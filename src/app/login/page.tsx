@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
@@ -89,6 +90,16 @@ export default function LoginPage() {
           >
             {loading ? "Signing in..." : "Sign In"}
           </button>
+
+          <p className="type-ui text-center text-sm text-ink-muted">
+            New here?{" "}
+            <Link
+              href="/signup"
+              className="text-burgundy underline-offset-2 hover:underline"
+            >
+              Create an account
+            </Link>
+          </p>
         </form>
       </div>
     </div>

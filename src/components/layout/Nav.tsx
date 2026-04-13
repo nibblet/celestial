@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
 import { useAgeMode } from "@/hooks/useAgeMode";
 
 const allNavItems = [
@@ -13,6 +12,7 @@ const allNavItems = [
   { href: "/themes", label: "Themes" },
   { href: "/timeline", label: "Timeline" },
   { href: "/ask", label: "Ask" },
+  { href: "/profile", label: "Profile" },
 ] as const;
 
 function navActive(pathname: string, href: string): boolean {
@@ -44,13 +44,7 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [isHome]);
 
-  async function handleSignOut() {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    window.location.href = "/login";
-  }
-
-  if (pathname === "/login") return null;
+  if (pathname === "/login" || pathname === "/signup") return null;
 
   const desktopNavSurface = navSolid
     ? "border-[var(--color-border)] bg-[rgba(247,243,237,0.92)] backdrop-blur-md shadow-sm"
@@ -88,13 +82,6 @@ export function Nav() {
               );
             })}
           </ul>
-          <button
-            type="button"
-            onClick={handleSignOut}
-            className="type-ui text-ink-ghost transition-colors duration-[var(--duration-fast)] hover:text-ink-muted"
-          >
-            Sign Out
-          </button>
         </div>
       </nav>
 
