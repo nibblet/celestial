@@ -58,50 +58,101 @@ The `static-data.ts` generator and the wiki index would also need to group by vo
 
 ---
 
-## Part 2: Contributor Interface — How Keith Adds New Stories
+## Part 2: Story Contribution — A Core Feature via Structured AI Chat
 
-### The Core Problem
+### The Big Idea
 
-Keith has stories in his head. The current pipeline requires: write text file → run Python scripts → generate wiki markdown → commit to git. That's a developer workflow, not a contributor workflow.
+The app currently has one mode: **Read** (explore Keith's stories). Contribution adds a second core mode: **Tell** (add new stories to the library). This isn't an admin tool tucked in a settings page — it's a primary feature, sitting alongside reading in the app's navigation.
 
-### Recommendation: A "Tell Your Story" Page
+**Anyone** in the family can contribute:
+- **Keith** adds his untold stories (Volume 2)
+- **Sons, grandchildren, others** add their own memories, perspectives, or stories about Keith (Volume 4: Family Voices)
+- Volume assignment is determined by who's contributing and what the story is about
 
-Build a simple, authenticated page at `/contribute` (visible only to Keith's profile, or to `admin` role users) with two input modes:
+### The Interface: Guided Story Chat
 
-#### Option A: Voice Recording (Recommended Primary)
+Inspired by the forvex-train structured chat pattern (REpost-style, free-form). Instead of a blank text area or a form with fields, the contributor has a **conversation with an AI interviewer** that draws the story out naturally.
 
-1. Keith taps a "Record" button and tells his story out loud
-2. Browser captures audio via MediaRecorder API
-3. Audio is sent to a server-side endpoint that:
-   - Stores the raw audio in Supabase Storage (permanent archive)
-   - Transcribes via Whisper API (or Anthropic's future audio support, or a speech-to-text service)
-   - Returns the transcript for review
-4. Keith reviews/edits the transcript in a simple text area
-5. On "Save", the story is stored as a draft in Supabase
+#### How It Works
 
-**Why voice-first:** Keith is a storyteller. Making him type defeats the purpose. Voice capture preserves his natural cadence and phrasing — which is also valuable raw material for the voice/style guide.
+1. User navigates to `/tell` (or "Add a Story" in the nav)
+2. The AI greets them and asks what they'd like to share:
+   - _"What's a story you'd like to add to the family library? It could be something from your own life, a memory of Keith, or something you've heard passed down."_
+3. The contributor talks or types freely — the AI follows up:
+   - _"When did this happen roughly?"_
+   - _"Who else was involved?"_
+   - _"What was the outcome — how did it turn out?"_
+   - _"What do you think the lesson was, looking back?"_
+4. The chat is **free-form, not rigid** — the AI adapts based on what's been said, not a fixed question sequence. It knows what a complete story needs (context, characters, events, reflection) and gently steers toward those elements without being formulaic.
+5. When the AI has enough material, it offers to draft the story:
+   - _"I think I have a good picture. Want me to write this up as a story for the library?"_
+6. The AI composes a story draft in the contributor's voice (or Keith's voice for Volume 2 contributions from Keith)
+7. The contributor reviews, edits, and submits
 
-#### Option B: Text Entry (Secondary)
+#### The Story Chat System Prompt
 
-A simple form with:
-- **Title** (required)
-- **Story text** (large textarea, Markdown-friendly)
-- **Life stage** (dropdown: Childhood, Education, Early Career, KPMG Years, Post-Corporate, Reflections)
-- **When did this happen?** (optional year or year range)
+The AI interviewer needs its own system prompt, distinct from the "Ask" guide. Key behaviors:
 
-Both options save to a `sb_story_drafts` table:
+- **Warm, curious, patient** — like a family member who genuinely wants to hear the story
+- **Knows the existing library** — can reference existing stories for context ("That reminds me of the story about Peat Marwick — is this around the same time?")
+- **Gathers structured data naturally** — without feeling like a form:
+  - Time period / dates
+  - People involved
+  - Setting / location
+  - Key events or decisions
+  - Lessons, principles, or reflections
+  - Memorable quotes or phrases
+- **Voice-aware** — when Keith is the contributor, the draft should match his memoir voice. When a grandchild contributes, it should sound like them.
+- **Knows when it has enough** — proactively offers to compose the draft rather than asking endless questions
+
+#### Voice Input (Enhancement)
+
+The chat supports text by default. Voice input can be layered on:
+- Browser MediaRecorder or Web Speech API for real-time speech-to-text
+- Each voice message is transcribed and appears as a chat bubble
+- Raw audio is preserved in Supabase Storage as archival material
+- This is an enhancement on top of the text chat — same flow, just a different input method
+
+### Data Model
+
+Two new tables:
 
 ```sql
+-- The chat conversation that gathered the story
+create table sb_story_sessions (
+  id uuid primary key default gen_random_uuid(),
+  contributor_id uuid references sb_profiles(id),
+  status text default 'gathering',  -- gathering | drafting | review | published
+  volume text default 'P2',         -- P2 (Keith), P4 (family), etc.
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+-- Individual messages in the story-gathering chat
+create table sb_story_session_messages (
+  id uuid primary key default gen_random_uuid(),
+  session_id uuid references sb_story_sessions(id),
+  role text not null,               -- 'user' | 'assistant'
+  content text not null,
+  audio_url text,                   -- optional: raw audio for this message
+  created_at timestamptz default now()
+);
+
+-- The composed story draft (output of the chat)
 create table sb_story_drafts (
   id uuid primary key default gen_random_uuid(),
+  session_id uuid references sb_story_sessions(id),
   contributor_id uuid references sb_profiles(id),
   title text not null,
   body text not null,
   life_stage text,
   year_start integer,
   year_end integer,
-  audio_url text,          -- link to raw audio in Supabase Storage
-  status text default 'draft',  -- draft | review | published
+  themes text[],                    -- AI-suggested themes
+  principles text[],                -- AI-extracted principles
+  quotes text[],                    -- notable quotes pulled from the story
+  status text default 'draft',      -- draft | approved | published
+  story_id text,                    -- assigned on publish: P2_S01, P4_S01, etc.
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
@@ -109,41 +160,39 @@ create table sb_story_drafts (
 
 ### The Publishing Pipeline
 
-Drafts don't go live automatically. The flow:
-
 ```
-Keith records/types → Draft saved in Supabase
+Contributor chats with AI → story session saved in Supabase
         ↓
-Admin reviews draft → Triggers extraction (principles, quotes, themes)
+AI composes draft → contributor reviews/edits → draft saved
         ↓
-Extraction can be:
-  (a) Automated via Claude API call (pass story text + extraction prompt)
-  (b) Semi-manual using existing Python pipeline
+Admin approves → triggers extraction:
+  Claude API call extracts structured metadata
+  (principles, heuristics, quotes, themes, timeline events)
         ↓
-Wiki markdown file generated → P2_S## ID assigned
+Story ID assigned (next P2_S## or P4_S##)
+Draft promoted to published story in Supabase
         ↓
-Story appears in the app
+Story appears in the app immediately (no redeploy)
+Optionally exported to git as wiki markdown for archival
 ```
 
-**For the MVP**, extraction via Claude API is the simplest path. The existing extraction prompt in `cobb_brain_lab/prompts/extraction_prompt.md` can be adapted into an API call that returns structured JSON (principles, heuristics, quotes, timeline events, themes). This avoids requiring Python pipeline knowledge.
+### Who Sees What
 
-### Architecture Decision: Supabase-First vs. Git-First Content
+| Role | Can Tell | Can Read Own Drafts | Can Approve/Publish |
+|---|---|---|---|
+| Keith (admin) | Yes — Volume 2 | Yes | Yes |
+| Family member | Yes — Volume 4 | Yes | No |
+| Admin (you) | Yes — any volume | Yes — all drafts | Yes |
 
-Two viable approaches:
+### Architecture: Supabase-First for New Content
 
-| | Git-first (current) | Supabase-first (new) |
-|---|---|---|
-| **How it works** | Stories are `.md` files in `content/wiki/stories/`. Server reads from filesystem. | Stories live in Supabase tables. Server queries DB. |
-| **Pros** | Simple, auditable, version-controlled. Works today. | Dynamic — no redeploy needed. Better for contributor workflow. |
-| **Cons** | Adding a story requires a git commit + redeploy. | Requires migrating the content model to DB. More complex. |
-| **Best for** | Curated, slow-changing content | Frequent additions, contributor self-service |
+New contributed stories live in Supabase, not the filesystem:
 
-**Recommendation: Hybrid approach.**
-
-- **Volume 1 (Memoir)** stays git-first — it's stable, complete, and the pipeline already produces the wiki markdown.
-- **Volume 2+ (new contributions)** are Supabase-first — drafts and published stories live in the DB, no git/redeploy cycle needed.
-- The wiki parser gets a `getAllStories()` that merges both sources: filesystem stories + DB stories.
-- Over time, published DB stories can optionally be exported to git as markdown for archival.
+- **Volume 1 (Memoir)** stays git-first — it's stable, complete, and the pipeline already produces the wiki markdown
+- **Volume 2+ (new contributions)** are Supabase-first — drafts and published stories live in the DB, no git/redeploy cycle needed
+- The wiki parser's `getAllStories()` merges both sources: filesystem stories (V1) + DB stories (V2+)
+- Published DB stories can optionally be exported to git as markdown for archival
+- The AI "Ask" feature sees all stories regardless of source — the system prompt includes both filesystem and DB content
 
 ---
 
@@ -192,39 +241,55 @@ Alternatively, for the web-based flow, an admin page at `/admin/sources` could:
 - Add volume display/filter to Stories page
 - **Effort: ~2-4 hours**
 
-### Phase 2: Contributor "Tell Your Story" Page (Medium)
-- `sb_story_drafts` table in Supabase
-- `/contribute` page with text input (voice can come in Phase 2b)
-- Admin review page at `/admin/drafts`
-- Claude API extraction endpoint to auto-extract principles/themes/quotes from draft text
-- Publishing flow: draft → extracted → wiki markdown generated → live
+### Phase 2: Story Chat MVP — Text-Based
+- Supabase tables: `sb_story_sessions`, `sb_story_session_messages`, `sb_story_drafts`
+- `/tell` page with the AI story-gathering chat (text input, streaming responses)
+- Story interviewer system prompt (warm, adaptive, knows the library)
+- "Compose draft" step: AI assembles chat material into a story
+- Contributor review/edit screen for the draft
+- `/api/tell` route — similar to `/api/ask` but with the interviewer prompt
+- **Effort: ~2-3 days**
+
+### Phase 3: Publishing Pipeline
+- Admin draft review page
+- Claude API extraction endpoint: pass story text → get structured metadata (principles, themes, quotes, heuristics, timeline)
+- Story ID assignment (next available P2_S## or P4_S##)
+- Hybrid `getAllStories()` that merges filesystem (V1) + Supabase (V2+)
+- Published stories immediately visible in the app — no redeploy
 - **Effort: ~1-2 days**
 
-### Phase 2b: Voice Recording
-- Add MediaRecorder-based voice capture to `/contribute`
-- Supabase Storage for audio files
-- Speech-to-text integration (Whisper API or similar)
-- **Effort: ~1 day additional**
-
-### Phase 3: Public Source Integration
-- Adapt `06_ingest_source.py` output into promotable stories
-- Build `07_promote_source.py` or web-based admin equivalent
+### Phase 4: Voice Input Enhancement
+- MediaRecorder or Web Speech API integration on the `/tell` chat
+- Each voice message transcribed → appears as chat text
+- Raw audio preserved in Supabase Storage
+- Same chat flow, just voice as an additional input method
 - **Effort: ~1 day**
 
-### Phase 4: Supabase-First Stories (Optional, if frequency warrants)
-- Migrate published Volume 2+ stories from filesystem to Supabase
-- Hybrid `getAllStories()` that merges git + DB sources
-- Remove redeploy requirement for new content
-- **Effort: ~2-3 days**
+### Phase 5: Public Source Integration
+- Adapt `06_ingest_source.py` output into promotable stories
+- Build `07_promote_source.py` or web-based admin equivalent
+- Promoted sources get P3_S## IDs and flow through the same publishing pipeline
+- **Effort: ~1 day**
+
+### Future: Maturation
+- Smarter interviewer: learns from existing stories to ask better follow-up questions
+- Multi-session stories: pick up where you left off across visits
+- Family discussion threads on contributed stories
+- Richer voice handling: speaker diarization, emotional tone markers
+- Story suggestions: "Keith, you mentioned [X] in your memoir — want to tell us more about that?"
 
 ---
 
 ## Summary of Recommendations
 
-1. **Framework: "Volumes in a Library"** — extend the existing `P1`/`P2`/`P3` ID scheme rather than replacing it. The book metaphor becomes a library metaphor. Everything else (themes, journeys, principles, AI prompts) works across volumes without structural changes.
+1. **Framework: "Volumes in a Library"** — extend the existing `P1`/`P2`/`P3`/`P4` ID scheme. The book metaphor becomes a library metaphor. Themes, journeys, principles, and the AI prompt layer all work across volumes without structural changes.
 
-2. **Contributor interface: Voice-first, simple** — Keith taps record, tells a story, reviews the transcript, saves. Admin publishes. Claude API handles extraction. No Python pipeline knowledge required.
+2. **Two core modes: Read and Tell** — contribution via structured AI chat is a first-class feature, not an admin tool. The chat draws stories out through natural conversation, then composes a draft. Available to Keith and all family members.
 
-3. **Public sources: Promote to stories** — The ingestion pipeline already exists. Add a "promotion" step that turns raw sources into wiki-formatted stories with extracted principles and themes.
+3. **Free-form chat, not rigid forms** — the AI interviewer adapts to what's been said, knows when it has enough, and gently steers toward complete stories. Inspired by the forvex-train/REpost pattern. Can mature over time.
 
-4. **Start with the ID generalization** — it's a tiny change that unblocks everything else.
+4. **Supabase-first for new content** — Volume 1 stays in git (stable). Volumes 2+ live in Supabase so new stories go live without a redeploy.
+
+5. **Public sources: Promote to stories** — the ingestion pipeline already exists. Add a promotion step that turns raw sources into Volume 3 stories.
+
+6. **Start with the ID generalization** — it's a tiny change that unblocks everything else.
