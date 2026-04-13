@@ -1,3 +1,7 @@
+// Supabase table names are prefixed with sb_ to avoid collisions
+// with other projects sharing the same Supabase instance.
+// Tables: sb_profiles, sb_conversations, sb_messages
+
 export type AgeMode = "young_reader" | "teen" | "adult";
 
 export type UserRole = "admin" | "member";

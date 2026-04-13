@@ -22,7 +22,7 @@ async function getInitialAgeMode(): Promise<AgeMode> {
 
     if (user) {
       const { data: profile } = await supabase
-        .from("profiles")
+        .from("sb_profiles")
         .select("age, age_mode")
         .eq("id", user.id)
         .single();

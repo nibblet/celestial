@@ -38,7 +38,7 @@ export function AgeModeProvider({
     } = await supabase.auth.getUser();
     if (user) {
       await supabase
-        .from("profiles")
+        .from("sb_profiles")
         .update({ age_mode: mode, updated_at: new Date().toISOString() })
         .eq("id", user.id);
     }
