@@ -34,6 +34,9 @@ yarn-error.log*
 .env*.local
 !.env.local.example
 
+# local scratch / accidental env dumps (never commit secrets)
+/Untitled
+
 # vercel
 .vercel
 
