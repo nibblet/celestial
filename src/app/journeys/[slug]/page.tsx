@@ -1,12 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getJourneyBySlug, getJourneySlugs } from "@/lib/wiki/journeys";
+import { getJourneyBySlug } from "@/lib/wiki/journeys";
 import { getStoryById } from "@/lib/wiki/parser";
 import { JourneyIntroContinue } from "@/components/journeys/JourneyIntroContinue";
-
-export function generateStaticParams() {
-  return getJourneySlugs().map((slug) => ({ slug }));
-}
 
 export default async function JourneyIntroPage({
   params,

@@ -161,9 +161,25 @@ export default function TellPage() {
 
   async function submitDraft() {
     if (!draft) return;
+    const hasEdits = editTitle !== draft.title || editBody !== draft.body;
+    if (hasEdits) {
+      const res = await fetch("/api/tell/draft/update", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          draftId: draft.draftId,
+          title: editTitle,
+          body: editBody,
+        }),
+      });
+
+      if (!res.ok) {
+        setError("Failed to save your edits. Please try again.");
+        return;
+      }
+    }
+
     setSubmitted(true);
-    // For now, the draft is already saved in Supabase by the /api/tell/draft endpoint.
-    // Future: update the draft with edited title/body if changed.
   }
 
   function startNew() {

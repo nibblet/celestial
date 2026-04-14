@@ -1,23 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
-import { getAllJourneys, getJourneyBySlug } from "@/lib/wiki/journeys";
+import { getJourneyBySlug } from "@/lib/wiki/journeys";
 import { getStoryById } from "@/lib/wiki/parser";
 import { lifeStageToEraAccent } from "@/lib/design/era";
 import { JourneyProgressBar } from "@/components/journeys/JourneyProgressBar";
 import { JourneyConnector } from "@/components/journeys/JourneyConnector";
 import { JourneyReflection } from "@/components/journeys/JourneyReflection";
 import { JourneyVisitRecorder } from "@/components/journeys/JourneyVisitRecorder";
-
-export function generateStaticParams() {
-  const journeys = getAllJourneys();
-  return journeys.flatMap((j) =>
-    j.storyIds.map((_, i) => ({
-      slug: j.slug,
-      step: String(i + 1),
-    }))
-  );
-}
 
 export default async function JourneyStepPage({
   params,

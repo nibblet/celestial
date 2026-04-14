@@ -1,13 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getJourneyBySlug, getJourneySlugs } from "@/lib/wiki/journeys";
+import { getJourneyBySlug } from "@/lib/wiki/journeys";
 import { getStoryById } from "@/lib/wiki/parser";
 import { JourneyCompleteMarker } from "@/components/journeys/JourneyCompleteMarker";
 import { JourneyCompleteSummary } from "@/components/journeys/JourneyCompleteSummary";
-
-export function generateStaticParams() {
-  return getJourneySlugs().map((slug) => ({ slug }));
-}
 
 function uniquePrinciplesForJourney(storyIds: string[]): string[] {
   const seen = new Set<string>();

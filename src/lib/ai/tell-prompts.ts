@@ -1,6 +1,14 @@
-import { getWikiSummaries } from "@/lib/wiki/parser";
+import { getWikiSummaries as getWikiSummariesFromParser } from "@/lib/wiki/parser";
 
 export type TellMode = "gathering" | "drafting";
+let cachedWikiSummaries: string | null = null;
+
+function getWikiSummaries(): string {
+  if (!cachedWikiSummaries) {
+    cachedWikiSummaries = getWikiSummariesFromParser();
+  }
+  return cachedWikiSummaries;
+}
 
 export function buildTellSystemPrompt(
   contributorName: string,

@@ -7,7 +7,8 @@ import Link from "next/link";
 import ReactMarkdown, { type Components } from "react-markdown";
 
 const ASSISTANT_MARKDOWN_COMPONENTS: Components = {
-  a({ href, children, node: _node, ...props }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  a({ href, children, node: _, ...props }) {
     if (href?.startsWith("/")) {
       return (
         <Link

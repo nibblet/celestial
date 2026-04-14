@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { createClient } from "@/lib/supabase/server";
 import { buildTellSystemPrompt } from "@/lib/ai/tell-prompts";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY || "",
@@ -14,6 +15,17 @@ export async function POST(request: Request) {
 
   if (!user) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const rateLimit = checkRateLimit(`${user.id}:draft`, 5, 60_000);
+  if (!rateLimit.allowed) {
+    return Response.json(
+      { error: "Please wait before generating another draft." },
+      {
+        status: 429,
+        headers: { "Retry-After": String(Math.ceil(rateLimit.retryAfterMs / 1000)) },
+      }
+    );
   }
 
   const { sessionId } = (await request.json()) as { sessionId: string };
@@ -91,8 +103,12 @@ export async function POST(request: Request) {
     if (fenced) {
       draft = JSON.parse(fenced[1]);
     } else {
+      console.error(
+        "[tell/draft] Failed to parse Claude response:",
+        rawText.slice(0, 200)
+      );
       return Response.json(
-        { error: "Failed to parse story draft", raw: rawText },
+        { error: "Failed to compose story draft — please try again." },
         { status: 500 }
       );
     }
