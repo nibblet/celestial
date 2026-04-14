@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { getTimeline, getStoryById } from "@/lib/wiki/parser";
 import { yearToEraAccent } from "@/lib/design/era";
@@ -36,6 +37,9 @@ export default function TimelinePage() {
                     const story = getStoryById(evt.storyRef);
                     const accent = yearToEraAccent(evt.year);
                     const label = `Era: ${accent.label}, year ${evt.year}`;
+                    const illAlt =
+                      [evt.organization, evt.location].filter(Boolean).join(", ") ||
+                      evt.event;
                     return (
                       <div
                         key={i}
@@ -65,6 +69,18 @@ export default function TimelinePage() {
                                 .filter(Boolean)
                                 .join(" — ")}
                             </p>
+                          )}
+                          {evt.illustration && (
+                            <div className="relative mt-2 h-28 w-full overflow-hidden rounded-md bg-[var(--color-muted)]">
+                              <Image
+                                src={evt.illustration}
+                                alt={`Context image: ${illAlt}`}
+                                width={640}
+                                height={224}
+                                className="h-full w-full object-cover"
+                                sizes="(max-width: 768px) 100vw, 720px"
+                              />
+                            </div>
                           )}
                           {story && (
                             <Link

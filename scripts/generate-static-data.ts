@@ -37,6 +37,7 @@ interface TimelineEvent {
   organization: string;
   location: string;
   storyRef: string;
+  illustration?: string;
 }
 
 function extractMetadata(content: string, key: string): string {
@@ -115,7 +116,7 @@ function main() {
   const timelineEvents: TimelineEvent[] = [];
   for (const line of timelineContent.split("\n")) {
     const match = line.match(
-      /- \*\*(\d{4})\*\* — (.+?)(?:\s*\((.+?)\))?(?:,\s*(.+?))?\s*—\s*\[\[(P\d+_S\d+)\]\]/
+      /- \*\*(\d{4})\*\* — (.+?)(?:\s*\((.+?)\))?(?:,\s*(.+?))?\s*—\s*\[\[(P\d+_S\d+)\]\]\s*(?:\|\s*(.+))?/
     );
     if (match) {
       timelineEvents.push({
@@ -124,6 +125,7 @@ function main() {
         organization: match[3] || "",
         location: match[4]?.trim() || "",
         storyRef: match[5],
+        illustration: match[6]?.trim() || undefined,
       });
     }
   }
@@ -141,6 +143,7 @@ export interface StoryCard {
   themes: string[];
   wordCount: number;
   principles: string[];
+  volume?: string;
 }
 
 export interface ThemeCard {
@@ -156,6 +159,7 @@ export interface TimelineEvent {
   organization: string;
   location: string;
   storyRef: string;
+  illustration?: string;
 }
 
 export const storiesData: StoryCard[] = ${JSON.stringify(stories, null, 2)};

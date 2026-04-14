@@ -19,7 +19,7 @@
 
 ## Stories
 
-- [[P1_S02]] A V ery Busy Teenager — A former high-school student recounts a busy four years filled with strong acade...
+- [[P1_S02]] A Very Busy Teenager — A former high-school student recounts a busy four years filled with strong acade...
 - [[P1_S05]] A Would-be Music Man — An individual with clear musical talent but limited discipline recounts childhoo...
 - [[P1_S06]] Bayne Cobb, Exemplar of a Dad — A son reflects on his father's quiet, steady leadership across family, work, and...
 - [[P1_S07]] Frances Cobb—A Spool of Blue Thread — A memoir sketch of Frances Cobb, a hardworking seamstress and mother whose ambit...
@@ -38,15 +38,15 @@
 
 ## Selected Quotes
 
-> "It was just my destiny!" — _A V ery Busy Teenager_
+> "It was just my destiny!" — _A Very Busy Teenager_
 
-> "I did about 90 percent of the work required to publish the paper." — _A V ery Busy Teenager_
+> "I did about 90 percent of the work required to publish the paper." — _A Very Busy Teenager_
 
-> "She simply put her foot down and forbade me from playing it." — _A V ery Busy Teenager_
+> "She simply put her foot down and forbade me from playing it." — _A Very Busy Teenager_
 
-> "I was quite a busy guy." — _A V ery Busy Teenager_
+> "I was quite a busy guy." — _A Very Busy Teenager_
 
-> "I was always a good student, partly because of a fundamental curiosity." — _A V ery Busy Teenager_
+> "I was always a good student, partly because of a fundamental curiosity." — _A Very Busy Teenager_
 
 ---
 *Theme compiled from story index*

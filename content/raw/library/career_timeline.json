@@ -7,7 +7,8 @@
     "location": "Hattiesburg, Mississippi",
     "story_reference": "P1_S36",
     "source_excerpt": "Mississippi Southern College in the autumn of 1959, neither of them realizing the presence of the other.",
-    "confidence": "high"
+    "confidence": "high",
+    "illustration": "/timeline/usm.jpg"
   },
   {
     "year": 1959,
@@ -37,7 +38,8 @@
     "location": "Jackson, Mississippi",
     "story_reference": "P1_S16",
     "source_excerpt": "we decided to accept the Peat Marwick offer in Jackson, notwithstanding the fact that the salary was the lowest.",
-    "confidence": "high"
+    "confidence": "high",
+    "illustration": "/timeline/accounting-machine.jpg"
   },
   {
     "year": 1963,
@@ -66,7 +68,8 @@
     "location": "Jackson, Mississippi",
     "story_reference": "P1_S38",
     "source_excerpt": "Our financial contributions started with a modest payroll deduction from my first paycheck at Peat Marwick in 1963.",
-    "confidence": "high"
+    "confidence": "high",
+    "illustration": "/timeline/mississippi-jackson.jpg"
   },
   {
     "year": 1968,
@@ -96,7 +99,8 @@
     "location": "Orlando, Florida",
     "story_reference": "P1_S20",
     "source_excerpt": "So, we loaded up our virtual covered wagon and off we went to Orlando in August 1971.",
-    "confidence": "high"
+    "confidence": "high",
+    "illustration": "/timeline/florida-orlando.jpg"
   },
   {
     "year": 1971,
@@ -116,7 +120,8 @@
     "location": "Fort Lauderdale, Florida",
     "story_reference": "P1_S21",
     "source_excerpt": "We arrived in Fort Lauderdale in the summer of 1975.",
-    "confidence": "high"
+    "confidence": "high",
+    "illustration": "/timeline/florida-fort-lauderdale.jpg"
   },
   {
     "year": 1977,
@@ -136,7 +141,8 @@
     "location": "Baltimore, Maryland",
     "story_reference": "P1_S22",
     "source_excerpt": "KPMG asked us to move there in 1989. The Baltimore office had been an important cog in the KPMG wheel.",
-    "confidence": "high"
+    "confidence": "high",
+    "illustration": "/timeline/maryland-baltimore.jpg"
   },
   {
     "year": 1990,
@@ -145,7 +151,8 @@
     "location": "Annapolis, Maryland",
     "story_reference": "P1_S39",
     "source_excerpt": "In 1990 I was invited to a dinner at the Governor's mansion in Maryland.",
-    "confidence": "high"
+    "confidence": "high",
+    "illustration": "/timeline/maryland-annapolis.jpg"
   },
   {
     "year": 1991,
@@ -155,7 +162,8 @@
     "location": "Philadelphia, Pennsylvania",
     "story_reference": "P1_S23",
     "source_excerpt": "We arrived in Philadelphia in August 1991.",
-    "confidence": "high"
+    "confidence": "high",
+    "illustration": "/timeline/pennsylvania-philadelphia.jpg"
   },
   {
     "year": 1993,
@@ -184,7 +192,8 @@
     "location": "Fort Lauderdale, Florida",
     "story_reference": "P1_S25",
     "source_excerpt": "we finally agreed on a start date of April 1, 1995.",
-    "confidence": "high"
+    "confidence": "high",
+    "illustration": "/timeline/alamo-cars.jpg"
   },
   {
     "year": 1996,
@@ -212,7 +221,8 @@
     "location": "Miami, Florida",
     "story_reference": "P1_S26",
     "source_excerpt": "My first call came from the Federal Reserve Bank. I was invited to join the board of the Miami branch of the Fed.",
-    "confidence": "high"
+    "confidence": "high",
+    "illustration": "/timeline/florida-miami.jpg"
   },
   {
     "year": 1998,
@@ -241,7 +251,8 @@
     "location": null,
     "story_reference": "P1_S26",
     "source_excerpt": "The capital markets for entrepreneurial businesses completely dried up, quite suddenly, in the year 2000.",
-    "confidence": "high"
+    "confidence": "high",
+    "illustration": "/timeline/laundromat.jpg"
   },
   {
     "year": 2002,
@@ -251,7 +262,8 @@
     "location": "Florida",
     "story_reference": "P1_S26",
     "source_excerpt": "One day in 2002, I received a breakfast invitation from Alan Levan, chairman of BankAtlantic Bancorp.",
-    "confidence": "high"
+    "confidence": "high",
+    "illustration": "/timeline/bankatlantic.jpg"
   },
   {
     "year": 2003,
@@ -261,7 +273,8 @@
     "location": "Florida",
     "story_reference": "P1_S26",
     "source_excerpt": "Invitation to teach as an adjunct professor at Nova Southeastern University (circa 2003).",
-    "confidence": "medium"
+    "confidence": "medium",
+    "illustration": "/timeline/nova-southeastern.jpg"
   },
   {
     "year": 2012,
@@ -307,6 +320,7 @@
     "location": "Antarctica",
     "story_reference": "P1_S29",
     "source_excerpt": "We rounded out our continental bucket list in 2014 with a memorable expedition to Antarctica.",
-    "confidence": "high"
+    "confidence": "high",
+    "illustration": "/timeline/antarctica.jpg"
   }
 ]

@@ -37,6 +37,8 @@ export interface WikiTimelineEvent {
   organization: string;
   location: string;
   storyRef: string;
+  /** Path under public/, e.g. /timeline/usm.jpg */
+  illustration?: string;
 }
 
 function readWikiFile(relativePath: string): string {
@@ -209,7 +211,7 @@ export function getTimeline(): WikiTimelineEvent[] {
 
   for (const line of lines) {
     const match = line.match(
-      /- \*\*(\d{4})\*\* — (.+?)(?:\s*\((.+?)\))?(?:,\s*(.+?))?\s*—\s*\[\[(P\d+_S\d+)\]\]/
+      /- \*\*(\d{4})\*\* — (.+?)(?:\s*\((.+?)\))?(?:,\s*(.+?))?\s*—\s*\[\[(P\d+_S\d+)\]\]\s*(?:\|\s*(.+))?/
     );
     if (match) {
       events.push({
@@ -218,6 +220,7 @@ export function getTimeline(): WikiTimelineEvent[] {
         organization: match[3] || "",
         location: match[4] || "",
         storyRef: match[5],
+        illustration: match[6]?.trim() || undefined,
       });
     }
   }

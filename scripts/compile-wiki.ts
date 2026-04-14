@@ -49,6 +49,8 @@ interface TimelineEvent {
   story_reference: string;
   source_excerpt?: string;
   confidence: string;
+  /** Optional path under public/, e.g. /timeline/usm.jpg */
+  illustration?: string;
 }
 
 interface ParsedStory {
@@ -484,14 +486,23 @@ function main() {
       const storyRef = storyJsons[evt.story_reference]
         ? `[[${evt.story_reference}]]`
         : evt.story_reference;
+      const ill = evt.illustration ? ` | ${evt.illustration}` : "";
       timelinePage.push(
-        `- **${evt.year}** — ${evt.event}${evt.organization ? ` (${evt.organization})` : ""}${evt.location ? `, ${evt.location}` : ""} — ${storyRef}`
+        `- **${evt.year}** — ${evt.event}${evt.organization ? ` (${evt.organization})` : ""}${evt.location ? `, ${evt.location}` : ""} — ${storyRef}${ill}`
       );
     }
     timelinePage.push("");
   }
 
-  timelinePage.push("---", "*Compiled from career_timeline.json*");
+  timelinePage.push(
+    "",
+    "## Illustration sources",
+    "",
+    "Representative photos for key timeline entries live in `public/timeline/`. They are downloaded from [Wikimedia Commons](https://commons.wikimedia.org/) under various Creative Commons licenses. They are meant as **place-and-era context**, not corporate branding: e.g. the BankAtlantic image is the namesake arena; the vintage Burroughs machine evokes public-accounting firm work (Peat Marwick / KPMG era).",
+    "",
+    "---",
+    "*Compiled from career_timeline.json*"
+  );
   fs.writeFileSync(path.join(WIKI, "timeline", "career-timeline.md"), timelinePage.join("\n"));
   indexEntries.push(`- [[timeline/career-timeline.md]] — Full career timeline: ${timeline.length} events`);
 
