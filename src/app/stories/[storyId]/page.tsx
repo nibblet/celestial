@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import { ReadingProgressBar } from "@/components/story/ReadingProgressBar";
+import { StoryAudioControls } from "@/components/story/StoryAudioControls";
 import { SourceBadge } from "@/components/ui/SourceBadge";
 import { lifeStageToEraAccent } from "@/lib/design/era";
 
@@ -19,6 +20,8 @@ export default async function StoryDetailPage({
   if (!story) notFound();
 
   const era = lifeStageToEraAccent(story.lifeStage);
+  const supportsListenMode =
+    story.source === "memoir" || story.source === "interview";
 
   return (
     <>
@@ -67,6 +70,14 @@ export default async function StoryDetailPage({
             {story.summary}
           </p>
         </div>
+
+        {supportsListenMode && (
+          <StoryAudioControls
+            title={story.title}
+            fullText={story.fullText}
+            wordCount={story.wordCount}
+          />
+        )}
 
         <article className="story-body prose prose-story prose-lg max-w-none pb-8">
           <ReactMarkdown>{story.fullText}</ReactMarkdown>

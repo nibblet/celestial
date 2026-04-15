@@ -2,10 +2,22 @@ import Anthropic from "@anthropic-ai/sdk";
 import { createClient } from "@/lib/supabase/server";
 import { buildTellSystemPrompt } from "@/lib/ai/tell-prompts";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { isKeithSpecialAccessEmail } from "@/lib/auth/special-access";
+import {
+  getContributorPersonaName,
+  getVolumeForContributionMode,
+} from "@/lib/tell/contribution";
+import type { ContributionMode } from "@/types";
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY || "",
 });
+
+type StorySessionRow = {
+  id: string;
+  contributor_id: string;
+  contribution_mode: ContributionMode | null;
+};
 
 export async function POST(request: Request) {
   try {
@@ -32,13 +44,26 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { message, sessionId } = body as {
+    const { message, sessionId, contributionMode = "tell" } = body as {
       message: string;
       sessionId?: string;
+      contributionMode?: ContributionMode;
     };
 
     if (!message || typeof message !== "string" || message.length > 5000) {
       return Response.json({ error: "Invalid message" }, { status: 400 });
+    }
+
+    if (contributionMode !== "tell" && contributionMode !== "beyond") {
+      return Response.json(
+        { error: "Invalid contribution mode" },
+        { status: 400 }
+      );
+    }
+
+    const isKeithSpecialAccess = isKeithSpecialAccessEmail(user.email);
+    if (contributionMode === "beyond" && !isKeithSpecialAccess) {
+      return Response.json({ error: "Forbidden" }, { status: 403 });
     }
 
     // Get contributor name
@@ -48,7 +73,11 @@ export async function POST(request: Request) {
       .eq("id", user.id)
       .single();
 
-    const contributorName = profile?.display_name || "Family Member";
+    const displayName = profile?.display_name || "Family Member";
+    const contributorName = getContributorPersonaName(
+      contributionMode,
+      displayName
+    );
 
     // Get or create story session
     let sessId = sessionId;
@@ -58,7 +87,8 @@ export async function POST(request: Request) {
         .insert({
           contributor_id: user.id,
           status: "gathering",
-          volume: "P2",
+          volume: getVolumeForContributionMode(contributionMode),
+          contribution_mode: contributionMode,
         })
         .select("id")
         .single();
@@ -71,6 +101,26 @@ export async function POST(request: Request) {
         );
       }
       sessId = sess.id;
+    } else {
+      const { data: existingSession } = await supabase
+        .from("sb_story_sessions")
+        .select("id, contributor_id, contribution_mode")
+        .eq("id", sessId)
+        .single();
+
+      const session = existingSession as StorySessionRow | null;
+      const sessionMode = session?.contribution_mode ?? "tell";
+
+      if (!session || session.contributor_id !== user.id) {
+        return Response.json({ error: "Session not found" }, { status: 404 });
+      }
+
+      if (sessionMode !== contributionMode) {
+        return Response.json(
+          { error: "Session belongs to a different workspace" },
+          { status: 400 }
+        );
+      }
     }
 
     // Save user message
@@ -109,7 +159,11 @@ export async function POST(request: Request) {
       content: m.content,
     }));
 
-    const systemPrompt = buildTellSystemPrompt(contributorName, "gathering");
+    const systemPrompt = buildTellSystemPrompt(
+      contributorName,
+      "gathering",
+      contributionMode
+    );
 
     // Stream response
     const stream = anthropic.messages.stream({

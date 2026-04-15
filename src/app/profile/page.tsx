@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
 import { ProfileHero } from "@/components/profile/ProfileHero";
+import { KeithProfileHero } from "@/components/profile/KeithProfileHero";
+import { getAuthenticatedProfileContext } from "@/lib/auth/profile-context";
 
 export const metadata: Metadata = {
   title: "Profile",
@@ -24,24 +25,22 @@ function resolveDisplayName(
 }
 
 export default async function ProfilePage() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { user, profile, isKeithSpecialAccess } =
+    await getAuthenticatedProfileContext();
 
   if (!user) redirect("/login");
-
-  const { data: profile } = await supabase
-    .from("sb_profiles")
-    .select("display_name")
-    .eq("id", user.id)
-    .single();
 
   const displayName = resolveDisplayName(
     profile?.display_name,
     user.user_metadata?.display_name,
     user.email
   );
+
+  if (isKeithSpecialAccess) {
+    return (
+      <KeithProfileHero displayName={displayName} email={user.email ?? ""} />
+    );
+  }
 
   return <ProfileHero displayName={displayName} email={user.email ?? ""} />;
 }

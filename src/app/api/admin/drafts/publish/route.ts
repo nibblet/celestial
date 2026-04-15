@@ -47,11 +47,12 @@ export async function POST(request: Request) {
   // Get the session to determine volume
   const { data: session } = await supabase
     .from("sb_story_sessions")
-    .select("volume")
+    .select("volume, contribution_mode")
     .eq("id", draft.session_id)
     .single();
 
-  const volume = session?.volume || "P2";
+  const volume =
+    session?.volume || (session?.contribution_mode === "beyond" ? "P2" : "P4");
 
   // Find next available story ID for this volume
   const { data: existing } = await supabase

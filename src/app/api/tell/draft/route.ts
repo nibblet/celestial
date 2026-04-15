@@ -2,6 +2,9 @@ import Anthropic from "@anthropic-ai/sdk";
 import { createClient } from "@/lib/supabase/server";
 import { buildTellSystemPrompt } from "@/lib/ai/tell-prompts";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { isKeithSpecialAccessEmail } from "@/lib/auth/special-access";
+import { getContributorPersonaName } from "@/lib/tell/contribution";
+import type { ContributionMode } from "@/types";
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY || "",
@@ -28,21 +31,43 @@ export async function POST(request: Request) {
     );
   }
 
-  const { sessionId } = (await request.json()) as { sessionId: string };
+  const { sessionId, contributionMode = "tell" } = (await request.json()) as {
+    sessionId: string;
+    contributionMode?: ContributionMode;
+  };
 
   if (!sessionId) {
     return Response.json({ error: "sessionId required" }, { status: 400 });
   }
 
+  if (contributionMode !== "tell" && contributionMode !== "beyond") {
+    return Response.json(
+      { error: "Invalid contribution mode" },
+      { status: 400 }
+    );
+  }
+
+  const isKeithSpecialAccess = isKeithSpecialAccessEmail(user.email);
+  if (contributionMode === "beyond" && !isKeithSpecialAccess) {
+    return Response.json({ error: "Forbidden" }, { status: 403 });
+  }
+
   // Verify session belongs to this user
   const { data: session } = await supabase
     .from("sb_story_sessions")
-    .select("id, contributor_id")
+    .select("id, contributor_id, contribution_mode")
     .eq("id", sessionId)
     .single();
 
   if (!session || session.contributor_id !== user.id) {
     return Response.json({ error: "Session not found" }, { status: 404 });
+  }
+
+  if ((session.contribution_mode ?? "tell") !== contributionMode) {
+    return Response.json(
+      { error: "Session belongs to a different workspace" },
+      { status: 400 }
+    );
   }
 
   // Get contributor name
@@ -52,7 +77,11 @@ export async function POST(request: Request) {
     .eq("id", user.id)
     .single();
 
-  const contributorName = profile?.display_name || "Family Member";
+  const displayName = profile?.display_name || "Family Member";
+  const contributorName = getContributorPersonaName(
+    contributionMode,
+    displayName
+  );
 
   // Load full conversation history
   const { data: history } = await supabase
@@ -80,7 +109,11 @@ export async function POST(request: Request) {
     content: "Please compose this into a story for the library now.",
   });
 
-  const systemPrompt = buildTellSystemPrompt(contributorName, "drafting");
+  const systemPrompt = buildTellSystemPrompt(
+    contributorName,
+    "drafting",
+    contributionMode
+  );
 
   // Non-streaming — we need the full JSON response
   const response = await anthropic.messages.create({
@@ -135,6 +168,7 @@ export async function POST(request: Request) {
       principles: draft.principles || [],
       quotes: draft.quotes || [],
       status: "draft",
+      contribution_mode: contributionMode,
     })
     .select("id")
     .single();

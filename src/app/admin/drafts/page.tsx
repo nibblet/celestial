@@ -2,9 +2,11 @@
 
 import { useState, useEffect, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
+import { getContributionLabel } from "@/lib/tell/contribution";
 
 interface Draft {
   id: string;
+  session_id: string;
   title: string;
   body: string;
   life_stage: string | null;
@@ -16,6 +18,8 @@ interface Draft {
   status: string;
   story_id: string | null;
   created_at: string;
+  volume: string;
+  contribution_mode: "tell" | "beyond";
   contributor: { display_name: string } | null;
 }
 
@@ -85,7 +89,7 @@ export default function AdminDraftsPage() {
     <div className="mx-auto max-w-content px-[var(--page-padding-x)] py-6">
       <h1 className="type-page-title text-2xl mb-1">Story Drafts</h1>
       <p className="type-ui text-ink-muted text-sm mb-6">
-        Review and publish stories contributed by family members.
+        Review and publish both family Tell submissions and Keith Beyond drafts.
       </p>
 
       {drafts.length === 0 && (
@@ -119,6 +123,14 @@ export default function AdminDraftsPage() {
                     <span className="ml-1 text-ink-ghost">({d.story_id})</span>
                   )}
                 </p>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  <span className="rounded-full bg-burgundy-light px-2 py-0.5 text-[0.625rem] font-medium text-burgundy">
+                    {getContributionLabel(d.contribution_mode)}
+                  </span>
+                  <span className="rounded-full bg-ocean-pale px-2 py-0.5 text-[0.625rem] font-medium text-ocean">
+                    {d.volume}
+                  </span>
+                </div>
                 {d.themes.length > 0 && (
                   <div className="flex flex-wrap gap-1 mt-1.5">
                     {d.themes.map((t) => (

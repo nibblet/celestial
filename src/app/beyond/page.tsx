@@ -4,15 +4,15 @@ import { StoryContributionWorkspace } from "@/components/tell/StoryContributionW
 import { getAuthenticatedProfileContext } from "@/lib/auth/profile-context";
 
 export const metadata: Metadata = {
-  title: "Tell a Story",
-  description: "Share a family memory for the Keith Cobb Storybook library.",
+  title: "Beyond",
+  description: "Keith's dedicated space for shaping untold stories into Volume 2.",
 };
 
-export default async function TellPage() {
+export default async function BeyondPage() {
   const { user, isKeithSpecialAccess } = await getAuthenticatedProfileContext();
 
   if (!user) redirect("/login");
-  if (isKeithSpecialAccess) redirect("/beyond");
+  if (!isKeithSpecialAccess) redirect("/tell");
 
-  return <StoryContributionWorkspace contributionMode="tell" />;
+  return <StoryContributionWorkspace contributionMode="beyond" />;
 }
