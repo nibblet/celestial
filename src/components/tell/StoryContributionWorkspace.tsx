@@ -137,6 +137,11 @@ export function StoryContributionWorkspace({
   const [expandedQuestionId, setExpandedQuestionId] = useState<string | null>(
     null
   );
+  const [quickAnswerText, setQuickAnswerText] = useState("");
+  const [questionActionBusy, setQuestionActionBusy] = useState(false);
+  const [questionActionError, setQuestionActionError] = useState<string | null>(
+    null
+  );
   const bottomRef = useRef<HTMLDivElement>(null);
   const sendInFlightRef = useRef(false);
 
@@ -305,6 +310,67 @@ export function StoryContributionWorkspace({
       setViewMode("chat");
     } finally {
       setDraftLoading(false);
+    }
+  }
+
+  async function submitQuickAnswer(questionId: string) {
+    const text = quickAnswerText.trim();
+    if (!text || questionActionBusy) return;
+    setQuestionActionBusy(true);
+    setQuestionActionError(null);
+    try {
+      const res = await fetch(
+        `/api/beyond/questions/${questionId}/answer`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ answer_text: text, visibility: "public" }),
+        }
+      );
+      if (!res.ok) {
+        const data = (await res.json().catch(() => ({}))) as {
+          error?: string;
+        };
+        setQuestionActionError(data.error || "Could not save the answer.");
+        return;
+      }
+      setPendingQuestions((prev) => prev.filter((q) => q.id !== questionId));
+      setExpandedQuestionId(null);
+      setQuickAnswerText("");
+    } finally {
+      setQuestionActionBusy(false);
+    }
+  }
+
+  async function seedSessionFromQuestion(questionId: string) {
+    if (questionActionBusy) return;
+    setQuestionActionBusy(true);
+    setQuestionActionError(null);
+    try {
+      const res = await fetch(
+        `/api/beyond/questions/${questionId}/seed-session`,
+        { method: "POST" }
+      );
+      if (!res.ok) {
+        const data = (await res.json().catch(() => ({}))) as {
+          error?: string;
+        };
+        setQuestionActionError(
+          data.error || "Could not start a session from that question."
+        );
+        return;
+      }
+      const data = (await res.json()) as {
+        sessionId: string;
+        messages: Message[];
+      };
+      setSessionId(data.sessionId);
+      setMessages(data.messages);
+      setPendingQuestions((prev) => prev.filter((q) => q.id !== questionId));
+      setExpandedQuestionId(null);
+      setQuickAnswerText("");
+    } finally {
+      setQuestionActionBusy(false);
     }
   }
 
@@ -569,6 +635,48 @@ export function StoryContributionWorkspace({
                             {isOpen ? "−" : "+"}
                           </span>
                         </button>
+                        {isOpen && (
+                          <div className="mt-3 border-t border-[var(--color-border)] pt-3">
+                            <textarea
+                              value={quickAnswerText}
+                              onChange={(e) =>
+                                setQuickAnswerText(e.target.value)
+                              }
+                              placeholder="Answer in a sentence or two, or turn it into a chapter below."
+                              rows={3}
+                              maxLength={5000}
+                              disabled={questionActionBusy}
+                              className="type-ui mb-2 w-full rounded-md border border-[var(--color-border)] bg-warm-white-2 px-3 py-2 text-ink placeholder:text-ink-ghost"
+                            />
+                            {questionActionError && (
+                              <p className="mb-2 text-xs text-red-700">
+                                {questionActionError}
+                              </p>
+                            )}
+                            <div className="flex flex-wrap gap-2">
+                              <button
+                                type="button"
+                                onClick={() => submitQuickAnswer(q.id)}
+                                disabled={
+                                  questionActionBusy || !quickAnswerText.trim()
+                                }
+                                className="type-ui rounded-md bg-clay px-3 py-1.5 text-xs font-medium text-warm-white transition-colors hover:bg-clay-mid disabled:cursor-not-allowed disabled:opacity-50"
+                              >
+                                {questionActionBusy
+                                  ? "Saving..."
+                                  : "Answer quickly"}
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => seedSessionFromQuestion(q.id)}
+                                disabled={questionActionBusy}
+                                className="type-ui rounded-md border border-clay px-3 py-1.5 text-xs font-medium text-clay transition-colors hover:bg-clay hover:text-warm-white disabled:cursor-not-allowed disabled:opacity-50"
+                              >
+                                Turn into a chapter
+                              </button>
+                            </div>
+                          </div>
+                        )}
                       </li>
                     );
                   })}

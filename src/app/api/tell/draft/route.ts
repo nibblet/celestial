@@ -65,7 +65,7 @@ export async function POST(request: Request) {
   // Verify session belongs to this user
   const { data: session } = await supabase
     .from("sb_story_sessions")
-    .select("id, contributor_id, contribution_mode")
+    .select("id, contributor_id, contribution_mode, from_question_id")
     .eq("id", sessionId)
     .single();
 
@@ -181,6 +181,32 @@ export async function POST(request: Request) {
       { error: "Failed to save draft" },
       { status: 500 }
     );
+  }
+
+  // If this Beyond session was seeded from a reader question, publish the
+  // draft as a public answer to that question and mark it answered.
+  const fromQuestionId = (session as { from_question_id?: string | null })
+    ?.from_question_id;
+  if (fromQuestionId) {
+    const { error: answerError } = await supabase
+      .from("sb_chapter_answers")
+      .insert({
+        question_id: fromQuestionId,
+        answerer_id: user.id,
+        linked_draft_id: savedDraft.id,
+        visibility: "public",
+      });
+    if (answerError) {
+      console.error(
+        "[tell/draft] Failed to link answer to question:",
+        answerError
+      );
+    } else {
+      await supabase
+        .from("sb_chapter_questions")
+        .update({ status: "answered", updated_at: new Date().toISOString() })
+        .eq("id", fromQuestionId);
+    }
   }
 
   return Response.json({
