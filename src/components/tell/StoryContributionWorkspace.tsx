@@ -181,6 +181,7 @@ export function StoryContributionWorkspace({
         const lines = buffer.split("\n");
         buffer = done ? "" : (lines.pop() ?? "");
 
+        let sseTextBatch = "";
         for (const line of lines) {
           if (!line.startsWith("data: ")) continue;
           try {
@@ -192,19 +193,25 @@ export function StoryContributionWorkspace({
             if (data.sessionId && !sessionId) {
               setSessionId(data.sessionId);
             }
-            if (data.text) {
-              setMessages((prev) => {
-                const updated = [...prev];
-                const last = updated[updated.length - 1];
-                if (last.role === "assistant") {
-                  last.content += data.text;
-                }
-                return updated;
-              });
+            if (typeof data.text === "string" && data.text.length > 0) {
+              sseTextBatch += data.text;
             }
           } catch {
             // Skip malformed SSE lines.
           }
+        }
+
+        if (sseTextBatch) {
+          // Immutable update: Strict Mode may run this updater twice with the same `prev`;
+          // in-place mutation would append the chunk twice ("ThatThat's…").
+          setMessages((prev) => {
+            const last = prev[prev.length - 1];
+            if (!last || last.role !== "assistant") return prev;
+            return [
+              ...prev.slice(0, -1),
+              { ...last, content: last.content + sseTextBatch },
+            ];
+          });
         }
 
         if (done) break;
