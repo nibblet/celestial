@@ -11,7 +11,39 @@
 
 ## Open Issues
 
-No open issues.
+### [FIX-013] Uncaught Exception in /api/tell/draft When Fenced JSON is Malformed
+- **Status:** planned
+- **Severity:** Low — Claude rarely returns fenced-but-invalid JSON; contributor sees a broken spinner with no user-friendly message if it occurs
+- **Found:** 2026-04-15
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-013-tell-draft-fenced-json-throw.md`
+- **Summary:** The secondary `JSON.parse(fenced[1])` call in the catch block of `/api/tell/draft/route.ts` is not wrapped in its own try/catch. If the fenced content is also malformed, the exception propagates uncaught. Fix: wrap the secondary parse in a try/catch with the same error logging and response pattern as the outer fallback.
+
+---
+
+### [FIX-014] ageMode Not Validated at Runtime in /api/ask
+- **Status:** planned
+- **Severity:** Low — family-only app; trusted users. If any client sends a non-enum ageMode value, `AGE_MODE_INSTRUCTIONS[ageMode]` silently returns `undefined`, which is interpolated as the string `"undefined"` in the system prompt.
+- **Found:** 2026-04-15
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-014-agemode-not-validated.md`
+- **Summary:** Add a runtime validation guard after destructuring `ageMode` from the request body. If the value is not one of `["young_reader", "teen", "adult"]`, default to `"adult"`. One-line fix.
+
+---
+
+### [FIX-016] Tell Page SSE State Mutation (Strict Mode Double-Append Risk)
+- **Status:** planned
+- **Severity:** Low-Medium — in React Strict Mode (Next.js dev), SSE text chunks may double-append since the state updater mutates the object in-place; violates React immutability contract
+- **Found:** 2026-04-15
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-016-tell-sse-mutation.md`
+- **Summary:** `tell/page.tsx` `sendMessage()` mutates `last.content += data.text` inside `setMessages`. `ask/page.tsx` already uses the correct immutable batch pattern (introduced in the SSE improvements). Port that pattern to `tell/page.tsx`.
+
+---
+
+### [FIX-017] Multiple Draft Rows Created for One Tell Session
+- **Status:** planned
+- **Severity:** Low — produces orphaned draft rows in `sb_story_drafts`; session status stuck at `drafting` when user goes back to chat
+- **Found:** 2026-04-15
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-017-multiple-drafts-per-session.md`
+- **Summary:** Composing a draft, going back to chat, then composing again creates a second `sb_story_drafts` row. Fix: upsert in draft API (update if draft exists for session). Also reset session status to `gathering` via PATCH when user clicks "Keep Talking".
 
 ---
 

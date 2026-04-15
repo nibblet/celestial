@@ -10,7 +10,7 @@ This does NOT gate any content. Reading progress is purely additive and celebrat
 - As a family member, I want to see my reading progress so I feel a sense of accomplishment working through the archive.
 - As Paul, I want to encourage family engagement without adding friction — read tracking should be automatic, not a button to click.
 
-## Implementation
+## Implementation (Corrected to Current App Architecture)
 
 ### Phase 1: Database — Track Reads
 
@@ -51,10 +51,16 @@ This does NOT gate any content. Reading progress is purely additive and celebrat
      const { data: { user } } = await supabase.auth.getUser();
      if (!user) return Response.json({ error: "Unauthorized" }, { status: 401 });
 
-     await supabase.from("sb_story_reads").upsert(
+     const { error } = await supabase.from("sb_story_reads").upsert(
        { user_id: user.id, story_id: params.storyId },
        { onConflict: "user_id,story_id", ignoreDuplicates: true }
      );
+     if (error) {
+       return Response.json(
+         { error: "Failed to mark story as read" },
+         { status: 500 }
+       );
+     }
 
      return Response.json({ ok: true });
    }
@@ -62,7 +68,38 @@ This does NOT gate any content. Reading progress is purely additive and celebrat
 
 2. **Checkpoint:** POST `/api/stories/P1_S01/read` marks story as read.
 
-### Phase 3: Mark Story as Read on Page Load
+### Phase 3: API — Fetch Current User Read IDs
+
+1. Create `src/app/api/story-reads/route.ts`:
+   ```ts
+   import { createClient } from "@/lib/supabase/server";
+
+   export async function GET() {
+     const supabase = await createClient();
+     const {
+       data: { user },
+     } = await supabase.auth.getUser();
+
+     if (!user) return Response.json({ storyIds: [] });
+
+     const { data, error } = await supabase
+       .from("sb_story_reads")
+       .select("story_id")
+       .eq("user_id", user.id);
+
+     if (error) {
+       return Response.json(
+         { error: "Failed to fetch story reads" },
+         { status: 500 }
+       );
+     }
+
+     return Response.json({ storyIds: (data || []).map((r) => r.story_id) });
+   }
+   ```
+
+2. **Checkpoint:** GET `/api/story-reads` returns `{ storyIds: [...] }` for logged-in users and `[]` for logged-out users.
+### Phase 4: Mark Story as Read on Page Load
 
 1. Open `src/app/stories/[storyId]/page.tsx` (server component).
 
@@ -83,21 +120,22 @@ This does NOT gate any content. Reading progress is purely additive and celebrat
 
 4. **Checkpoint:** Visiting any story page silently marks it as read.
 
-### Phase 4: Read Badges in Story Library
+### Phase 5: Read Badges in Story Library (Client-Side Compatible)
 
 1. Open `src/app/stories/page.tsx`.
 
-2. In the server component, fetch the user's read story IDs:
+2. Keep this file as a client component. Add local state and `useEffect` to fetch read IDs from `/api/story-reads`:
    ```ts
-   const supabase = await createClient();
-   const { data: { user } } = await supabase.auth.getUser();
-   const { data: reads } = user
-     ? await supabase
-         .from("sb_story_reads")
-         .select("story_id")
-         .eq("user_id", user.id)
-     : { data: [] };
-   const readSet = new Set((reads || []).map((r) => r.story_id));
+   const [readIds, setReadIds] = useState<string[]>([]);
+
+   useEffect(() => {
+     fetch("/api/story-reads")
+       .then((res) => (res.ok ? res.json() : { storyIds: [] }))
+       .then((json) => setReadIds(Array.isArray(json.storyIds) ? json.storyIds : []))
+       .catch(() => setReadIds([]));
+   }, []);
+
+   const readSet = useMemo(() => new Set(readIds), [readIds]);
    ```
 
 3. Pass `readSet` down to story cards. Add a small checkmark badge to each card where `readSet.has(story.storyId)`:
@@ -116,7 +154,7 @@ This does NOT gate any content. Reading progress is purely additive and celebrat
 
 4. **Checkpoint:** Visit 2-3 stories, return to library — those cards show a green checkmark.
 
-### Phase 5: Reading Progress on Profile Page
+### Phase 6: Reading Progress on Profile Page
 
 1. Open `src/app/profile/page.tsx`.
 
@@ -127,11 +165,27 @@ This does NOT gate any content. Reading progress is purely additive and celebrat
      .select("story_id", { count: "exact", head: true })
      .eq("user_id", user.id);
    const readCount = count || 0;
-   const totalStories = 39; // Volume 1 count
    ```
 
-3. Add a progress display in the profile UI:
+3. Compute `totalStories` from existing story data (not a hardcoded `39`) and pass both values into `ProfileHero` props:
+   ```ts
+   import { storiesData } from "@/lib/wiki/static-data";
+   const totalStories = storiesData.length;
+   return (
+     <ProfileHero
+       displayName={displayName}
+       email={user.email ?? ""}
+       readCount={readCount}
+       totalStories={totalStories}
+     />
+   );
+   ```
+
+4. Update `src/components/profile/ProfileHero.tsx` props to accept `readCount` and `totalStories` and render a progress card in the hero UI:
    ```tsx
+   const safePercent =
+     totalStories > 0 ? Math.min(100, (readCount / totalStories) * 100) : 0;
+
    <div className="rounded-lg border border-[var(--color-border)] bg-warm-white p-4">
      <p className="type-ui text-xs font-medium text-ink-muted mb-2">
        Reading Progress
@@ -140,7 +194,7 @@ This does NOT gate any content. Reading progress is purely additive and celebrat
        <div className="flex-1 rounded-full bg-[var(--color-border)] h-2 overflow-hidden">
          <div
            className="h-full bg-clay rounded-full transition-all"
-           style={{ width: `${(readCount / totalStories) * 100}%` }}
+         style={{ width: `${safePercent}%` }}
          />
        </div>
        <span className="type-ui text-sm text-ink shrink-0">
@@ -155,10 +209,11 @@ This does NOT gate any content. Reading progress is purely additive and celebrat
    </div>
    ```
 
-4. **Checkpoint:** Profile shows progress bar. Reads update after visiting stories.
+5. **Checkpoint:** Profile shows progress bar. Reads update after visiting stories.
 
 ## Content Considerations
-- Volume 1 stories only (39 total). When Volume 2 stories are published, `totalStories` could be dynamic (fetch from Supabase story count).
+- Use dynamic total from `storiesData.length` in this phase.
+- If/when library source moves fully to Supabase, switch denominator to published-story count query.
 - No wiki file changes needed.
 
 ## Age-Mode Impact
@@ -169,14 +224,16 @@ This does NOT gate any content. Reading progress is purely additive and celebrat
 - [ ] Build passes
 - [ ] Lint passes
 - [ ] Migration applied successfully in Supabase
+- [ ] GET `/api/story-reads` returns expected IDs for logged-in user and `[]` when logged out
 - [ ] Visiting a story marks it read (verify via Supabase table)
 - [ ] Library shows checkmarks on read stories
 - [ ] Profile shows correct count and progress bar
 - [ ] Two different users have separate read tracking (RLS verified)
 - [ ] Reading the same story twice doesn't create duplicate rows
+- [ ] `readCount > totalStories` does not overflow progress bar width
 
 ## Dependencies
 - None (can be done after any other current fix)
 - Supabase migration must be applied before deploying
 
-## Estimated Total: 1.5 hours
+## Estimated Total: 2 hours

@@ -71,15 +71,16 @@
 ---
 
 ### [IDEA-007] Resume Tell Session — Continue an In-Progress Story
-- **Status:** ready
+- **Status:** shipped
 - **Category:** enhance
 - **Seeded:** 2026-04-14
-- **Last Updated:** 2026-04-14
+- **Last Updated:** 2026-04-15
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-007-resume-tell-session.md`
 - **Summary:** When a contributor navigates away from `/tell` mid-conversation, they lose their context. A "Continue your story" banner on the Tell page detects in-progress sessions and lets them pick up exactly where they left off.
 - **Night Notes:**
-  - 2026-04-14: Seeded and advanced to `ready` same night. Validated: `sb_story_sessions` table has `status` field; `gathering` sessions are resumable. Two new API routes needed (`GET /api/tell/sessions` and `GET /api/tell/sessions/[id]`). UI: resume banner in Tell empty state. Estimated 1.5–2 hours. No dependencies.
+  - 2026-04-14: Seeded and advanced to `ready` same night.
+  - 2026-04-15: **SHIPPED.** `GET /api/tell/sessions` (lists up to 3 in-progress gathering sessions with first-message preview) and `GET /api/tell/sessions/[id]` (loads full message history) routes implemented. `tell/page.tsx` now shows a "Continue your story" banner on the empty state with session cards and a `resumeSession()` handler that restores chat history. Full round-trip: user can leave mid-session and resume with full conversation context restored.
 
 ---
 
