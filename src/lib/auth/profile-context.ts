@@ -1,6 +1,6 @@
 import type { User } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/server";
-import { isKeithSpecialAccessEmail } from "@/lib/auth/special-access";
+import { hasKeithSpecialAccess } from "@/lib/auth/special-access";
 import type { Profile } from "@/types";
 
 export interface AuthenticatedProfileContext {
@@ -32,6 +32,6 @@ export async function getAuthenticatedProfileContext(): Promise<AuthenticatedPro
   return {
     user,
     profile: profile ?? null,
-    isKeithSpecialAccess: isKeithSpecialAccessEmail(user.email),
+    isKeithSpecialAccess: hasKeithSpecialAccess(user.email, profile?.role),
   };
 }

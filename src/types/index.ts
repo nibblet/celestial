@@ -4,7 +4,7 @@
 
 export type AgeMode = "young_reader" | "teen" | "adult";
 
-export type UserRole = "admin" | "member";
+export type UserRole = "admin" | "member" | "keith";
 export type ContributionMode = "tell" | "beyond";
 
 export interface Profile {

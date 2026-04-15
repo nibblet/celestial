@@ -2,7 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { createClient } from "@/lib/supabase/server";
 import { buildTellSystemPrompt } from "@/lib/ai/tell-prompts";
 import { checkRateLimit } from "@/lib/rate-limit";
-import { isKeithSpecialAccessEmail } from "@/lib/auth/special-access";
+import { hasKeithSpecialAccess } from "@/lib/auth/special-access";
 import { getContributorPersonaName } from "@/lib/tell/contribution";
 import type { ContributionMode } from "@/types";
 
@@ -47,7 +47,17 @@ export async function POST(request: Request) {
     );
   }
 
-  const isKeithSpecialAccess = isKeithSpecialAccessEmail(user.email);
+  // Get contributor name and role — role is consulted for Keith Special Access.
+  const { data: profile } = await supabase
+    .from("sb_profiles")
+    .select("display_name, role")
+    .eq("id", user.id)
+    .single();
+
+  const isKeithSpecialAccess = hasKeithSpecialAccess(
+    user.email,
+    profile?.role
+  );
   if (contributionMode === "beyond" && !isKeithSpecialAccess) {
     return Response.json({ error: "Forbidden" }, { status: 403 });
   }
@@ -69,13 +79,6 @@ export async function POST(request: Request) {
       { status: 400 }
     );
   }
-
-  // Get contributor name
-  const { data: profile } = await supabase
-    .from("sb_profiles")
-    .select("display_name")
-    .eq("id", user.id)
-    .single();
 
   const displayName = profile?.display_name || "Family Member";
   const contributorName = getContributorPersonaName(
