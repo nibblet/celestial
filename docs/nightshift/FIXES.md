@@ -9,6 +9,35 @@
 
 ---
 
+## Open Issues
+
+### [FIX-013] Uncommitted Auth Redirect Changes (app-url.ts + signup/middleware)
+- **Status:** planned
+- **Severity:** Medium — working code exists locally but is untracked; a fresh clone or Vercel deploy would silently lose the auth redirect URL fix
+- **Found:** 2026-04-15
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-013-uncommitted-signup-changes.md`
+- **Summary:** Four files changed locally (new `src/lib/app-url.ts`, updated `signup/page.tsx`, `middleware.ts`, `.env.local.example`) to support `NEXT_PUBLIC_SITE_URL` for Vercel auth redirects — but none are committed to git.
+
+---
+
+### [FIX-014] Tell Page Missing sendInFlightRef Double-Submit Guard
+- **Status:** planned
+- **Severity:** Low — intermittent duplicate sends on slow connections or double-click
+- **Found:** 2026-04-15
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-014-tell-double-submit.md`
+- **Summary:** `tell/page.tsx` uses `loading` React state to guard double-submit, but state is async and stale before re-render. `ask/page.tsx` fixed this with `sendInFlightRef` (commit `4b209d3`) — fix needs porting to Tell.
+
+---
+
+### [FIX-015] submitDraft() Has No In-Progress Guard
+- **Status:** planned
+- **Severity:** Low — double-click on Submit Story fires two PATCH requests; button remains active during network call
+- **Found:** 2026-04-15
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-015-submit-draft-no-guard.md`
+- **Summary:** `tell/page.tsx` `submitDraft()` has no `submitting` state or ref guard. Add `submitting` state, guard the function, disable button with "Submitting..." label during in-flight.
+
+---
+
 ## Recently Resolved
 
 ### [FIX-008] submitDraft Ignores User Edits to Title/Body

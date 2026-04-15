@@ -4,6 +4,52 @@
 
 ---
 
+## Run: 2026-04-15 (Run 4)
+
+### Summary
+- Scanned: tell/page.tsx, api/tell/draft/update, ask/page.tsx, signup/page.tsx, app-url.ts, middleware.ts, admin/drafts, api/ask, ai/prompts.ts, ai/tell-prompts.ts, home page, git history (3 post-nightshift commits)
+- Issues found: 3 new (FIX-013 already had plan, FIX-014, FIX-015 new) — all `planned`
+- Issues resolved: FIX-008–012 confirmed resolved (commit 2c00b5d, verified in code)
+- Ideas: 2 parked (IDEA-003, IDEA-004 — 3-day stale), 2 new (IDEA-012 seed, IDEA-013 seed → planned)
+- Plans written:
+  - `FIXPLAN-FIX-014-tell-double-submit.md`
+  - `FIXPLAN-FIX-015-submit-draft-no-guard.md`
+  - `DEVPLAN-IDEA-013-story-reading-progress.md`
+
+### Build & Lint Results
+- `npm run build`: **PASSES** — clean, no warnings. 26 routes (added `/api/tell/draft/update`). Turbopack build in 4.3s.
+- `npm run lint`: **PASSES** — 0 warnings, 0 errors. FIX-012 confirmed resolved.
+
+### Key Findings
+
+1. **FIX-008–012 all resolved in one session** (commit `2c00b5d`) — Paul shipped all 5 planned fixes same day they were written. Tell draft persistence, rate limiting, wiki cache, dead params, and lint warning all resolved. The nightshift-to-execution cycle is working.
+
+2. **Major content update (commit `4b209d3`)** — All 39 story wiki files were substantially rewritten/improved. 14 new timeline photos added to `public/timeline/`. Ask page received significant improvements (sendInFlightRef double-submit guard, useCallback, SSE text batching for React Strict Mode safety, journey-aware context, markdown hyperlinks to story pages).
+
+3. **FIX-013 (MEDIUM): Auth redirect changes uncommitted** — Four files in the working tree fix Vercel auth redirect URLs via a new `getAuthRedirectOrigin()` utility (`src/lib/app-url.ts`). A plan file was written manually but not committed. A fresh clone or Vercel deployment would silently lose this fix. The `NEXT_PUBLIC_SITE_URL` env var isn't yet in the example file either. A 5-minute commit resolves this.
+
+4. **FIX-014 (LOW): Tell page missing sendInFlightRef** — Paul's ask/page.tsx commit added `sendInFlightRef` to prevent double-submit race conditions. The fix was not ported to `tell/page.tsx`, which still uses the weaker `loading` state guard. 5-minute port.
+
+5. **FIX-015 (LOW): submitDraft() has no submitting guard** — "Submit Story" button has no `disabled` prop or in-progress state. Double-click fires two PATCH requests. No data loss risk, but adds `submitting` state for UX quality. 10-minute fix.
+
+6. **IDEA-003 + IDEA-004 parked** — Age-aware chips (IDEA-003) and bookmarks (IDEA-004) both 3+ days with no related commits. Parked per stale rule. IDEA-003's plan remains valid for a 20-minute pickup if prioritized.
+
+7. **IDEA-013 (Reading Progress) advanced to `planned` same night** — Clear technical path: Supabase migration 004 (`sb_story_reads`), `ReadTracker` client component on story pages, read badges in library, progress bar on profile. Estimated 1.5 hours. No dependencies.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/FIXPLAN-FIX-013-uncommitted-signup-changes.md` — Commit the auth redirect changes (5 min, prevents silent loss)
+- `docs/nightshift/plans/DEVPLAN-IDEA-007-resume-tell-session.md` — Resume in-progress Tell sessions (1.5-2 hrs)
+- `docs/nightshift/plans/DEVPLAN-IDEA-013-story-reading-progress.md` — Story reading progress tracking (1.5 hrs, needs migration 004)
+- `docs/nightshift/plans/FIXPLAN-FIX-014-tell-double-submit.md` — Port sendInFlightRef to Tell (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-015-submit-draft-no-guard.md` — submitDraft in-progress guard (10 min)
+
+### Recommendations
+- **If you have 15 min:** FIX-013 (commit auth changes, 5 min) + FIX-014 + FIX-015 back-to-back. Three clean fixes that close all open issues.
+- **If you have 2 hours:** The 15-min batch above, then IDEA-007 (Resume Tell session, 1.5 hrs). After this: Tell pipeline is fully polished and zero open bugs remain.
+- **If you have a full session:** Everything above + IDEA-013 (Reading Progress, 1.5 hrs). The app gains tracking infrastructure and the family sees their journey through the archive.
+
+---
+
 ## Run: 2026-04-14 (Run 3)
 
 ### Summary

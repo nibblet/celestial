@@ -29,10 +29,10 @@
 ---
 
 ### [IDEA-003] Age-Aware Ask Keith Suggestion Chips
-- **Status:** ready
+- **Status:** parked
 - **Category:** enhance
 - **Seeded:** 2026-04-12
-- **Last Updated:** 2026-04-13
+- **Last Updated:** 2026-04-15
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-003-age-aware-suggestion-chips.md`
 - **Summary:** The 4 suggestion chips on the Ask Keith empty state are hardcoded for adult readers. They should dynamically reflect the active age mode — simpler, more relatable questions for young_reader and teen modes.
@@ -40,6 +40,20 @@
   - 2026-04-12: Seeded by Nightshift. `useAgeMode()` hook is already imported.
   - 2026-04-13: Advanced to `ready`. Dev plan written.
   - 2026-04-14: Still unimplemented (verified in `ask/page.tsx` lines 213–218). Plan remains valid. 20-minute change, no dependencies.
+  - 2026-04-15: **Stale 3 days — no commits related. Likely low priority or deprioritized in favor of Tell/journeys work. Demoting to parked. Plan still valid if revisited.**
+
+---
+
+### [IDEA-013] Story Reading Progress — Track the Journey Through 39 Stories
+- **Status:** planned
+- **Category:** enhance
+- **Seeded:** 2026-04-15
+- **Last Updated:** 2026-04-15
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-013-story-reading-progress.md`
+- **Summary:** Automatically track which of Keith's 39 stories each family member has read. Show green checkmarks on read story cards in the library, and a progress bar ("X of 39 stories read") on the profile page. No action required from the user — reading a story marks it read automatically.
+- **Night Notes:**
+  - 2026-04-15: Seeded and advanced to `planned` same night. Technically: new `sb_story_reads` Supabase table (migration 004), `ReadTracker` client component on story pages, read badge on story cards, progress bar on profile. Estimated 1.5 hours. No dependencies on other open items.
 
 ---
 
@@ -87,15 +101,16 @@
 ---
 
 ### [IDEA-004] Story Bookmarks — Save Favorites for Easy Return
-- **Status:** seed
+- **Status:** parked
 - **Category:** new
 - **Seeded:** 2026-04-12
-- **Last Updated:** 2026-04-12
+- **Last Updated:** 2026-04-15
 - **Priority:** P2
 - **Plan:** *(not yet written)*
 - **Summary:** Let family members bookmark stories for re-reading. Bookmarks persist to Supabase so they're available across devices.
 - **Night Notes:**
   - 2026-04-12: Seeded by Nightshift. New `sb_bookmarks` table, heart icon on story cards, "My Bookmarks" on home/profile.
+  - 2026-04-15: **Stale 3 days — no commits related. IDEA-013 (reading progress) covers similar engagement use case and is simpler. Demoting to parked. Can revisit as complement to IDEA-013.**
 
 ---
 
@@ -164,6 +179,22 @@
 
 ---
 
+### [IDEA-012] Letter to Keith — Personal Takeaway from an Ask Conversation
+- **Status:** seed
+- **Category:** new
+- **Seeded:** 2026-04-15
+- **Last Updated:** 2026-04-15
+- **Priority:** P2
+- **Plan:** *(not yet written)*
+- **Summary:** After an Ask Keith conversation, offer a "Write me a letter" button that generates a short, personalized letter (from the user's perspective, addressed to Keith) summarizing what they learned and what it means to them. AI-composed from the conversation history, downloadable as plain text or printable. Especially meaningful for grandchildren — a personal artifact connecting them to Keith's stories.
+- **Night Notes:**
+  - 2026-04-15: Seeded by Nightshift. Technically: reuse existing `messages` state in `ask/page.tsx`, new non-streaming `/api/ask/letter` endpoint (similar to `/api/tell/draft` — full conversation → composed output). No DB changes needed. Pairs naturally with guided journeys (end-of-journey letter).
+
+---
+
 ## Parked
 
-*(Ideas demoted after 3+ days without action)*
+*(Ideas demoted after 3+ days without action — full entries remain in category sections above with status: parked)*
+
+- **IDEA-003** Age-Aware Suggestion Chips — parked 2026-04-15. Plan still valid at `DEVPLAN-IDEA-003-age-aware-suggestion-chips.md`.
+- **IDEA-004** Story Bookmarks — parked 2026-04-15. Superseded by IDEA-013 (reading progress).

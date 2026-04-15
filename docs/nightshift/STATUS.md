@@ -1,6 +1,6 @@
 # STATUS — Keith Cobb Interactive Storybook
 
-> Last updated: 2026-04-14 (Nightshift Run 3)
+> Last updated: 2026-04-15 (Nightshift Run 4)
 
 ## App Summary
 
@@ -119,28 +119,32 @@
 - Server components by default; client components marked with `'use client'`
 - Rate limiter key pattern: `userId` for chat, `${userId}:draft` for drafting endpoint
 
+## Recent Changes (Since Run 3)
+- **Commit 4b209d3**: Massive content update — all 39 story wiki files rewritten/improved, 14 new timeline photos added to `public/timeline/`, ask/page.tsx significantly improved (sendInFlightRef, useCallback, journey-awareness, markdown hyperlinks, SSE batching)
+- **Commit 2c00b5d**: FIX-008–012 all resolved — tell draft persistence, rate limiting, wiki cache, dead params cleanup, lint warning
+- **Uncommitted**: auth redirect improvements (app-url.ts, signup/page.tsx, middleware.ts, .env.local.example) — tracked as FIX-013
+
 ## Current State
 - V1 + V2 features complete: stories, themes, timeline, ask, journeys, tell, admin drafts, signup/profile
 - Build: **PASSES** — clean, no warnings
-- Lint: **1 warning** — `_node` unused in ask/page.tsx (FIX-012, trivial)
-- 5 open issues (FIX-008 through FIX-012) — all planned
+- Lint: **PASSES** — no warnings, no errors (FIX-012 resolved)
+- 3 open issues (FIX-013, FIX-014, FIX-015) — all planned
+- Content: All 39 stories refreshed; 14 timeline photos; wiki index updated
+- Auth: `app-url.ts` + `NEXT_PUBLIC_SITE_URL` support in place but uncommitted (FIX-013)
 - No tests written yet
 - No CI/CD pipeline configured
 - No error monitoring or analytics
 
 ## Known Issues (See FIXES.md)
-- FIX-008: submitDraft ignores user edits (planned, HIGH — user data loss)
-- FIX-009: no rate limit on /api/tell/draft, raw Claude response in error (planned, MEDIUM)
-- FIX-010: getWikiSummaries() no cache in tell-prompts (planned, LOW-MEDIUM)
-- FIX-011: dead generateStaticParams in journey routes (planned, LOW)
-- FIX-012: _node unused lint warning in ask/page.tsx (planned, VERY LOW)
+- FIX-013: Uncommitted auth redirect changes (planned, MEDIUM — fresh deploy would lose the Vercel redirect fix)
+- FIX-014: Tell page missing sendInFlightRef double-submit guard (planned, LOW)
+- FIX-015: submitDraft() no in-progress guard (planned, LOW)
 
 ## Next Actions (Priority Order)
-1. **FIX-008** — submitDraft saves edits (30 min, prevents user data loss)
-2. **FIX-009** — Rate limit /api/tell/draft + remove raw leak (15 min, financial/privacy safety)
-3. **IDEA-003** — Age-aware suggestion chips in Ask (20 min, no deps, big UX value for kids)
-4. **IDEA-007** — Resume Tell session (1.5–2 hrs, great UX for contributors)
-5. **FIX-010** — Cache wiki summaries in tell-prompts (10 min, performance)
-6. **FIX-011** — Remove dead generateStaticParams in journeys (5 min, code hygiene)
-7. **FIX-012** — Fix unused _node lint warning (5 min)
-8. **IDEA-002 (remaining)** — Admin direct story editor for Keith (Track 2, 4–6 hours)
+1. **FIX-013** — Commit the auth redirect changes (5 min, prevents silent loss on fresh deploy)
+2. **IDEA-007** — Resume Tell session (1.5–2 hrs, great UX for contributors)
+3. **IDEA-013** — Story reading progress tracking (1.5 hrs, needs migration 004)
+4. **FIX-014** — Port sendInFlightRef to Tell page (5 min, code quality)
+5. **FIX-015** — submitDraft in-progress guard (10 min, UX polish)
+6. **IDEA-012** — Letter to Keith (new feature, explore further)
+7. **IDEA-002 (remaining)** — Admin direct story editor for Keith (Track 2, 4–6 hours)
