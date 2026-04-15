@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import { ReadingProgressBar } from "@/components/story/ReadingProgressBar";
 import { StoryAudioControls } from "@/components/story/StoryAudioControls";
+import { AskAboutStory } from "@/components/stories/AskAboutStory";
+import { AnsweredQuestionsList } from "@/components/stories/AnsweredQuestionsList";
 import { SourceBadge } from "@/components/ui/SourceBadge";
 import { lifeStageToEraAccent } from "@/lib/design/era";
 
@@ -166,6 +168,10 @@ export default async function StoryDetailPage({
             </div>
           </div>
         )}
+
+        <AnsweredQuestionsList storyId={storyId} />
+
+        <AskAboutStory storyId={storyId} />
 
         <div className="mt-8 flex flex-col gap-3 border-t border-[var(--color-divider)] pt-6 sm:flex-row">
           <Link
