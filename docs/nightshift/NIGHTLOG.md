@@ -4,6 +4,26 @@
 
 ---
 
+## Run: 2026-04-16 (Run 5 — addendum, Paul request)
+
+### Summary
+- Paul requested two new features: bookmark a story as a favorite + highlight a paragraph to save
+- IDEA-004 unparked and advanced to `ready` (was parked 2026-04-15)
+- IDEA-016 seeded and advanced to `ready` in one session
+- Plans written:
+  - `DEVPLAN-IDEA-004-story-favorites.md` — heart icon, `/profile/favorites`, migration 011
+  - `DEVPLAN-IDEA-016-passage-highlights.md` — text selection, floating save button, `/profile/highlights`, migration 012
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-004-story-favorites.md` — Favorite stories (1.5–2 hrs)
+- `docs/nightshift/plans/DEVPLAN-IDEA-016-passage-highlights.md` — Save passages (2–2.5 hrs)
+
+### Recommended order
+1. **IDEA-004 first** (favorites) — simpler, no complex DOM event handling. Introduces the profile subpage pattern (`/profile/favorites`) that IDEA-016 reuses.
+2. **IDEA-016 second** (highlights) — builds on the profile page pattern, then adds the text-selection client component on story pages.
+
+---
+
 ## Run: 2026-04-16 (Run 5)
 
 ### Summary

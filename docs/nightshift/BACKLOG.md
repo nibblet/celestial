@@ -115,16 +115,18 @@
 
 ---
 
-### [IDEA-004] Story Bookmarks — Save Favorites for Easy Return
-- **Status:** parked
+### [IDEA-004] Bookmark a Story as a Favorite
+- **Status:** ready
 - **Category:** new
 - **Seeded:** 2026-04-12
-- **Last Updated:** 2026-04-15
-- **Priority:** P2
-- **Plan:** *(not written)*
-- **Summary:** Bookmarking with Supabase persistence. Superseded by IDEA-013/014 (reading progress).
+- **Last Updated:** 2026-04-16
+- **Priority:** P1
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-004-story-favorites.md`
+- **Summary:** Heart icon on every story detail page. Favorited stories collected at `/profile/favorites`, linked from ProfileHero. `sb_story_favorites` table (migration 011), optimistic toggle, clean empty state. Pairs with IDEA-016 (passage highlights) — both surface on the profile page.
 - **Night Notes:**
-  - 2026-04-15: **Parked** — 3-day stale, superseded by IDEA-013.
+  - 2026-04-12: Seeded by Nightshift.
+  - 2026-04-15: Parked — superseded by IDEA-013.
+  - 2026-04-16: **Unparked and advanced to `ready`** — Paul explicitly requested. Full dev plan written. Estimated 1.5–2 hours.
 
 ---
 
@@ -180,6 +182,19 @@
 
 ---
 
+### [IDEA-016] Save a Passage — Highlight Text from Stories
+- **Status:** ready
+- **Category:** new
+- **Seeded:** 2026-04-16
+- **Last Updated:** 2026-04-16
+- **Priority:** P1
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-016-passage-highlights.md`
+- **Summary:** Select any text in a story body → floating "Save this passage" button appears → one click saves it to Supabase. All saved passages collected at `/profile/highlights`, grouped by story in a reading-journal layout with blockquote styling. Individual passages can be removed. `sb_story_highlights` table (migration 012). Pairs with IDEA-004 (favorites) — both accessible from the profile page.
+- **Night Notes:**
+  - 2026-04-16: Seeded and advanced to `ready` same session (Paul explicitly requested). Full dev plan written. Key component: `StoryBodyWithHighlighting.tsx` — wraps ReactMarkdown, listens for `selectionchange`, positions floating button above selection using `getBoundingClientRect()`. Estimated 2–2.5 hours.
+
+---
+
 ### [IDEA-015] Enable Deep Ask — Multi-Perspective Responses in Production
 - **Status:** ready
 - **Category:** new
@@ -198,6 +213,6 @@
 *(Ideas demoted after 3+ days without action — full entries remain in category sections above with status: parked)*
 
 - **IDEA-003** Age-Aware Suggestion Chips — parked 2026-04-15. Plan at `DEVPLAN-IDEA-003-age-aware-suggestion-chips.md`.
-- **IDEA-004** Story Bookmarks — parked 2026-04-15. Superseded by IDEA-013/014.
+- *(IDEA-004 unparked 2026-04-16 — see active section above)*
 - **IDEA-005** Reading Time Estimate — parked 2026-04-16. Stale 3 days. `wordCount` exists but Paul has not prioritized. Parked — easy to revisit (30 min, no deps).
 - **IDEA-006** Featured Story of the Week — parked 2026-04-16. Stale 3 days. Wiki-first, no DB changes. Parked — revisit when home page refresh is prioritized.
