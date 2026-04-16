@@ -7,6 +7,7 @@ import { ReadTracker } from "@/components/story/ReadTracker";
 import { FavoriteButton } from "@/components/story/FavoriteButton";
 import { StoryAudioControls } from "@/components/story/StoryAudioControls";
 import { StoryMarkdown } from "@/components/story/StoryMarkdown";
+import { StoryBodyWithHighlighting } from "@/components/story/StoryBodyWithHighlighting";
 import { AskAboutStory } from "@/components/stories/AskAboutStory";
 import { AnsweredQuestionsList } from "@/components/stories/AnsweredQuestionsList";
 import { SourceBadge } from "@/components/ui/SourceBadge";
@@ -122,9 +123,17 @@ export default async function StoryDetailPage({
           />
         )}
 
-        <article className="story-body prose prose-story prose-lg max-w-none pb-8">
-          <StoryMarkdown content={story.fullText} />
-        </article>
+        {user ? (
+          <StoryBodyWithHighlighting
+            storyId={storyId}
+            storyTitle={story.title}
+            fullText={story.fullText}
+          />
+        ) : (
+          <article className="story-body prose prose-story prose-lg max-w-none pb-8">
+            <StoryMarkdown content={story.fullText} />
+          </article>
+        )}
 
         {story.principles.length > 0 && (
           <div className="mb-4 rounded-xl border border-[var(--color-border)] bg-warm-white p-5">

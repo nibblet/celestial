@@ -13,6 +13,8 @@ export interface Profile {
   age: number | null;
   age_mode: AgeMode | null;
   role: UserRole;
+  has_onboarded: boolean;
+  onboarded_at: string | null;
   created_at: string;
   updated_at: string;
 }
