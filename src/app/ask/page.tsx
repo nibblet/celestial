@@ -88,6 +88,9 @@ function AskPageContent() {
   const [loading, setLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [contextStoryTitle, setContextStoryTitle] = useState<string | null>(
+    null
+  );
   const bottomRef = useRef<HTMLDivElement>(null);
   /** Synchronous guard — `loading` state is stale until re-render, so double-submit can otherwise run two streams into one assistant bubble. */
   const sendInFlightRef = useRef(false);
@@ -95,6 +98,23 @@ function AskPageContent() {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  useEffect(() => {
+    if (!storySlug) {
+      setContextStoryTitle(null);
+      return;
+    }
+    let cancelled = false;
+    fetch(`/api/stories/${encodeURIComponent(storySlug)}/meta`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d: { title?: string } | null) => {
+        if (!cancelled && d?.title) setContextStoryTitle(d.title);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [storySlug]);
 
   const sendMessage = useCallback(async (text?: string) => {
     const messageText = text ?? input.trim();
@@ -209,10 +229,7 @@ function AskPageContent() {
       <div className="border-b border-[var(--color-border)] py-4">
         <h1 className="type-page-title text-2xl">Ask Keith</h1>
         <p className="type-ui mt-1 text-ink-ghost">
-          Ask questions about Keith&apos;s stories and life lessons
-          {storySlug && (
-            <span className="text-clay"> &middot; Reading {storySlug}</span>
-          )}
+          AI-guided chat using Keith&apos;s published stories and life lessons
           {journeySlug && !storySlug && (
             <span className="text-clay">
               {" "}
@@ -221,6 +238,21 @@ function AskPageContent() {
           )}
         </p>
       </div>
+
+      {storySlug && (
+        <div className="border-b border-[var(--color-border)] bg-gold-pale/30 py-3">
+          <p className="type-meta text-ink">Story context</p>
+          <p className="mt-1 font-[family-name:var(--font-lora)] text-sm text-ink">
+            You&apos;re chatting with the archive in the context of:{" "}
+            <Link
+              href={`/stories/${encodeURIComponent(storySlug)}`}
+              className="font-medium text-clay underline underline-offset-2 hover:text-clay-mid"
+            >
+              {contextStoryTitle ?? storySlug}
+            </Link>
+          </p>
+        </div>
+      )}
 
       <div
         className="flex-1 space-y-4 overflow-y-auto py-4"

@@ -48,30 +48,39 @@ export default async function StoryDetailPage({
             {story.sourceDetail}
           </p>
         )}
-        <div className="mb-4 flex flex-wrap gap-2">
+        <div className="mb-3 flex flex-wrap items-center gap-2">
           <SourceBadge source={story.source} />
           <span
             className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${era.badgeClass}`}
           >
             {story.lifeStage}
           </span>
-          {story.themes.map((theme) => {
-            const isLeadership = theme.toLowerCase().includes("leadership");
-            return (
-              <Link
-                key={theme}
-                href={`/themes/${theme.toLowerCase().replace(/\s+/g, "-")}`}
-                className={`rounded-full px-2.5 py-0.5 text-xs font-medium transition-colors ${
-                  isLeadership
-                    ? "bg-ocean-pale text-ocean hover:bg-ocean-pale/80"
-                    : "bg-green-pale text-green hover:bg-green-pale/80"
-                }`}
-              >
-                {theme}
-              </Link>
-            );
-          })}
         </div>
+        {story.themes.length > 0 && (
+          <div className="mb-4">
+            <p className="type-meta mb-2 text-ink-ghost">Themes</p>
+            <div className="flex flex-wrap gap-2">
+              {story.themes.map((theme) => {
+                const isLeadership = theme
+                  .toLowerCase()
+                  .includes("leadership");
+                return (
+                  <Link
+                    key={theme}
+                    href={`/themes/${theme.toLowerCase().replace(/\s+/g, "-")}`}
+                    className={`rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors ${
+                      isLeadership
+                        ? "border-ocean/35 text-ocean hover:border-ocean hover:bg-ocean-pale/50"
+                        : "border-green/35 text-green hover:border-green hover:bg-green-pale/50"
+                    }`}
+                  >
+                    {theme}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         <div className="mb-6 rounded-lg border border-clay-border bg-gold-pale/40 p-4">
           <p className="font-[family-name:var(--font-lora)] text-sm italic leading-relaxed text-ink">
@@ -175,18 +184,21 @@ export default async function StoryDetailPage({
 
         <AskAboutStory storyId={storyId} />
 
-        <div className="mt-8 flex flex-col gap-3 border-t border-[var(--color-divider)] pt-6 sm:flex-row">
-          <Link
-            href={`/ask?story=${storyId}`}
-            className="flex-1 rounded-lg bg-clay py-2.5 text-center text-sm font-medium text-warm-white transition-colors hover:bg-clay-mid"
-          >
-            Ask about this story
-          </Link>
+        <div className="mt-8 flex flex-col gap-3 border-t border-[var(--color-divider)] pt-6 sm:flex-row sm:items-start">
+          <div className="flex min-w-0 flex-1 flex-col gap-1">
+            <Link
+              href={`/ask?story=${storyId}`}
+              className="rounded-lg bg-clay py-2.5 text-center text-sm font-medium text-warm-white transition-colors hover:bg-clay-mid"
+            >
+              Chat about this story (AI)
+            </Link>
+          </div>
           <Link
             href="/stories"
-            className="flex-1 rounded-lg border border-[var(--color-border)] bg-warm-white py-2.5 text-center text-sm font-medium text-ink transition-colors hover:border-clay-border"
+            className="flex-1 rounded-lg border border-[var(--color-border)] bg-warm-white py-2.5 text-center text-sm font-medium text-ink transition-colors hover:border-clay-border sm:max-w-[12rem] sm:self-center"
           >
-            Browse more stories
+            <span className="sm:hidden">More stories</span>
+            <span className="hidden sm:inline">Browse more stories</span>
           </Link>
         </div>
       </div>

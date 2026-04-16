@@ -1,7 +1,6 @@
-import Link from "next/link";
 import { getAllJourneys } from "@/lib/wiki/journeys";
 import { JourneyStatusBadge } from "@/components/journeys/JourneyStatusBadge";
-import { JourneyExperienceBadge } from "@/components/journeys/JourneyExperienceBadge";
+import { JourneyCTAButtons } from "@/components/journeys/JourneyCTAButtons";
 
 export default function JourneysPage() {
   const journeys = getAllJourneys();
@@ -14,54 +13,54 @@ export default function JourneysPage() {
       </p>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        {journeys.map((journey) => (
-          <div
-            key={journey.slug}
-            className="relative rounded-xl border border-[var(--color-border)] bg-warm-white p-4 pb-5 pt-5 pr-16"
-          >
-            <JourneyStatusBadge
-              slug={journey.slug}
-              totalSteps={journey.storyIds.length}
-            />
-            <div className="mb-3 flex flex-wrap gap-2">
-              {journey.experienceModes.map((mode) => (
-                <JourneyExperienceBadge key={mode} mode={mode} />
-              ))}
-            </div>
-            <div className="group">
-              <h2 className="font-[family-name:var(--font-playfair)] text-base font-semibold text-ink transition-colors group-hover:text-burgundy">
-                {journey.title}
-              </h2>
-              <p className="type-ui mt-2 line-clamp-3 text-ink-muted">
-                {journey.description}
-              </p>
-              <p className="type-meta mt-3 normal-case tracking-normal text-ink-ghost">
-                {journey.storyCount} stories
-              </p>
-              {journey.narratedDek && (
-                <p className="mt-3 font-[family-name:var(--font-lora)] text-xs italic text-ink-muted">
-                  {journey.narratedDek}
+        {journeys.map((journey) => {
+          const hasNarrated = journey.experienceModes.includes("narrated");
+          const hasGuided = journey.experienceModes.includes("guided");
+          const singleMode =
+            journey.experienceModes.length === 1
+              ? journey.experienceModes[0]
+              : null;
+
+          return (
+            <div
+              key={journey.slug}
+              className="relative rounded-xl border border-[var(--color-border)] bg-warm-white p-4 pb-5 pt-5 pr-16"
+            >
+              <JourneyStatusBadge
+                slug={journey.slug}
+                totalSteps={journey.storyIds.length}
+              />
+              <div className="group">
+                <h2 className="font-[family-name:var(--font-playfair)] text-base font-semibold text-ink transition-colors group-hover:text-burgundy">
+                  {journey.title}
+                </h2>
+                {singleMode && (
+                  <p className="type-meta mt-1.5 text-ink-ghost">
+                    {singleMode === "narrated"
+                      ? "Narrated experience only"
+                      : "Guided path only"}
+                  </p>
+                )}
+                <p className="type-ui mt-2 line-clamp-3 text-ink-muted">
+                  {journey.description}
                 </p>
-              )}
+                <p className="type-meta mt-3 normal-case tracking-normal text-ink-ghost">
+                  {journey.storyCount} stories
+                </p>
+                {journey.narratedDek && (
+                  <p className="mt-3 font-[family-name:var(--font-lora)] text-xs italic text-ink-muted">
+                    {journey.narratedDek}
+                  </p>
+                )}
+              </div>
+              <JourneyCTAButtons
+                slug={journey.slug}
+                hasNarrated={hasNarrated}
+                hasGuided={hasGuided}
+              />
             </div>
-            <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-              {journey.experienceModes.includes("narrated") && (
-                <Link
-                  href={`/journeys/${journey.slug}/narrated`}
-                  className="type-ui rounded-lg bg-clay px-4 py-2.5 text-center font-medium text-warm-white transition-colors hover:bg-clay-mid"
-                >
-                  Read Narrated Journey
-                </Link>
-              )}
-              <Link
-                href={`/journeys/${journey.slug}`}
-                className="type-ui rounded-lg border border-[var(--color-border)] bg-warm-white-2 px-4 py-2.5 text-center font-medium text-ink transition-colors hover:border-clay-border"
-              >
-                Open Guided Journey
-              </Link>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

@@ -276,32 +276,6 @@ export const storiesData: StoryCard[] = [
   },
   {
     "storyId": "P1_S02",
-    "slug": "a-v-ery-busy-teenager",
-    "title": "A Very Busy Teenager",
-    "summary": "A former high-school student recounts a busy four years filled with strong academics, extensive extracurricular involvement, health crises, and the choice of a college major influenced by an aptitude test.",
-    "source": "memoir",
-    "sourceDetail": "",
-    "lifeStage": "Education",
-    "themes": [
-      "Adversity",
-      "Career Choices",
-      "Gratitude",
-      "Identity",
-      "Leadership",
-      "Mentorship",
-      "Work Ethic"
-    ],
-    "wordCount": 2456,
-    "principles": [
-      "High-quality teaching produces lasting advantage and prepares for future success.",
-      "Extracurricular activities build skills, confidence, and social bonds.",
-      "Leaders must develop delegation skills rather than assuming excessive responsibility.",
-      "Adversity can be an opportunity to learn durable skills."
-    ],
-    "volume": "P1"
-  },
-  {
-    "storyId": "P1_S02",
     "slug": "a-very-busy-teenager",
     "title": "A Very Busy Teenager",
     "summary": "A former high-school student recounts a busy four years filled with strong academics, extensive extracurricular involvement, health crises, and the choice of a college major influenced by an aptitude test.",

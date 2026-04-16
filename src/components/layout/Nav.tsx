@@ -24,6 +24,112 @@ function isNavActive(pathname: string, href: string): boolean {
   return false;
 }
 
+function MobileNavIcon({
+  name,
+  active,
+}: {
+  name: (typeof primaryNavItems)[number]["href"];
+  active: boolean;
+}) {
+  const c = active ? "text-burgundy" : "text-ink-muted";
+  switch (name) {
+    case "/stories":
+      return (
+        <svg
+          className={`h-5 w-5 ${c}`}
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden
+        >
+          <path
+            d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+          />
+          <path
+            d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M8 7h8M8 11h6"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+          />
+        </svg>
+      );
+    case "/journeys":
+      return (
+        <svg
+          className={`h-5 w-5 ${c}`}
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="9"
+            stroke="currentColor"
+            strokeWidth="1.75"
+          />
+          <path
+            d="m16.2 7.8-4.4 14.2M9.5 9.5 16 8"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+          />
+        </svg>
+      );
+    case "/ask":
+      return (
+        <svg
+          className={`h-5 w-5 ${c}`}
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden
+        >
+          <path
+            d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+    case "/tell":
+      return (
+        <svg
+          className={`h-5 w-5 ${c}`}
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden
+        >
+          <path
+            d="M12 20h9"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+          />
+          <path
+            d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
 export function Nav() {
   const pathname = usePathname();
   const profileBadge = useProfileNotificationBadge();
@@ -97,10 +203,11 @@ export function Nav() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`flex flex-col items-center px-1.5 py-1 text-[0.6875rem] font-medium tracking-wide ${
+                  className={`flex flex-col items-center gap-0.5 px-1 py-1 text-[0.6875rem] font-medium tracking-wide ${
                     active ? "text-burgundy" : "text-ink-muted"
                   }`}
                 >
+                  <MobileNavIcon name={item.href} active={active} />
                   {item.label}
                 </Link>
               </li>

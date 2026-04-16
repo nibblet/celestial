@@ -56,7 +56,7 @@ export default async function JourneyIntroPage({
             href={`/journeys/${journey.slug}/narrated`}
             className="type-ui inline-block rounded-lg bg-clay px-5 py-2.5 font-medium text-warm-white transition-colors hover:bg-clay-mid"
           >
-            Read Narrated Journey
+            Read the narrative
           </Link>
         </div>
       )}

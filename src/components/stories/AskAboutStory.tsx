@@ -63,7 +63,7 @@ export function AskAboutStory({ storyId }: { storyId: string }) {
   if (status === "sent") {
     return (
       <div className="mt-8 rounded-xl border border-clay-border bg-gold-pale/40 p-5">
-        <p className="type-meta mb-1 text-clay">Question sent</p>
+        <p className="type-meta mb-1 text-clay">Note sent</p>
         <p className="font-[family-name:var(--font-lora)] text-sm text-ink-muted">
           Keith will see it. When he answers, it&apos;ll appear here for other
           readers too.
@@ -82,17 +82,18 @@ export function AskAboutStory({ storyId }: { storyId: string }) {
   if (status === "idle") {
     return (
       <div className="mt-8 rounded-xl border border-[var(--color-border)] bg-warm-white p-5">
-        <h2 className="type-meta mb-1 text-ink">Ask Keith a question</h2>
+        <h2 className="type-meta mb-1 text-ink">A note for Keith</h2>
         <p className="mb-3 font-[family-name:var(--font-lora)] text-sm text-ink-muted">
           Something in this story you want to know more about? Send Keith a
-          question and he&apos;ll answer it directly.
+          private note. When he answers, it&apos;ll show here for other readers
+          too.
         </p>
         <button
           type="button"
           onClick={() => setStatus("expanded")}
           className="type-ui rounded-full border border-clay bg-warm-white px-4 py-1.5 text-sm font-medium text-clay transition-colors hover:bg-clay hover:text-warm-white"
         >
-          Ask a question
+          Write to Keith
         </button>
       </div>
     );
@@ -103,7 +104,7 @@ export function AskAboutStory({ storyId }: { storyId: string }) {
       onSubmit={handleSubmit}
       className="mt-8 rounded-xl border border-clay-border bg-warm-white p-5"
     >
-      <h2 className="type-meta mb-1 text-ink">Ask Keith a question</h2>
+      <h2 className="type-meta mb-1 text-ink">Write to Keith</h2>
       <p className="mb-4 font-[family-name:var(--font-lora)] text-sm text-ink-muted">
         What&apos;s the question about? (optional)
       </p>
