@@ -24,7 +24,7 @@
 - **Summary:** Curated, themed paths through the 39 stories with reflection prompts and progress tracking via localStorage.
 - **Night Notes:**
   - 2026-04-12: Seeded by Paul. Nightshift wrote the dev plan.
-  - 2026-04-14: **SHIPPED.** Implemented in commit `3d56213`. Routes live at `/journeys`, `/journeys/[slug]`, `/journeys/[slug]/[step]`, `/journeys/[slug]/complete`. Four journeys in `content/wiki/journeys/`. Full UI including progress bar, journey connector text, reflection prompts, and completion page.
+  - 2026-04-14: **SHIPPED.** Four journeys live at `/journeys`. Full UI including progress bar, reflection prompts, completion page.
 
 ---
 
@@ -35,38 +35,11 @@
 - **Last Updated:** 2026-04-15
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-003-age-aware-suggestion-chips.md`
-- **Summary:** The 4 suggestion chips on the Ask Keith empty state are hardcoded for adult readers. They should dynamically reflect the active age mode — simpler, more relatable questions for young_reader and teen modes.
+- **Summary:** The 4 suggestion chips on the Ask Keith empty state are hardcoded for adult readers. They should dynamically reflect the active age mode.
 - **Night Notes:**
-  - 2026-04-12: Seeded by Nightshift. `useAgeMode()` hook is already imported.
+  - 2026-04-12: Seeded. `useAgeMode()` hook already imported.
   - 2026-04-13: Advanced to `ready`. Dev plan written.
-  - 2026-04-14: Still unimplemented (verified in `ask/page.tsx` lines 213–218). Plan remains valid. 20-minute change, no dependencies.
-  - 2026-04-15: **Stale 3 days — no commits related. Likely low priority or deprioritized in favor of Tell/journeys work. Demoting to parked. Plan still valid if revisited.**
-
----
-
-### [IDEA-013] Story Reading Progress — Track the Journey Through 39 Stories
-- **Status:** planned
-- **Category:** enhance
-- **Seeded:** 2026-04-15
-- **Last Updated:** 2026-04-15
-- **Priority:** P2
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-013-story-reading-progress.md`
-- **Summary:** Automatically track which of Keith's 39 stories each family member has read. Show green checkmarks on read story cards in the library, and a progress bar ("X of 39 stories read") on the profile page. No action required from the user — reading a story marks it read automatically.
-- **Night Notes:**
-  - 2026-04-15: Seeded and advanced to `planned` same night. Technically: new `sb_story_reads` Supabase table (migration 004), `ReadTracker` client component on story pages, read badge on story cards, progress bar on profile. Estimated 1.5 hours. No dependencies on other open items.
-
----
-
-### [IDEA-005] Reading Time Estimate on Story Cards
-- **Status:** seed
-- **Category:** enhance
-- **Seeded:** 2026-04-13
-- **Last Updated:** 2026-04-13
-- **Priority:** P3
-- **Plan:** *(not yet written)*
-- **Summary:** Show estimated reading time on story cards in the library and on the story detail header. The `wordCount` field already exists on `WikiStory` — just display `Math.ceil(wordCount / 200)` minutes.
-- **Night Notes:**
-  - 2026-04-13: Seeded by Nightshift. `wordCount` already populated. UI change only.
+  - 2026-04-15: **Stale 3 days — parked.** Plan still valid if revisited (20-min change).
 
 ---
 
@@ -77,10 +50,51 @@
 - **Last Updated:** 2026-04-15
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-007-resume-tell-session.md`
-- **Summary:** When a contributor navigates away from `/tell` mid-conversation, they lose their context. A "Continue your story" banner on the Tell page detects in-progress sessions and lets them pick up exactly where they left off.
+- **Summary:** "Continue your story" banner on Tell/Beyond pages. Detects in-progress sessions and lets contributors resume mid-conversation.
 - **Night Notes:**
   - 2026-04-14: Seeded and advanced to `ready` same night.
-  - 2026-04-15: **SHIPPED.** `GET /api/tell/sessions` (lists up to 3 in-progress gathering sessions with first-message preview) and `GET /api/tell/sessions/[id]` (loads full message history) routes implemented. `tell/page.tsx` now shows a "Continue your story" banner on the empty state with session cards and a `resumeSession()` handler that restores chat history. Full round-trip: user can leave mid-session and resume with full conversation context restored.
+  - 2026-04-15: **SHIPPED.** `GET /api/tell/sessions` + `GET /api/tell/sessions/[id]`. Implemented in `StoryContributionWorkspace.tsx`. Works for both tell and beyond modes.
+
+---
+
+### [IDEA-009] Story Voice Playback — Audio Narration
+- **Status:** shipped
+- **Category:** enhance
+- **Seeded:** 2026-04-14
+- **Last Updated:** 2026-04-16
+- **Priority:** P1
+- **Plan:** *(no dev plan written — Paul implemented directly)*
+- **Summary:** Web Speech API TTS on all story pages. Play/Pause/Stop controls, estimated listen time from wordCount. No server cost, no audio files.
+- **Night Notes:**
+  - 2026-04-14: Seeded by Paul.
+  - 2026-04-16: **SHIPPED.** `StoryAudioControls.tsx` + `src/lib/story-audio.ts` confirmed in codebase. Accessible, aria-live status, `useSyncExternalStore` for SSR safety.
+
+---
+
+### [IDEA-013] Story Reading Progress — Track the Journey Through 39 Stories
+- **Status:** planned
+- **Category:** enhance
+- **Seeded:** 2026-04-15
+- **Last Updated:** 2026-04-16
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-013-story-reading-progress.md` *(infra portion)*
+- **Summary:** Track which of Keith's 39 stories each family member has read. Show progress on profile and read badges on story cards.
+- **Night Notes:**
+  - 2026-04-15: Seeded and advanced to `planned` same night.
+  - 2026-04-16: **Infra SHIPPED** (migration `005_story_reads.sql`, `ReadTracker` on story pages, `/api/stories/[storyId]/read`, Keith analytics dashboard). UI elements (profile progress bar + story card badges) remain. See IDEA-014 for UI plan.
+
+---
+
+### [IDEA-014] Story Read Progress UI — Profile Bar + Story Card Badges
+- **Status:** ready
+- **Category:** enhance
+- **Seeded:** 2026-04-16
+- **Last Updated:** 2026-04-16
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-014-story-read-progress-ui.md`
+- **Summary:** The read tracking infrastructure is live. This closes the loop: show "X of 39 stories read" progress bar on the user's profile page, and a small "Read" badge on story cards for stories already visited. Estimated 1–1.5 hours.
+- **Night Notes:**
+  - 2026-04-16: Seeded and advanced to `ready` same night. DB + API + ReadTracker all confirmed working. Only UI elements remain. Plan written.
 
 ---
 
@@ -93,11 +107,11 @@
 - **Last Updated:** 2026-04-14
 - **Priority:** P1
 - **Plan:** *(full dev plan not yet written)*
-- **Summary:** Two-track system for adding new stories. Track 1 (family contributions via `/tell`) is now implemented. Track 2 (direct markdown authoring by Keith/admin) and Track 3 (source material pipeline) remain.
+- **Summary:** Track 1 (family /tell) and Beyond (Keith's AI-assisted workspace) are shipped. Track 2 (direct markdown authoring by Keith/admin) remains.
 - **Night Notes:**
-  - 2026-04-12: Seeded by Paul. Track 1 explored as admin-only markdown editor.
-  - 2026-04-12 (Nightshift): Advanced to `exploring`. `sb_profiles.role` supports admin gating.
-  - 2026-04-14: **Track 1 (family contributions) SHIPPED** as `/tell` feature in commit `cad049d`. The `/tell` → `/admin/drafts` → publish pipeline is fully functional. Advancing to `planned`. What remains: (a) admin-facing direct markdown editor for Keith to write stories without going through chat, (b) V2 story management in admin (edit published Supabase stories). Track 2 (source material pipeline) is still a separate larger investment.
+  - 2026-04-12: Seeded by Paul.
+  - 2026-04-14: Track 1 SHIPPED as `/tell`. Advanced to `planned`.
+  - 2026-04-16: Beyond workspace SHIPPED — Keith can now capture stories via AI-assisted chat AND respond to reader questions. Remaining: admin-facing direct markdown editor for quick story additions without chat.
 
 ---
 
@@ -107,24 +121,10 @@
 - **Seeded:** 2026-04-12
 - **Last Updated:** 2026-04-15
 - **Priority:** P2
-- **Plan:** *(not yet written)*
-- **Summary:** Let family members bookmark stories for re-reading. Bookmarks persist to Supabase so they're available across devices.
+- **Plan:** *(not written)*
+- **Summary:** Bookmarking with Supabase persistence. Superseded by IDEA-013/014 (reading progress).
 - **Night Notes:**
-  - 2026-04-12: Seeded by Nightshift. New `sb_bookmarks` table, heart icon on story cards, "My Bookmarks" on home/profile.
-  - 2026-04-15: **Stale 3 days — no commits related. IDEA-013 (reading progress) covers similar engagement use case and is simpler. Demoting to parked. Can revisit as complement to IDEA-013.**
-
----
-
-### [IDEA-006] Featured Story of the Week on Home Page
-- **Status:** seed
-- **Category:** new
-- **Seeded:** 2026-04-13
-- **Last Updated:** 2026-04-13
-- **Priority:** P2
-- **Plan:** *(not yet written)*
-- **Summary:** A highlighted "Story of the Week" card on the home page, curated by Paul from the 39 stories via a simple `content/wiki/featured.json` file.
-- **Night Notes:**
-  - 2026-04-13: Seeded by Nightshift. Zero DB changes needed, fully wiki-first.
+  - 2026-04-15: **Parked** — 3-day stale, superseded by IDEA-013.
 
 ---
 
@@ -135,22 +135,9 @@
 - **Last Updated:** 2026-04-14
 - **Priority:** P2
 - **Plan:** *(not yet written)*
-- **Summary:** Now that family members can contribute stories via `/tell`, the home page should show a "Recently Added" section listing the newest published Supabase stories. This gives the family a sense that the archive is living and growing, and rewards contributors by making their stories visible immediately.
+- **Summary:** Home page section showing most recent family-contributed stories (from `getPublishedStories()`). Pairs naturally with IDEA-006.
 - **Night Notes:**
-  - 2026-04-14: Seeded by Nightshift. Implementation: home page calls `getPublishedStories()` (already exists in `supabase-stories.ts`) and renders the most recent 3, sorted by Supabase `created_at`. No DB changes. Pure UI addition. Pairs naturally with IDEA-006 (featured story) — could combine into one "What's New" section.
-
----
-
-### [IDEA-009] Story Voice Playback — Audio Narration for Young Readers
-- **Status:** seed
-- **Category:** enhance
-- **Seeded:** 2026-04-14
-- **Last Updated:** 2026-04-14
-- **Priority:** P1
-- **Plan:** *(not yet written)*
-- **Summary:** Add a "Listen" button to story pages that reads the story aloud using browser-native Text-to-Speech (Web Speech API) — no server, no cost, no audio files to host. Especially valuable for young_reader mode (ages 3-10) who can't read long text. Controls: play/pause, speed (0.8x for kids), sentence-level highlight tracking so children can follow along visually. Could optionally use an ElevenLabs voice for richer audio if a Keith-like voice is trained.
-- **Night Notes:**
-  - 2026-04-14: Seeded by Paul. Web Speech API (`speechSynthesis`) is built into all modern browsers and requires zero infrastructure. The story `fullText` is already on the page. For young_reader mode, this could be the primary way children "read" — auto-play on page load with a friendly UI. ElevenLabs voice cloning is a future enhancement once basic TTS works.
+  - 2026-04-14: Seeded. `getPublishedStories()` already exists. Pure UI addition, no DB changes.
 
 ---
 
@@ -161,9 +148,9 @@
 - **Last Updated:** 2026-04-14
 - **Priority:** P2
 - **Plan:** *(not yet written)*
-- **Summary:** A curated "Keith in the World" section that surfaces public content featuring Keith Cobb — podcasts, YouTube interviews, press coverage, and professional profiles. Family members (especially grandchildren) can see and hear Keith speak in his own voice on topics the stories cover. Content is wiki-curated (a `content/wiki/media.md` file listing URLs + descriptions) so Paul controls what appears; no scraping or automation needed.
+- **Summary:** Curated "Keith in the World" section — podcasts, YouTube interviews, press coverage. Wiki-curated via `content/wiki/media/` files. No backend.
 - **Night Notes:**
-  - 2026-04-14: Seeded by Paul (podcasts and YouTube videos to add). Approach: a `content/wiki/media/` directory with a file per media item (title, type: podcast|video|article, url, description, related_story_ids, year). A `/media` route renders these as an embedded or linked gallery. YouTube embeds via iframe; podcast links open externally. Cross-link from story pages: "Hear Keith speak about this →". No backend needed — fully wiki-first.
+  - 2026-04-14: Seeded by Paul.
 
 ---
 
@@ -174,9 +161,9 @@
 - **Last Updated:** 2026-04-14
 - **Priority:** P1
 - **Plan:** *(not yet written)*
-- **Summary:** For stories that have associated photos, surface those images inline during reading — fade-in as the reader scrolls to the relevant passage, or as clickable thumbnails in the story margin. Especially powerful in young_reader mode where visual context makes stories come alive. Photo metadata lives in the wiki (story markdown frontmatter or a companion `.photos.json`) so Paul can associate specific photos with specific paragraphs or just with the story as a whole.
+- **Summary:** Associate photos with specific stories (via frontmatter). Inline reveal as reader scrolls. Especially powerful in young_reader mode.
 - **Night Notes:**
-  - 2026-04-14: Seeded by Paul. The timeline already has 14 photos in `public/timeline/`. Stories don't yet have associated photos. Approach: (1) a `public/stories/` directory for story photos, (2) story markdown frontmatter adds `photos: [{ src, caption, paragraph }]` — the `paragraph` index controls which prose section triggers the reveal. In young_reader mode, photos could auto-reveal with a CSS fade-in on scroll; in adult mode, they could be tasteful thumbnails that expand on click. ReadingProgressBar component already exists and could be extended to trigger photo reveals at scroll thresholds.
+  - 2026-04-14: Seeded by Paul. Timeline already has 14 photos in `public/timeline/`. `ReadingProgressBar` exists and could trigger photo reveals.
 
 ---
 
@@ -187,9 +174,22 @@
 - **Last Updated:** 2026-04-15
 - **Priority:** P2
 - **Plan:** *(not yet written)*
-- **Summary:** After an Ask Keith conversation, offer a "Write me a letter" button that generates a short, personalized letter (from the user's perspective, addressed to Keith) summarizing what they learned and what it means to them. AI-composed from the conversation history, downloadable as plain text or printable. Especially meaningful for grandchildren — a personal artifact connecting them to Keith's stories.
+- **Summary:** After an Ask conversation, generate a short personal letter (from the user's perspective) summarizing what they learned. Downloadable. Especially meaningful for grandchildren.
 - **Night Notes:**
-  - 2026-04-15: Seeded by Nightshift. Technically: reuse existing `messages` state in `ask/page.tsx`, new non-streaming `/api/ask/letter` endpoint (similar to `/api/tell/draft` — full conversation → composed output). No DB changes needed. Pairs naturally with guided journeys (end-of-journey letter).
+  - 2026-04-15: Seeded. Non-streaming `/api/ask/letter` endpoint reusing conversation messages state.
+
+---
+
+### [IDEA-015] Enable Deep Ask — Multi-Perspective Responses in Production
+- **Status:** ready
+- **Category:** new
+- **Seeded:** 2026-04-16
+- **Last Updated:** 2026-04-16
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-015-deep-ask-activation.md`
+- **Summary:** The multi-perspective Ask orchestrator (storyteller + principles coach → synthesizer) is fully implemented and feature-flagged via `ENABLE_DEEP_ASK=true`. The classifier now defaults to "deep" for all reflective questions. Activating it requires reviewing the perspective prompts in `perspectives.ts`, testing locally, then setting the env var in Vercel. Estimated 30 min eval + 5 min deploy.
+- **Night Notes:**
+  - 2026-04-16: Seeded and advanced to `ready` same night. `orchestrator.ts`, `classifier.ts`, `perspectives.ts` all confirmed in codebase. Plan written.
 
 ---
 
@@ -197,5 +197,7 @@
 
 *(Ideas demoted after 3+ days without action — full entries remain in category sections above with status: parked)*
 
-- **IDEA-003** Age-Aware Suggestion Chips — parked 2026-04-15. Plan still valid at `DEVPLAN-IDEA-003-age-aware-suggestion-chips.md`.
-- **IDEA-004** Story Bookmarks — parked 2026-04-15. Superseded by IDEA-013 (reading progress).
+- **IDEA-003** Age-Aware Suggestion Chips — parked 2026-04-15. Plan at `DEVPLAN-IDEA-003-age-aware-suggestion-chips.md`.
+- **IDEA-004** Story Bookmarks — parked 2026-04-15. Superseded by IDEA-013/014.
+- **IDEA-005** Reading Time Estimate — parked 2026-04-16. Stale 3 days. `wordCount` exists but Paul has not prioritized. Parked — easy to revisit (30 min, no deps).
+- **IDEA-006** Featured Story of the Week — parked 2026-04-16. Stale 3 days. Wiki-first, no DB changes. Parked — revisit when home page refresh is prioritized.

@@ -4,6 +4,54 @@
 
 ---
 
+## Run: 2026-04-16 (Run 5)
+
+### Summary
+- Scanned: 20 commits since Run 4, all new route files (beyond, profile/questions, api/beyond/*, api/stories/*/questions, api/notifications/count), components (StoryAudioControls, ReadTracker, AnsweredQuestionsList, AskAboutStory, KeithProfileHero, KeithDashboard, ProfileNavLink), AI orchestration layer (orchestrator.ts, classifier.ts, perspectives.ts), 10 migrations, build + lint
+- Issues found: 2 new (FIX-018, FIX-019) — both planned
+- Issues resolved: 0 this run (FIX-013–015 all resolved in prior session)
+- Ideas: 2 new `ready` (IDEA-014, IDEA-015), 2 shipped (IDEA-009, IDEA-013 infra), 2 parked (IDEA-005, IDEA-006 — 3-day stale)
+- Plans written:
+  - `FIXPLAN-FIX-018-uncommitted-changes.md`
+  - `FIXPLAN-FIX-019-classifier-lint.md`
+  - `DEVPLAN-IDEA-014-story-read-progress-ui.md`
+  - `DEVPLAN-IDEA-015-deep-ask-activation.md`
+
+### Build & Lint Results
+- `npm run build`: **PASSES** — clean, 34 routes (up from 26 last run). New routes: `/beyond`, `/profile/questions`, `/journeys/[slug]/narrated`, `/stories/timeline`, and 8 new API routes.
+- `npm run lint`: **1 warning** — `_history` unused in `classifier.ts:43`. No errors. (lint was previously clean — this is a regression tracked as FIX-019)
+
+### Key Findings
+
+1. **Massive feature wave since Run 4 (20 commits).** The app has grown substantially. Major additions: Beyond workspace (Keith's private story studio), reader Q&A system (ask-about-story → Keith triage → answer → public display), multi-perspective Ask orchestrator (3-call deep path, feature-flagged), story audio TTS (Web Speech API), story read tracking infrastructure, hub navigation, profile notifications.
+
+2. **IDEA-009 (Story Voice Playback) SHIPPED** — `StoryAudioControls.tsx` is fully built with Web Speech API. Play/Pause/Stop, estimated listen time, aria-live status, SSR-safe. No server cost. Paul implemented without a dev plan — marking shipped.
+
+3. **IDEA-013 (Story Reading Progress) — infra SHIPPED, UI still needed.** `sb_story_reads` table, `ReadTracker` component (fires silently on story visit), `/api/stories/[storyId]/read` endpoint, and Keith's analytics dashboard are all live. The user-facing UI (progress bar on profile, read badges on story cards) is NOT yet built. Created IDEA-014 as the UI completion task.
+
+4. **Beyond workspace is comprehensive.** Keith has a dedicated `/beyond` page (keith role-gated) that reuses `StoryContributionWorkspace` with `contributionMode="beyond"`. The workspace shows pending reader questions in a triage strip — Keith can quick-answer (text, public/private), seed a full Beyond session, or dismiss. Session → draft → publish pipeline works identically to Tell. This closes the reader feedback loop elegantly.
+
+5. **Multi-perspective Ask orchestrator built but not yet active in prod.** `orchestrator.ts` + `classifier.ts` + `perspectives.ts` are all confirmed in the codebase. The classifier was just inverted (defaults to "deep" for all non-factual questions). Activation requires setting `ENABLE_DEEP_ASK=true` in Vercel env. The quality improvement for reflective questions is significant. Created IDEA-015 as the activation plan.
+
+6. **FIX-018 (MEDIUM): Two uncommitted working-tree changes.** `KeithProfileHero.tsx` (2 quick links removed, grid simplified) and `classifier.ts` (logic inversion) are both modified but not committed. A `git add + commit` resolves this in under 5 minutes. Risk: Vercel deploy from a fresh clone would lose both.
+
+7. **FIX-019 (VERY LOW): Lint warning regression.** `classifier.ts` `_history` parameter causes `@typescript-eslint/no-unused-vars` warning. Lint was clean after FIX-012; this is a 1-line eslint-disable comment away from clean again.
+
+8. **IDEA-005 + IDEA-006 parked** — Reading time estimate (IDEA-005, seeded 2026-04-13) and Featured Story of the Week (IDEA-006, seeded 2026-04-13) both 3 days without action. Parked per stale rule.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/FIXPLAN-FIX-018-uncommitted-changes.md` — Commit KeithProfileHero + classifier (5 min, prevents silent deploy loss)
+- `docs/nightshift/plans/FIXPLAN-FIX-019-classifier-lint.md` — Fix _history lint warning (1 min, pairs with FIX-018)
+- `docs/nightshift/plans/DEVPLAN-IDEA-014-story-read-progress-ui.md` — Profile progress bar + story card read badges (1–1.5 hrs)
+- `docs/nightshift/plans/DEVPLAN-IDEA-015-deep-ask-activation.md` — Enable deep Ask in production (30 min eval + env var set)
+
+### Recommendations
+- **If you have 10 min:** FIX-018 (commit working tree, 5 min) + FIX-019 (lint disable comment, 1 min) back-to-back. Two lines of work that eliminate all medium/low deployment risk.
+- **If you have 2 hours:** The 10-min batch above + IDEA-015 (review perspective prompts, test locally, enable `ENABLE_DEEP_ASK=true` in Vercel) + IDEA-014 (profile progress bar). After this session: the app is fully clean and the Ask feature has meaningful qualitative depth for reflective questions.
+- **If you want the biggest visual win:** IDEA-014 alone (1–1.5 hrs). Family members immediately see their reading progress on their profile and know which story cards they've already visited. Closes the loop on the read tracking already silently in production.
+
+---
+
 ## Run: 2026-04-15 (Run 4)
 
 ### Summary

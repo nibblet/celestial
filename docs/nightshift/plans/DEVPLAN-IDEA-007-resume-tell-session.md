@@ -1,5 +1,7 @@
 # Dev Plan: [IDEA-007] Resume Tell Session — Continue an In-Progress Story
 
+**Status (2026-04-15): Implemented.** Logic lives in `StoryContributionWorkspace` (used by `/tell` and `/beyond`), not inline in `tell/page.tsx`. APIs: `GET /api/tell/sessions`, `GET /api/tell/sessions/[id]` — both support `?mode=tell|beyond` to scope sessions by `contribution_mode`.
+
 ## What This Does
 When a family member starts telling a story on the `/tell` page, their conversation is saved
 to Supabase (`sb_story_sessions` + `sb_story_messages`). But if they navigate away or close
@@ -100,7 +102,9 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
 
 ### Phase 3: UI — Resume Banner and Load Flow
 
-Update `src/app/tell/page.tsx`:
+Update `src/app/tell/page.tsx` (or the shared workspace component it renders):
+
+**Actual implementation:** `src/components/tell/StoryContributionWorkspace.tsx`.
 
 1. **Add state** for pending sessions:
 ```ts
@@ -183,10 +187,10 @@ No direct impact. The Tell feature is available to all age modes, but resuming s
 most relevant to adult contributors.
 
 ## Testing
-- [ ] Build passes
+- [x] Build passes (`npm run build`, 2026-04-15)
 - [ ] Start a Tell session, navigate away, return — banner shows with preview
 - [ ] Click "Continue" — previous messages load, new messages continue the same session
-- [ ] Click "Start a new story instead" — banner dismisses, fresh chat starts
+- [ ] Click "Start a new one instead" — banner dismisses, fresh chat starts
 - [ ] After composing a draft, return to `/tell` — banner does NOT show (session is "drafting")
 - [ ] No session exists — banner does not show, normal empty state appears
 

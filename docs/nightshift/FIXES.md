@@ -1,6 +1,10 @@
 # FIXES — Keith Cobb Interactive Storybook
 
 > Bug and issue tracker. Updated each nightshift run.
+> **Note on numbering:** FIX-013 and FIX-014 numbers were reused after original issues resolved.
+> Open FIX-013 = fenced JSON (different from resolved FIX-013 = auth redirect).
+> Open FIX-014 = ageMode validation (different from resolved FIX-014 = tell double-submit).
+> New issues from Run 5 start at FIX-018.
 
 ## Statuses
 - `found` — Issue identified, no plan yet
@@ -34,7 +38,7 @@
 - **Severity:** Low-Medium — in React Strict Mode (Next.js dev), SSE text chunks may double-append since the state updater mutates the object in-place; violates React immutability contract
 - **Found:** 2026-04-15
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-016-tell-sse-mutation.md`
-- **Summary:** `tell/page.tsx` `sendMessage()` mutates `last.content += data.text` inside `setMessages`. `ask/page.tsx` already uses the correct immutable batch pattern (introduced in the SSE improvements). Port that pattern to `tell/page.tsx`.
+- **Summary:** `tell/page.tsx` (now `StoryContributionWorkspace.tsx`) `sendMessage()` mutates `last.content += data.text` inside `setMessages`. `ask/page.tsx` already uses the correct immutable batch pattern. Port that pattern to `StoryContributionWorkspace.tsx`.
 
 ---
 
@@ -47,11 +51,29 @@
 
 ---
 
+### [FIX-018] Uncommitted Changes — KeithProfileHero + classifier.ts
+- **Status:** planned
+- **Severity:** Medium — working changes exist in the working tree; a fresh Vercel deploy or git stash would silently lose them
+- **Found:** 2026-04-16
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-018-uncommitted-changes.md`
+- **Summary:** Two files have uncommitted working-tree changes: `KeithProfileHero.tsx` (removed "Read the Library" + "Walk the Timeline" quick links, grid adjusted to sm:grid-cols-2, Tailwind override fixes) and `classifier.ts` (inverted deep/simple logic — now defaults to "deep" for all non-factual questions). Both are intentional and working. A `git add + commit` resolves this.
+
+---
+
+### [FIX-019] `_history` Unused Parameter Lint Warning in classifier.ts
+- **Status:** planned
+- **Severity:** Very Low — 1 ESLint warning; no runtime impact. Lint was previously clean (0 warnings) so this represents a regression.
+- **Found:** 2026-04-16
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-019-classifier-lint.md`
+- **Summary:** `src/lib/ai/classifier.ts` line 43: `_history` parameter has an underscore prefix but the project's ESLint config still warns on it. Add `// eslint-disable-next-line @typescript-eslint/no-unused-vars` on the line before. One-line fix, pairs with FIX-018 commit.
+
+---
+
 ## Recently Resolved
 
 ### [FIX-013] Uncommitted Auth Redirect Changes (app-url.ts + signup/middleware)
 - **Status:** resolved
-- **Severity:** Medium — working code existed locally but was untracked; a fresh clone or Vercel deploy could silently lose auth redirect behavior
+- **Severity:** Medium
 - **Found:** 2026-04-15
 - **Resolved:** 2026-04-15
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-013-uncommitted-signup-changes.md`
@@ -61,7 +83,7 @@
 
 ### [FIX-014] Tell Page Missing sendInFlightRef Double-Submit Guard
 - **Status:** resolved
-- **Severity:** Low — intermittent duplicate sends on slow connections or double-click
+- **Severity:** Low
 - **Found:** 2026-04-15
 - **Resolved:** 2026-04-15
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-014-tell-double-submit.md`
@@ -71,7 +93,7 @@
 
 ### [FIX-015] submitDraft() Has No In-Progress Guard
 - **Status:** resolved
-- **Severity:** Low — double-click on Submit Story fired duplicate PATCH requests
+- **Severity:** Low
 - **Found:** 2026-04-15
 - **Resolved:** 2026-04-15
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-015-submit-draft-no-guard.md`
@@ -81,7 +103,7 @@
 
 ### [FIX-008] submitDraft Ignores User Edits to Title/Body
 - **Status:** resolved
-- **Severity:** High — user edits are silently discarded; contributor never knows
+- **Severity:** High
 - **Found:** 2026-04-14
 - **Resolved:** 2026-04-14
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-008-submit-draft-ignores-edits.md`
@@ -91,7 +113,7 @@
 
 ### [FIX-009] No Rate Limiting on /api/tell/draft + Raw Response Leak
 - **Status:** resolved
-- **Severity:** Medium — financial risk (4096 token Claude call, unguarded); minor privacy issue
+- **Severity:** Medium
 - **Found:** 2026-04-14
 - **Resolved:** 2026-04-14
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-009-tell-draft-rate-limiting.md`
@@ -101,7 +123,7 @@
 
 ### [FIX-010] getWikiSummaries() in parser.ts Has No Cache
 - **Status:** resolved
-- **Severity:** Low-Medium — disk read on every /api/tell request; immutable file at runtime
+- **Severity:** Low-Medium
 - **Found:** 2026-04-14
 - **Resolved:** 2026-04-14
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-010-tell-prompts-wiki-cache.md`
@@ -111,92 +133,41 @@
 
 ### [FIX-011] Dead `generateStaticParams` in Journey Routes
 - **Status:** resolved
-- **Severity:** Low — dead code, same issue as FIX-006 (resolved for stories/themes but reintroduced for journeys)
+- **Severity:** Low
 - **Found:** 2026-04-14
 - **Resolved:** 2026-04-14
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-011-dead-generatestaticparams-journeys.md`
-- **Summary:** Removed dead `generateStaticParams` exports and now-unused journey list imports from `journeys/[slug]/page.tsx` and `journeys/[slug]/[step]/page.tsx`.
 
 ---
 
 ### [FIX-012] Unused `_node` Lint Warning in Ask Page
 - **Status:** resolved
-- **Severity:** Very Low — 1 ESLint warning, no runtime impact
+- **Severity:** Very Low
 - **Found:** 2026-04-14
 - **Resolved:** 2026-04-14
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-012-unused-node-lint-warning.md`
-- **Summary:** Updated markdown link renderer arg destructuring from `node: _node` to `node: _`, clearing the lint warning while still excluding `node` from spread props.
 
 ---
 
 ## Resolved Issues
 
 ### [FIX-001] Next.js 16 Middleware Deprecation
-- **Status:** resolved
-- **Severity:** Medium — build warning today, will eventually break
-- **Found:** 2026-04-12
-- **Resolved:** 2026-04-13
-- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-001-middleware-to-proxy.md`
-- **Summary:** Replaced `src/middleware.ts` with `src/proxy.ts` using `export async function proxy` (Next.js 16 requires the function name `proxy`, not `middleware`). Build no longer emits the deprecation warning.
-
----
+- **Status:** resolved — `src/proxy.ts` replaces `src/middleware.ts`
 
 ### [FIX-002] Lint Errors in scripts/compile-wiki.ts
-- **Status:** resolved
-- **Severity:** Low — breaks clean lint, will block CI
-- **Found:** 2026-04-12
-- **Resolved:** 2026-04-13
-- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-002-compile-wiki-lint-errors.md`
-- **Summary:** Added `ParsedStory`, typed manifest rows as `Record<string, string>` → `ManifestRow`, removed unused `getLifeStage`, `LIFE_STAGE_ORDER`, and `quotesData` load.
-
----
+- **Status:** resolved — typed and cleaned up
 
 ### [FIX-003] Story Full Text Loses Markdown Formatting
-- **Status:** resolved
-- **Severity:** Low-Medium — UX quality, no data loss
-- **Found:** 2026-04-12
-- **Resolved:** 2026-04-13
-- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-003-story-fulltext-markdown.md`
-- **Summary:** `src/app/stories/[storyId]/page.tsx` now renders `fullText` with `ReactMarkdown` inside the existing prose article.
-
----
+- **Status:** resolved — `ReactMarkdown` used for `fullText`
 
 ### [FIX-004] No Rate Limiting on /api/ask
-- **Status:** resolved
-- **Severity:** Medium — financial risk, no cost guard on Claude API
-- **Found:** 2026-04-12
-- **Resolved:** 2026-04-13
-- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-004-ask-api-rate-limiting.md`
-- **Summary:** Added `src/lib/rate-limit.ts` (20 req/min per user). `/api/ask` returns 429 with `Retry-After`; Ask page shows a friendly message for 429.
-
----
+- **Status:** resolved — `src/lib/rate-limit.ts` (20/min per user)
 
 ### [FIX-005] Orphaned User Messages on Stream Failure
-- **Status:** resolved
-- **Severity:** Low — invisible today, will surface when conversation resumption is built
-- **Found:** 2026-04-12
-- **Resolved:** 2026-04-13
-- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-005-orphaned-user-messages.md`
-- **Summary:** User message insert uses `.select("id").single()`; on stream `catch`, if `fullResponse` is still empty, the row is deleted by `id`.
-
----
+- **Status:** resolved — delete on empty stream catch
 
 ### [FIX-006] Dead `generateStaticParams` in Story/Theme Detail Pages
 - **Status:** resolved
-- **Severity:** Low — dead code at build time, no runtime impact
-- **Found:** 2026-04-13
-- **Resolved:** 2026-04-13
-- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-006-dead-generatestaticparams.md`
-- **Summary:** Removed `generateStaticParams` and unused `getAllStories` / `getAllThemes` imports from story and theme detail pages.
-
----
 
 ### [FIX-007] SSE Stream Chunk Parsing Fragility in Ask Page
-- **Status:** resolved
-- **Severity:** Medium — causes intermittent chat failures on slow/mobile connections
-- **Found:** 2026-04-13
-- **Resolved:** 2026-04-13
-- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-007-sse-chunk-fragility.md`
-- **Summary:** Ask page stream reader uses a line buffer, `TextDecoder` `{ stream: true }`, final `decode()` flush on `done`, and per-line try/catch.
-
----
+- **Status:** resolved — line buffer + TextDecoder stream:true
