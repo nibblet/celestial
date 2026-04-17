@@ -20,6 +20,8 @@ export interface EraAccent {
   cardRing: string;
   /** Life-stage / era pill on story cards */
   badgeClass: string;
+  /** Solid border-color class for era accent stripes (e.g. story title left border) */
+  accentBorder: string;
 }
 
 const ACCENTS: Record<EraKey, EraAccent> = {
@@ -31,6 +33,7 @@ const ACCENTS: Record<EraKey, EraAccent> = {
     border: "border-burgundy/25",
     cardRing: "ring-burgundy",
     badgeClass: "bg-burgundy-light text-burgundy",
+    accentBorder: "border-burgundy",
   },
   coming_of_age: {
     key: "coming_of_age",
@@ -40,6 +43,7 @@ const ACCENTS: Record<EraKey, EraAccent> = {
     border: "border-clay/25",
     cardRing: "ring-clay",
     badgeClass: "bg-clay-light text-clay",
+    accentBorder: "border-clay",
   },
   building: {
     key: "building",
@@ -49,6 +53,7 @@ const ACCENTS: Record<EraKey, EraAccent> = {
     border: "border-gold/40",
     cardRing: "ring-gold",
     badgeClass: "bg-gold-pale text-gold",
+    accentBorder: "border-gold",
   },
   leadership: {
     key: "leadership",
@@ -58,6 +63,7 @@ const ACCENTS: Record<EraKey, EraAccent> = {
     border: "border-ocean/25",
     cardRing: "ring-ocean",
     badgeClass: "bg-ocean-pale text-ocean",
+    accentBorder: "border-ocean",
   },
   legacy: {
     key: "legacy",
@@ -67,6 +73,7 @@ const ACCENTS: Record<EraKey, EraAccent> = {
     border: "border-green/25",
     cardRing: "ring-green",
     badgeClass: "bg-green-pale text-green",
+    accentBorder: "border-green",
   },
 };
 

@@ -220,51 +220,72 @@ export function StoryAudioControls({
   const playDisabled =
     isLoading || (mode === "web-speech" && !hasSpeechSupport);
 
-  return (
-    <section className="mb-6 rounded-xl border border-clay-border bg-ocean-pale/55 p-4">
-      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        <div>
-          <p className="type-meta mb-1 text-ocean">Listen To This Story</p>
-          <p className="type-ui text-ink">{listenLabel}</p>
-        </div>
+  function handlePrimary() {
+    if (isPlaying || isPaused) {
+      handlePauseResume();
+      return;
+    }
+    handleListen();
+  }
 
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={handleListen}
-            disabled={playDisabled}
-            className="rounded-lg bg-ocean px-4 py-2 text-sm font-medium text-warm-white transition-colors hover:bg-[#3f6e8a] disabled:cursor-not-allowed disabled:bg-ink-ghost"
-          >
-            {isLoading
-              ? "Preparing…"
-              : isPlaying || isPaused
-                ? "Play Again"
-                : "Click Here to Listen"}
-          </button>
-          <button
-            type="button"
-            onClick={handlePauseResume}
-            disabled={isUnsupported || (!isPlaying && !isPaused)}
-            className="rounded-lg border border-[var(--color-border-strong)] bg-warm-white px-4 py-2 text-sm font-medium text-ink transition-colors hover:border-clay-border disabled:cursor-not-allowed disabled:text-ink-ghost"
-          >
-            {isPaused ? "Resume" : "Pause"}
-          </button>
+  function getPrimaryLabel() {
+    if (isLoading) return "Preparing…";
+    if (isPlaying) return `\u23F8 Pause`;
+    if (isPaused) return `\u25B6 Resume`;
+    if (playbackState === "ended") return `\u25B6 Play again`;
+    return `\u25B6 Listen \u00B7 ${listenLabel}`;
+  }
+
+  function getPrimaryAriaLabel() {
+    if (isLoading) return "Preparing audio";
+    if (isPlaying) return "Pause narration";
+    if (isPaused) return "Resume narration";
+    if (playbackState === "ended") return "Play narration again";
+    return `Play narration, ${listenLabel}`;
+  }
+
+  if (isUnsupported) {
+    return (
+      <section className="mb-5">
+        <button
+          type="button"
+          disabled
+          className="type-ui cursor-not-allowed text-ink-ghost"
+        >
+          Listening unavailable in this browser
+        </button>
+        <p id={statusId} aria-live="polite" className="sr-only">
+          {getStatusMessage()}
+        </p>
+      </section>
+    );
+  }
+
+  return (
+    <section className="mb-5">
+      <div className="flex flex-wrap items-center gap-3">
+        <button
+          type="button"
+          onClick={handlePrimary}
+          disabled={playDisabled}
+          aria-label={getPrimaryAriaLabel()}
+          className="inline-flex items-center rounded-full bg-ocean px-4 py-2 text-sm font-medium text-warm-white transition-colors hover:bg-[#3f6e8a] disabled:cursor-not-allowed disabled:bg-ink-ghost"
+        >
+          {getPrimaryLabel()}
+        </button>
+        {canStop && (
           <button
             type="button"
             onClick={handleStop}
-            disabled={isUnsupported || !canStop}
-            className="rounded-lg border border-[var(--color-border-strong)] bg-warm-white px-4 py-2 text-sm font-medium text-ink transition-colors hover:border-clay-border disabled:cursor-not-allowed disabled:text-ink-ghost"
+            aria-label="Stop narration"
+            className="type-ui text-ink-ghost underline-offset-4 transition-colors hover:text-ink hover:underline"
           >
             Stop
           </button>
-        </div>
+        )}
       </div>
 
-      <p
-        id={statusId}
-        aria-live="polite"
-        className="mt-3 font-[family-name:var(--font-lora)] text-sm text-ink-muted"
-      >
+      <p id={statusId} aria-live="polite" className="sr-only">
         {getStatusMessage()}
       </p>
 

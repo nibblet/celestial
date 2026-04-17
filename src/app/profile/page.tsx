@@ -70,6 +70,7 @@ export default async function ProfilePage() {
       displayName={displayName}
       email={user.email ?? ""}
       unreadAnswerCount={unreadAnswerCount ?? 0}
+      isAdmin={profile?.role === "admin"}
       dashboard={await getProfileReadingDashboardData(user.id)}
     />
   );

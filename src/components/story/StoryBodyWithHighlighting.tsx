@@ -11,8 +11,10 @@ interface StoryBodyWithHighlightingProps {
 
 const MIN_CHARS = 10;
 const MAX_CHARS = 1000;
+// Corrections can be as short as a single garbled word
+const MIN_CORRECTION_CHARS = 3;
 
-type SaveStatus = "idle" | "visible" | "saving" | "saved" | "error";
+type SaveStatus = "idle" | "visible" | "saving" | "saved" | "reporting" | "reported" | "error";
 
 export function StoryBodyWithHighlighting({
   storyId,
@@ -25,15 +27,32 @@ export function StoryBodyWithHighlighting({
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const clearTimer = () => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+  };
+
   const onSelectionChange = useCallback(() => {
     const sel = window.getSelection();
-    if (!sel || sel.isCollapsed) {
-      setStatus((s) => (s === "visible" ? "idle" : s));
+    // Don't clobber an in-flight or completed action
+    if (
+      !sel ||
+      sel.isCollapsed ||
+      status === "saving" ||
+      status === "reporting" ||
+      status === "saved" ||
+      status === "reported"
+    ) {
+      if ((!sel || sel.isCollapsed) && status === "visible") {
+        setStatus("idle");
+      }
       return;
     }
+
     const text = sel.toString().trim();
-    if (text.length < MIN_CHARS || text.length > MAX_CHARS) {
-      setStatus((s) => (s === "visible" ? "idle" : s));
+    // Need at least MIN_CORRECTION_CHARS to show any button;
+    // "Save passage" button only appears if >= MIN_CHARS.
+    if (text.length < MIN_CORRECTION_CHARS || text.length > MAX_CHARS) {
+      if (status === "visible") setStatus("idle");
       return;
     }
     if (!containerRef.current) return;
@@ -48,19 +67,20 @@ export function StoryBodyWithHighlighting({
       y: rect.top - containerRect.top - 8,
     });
     setStatus("visible");
-  }, []);
+  }, [status]);
 
   useEffect(() => {
     document.addEventListener("selectionchange", onSelectionChange);
     return () => {
       document.removeEventListener("selectionchange", onSelectionChange);
-      if (timerRef.current) clearTimeout(timerRef.current);
+      clearTimer();
     };
   }, [onSelectionChange]);
 
-  async function save() {
-    if (status !== "visible" || !selText) return;
+  async function savePassage() {
+    if (status !== "visible" || selText.length < MIN_CHARS) return;
     setStatus("saving");
+    clearTimer();
     try {
       const res = await fetch(`/api/stories/${storyId}/highlights`, {
         method: "POST",
@@ -69,10 +89,26 @@ export function StoryBodyWithHighlighting({
       });
       setStatus(res.ok ? "saved" : "error");
       window.getSelection()?.removeAllRanges();
-      timerRef.current = setTimeout(
-        () => setStatus("idle"),
-        res.ok ? 2000 : 2500
-      );
+      timerRef.current = setTimeout(() => setStatus("idle"), res.ok ? 2000 : 2500);
+    } catch {
+      setStatus("error");
+      timerRef.current = setTimeout(() => setStatus("idle"), 2500);
+    }
+  }
+
+  async function reportError() {
+    if (status !== "visible" || selText.length < MIN_CORRECTION_CHARS) return;
+    setStatus("reporting");
+    clearTimer();
+    try {
+      const res = await fetch(`/api/stories/${storyId}/corrections`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ passage_text: selText, story_title: storyTitle }),
+      });
+      setStatus(res.ok ? "reported" : "error");
+      window.getSelection()?.removeAllRanges();
+      timerRef.current = setTimeout(() => setStatus("idle"), res.ok ? 2500 : 2500);
     } catch {
       setStatus("error");
       timerRef.current = setTimeout(() => setStatus("idle"), 2500);
@@ -80,6 +116,8 @@ export function StoryBodyWithHighlighting({
   }
 
   const showBtn = status !== "idle";
+  const isBusy = status === "saving" || status === "reporting";
+  const canSavePassage = selText.length >= MIN_CHARS;
 
   return (
     <article className="story-body relative">
@@ -99,27 +137,45 @@ export function StoryBodyWithHighlighting({
             transform: "translate(-50%, -100%)",
             zIndex: 50,
           }}
+          className="flex flex-col items-center gap-1"
         >
-          <button
-            type="button"
-            onClick={save}
-            disabled={status !== "visible"}
-            className={`whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-semibold shadow-lg transition-colors ${
-              status === "saved"
-                ? "bg-green text-warm-white"
-                : status === "error"
-                  ? "bg-red-500 text-white"
-                  : "cursor-pointer bg-clay text-warm-white hover:bg-clay-mid disabled:opacity-50"
-            }`}
-          >
-            {status === "saving"
-              ? "Saving\u2026"
-              : status === "saved"
-                ? "\u2713 Saved to your passages"
-                : status === "error"
-                  ? "Couldn\u2019t save \u2014 try again"
-                  : "Save this passage"}
-          </button>
+          {/* ── Primary: Save passage ── */}
+          {status === "saved" ? (
+            <span className="whitespace-nowrap rounded-full bg-green px-3 py-1.5 text-xs font-semibold text-warm-white shadow-lg">
+              ✓ Saved to your passages
+            </span>
+          ) : status === "reported" ? (
+            <span className="whitespace-nowrap rounded-full bg-clay px-3 py-1.5 text-xs font-semibold text-warm-white shadow-lg">
+              ✓ Error reported — thanks
+            </span>
+          ) : status === "error" ? (
+            <span className="whitespace-nowrap rounded-full bg-red-500 px-3 py-1.5 text-xs font-semibold text-white shadow-lg">
+              Couldn&apos;t save — try again
+            </span>
+          ) : (
+            <>
+              {canSavePassage && (
+                <button
+                  type="button"
+                  onClick={savePassage}
+                  disabled={isBusy}
+                  className="whitespace-nowrap rounded-full bg-clay px-3 py-1.5 text-xs font-semibold text-warm-white shadow-lg transition-colors hover:bg-clay-mid disabled:opacity-50"
+                >
+                  {status === "saving" ? "Saving\u2026" : "Save this passage"}
+                </button>
+              )}
+
+              {/* ── Secondary: Report error — deliberately smaller & muted ── */}
+              <button
+                type="button"
+                onClick={reportError}
+                disabled={isBusy}
+                className="whitespace-nowrap rounded px-2 py-0.5 text-[11px] font-medium text-ink-ghost transition-colors hover:bg-red-50 hover:text-red-600 disabled:opacity-40"
+              >
+                {status === "reporting" ? "Reporting\u2026" : "⚠ Report error"}
+              </button>
+            </>
+          )}
         </div>
       )}
     </article>

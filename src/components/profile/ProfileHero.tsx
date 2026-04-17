@@ -9,6 +9,7 @@ type ProfileHeroProps = {
   displayName: string;
   email: string;
   unreadAnswerCount?: number;
+  isAdmin?: boolean;
   dashboard: ProfileReadingDashboardData;
 };
 
@@ -16,6 +17,7 @@ export function ProfileHero({
   displayName,
   email,
   unreadAnswerCount = 0,
+  isAdmin = false,
   dashboard,
 }: ProfileHeroProps) {
   async function handleSignOut() {
@@ -93,6 +95,14 @@ export function ProfileHero({
             >
               Take the tour again
             </Link>
+            {isAdmin && (
+              <Link
+                href="/profile/admin"
+                className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border-2 border-[rgba(240,232,213,0.55)] bg-[rgba(240,232,213,0.12)] px-6 py-2.5 font-[family-name:var(--font-inter)] text-sm font-semibold tracking-wide text-[#f7f3ed] transition-[background-color,border-color] duration-[var(--duration-normal)] hover:border-[#f0e8d5] hover:bg-[rgba(240,232,213,0.22)]"
+              >
+                &#9881; Admin
+              </Link>
+            )}
             <button
               type="button"
               onClick={handleSignOut}
