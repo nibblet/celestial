@@ -27,6 +27,7 @@ export function KeithDashboard({
   weeklyReads,
   topStories,
   trendingStories,
+  beyondActivity,
 }: KeithDashboardData) {
   const maxWeeklyReads = Math.max(...weeklyReads.map((week) => week.reads), 1);
   const maxTopReads = Math.max(...topStories.map((story) => story.reads), 1);
@@ -227,7 +228,86 @@ export function KeithDashboard({
             )}
           </div>
         </div>
+
+        {/* ── Beyond activity ── */}
+        <div className="mt-10">
+          <div className="mb-5 flex items-end justify-between gap-3">
+            <div>
+              <p className="type-era-label text-[rgba(247,243,237,0.58)]">
+                Beyond activity
+              </p>
+              <h3 className="mt-2 font-[family-name:var(--font-playfair)] text-2xl text-[#f7f3ed]">
+                What&apos;s moving in your private workshop
+              </h3>
+            </div>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+            <BeyondStat
+              label="Drafts in progress"
+              value={beyondActivity.draftsInProgress}
+            />
+            <BeyondStat
+              label="Submitted for review"
+              value={beyondActivity.draftsSubmittedForReview}
+              accent="clay"
+            />
+            <BeyondStat
+              label="Published this month"
+              value={beyondActivity.publishedThisMonth}
+              accent="gold"
+            />
+            <BeyondStat
+              label="Biographies with your voice"
+              value={beyondActivity.biosEdited}
+            />
+            <BeyondStat
+              label="Questions answered (30 d)"
+              value={beyondActivity.questionsAnsweredLast30Days}
+            />
+            <BeyondStat
+              label="Questions awaiting you"
+              value={beyondActivity.questionsPending}
+              accent={beyondActivity.questionsPending > 0 ? "clay" : undefined}
+            />
+          </div>
+        </div>
       </div>
     </section>
+  );
+}
+
+function BeyondStat({
+  label,
+  value,
+  accent,
+}: {
+  label: string;
+  value: number;
+  accent?: "clay" | "gold";
+}) {
+  const borderClass =
+    accent === "clay"
+      ? "border-[rgba(184,67,54,0.45)]"
+      : accent === "gold"
+        ? "border-[rgba(212,168,67,0.45)]"
+        : "border-[rgba(247,243,237,0.1)]";
+  const valueClass =
+    accent === "clay"
+      ? "text-[#e8b4a8]"
+      : accent === "gold"
+        ? "text-[#d4a843]"
+        : "text-[#f7f3ed]";
+  return (
+    <div
+      className={`rounded-[20px] border ${borderClass} bg-[rgba(247,243,237,0.04)] p-4`}
+    >
+      <p className="type-era-label text-[rgba(247,243,237,0.5)]">{label}</p>
+      <p
+        className={`mt-2 font-[family-name:var(--font-playfair)] text-3xl font-semibold ${valueClass}`}
+      >
+        {value}
+      </p>
+    </div>
   );
 }

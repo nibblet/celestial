@@ -22,8 +22,9 @@ export default async function StoryDetailPage({
   params: Promise<{ storyId: string }>;
 }) {
   const { storyId } = await params;
-  // Try filesystem first (Volume 1), then Supabase (Volume 2+)
-  const story = getStoryById(storyId) || (await getPublishedStoryById(storyId));
+  // Supabase first so published revisions (Keith's edits via Beyond) override
+  // the filesystem source; fall back to filesystem for Volume 1 originals.
+  const story = (await getPublishedStoryById(storyId)) || getStoryById(storyId);
 
   if (!story) notFound();
 

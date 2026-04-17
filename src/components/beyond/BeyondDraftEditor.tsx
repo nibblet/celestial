@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import type { Editor } from "@tiptap/react";
 import { TipTapEditor, type MentionEntry } from "./TipTapEditor";
 import { MediaGallery } from "./MediaGallery";
+import { AIPolishPanel, type PolishSuggestion } from "./AIPolishPanel";
 
 export interface DraftRecord {
   id: string;
@@ -56,7 +57,16 @@ export function BeyondDraftEditor({ initial, origin, onSaved, onBack }: Props) {
   const [submitState, setSubmitState] = useState<"idle" | "submitting" | "submitted">(
     initial?.status && initial.status !== "draft" ? "submitted" : "idle"
   );
+  const [publishState, setPublishState] = useState<
+    "idle" | "publishing" | "published"
+  >(initial?.status === "published" ? "published" : "idle");
+  const [publishedStoryId, setPublishedStoryId] = useState<string | null>(
+    initial?.status === "published" ? initial?.story_id ?? null : null
+  );
   const [error, setError] = useState<string | null>(null);
+  const [polishing, setPolishing] = useState(false);
+  const [polishError, setPolishError] = useState<string | null>(null);
+  const [suggestion, setSuggestion] = useState<PolishSuggestion | null>(null);
 
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastSavedPayload = useRef<string>("");
@@ -158,6 +168,126 @@ export function BeyondDraftEditor({ initial, origin, onSaved, onBack }: Props) {
     }
   }
 
+  async function publishNow() {
+    // Ensure the latest text is saved before publishing.
+    if (!draftId) {
+      await save();
+    }
+    const id = draftId;
+    if (!id) return;
+    setPublishState("publishing");
+    setError(null);
+    try {
+      // Flush any pending edits first so we publish the current text.
+      await save();
+      const res = await fetch(`/api/beyond/drafts/${id}/publish`, {
+        method: "POST",
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        storyId?: string;
+        error?: string;
+      };
+      if (!res.ok) {
+        throw new Error(data.error || "Publish failed");
+      }
+      setPublishState("published");
+      setPublishedStoryId(data.storyId ?? null);
+      setSubmitState("submitted");
+    } catch (err) {
+      setPublishState("idle");
+      setError(err instanceof Error ? err.message : "Publish failed");
+    }
+  }
+
+  async function requestPolish() {
+    setPolishing(true);
+    setPolishError(null);
+    setSuggestion(null);
+    try {
+      const res = await fetch("/api/beyond/polish", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: payload.title,
+          body: payload.body,
+          life_stage: payload.life_stage,
+          year_start: payload.year_start,
+          year_end: payload.year_end,
+          themes: payload.themes,
+          principles: payload.principles,
+          quotes: payload.quotes,
+        }),
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        suggestion?: PolishSuggestion;
+        error?: string;
+      };
+      if (!res.ok) {
+        throw new Error(data.error || "Polish failed");
+      }
+      if (!data.suggestion) {
+        throw new Error("No suggestion returned");
+      }
+      setSuggestion(data.suggestion);
+    } catch (err) {
+      setPolishError(err instanceof Error ? err.message : "Polish failed");
+    } finally {
+      setPolishing(false);
+    }
+  }
+
+  function acceptPolishField(field: keyof PolishSuggestion) {
+    if (!suggestion) return;
+    const val = suggestion[field];
+    switch (field) {
+      case "title":
+        if (typeof val === "string") setTitle(val);
+        break;
+      case "body":
+        if (typeof val === "string") {
+          setBody(val);
+          editorRef.current?.commands.setContent(val);
+        }
+        break;
+      case "life_stage":
+        if (val === null || typeof val === "string") setLifeStage((val as string) || "");
+        break;
+      case "year_start":
+        if (val === null || typeof val === "number")
+          setYearStart(val == null ? "" : String(val));
+        break;
+      case "year_end":
+        if (val === null || typeof val === "number")
+          setYearEnd(val == null ? "" : String(val));
+        break;
+      case "themes":
+        if (Array.isArray(val)) setThemes(val.join(", "));
+        break;
+      case "principles":
+        if (Array.isArray(val)) setPrinciples(val.join(", "));
+        break;
+      case "quotes":
+        if (Array.isArray(val)) setQuotes(val.join("\n"));
+        break;
+    }
+    // Drop accepted field from suggestion so the UI reflects progress.
+    setSuggestion((prev) => {
+      if (!prev) return prev;
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
+  }
+
+  function acceptAllPolish() {
+    if (!suggestion) return;
+    (Object.keys(suggestion) as (keyof PolishSuggestion)[]).forEach((k) => {
+      if (k === "rationale") return;
+      acceptPolishField(k);
+    });
+    setSuggestion(null);
+  }
+
   const savedLabel =
     saveState === "saving"
       ? "Saving…"
@@ -194,23 +324,87 @@ export function BeyondDraftEditor({ initial, origin, onSaved, onBack }: Props) {
           </button>
           <button
             type="button"
-            onClick={submitForReview}
-            disabled={submitState !== "idle" || !payload.title.trim()}
-            className="type-ui rounded-lg bg-clay px-3 py-1.5 text-sm font-medium text-warm-white transition-colors hover:bg-clay-mid disabled:opacity-50"
+            onClick={requestPolish}
+            disabled={polishing || (!payload.title.trim() && !payload.body.trim())}
+            className="type-ui rounded-lg border border-clay px-3 py-1.5 text-sm font-medium text-clay transition-colors hover:bg-clay hover:text-warm-white disabled:opacity-50"
+            title="Light AI polish — fixes typos, suggests metadata, never rewrites your voice"
           >
-            {submitState === "submitted"
-              ? "Submitted"
-              : submitState === "submitting"
-                ? "Submitting…"
-                : "Submit for review"}
+            {polishing ? "Polishing…" : "✨ AI Polish"}
+          </button>
+          {publishState !== "published" && submitState !== "submitted" && (
+            <button
+              type="button"
+              onClick={submitForReview}
+              disabled={submitState !== "idle" || !payload.title.trim()}
+              className="type-ui rounded-lg border border-clay px-3 py-1.5 text-sm font-medium text-clay transition-colors hover:bg-clay hover:text-warm-white disabled:opacity-50"
+              title="Set aside as ready to publish — useful if you want to sleep on it"
+            >
+              {submitState === "submitting" ? "Submitting…" : "Mark ready"}
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={publishNow}
+            disabled={
+              publishState !== "idle" ||
+              !payload.title.trim() ||
+              !payload.body.trim()
+            }
+            className="type-ui rounded-lg bg-clay px-3 py-1.5 text-sm font-medium text-warm-white transition-colors hover:bg-clay-mid disabled:opacity-50"
+            title={
+              initial?.story_id
+                ? "Publish this revision — replaces the current published version"
+                : "Publish this story to the family library"
+            }
+          >
+            {publishState === "published"
+              ? "Published ✓"
+              : publishState === "publishing"
+                ? "Publishing…"
+                : initial?.story_id
+                  ? "Publish revision"
+                  : "Publish"}
           </button>
         </div>
       </div>
+
+      {publishState === "published" && publishedStoryId && (
+        <div className="rounded-lg border border-green-300 bg-green-50 p-3 text-sm text-green-900">
+          Published as <span className="font-mono">{publishedStoryId}</span>.
+          It&apos;s live in the family library. Further edits here will create a
+          new revision when you publish again.
+        </div>
+      )}
 
       {error && (
         <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
           {error}
         </div>
+      )}
+
+      {polishError && (
+        <div className="rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
+          AI polish failed: {polishError}
+        </div>
+      )}
+
+      {suggestion && (
+        <AIPolishPanel
+          suggestion={suggestion}
+          current={{
+            title,
+            body,
+            life_stage: lifeStage,
+            year_start: yearStart,
+            year_end: yearEnd,
+            themes,
+            principles,
+            quotes,
+          }}
+          onAcceptField={acceptPolishField}
+          onAcceptAll={acceptAllPolish}
+          onReject={() => setSuggestion(null)}
+        />
       )}
 
       {showPreview ? (

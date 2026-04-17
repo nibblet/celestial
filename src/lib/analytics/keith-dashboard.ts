@@ -19,11 +19,30 @@ type WeeklyReadMetric = {
   reads: number;
 };
 
+export type BeyondActivity = {
+  draftsInProgress: number;
+  draftsSubmittedForReview: number;
+  publishedThisMonth: number;
+  biosEdited: number;
+  questionsAnsweredLast30Days: number;
+  questionsPending: number;
+};
+
 export type KeithDashboardData = {
   summary: DashboardSummary;
   weeklyReads: WeeklyReadMetric[];
   topStories: TopStoryMetric[];
   trendingStories: TopStoryMetric[];
+  beyondActivity: BeyondActivity;
+};
+
+const EMPTY_BEYOND_ACTIVITY: BeyondActivity = {
+  draftsInProgress: 0,
+  draftsSubmittedForReview: 0,
+  publishedThisMonth: 0,
+  biosEdited: 0,
+  questionsAnsweredLast30Days: 0,
+  questionsPending: 0,
 };
 
 function startOfDay(date: Date): Date {
@@ -94,6 +113,61 @@ function rankStories(
     }));
 }
 
+async function loadBeyondActivity(
+  admin: ReturnType<typeof createAdminClient>
+): Promise<BeyondActivity> {
+  const now = new Date();
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const thirtyDaysAgo = addDays(startOfDay(now), -30);
+
+  const [
+    draftsInProgress,
+    draftsSubmitted,
+    publishedThisMonth,
+    biosEdited,
+    questionsAnswered,
+    questionsPending,
+  ] = await Promise.all([
+    admin
+      .from("sb_story_drafts")
+      .select("id", { count: "exact", head: true })
+      .eq("contribution_mode", "beyond")
+      .eq("status", "draft"),
+    admin
+      .from("sb_story_drafts")
+      .select("id", { count: "exact", head: true })
+      .eq("contribution_mode", "beyond")
+      .eq("status", "approved"),
+    admin
+      .from("sb_story_drafts")
+      .select("id", { count: "exact", head: true })
+      .eq("contribution_mode", "beyond")
+      .eq("status", "published")
+      .gte("updated_at", formatIso(startOfMonth)),
+    admin
+      .from("sb_people")
+      .select("id", { count: "exact", head: true })
+      .not("bio_md", "is", null),
+    admin
+      .from("sb_chapter_answers")
+      .select("id", { count: "exact", head: true })
+      .gte("created_at", formatIso(thirtyDaysAgo)),
+    admin
+      .from("sb_chapter_questions")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "pending"),
+  ]);
+
+  return {
+    draftsInProgress: draftsInProgress.count ?? 0,
+    draftsSubmittedForReview: draftsSubmitted.count ?? 0,
+    publishedThisMonth: publishedThisMonth.count ?? 0,
+    biosEdited: biosEdited.count ?? 0,
+    questionsAnsweredLast30Days: questionsAnswered.count ?? 0,
+    questionsPending: questionsPending.count ?? 0,
+  };
+}
+
 export async function getKeithDashboardData(): Promise<KeithDashboardData> {
   let admin;
   try {
@@ -109,8 +183,15 @@ export async function getKeithDashboardData(): Promise<KeithDashboardData> {
       weeklyReads: [],
       topStories: [],
       trendingStories: [],
+      beyondActivity: EMPTY_BEYOND_ACTIVITY,
     };
   }
+
+  // Fetch in parallel with the reads query below by resolving separately.
+  const beyondActivityPromise = loadBeyondActivity(admin).catch((err) => {
+    console.error("Failed to load Beyond activity:", err);
+    return EMPTY_BEYOND_ACTIVITY;
+  });
 
   const { data: publishedStories } = await admin
     .from("sb_story_drafts")
@@ -137,6 +218,7 @@ export async function getKeithDashboardData(): Promise<KeithDashboardData> {
       weeklyReads: [],
       topStories: [],
       trendingStories: [],
+      beyondActivity: await beyondActivityPromise,
     };
   }
 
@@ -176,5 +258,6 @@ export async function getKeithDashboardData(): Promise<KeithDashboardData> {
     })),
     topStories: rankStories(allReads, titleMap),
     trendingStories: rankStories(recentReads, titleMap),
+    beyondActivity: await beyondActivityPromise,
   };
 }

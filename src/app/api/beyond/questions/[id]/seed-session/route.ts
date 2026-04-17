@@ -114,6 +114,25 @@ export async function POST(
     );
   }
 
+  // Mark the question as in_progress so it stops appearing in the pending
+  // Q&A list while Keith works the chapter. It will move to "answered" when
+  // a formal answer is posted (or the resulting chapter is published).
+  const { error: questionUpdateError } = await supabase
+    .from("sb_chapter_questions")
+    .update({
+      status: "in_progress",
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", questionId);
+
+  if (questionUpdateError) {
+    // Non-fatal: the session exists, we just couldn't update status.
+    console.error(
+      "Warning: failed to mark question in_progress:",
+      questionUpdateError
+    );
+  }
+
   return Response.json({
     sessionId: session.id,
     messages: [{ role: "assistant", content: seedMessage }],

@@ -161,13 +161,18 @@ export default function AdminDraftsPage() {
                 >
                   {expanded === d.id ? "Collapse" : "Preview"}
                 </button>
-                {d.status === "draft" && (
+                {(d.status === "draft" || d.status === "approved") && (
                   <button
                     onClick={() => publishDraft(d.id)}
                     disabled={publishing === d.id}
                     className="type-ui rounded bg-clay px-3 py-1 text-xs font-medium text-warm-white hover:bg-clay-mid disabled:opacity-50"
+                    title={d.status === "approved" ? "Publish this approved revision" : "Publish this draft"}
                   >
-                    {publishing === d.id ? "Publishing..." : "Publish"}
+                    {publishing === d.id
+                      ? "Publishing..."
+                      : d.status === "approved"
+                        ? "Publish revision"
+                        : "Publish"}
                   </button>
                 )}
               </div>

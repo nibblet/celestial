@@ -7,8 +7,9 @@ export async function GET(
   context: { params: Promise<{ storyId: string }> }
 ) {
   const { storyId } = await context.params;
+  // Supabase first so revisions win over filesystem originals.
   const story =
-    getStoryById(storyId) || (await getPublishedStoryById(storyId));
+    (await getPublishedStoryById(storyId)) || getStoryById(storyId);
   if (!story) {
     return NextResponse.json({ title: null }, { status: 404 });
   }

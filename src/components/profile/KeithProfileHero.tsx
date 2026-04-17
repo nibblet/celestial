@@ -12,39 +12,18 @@ type KeithProfileHeroProps = {
   dashboard: KeithDashboardData;
 };
 
-type QuickLink = {
-  href: string;
-  label: string;
-  description: string;
-  badge?: string;
-};
-
 export function KeithProfileHero({
   displayName,
   email,
   pendingQuestionCount = 0,
   dashboard,
 }: KeithProfileHeroProps) {
-  const quickLinks: QuickLink[] = [
-    {
-      href: "/beyond",
-      label: "Enter Beyond",
-      description:
-        "Capture untold stories in Keith's voice and continue the archive.",
-      badge:
-        pendingQuestionCount > 0
-          ? `${pendingQuestionCount} reader question${
-              pendingQuestionCount === 1 ? "" : "s"
-            }`
-          : undefined,
-    },
-    {
-      href: "/profile/questions",
-      label: "My questions",
-      description:
-        "Questions you've asked and the answers you've sent back.",
-    },
-  ];
+  const badge =
+    pendingQuestionCount > 0
+      ? `${pendingQuestionCount} reader question${
+          pendingQuestionCount === 1 ? "" : "s"
+        }`
+      : undefined;
 
   async function handleSignOut() {
     const supabase = createClient();
@@ -70,78 +49,51 @@ export function KeithProfileHero({
         />
 
         <div className="relative mx-auto max-w-wide px-[var(--page-padding-x)] py-16 md:py-24">
-          <div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-end">
-            <div>
-              <p className="type-era-label mb-4 text-[rgba(247,243,237,0.68)]">
-                Keith&apos;s story workshop
-              </p>
-              <h1 className="mb-4 font-[family-name:var(--font-playfair)] text-[clamp(2.5rem,6vw,4.75rem)] font-semibold leading-[1.02] tracking-tight text-[#f7f3ed]">
-                Welcome back, {displayName}.
-              </h1>
-              <p className="max-w-2xl font-[family-name:var(--font-lora)] text-lg leading-relaxed text-[rgba(247,243,237,0.82)]">
-                This is the launch point for the next volume. Use Beyond to turn
-                memories, scenes, and reflections into new Keith Cobb stories that
-                can join the family library.
-              </p>
-              <div className="mt-6 flex flex-wrap items-center gap-3">
-                <Link
-                  href="/beyond"
-                  className="type-ui inline-flex min-h-[46px] items-center justify-center rounded-full bg-gold px-6 py-2.5 text-sm font-semibold text-[#2c1c10] transition-transform duration-[var(--duration-normal)] hover:-translate-y-0.5"
-                >
-                  Open Beyond
-                </Link>
-                <Link
-                  href="/stories"
-                  className="type-ui inline-flex min-h-[46px] items-center justify-center rounded-full border border-[rgba(247,243,237,0.32)] bg-[rgba(247,243,237,0.08)] px-6 py-2.5 text-sm font-semibold !text-[#f7f3ed] transition-colors duration-[var(--duration-normal)] hover:bg-[rgba(247,243,237,0.16)]"
-                >
-                  Browse stories
-                </Link>
-                <button
-                  type="button"
-                  onClick={handleSignOut}
-                  className="type-ui inline-flex min-h-[46px] items-center justify-center rounded-full border border-[rgba(247,243,237,0.2)] px-6 py-2.5 text-sm font-semibold !text-[rgba(247,243,237,0.9)] transition-colors duration-[var(--duration-normal)] hover:!text-[#f7f3ed]"
-                >
-                  Sign out
-                </button>
-              </div>
-              <p className="type-ui mt-4 text-sm !text-[rgba(247,243,237,0.65)]">
-                Signed in as {email}
-              </p>
-            </div>
-
-            <div className="rounded-[28px] border border-[rgba(247,243,237,0.16)] bg-[rgba(247,243,237,0.06)] p-6 backdrop-blur-sm">
-              <p className="type-era-label mb-3 text-[rgba(247,243,237,0.6)]">
-                Next chapter
-              </p>
-              <p className="font-[family-name:var(--font-lora)] text-base leading-relaxed text-[rgba(247,243,237,0.86)]">
-                Beyond is where untold stories become Volume 2. The rest of the
-                family keeps using Tell for shorter memories and perspectives.
-              </p>
-            </div>
+          <div className="max-w-3xl">
+            <p className="type-era-label mb-4 text-[rgba(247,243,237,0.68)]">
+              Keith&apos;s story workshop
+            </p>
+            <h1 className="mb-4 font-[family-name:var(--font-playfair)] text-[clamp(2.5rem,6vw,4.75rem)] font-semibold leading-[1.02] tracking-tight text-[#f7f3ed]">
+              Welcome back, {displayName}.
+            </h1>
+            <p className="max-w-2xl font-[family-name:var(--font-lora)] text-lg leading-relaxed text-[rgba(247,243,237,0.82)]">
+              Beyond is the launch point for the next volume — where untold
+              stories become Volume 2. Turn memories, scenes, and reflections
+              into new Keith Cobb stories that can join the family library.
+            </p>
+            <p className="type-ui mt-4 text-sm !text-[rgba(247,243,237,0.65)]">
+              Signed in as {email}
+            </p>
           </div>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2">
-            {quickLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="group rounded-[24px] border border-[rgba(247,243,237,0.14)] bg-[rgba(247,243,237,0.04)] p-5 transition-[transform,border-color,background-color] duration-[var(--duration-normal)] hover:-translate-y-1 hover:border-[rgba(247,243,237,0.3)] hover:bg-[rgba(247,243,237,0.08)]"
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <p className="type-ui text-sm font-semibold !text-[#f7f3ed]">
-                    {link.label}
-                  </p>
-                  {link.badge && (
-                    <span className="type-ui rounded-full bg-gold px-2.5 py-0.5 text-xs font-semibold text-[#2c1c10]">
-                      {link.badge}
-                    </span>
-                  )}
-                </div>
-                <p className="mt-2 font-[family-name:var(--font-lora)] text-sm leading-relaxed text-[rgba(247,243,237,0.7)]">
-                  {link.description}
+          <div className="mt-10 grid gap-4 sm:grid-cols-[1.4fr_1fr]">
+            <Link
+              href="/beyond"
+              className="group rounded-[24px] border border-[rgba(247,243,237,0.18)] bg-[#1e3a4a] p-6 transition-[transform,border-color,background-color] duration-[var(--duration-normal)] hover:-translate-y-1 hover:border-[rgba(247,243,237,0.36)] hover:bg-[#26475a]"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <p className="type-ui text-base font-semibold !text-[#f7f3ed]">
+                  Enter Beyond
                 </p>
-              </Link>
-            ))}
+                {badge && (
+                  <span className="type-ui rounded-full bg-gold px-2.5 py-0.5 text-xs font-semibold text-[#2c1c10]">
+                    {badge}
+                  </span>
+                )}
+              </div>
+              <p className="mt-2 font-[family-name:var(--font-lora)] text-sm leading-relaxed text-[rgba(247,243,237,0.75)]">
+                Capture untold stories in Keith&apos;s voice and continue the
+                archive.
+              </p>
+            </Link>
+
+            <button
+              type="button"
+              onClick={handleSignOut}
+              className="type-ui inline-flex min-h-[46px] items-center justify-center self-start rounded-full border border-[rgba(247,243,237,0.2)] px-6 py-2.5 text-sm font-semibold !text-[rgba(247,243,237,0.9)] transition-colors duration-[var(--duration-normal)] hover:!text-[#f7f3ed]"
+            >
+              Sign out
+            </button>
           </div>
         </div>
       </section>

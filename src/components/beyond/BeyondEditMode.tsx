@@ -23,6 +23,8 @@ export function BeyondEditMode() {
   const [picker, setPicker] = useState<"drafts" | "published" | "biographies">("drafts");
   const [query, setQuery] = useState("");
   const [opening, setOpening] = useState<string | null>(null);
+  const [publishingId, setPublishingId] = useState<string | null>(null);
+  const [publishError, setPublishError] = useState<string | null>(null);
   // Warning gate: set to a story when Keith tries to open a published chapter
   // for the first time; cleared on confirm or cancel.
   const [pendingStory, setPendingStory] = useState<PublishedStory | null>(null);
@@ -74,6 +76,27 @@ export function BeyondEditMode() {
         s.lifeStage.toLowerCase().includes(q)
     );
   }, [query, stories]);
+
+  async function publishDraft(draftId: string) {
+    setPublishingId(draftId);
+    setPublishError(null);
+    try {
+      const res = await fetch(`/api/beyond/drafts/${draftId}/publish`, {
+        method: "POST",
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        error?: string;
+      };
+      if (!res.ok) {
+        throw new Error(data.error || "Publish failed");
+      }
+      await load();
+    } catch (err) {
+      setPublishError(err instanceof Error ? err.message : "Publish failed");
+    } finally {
+      setPublishingId(null);
+    }
+  }
 
   async function openPublished(story: PublishedStory) {
     setPendingStory(null);
@@ -178,39 +201,138 @@ export function BeyondEditMode() {
               </p>
             </div>
           ) : (
-            <ul className="space-y-2">
-              {drafts.map((d) => (
-                <li key={d.id}>
-                  <button
-                    type="button"
-                    onClick={() => setSelected(d)}
-                    className="flex w-full flex-col gap-1 rounded-lg border border-[var(--color-border)] bg-warm-white p-3 text-left transition-colors hover:border-clay-border"
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="type-ui truncate font-medium text-ink">
-                        {d.title || "Untitled"}
-                      </span>
-                      <span className="type-ui shrink-0 text-xs text-ink-ghost">
-                        {d.status === "approved"
-                          ? "In review"
-                          : d.status === "published"
-                            ? "Published"
-                            : "Draft"}
-                        {d.origin ? ` · ${d.origin}` : ""}
-                      </span>
+            (() => {
+              const ready = drafts.filter((d) => d.status === "approved");
+              const inProgress = drafts.filter((d) => d.status === "draft");
+              return (
+                <div className="space-y-6">
+                  {publishError && (
+                    <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+                      {publishError}
                     </div>
-                    <p className="type-ui line-clamp-2 text-xs text-ink-muted">
-                      {stripHTML(d.body || "").slice(0, 180)}
+                  )}
+
+                  {ready.length > 0 && (
+                    <section>
+                      <div className="mb-2 flex items-baseline justify-between">
+                        <h3 className="type-ui text-sm font-semibold text-clay">
+                          ✓ Ready to publish
+                          <span className="ml-2 font-normal text-ink-ghost">
+                            ({ready.length})
+                          </span>
+                        </h3>
+                        <p className="type-ui text-xs text-ink-ghost">
+                          Marked ready — one click to go live
+                        </p>
+                      </div>
+                      <ul className="space-y-2">
+                        {ready.map((d) => (
+                          <li
+                            key={d.id}
+                            className="rounded-lg border border-clay-border p-3"
+                            style={{
+                              backgroundColor: "rgba(184, 67, 54, 0.08)",
+                            }}
+                          >
+                            <div className="flex items-center justify-between gap-3">
+                              <button
+                                type="button"
+                                onClick={() => setSelected(d)}
+                                className="min-w-0 flex-1 text-left"
+                              >
+                                <span className="type-ui block truncate font-medium text-ink">
+                                  {d.title || "Untitled"}
+                                </span>
+                                <p className="type-ui mt-0.5 line-clamp-1 text-xs text-ink-muted">
+                                  {stripHTML(d.body || "").slice(0, 160)}
+                                </p>
+                                {d.updated_at && (
+                                  <p className="type-ui mt-1 text-[11px] text-ink-ghost">
+                                    Marked ready{" "}
+                                    {new Date(d.updated_at).toLocaleString()}
+                                    {d.story_id ? " · revision" : ""}
+                                  </p>
+                                )}
+                              </button>
+                              <div className="flex shrink-0 flex-col items-end gap-1">
+                                <button
+                                  type="button"
+                                  onClick={() => publishDraft(d.id)}
+                                  disabled={publishingId === d.id}
+                                  className="type-ui rounded bg-clay px-3 py-1.5 text-xs font-medium text-warm-white hover:bg-clay-mid disabled:opacity-50"
+                                >
+                                  {publishingId === d.id
+                                    ? "Publishing…"
+                                    : d.story_id
+                                      ? "Publish revision"
+                                      : "Publish"}
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => setSelected(d)}
+                                  className="type-ui text-[11px] text-ink-ghost hover:text-clay"
+                                >
+                                  Review first
+                                </button>
+                              </div>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  )}
+
+                  {inProgress.length > 0 && (
+                    <section>
+                      {ready.length > 0 && (
+                        <h3 className="type-ui mb-2 text-sm font-semibold text-ink-muted">
+                          In progress
+                          <span className="ml-2 font-normal text-ink-ghost">
+                            ({inProgress.length})
+                          </span>
+                        </h3>
+                      )}
+                      <ul className="space-y-2">
+                        {inProgress.map((d) => (
+                          <li key={d.id}>
+                            <button
+                              type="button"
+                              onClick={() => setSelected(d)}
+                              className="flex w-full flex-col gap-1 rounded-lg border border-[var(--color-border)] bg-warm-white p-3 text-left transition-colors hover:border-clay-border"
+                            >
+                              <div className="flex items-center justify-between gap-3">
+                                <span className="type-ui truncate font-medium text-ink">
+                                  {d.title || "Untitled"}
+                                </span>
+                                <span className="type-ui shrink-0 text-xs text-ink-ghost">
+                                  Draft
+                                  {d.origin ? ` · ${d.origin}` : ""}
+                                </span>
+                              </div>
+                              <p className="type-ui line-clamp-2 text-xs text-ink-muted">
+                                {stripHTML(d.body || "").slice(0, 180)}
+                              </p>
+                              {d.updated_at && (
+                                <p className="type-ui text-[11px] text-ink-ghost">
+                                  Updated{" "}
+                                  {new Date(d.updated_at).toLocaleString()}
+                                </p>
+                              )}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  )}
+
+                  {ready.length === 0 && inProgress.length === 0 && (
+                    <p className="type-ui text-sm text-ink-ghost">
+                      Nothing in progress right now.
                     </p>
-                    {d.updated_at && (
-                      <p className="type-ui text-[11px] text-ink-ghost">
-                        Updated {new Date(d.updated_at).toLocaleString()}
-                      </p>
-                    )}
-                  </button>
-                </li>
-              ))}
-            </ul>
+                  )}
+                </div>
+              );
+            })()
           )}
         </>
       )}

@@ -18,7 +18,7 @@ function BeyondShellInner() {
   const mode = resolveMode(params.get("mode"));
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="beyond-theme relative flex h-full flex-col">
       <BeyondModeTabs active={mode} />
       <div className="flex-1 overflow-y-auto">
         {mode === "qa" && <BeyondQAMode />}

@@ -79,30 +79,32 @@ body[data-age-mode="teen"] {
 }
 
 @theme inline {
-  --color-burgundy: #8b2c2c;
-  --color-burgundy-dark: #6b1e1e;
-  --color-burgundy-light: #f5e8e8;
-  --color-clay: #b5451b;
-  --color-clay-mid: #c8662a;
-  --color-clay-light: #fdf0e8;
-  --color-clay-border: #e8b090;
-  --color-parchment: #f0e8d5;
-  --color-warm-white: #f7f3ed;
-  --color-warm-white-2: #fbf8f4;
-  --color-ink: #2c1c10;
-  --color-ink-muted: #6b5040;
-  --color-ink-ghost: #a89070;
-  --color-ocean: #4a7fa0;
-  --color-ocean-light: #7ab3c9;
-  --color-ocean-pale: #e8f4f8;
-  --color-green: #3d6b35;
-  --color-green-mid: #6ba35a;
-  --color-green-pale: #eef4ec;
-  --color-gold: #d4a843;
-  --color-gold-pale: #f5e8c8;
-  --color-border: rgba(44, 28, 16, 0.12);
-  --color-border-strong: rgba(44, 28, 16, 0.25);
-  --color-divider: rgba(44, 28, 16, 0.08);
+  /* Colors reference :root custom properties so they can be overridden
+     in scoped themes (e.g. .beyond-theme for Keith's workspace). */
+  --color-burgundy: var(--color-burgundy);
+  --color-burgundy-dark: var(--color-burgundy-dark);
+  --color-burgundy-light: var(--color-burgundy-light);
+  --color-clay: var(--color-clay);
+  --color-clay-mid: var(--color-clay-mid);
+  --color-clay-light: var(--color-clay-light);
+  --color-clay-border: var(--color-clay-border);
+  --color-parchment: var(--color-parchment);
+  --color-warm-white: var(--color-warm-white);
+  --color-warm-white-2: var(--color-warm-white-2);
+  --color-ink: var(--color-ink);
+  --color-ink-muted: var(--color-ink-muted);
+  --color-ink-ghost: var(--color-ink-ghost);
+  --color-ocean: var(--color-ocean);
+  --color-ocean-light: var(--color-ocean-light);
+  --color-ocean-pale: var(--color-ocean-pale);
+  --color-green: var(--color-green);
+  --color-green-mid: var(--color-green-mid);
+  --color-green-pale: var(--color-green-pale);
+  --color-gold: var(--color-gold);
+  --color-gold-pale: var(--color-gold-pale);
+  --color-border: var(--color-border);
+  --color-border-strong: var(--color-border-strong);
+  --color-divider: var(--color-divider);
 
   --max-width-story: 680px;
   --max-width-content: 800px;
@@ -113,6 +115,58 @@ body[data-age-mode="teen"] {
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
+}
+
+/* --- Beyond workspace theme (Keith's private space) ---
+   Scoped override inspired by the back-of-dust-jacket portrait:
+   deep ocean teal background, warm cream text, red cap as accent.
+   Applied only inside /beyond/* via <div class="beyond-theme">. */
+.beyond-theme {
+  /* Accent: red cap replaces clay */
+  --color-clay: #b84336;
+  --color-clay-mid: #9e3529;
+  --color-clay-light: #3d2622;
+  --color-clay-border: rgba(184, 67, 54, 0.35);
+
+  /* Surfaces: ocean teal replaces warm white */
+  --color-warm-white: #1e3a4a;
+  --color-warm-white-2: #26475a;
+  --color-parchment: #17303d;
+
+  /* Text: warm cream inverted */
+  --color-ink: #f5ede0;
+  --color-ink-muted: #c8c1b2;
+  --color-ink-ghost: #8a9398;
+
+  /* Borders softened for dark surface */
+  --color-border: rgba(247, 237, 224, 0.15);
+  --color-border-strong: rgba(247, 237, 224, 0.3);
+  --color-divider: rgba(247, 237, 224, 0.1);
+
+  /* Burgundy headings stay but lean warmer against teal */
+  --color-burgundy: #e8b4a8;
+  --color-burgundy-dark: #d19a8c;
+  --color-burgundy-light: #2a3d48;
+
+  background: var(--color-parchment);
+  color: var(--color-ink);
+  position: relative;
+  isolation: isolate;
+}
+
+/* Painting wash — very light atmospheric overlay */
+.beyond-theme::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/images/keith-portrait.jpg");
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  opacity: 0.07;
+  pointer-events: none;
+  z-index: -1;
+  mix-blend-mode: luminosity;
 }
 
 /* --- Typography utilities (spec section 3) --- */

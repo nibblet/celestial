@@ -29,7 +29,7 @@ export async function POST(request: Request) {
   // Get the draft
   const { data: draft } = await supabase
     .from("sb_story_drafts")
-    .select("id, status, session_id")
+    .select("id, status, session_id, story_id, origin")
     .eq("id", draftId)
     .single();
 
@@ -44,6 +44,58 @@ export async function POST(request: Request) {
     );
   }
 
+  // ── Revision path ──
+  // If the draft already has a story_id (created via from-story or referencing
+  // an existing published story), publish it in place: supersede any prior
+  // published row with that story_id and keep the id stable.
+  if (draft.story_id) {
+    const { error: supersedeError } = await supabase
+      .from("sb_story_drafts")
+      .update({
+        status: "superseded",
+        updated_at: new Date().toISOString(),
+      })
+      .eq("story_id", draft.story_id)
+      .eq("status", "published")
+      .neq("id", draftId);
+
+    if (supersedeError) {
+      return Response.json(
+        { error: "Failed to supersede prior version" },
+        { status: 500 }
+      );
+    }
+
+    const { error: publishError } = await supabase
+      .from("sb_story_drafts")
+      .update({
+        status: "published",
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", draftId);
+
+    if (publishError) {
+      return Response.json(
+        { error: "Failed to publish revision" },
+        { status: 500 }
+      );
+    }
+
+    if (draft.session_id) {
+      await supabase
+        .from("sb_story_sessions")
+        .update({ status: "published", updated_at: new Date().toISOString() })
+        .eq("id", draft.session_id);
+    }
+
+    return Response.json({
+      storyId: draft.story_id,
+      status: "published",
+      revision: true,
+    });
+  }
+
+  // ── New-story path ──
   // Get the session to determine volume
   const { data: session } = await supabase
     .from("sb_story_sessions")
