@@ -15,9 +15,6 @@ import { AnsweredQuestionsList } from "@/components/stories/AnsweredQuestionsLis
 import { lifeStageToEraAccent } from "@/lib/design/era";
 import { createClient } from "@/lib/supabase/server";
 
-const STORY_AUDIO_UI_ENABLED =
-  process.env.NEXT_PUBLIC_ENABLE_STORY_AUDIO === "true";
-
 export default async function StoryDetailPage({
   params,
 }: {
@@ -31,8 +28,7 @@ export default async function StoryDetailPage({
 
   const era = lifeStageToEraAccent(story.lifeStage);
   const supportsListenMode =
-    STORY_AUDIO_UI_ENABLED &&
-    (story.source === "memoir" || story.source === "interview");
+    story.source === "memoir" || story.source === "interview";
 
   // Check if current user has favorited this story
   const supabase = await createClient();

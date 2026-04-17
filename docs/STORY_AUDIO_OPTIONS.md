@@ -5,9 +5,8 @@
 
 ## Current product state
 
-- The story listen UI is currently **hidden by default** behind `NEXT_PUBLIC_ENABLE_STORY_AUDIO`.
-- Browser-based narration code remains in the repo as a temporary implementation path, but it is not visible unless that flag is explicitly set to `true`.
-- This keeps the product clean while preserving the work as a fallback/reference implementation.
+- The story listen UI is **always visible** on memoir and interview stories.
+- Playback is ElevenLabs (streaming, cached to Supabase Storage after first listen); Web Speech is kept as a fallback if ElevenLabs is not configured or fails.
 
 ## Goal
 
