@@ -4,5 +4,6 @@
 
 - 39 story pages
 - 12 theme pages
+- 65 people pages
 - 1 timeline page
 - 1 index page

@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "inventory:people": "node --import tsx scripts/inventory-people.ts",
+    "compile:wiki": "node --import tsx scripts/compile-wiki.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.88.0",

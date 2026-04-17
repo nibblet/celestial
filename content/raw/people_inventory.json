@@ -1,0 +1,3635 @@
+{
+  "generated": "2026-04-17",
+  "people": [
+    {
+      "canonical_name": "Accounting Professional",
+      "slug": "accounting-professional",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S19",
+        "P1_S22",
+        "P1_S24",
+        "P1_S28",
+        "P1_S30"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Accounting Professional Services",
+      "slug": "accounting-professional-services",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S24",
+        "P1_S28"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Africa One",
+      "slug": "africa-one",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S29",
+        "P1_S37"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Air Force",
+      "slug": "air-force",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S34",
+        "P1_S35"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Air Force Academy",
+      "slug": "air-force-academy",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S34",
+        "P1_S35"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Alamo Rent",
+      "slug": "alamo-rent",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S24",
+        "P1_S25",
+        "P1_S26",
+        "P1_S36"
+      ],
+      "interview_story_ids": [
+        "IV_S03",
+        "IV_S04",
+        "IV_S08"
+      ],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Alamo Rent A Car",
+      "slug": "alamo-rent-a-car",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S24",
+        "P1_S25",
+        "P1_S26",
+        "P1_S36"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "All-State Band",
+      "slug": "all-state-band",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S05",
+        "P1_S07",
+        "P1_S11"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Alliance Data",
+      "slug": "alliance-data",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S25",
+        "P1_S26"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Alliance Data Systems",
+      "slug": "alliance-data-systems",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S25",
+        "P1_S26"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Altamonte Springs",
+      "slug": "altamonte-springs",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S20",
+        "P1_S33",
+        "P1_S34"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Arthur Andersen",
+      "slug": "arthur-andersen",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S16",
+        "P1_S21"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Arts Center",
+      "slug": "arts-center",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S25",
+        "P1_S38"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Baltimore Accepted",
+      "slug": "baltimore-accepted",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S22"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Baltimore Philadelphia",
+      "slug": "baltimore-philadelphia",
+      "tiers": [
+        "D"
+      ],
+      "memoir_story_ids": [],
+      "interview_story_ids": [
+        "IV_S03",
+        "IV_S06"
+      ],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Bargain Store",
+      "slug": "bargain-store",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S07",
+        "P1_S09",
+        "P1_S14"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Bayne Cobb",
+      "slug": "bayne-cobb",
+      "tiers": [
+        "A",
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S01",
+        "P1_S06",
+        "P1_S07"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [
+        "P1_S06"
+      ],
+      "note": "Tier A subject from P1_S06. Often appears in prose as the pair \"Bayne and Frances\" with Frances Cobb, his wife.",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Ben Franklin",
+      "slug": "ben-franklin",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S07",
+        "P1_S09"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Bill Hannon",
+      "slug": "bill-hannon",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S24",
+        "P1_S27"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Bill Norton",
+      "slug": "bill-norton",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S16",
+        "P1_S18",
+        "P1_S19",
+        "P1_S21",
+        "P1_S32"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Bill Su",
+      "slug": "bill-su",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S18",
+        "P1_S19"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Blue and Ruby Cole",
+      "slug": "blue-and-ruby-cole",
+      "tiers": [
+        "A",
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S01",
+        "P1_S05",
+        "P1_S08"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [
+        "P1_S08"
+      ],
+      "note": "Tier A subject from P1_S08. Shorter phrases \"Blue and Ruby\" and \"Blue Cole\" refer to the same neighbors, Blue and Ruby Cole.",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Boy Scout Council",
+      "slug": "boy-scout-council",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S04",
+        "P1_S23"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Boy Scout Jamboree",
+      "slug": "boy-scout-jamboree",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S04",
+        "P1_S11",
+        "P1_S30"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Broward County",
+      "slug": "broward-county",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S33",
+        "P1_S38"
+      ],
+      "interview_story_ids": [
+        "IV_S10"
+      ],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Cal-Maine Foods",
+      "slug": "cal-maine-foods",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S18",
+        "P1_S19"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Calhoun City High",
+      "slug": "calhoun-city-high",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S03"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Calhoun City High School",
+      "slug": "calhoun-city-high-school",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S03"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Calhoun City Mississippi",
+      "slug": "calhoun-city-mississippi",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S01",
+        "P1_S12"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Calhoun County",
+      "slug": "calhoun-county",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S01",
+        "P1_S36"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Camp Palila",
+      "slug": "camp-palila",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S04",
+        "P1_S11"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Capital Kidder",
+      "slug": "capital-kidder",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S24",
+        "P1_S27"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Capital Kidder Peabody",
+      "slug": "capital-kidder-peabody",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S24",
+        "P1_S27"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Carlsbad Caverns",
+      "slug": "carlsbad-caverns",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S29",
+        "P1_S39"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Carter Dobbs",
+      "slug": "carter-dobbs",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S04",
+        "P1_S18"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Carter Dobbs Dr",
+      "slug": "carter-dobbs-dr",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S04",
+        "P1_S18"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "CEO of Alamo",
+      "slug": "ceo-of-alamo",
+      "tiers": [
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S25"
+      ],
+      "interview_story_ids": [
+        "IV_S04"
+      ],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "CEO of Alamo Rent",
+      "slug": "ceo-of-alamo-rent",
+      "tiers": [
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S25"
+      ],
+      "interview_story_ids": [
+        "IV_S04"
+      ],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Charles T. Brumfield",
+      "slug": "charles-t-brumfield",
+      "tiers": [
+        "A",
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S12",
+        "P1_S13",
+        "P1_S36"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [
+        "P1_S36"
+      ],
+      "note": "Tier A subject from P1_S36. Also referred to as \"Charlie Brumfield\" in some stories.",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "City High",
+      "slug": "city-high",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S03"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "City High School",
+      "slug": "city-high-school",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S03"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "City Mississippi",
+      "slug": "city-mississippi",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S01",
+        "P1_S12"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "City of Fort",
+      "slug": "city-of-fort",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S38"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "City of Fort Lauderdale",
+      "slug": "city-of-fort-lauderdale",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S38"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Closer Walk",
+      "slug": "closer-walk",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S31"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Clym Yeobright",
+      "slug": "clym-yeobright",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S03"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Commonwealth Savings",
+      "slug": "commonwealth-savings",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S27"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Commonwealth Savings and Loan",
+      "slug": "commonwealth-savings-and-loan",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S27"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Community Foundation",
+      "slug": "community-foundation",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S03",
+        "P1_S21",
+        "P1_S38"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Concerto No",
+      "slug": "concerto-no",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S10",
+        "P1_S31"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Contracting Company",
+      "slug": "contracting-company",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S18",
+        "P1_S19"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Coral Ridge",
+      "slug": "coral-ridge",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S33",
+        "P1_S37"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Costa Rica",
+      "slug": "costa-rica",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S29",
+        "P1_S34"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Crest School",
+      "slug": "crest-school",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S34"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Data Systems",
+      "slug": "data-systems",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S25",
+        "P1_S26"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "David Rush",
+      "slug": "david-rush",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S22"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Dean of Student",
+      "slug": "dean-of-student",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S13",
+        "P1_S15"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Dean of Student Affairs",
+      "slug": "dean-of-student-affairs",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S13",
+        "P1_S15"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Disney World",
+      "slug": "disney-world",
+      "tiers": [
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S20"
+      ],
+      "interview_story_ids": [
+        "IV_S03"
+      ],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Dobbs Dr",
+      "slug": "dobbs-dr",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S04",
+        "P1_S18"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Dot Cobb",
+      "slug": "dot-cobb",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S01",
+        "P1_S12"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "Dot Hill is her maiden name—the same person. \"Keith and Dot\" in the memoir refers to her with Keith Cobb.",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Dr Carter Dobbs",
+      "slug": "dr-carter-dobbs",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S04",
+        "P1_S18"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "Sometimes shortened to \"Dr Carter\" in the text.",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Dr McCain",
+      "slug": "dr-mccain",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S15",
+        "P1_S16",
+        "P1_S18"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Dr Switzer",
+      "slug": "dr-switzer",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S13",
+        "P1_S18"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Drug Store",
+      "slug": "drug-store",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S01",
+        "P1_S07"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Duchin Story",
+      "slug": "duchin-story",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S10",
+        "P1_S31"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Ebbets Field",
+      "slug": "ebbets-field",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S11",
+        "P1_S30"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Eddy Duchin",
+      "slug": "eddy-duchin",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S10",
+        "P1_S31"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Eddy Duchin Story",
+      "slug": "eddy-duchin-story",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S10",
+        "P1_S31"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Elvis Presley",
+      "slug": "elvis-presley",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S05",
+        "P1_S30",
+        "P1_S31"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Ernie Jenkins",
+      "slug": "ernie-jenkins",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S18",
+        "P1_S27"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Fair Lady",
+      "slug": "fair-lady",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S10",
+        "P1_S11",
+        "P1_S39"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Fair Talent",
+      "slug": "fair-talent",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S05",
+        "P1_S30"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Fair Talent Competition",
+      "slug": "fair-talent-competition",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S05",
+        "P1_S30"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Federal Reserve Board",
+      "slug": "federal-reserve-board",
+      "tiers": [
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S38"
+      ],
+      "interview_story_ids": [
+        "IV_S06"
+      ],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "First Baptist Church",
+      "slug": "first-baptist-church",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S03",
+        "P1_S04",
+        "P1_S12",
+        "P1_S31",
+        "P1_S37",
+        "P1_S39"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "First National",
+      "slug": "first-national",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S09",
+        "P1_S18"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "First National Bank",
+      "slug": "first-national-bank",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S09",
+        "P1_S18"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "First Presbyterian",
+      "slug": "first-presbyterian",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S37",
+        "P1_S38"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "First Presbyterian Church",
+      "slug": "first-presbyterian-church",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S37",
+        "P1_S38"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Flat Minor",
+      "slug": "flat-minor",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S10",
+        "P1_S31"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Florida and the Bahamas",
+      "slug": "florida-and-the-bahamas",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S29",
+        "P1_S33"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Florida State",
+      "slug": "florida-state",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S11",
+        "P1_S21"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Florida State University",
+      "slug": "florida-state-university",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S11",
+        "P1_S21"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Force Academy",
+      "slug": "force-academy",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S34",
+        "P1_S35"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Forest Hall",
+      "slug": "forest-hall",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S13",
+        "P1_S36"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Forge Pennsylvania",
+      "slug": "forge-pennsylvania",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S04",
+        "P1_S11"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Fort Lauderdale Peat",
+      "slug": "fort-lauderdale-peat",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S30"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Fort Lauderdale Peat Marwick",
+      "slug": "fort-lauderdale-peat-marwick",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S30"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Frances Clements",
+      "slug": "frances-clements",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S06",
+        "P1_S07"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Frances Cobb",
+      "slug": "frances-cobb",
+      "tiers": [
+        "A",
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S07",
+        "P1_S09"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [
+        "P1_S07"
+      ],
+      "note": "Tier A subject from P1_S07. Often appears paired as \"Bayne and Frances\" with Bayne Cobb (*his wife).",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Frances Hardin",
+      "slug": "frances-hardin",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S13"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Frances Mallory",
+      "slug": "frances-mallory",
+      "tiers": [
+        "A",
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S03",
+        "P1_S18",
+        "P1_S33"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [
+        "P1_S03"
+      ],
+      "note": "Tier A subject from P1_S03. \"Miss Frances\" and \"Miss Frances Mallory\" refer to this same teacher.",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Fred Nabors",
+      "slug": "fred-nabors",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S03",
+        "P1_S33"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Freddie Cox",
+      "slug": "freddie-cox",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S05",
+        "P1_S31"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "GE Capital",
+      "slug": "ge-capital",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S24",
+        "P1_S27"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "GE Capital Kidder",
+      "slug": "ge-capital-kidder",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S24",
+        "P1_S27"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "GE Capital Kidder Peabody",
+      "slug": "ge-capital-kidder-peabody",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S24",
+        "P1_S27"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Gene O Kelly",
+      "slug": "gene-o-kelly",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S24",
+        "P1_S28"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Government Association",
+      "slug": "government-association",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S11",
+        "P1_S15",
+        "P1_S36",
+        "P1_S38",
+        "P1_S39"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Grand Canyon",
+      "slug": "grand-canyon",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S29",
+        "P1_S39"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Gulf Coast",
+      "slug": "gulf-coast",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S05",
+        "P1_S11",
+        "P1_S36"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Hall of Fame",
+      "slug": "hall-of-fame",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S13",
+        "P1_S22",
+        "P1_S23",
+        "P1_S39"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Hank Watson",
+      "slug": "hank-watson",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S22"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Harold Stokes",
+      "slug": "harold-stokes",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S22"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Harry Lorayne",
+      "slug": "harry-lorayne",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S13"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Harry Robinson",
+      "slug": "harry-robinson",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S09",
+        "P1_S12"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Hattiesburg Mississippi",
+      "slug": "hattiesburg-mississippi",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S11",
+        "P1_S30"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "High School",
+      "slug": "high-school",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S03",
+        "P1_S06"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Howard Miller",
+      "slug": "howard-miller",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S20",
+        "P1_S21"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Humble Oil",
+      "slug": "humble-oil",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S06",
+        "P1_S09",
+        "P1_S12",
+        "P1_S16",
+        "P1_S18"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Hy Indowsky",
+      "slug": "hy-indowsky",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S30"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "I' I've",
+      "slug": "i-i-ve",
+      "tiers": [
+        "D"
+      ],
+      "memoir_story_ids": [],
+      "interview_story_ids": [
+        "IV_S05",
+        "IV_S10"
+      ],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "I've I've",
+      "slug": "i-ve-i-ve",
+      "tiers": [
+        "D"
+      ],
+      "memoir_story_ids": [],
+      "interview_story_ids": [
+        "IV_S03",
+        "IV_S06",
+        "IV_S10"
+      ],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Jackson Mississippi",
+      "slug": "jackson-mississippi",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S18",
+        "P1_S20",
+        "P1_S33"
+      ],
+      "interview_story_ids": [
+        "IV_S03",
+        "IV_S05"
+      ],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Jane Harrelson",
+      "slug": "jane-harrelson",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S05",
+        "P1_S31"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Jim Blosser",
+      "slug": "jim-blosser",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S25",
+        "P1_S26"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Jim Brocksmith",
+      "slug": "jim-brocksmith",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S22",
+        "P1_S23",
+        "P1_S24"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Jim Madonna",
+      "slug": "jim-madonna",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S22",
+        "P1_S23",
+        "P1_S24",
+        "P1_S28"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "\"Madonna and Jim\" (and similar transcript variants with Jon/Jim) refer to Jim Madonna.",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "John Cobb",
+      "slug": "john-cobb",
+      "tiers": [
+        "C"
+      ],
+      "memoir_story_ids": [
+        "P1_S34"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "Son; the phrase \"Paul and John\" refers to him and Paul Cobb.",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "John Edmondson",
+      "slug": "john-edmondson",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S05"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "John Simpson",
+      "slug": "john-simpson",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S11",
+        "P1_S15"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Julian Noel",
+      "slug": "julian-noel",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S18",
+        "P1_S27"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Julie Andrews",
+      "slug": "julie-andrews",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S11",
+        "P1_S31"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Keith Cobb",
+      "slug": "keith-cobb",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S01",
+        "P1_S12",
+        "P1_S24",
+        "P1_S35"
+      ],
+      "interview_story_ids": [
+        "IV_S01"
+      ],
+      "tier_a_story_ids": [],
+      "note": "\"Keith and Dot\" refers to Keith with Dot Cobb (née Hill).",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Keith Costello",
+      "slug": "keith-costello",
+      "tiers": [
+        "D"
+      ],
+      "memoir_story_ids": [],
+      "interview_story_ids": [
+        "IV_S07",
+        "IV_S08"
+      ],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Kidder Peabody",
+      "slug": "kidder-peabody",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S24",
+        "P1_S27"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "KPMG Management",
+      "slug": "kpmg-management",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S22",
+        "P1_S23",
+        "P1_S24"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "KPMG Management Committee",
+      "slug": "kpmg-management-committee",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S23",
+        "P1_S24"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Larry Horner",
+      "slug": "larry-horner",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S23"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Lauderdale Peat",
+      "slug": "lauderdale-peat",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S30"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Lauderdale Peat Marwick",
+      "slug": "lauderdale-peat-marwick",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S30"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Lehigh University",
+      "slug": "lehigh-university",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S34",
+        "P1_S35"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Libba Jane",
+      "slug": "libba-jane",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S05",
+        "P1_S31"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Libba Jane Harrelson",
+      "slug": "libba-jane-harrelson",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S05",
+        "P1_S31"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Library Foundation",
+      "slug": "library-foundation",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S38"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Louis Armstrong",
+      "slug": "louis-armstrong",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S29",
+        "P1_S31"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Louis Cardinals",
+      "slug": "louis-cardinals",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S07",
+        "P1_S10"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Loyola University",
+      "slug": "loyola-university",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S30",
+        "P1_S37"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Madison Street",
+      "slug": "madison-street",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S06",
+        "P1_S08",
+        "P1_S10",
+        "P1_S12"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Madison University",
+      "slug": "madison-university",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S34",
+        "P1_S35"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Main Hurdman",
+      "slug": "main-hurdman",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S22"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Main Line",
+      "slug": "main-line",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S23",
+        "P1_S33"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Mallory House",
+      "slug": "mallory-house",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S03",
+        "P1_S08",
+        "P1_S33"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Management Committee",
+      "slug": "management-committee",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S22",
+        "P1_S23",
+        "P1_S24"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Marc Gerstein",
+      "slug": "marc-gerstein",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S24",
+        "P1_S25"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Marine Band",
+      "slug": "marine-band",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S01",
+        "P1_S05"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Marwick Mitchell",
+      "slug": "marwick-mitchell",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S16",
+        "P1_S18"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Marwick Mitchell Co",
+      "slug": "marwick-mitchell-co",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S16",
+        "P1_S18"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Mid-South Fair",
+      "slug": "mid-south-fair",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S05",
+        "P1_S30"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Mid-South Fair Talent",
+      "slug": "mid-south-fair-talent",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S05",
+        "P1_S30"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Mid-South Fair Talent Competition",
+      "slug": "mid-south-fair-talent-competition",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S05",
+        "P1_S30"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Mike Egan",
+      "slug": "mike-egan",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S24",
+        "P1_S25",
+        "P1_S33"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Mississippi College",
+      "slug": "mississippi-college",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S12",
+        "P1_S13",
+        "P1_S16",
+        "P1_S33"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Mississippi Southern",
+      "slug": "mississippi-southern",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S13",
+        "P1_S15",
+        "P1_S36"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Mississippi Southern College",
+      "slug": "mississippi-southern-college",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S13",
+        "P1_S15",
+        "P1_S36"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Mississippi State University",
+      "slug": "mississippi-state-university",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S12",
+        "P1_S38"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Mitchell Co",
+      "slug": "mitchell-co",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S16",
+        "P1_S18"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Moro Road",
+      "slug": "moro-road",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S23",
+        "P1_S33"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Mr Cobb",
+      "slug": "mr-cobb",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S13",
+        "P1_S14"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Mt Moro",
+      "slug": "mt-moro",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S23",
+        "P1_S33"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Mt Moro Road",
+      "slug": "mt-moro-road",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S23",
+        "P1_S33"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Murray Underwood",
+      "slug": "murray-underwood",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S18",
+        "P1_S27"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Museum of Science",
+      "slug": "museum-of-science",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S38"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "National Bank",
+      "slug": "national-bank",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S09",
+        "P1_S18"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "New Jersey",
+      "slug": "new-jersey",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S13",
+        "P1_S29"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "New Mexico",
+      "slug": "new-mexico",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S29",
+        "P1_S39"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "New Orleans",
+      "slug": "new-orleans",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S06",
+        "P1_S09",
+        "P1_S11",
+        "P1_S12",
+        "P1_S16",
+        "P1_S31"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "New World",
+      "slug": "new-world",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S24",
+        "P1_S28"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "New York City",
+      "slug": "new-york-city",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S05",
+        "P1_S11"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Norm White",
+      "slug": "norm-white",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S19",
+        "P1_S20",
+        "P1_S33"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "North Carolina",
+      "slug": "north-carolina",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S01",
+        "P1_S06"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Out of the Red",
+      "slug": "out-of-the-red",
+      "tiers": [
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S39"
+      ],
+      "interview_story_ids": [
+        "IV_S01"
+      ],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Out of the Red Clay",
+      "slug": "out-of-the-red-clay",
+      "tiers": [
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S39"
+      ],
+      "interview_story_ids": [
+        "IV_S01"
+      ],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Paul Breazeale",
+      "slug": "paul-breazeale",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S18",
+        "P1_S20"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Paul Cobb",
+      "slug": "paul-cobb",
+      "tiers": [
+        "C"
+      ],
+      "memoir_story_ids": [
+        "P1_S34"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "Son; the phrase \"Paul and John\" in the memoir refers to Paul and John Cobb.",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Peat Marwick Mitchell",
+      "slug": "peat-marwick-mitchell",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S16",
+        "P1_S18"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Peat Marwick Mitchell Co",
+      "slug": "peat-marwick-mitchell-co",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S16",
+        "P1_S18"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Pete Fountain",
+      "slug": "pete-fountain",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S31"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Pete Musser",
+      "slug": "pete-musser",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S23",
+        "P1_S38"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Portland Oregon",
+      "slug": "portland-oregon",
+      "tiers": [
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S29"
+      ],
+      "interview_story_ids": [
+        "IV_S08"
+      ],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Presbyterian Church",
+      "slug": "presbyterian-church",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S37",
+        "P1_S38"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Professional Services",
+      "slug": "professional-services",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S24",
+        "P1_S28"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Red Clay Hills",
+      "slug": "red-clay-hills",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S01",
+        "P1_S39"
+      ],
+      "interview_story_ids": [
+        "IV_S01"
+      ],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Refining Co",
+      "slug": "refining-co",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S09",
+        "P1_S12",
+        "P1_S18"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Rent A Car",
+      "slug": "rent-a-car",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S24",
+        "P1_S25",
+        "P1_S26",
+        "P1_S35",
+        "P1_S36"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Reserve Board",
+      "slug": "reserve-board",
+      "tiers": [
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S38"
+      ],
+      "interview_story_ids": [
+        "IV_S06"
+      ],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Return of the Native",
+      "slug": "return-of-the-native",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S03"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "RHR International",
+      "slug": "rhr-international",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S23",
+        "P1_S26",
+        "P1_S30"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Roger Ballou",
+      "slug": "roger-ballou",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S25",
+        "P1_S26"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Ronald Reagan",
+      "slug": "ronald-reagan",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S24",
+        "P1_S30"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Rosalie Arthur",
+      "slug": "rosalie-arthur",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S25"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Roy Letourneau",
+      "slug": "roy-letourneau",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S20",
+        "P1_S39"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Ruby Cole",
+      "slug": "ruby-cole",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S01",
+        "P1_S08"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "San Francisco",
+      "slug": "san-francisco",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S24",
+        "P1_S29",
+        "P1_S36"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Savings and Loan",
+      "slug": "savings-and-loan",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S27"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Scout Council",
+      "slug": "scout-council",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S04",
+        "P1_S23"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Scout Jamboree",
+      "slug": "scout-jamboree",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S04",
+        "P1_S11",
+        "P1_S30"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Shipley School",
+      "slug": "shipley-school",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S23",
+        "P1_S34"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "South Carolina",
+      "slug": "south-carolina",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S33",
+        "P1_S36"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "South Madison",
+      "slug": "south-madison",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S06",
+        "P1_S08",
+        "P1_S10",
+        "P1_S12"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "South Madison Street",
+      "slug": "south-madison-street",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S06",
+        "P1_S08",
+        "P1_S10",
+        "P1_S12"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Southern College",
+      "slug": "southern-college",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S13",
+        "P1_S15",
+        "P1_S36"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Southern Mississippi",
+      "slug": "southern-mississippi",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S05",
+        "P1_S10",
+        "P1_S11",
+        "P1_S12",
+        "P1_S13",
+        "P1_S14",
+        "P1_S15",
+        "P1_S17",
+        "P1_S30"
+      ],
+      "interview_story_ids": [
+        "IV_S02"
+      ],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Steve Berrard",
+      "slug": "steve-berrard",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S25",
+        "P1_S26"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Steve Swink",
+      "slug": "steve-swink",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S04",
+        "P1_S26"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Student Affairs",
+      "slug": "student-affairs",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S13",
+        "P1_S15"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Student Government Association",
+      "slug": "student-government-association",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S11",
+        "P1_S15",
+        "P1_S36",
+        "P1_S38",
+        "P1_S39"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Student Union",
+      "slug": "student-union",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S13",
+        "P1_S15"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Talent Competition",
+      "slug": "talent-competition",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S05",
+        "P1_S30"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Tocqueville Society",
+      "slug": "tocqueville-society",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S23",
+        "P1_S38"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "University of Southern",
+      "slug": "university-of-southern",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S05",
+        "P1_S10",
+        "P1_S11",
+        "P1_S12",
+        "P1_S13",
+        "P1_S14",
+        "P1_S15",
+        "P1_S17",
+        "P1_S30"
+      ],
+      "interview_story_ids": [
+        "IV_S02"
+      ],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "University of Southern Mississippi",
+      "slug": "university-of-southern-mississippi",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S02",
+        "P1_S05",
+        "P1_S10",
+        "P1_S11",
+        "P1_S12",
+        "P1_S13",
+        "P1_S14",
+        "P1_S15",
+        "P1_S17",
+        "P1_S30"
+      ],
+      "interview_story_ids": [
+        "IV_S02"
+      ],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Valley Forge Pennsylvania",
+      "slug": "valley-forge-pennsylvania",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S04",
+        "P1_S11"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "Walter Hanson",
+      "slug": "walter-hanson",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S19",
+        "P1_S20",
+        "P1_S21"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Wayne Huizenga",
+      "slug": "wayne-huizenga",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S21",
+        "P1_S25"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": true
+    },
+    {
+      "canonical_name": "Winkler Associates",
+      "slug": "winkler-associates",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S09",
+        "P1_S12",
+        "P1_S16",
+        "P1_S18"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    },
+    {
+      "canonical_name": "York City",
+      "slug": "york-city",
+      "tiers": [
+        "B",
+        "D"
+      ],
+      "memoir_story_ids": [
+        "P1_S05",
+        "P1_S11"
+      ],
+      "interview_story_ids": [],
+      "tier_a_story_ids": [],
+      "note": "",
+      "wiki_eligible": false
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 > Master index of all wiki pages. Used by the AI layer to navigate content.
 
-**49 stories** (39 memoir + 10 interview) | **12 themes** | **43 timeline events**
+**49 stories** (39 memoir + 10 interview) | **12 themes** | **65 people** | **43 timeline events**
 
 ## Memoir Stories
 
@@ -75,6 +75,76 @@
 - [[themes/leadership.md]] — Leadership: 23 stories
 - [[themes/mentorship.md]] — Mentorship: 4 stories
 - [[themes/work-ethic.md]] — Work Ethic: 26 stories
+
+## People
+
+Stubs from `content/raw/people_inventory.json` (Tier **B/D** filtered to likely people; **A/C** always). Tune in `people_inventory_overrides.json`: `wiki_person_include`, `wiki_person_exclude`, `wiki_only`, `wiki_exclude`. Then `npm run inventory:people`.
+
+- [[people/bayne-cobb.md]] — Bayne Cobb (A+B+D)
+- [[people/ben-franklin.md]] — Ben Franklin (B+D)
+- [[people/bill-hannon.md]] — Bill Hannon (B+D)
+- [[people/bill-norton.md]] — Bill Norton (B+D)
+- [[people/bill-su.md]] — Bill Su (B+D)
+- [[people/blue-and-ruby-cole.md]] — Blue and Ruby Cole (A+B+D)
+- [[people/carter-dobbs.md]] — Carter Dobbs (B+D)
+- [[people/charles-t-brumfield.md]] — Charles T. Brumfield (A+B+D)
+- [[people/clym-yeobright.md]] — Clym Yeobright (B+D)
+- [[people/david-rush.md]] — David Rush (B+D)
+- [[people/dot-cobb.md]] — Dot Cobb (B+D)
+- [[people/dr-carter-dobbs.md]] — Dr Carter Dobbs (B+D)
+- [[people/dr-mccain.md]] — Dr McCain (B+D)
+- [[people/dr-switzer.md]] — Dr Switzer (B+D)
+- [[people/eddy-duchin.md]] — Eddy Duchin (B+D)
+- [[people/elvis-presley.md]] — Elvis Presley (B+D)
+- [[people/ernie-jenkins.md]] — Ernie Jenkins (B+D)
+- [[people/frances-clements.md]] — Frances Clements (B+D)
+- [[people/frances-cobb.md]] — Frances Cobb (A+B+D)
+- [[people/frances-hardin.md]] — Frances Hardin (B+D)
+- [[people/frances-mallory.md]] — Frances Mallory (A+B+D)
+- [[people/fred-nabors.md]] — Fred Nabors (B+D)
+- [[people/freddie-cox.md]] — Freddie Cox (B+D)
+- [[people/gene-o-kelly.md]] — Gene O Kelly (B+D)
+- [[people/hank-watson.md]] — Hank Watson (B+D)
+- [[people/harold-stokes.md]] — Harold Stokes (B+D)
+- [[people/harry-lorayne.md]] — Harry Lorayne (B+D)
+- [[people/harry-robinson.md]] — Harry Robinson (B+D)
+- [[people/howard-miller.md]] — Howard Miller (B+D)
+- [[people/hy-indowsky.md]] — Hy Indowsky (B+D)
+- [[people/jane-harrelson.md]] — Jane Harrelson (B+D)
+- [[people/jim-blosser.md]] — Jim Blosser (B+D)
+- [[people/jim-brocksmith.md]] — Jim Brocksmith (B+D)
+- [[people/jim-madonna.md]] — Jim Madonna (B+D)
+- [[people/john-cobb.md]] — John Cobb (C)
+- [[people/john-edmondson.md]] — John Edmondson (B+D)
+- [[people/john-simpson.md]] — John Simpson (B+D)
+- [[people/julian-noel.md]] — Julian Noel (B+D)
+- [[people/julie-andrews.md]] — Julie Andrews (B+D)
+- [[people/keith-cobb.md]] — Keith Cobb (B+D)
+- [[people/keith-costello.md]] — Keith Costello (D)
+- [[people/larry-horner.md]] — Larry Horner (B+D)
+- [[people/libba-jane.md]] — Libba Jane (B+D)
+- [[people/libba-jane-harrelson.md]] — Libba Jane Harrelson (B+D)
+- [[people/louis-armstrong.md]] — Louis Armstrong (B+D)
+- [[people/marc-gerstein.md]] — Marc Gerstein (B+D)
+- [[people/mike-egan.md]] — Mike Egan (B+D)
+- [[people/mr-cobb.md]] — Mr Cobb (B+D)
+- [[people/mt-moro.md]] — Mt Moro (B+D)
+- [[people/murray-underwood.md]] — Murray Underwood (B+D)
+- [[people/norm-white.md]] — Norm White (B+D)
+- [[people/paul-breazeale.md]] — Paul Breazeale (B+D)
+- [[people/paul-cobb.md]] — Paul Cobb (C)
+- [[people/pete-fountain.md]] — Pete Fountain (B+D)
+- [[people/pete-musser.md]] — Pete Musser (B+D)
+- [[people/portland-oregon.md]] — Portland Oregon (D)
+- [[people/roger-ballou.md]] — Roger Ballou (B+D)
+- [[people/ronald-reagan.md]] — Ronald Reagan (B+D)
+- [[people/rosalie-arthur.md]] — Rosalie Arthur (B+D)
+- [[people/roy-letourneau.md]] — Roy Letourneau (B+D)
+- [[people/ruby-cole.md]] — Ruby Cole (B+D)
+- [[people/steve-berrard.md]] — Steve Berrard (B+D)
+- [[people/steve-swink.md]] — Steve Swink (B+D)
+- [[people/walter-hanson.md]] — Walter Hanson (B+D)
+- [[people/wayne-huizenga.md]] — Wayne Huizenga (B+D)
 
 ## Timeline
 

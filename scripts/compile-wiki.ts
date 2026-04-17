@@ -66,6 +66,20 @@ interface ParsedStory {
   heuristics: string[];
 }
 
+interface PersonInventoryJson {
+  generated: string;
+  people: Array<{
+    canonical_name: string;
+    slug: string;
+    tiers: string[];
+    memoir_story_ids: string[];
+    interview_story_ids: string[];
+    tier_a_story_ids?: string[];
+    note: string;
+    wiki_eligible: boolean;
+  }>;
+}
+
 // --- Helpers ---
 
 function cleanTitle(title: string): string {
@@ -213,6 +227,14 @@ function parseManifest(csvPath: string): Record<string, ManifestRow> {
 }
 
 // --- Find related stories by shared themes ---
+
+/** Resolve `stories/P1_S01-….md` or `stories/IV_S01-….md` after story pages are written. */
+function resolveStoryWikiRel(wikiStoriesDir: string, storyId: string): string | null {
+  const f = fs
+    .readdirSync(wikiStoriesDir)
+    .find((x) => x.startsWith(`${storyId}-`) && x.endsWith(".md"));
+  return f ? `stories/${f}` : null;
+}
 
 function findRelatedStories(
   storyId: string,
@@ -532,6 +554,62 @@ function main() {
 
   const totalStories = allStoryIds.length + ivStoryFiles.length;
 
+  // ============ COMPILE PEOPLE PAGES (from inventory JSON) ============
+
+  console.log("👤 Compiling people wiki pages from people_inventory.json...");
+
+  const wikiStoriesDir = path.join(WIKI, "stories");
+  const peopleDir = path.join(WIKI, "people");
+  const invPath = path.join(RAW, "people_inventory.json");
+  let peopleIndexEntries: string[] = [];
+
+  if (fs.existsSync(invPath)) {
+    const inv: PersonInventoryJson = JSON.parse(fs.readFileSync(invPath, "utf-8"));
+    for (const f of fs.readdirSync(peopleDir).filter((x) => x.endsWith(".md"))) {
+      fs.unlinkSync(path.join(peopleDir, f));
+    }
+    for (const p of inv.people) {
+      if (!p.wiki_eligible) continue;
+      const lines = [
+        `# ${p.canonical_name}`,
+        "",
+        `> Inventory entry (tiers: ${p.tiers.join(", ")}). Cross-links to memoir and interview wiki pages.`,
+        "",
+        `**Slug:** ${p.slug}`,
+        "",
+      ];
+      if (p.memoir_story_ids?.length) {
+        lines.push("## Memoir stories", "");
+        for (const sid of p.memoir_story_ids) {
+          const rel = resolveStoryWikiRel(wikiStoriesDir, sid);
+          if (rel) lines.push(`- [[${rel}]] (${sid})`);
+          else lines.push(`- ${sid} _(wiki story file not found)_`);
+        }
+        lines.push("");
+      }
+      if (p.interview_story_ids?.length) {
+        lines.push("## Interview stories", "");
+        for (const sid of p.interview_story_ids) {
+          const rel = resolveStoryWikiRel(wikiStoriesDir, sid);
+          if (rel) lines.push(`- [[${rel}]] (${sid})`);
+          else lines.push(`- ${sid} _(wiki story file not found)_`);
+        }
+        lines.push("");
+      }
+      if (p.note) {
+        lines.push("## Note", "", p.note, "");
+      }
+      lines.push("---", `*Sources: content/raw/people_inventory.json · generated ${inv.generated}*`);
+
+      const fn = `${p.slug}.md`;
+      fs.writeFileSync(path.join(peopleDir, fn), lines.join("\n"));
+      peopleIndexEntries.push(`- [[people/${fn}]] — ${p.canonical_name} (${p.tiers.join("+")})`);
+    }
+    console.log(`   Wrote ${peopleIndexEntries.length} people pages`);
+  } else {
+    console.log("   (skipped — no content/raw/people_inventory.json; run inventory:people)");
+  }
+
   // ============ COMPILE INDEX ============
 
   console.log("📋 Generating index.md...");
@@ -541,7 +619,7 @@ function main() {
     "",
     "> Master index of all wiki pages. Used by the AI layer to navigate content.",
     "",
-    `**${totalStories} stories** (${allStoryIds.length} memoir + ${ivStoryFiles.length} interview) | **${Object.keys(storyIndexData.themes).length} themes** | **${timeline.length} timeline events**`,
+    `**${totalStories} stories** (${allStoryIds.length} memoir + ${ivStoryFiles.length} interview) | **${Object.keys(storyIndexData.themes).length} themes** | **${peopleIndexEntries.length} people** | **${timeline.length} timeline events**`,
     "",
     "## Memoir Stories",
     "",
@@ -557,6 +635,19 @@ function main() {
     "",
     ...indexEntries.filter(e => e.includes("themes/")),
     "",
+    "## People",
+    "",
+    ...(peopleIndexEntries.length > 0
+      ? [
+          "Stubs from `content/raw/people_inventory.json` (Tier **B/D** filtered to likely people; **A/C** always). Tune in `people_inventory_overrides.json`: `wiki_person_include`, `wiki_person_exclude`, `wiki_only`, `wiki_exclude`. Then `npm run inventory:people`.",
+          "",
+          ...peopleIndexEntries,
+          "",
+        ]
+      : [
+          "*No people stubs yet. Run `npm run inventory:people` then `npx tsx scripts/compile-wiki.ts`.*",
+          "",
+        ]),
     "## Timeline",
     "",
     ...indexEntries.filter(e => e.includes("timeline/")),
@@ -569,12 +660,13 @@ function main() {
 
   // ============ COMPILE LOG ============
 
-  const logEntry = `## [${new Date().toISOString().split("T")[0]}] compile | Initial wiki compilation\n\n- ${allStoryIds.length} story pages\n- ${Object.keys(storyIndexData.themes).length} theme pages\n- 1 timeline page\n- 1 index page\n`;
+  const logEntry = `## [${new Date().toISOString().split("T")[0]}] compile | Initial wiki compilation\n\n- ${allStoryIds.length} story pages\n- ${Object.keys(storyIndexData.themes).length} theme pages\n- ${peopleIndexEntries.length} people pages\n- 1 timeline page\n- 1 index page\n`;
   fs.writeFileSync(path.join(WIKI, "log.md"), `# Wiki Compilation Log\n\n${logEntry}`);
 
   console.log(`\n✅ Wiki compiled successfully!`);
   console.log(`   ${allStoryIds.length} story pages → content/wiki/stories/`);
   console.log(`   ${Object.keys(storyIndexData.themes).length} theme pages → content/wiki/themes/`);
+  console.log(`   ${peopleIndexEntries.length} people pages → content/wiki/people/`);
   console.log(`   1 timeline page → content/wiki/timeline/`);
   console.log(`   1 index → content/wiki/index.md`);
   console.log(`   1 log → content/wiki/log.md`);
