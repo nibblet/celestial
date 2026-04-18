@@ -1,6 +1,6 @@
-import Link from "next/link";
 import type { StorySource } from "@/lib/wiki/parser";
 import { SourceBadge } from "@/components/ui/SourceBadge";
+import { ThemePillLink } from "@/components/themes/ThemePillLink";
 
 interface StoryDetailsDisclosureProps {
   source: StorySource;
@@ -40,24 +40,14 @@ export function StoryDetailsDisclosure({
           <div>
             <p className="type-meta mb-2 text-ink-ghost">Themes</p>
             <div className="flex flex-wrap gap-2">
-              {themes.map((theme) => {
-                const isLeadership = theme
-                  .toLowerCase()
-                  .includes("leadership");
-                return (
-                  <Link
-                    key={theme}
-                    href={`/themes/${theme.toLowerCase().replace(/\s+/g, "-")}`}
-                    className={`rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors ${
-                      isLeadership
-                        ? "border-ocean/35 text-ocean hover:border-ocean hover:bg-ocean-pale/50"
-                        : "border-green/35 text-green hover:border-green hover:bg-green-pale/50"
-                    }`}
-                  >
-                    {theme}
-                  </Link>
-                );
-              })}
+              {themes.map((theme) => (
+                <ThemePillLink
+                  key={theme}
+                  href={`/themes/${theme.toLowerCase().replace(/\s+/g, "-")}`}
+                >
+                  {theme}
+                </ThemePillLink>
+              ))}
             </div>
           </div>
         )}

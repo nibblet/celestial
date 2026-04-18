@@ -90,10 +90,24 @@ function getPreloadPassage(raw: string | null): string | undefined {
   return trimmed.slice(0, 1000);
 }
 
+function getPreloadPrompt(raw: string | null): string | undefined {
+  if (raw === null || raw === "") return undefined;
+  let decoded: string;
+  try {
+    decoded = decodeURIComponent(raw);
+  } catch {
+    decoded = raw;
+  }
+  const trimmed = decoded.trim();
+  if (!trimmed) return undefined;
+  return trimmed.slice(0, 600);
+}
+
 function AskPageContent() {
   const searchParams = useSearchParams();
   const storySlug = searchParams.get("story") || undefined;
   const journeySlug = searchParams.get("journey") || undefined;
+  const prefilledPrompt = getPreloadPrompt(searchParams.get("prompt"));
   const highlightIdFromUrl = searchParams.get("highlight") || undefined;
   const startFreshFromHighlight = searchParams.get("new") === "1";
   const urlPassage = getPreloadPassage(searchParams.get("passage"));
@@ -120,6 +134,8 @@ function AskPageContent() {
   const sendInFlightRef = useRef(false);
   /** Prevents double auto-send from React Strict Mode when preloading a passage from the URL. */
   const preloadFiredRef = useRef(false);
+  /** Prevents repeated prompt prefill from URL search params. */
+  const promptHydratedRef = useRef<string | null>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -328,6 +344,23 @@ function AskPageContent() {
   const effectivePreloadPassage = urlPassage ?? passageFromHighlight;
 
   useEffect(() => {
+    if (!prefilledPrompt) {
+      promptHydratedRef.current = null;
+      return;
+    }
+    if (
+      promptHydratedRef.current === prefilledPrompt ||
+      messages.length > 0 ||
+      sendInFlightRef.current ||
+      input.trim().length > 0
+    ) {
+      return;
+    }
+    promptHydratedRef.current = prefilledPrompt;
+    setInput(prefilledPrompt);
+  }, [prefilledPrompt, messages.length, input]);
+
+  useEffect(() => {
     if (highlightHydration !== "ready") return;
     if (
       !effectivePreloadPassage ||
@@ -378,6 +411,16 @@ function AskPageContent() {
             >
               {contextStoryTitle ?? storySlug}
             </Link>
+          </p>
+        </div>
+      )}
+
+      {!storySlug && prefilledPrompt && messages.length === 0 && (
+        <div className="border-b border-[var(--color-border)] bg-gold-pale/30 py-3">
+          <p className="type-meta text-ink">Principle prompt loaded</p>
+          <p className="mt-1 font-[family-name:var(--font-lora)] text-sm text-ink">
+            We loaded a suggested question into Ask. You can edit it before you
+            send.
           </p>
         </div>
       )}

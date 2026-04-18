@@ -14,6 +14,7 @@ export type EraKey =
 export interface EraAccent {
   key: EraKey;
   label: string;
+  hex: string;
   dot: string;
   yearText: string;
   border: string;
@@ -28,6 +29,7 @@ const ACCENTS: Record<EraKey, EraAccent> = {
   red_clay: {
     key: "red_clay",
     label: "Red Clay Hills",
+    hex: "#8b2c2c",
     dot: "bg-burgundy",
     yearText: "text-burgundy",
     border: "border-burgundy/25",
@@ -38,6 +40,7 @@ const ACCENTS: Record<EraKey, EraAccent> = {
   coming_of_age: {
     key: "coming_of_age",
     label: "Coming of Age",
+    hex: "#c8662a",
     dot: "bg-clay",
     yearText: "text-clay",
     border: "border-clay/25",
@@ -48,6 +51,7 @@ const ACCENTS: Record<EraKey, EraAccent> = {
   building: {
     key: "building",
     label: "Building",
+    hex: "#d4a843",
     dot: "bg-gold",
     yearText: "text-gold",
     border: "border-gold/40",
@@ -58,6 +62,7 @@ const ACCENTS: Record<EraKey, EraAccent> = {
   leadership: {
     key: "leadership",
     label: "Leadership",
+    hex: "#4a7fa0",
     dot: "bg-ocean",
     yearText: "text-ocean",
     border: "border-ocean/25",
@@ -68,6 +73,7 @@ const ACCENTS: Record<EraKey, EraAccent> = {
   legacy: {
     key: "legacy",
     label: "Legacy",
+    hex: "#6ba35a",
     dot: "bg-green",
     yearText: "text-green",
     border: "border-green/25",
@@ -76,6 +82,22 @@ const ACCENTS: Record<EraKey, EraAccent> = {
     accentBorder: "border-green",
   },
 };
+
+export const orderedEraKeys: EraKey[] = [
+  "red_clay",
+  "coming_of_age",
+  "building",
+  "leadership",
+  "legacy",
+];
+
+export function getEraAccent(key: EraKey): EraAccent {
+  return ACCENTS[key];
+}
+
+export function getAllEraAccents(): EraAccent[] {
+  return orderedEraKeys.map((key) => ACCENTS[key]);
+}
 
 export function yearToEraKey(year: number): EraKey {
   if (year <= 1955) return "red_clay";

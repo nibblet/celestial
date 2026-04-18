@@ -16,10 +16,10 @@ const navCards = [
       "Browse Keith's stories — from growing up in Mississippi to leading national organizations.",
   },
   {
-    href: "/themes",
-    title: "Explore by Topic",
+    href: "/principles",
+    title: "Explore Principles",
     description:
-      "Discover the principles and values shaping Keith's decisions — integrity, work ethic, leadership, and more.",
+      "Follow the core principles shaping Keith's decisions, then trace how they show up across stories and themes.",
   },
   {
     href: "/ask",

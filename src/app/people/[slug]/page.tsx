@@ -6,13 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getAuthenticatedProfileContext } from "@/lib/auth/profile-context";
 import { PersonEditDrawer } from "@/components/people/PersonEditDrawer";
 import { PersonMediaPanel } from "@/components/people/PersonMediaPanel";
-
-const TIER_LABEL: Record<string, string> = {
-  A: "Dedicated story",
-  B: "Recurring in memoir",
-  C: "Curated",
-  D: "Across memoir & interviews",
-};
+import { TIER_SHORT_LABEL } from "@/lib/wiki/people-tiers";
 
 export default async function PersonDetailPage({
   params,
@@ -65,9 +59,9 @@ export default async function PersonDetailPage({
             <span
               key={t}
               className="type-meta rounded-full border border-clay-border bg-warm-white px-2 py-0.5 normal-case tracking-normal text-ink-muted"
-              title={TIER_LABEL[t]}
+              title={`Inventory tier ${t}: ${TIER_SHORT_LABEL[t] ?? ""}`}
             >
-              Tier {t}
+              {TIER_SHORT_LABEL[t] ?? `Tier ${t}`}
             </span>
           ))}
         </div>

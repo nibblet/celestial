@@ -1,11 +1,19 @@
 import Link from "next/link";
 import { getAllThemes } from "@/lib/wiki/parser";
-import { buildChordMatrix } from "@/lib/wiki/graph";
+import {
+  buildChordMatrix,
+  buildStorySankey,
+  buildThemePrincipleMatrix,
+} from "@/lib/wiki/graph";
 import { ChordDiagram } from "@/components/viz/ChordDiagram";
+import { ThemePrincipleMatrix } from "@/components/viz/ThemePrincipleMatrix";
+import { StorySankey } from "@/components/viz/StorySankey";
 
 export default function ThemesPage() {
   const themes = getAllThemes();
   const chord = buildChordMatrix();
+  const principleMatrix = buildThemePrincipleMatrix();
+  const sankey = buildStorySankey();
 
   return (
     <div className="mx-auto max-w-wide px-[var(--page-padding-x)] py-6 md:py-10">
@@ -22,6 +30,10 @@ export default function ThemesPage() {
       <div className="mx-auto mb-10 max-w-[720px]">
         <ChordDiagram data={chord} />
       </div>
+
+      <ThemePrincipleMatrix data={principleMatrix} />
+
+      <StorySankey data={sankey} />
 
       <div className="mx-auto max-w-content">
         <h2 className="font-[family-name:var(--font-playfair)] mb-3 text-xl font-semibold text-burgundy">

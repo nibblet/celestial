@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import type { ChordMatrix } from "@/lib/wiki/graph";
+import { themeColor } from "@/lib/design/theme-viz";
 
 interface Props {
   data: ChordMatrix;
@@ -16,23 +17,8 @@ const INNER_R = 240;
 const LABEL_R = 276;
 const GAP_ANGLE = 0.022;
 
-const THEME_COLORS: Record<string, string> = {
-  integrity: "#8b2c2c",
-  leadership: "#b5451b",
-  "work-ethic": "#c8662a",
-  mentorship: "#d4a843",
-  family: "#6b1e1e",
-  community: "#3d6b35",
-  curiosity: "#4a7fa0",
-  identity: "#a04a4a",
-  gratitude: "#6ba35a",
-  adversity: "#6b5040",
-  "financial-responsibility": "#7ab3c9",
-  "career-choices": "#2f5d7a",
-};
-
 function color(slug: string): string {
-  return THEME_COLORS[slug] || "#b5451b";
+  return themeColor(slug);
 }
 
 /** Point on a circle at the given angle, where 0 rad = 3 o'clock. */
