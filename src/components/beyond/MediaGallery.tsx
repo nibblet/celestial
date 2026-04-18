@@ -266,6 +266,7 @@ function Lightbox({
   onDelete: () => void;
 }) {
   const [caption, setCaption] = useState(item.caption ?? "");
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setCaption(item.caption ?? ""), [item]);
 
   useEffect(() => {

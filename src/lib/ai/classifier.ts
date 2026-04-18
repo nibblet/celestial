@@ -40,6 +40,7 @@ export type QuestionDepth = "simple" | "deep";
 
 export function classifyQuestion(
   message: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _history?: { role: string; content: string }[]
 ): QuestionDepth {
   const trimmed = message.trim();

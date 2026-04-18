@@ -30,6 +30,7 @@ export const MentionList = forwardRef<MentionListHandle, Props>(function Mention
 ) {
   const [index, setIndex] = useState(0);
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setIndex(0), [items]);
 
   function pick(i: number) {

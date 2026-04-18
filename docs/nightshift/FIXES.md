@@ -15,15 +15,6 @@
 
 ## Open Issues
 
-### [FIX-021] ESLint Errors in Beyond Components (4 errors)
-- **Status:** planned
-- **Severity:** Medium — build still passes but lint now reports 4 errors (up from 0); regression from clean lint state before Beyond feature wave
-- **Found:** 2026-04-18
-- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-021-beyond-lint-errors.md`
-- **Summary:** Four ESLint errors in new Beyond components: `scripts/compile-wiki.ts:564` (`let` → `const` for `peopleIndexEntries`); `MediaGallery.tsx:269` and `MentionSuggestion.tsx:33` (`react-hooks/set-state-in-effect` — legitimate "reset state on prop change" pattern needing eslint-disable); `TipTapEditor.tsx:185` (`react-hooks/immutability` — false positive on DOM element attribute mutation needing eslint-disable). All four are 2-minute fixes. **Do with FIX-019 + FIX-020 for a complete lint sweep.**
-
----
-
 ### [FIX-022] Duplicate `013_` Migration Prefix
 - **Status:** planned
 - **Severity:** Low — no functional impact since Supabase tracks migrations by full filename; however, it's confusing naming and could cause issues on fresh deployments if alphabetical ordering ever changes
@@ -69,25 +60,37 @@
 
 ---
 
-### [FIX-019] `_history` Unused Parameter Lint Warning in classifier.ts
-- **Status:** planned
-- **Severity:** Very Low — 1 ESLint warning; no runtime impact. Lint was previously clean (0 warnings) so this represents a regression.
-- **Found:** 2026-04-16
-- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-019-classifier-lint.md`
-- **Summary:** `src/lib/ai/classifier.ts` line 43: `_history` parameter has an underscore prefix but the project's ESLint config still warns on it. Add `// eslint-disable-next-line @typescript-eslint/no-unused-vars` on the line before. One-line fix, pairs with FIX-020.
+## Recently Resolved
+
+### [FIX-021] ESLint Errors in Beyond Components (4 errors)
+- **Status:** resolved
+- **Severity:** Medium
+- **Found:** 2026-04-18
+- **Resolved:** 2026-04-18
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-021-beyond-lint-errors.md`
+- **Summary:** Fixed all 4 ESLint errors in Beyond feature wave: `scripts/compile-wiki.ts:564` (`let` → `const` on `peopleIndexEntries`); `MediaGallery.tsx:269` and `MentionSuggestion.tsx:33` got `// eslint-disable-next-line react-hooks/set-state-in-effect` for legitimate reset-on-prop-change pattern; `TipTapEditor.tsx:185` got `// eslint-disable-next-line react-hooks/immutability` for imperative DOM attribute mutation (false positive). Lint now clean: `npm run lint` → 0 problems. `npm run build` passes.
 
 ---
 
 ### [FIX-020] `<img>` ESLint Warnings in StoryMarkdown.tsx
-- **Status:** planned
-- **Severity:** Very Low — 2 `@next/next/no-img-element` warnings; no runtime impact. Lint had 1 warning before this run; these add 2 more. Raw `<img>` is intentional here (dynamic sources, unknown dimensions at compile time, `loading="lazy"` already present).
+- **Status:** resolved
+- **Severity:** Very Low
 - **Found:** 2026-04-17
+- **Resolved:** 2026-04-18
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-020-storymarkdown-img-warnings.md`
-- **Summary:** `src/components/story/StoryMarkdown.tsx` lines 34 and 100 use raw `<img>` tags inside a `ReactMarkdown` custom renderer and a lightbox. `next/image` is impractical here (dynamic sources, unknown dimensions). Fix: add targeted `eslint-disable-next-line @next/next/no-img-element` comments at both locations. Two-line fix.
+- **Summary:** Added `// eslint-disable-next-line @next/next/no-img-element` at both raw `<img>` sites in `src/components/story/StoryMarkdown.tsx` (inline story image renderer and lightbox). `next/image` remains impractical due to dynamic sources with unknown compile-time dimensions.
 
 ---
 
-## Recently Resolved
+### [FIX-019] `_history` Unused Parameter Lint Warning in classifier.ts
+- **Status:** resolved
+- **Severity:** Very Low
+- **Found:** 2026-04-16
+- **Resolved:** 2026-04-18
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-019-classifier-lint.md`
+- **Summary:** Added `// eslint-disable-next-line @typescript-eslint/no-unused-vars` above the `_history` parameter in `src/lib/ai/classifier.ts`, keeping the param as a future affordance for context-aware classification without a lint warning.
+
+---
 
 ### [FIX-018] Uncommitted Changes — KeithProfileHero + classifier.ts
 - **Status:** resolved

@@ -182,6 +182,7 @@ export function TipTapEditor({ initialHTML, onChange, placeholder, onReady }: Pr
   useEffect(() => {
     if (!editor) return;
     const el = editor.view.dom as HTMLElement;
+    // eslint-disable-next-line react-hooks/immutability
     el.dataset.placeholder = placeholder || "";
     return () => {
       delete el.dataset.placeholder;

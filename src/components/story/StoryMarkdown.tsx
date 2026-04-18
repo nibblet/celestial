@@ -43,6 +43,7 @@ export function StoryMarkdown({ content }: { content: string }) {
             if (!src || typeof src !== "string") return null;
             const imageAlt = alt || "Story image";
             return (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={src}
                 alt={imageAlt}
@@ -109,6 +110,7 @@ export function StoryMarkdown({ content }: { content: string }) {
               </button>
             </div>
             <div className="max-h-[88vh] overflow-auto rounded-lg bg-black/30 p-1">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={activeImage.src}
                 alt={activeImage.alt}

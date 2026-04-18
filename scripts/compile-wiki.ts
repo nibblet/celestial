@@ -561,7 +561,7 @@ function main() {
   const wikiStoriesDir = path.join(WIKI, "stories");
   const peopleDir = path.join(WIKI, "people");
   const invPath = path.join(RAW, "people_inventory.json");
-  let peopleIndexEntries: string[] = [];
+  const peopleIndexEntries: string[] = [];
 
   if (fs.existsSync(invPath)) {
     const inv: PersonInventoryJson = JSON.parse(fs.readFileSync(invPath, "utf-8"));
