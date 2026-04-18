@@ -4,6 +4,56 @@
 
 ---
 
+## Run: 2026-04-18 (Run 7)
+
+### Summary
+- Scanned: 9 commits since Run 6 (4fa9d60 through 43cfb4b), all new source files (PhotoFrameOverlay, TipTapEditor, BeyondEditMode, BeyondDraftEditor, BeyondPeopleMode, BeyondModeTabs, MediaGallery, MentionSuggestion, PersonLink, PersonEditDrawer, PersonMediaPanel, StoryAudioControls + ElevenLabs lib, CorrectionActions, people routes, media routes, audio routes), 5 new migrations (013_story_corrections through 017_media), 58 new wiki people pages, build + lint
+- Issues found: 2 new (FIX-021 — 4 lint errors, FIX-022 — dual 013 migration prefix) — both planned
+- Issues resolved: 0 this run (all prior open issues unchanged)
+- Ideas: IDEA-017 marked shipped; IDEA-012 parked (3-day stale); IDEA-019 seeded and advanced to `planned` same night; IDEA-020 seeded
+- Plans written:
+  - `FIXPLAN-FIX-021-beyond-lint-errors.md`
+  - `FIXPLAN-FIX-022-dual-013-migration.md`
+  - `DEVPLAN-IDEA-019-people-in-ask-keith.md`
+
+### Build & Lint Results
+- `npm run build`: **PASSES** — clean, 44 routes. New routes: `/people`, `/people/[slug]`, `/profile/admin`, `/admin/media`, plus audio/corrections/media/people API routes.
+- `npm run lint`: **4 errors, 3 warnings** — regression from Run 6 (0 errors, 3 warnings). Errors: `prefer-const` in `compile-wiki.ts:564` + `react-hooks/set-state-in-effect` in `MediaGallery.tsx:269` + `MentionSuggestion.tsx:33` + `react-hooks/immutability` in `TipTapEditor.tsx:185`. All fixable in 2 minutes per FIXPLAN-FIX-021. Warnings: FIX-019 + FIX-020 (unchanged).
+
+### Key Findings
+
+1. **9 commits — massive Beyond + People + Audio feature wave.** Paul shipped: photo frame mode (IDEA-017), ElevenLabs server-side TTS with Supabase Storage caching, Beyond Edit Mode with TipTap WYSIWYG editor, people inventory as first-class entities with wiki pages + DB, media attachment system, story corrections, and Beyond mode tabs. The app has expanded from 38 to 44 routes.
+
+2. **IDEA-017 (Photo Frame) SHIPPED** — `PhotoFrameOverlay.tsx` confirmed in `be2d3fd`. Full Fullscreen API, crossfade, preload, pause-on-tap. Exactly as designed.
+
+3. **People Inventory is a major new feature.** 58 people pages compiled from `content/raw/people_inventory.json` into `content/wiki/people/`. Full biographical write-ups for Tier A subjects (Bayne Cobb, Frances Cobb, etc.) via `<!-- ai-draft -->` blocks. `/people` directory + `/people/[slug]` detail with Keith-editable drawer and media panel. `sb_people` (DB) + `sb_story_people` (link table) + `PersonLink` for @mention chips. This is the most substantial structural addition since stories themselves.
+
+4. **Beyond is now a full authoring workspace.** Three mode tabs: QA (existing), Edit (new TipTap editor), People (new). `sb_story_drafts.session_id` is now nullable — Keith can write directly without a chat session. `origin = 'write' | 'edit'` distinguishes new drafts from story revisions. Warning gate prevents accidental overwrites of published chapters. TipTap @mention autocomplete links people via `/api/people` search.
+
+5. **ElevenLabs TTS fully implemented.** Migration 014 creates `sb_story_audio` ledger + `story-audio` public Storage bucket. `StoryAudioControls` now defaults to `mode="elevenlabs"` and falls back to Web Speech API. Rate limited at 5/15min to bound API spend. Requires `ELEVENLABS_API_KEY` + `ELEVENLABS_VOICE_ID` in env.
+
+6. **FIX-021 (MEDIUM): 4 new lint errors** in Beyond components. All are correct-behavior code that simply needs a `const` fix or targeted eslint-disable comment. Should be fixed ASAP to restore clean lint output. Group with FIX-019/020 for a complete 5-minute lint sweep.
+
+7. **FIX-022 (LOW): Dual `013_` migration prefix.** Two migrations start with `013_`: `013_onboarding_flags.sql` and `013_story_corrections.sql`. Alphabetical ordering means they apply consistently (`onboarding_flags` before `story_corrections`) and Supabase tracks by full filename. Low risk but confusing. Fix: add a comment in `013_story_corrections.sql` noting the naming situation. New migrations should start at `018_`.
+
+8. **IDEA-019 seeded and planned.** The Ask Keith system prompt includes the wiki index (which lists people names) but NOT the detailed biographical content from `content/wiki/people/`. Confirmed: `content/wiki/people/bayne-cobb.md` has a 300-word bio with notable moments and a representative quote. Adding `getPeopleContext()` to `prompts.ts` would directly improve AI response quality for the most emotionally resonant family questions. Estimated 1 hour. Dev plan written.
+
+9. **Interview stories (IV_S01–IV_S10) are in the wiki and surfaced.** Stories page has an "Interview" filter. Wiki index updated to show "49 stories (39 memoir + 10 interview)". Timeline expanded to 43 events. Static data confirms interview story integration.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/FIXPLAN-FIX-021-beyond-lint-errors.md` — 4 eslint fixes (2 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-019-classifier-lint.md` + `FIXPLAN-FIX-020-storymarkdown-img-warnings.md` — 3 more lint comments (2 min) — do all 3 plans together in one commit for a full lint sweep
+- `docs/nightshift/plans/DEVPLAN-IDEA-019-people-in-ask-keith.md` — people bio context in Ask system prompt (1 hr)
+- `docs/nightshift/plans/DEVPLAN-IDEA-018-ask-from-passage.md` — "Ask Keith about this" from highlights (1 hr)
+- `docs/nightshift/plans/DEVPLAN-IDEA-014-story-read-progress-ui.md` — story card read badges, Phase 2 only (~45 min)
+
+### Recommendations
+- **If you have 5 min:** FIX-021 + FIX-019 + FIX-020 together (7 total eslint fixes across 4 files) — restores completely clean lint output. Group as one commit: "fix: clear all ESLint warnings and errors".
+- **If you have 1 hour:** IDEA-019 alone (people bio context in Ask Keith). Highest AI quality improvement available. People pages are shipped, wiki bios exist, system prompt just needs one new loader function. Before/after test: ask "Who was Bayne Cobb?" — the improvement will be immediately obvious.
+- **If you have 2 hours:** Lint sweep (5 min) + IDEA-019 (1 hr) + IDEA-018 (1 hr). After this session: lint clean, Ask knows who people are, highlights connect to live conversations. Three quality improvements that build on each other.
+
+---
+
 ## Run: 2026-04-17 (Run 6)
 
 ### Summary

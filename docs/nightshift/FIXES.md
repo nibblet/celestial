@@ -15,6 +15,24 @@
 
 ## Open Issues
 
+### [FIX-021] ESLint Errors in Beyond Components (4 errors)
+- **Status:** planned
+- **Severity:** Medium — build still passes but lint now reports 4 errors (up from 0); regression from clean lint state before Beyond feature wave
+- **Found:** 2026-04-18
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-021-beyond-lint-errors.md`
+- **Summary:** Four ESLint errors in new Beyond components: `scripts/compile-wiki.ts:564` (`let` → `const` for `peopleIndexEntries`); `MediaGallery.tsx:269` and `MentionSuggestion.tsx:33` (`react-hooks/set-state-in-effect` — legitimate "reset state on prop change" pattern needing eslint-disable); `TipTapEditor.tsx:185` (`react-hooks/immutability` — false positive on DOM element attribute mutation needing eslint-disable). All four are 2-minute fixes. **Do with FIX-019 + FIX-020 for a complete lint sweep.**
+
+---
+
+### [FIX-022] Duplicate `013_` Migration Prefix
+- **Status:** planned
+- **Severity:** Low — no functional impact since Supabase tracks migrations by full filename; however, it's confusing naming and could cause issues on fresh deployments if alphabetical ordering ever changes
+- **Found:** 2026-04-18
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-022-dual-013-migration.md`
+- **Summary:** `supabase/migrations/` has both `013_onboarding_flags.sql` (Run 6) and `013_story_corrections.sql` (this week). The subsequent migrations (014–017) are correctly numbered. Fix: add a comment to `013_story_corrections.sql` acknowledging the numbering (Option A — safe for active deployments). Do NOT rename if already applied in production. New migrations should start at `018_`.
+
+---
+
 ### [FIX-013] Uncaught Exception in /api/tell/draft When Fenced JSON is Malformed
 - **Status:** planned
 - **Severity:** Low — Claude rarely returns fenced-but-invalid JSON; contributor sees a broken spinner with no user-friendly message if it occurs

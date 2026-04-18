@@ -176,15 +176,16 @@
 ---
 
 ### [IDEA-012] Letter to Keith — Personal Takeaway from an Ask Conversation
-- **Status:** seed
+- **Status:** parked
 - **Category:** new
 - **Seeded:** 2026-04-15
-- **Last Updated:** 2026-04-15
+- **Last Updated:** 2026-04-18
 - **Priority:** P2
 - **Plan:** *(not yet written)*
 - **Summary:** After an Ask conversation, generate a short personal letter (from the user's perspective) summarizing what they learned. Downloadable. Especially meaningful for grandchildren.
 - **Night Notes:**
   - 2026-04-15: Seeded. Non-streaming `/api/ask/letter` endpoint reusing conversation messages state.
+  - 2026-04-18: **Stale 3 days — likely low priority while Paul ships Beyond/People/Audio features. Demoting to parked.** Plan would be: POST `/api/ask/letter` with conversation history → single Sonnet call → return formatted letter text → client download as `.txt`. No new DB. Easy to revisit (~45 min).
 
 ---
 
@@ -203,15 +204,16 @@
 ---
 
 ### [IDEA-017] Photo Frame Mode — Fullscreen Rotating Memoir Photos
-- **Status:** ready
+- **Status:** shipped
 - **Category:** new
 - **Seeded:** 2026-04-17
-- **Last Updated:** 2026-04-17
+- **Last Updated:** 2026-04-18
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-017-photo-frame.md`
 - **Summary:** A "Photo Frame" button on the home page triggers fullscreen mode where all chrome disappears and the 35 memoir photos cycle with a slow crossfade every 8 seconds. Subtle caption (story title + era) at the bottom. Close button reveals on hover; Escape exits. Designed for a tablet left on the table at a family gathering.
 - **Night Notes:**
   - 2026-04-17: Seeded as a gallery page; revised to photo frame mode same session (Paul's direction — more evocative, kiosk-style). 35 photos already in `public/book-images/`. Key component: `PhotoFrameOverlay.tsx` — fixed-position, Fullscreen API, crossfade via opacity transition, preloads next image. No new routes, no DB. Estimated 1.5–2 hours.
+  - 2026-04-18: **SHIPPED.** `PhotoFrameOverlay.tsx` confirmed in commit `be2d3fd`. Fullscreen API, 8-second advance, 1.2s crossfade, 30s pause-on-tap, preloads next image. Escape and fullscreen exit both close.
 
 ---
 
@@ -225,6 +227,32 @@
 - **Summary:** "Ask Keith about this →" button on each saved passage in `/profile/highlights`. Clicking it opens the Ask Keith chat with the saved passage pre-loaded as context, so the AI responds specifically to that quote. Transforms saved passages from a static archive into live conversation starters.
 - **Night Notes:**
   - 2026-04-17: Seeded and advanced to `ready` same night. Both IDEA-016 (highlights) and Ask are shipped. This is a pure integration — URL query param on `/ask` + `useEffect` on mount + button in highlights page. Estimated 1 hour. Strong storytelling value for grandchildren.
+
+---
+
+### [IDEA-019] People Biographical Context in Ask Keith
+- **Status:** planned
+- **Category:** enhance
+- **Seeded:** 2026-04-18
+- **Last Updated:** 2026-04-18
+- **Priority:** P1
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-019-people-in-ask-keith.md`
+- **Summary:** Ask Keith currently only has story summaries when answering questions about people. The wiki already has 58 people pages with rich AI-drafted bios (confirmed for Tier A figures like Bayne Cobb, Frances Cobb, etc.). Adding a `getPeopleContext()` loader to `src/lib/ai/prompts.ts` that reads the `ai-draft` section from each person's wiki page would make Ask dramatically more knowledgeable when a grandchild asks "Who was Grandpa's dad?" No new DB changes, no new routes — purely a system prompt enhancement. Estimated 1 hour.
+- **Night Notes:**
+  - 2026-04-18: Seeded and advanced to `planned` same night. Verified: `content/wiki/people/bayne-cobb.md` has a full 300-word bio with quotes and notable moments. The `getWikiSummaries()` call only loads `index.md` (one-line per person). People wiki pages are NOT included in the system prompt today. Gap confirmed. Dev plan written.
+
+---
+
+### [IDEA-020] Reading Milestone Celebration — Complete All 39 Memoir Stories
+- **Status:** seed
+- **Category:** new
+- **Seeded:** 2026-04-18
+- **Last Updated:** 2026-04-18
+- **Priority:** P2
+- **Plan:** *(not yet written)*
+- **Summary:** When a family member reads their 39th memoir story (`sb_story_reads` count reaches 39 for P1_S* stories), show a special congratulations moment — "You've walked the full journey with Grandpa" — as a fullscreen overlay or celebratory toast with a meaningful message. The `sb_story_reads` infrastructure is fully in place; this is purely a celebration UI layer on top of the ReadTracker component. Especially meaningful for grandchildren who read the whole book.
+- **Night Notes:**
+  - 2026-04-18: Seeded. Implementation sketch: `ReadTracker` component checks total memoir story read count after each successful POST; if it hits 39 for the first time, fires a callback to parent page. Parent page shows `MilestoneOverlay.tsx` (similar pattern to `PhotoFrameOverlay.tsx`). No new DB columns needed — just a count query on `sb_story_reads` where story_id like `P1_%`.
 
 ---
 
@@ -251,3 +279,4 @@
 - **IDEA-006** Featured Story of the Week — parked 2026-04-16. Stale 3 days. Wiki-first, no DB changes. Parked — revisit when home page refresh is prioritized.
 - **IDEA-008** New Stories Feed — parked 2026-04-17. Stale 3 days. Pure UI addition. Parked — low priority while larger features are landing.
 - **IDEA-010** Public Media Integration — parked 2026-04-17. Stale 3 days. Content curation is the blocker (need actual media links). Parked — revisit when Paul has a media list.
+- **IDEA-012** Letter to Keith — parked 2026-04-18. Stale 3 days. Non-streaming `/api/ask/letter` endpoint. Parked — revisit when conversational features take priority.
