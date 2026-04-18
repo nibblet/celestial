@@ -10,7 +10,7 @@
 - Scanned: 9 commits since Run 6 (4fa9d60 through 43cfb4b), all new source files (PhotoFrameOverlay, TipTapEditor, BeyondEditMode, BeyondDraftEditor, BeyondPeopleMode, BeyondModeTabs, MediaGallery, MentionSuggestion, PersonLink, PersonEditDrawer, PersonMediaPanel, StoryAudioControls + ElevenLabs lib, CorrectionActions, people routes, media routes, audio routes), 5 new migrations (013_story_corrections through 017_media), 58 new wiki people pages, build + lint
 - Issues found: 2 new (FIX-021 — 4 lint errors, FIX-022 — dual 013 migration prefix) — both planned
 - Issues resolved: 0 this run (all prior open issues unchanged)
-- Ideas: IDEA-017 marked shipped; IDEA-012 parked (3-day stale); IDEA-019 seeded and advanced to `planned` same night; IDEA-020 seeded
+- Ideas: IDEA-017 marked shipped; IDEA-012 parked (3-day stale); IDEA-019 seeded and advanced to `planned` same night; IDEA-021 seeded (reading milestone celebration)
 - Plans written:
   - `FIXPLAN-FIX-021-beyond-lint-errors.md`
   - `FIXPLAN-FIX-022-dual-013-migration.md`

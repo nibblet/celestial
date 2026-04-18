@@ -97,6 +97,21 @@
 - **Night Notes:**
   - 2026-04-16: Seeded and advanced to `ready` same night. DB + API + ReadTracker all confirmed working. Only UI elements remain. Plan written.
   - 2026-04-17: **Profile progress dashboard portion SHIPPED** (ProfileReadingDashboard on `/profile`). Story card badges (Phase 2 of the plan) remain. Plan still valid — only Phase 2 needs execution now. Estimated ~45 min remaining work.
+  - 2026-04-18: `ProfileReadingDashboard` has been superseded by the new reflection gallery (IDEA-020). Story card "Read" badges (Phase 2) are still open and remain the only outstanding piece.
+
+---
+
+### [IDEA-020] Profile as Reflection Gallery
+- **Status:** shipped
+- **Category:** enhance
+- **Seeded:** 2026-04-18
+- **Last Updated:** 2026-04-18
+- **Priority:** P1
+- **Spec:** `docs/nightshift/specs/2026-04-18-profile-reflection-gallery-design.md`
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-020-profile-reflection-gallery.md`
+- **Summary:** Reworked `/profile` (non-Keith users) into a reflective mirror: AI narrator reflection as hero, gallery of signal tiles (featured passage, with-Keith-since, principles, dialogue with Keith, themes, keepers, ghosted future "Keith's people" tile). Utility actions demoted to subtle top-right icons (tour, admin, sign-out). Keith special-access profile untouched.
+- **Night Notes:**
+  - 2026-04-18: Spec + plan written and implemented end-to-end on `feat/profile-reflection-gallery`. New table `sb_profile_reflections` (migration 019) with cooldown (24h) + trigger (+3 reads, +1 saved, +1 asked) logic. Reuses Claude Sonnet 4 via the existing Anthropic wiring. Deprecated `ProfileHero`, `ProfileReadingDashboard`, and `profile-dashboard.ts` deleted. Pre-existing IDEA-014 Phase 2 (story card read badges) still pending.
 
 ---
 
@@ -243,7 +258,7 @@
 
 ---
 
-### [IDEA-020] Reading Milestone Celebration — Complete All 39 Memoir Stories
+### [IDEA-021] Reading Milestone Celebration — Complete All 39 Memoir Stories
 - **Status:** seed
 - **Category:** new
 - **Seeded:** 2026-04-18

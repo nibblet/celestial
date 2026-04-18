@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { getProfileReadingDashboardData } from "@/lib/analytics/profile-dashboard";
-import { ProfileHero } from "@/components/profile/ProfileHero";
+import { getProfileGalleryData } from "@/lib/analytics/profile-gallery-data";
+import { ProfileReflectionHero } from "@/components/profile/ProfileReflectionHero";
+import { ProfileGallery } from "@/components/profile/ProfileGallery";
 import { KeithProfileHero } from "@/components/profile/KeithProfileHero";
 import { getKeithDashboardData } from "@/lib/analytics/keith-dashboard";
 import { getAuthenticatedProfileContext } from "@/lib/auth/profile-context";
@@ -39,15 +40,8 @@ export default async function ProfilePage() {
     user.email
   );
 
-  const supabase = await createClient();
-  const { count: unreadAnswerCount } = await supabase
-    .from("sb_chapter_questions")
-    .select("id", { count: "exact", head: true })
-    .eq("asker_id", user.id)
-    .eq("status", "answered")
-    .eq("asker_seen", false);
-
   if (isKeithSpecialAccess) {
+    const supabase = await createClient();
     const { count: pendingQuestionCount } = await supabase
       .from("sb_chapter_questions")
       .select("id", { count: "exact", head: true })
@@ -65,13 +59,22 @@ export default async function ProfilePage() {
     );
   }
 
+  const data = await getProfileGalleryData(user.id);
+  const hasAnyActivity =
+    data.readStats.readCount > 0 ||
+    data.savedPassageCount > 0 ||
+    data.dialogue.askedCount > 0 ||
+    data.favorites.totalCount > 0;
+
   return (
-    <ProfileHero
-      displayName={displayName}
-      email={user.email ?? ""}
-      unreadAnswerCount={unreadAnswerCount ?? 0}
-      isAdmin={profile?.role === "admin"}
-      dashboard={await getProfileReadingDashboardData(user.id)}
-    />
+    <>
+      <ProfileReflectionHero
+        displayName={displayName}
+        isAdmin={profile?.role === "admin"}
+        reflection={data.reflection}
+        hasAnyActivity={hasAnyActivity}
+      />
+      <ProfileGallery data={data} />
+    </>
   );
 }
