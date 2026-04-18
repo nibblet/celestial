@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  buildReflectionPrompt,
   computeInputSignature,
   shouldRegenerateReflection,
   type ReflectionInputs,
@@ -115,4 +116,36 @@ test("shouldRegenerate returns 'use-cache' for tiny read growth below threshold"
     now: new Date("2026-04-18T12:00:00Z"),
   });
   assert.equal(got, "use-cache");
+});
+
+test("buildReflectionPrompt includes themes, principles, and saved passages", () => {
+  const prompt = buildReflectionPrompt({
+    reads: [
+      { title: "A Towhead from the Red Clay Hills", themes: ["Identity"], principles: ["Small communities matter."] },
+      { title: "A Very Busy Teenager", themes: ["Identity", "Gratitude"], principles: ["Adversity builds skills."] },
+    ],
+    savedPassages: [
+      { storyTitle: "A Very Busy Teenager", text: "The four years of high school..." },
+    ],
+    askedQuestions: ["do you have any red clay left?"],
+  });
+  assert.match(prompt, /Identity/);
+  assert.match(prompt, /Small communities matter\./);
+  assert.match(prompt, /The four years of high school/);
+  assert.match(prompt, /do you have any red clay left\?/);
+});
+
+test("buildReflectionPrompt caps saved passages to 20", () => {
+  const savedPassages = Array.from({ length: 30 }, (_, i) => ({
+    storyTitle: "Story " + i,
+    text: "passage-marker-" + i,
+  }));
+  const prompt = buildReflectionPrompt({
+    reads: [{ title: "x", themes: [], principles: [] }],
+    savedPassages,
+    askedQuestions: [],
+  });
+  assert.match(prompt, /passage-marker-29/);
+  assert.match(prompt, /passage-marker-10/);
+  assert.doesNotMatch(prompt, /passage-marker-9\b/);
 });

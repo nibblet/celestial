@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import Anthropic from "@anthropic-ai/sdk";
 
 export type ReflectionInputs = {
   readCount: number;
@@ -74,4 +75,95 @@ export function shouldRegenerateReflection(args: {
   if (!cooldownElapsed) return "use-cache";
   if (!triggersMet) return "use-cache";
   return "generate";
+}
+
+export const REFLECTION_MODEL = "claude-sonnet-4-20250514";
+const REFLECTION_MAX_TOKENS = 160;
+const REFLECTION_TIMEOUT_MS = 4000;
+
+export type ReflectionCorpus = {
+  reads: { title: string; themes: string[]; principles: string[] }[];
+  savedPassages: { storyTitle: string; text: string }[];
+  askedQuestions: string[];
+};
+
+const SYSTEM_PROMPT = `You are a warm, observant narrator writing a single reflective sentence (or two short sentences) about what a reader seems to be drawn to in Keith Cobb's memoir stories.
+
+Rules:
+- Voice: second person ("your reading keeps returning to…"). Never first person. Never quote Keith directly.
+- Tone: observational and warm, not prescriptive. Never tell them what to do.
+- Length: 25–45 words total. Plain prose only. No lists, no markdown, no emojis.
+- Never invent facts. If the signal is thin, say something honest and small.
+- Reference what they seem drawn to: themes, principles, or the character of the passages they've saved. You may allude to questions they've asked as signs of curiosity.
+- Never include the user's name. Never use "Keith" as a subject — write about the reader, not about Keith.
+
+Output: just the reflection text. No preamble, no quotes around it.`;
+
+export function buildReflectionPrompt(corpus: ReflectionCorpus): string {
+  const themeCounts = new Map<string, number>();
+  const principleCounts = new Map<string, number>();
+  for (const r of corpus.reads) {
+    for (const t of r.themes) themeCounts.set(t, (themeCounts.get(t) ?? 0) + 1);
+    for (const p of r.principles) principleCounts.set(p, (principleCounts.get(p) ?? 0) + 1);
+  }
+
+  const topThemes = [...themeCounts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 6)
+    .map(([name, count]) => `${name} (${count})`);
+
+  const topPrinciples = [...principleCounts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 6)
+    .map(([text]) => `- ${text}`);
+
+  const savedCapped = corpus.savedPassages.slice(-20);
+
+  const lines: string[] = [];
+  lines.push(`STORIES_READ: ${corpus.reads.length}`);
+  lines.push(`TOP_THEMES: ${topThemes.join(", ") || "(none)"}`);
+  lines.push(`TOP_PRINCIPLES:`);
+  lines.push(topPrinciples.length ? topPrinciples.join("\n") : "(none)");
+  lines.push(`SAVED_PASSAGES (${savedCapped.length}):`);
+  if (savedCapped.length === 0) lines.push("(none)");
+  for (const p of savedCapped) lines.push(`- from "${p.storyTitle}": ${p.text}`);
+  lines.push(`QUESTIONS_ASKED:`);
+  if (corpus.askedQuestions.length === 0) lines.push("(none)");
+  for (const q of corpus.askedQuestions) lines.push(`- ${q}`);
+
+  return lines.join("\n");
+}
+
+export async function generateReflection(
+  corpus: ReflectionCorpus,
+  anthropic: Anthropic
+): Promise<{ text: string; modelSlug: string } | null> {
+  const userPrompt = buildReflectionPrompt(corpus);
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), REFLECTION_TIMEOUT_MS);
+
+  try {
+    const response = await anthropic.messages.create(
+      {
+        model: REFLECTION_MODEL,
+        max_tokens: REFLECTION_MAX_TOKENS,
+        system: SYSTEM_PROMPT,
+        messages: [{ role: "user", content: userPrompt }],
+      },
+      { signal: controller.signal }
+    );
+
+    const text = response.content
+      .filter((b) => b.type === "text")
+      .map((b) => b.text)
+      .join("")
+      .trim();
+    if (!text) return null;
+    return { text, modelSlug: REFLECTION_MODEL };
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timeout);
+  }
 }
