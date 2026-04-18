@@ -15,6 +15,7 @@ import {
   getDecisionFrameworks,
   getStoryContext,
   getJourneyContextForPrompt,
+  getPeopleContext,
   AGE_MODE_INSTRUCTIONS,
 } from "./prompts";
 
@@ -28,6 +29,8 @@ function sharedContentBlock(
 
   parts.push(`## Story ID Catalog (for links)\n${getStoryLinkCatalog()}`);
   parts.push(`## Wiki Index\n${getWikiSummaries()}`);
+  const people = getPeopleContext();
+  if (people) parts.push(people);
 
   if (storySlug) {
     const ctx = getStoryContext(storySlug);

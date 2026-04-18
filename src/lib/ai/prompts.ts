@@ -11,6 +11,64 @@ let cachedWikiSummaries: string | null = null;
 let cachedVoiceGuide: string | null = null;
 let cachedStoryLinkCatalog: string | null = null;
 let cachedDecisionFrameworks: string | null = null;
+let cachedPeopleContext: string | null = null;
+let loggedSystemPromptApproxTokens = false;
+
+/** Inventory line lists tiers like "(tiers: A, B, D)" — Tier A bios are richest. */
+function peoplePageHasTierA(markdown: string): boolean {
+  const m = markdown.match(/Inventory entry\s*\(tiers:\s*([^)]+)\)/i);
+  if (!m) return false;
+  return /\bA\b/.test(m[1]);
+}
+
+function collectPeopleBioEntries(tierAOnly: boolean): string[] {
+  const peopleDir = path.join(WIKI_DIR, "people");
+  if (!fs.existsSync(peopleDir)) return [];
+
+  const entries: string[] = [];
+  const files = fs.readdirSync(peopleDir).filter((f) => f.endsWith(".md"));
+
+  for (const file of files) {
+    const content = fs.readFileSync(path.join(peopleDir, file), "utf-8");
+    if (tierAOnly && !peoplePageHasTierA(content)) continue;
+
+    const draftMatch = content.match(
+      /<!-- ai-draft:start[^>]*-->([\s\S]*?)<!-- ai-draft:end -->/
+    );
+    if (!draftMatch) continue;
+    const bio = draftMatch[1].trim();
+    if (!bio) continue;
+    entries.push(bio);
+  }
+  return entries;
+}
+
+/**
+ * AI-draft bios from `content/wiki/people/*.md` (between <!-- ai-draft --> markers).
+ * If the combined text exceeds ~14k characters, only inventory Tier A pages are included.
+ */
+export function getPeopleContext(): string {
+  if (cachedPeopleContext !== null) return cachedPeopleContext;
+
+  let entries = collectPeopleBioEntries(false);
+  const joined = entries.join("\n\n---\n\n");
+  const maxChars = 14_000;
+  if (joined.length > maxChars) {
+    entries = collectPeopleBioEntries(true);
+  }
+
+  const ageModeHint = `When discussing people from the list below, adapt biographical detail to the age mode:
+- young_reader: simple, warm language (e.g. "Grandpa's dad was a hardworking man who drove a truck…"); one clear idea.
+- teen: brief factual bio plus one vivid detail they can relate to.
+- adult: full biographical context as written below (quotes and specifics when relevant).`;
+
+  cachedPeopleContext =
+    entries.length > 0
+      ? `## Key People in Keith's Life\n\n${ageModeHint}\n\n${entries.join("\n\n---\n\n")}`
+      : "";
+
+  return cachedPeopleContext;
+}
 
 export function getStoryLinkCatalog(): string {
   if (cachedStoryLinkCatalog) return cachedStoryLinkCatalog;
@@ -93,12 +151,13 @@ export function buildSystemPrompt(
 ): string {
   const voice = getVoiceGuide();
   const wikiIndex = getWikiSummaries();
+  const peopleContext = getPeopleContext();
   const storyContext = storySlug ? getStoryContext(storySlug) : "";
   const journeyContext = journeySlug
     ? getJourneyContextForPrompt(journeySlug)
     : "";
 
-  return `You are a guide to Keith Cobb's stories and life lessons. You help family members — especially grandchildren and great-grandchildren — explore the experiences, values, and lessons described in Keith's memoir.
+  const prompt = `You are a guide to Keith Cobb's stories and life lessons. You help family members — especially grandchildren and great-grandchildren — explore the experiences, values, and lessons described in Keith's memoir.
 
 ## Your Role
 You do NOT pretend to be Keith Cobb. You do NOT claim to personally remember the user. Instead, you answer by referencing the stories, timeline, quotes, and lessons contained in the memoir materials.
@@ -163,6 +222,8 @@ ${voice.slice(0, 2000)}
 ## Wiki Index (All Available Content)
 ${wikiIndex}
 
+${peopleContext ? `\n${peopleContext}\n` : ""}
+
 ## Decision Frameworks
 ${getDecisionFrameworks().slice(0, 2000)}
 
@@ -170,4 +231,14 @@ ${publishedStorySummaries ? `## Additional Stories (Family Contributions)\n${pub
 
 ${journeyContext ? `## Guided Journey Context\n${journeyContext}\n` : ""}
 ${storyContext ? `## Currently Reading\nThe user is reading this story:\n\n${storyContext.slice(0, 3000)}` : ""}`;
+
+  if (process.env.NODE_ENV === "development" && !loggedSystemPromptApproxTokens) {
+    loggedSystemPromptApproxTokens = true;
+    console.log(
+      "[ask] system prompt approx tokens:",
+      Math.round(prompt.length / 4)
+    );
+  }
+
+  return prompt;
 }
