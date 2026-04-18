@@ -229,48 +229,51 @@ export async function getProfileGalleryData(
     ? { text: cached.reflectionText, refreshedAt: cached.generatedAt.toISOString() }
     : null;
 
-  if (decision === "generate") {
-    const apiKey = process.env.ANTHROPIC_API_KEY;
-    if (apiKey) {
-      const { data: allHighlights } = await supabase
-        .from("sb_story_highlights")
-        .select("story_title, passage_text")
-        .eq("user_id", userId)
-        .order("saved_at", { ascending: true });
-      const corpus: ReflectionCorpus = {
-        reads: reads.map((r) => {
-          const s = storyMap.get(r.story_id);
-          return {
-            title: s?.title ?? r.story_id,
-            themes: s?.themes ?? [],
-            principles: s?.principles ?? [],
-          };
-        }),
-        savedPassages: (allHighlights ?? []).map((h) => ({
-          storyTitle: h.story_title,
-          text: h.passage_text,
-        })),
-        askedQuestions: questionRows.map((q) => q.question),
-      };
+  // Short-circuit the "generate" branch when no API key is configured. Without
+  // this, every render re-enters the branch (cooldown is keyed on generated_at,
+  // which never advances without a successful call) and re-runs the extra
+  // highlights query — cheap, but wasted work. Graceful degradation keeps the
+  // cached reflection (if any) visible.
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (decision === "generate" && apiKey) {
+    const { data: allHighlights } = await supabase
+      .from("sb_story_highlights")
+      .select("story_title, passage_text")
+      .eq("user_id", userId)
+      .order("saved_at", { ascending: true });
+    const corpus: ReflectionCorpus = {
+      reads: reads.map((r) => {
+        const s = storyMap.get(r.story_id);
+        return {
+          title: s?.title ?? r.story_id,
+          themes: s?.themes ?? [],
+          principles: s?.principles ?? [],
+        };
+      }),
+      savedPassages: (allHighlights ?? []).map((h) => ({
+        storyTitle: h.story_title,
+        text: h.passage_text,
+      })),
+      askedQuestions: questionRows.map((q) => q.question),
+    };
 
-      const anthropic = new Anthropic({ apiKey });
-      const generated = await generateReflection(corpus, anthropic);
-      if (generated) {
-        const admin = createAdminClient();
-        const signature = computeInputSignature(inputs);
-        const now = new Date();
-        await admin.from("sb_profile_reflections").upsert(
-          {
-            user_id: userId,
-            reflection_text: generated.text,
-            generated_at: now.toISOString(),
-            input_signature: signature,
-            model_slug: generated.modelSlug,
-          },
-          { onConflict: "user_id" }
-        );
-        reflection = { text: generated.text, refreshedAt: now.toISOString() };
-      }
+    const anthropic = new Anthropic({ apiKey });
+    const generated = await generateReflection(corpus, anthropic);
+    if (generated) {
+      const admin = createAdminClient();
+      const signature = computeInputSignature(inputs);
+      const now = new Date();
+      await admin.from("sb_profile_reflections").upsert(
+        {
+          user_id: userId,
+          reflection_text: generated.text,
+          generated_at: now.toISOString(),
+          input_signature: signature,
+          model_slug: generated.modelSlug,
+        },
+        { onConflict: "user_id" }
+      );
+      reflection = { text: generated.text, refreshedAt: now.toISOString() };
     }
   }
 

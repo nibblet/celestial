@@ -15,7 +15,7 @@ export function DialogueTile({
   answeredCount,
   className = "",
 }: Props) {
-  if (askedCount === 0) {
+  if (askedCount === 0 || recent.length === 0) {
     return (
       <GhostTile
         label="Your dialogue with Keith"
