@@ -63,7 +63,7 @@ export default async function JourneyCompletePage({
           href={`/ask?journey=${encodeURIComponent(journey.slug)}`}
           className="type-ui rounded-lg bg-clay py-2.5 text-center font-medium text-warm-white transition-colors hover:bg-clay-mid"
         >
-          Ask Keith about this journey
+          Ask about this journey
         </Link>
         <Link
           href="/journeys"

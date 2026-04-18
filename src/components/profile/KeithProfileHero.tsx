@@ -57,9 +57,9 @@ export function KeithProfileHero({
               Welcome back, {displayName}.
             </h1>
             <p className="max-w-2xl font-[family-name:var(--font-lora)] text-lg leading-relaxed text-[rgba(247,243,237,0.82)]">
-              Beyond is the launch point for the next volume — where untold
-              stories become Volume 2. Turn memories, scenes, and reflections
-              into new Keith Cobb stories that can join the family library.
+              Beyond is the launch point for shaping untold stories into new
+              stories for the collection. Turn memories, scenes, and
+              reflections into additions to the family library.
             </p>
             <p className="type-ui mt-4 text-sm !text-[rgba(247,243,237,0.65)]">
               Signed in as {email}
@@ -82,8 +82,8 @@ export function KeithProfileHero({
                 )}
               </div>
               <p className="mt-2 font-[family-name:var(--font-lora)] text-sm leading-relaxed text-[rgba(247,243,237,0.75)]">
-                Capture untold stories in Keith&apos;s voice and continue the
-                archive.
+                Capture untold stories in Keith&apos;s storytelling voice for
+                the collection.
               </p>
             </Link>
 

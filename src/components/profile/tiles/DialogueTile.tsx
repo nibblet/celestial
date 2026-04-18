@@ -18,8 +18,8 @@ export function DialogueTile({
   if (askedCount === 0 || recent.length === 0) {
     return (
       <GhostTile
-        label="Your dialogue with Keith"
-        body="Questions you ask Keith will live here."
+        label="Your questions about Keith"
+        body="Questions you ask about Keith's stories will live here."
         className={className}
       />
     );
@@ -31,7 +31,7 @@ export function DialogueTile({
     >
       <div className="flex items-center justify-between">
         <h3 className="type-era-label text-[rgba(240,232,213,0.58)]">
-          Your dialogue with Keith
+          Your questions about Keith
         </h3>
         <Link
           href="/profile/questions"
@@ -56,7 +56,7 @@ export function DialogueTile({
                 </span>
               ) : (
                 <span className="text-[rgba(240,232,213,0.5)]">
-                  Waiting for Keith&apos;s answer…
+                  Waiting for a story-based answer…
                 </span>
               )}
             </p>

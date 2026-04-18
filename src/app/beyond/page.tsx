@@ -5,7 +5,8 @@ import { getAuthenticatedProfileContext } from "@/lib/auth/profile-context";
 
 export const metadata: Metadata = {
   title: "Beyond",
-  description: "Keith's dedicated space for shaping untold stories into Volume 2.",
+  description:
+    "Keith's dedicated space for shaping untold stories into new stories for the collection.",
 };
 
 export default async function BeyondPage() {

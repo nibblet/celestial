@@ -22,7 +22,7 @@ function buildSeedMessage(params: {
     "",
     `"${params.question}"`,
     "",
-    "Walk Keith through answering this. If the answer opens up a new chapter worth keeping, we'll capture it as a Volume 2 story. Where would you like to start?",
+    "Walk Keith through answering this. If the answer opens up a new chapter worth keeping, we'll capture it as a new story for the collection. Where would you like to start?",
   ].join("\n");
 }
 

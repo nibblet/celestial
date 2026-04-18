@@ -304,7 +304,7 @@ function AskPageContent() {
       }
     } catch {
       setError(
-        "Ask Keith is temporarily unavailable. Try browsing stories by topic in the meantime."
+        "Ask About Keith is temporarily unavailable. Try browsing stories by topic in the meantime."
       );
       setMessages((prev) => {
         if (prev[prev.length - 1]?.content === "") {
@@ -354,9 +354,10 @@ function AskPageContent() {
   return (
     <div className="mx-auto flex h-[calc(100vh-8rem)] max-w-content flex-col px-[var(--page-padding-x)] md:h-[calc(100vh-4rem)]">
       <div className="border-b border-[var(--color-border)] py-4">
-        <h1 className="type-page-title text-2xl">Ask Keith</h1>
+        <h1 className="type-page-title text-2xl">Ask About Keith</h1>
         <p className="type-ui mt-1 text-ink-ghost">
-          AI-guided chat using Keith&apos;s published stories and life lessons
+          Ask questions about Keith&apos;s stories. You&apos;ll get answers
+          drawn from Keith&apos;s stories and life lessons.
           {journeySlug && !storySlug && (
             <span className="text-clay">
               {" "}

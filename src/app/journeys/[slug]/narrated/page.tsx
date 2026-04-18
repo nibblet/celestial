@@ -74,7 +74,7 @@ export default async function NarratedJourneyPage({
             href={`/ask?journey=${encodeURIComponent(journey.slug)}`}
             className="type-ui rounded-lg border border-[var(--color-border)] bg-warm-white-2 px-4 py-2.5 text-center font-medium text-ink transition-colors hover:border-clay-border"
           >
-            Ask Keith about this journey
+            Ask about this journey
           </Link>
         </div>
       </div>

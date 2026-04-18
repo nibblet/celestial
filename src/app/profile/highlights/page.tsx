@@ -132,7 +132,7 @@ export default async function ProfileHighlightsPage() {
                         href={`/ask?highlight=${encodeURIComponent(h.id)}`}
                         className="type-ui inline-flex items-center gap-1 text-xs font-medium text-clay hover:text-clay-mid transition-colors"
                       >
-                        Ask Keith about this →
+                        Ask about this passage →
                       </Link>
                     )}
                   </div>

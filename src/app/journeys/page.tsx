@@ -9,7 +9,8 @@ export default function JourneysPage() {
     <div className="mx-auto max-w-content px-[var(--page-padding-x)] py-6 md:py-10">
       <h1 className="type-page-title mb-2">Journeys</h1>
       <p className="type-ui mb-6 text-ink-muted">
-        Explore Keith&apos;s life as either a curated path through stories or a newly narrated journey woven from the memoir and interviews.
+        Explore Keith&apos;s life as either a curated path through stories or a
+        woven retelling built from the memoir and interviews.
       </p>
 
       <div className="grid gap-3 sm:grid-cols-2">
@@ -41,17 +42,12 @@ export default function JourneysPage() {
                       : "Guided path only"}
                   </p>
                 )}
-                <p className="type-ui mt-2 line-clamp-3 text-ink-muted">
+                <p className="mt-2 line-clamp-3 font-[family-name:var(--font-lora)] text-sm italic leading-snug text-ink-muted">
                   {journey.description}
                 </p>
                 <p className="type-meta mt-3 normal-case tracking-normal text-ink-ghost">
                   {journey.storyCount} stories
                 </p>
-                {journey.narratedDek && (
-                  <p className="mt-3 font-[family-name:var(--font-lora)] text-xs italic text-ink-muted">
-                    {journey.narratedDek}
-                  </p>
-                )}
               </div>
               <JourneyCTAButtons
                 slug={journey.slug}

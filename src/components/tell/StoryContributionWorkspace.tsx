@@ -67,10 +67,10 @@ const workspaceContent: Record<ContributionMode, WorkspaceContent> = {
     ],
   },
   beyond: {
-    badge: "Volume 2",
+    badge: "New stories",
     title: "Beyond",
     subtitle:
-      "Continue Keith's untold stories and shape the next volume of the library.",
+      "Continue untold stories and shape new stories for the collection.",
     emptyPrompt: "Which untold Keith story should we work on today?",
     inputPlaceholder: "Start with the moment, season, or lesson you want to capture...",
     composeCta: "Draft the next Beyond story",
@@ -79,7 +79,7 @@ const workspaceContent: Record<ContributionMode, WorkspaceContent> = {
       "Refine the draft, preserve the voice, and submit it into the publishing flow.",
     submittedTitle: "Beyond draft submitted!",
     submittedBody:
-      "This untold story is now in the review queue and ready for the next step into the library.",
+      "This untold story is now in the review queue and ready for the next step into the collection.",
     resumeTitle: "Continue an untold story",
     suggestions: [
       "I want to tell a story that never made it into the memoir",

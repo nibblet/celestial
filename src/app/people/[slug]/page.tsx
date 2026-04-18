@@ -90,14 +90,6 @@ export default async function PersonDetailPage({
         </div>
       )}
 
-      {person.note && (
-        <div className="mb-6 rounded-xl border border-[var(--color-border)] bg-warm-white p-4">
-          <p className="font-[family-name:var(--font-lora)] text-sm text-ink-muted">
-            {person.note}
-          </p>
-        </div>
-      )}
-
       {dbPerson?.bio_md ? (
         <section className="mb-8">
           <article className="prose prose-story max-w-none">

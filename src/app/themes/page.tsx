@@ -12,7 +12,7 @@ export default function ThemesPage() {
       <div className="mx-auto max-w-content">
         <h1 className="type-page-title mb-2">Themes &amp; Principles</h1>
         <p className="type-ui mb-6 text-ink-muted">
-          The values and principles that shaped Keith&apos;s decisions. Each
+          The values and principles shaping Keith&apos;s decisions. Each
           arc below is a theme, sized by how many stories it appears in.
           Ribbons show the themes that share stories — hover to see how they
           weave together.

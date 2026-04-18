@@ -3,7 +3,7 @@
 import type { AgeMode } from "@/types";
 
 /**
- * Static Ask Keith demo: a fake chat with a user question, typing dots, and
+ * Static Ask About Keith demo: a fake chat with a user question, typing dots, and
  * a short Keith reply with a source chip. Copy branches on age mode so
  * young readers see a kid-friendly exchange.
  */

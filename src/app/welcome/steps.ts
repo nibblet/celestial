@@ -30,10 +30,10 @@ export function getSteps(ageMode: AgeMode): StepSpec[] {
     },
     {
       key: "ask",
-      title: isYoungReader ? "Ask Keith anything" : "Have a conversation with Keith",
+      title: "Ask About Keith",
       body: isYoungReader
-        ? "Type a question like 'What was your favorite game as a kid?' — Keith will answer from his stories."
-        : "Ask about any moment in his life. Answers are grounded in his own stories and always point back to where they came from.",
+        ? "Type a question like 'What was your favorite game as a kid?' — you'll get answers drawn from Keith's stories."
+        : "Ask questions about Keith's stories. You'll get answers drawn from his stories and pointed back to where they came from.",
       Demo: AskDemo,
     },
     {

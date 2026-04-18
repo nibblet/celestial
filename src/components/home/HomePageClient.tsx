@@ -13,19 +13,19 @@ const navCards = [
     href: "/stories",
     title: "Read a Story",
     description:
-      "Browse 39 stories from Keith's life — from growing up in Mississippi to leading national organizations.",
+      "Browse Keith's stories — from growing up in Mississippi to leading national organizations.",
   },
   {
     href: "/themes",
     title: "Explore by Topic",
     description:
-      "Discover the principles and values that shaped Keith's decisions — integrity, work ethic, leadership, and more.",
+      "Discover the principles and values shaping Keith's decisions — integrity, work ethic, leadership, and more.",
   },
   {
     href: "/ask",
     title: "Ask a Question",
     description:
-      "Have a conversation guided by Keith's stories. Ask about life, career, decisions, or family.",
+      "Ask questions about Keith's stories. You'll get answers drawn from Keith's stories, life, career, and family memories.",
   },
 ];
 
@@ -49,8 +49,7 @@ export function HomePageClient() {
             The Keith Cobb Story Library
           </h2>
           <p className="type-ui mx-auto max-w-md text-ink-muted">
-            A collection of stories, lessons, and values from a life well lived
-            — preserved for the family.
+            A family library built from Keith&apos;s memoir and conversations.
           </p>
         </Reveal>
 

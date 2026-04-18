@@ -50,13 +50,17 @@ export default async function JourneyIntroPage({
           <h2 className="type-meta mb-2 text-ink">Narrated Journey</h2>
           <p className="type-body mb-4 text-ink-muted">
             {journey.narratedDek ||
-              "Read a single longform journey woven from Keith's memoir stories and interviews."}
+              "Read a single longform retelling woven from Keith's memoir stories and interviews."}
+          </p>
+          <p className="type-meta mb-4 normal-case tracking-normal text-ink-ghost">
+            Narrative = one woven retelling. Chapters = the original stories in
+            order.
           </p>
           <Link
             href={`/journeys/${journey.slug}/narrated`}
             className="type-ui inline-block rounded-lg bg-clay px-5 py-2.5 font-medium text-warm-white transition-colors hover:bg-clay-mid"
           >
-            Read the narrative
+            Read Narrative
           </Link>
         </div>
       )}
