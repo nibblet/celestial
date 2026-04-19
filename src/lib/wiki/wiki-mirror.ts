@@ -285,6 +285,57 @@ export function buildStoryWikiMarkdown(integration: StoryIntegration): string {
   return lines.join("\n");
 }
 
+/** If publish fails after superseding the active story doc, restore the latest superseded row so Ask/corpus stay consistent. */
+async function reactivateLatestSupersededStoryDoc(
+  supabase: SupabaseClient,
+  docKey: string,
+  now: string
+): Promise<void> {
+  const { data } = await supabase
+    .from("sb_wiki_documents")
+    .select("id")
+    .eq("doc_type", "story")
+    .eq("doc_key", docKey)
+    .eq("status", "superseded")
+    .order("version", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (!data?.id) return;
+  await supabase
+    .from("sb_wiki_documents")
+    .update({ status: "active", updated_at: now })
+    .eq("id", data.id);
+}
+
+/**
+ * After a failed derived-doc insert, re-activate the most recent superseded row per
+ * (doc_type, doc_key) only — not every historical superseded row (would violate the active unique index).
+ */
+async function reactivateLatestSupersededDerivedWikiDocs(
+  supabase: SupabaseClient,
+  now: string
+): Promise<void> {
+  const { data } = await supabase
+    .from("sb_wiki_documents")
+    .select("id, doc_type, doc_key, version")
+    .in("doc_type", ["theme", "timeline", "index"])
+    .eq("status", "superseded");
+  const bestByKey = new Map<string, { id: string; version: number }>();
+  for (const row of data ?? []) {
+    const k = `${row.doc_type}:${row.doc_key}`;
+    const prev = bestByKey.get(k);
+    if (!prev || row.version > prev.version) {
+      bestByKey.set(k, { id: row.id, version: row.version });
+    }
+  }
+  for (const { id } of bestByKey.values()) {
+    await supabase
+      .from("sb_wiki_documents")
+      .update({ status: "active", updated_at: now })
+      .eq("id", id);
+  }
+}
+
 export async function publishStoryToWikiMirror(
   supabase: SupabaseClient,
   draft: StoryDraftForMirror,
@@ -335,6 +386,7 @@ export async function publishStoryToWikiMirror(
     generated_at: now,
   });
   if (integrationError) {
+    await reactivateLatestSupersededStoryDoc(supabase, docKey, now);
     throw new Error(`Failed to save story integration: ${integrationError.message}`);
   }
 
@@ -354,6 +406,7 @@ export async function publishStoryToWikiMirror(
 
   const { error: documentError } = await supabase.from("sb_wiki_documents").insert(row);
   if (documentError) {
+    await reactivateLatestSupersededStoryDoc(supabase, docKey, now);
     throw new Error(`Failed to save wiki document: ${documentError.message}`);
   }
 
@@ -567,6 +620,7 @@ export async function rebuildDerivedWikiMirrorDocuments(
     .from("sb_wiki_documents")
     .insert(docs);
   if (insertError) {
+    await reactivateLatestSupersededDerivedWikiDocs(supabase, now);
     throw new Error(`Failed to save derived wiki documents: ${insertError.message}`);
   }
 }

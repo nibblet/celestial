@@ -1,4 +1,5 @@
 # A Towhead from the Red Clay Hills
+
 **Story ID:** P1_S01
 **Part:** One
 **Tags:** 1940s–1950s, Tension between humble small-town origins and later life 'glitter and glitz' that became his destiny, and how formative community influences shaped identity., Value community and hard work as central virtues, Early influences (home, school, Remembering origins helps explain later choices an, Hands-on community activities and local institutio

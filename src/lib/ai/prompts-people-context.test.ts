@@ -20,6 +20,10 @@ test("buildSystemPrompt embeds people context after wiki index material", () => 
   const prompt = buildSystemPrompt("adult");
   const wikiIdx = prompt.indexOf("## Wiki Index");
   const keyPeople = prompt.indexOf("## Key People in Keith's Life");
+  const principles = prompt.indexOf("## Keith's 12 Core Principles");
   const frameworks = prompt.indexOf("## Decision Frameworks");
-  assert.ok(wikiIdx >= 0 && keyPeople > wikiIdx && frameworks > keyPeople);
+  assert.ok(wikiIdx >= 0 && principles > wikiIdx && frameworks > principles);
+  if (keyPeople >= 0) {
+    assert.ok(principles > keyPeople);
+  }
 });

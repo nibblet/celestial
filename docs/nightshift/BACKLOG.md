@@ -3,6 +3,7 @@
 > Ideas backlog with maturity tracking. Two categories: enhance existing features, and new features.
 
 ## Maturity Levels
+
 - `seed` — 1-2 sentence concept, just identified
 - `exploring` — Validated against codebase, feasibility assessed
 - `planned` — User stories, technical approach defined
@@ -15,6 +16,7 @@
 ## Category 1: Enhance / Mature / Expand Existing Features
 
 ### [IDEA-001] Guided Journeys — Curated Paths Through Stories
+
 - **Status:** shipped
 - **Category:** enhance
 - **Seeded:** 2026-04-12
@@ -29,21 +31,24 @@
 ---
 
 ### [IDEA-003] Age-Aware Ask Keith Suggestion Chips
-- **Status:** parked
+
+- **Status:** shipped
 - **Category:** enhance
 - **Seeded:** 2026-04-12
-- **Last Updated:** 2026-04-15
+- **Last Updated:** 2026-04-19
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-003-age-aware-suggestion-chips.md`
-- **Summary:** The 4 suggestion chips on the Ask Keith empty state are hardcoded for adult readers. They should dynamically reflect the active age mode.
+- **Summary:** Ask Keith uses `SUGGESTIONS_BY_AGE_MODE` in `src/app/ask/page.tsx` so the four empty-state chips follow the active age mode (young_reader, teen, adult) from `useAgeMode()`.
 - **Night Notes:**
   - 2026-04-12: Seeded. `useAgeMode()` hook already imported.
   - 2026-04-13: Advanced to `ready`. Dev plan written.
-  - 2026-04-15: **Stale 3 days — parked.** Plan still valid if revisited (20-min change).
+  - 2026-04-15: Previously marked parked as stale; implementation was already in line with the plan.
+  - 2026-04-19: **SHIPPED** — validated: `SUGGESTIONS_BY_AGE_MODE[ageMode].map(...)` in `AskPageContent`.
 
 ---
 
 ### [IDEA-007] Resume Tell Session — Continue an In-Progress Story
+
 - **Status:** shipped
 - **Category:** enhance
 - **Seeded:** 2026-04-14
@@ -58,6 +63,7 @@
 ---
 
 ### [IDEA-009] Story Voice Playback — Audio Narration
+
 - **Status:** shipped
 - **Category:** enhance
 - **Seeded:** 2026-04-14
@@ -71,7 +77,23 @@
 
 ---
 
+### [IDEA-005] Reading Time Estimate
+
+- **Status:** shipped
+- **Category:** enhance
+- **Seeded:** 2026-04-13
+- **Last Updated:** 2026-04-19
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-005-reading-time-estimate.md`
+- **Summary:** Estimated duration from `wordCount` is surfaced as **listen time** (`formatEstimatedListenLabel`, `StoryAudioControls`) for memoir and interview sources — shipped alongside IDEA-009. The DEVPLAN’s separate “~min read” line on **every** story library card (`StoriesPageClient`) and optional header label is **not** built; card-level read labels remain a small optional follow-up if desired.
+- **Night Notes:**
+  - 2026-04-16: Parked (stale) while card UI was untouched.
+  - 2026-04-19: **SHIPPED (primary intent via voice)** — duration affordance merged with narration controls; aligns deployment with IDEA-005’s word-count-based estimate for the listening path.
+
+---
+
 ### [IDEA-013] Story Reading Progress — Track the Journey Through 39 Stories
+
 - **Status:** shipped
 - **Category:** enhance
 - **Seeded:** 2026-04-15
@@ -87,6 +109,7 @@
 ---
 
 ### [IDEA-014] Story Read Progress UI — Story Card Read Badges
+
 - **Status:** ready
 - **Category:** enhance
 - **Seeded:** 2026-04-16
@@ -102,6 +125,7 @@
 ---
 
 ### [IDEA-020] Profile as Reflection Gallery
+
 - **Status:** shipped
 - **Category:** enhance
 - **Seeded:** 2026-04-18
@@ -118,22 +142,24 @@
 ## Category 2: New Features or Integrations
 
 ### [IDEA-002] Keith's Story Workshop — Author & Source Material Intake
-- **Status:** parked
+
+- **Status:** shipped
 - **Category:** new
 - **Seeded:** 2026-04-12
 - **Last Updated:** 2026-04-19
 - **Priority:** P1
 - **Plan:** *(full dev plan not yet written)*
-- **Summary:** Track 1 (family /tell) and Beyond (Keith's AI-assisted workspace + TipTap direct editor) are shipped. Track 2 (raw markdown authoring) was the remaining piece.
+- **Summary:** Family `/tell`, Beyond (AI-assisted + TipTap direct-write `origin='write'`), and Supabase wiki mirror publish form the full workshop. A separate admin raw-markdown editor is superseded by TipTap + mirror; optional raw import can reuse `wiki-mirror.ts` later if needed.
 - **Night Notes:**
   - 2026-04-12: Seeded by Paul.
   - 2026-04-14: Track 1 SHIPPED as `/tell`.
   - 2026-04-16: Beyond workspace SHIPPED.
-  - 2026-04-19: **Stale 3 days — parked.** The TipTap direct-write mode in Beyond (`origin='write'`) now lets Keith write directly without a chat session, and the wiki mirror publishes to Supabase. The admin markdown editor track is superseded by this. If raw-text import is ever needed, the `wiki-mirror.ts` infrastructure can support it. Parked as largely fulfilled by TipTap + wiki mirror.
+  - 2026-04-19: **SHIPPED** — TipTap direct-write + wiki mirror match deployment; status updated from parked.
 
 ---
 
 ### [IDEA-004] Bookmark a Story as a Favorite
+
 - **Status:** shipped
 - **Category:** new
 - **Seeded:** 2026-04-12
@@ -150,6 +176,7 @@
 ---
 
 ### [IDEA-008] "New Stories" Feed on Home Page
+
 - **Status:** parked
 - **Category:** new
 - **Seeded:** 2026-04-14
@@ -164,20 +191,23 @@
 ---
 
 ### [IDEA-010] Public Media Integration — Podcasts, Videos, and Public Sources
-- **Status:** parked
+
+- **Status:** shipped
 - **Category:** new
 - **Seeded:** 2026-04-14
-- **Last Updated:** 2026-04-17
+- **Last Updated:** 2026-04-19
 - **Priority:** P2
 - **Plan:** *(not yet written)*
-- **Summary:** Curated "Keith in the World" section — podcasts, YouTube interviews, press coverage. Wiki-curated via `content/wiki/media/` files. No backend.
+- **Summary:** Delivered as **Coffee with Cagnetta** interview content: `IV_S01`–`IV_S10` wiki stories, timeline/index hooks, and Ask corpus context (`prompts.ts`). The original sketch of a separate link gallery under `content/wiki/media/` was not built; first-person public interview is in the story graph instead.
 - **Night Notes:**
-  - 2026-04-14: Seeded by Paul.
-  - 2026-04-17: Stale 3 days — content curation is the blocker (need actual media links), not the code. Demoting to parked. Revisit when Paul has a media list to work from.
+  - 2026-04-14: Seeded by Paul (curated external links angle).
+  - 2026-04-17: Previously parked pending a media URL list.
+  - 2026-04-19: **SHIPPED** — validated: interview markdown, `Coffee with Cagnetta` attribution, IV story series in library and compiler pipeline.
 
 ---
 
 ### [IDEA-011] Story Photos — Images That Surface During Reading
+
 - **Status:** shipped
 - **Category:** enhance
 - **Seeded:** 2026-04-14
@@ -192,6 +222,7 @@
 ---
 
 ### [IDEA-012] Letter to Keith — Personal Takeaway from an Ask Conversation
+
 - **Status:** parked
 - **Category:** new
 - **Seeded:** 2026-04-15
@@ -206,6 +237,7 @@
 ---
 
 ### [IDEA-016] Save a Passage — Highlight Text from Stories
+
 - **Status:** shipped
 - **Category:** new
 - **Seeded:** 2026-04-16
@@ -220,6 +252,7 @@
 ---
 
 ### [IDEA-017] Photo Frame Mode — Fullscreen Rotating Memoir Photos
+
 - **Status:** shipped
 - **Category:** new
 - **Seeded:** 2026-04-17
@@ -234,6 +267,7 @@
 ---
 
 ### [IDEA-018] Ask Keith About a Saved Passage
+
 - **Status:** shipped
 - **Category:** new
 - **Seeded:** 2026-04-17
@@ -248,6 +282,7 @@
 ---
 
 ### [IDEA-019] People Biographical Context in Ask Keith
+
 - **Status:** shipped
 - **Category:** enhance
 - **Seeded:** 2026-04-18
@@ -262,6 +297,7 @@
 ---
 
 ### [IDEA-022] Principles Context in Ask Keith
+
 - **Status:** ready
 - **Category:** enhance
 - **Seeded:** 2026-04-19
@@ -275,6 +311,7 @@
 ---
 
 ### [IDEA-023] Explore Hub — Interactive Story Map
+
 - **Status:** exploring
 - **Category:** new
 - **Seeded:** 2026-04-19
@@ -288,6 +325,7 @@
 ---
 
 ### [IDEA-021] Reading Milestone Celebration — Complete All 39 Memoir Stories
+
 - **Status:** seed
 - **Category:** new
 - **Seeded:** 2026-04-18
@@ -301,6 +339,7 @@
 ---
 
 ### [IDEA-015] Enable Deep Ask — Multi-Perspective Responses in Production
+
 - **Status:** parked
 - **Category:** new
 - **Seeded:** 2026-04-16
@@ -318,12 +357,12 @@
 
 *(Ideas demoted after 3+ days without action — full entries remain in category sections above with status: parked)*
 
-- **IDEA-003** Age-Aware Suggestion Chips — parked 2026-04-15. Plan at `DEVPLAN-IDEA-003-age-aware-suggestion-chips.md`.
+- *(IDEA-002 SHIPPED 2026-04-19 — TipTap + wiki mirror; was listed here while incorrectly parked.)*
+- *(IDEA-003 SHIPPED 2026-04-19 — age-aware suggestion chips in `ask/page.tsx`.)*
 - *(IDEA-004 unparked 2026-04-16 — SHIPPED 2026-04-17)*
-- **IDEA-005** Reading Time Estimate — parked 2026-04-16. Stale 3 days. `wordCount` exists but Paul has not prioritized. Parked — easy to revisit (30 min, no deps).
+- *(IDEA-005 SHIPPED 2026-04-19 — listen-duration via `story-audio` + `StoryAudioControls` with IDEA-009; optional card “min read” follow-up remains.)*
+- *(IDEA-010 SHIPPED 2026-04-19 — Cagnetta interview as IV story series.)*
 - **IDEA-006** Featured Story of the Week — parked 2026-04-16. Stale 3 days. Wiki-first, no DB changes. Parked — revisit when home page refresh is prioritized.
 - **IDEA-008** New Stories Feed — parked 2026-04-17. Stale 3 days. Pure UI addition. Parked — low priority while larger features are landing.
-- **IDEA-010** Public Media Integration — parked 2026-04-17. Stale 3 days. Content curation is the blocker (need actual media links). Parked — revisit when Paul has a media list.
 - **IDEA-012** Letter to Keith — parked 2026-04-18. Non-streaming `/api/ask/letter` endpoint. Parked — revisit when conversational features take priority.
 - **IDEA-015** Enable Deep Ask — parked 2026-04-19. Stale 3 days. Orchestrator updated with corpus data in Run 8; perspective prompts are better now. Re-evaluate when Paul has time for quality eval.
-- **IDEA-002** Keith's Story Workshop direct markdown — parked 2026-04-19. Stale 3 days. TipTap direct-write mode + wiki mirror largely fulfills the remaining need.

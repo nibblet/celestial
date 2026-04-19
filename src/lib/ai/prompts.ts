@@ -2,7 +2,11 @@ import * as fs from "fs";
 import * as path from "path";
 import type { AgeMode } from "@/types";
 import { getJourneyBySlug } from "@/lib/wiki/journeys";
-import { getAllStories, getStoryById } from "@/lib/wiki/parser";
+import {
+  getAllCanonicalPrinciples,
+  getAllStories,
+  getStoryById,
+} from "@/lib/wiki/parser";
 
 const WIKI_DIR = path.join(process.cwd(), "content/wiki");
 const RAW_DIR = path.join(process.cwd(), "content/raw");
@@ -12,6 +16,7 @@ let cachedVoiceGuide: string | null = null;
 let cachedStoryLinkCatalog: string | null = null;
 let cachedDecisionFrameworks: string | null = null;
 let cachedPeopleContext: string | null = null;
+let cachedPrinciplesContext: string | null = null;
 let loggedSystemPromptApproxTokens = false;
 
 /** Inventory line lists tiers like "(tiers: A, B, D)" — Tier A bios are richest. */
@@ -68,6 +73,32 @@ export function getPeopleContext(): string {
       : "";
 
   return cachedPeopleContext;
+}
+
+function getPrinciplesContext(): string {
+  if (cachedPrinciplesContext) return cachedPrinciplesContext;
+
+  const principles = getAllCanonicalPrinciples();
+  const lines = [
+    "## Keith's 12 Core Principles",
+    "",
+    "These recurring patterns of belief and leadership emerge across Keith's stories:",
+    "",
+  ];
+
+  for (const p of principles) {
+    lines.push(`**${p.title}** — ${p.thesis}`);
+    if (p.stories.length > 0) {
+      const storyTitles = p.stories
+        .slice(0, 3)
+        .map((s) => s.title)
+        .join("; ");
+      lines.push(`  *Seen in: ${storyTitles}*`);
+    }
+  }
+
+  cachedPrinciplesContext = lines.join("\n");
+  return cachedPrinciplesContext;
 }
 
 export function getStoryLinkCatalog(): string {
@@ -155,6 +186,7 @@ export function buildSystemPrompt(
   const voice = getVoiceGuide();
   const wikiIndex = canonicalWikiSummaries ?? getWikiSummaries();
   const peopleContext = getPeopleContext();
+  const principlesContext = getPrinciplesContext();
   const storyContext = canonicalStoryContext ?? (storySlug ? getStoryContext(storySlug) : "");
   const journeyContext = journeySlug
     ? getJourneyContextForPrompt(journeySlug)
@@ -226,6 +258,7 @@ ${voice.slice(0, 2000)}
 ${wikiIndex}
 
 ${peopleContext ? `\n${peopleContext}\n` : ""}
+${principlesContext ? `\n${principlesContext}\n` : ""}
 
 ## Decision Frameworks
 ${getDecisionFrameworks().slice(0, 2000)}

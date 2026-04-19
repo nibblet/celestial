@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getProfileGalleryData } from "@/lib/analytics/profile-gallery-data";
 import { ProfileReflectionHero } from "@/components/profile/ProfileReflectionHero";
 import { ProfileGallery } from "@/components/profile/ProfileGallery";
+import { storiesData } from "@/lib/wiki/static-data";
 import { KeithProfileHero } from "@/components/profile/KeithProfileHero";
 import { getKeithDashboardData } from "@/lib/analytics/keith-dashboard";
 import { getAuthenticatedProfileContext } from "@/lib/auth/profile-context";
@@ -74,7 +75,7 @@ export default async function ProfilePage() {
         reflection={data.reflection}
         hasAnyActivity={hasAnyActivity}
       />
-      <ProfileGallery data={data} />
+      <ProfileGallery data={data} totalStories={storiesData.length} />
     </>
   );
 }

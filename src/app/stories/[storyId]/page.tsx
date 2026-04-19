@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { ReadingProgressBar } from "@/components/story/ReadingProgressBar";
 import { ReadTracker } from "@/components/story/ReadTracker";
 import { FavoriteButton } from "@/components/story/FavoriteButton";
+import { ReadBadgeAgeAware } from "@/components/story/ReadBadgeAgeAware";
 import { StoryAudioControls } from "@/components/story/StoryAudioControls";
 import { StoryMarkdown } from "@/components/story/StoryMarkdown";
 import { StoryBodyWithHighlighting } from "@/components/story/StoryBodyWithHighlighting";
@@ -40,6 +41,7 @@ export default async function StoryDetailPage({
   } = await supabase.auth.getUser();
 
   let initialFavorited = false;
+  let initialRead = false;
   if (user) {
     const { data } = await supabase
       .from("sb_story_favorites")
@@ -48,6 +50,14 @@ export default async function StoryDetailPage({
       .eq("story_id", storyId)
       .single();
     initialFavorited = !!data;
+
+    const { data: readRow } = await supabase
+      .from("sb_story_reads")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("story_id", storyId)
+      .maybeSingle();
+    initialRead = !!readRow;
   }
 
   const tocSections: StoryTOCSection[] = [{ id: "story-body", label: "Story" }];
@@ -90,11 +100,14 @@ export default async function StoryDetailPage({
                   </p>
                 )}
                 {user && (
-                  <FavoriteButton
-                    storyId={storyId}
-                    storyTitle={story.title}
-                    initialFavorited={initialFavorited}
-                  />
+                  <div className="flex flex-wrap items-center gap-2">
+                    {initialRead && <ReadBadgeAgeAware />}
+                    <FavoriteButton
+                      storyId={storyId}
+                      storyTitle={story.title}
+                      initialFavorited={initialFavorited}
+                    />
+                  </div>
                 )}
               </div>
             </div>

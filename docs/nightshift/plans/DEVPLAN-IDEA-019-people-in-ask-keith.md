@@ -47,7 +47,7 @@ export function getPeopleContext(): string {
 }
 ```
 
-3. **Checkpoint:** Import and call `getPeopleContext()` in a scratch test to verify it returns bio content for Tier A people like Bayne Cobb, Frances Cobb, etc.
+1. **Checkpoint:** Import and call `getPeopleContext()` in a scratch test to verify it returns bio content for Tier A people like Bayne Cobb, Frances Cobb, etc.
 
 ### Phase 2: Add People Context to System Prompt
 
@@ -62,18 +62,18 @@ const peopleContext = getPeopleContext();
 
 The exact insertion point should be after the `## Stories` wiki summary section and before any age-mode instructions. The goal is: people bios are available when the AI needs them, but they don't dominate the prompt.
 
-3. **Checkpoint:** Send a test Ask request locally: "Tell me about Bayne Cobb." Verify the response includes specific biographical details (born 1916, truck driver, died at 93, etc.) rather than a generic "Keith's father" answer.
+1. **Checkpoint:** Send a test Ask request locally: "Tell me about Bayne Cobb." Verify the response includes specific biographical details (born 1916, truck driver, died at 93, etc.) rather than a generic "Keith's father" answer.
 
 ### Phase 3: Token Budget Check
 
 The wiki people directory has 58 files. Not all have `ai-draft` sections. Tier A/B people with drafted bios will contribute ~200-400 words each. At full coverage, this could add 5,000–15,000 tokens to the system prompt.
 
 Before shipping, check the prompt size:
+
 1. After Phase 2, log `process.env.NODE_ENV === 'development' && console.log('System prompt tokens:', systemPrompt.length / 4)` temporarily
 2. If the prompt is over ~6,000 tokens total, consider filtering to only Tier A people (who have the richest bios):
-   - Filter: only include files where the wiki page's tier line contains `(A`
-   - Or: limit to the 15–20 most prominent people by checking for Tier A in the `## Note` section
-
+  - Filter: only include files where the wiki page's tier line contains `(A`
+  - Or: limit to the 15–20 most prominent people by checking for Tier A in the `## Note` section
 3. **Checkpoint:** Ask multiple questions in different age modes. Verify the response quality improves without noticeably slower response times.
 
 ### Phase 4: Age-Mode Tone
@@ -89,7 +89,7 @@ When discussing people from the list above, adapt the biographical detail to the
 
 This instruction should be inline in the people context section of the system prompt.
 
-5. **Checkpoint:** Ask "Who was Bayne Cobb?" in each of the three age modes. Verify the depth and vocabulary shift correctly.
+1. **Checkpoint:** Ask "Who was Bayne Cobb?" in each of the three age modes. Verify the depth and vocabulary shift correctly.
 
 ## Content Considerations
 
@@ -106,17 +106,18 @@ This instruction should be inline in the people context section of the system pr
 
 ## Testing
 
-- [ ] Build passes after changes to prompts.ts
-- [ ] "Tell me about Bayne Cobb" returns specific biographical facts
-- [ ] "Who was Frances Cobb?" returns content about Keith's mother
-- [ ] "Tell me about Blue and Ruby Cole" returns content from their people page
-- [ ] Response quality doesn't regress for non-people questions (story/theme queries)
-- [ ] Token budget check: system prompt length is reasonable (< 8,000 tokens ideally)
-- [ ] All three age modes tested
+- Build passes after changes to prompts.ts
+- "Tell me about Bayne Cobb" returns specific biographical facts
+- "Who was Frances Cobb?" returns content about Keith's mother
+- "Tell me about Blue and Ruby Cole" returns content from their people page
+- Response quality doesn't regress for non-people questions (story/theme queries)
+- Token budget check: system prompt length is reasonable (< 8,000 tokens ideally)
+- All three age modes tested
 
 ## Dependencies
 
 None — people wiki pages already exist with AI-drafted bios (confirmed in `content/wiki/people/bayne-cobb.md` and others).
 
 ## Estimated Total: 1 hour
+
 (30 min implementation, 30 min testing across age modes and question types)

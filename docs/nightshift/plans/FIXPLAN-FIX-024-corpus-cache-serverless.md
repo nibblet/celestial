@@ -1,14 +1,17 @@
 # Fix: [FIX-024] Corpus Cache Invalidation Ineffective in Serverless
 
 ## Problem
+
 `src/lib/wiki/corpus.ts` uses a module-level variable `cachedDbStories` with a 30-second TTL to cache Supabase wiki mirror story documents. When Keith publishes a story via `/api/beyond/drafts/[id]/publish`, the route calls `invalidateWikiCorpusCache()` to clear this cache.
 
 In Vercel's serverless runtime, each function invocation runs in a separate Node.js process (Lambda instance). The `invalidateWikiCorpusCache()` call only clears the cache in the specific Lambda that handled the publish request. Other concurrent Lambda instances (e.g., a family member using Ask Keith at the same time) still serve the stale cache for up to 30 seconds. The `invalidateWikiCorpusCache` export creates a false sense of immediate consistency.
 
 ## Root Cause
+
 Module-level caching in serverless creates per-instance state. There is no shared memory between Lambda instances. This is a structural limitation of the serverless model, not a code bug.
 
 ## Impact
+
 Very Low — the family app has rare writes (Keith publishes maybe once a week) and a 30-second stale window is imperceptible. However the `invalidateWikiCorpusCache()` call is misleading.
 
 ## Steps
@@ -38,6 +41,7 @@ cachedDbStories = { expiresAt: now + CACHE_TTL_MS, stories, markdownByStoryId };
 ```
 
 And update the guard:
+
 ```typescript
 // Before:
 if (cachedDbStories && cachedDbStories.expiresAt > now) {
@@ -62,9 +66,12 @@ export function invalidateWikiCorpusCache() {
 ### 3. Run `npm run build` to verify no breakage
 
 ## Files Modified
+
 - `src/lib/wiki/corpus.ts` — add CACHE_TTL_MS constant and documentation comments
 
 ## Verify
-- [ ] Build passes
-- [ ] Lint passes
-- [ ] No behavioral change — purely documentation
+
+- Build passes
+- Lint passes
+- No behavioral change — purely documentation
+

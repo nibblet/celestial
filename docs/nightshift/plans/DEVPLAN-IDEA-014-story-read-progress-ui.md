@@ -1,22 +1,25 @@
 # Dev Plan: [IDEA-014] Story Read Progress UI — Profile Bar + Story Card Badges
 
 ## What This Does
+
 The reading tracking infrastructure is already live: `sb_story_reads` table (migration 005),
 `ReadTracker` component fires a POST on every story visit, and Keith's analytics dashboard
 shows family-wide read counts. What's missing is the user-facing feedback loop — family members
 can't see their own progress through Keith's 39 stories.
 
 This feature adds two visible elements:
+
 1. **Profile page**: "X of 39 stories read" progress bar on the family member's profile page.
 2. **Story library**: Small "✓ Read" badge on story cards the user has already visited.
 
 This closes the loop on IDEA-013. No new DB work needed — everything reads from `sb_story_reads`.
 
 ## User Stories
+
 - As a grandchild, I want to see how many of Grandpa's stories I've read so I know how far
-  I've gotten through his life.
+I've gotten through his life.
 - As a family member, I want to see which story cards I've already read in the library so I can
-  find new ones quickly.
+find new ones quickly.
 
 ## Implementation
 
@@ -25,7 +28,7 @@ This closes the loop on IDEA-013. No new DB work needed — everything reads fro
 **File:** `src/app/profile/page.tsx`
 
 1. In the server component, after the existing `unreadAnswerCount` query, add a read count query
-   for non-Keith users:
+  for non-Keith users:
 
 ```ts
 let storiesReadCount = 0;
@@ -38,7 +41,8 @@ if (!isKeithSpecialAccess) {
 }
 ```
 
-2. Pass `storiesReadCount` to `ProfileHero`:
+1. Pass `storiesReadCount` to `ProfileHero`:
+
 ```ts
 return (
   <ProfileHero
@@ -52,9 +56,8 @@ return (
 
 **File:** `src/components/profile/ProfileHero.tsx`
 
-3. Add `storiesReadCount` prop to the component type.
-
-4. Add a progress section just above (or below) the existing quick links grid:
+1. Add `storiesReadCount` prop to the component type.
+2. Add a progress section just above (or below) the existing quick links grid:
 
 ```tsx
 {storiesReadCount > 0 && (
@@ -94,6 +97,7 @@ pass them into the story card renderer.
 **File:** `src/app/stories/page.tsx`
 
 1. In the server component, add a query for the current user's read story IDs:
+
 ```ts
 const supabase = await createClient();
 const { data: { user } } = await supabase.auth.getUser();
@@ -108,12 +112,13 @@ if (user) {
 }
 ```
 
-2. Pass `readStoryIds` to the story card component (or render a small badge overlay).
+1. Pass `readStoryIds` to the story card component (or render a small badge overlay).
 
 **Note:** Inspect the current story card component structure before implementing — the story
 card may be an inline component or a separate file. Adjust accordingly.
 
-3. On each story card, if `readStoryIds.has(story.id)`, render a small indicator:
+1. On each story card, if `readStoryIds.has(story.id)`, render a small indicator:
+
 ```tsx
 {isRead && (
   <span className="type-meta absolute right-3 top-3 rounded-full bg-clay/10 px-2 py-0.5 text-xs text-clay">
@@ -140,22 +145,27 @@ imported in that component if it uses client state) or by receiving `ageMode` as
 ---
 
 ## Content Considerations
+
 No wiki or markdown changes.
 
 ## Age-Mode Impact
+
 - `young_reader`: celebratory copy on profile ("You read ALL of Grandpa's stories!")
 - `teen` + `adult`: standard "X of 39" phrasing
 
 ## Testing
-- [ ] Build passes
-- [ ] Visit any story page — fires read event silently (no UI change on story)
-- [ ] Visit `/profile` — progress bar shows if ≥1 story read
-- [ ] Visit `/stories` — read story cards show "Read" badge
-- [ ] Progress bar fills correctly (1/39, 10/39, 39/39)
-- [ ] `young_reader` mode: check celebratory copy at 39/39
+
+- Build passes
+- Visit any story page — fires read event silently (no UI change on story)
+- Visit `/profile` — progress bar shows if ≥1 story read
+- Visit `/stories` — read story cards show "Read" badge
+- Progress bar fills correctly (1/39, 10/39, 39/39)
+- `young_reader` mode: check celebratory copy at 39/39
 
 ## Dependencies
+
 - Migration `005_story_reads.sql` must be applied (already done).
 - `ReadTracker` must be on story pages (already done).
 
 ## Estimated Total: 1–1.5 hours
+

@@ -1,6 +1,7 @@
 # Dev Plan: [IDEA-017] Photo Frame Mode — Fullscreen Rotating Memoir Photos
 
 ## What This Does
+
 A "Photo Frame" button triggers a fullscreen mode where all app chrome disappears and the
 35 original memoir photos cycle slowly across the screen, one at a time, with a soft crossfade.
 A subtle caption — story title and life era — floats at the bottom. Escape or a hover-revealed
@@ -10,10 +11,11 @@ Designed for a tablet left on the coffee table at a family gathering, or anyone 
 sit with Keith's life in images without navigating the archive.
 
 ## User Stories
+
 - As a family member at a gathering, I want to put the storybook into photo frame mode so the
-  photos cycle on the table like a living family album.
+photos cycle on the table like a living family album.
 - As a grandchild, I want to see the memoir photos full-screen without any buttons or menus
-  getting in the way.
+getting in the way.
 
 ## Implementation
 
@@ -46,6 +48,7 @@ export const framePhotos: FramePhoto[] = [
 
 Populate all 35 entries. Order chronologically by page number (already embedded in the
 filename: `page-NNN`). Assign eras by rough page range:
+
 - Pages 001–050: "Early Life"
 - Pages 051–130: "Education & Service"
 - Pages 131–270: "Career & Leadership"
@@ -174,12 +177,11 @@ The home page already has nav cards. Add a "Photo Frame" trigger — either as a
 grid, or as a subtle button below the main nav card row.
 
 1. Convert the home page from a pure Server Component to a thin shell that imports a
-   `HomeClient` component (or add `"use client"` if the home page doesn't already have
+  `HomeClient` component (or add `"use client"` if the home page doesn't already have
    interactive elements).
-
 2. Add state: `const [photoFrame, setPhotoFrame] = useState(false)`
-
 3. Import `PhotoFrameOverlay` and `framePhotos`:
+
 ```tsx
 {photoFrame && (
   <PhotoFrameOverlay
@@ -189,7 +191,8 @@ grid, or as a subtle button below the main nav card row.
 )}
 ```
 
-4. Add the trigger button in the home page nav section:
+1. Add the trigger button in the home page nav section:
+
 ```tsx
 <button
   type="button"
@@ -211,7 +214,7 @@ closes, returns to home page cleanly.
 ### Phase 4: Polish
 
 1. **Preload next image** — use a hidden `<img>` or `new Image()` to preload the next photo
-   before it's needed, preventing a flash of blank while the next image loads.
+  before it's needed, preventing a flash of blank while the next image loads.
 
 ```ts
 // In the auto-advance useEffect, preload next:
@@ -222,40 +225,44 @@ useEffect(() => {
 }, [index, photos]);
 ```
 
-2. **Photo counter** — optional, very subtle: "12 / 35" in small text, top-left, same
-   hover-reveal behavior as the close button.
-
-3. **Pause on manual click** — clicking anywhere on the photo pauses auto-advance for 30
-   seconds, then resumes. Good for when someone wants to linger on a photo.
+1. **Photo counter** — optional, very subtle: "12 / 35" in small text, top-left, same
+  hover-reveal behavior as the close button.
+2. **Pause on manual click** — clicking anywhere on the photo pauses auto-advance for 30
+  seconds, then resumes. Good for when someone wants to linger on a photo.
 
 **Checkpoint:** Photos preload smoothly with no blank flash; counter visible on hover.
 
 ---
 
 ## Content Considerations
+
 - No wiki changes — all 35 images already in `public/book-images/`
 - `frame-photos.ts` is the only new content-adjacent file; populate from `book_images_manifest.csv`
 - Caption copy should be warm but brief — story title is usually enough
 
 ## Age-Mode Impact
+
 - Works identically across all age modes — no AI, no text content, just photos
 - Young readers especially benefit from the visual, immersive format
 
 ## Testing
-- [ ] Build passes
-- [ ] Click "Photo Frame" → fullscreen activates (or overlay fills screen if fullscreen blocked)
-- [ ] Photos advance automatically every ~8 seconds
-- [ ] Crossfade is smooth — no flash of black between photos
-- [ ] Caption updates with each photo
-- [ ] Escape key exits and returns to home page
-- [ ] Close button appears on hover, exits cleanly
-- [ ] `fullscreenchange` event exits correctly if user presses browser's own Escape
-- [ ] Works on mobile (fullscreen API may not be available — overlay fallback still covers screen)
+
+- Build passes
+- Click "Photo Frame" → fullscreen activates (or overlay fills screen if fullscreen blocked)
+- Photos advance automatically every ~8 seconds
+- Crossfade is smooth — no flash of black between photos
+- Caption updates with each photo
+- Escape key exits and returns to home page
+- Close button appears on hover, exits cleanly
+- `fullscreenchange` event exits correctly if user presses browser's own Escape
+- Works on mobile (fullscreen API may not be available — overlay fallback still covers screen)
 
 ## Dependencies
+
 - Requires `public/book-images/` (already present — 35 photos from commit `c7ebef7`)
 - No DB changes, no migrations, no new API routes
 
 ## Estimated Total: 1.5–2 hours
+
 (~30 min to populate `frame-photos.ts`, ~45 min for `PhotoFrameOverlay`, ~30 min for home page
 integration + preload polish)

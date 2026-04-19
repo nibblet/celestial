@@ -42,9 +42,9 @@ export default async function PrincipleDetailPage({
 
       <section className="mt-6 rounded-2xl border border-[var(--color-border)] bg-warm-white p-5">
         <div className="space-y-4">
-          {principle.aiNarrative.split("\n\n").map((paragraph) => (
+          {principle.aiNarrative.split("\n\n").map((paragraph, i) => (
             <p
-              key={paragraph}
+              key={i}
               className="font-[family-name:var(--font-lora)] text-base leading-relaxed text-ink-muted"
             >
               {paragraph}

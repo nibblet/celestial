@@ -1,4 +1,5 @@
 import type { ProfileGalleryData } from "@/lib/analytics/profile-gallery-data";
+import { StoriesReadProgress } from "@/components/profile/StoriesReadProgress";
 import { FeaturedPassageTile } from "./tiles/FeaturedPassageTile";
 import { WithKeithSinceTile } from "./tiles/WithKeithSinceTile";
 import { PrinciplesTile } from "./tiles/PrinciplesTile";
@@ -7,9 +8,9 @@ import { ThemesTile } from "./tiles/ThemesTile";
 import { KeepersTile } from "./tiles/KeepersTile";
 import { KeithsPeopleTile } from "./tiles/KeithsPeopleTile";
 
-type Props = { data: ProfileGalleryData };
+type Props = { data: ProfileGalleryData; totalStories: number };
 
-export function ProfileGallery({ data }: Props) {
+export function ProfileGallery({ data, totalStories }: Props) {
   return (
     <section className="relative border-t border-[rgba(240,232,213,0.12)] bg-[#241710] text-[#f0e8d5]">
       <div
@@ -18,6 +19,10 @@ export function ProfileGallery({ data }: Props) {
       />
       <div className="relative mx-auto max-w-wide px-[var(--page-padding-x)] py-12 md:py-16">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
+          <StoriesReadProgress
+            readCount={data.readStats.readCount}
+            totalStories={totalStories}
+          />
           <FeaturedPassageTile
             passage={data.featuredPassage}
             totalCount={data.savedPassageCount}

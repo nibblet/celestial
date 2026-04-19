@@ -16,6 +16,12 @@ interface WikiDocumentRow {
   generated_at: string;
 }
 
+// 30-second TTL. In Vercel serverless each Lambda instance has its own cache.
+// invalidateWikiCorpusCache() only affects the calling instance — other
+// concurrent instances will serve stale data until their TTL expires.
+// This is acceptable: Beyond publishes are rare and 30s staleness is invisible.
+const CACHE_TTL_MS = 30_000;
+
 let cachedDbStories:
   | { expiresAt: number; stories: WikiStory[]; markdownByStoryId: Map<string, string> }
   | null = null;
@@ -57,13 +63,18 @@ async function getActiveDbStories(): Promise<{
   }
 
   cachedDbStories = {
-    expiresAt: now + 30_000,
+    expiresAt: now + CACHE_TTL_MS,
     stories,
     markdownByStoryId,
   };
   return cachedDbStories;
 }
 
+/**
+ * Clears the in-memory corpus cache for this Lambda instance.
+ * In Vercel serverless, other concurrent instances are unaffected —
+ * their caches expire naturally after CACHE_TTL_MS.
+ */
 export function invalidateWikiCorpusCache() {
   cachedDbStories = null;
 }

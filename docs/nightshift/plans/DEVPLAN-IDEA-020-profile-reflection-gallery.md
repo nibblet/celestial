@@ -15,6 +15,7 @@
 ## File Structure
 
 **Create:**
+
 - `supabase/migrations/019_profile_reflections.sql` — `sb_profile_reflections` table + RLS
 - `src/lib/analytics/profile-reflection.ts` — trigger logic + generator + caching
 - `src/lib/analytics/profile-reflection.test.ts` — unit tests for trigger/signature logic
@@ -32,13 +33,16 @@
 - `src/components/profile/ProfileUtilityIcons.tsx` — client component for tour/admin/sign-out icons
 
 **Modify:**
+
 - `src/app/profile/page.tsx` — swap `<ProfileHero>` branch for the new components; Keith branch untouched
 
 **Delete (last task, after verification):**
+
 - `src/components/profile/ProfileHero.tsx`
 - `src/components/profile/ProfileReadingDashboard.tsx`
 
 **Unchanged:**
+
 - `src/components/profile/KeithProfileHero.tsx`
 - `src/components/profile/KeithDashboard.tsx`
 - `src/lib/analytics/keith-dashboard.ts`
@@ -48,9 +52,9 @@
 ## Task 1: Create the Profile Reflections Migration
 
 **Files:**
-- Create: `supabase/migrations/019_profile_reflections.sql`
 
-- [ ] **Step 1: Write the migration**
+- Create: `supabase/migrations/019_profile_reflections.sql`
+- **Step 1: Write the migration**
 
 ```sql
 -- Cached narrator-voiced reflection about each user's reading pattern.
@@ -75,12 +79,12 @@ create policy "Users read own reflection"
 -- No insert/update/delete policies for authenticated users.
 ```
 
-- [ ] **Step 2: Apply migration locally**
+- **Step 2: Apply migration locally**
 
-Run: `npx supabase db push` (or however the project normally applies migrations — follow the convention already used for `018_*`).
+Run: `npx supabase db push` (or however the project normally applies migrations — follow the convention already used for `018_`*).
 Expected: migration applies without error; `\d sb_profile_reflections` in `psql` shows the table and RLS enabled.
 
-- [ ] **Step 3: Commit**
+- **Step 3: Commit**
 
 ```bash
 git add supabase/migrations/019_profile_reflections.sql
@@ -98,10 +102,10 @@ Part of DEVPLAN-IDEA-020."
 ## Task 2: Reflection Trigger + Signature Logic (Pure Functions)
 
 **Files:**
+
 - Create: `src/lib/analytics/profile-reflection.ts` (trigger/signature functions only in this task)
 - Create: `src/lib/analytics/profile-reflection.test.ts`
-
-- [ ] **Step 1: Write the failing tests**
+- **Step 1: Write the failing tests**
 
 ```ts
 // src/lib/analytics/profile-reflection.test.ts
@@ -225,12 +229,12 @@ test("shouldRegenerate returns 'use-cache' for tiny read growth below threshold"
 });
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- **Step 2: Run tests to verify they fail**
 
 Run: `npm test -- --test-name-pattern="computeInputSignature|shouldRegenerate"`
 Expected: FAIL with "Cannot find module '@/lib/analytics/profile-reflection'".
 
-- [ ] **Step 3: Implement the functions**
+- **Step 3: Implement the functions**
 
 ```ts
 // src/lib/analytics/profile-reflection.ts
@@ -325,7 +329,7 @@ function parseSignatureCounts(
 
 **Note for implementer:** the pure-function design above hits a wall: a hash isn't invertible, so we can't compute deltas from signature alone. Replace the design with a prefixed-signature format that embeds raw counts. See Step 4.
 
-- [ ] **Step 4: Revise the implementation to use a prefix-encoded signature**
+- **Step 4: Revise the implementation to use a prefix-encoded signature**
 
 Replace the file content with:
 
@@ -405,12 +409,12 @@ export function shouldRegenerateReflection(args: {
 }
 ```
 
-- [ ] **Step 5: Run tests to verify they pass**
+- **Step 5: Run tests to verify they pass**
 
 Run: `npm test -- --test-name-pattern="computeInputSignature|shouldRegenerate"`
 Expected: PASS (all 8 tests).
 
-- [ ] **Step 6: Commit**
+- **Step 6: Commit**
 
 ```bash
 git add src/lib/analytics/profile-reflection.ts src/lib/analytics/profile-reflection.test.ts
@@ -429,10 +433,10 @@ Part of DEVPLAN-IDEA-020."
 ## Task 3: Narrator Generation (Anthropic Call)
 
 **Files:**
+
 - Modify: `src/lib/analytics/profile-reflection.ts` (add `generateReflection` and persist helpers)
 - Modify: `src/lib/analytics/profile-reflection.test.ts` (add tests for prompt shape — the model call itself is integration-tested)
-
-- [ ] **Step 1: Add failing test for prompt shape**
+- **Step 1: Add failing test for prompt shape**
 
 Append to `src/lib/analytics/profile-reflection.test.ts`:
 
@@ -473,12 +477,12 @@ test("buildReflectionPrompt caps saved passages to 20", () => {
 });
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- **Step 2: Run tests to verify they fail**
 
 Run: `npm test -- --test-name-pattern="buildReflectionPrompt"`
 Expected: FAIL with "buildReflectionPrompt is not exported".
 
-- [ ] **Step 3: Add prompt builder + generator to `profile-reflection.ts`**
+- **Step 3: Add prompt builder + generator to `profile-reflection.ts`**
 
 Append to `src/lib/analytics/profile-reflection.ts`:
 
@@ -576,12 +580,12 @@ export async function generateReflection(
 }
 ```
 
-- [ ] **Step 4: Run tests to verify they pass**
+- **Step 4: Run tests to verify they pass**
 
 Run: `npm test -- --test-name-pattern="buildReflectionPrompt"`
 Expected: PASS (2 new tests), plus all earlier tests still PASS.
 
-- [ ] **Step 5: Commit**
+- **Step 5: Commit**
 
 ```bash
 git add src/lib/analytics/profile-reflection.ts src/lib/analytics/profile-reflection.test.ts
@@ -600,9 +604,9 @@ Part of DEVPLAN-IDEA-020."
 ## Task 4: Profile Gallery Data Assembler
 
 **Files:**
-- Create: `src/lib/analytics/profile-gallery-data.ts`
 
-- [ ] **Step 1: Implement the assembler**
+- Create: `src/lib/analytics/profile-gallery-data.ts`
+- **Step 1: Implement the assembler**
 
 ```ts
 // src/lib/analytics/profile-gallery-data.ts
@@ -909,7 +913,7 @@ export async function getProfileGalleryData(
 
 **Note on `askedCount`:** The query limits to 10 for the dialogue preview. For an accurate total, swap the count fetch to a separate `head: true` count query (mirrors the favorites pattern). Add that as Step 2 below.
 
-- [ ] **Step 2: Fix the askedCount to use an accurate head-count query**
+- **Step 2: Fix the askedCount to use an accurate head-count query**
 
 Replace the `questionsRes` usage with two queries. Within `getProfileGalleryData`, split:
 
@@ -938,7 +942,7 @@ supabase
 
 Adjust `Promise.all` destructuring and the return block so `askedCount = askedCountRes.count ?? 0` and `answeredCount = answeredCountRes.count ?? 0`. Leave the existing 10-row query for populating `dialogueRecent`.
 
-- [ ] **Step 3: Commit**
+- **Step 3: Commit**
 
 ```bash
 git add src/lib/analytics/profile-gallery-data.ts
@@ -957,9 +961,9 @@ Part of DEVPLAN-IDEA-020."
 ## Task 5: Utility Icons Client Component
 
 **Files:**
-- Create: `src/components/profile/ProfileUtilityIcons.tsx`
 
-- [ ] **Step 1: Implement**
+- Create: `src/components/profile/ProfileUtilityIcons.tsx`
+- **Step 1: Implement**
 
 ```tsx
 // src/components/profile/ProfileUtilityIcons.tsx
@@ -1059,7 +1063,7 @@ export function ProfileUtilityIcons({ isAdmin }: Props) {
 }
 ```
 
-- [ ] **Step 2: Commit**
+- **Step 2: Commit**
 
 ```bash
 git add src/components/profile/ProfileUtilityIcons.tsx
@@ -1079,6 +1083,7 @@ Part of DEVPLAN-IDEA-020."
 Each tile is small and standalone. They render in one task because they share a visual language and it's faster to review as a set. All tiles are pure Server Components (no client state) unless noted.
 
 **Files:**
+
 - Create: `src/components/profile/tiles/GhostTile.tsx`
 - Create: `src/components/profile/tiles/FeaturedPassageTile.tsx`
 - Create: `src/components/profile/tiles/WithKeithSinceTile.tsx`
@@ -1087,8 +1092,7 @@ Each tile is small and standalone. They render in one task because they share a 
 - Create: `src/components/profile/tiles/ThemesTile.tsx`
 - Create: `src/components/profile/tiles/KeepersTile.tsx`
 - Create: `src/components/profile/tiles/KeithsPeopleTile.tsx`
-
-- [ ] **Step 1: Create `GhostTile.tsx` (shared empty-state shell)**
+- **Step 1: Create `GhostTile.tsx` (shared empty-state shell)**
 
 ```tsx
 // src/components/profile/tiles/GhostTile.tsx
@@ -1113,7 +1117,7 @@ export function GhostTile({ label, body, className = "" }: Props) {
 }
 ```
 
-- [ ] **Step 2: Create `FeaturedPassageTile.tsx`**
+- **Step 2: Create `FeaturedPassageTile.tsx`**
 
 ```tsx
 // src/components/profile/tiles/FeaturedPassageTile.tsx
@@ -1180,7 +1184,7 @@ export function FeaturedPassageTile({ passage, totalCount, className = "" }: Pro
 }
 ```
 
-- [ ] **Step 3: Create `WithKeithSinceTile.tsx`**
+- **Step 3: Create `WithKeithSinceTile.tsx`**
 
 ```tsx
 // src/components/profile/tiles/WithKeithSinceTile.tsx
@@ -1247,7 +1251,7 @@ export function WithKeithSinceTile({
 }
 ```
 
-- [ ] **Step 4: Create `PrinciplesTile.tsx`**
+- **Step 4: Create `PrinciplesTile.tsx`**
 
 ```tsx
 // src/components/profile/tiles/PrinciplesTile.tsx
@@ -1291,7 +1295,7 @@ export function PrinciplesTile({ principles, className = "" }: Props) {
 }
 ```
 
-- [ ] **Step 5: Create `DialogueTile.tsx`**
+- **Step 5: Create `DialogueTile.tsx`**
 
 ```tsx
 // src/components/profile/tiles/DialogueTile.tsx
@@ -1353,7 +1357,7 @@ export function DialogueTile({
                 </span>
               ) : (
                 <span className="text-[rgba(240,232,213,0.5)]">
-                  Waiting for Keith&apos;s answer…
+                  Waiting for Keith's answer…
                 </span>
               )}
             </p>
@@ -1365,7 +1369,7 @@ export function DialogueTile({
 }
 ```
 
-- [ ] **Step 6: Create `ThemesTile.tsx`**
+- **Step 6: Create `ThemesTile.tsx`**
 
 ```tsx
 // src/components/profile/tiles/ThemesTile.tsx
@@ -1414,7 +1418,7 @@ export function ThemesTile({ themes, className = "" }: Props) {
 }
 ```
 
-- [ ] **Step 7: Create `KeepersTile.tsx`**
+- **Step 7: Create `KeepersTile.tsx`**
 
 ```tsx
 // src/components/profile/tiles/KeepersTile.tsx
@@ -1478,7 +1482,7 @@ export function KeepersTile({ top, totalCount, className = "" }: Props) {
 }
 ```
 
-- [ ] **Step 8: Create `KeithsPeopleTile.tsx`**
+- **Step 8: Create `KeithsPeopleTile.tsx`**
 
 ```tsx
 // src/components/profile/tiles/KeithsPeopleTile.tsx
@@ -1491,7 +1495,7 @@ export function KeithsPeopleTile({ className = "" }: Props) {
       aria-label="Keith's people you've met — coming soon"
     >
       <p className="type-era-label text-[rgba(240,232,213,0.42)]">
-        Keith&apos;s people you&apos;ve met
+        Keith's people you've met
       </p>
       <p className="mt-3 font-[family-name:var(--font-inter)] text-sm italic text-[rgba(240,232,213,0.5)]">
         Coming once people pages ship.
@@ -1501,7 +1505,7 @@ export function KeithsPeopleTile({ className = "" }: Props) {
 }
 ```
 
-- [ ] **Step 9: Commit**
+- **Step 9: Commit**
 
 ```bash
 git add src/components/profile/tiles/
@@ -1520,10 +1524,10 @@ Part of DEVPLAN-IDEA-020."
 ## Task 7: Reflection Hero + Gallery Shell
 
 **Files:**
+
 - Create: `src/components/profile/ProfileReflectionHero.tsx`
 - Create: `src/components/profile/ProfileGallery.tsx`
-
-- [ ] **Step 1: Implement `ProfileReflectionHero.tsx`**
+- **Step 1: Implement `ProfileReflectionHero.tsx`**
 
 ```tsx
 // src/components/profile/ProfileReflectionHero.tsx
@@ -1621,7 +1625,7 @@ export function ProfileReflectionHero({
 }
 ```
 
-- [ ] **Step 2: Implement `ProfileGallery.tsx`**
+- **Step 2: Implement `ProfileGallery.tsx`**
 
 ```tsx
 // src/components/profile/ProfileGallery.tsx
@@ -1683,7 +1687,7 @@ export function ProfileGallery({ data }: Props) {
 }
 ```
 
-- [ ] **Step 3: Commit**
+- **Step 3: Commit**
 
 ```bash
 git add src/components/profile/ProfileReflectionHero.tsx src/components/profile/ProfileGallery.tsx
@@ -1702,9 +1706,9 @@ Part of DEVPLAN-IDEA-020."
 ## Task 8: Wire Up `/profile` Page
 
 **Files:**
-- Modify: `src/app/profile/page.tsx`
 
-- [ ] **Step 1: Replace the non-Keith branch**
+- Modify: `src/app/profile/page.tsx`
+- **Step 1: Replace the non-Keith branch**
 
 Replace the entire file content with:
 
@@ -1792,22 +1796,23 @@ export default async function ProfilePage() {
 }
 ```
 
-- [ ] **Step 2: Run `npm run dev` and manually verify**
+- **Step 2: Run `npm run dev` and manually verify**
 
 Run: `npm run dev`
 Expected manual checks (browser, signed in as a non-Keith user):
+
 1. `/profile` renders the new hero (narrator reflection or appropriate empty state) — no more old button row.
 2. Top-right icons are visible, keyboard focusable, tooltips on hover.
 3. Gallery grid below renders all 7 tiles with correct content.
 4. Signing in as the Keith account still shows the unchanged `KeithProfileHero`.
 5. Browser console shows no client errors; server terminal shows no unhandled errors.
 
-- [ ] **Step 3: Run lint**
+- **Step 3: Run lint**
 
 Run: `npm run lint`
 Expected: PASS with no new warnings in profile files.
 
-- [ ] **Step 4: Commit**
+- **Step 4: Commit**
 
 ```bash
 git add src/app/profile/page.tsx
@@ -1827,15 +1832,15 @@ Part of DEVPLAN-IDEA-020."
 Only run this after Task 8 has been verified working.
 
 **Files:**
+
 - Delete: `src/components/profile/ProfileHero.tsx`
 - Delete: `src/components/profile/ProfileReadingDashboard.tsx`
 - Delete: `src/lib/analytics/profile-dashboard.ts` (superseded by `profile-gallery-data.ts`)
-
-- [ ] **Step 1: Confirm no remaining imports of the deprecated files**
+- **Step 1: Confirm no remaining imports of the deprecated files**
 
 Run: `npx grep-like check using your search tool`. Expected: no imports of `ProfileHero`, `ProfileReadingDashboard`, or `profile-dashboard` from any remaining file. If any exist (other than the ones being deleted), fix them before deleting.
 
-- [ ] **Step 2: Delete the files**
+- **Step 2: Delete the files**
 
 ```bash
 git rm src/components/profile/ProfileHero.tsx
@@ -1843,12 +1848,12 @@ git rm src/components/profile/ProfileReadingDashboard.tsx
 git rm src/lib/analytics/profile-dashboard.ts
 ```
 
-- [ ] **Step 3: Run build to confirm no broken references**
+- **Step 3: Run build to confirm no broken references**
 
 Run: `npm run build`
 Expected: build succeeds with no "module not found" errors.
 
-- [ ] **Step 4: Commit**
+- **Step 4: Commit**
 
 ```bash
 git commit -m "chore(profile): remove deprecated hero + dashboard components
@@ -1865,9 +1870,9 @@ Part of DEVPLAN-IDEA-020."
 ## Task 10: Update Backlog
 
 **Files:**
-- Modify: `docs/nightshift/BACKLOG.md`
 
-- [ ] **Step 1: Append a shipped entry under Category 1**
+- Modify: `docs/nightshift/BACKLOG.md`
+- **Step 1: Append a shipped entry under Category 1**
 
 Add a new entry following the same format as IDEA-001:
 
@@ -1885,7 +1890,7 @@ Add a new entry following the same format as IDEA-001:
   - 2026-04-18: Spec + plan written and implemented end-to-end. New table sb_profile_reflections with 24h/+3-read/+1-saved trigger logic. Reuses Claude Sonnet 4 via existing Anthropic wiring.
 ```
 
-- [ ] **Step 2: Commit**
+- **Step 2: Commit**
 
 ```bash
 git add docs/nightshift/BACKLOG.md
@@ -1897,6 +1902,7 @@ git commit -m "docs: mark IDEA-020 profile reflection gallery shipped"
 ## Self-Review
 
 **1. Spec coverage:**
+
 - §1 Purpose — realized in Tasks 7–8 (hero is narrator reflection, utility demoted)
 - §2 Signals — all 3 anchors (reflection, principles, passages) + supporting signals rendered by Tasks 4 + 6–7
 - §3 Voice — encoded in `SYSTEM_PROMPT` in Task 3
@@ -1916,6 +1922,7 @@ git commit -m "docs: mark IDEA-020 profile reflection gallery shipped"
 **2. Placeholder scan:** No TBDs, no "implement later", no "similar to Task N", no vague error handling — all code is complete. One honest note in Task 4: the "Note on askedCount" explains *why* Step 2 exists rather than glossing. Left in place.
 
 **3. Type consistency:**
+
 - `ReflectionInputs`, `CachedReflection`, `ReflectionCorpus`, `RegenerateDecision` — defined in Task 2/3, used by Task 4. Consistent.
 - `ProfileGalleryData`, `GalleryDialogueItem` — defined and re-exported from `profile-gallery-data.ts` in Task 4; consumed by tiles in Task 6 and gallery in Task 7. `DialogueTile` imports `GalleryDialogueItem` — matches.
 - Component props between `ProfileGallery` → each tile: `principles`, `top`, `totalCount`, `themes`, `recent`, `askedCount`, `answeredCount`, `passage`, `firstReadAt`, etc. All names match between passing and receiving.

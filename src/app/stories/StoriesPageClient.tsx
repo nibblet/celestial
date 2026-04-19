@@ -6,6 +6,7 @@ import type { StoryCard, StorySource } from "@/lib/wiki/static-data";
 import { Reveal } from "@/components/ui/Reveal";
 import { SourceBadge } from "@/components/ui/SourceBadge";
 import { lifeStageToEraAccent } from "@/lib/design/era";
+import { ReadBadgeAgeAware } from "@/components/story/ReadBadgeAgeAware";
 
 const SOURCE_FILTERS: { label: string; value: StorySource | "all" }[] = [
   { label: "All Sources", value: "all" },
@@ -63,11 +64,22 @@ const LIFE_STAGES = [
   "Legacy",
 ];
 
-export function StoriesPageClient({ stories }: { stories: StoryCard[] }) {
+export function StoriesPageClient({
+  stories,
+  readStoryIds,
+}: {
+  stories: StoryCard[];
+  readStoryIds: string[];
+}) {
   const [search, setSearch] = useState("");
   const [selectedSource, setSelectedSource] = useState<StorySource | "all">("all");
   const [selectedStage, setSelectedStage] = useState("All");
   const [selectedTheme, setSelectedTheme] = useState("All");
+
+  const readSet = useMemo(
+    () => new Set(readStoryIds),
+    [readStoryIds]
+  );
 
   const allThemes = useMemo(() => {
     const themes = new Set<string>();
@@ -207,6 +219,7 @@ export function StoriesPageClient({ stories }: { stories: StoryCard[] }) {
                       })}
                     </div>
                   </div>
+                  {readSet.has(story.storyId) && <ReadBadgeAgeAware />}
                 </div>
               </Link>
             </Reveal>
