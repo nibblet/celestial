@@ -97,6 +97,38 @@ Second paragraph here.
   assert.ok(dossier!.profile?.includes("Second paragraph here."));
 });
 
+test("parses AI-enrichment sub-fields with marker meta", () => {
+  const md = `
+## Dossier
+
+### Role
+Commander
+
+<!-- ai-dossier:relationships generated="2026-04-21" reviewed="false" model="claude-sonnet-4-5" source-hash="abc123" -->
+### Key Relationships
+- **Aven Voss** — wife (CH01).
+<!-- ai-dossier:end -->
+
+<!-- ai-dossier:voice generated="2026-04-21" reviewed="true" model="claude-sonnet-4-5" source-hash="def456" -->
+### Voice & Manner
+Measured and direct.
+<!-- ai-dossier:end -->
+
+## Appearances
+`;
+  const { dossier, warnings } = parseCharacterDossierSection(md);
+  assert.ok(dossier);
+  assert.equal(dossier!.role, "Commander");
+  assert.equal(dossier!.relationships, "- **Aven Voss** — wife (CH01).");
+  assert.equal(dossier!.voice, "Measured and direct.");
+  assert.ok(dossier!.enrichment);
+  assert.equal(dossier!.enrichment!.relationships!.reviewed, false);
+  assert.equal(dossier!.enrichment!.relationships!.sourceHash, "abc123");
+  assert.equal(dossier!.enrichment!.voice!.reviewed, true);
+  assert.equal(dossier!.enrichment!.voice!.model, "claude-sonnet-4-5");
+  assert.deepEqual(warnings, []);
+});
+
 test("label case-insensitive", () => {
   const md = `
 ## Dossier

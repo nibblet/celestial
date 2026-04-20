@@ -19,6 +19,11 @@ Galen’s wife of 82 years. Background in medicine, law enforcement, and intelli
 ### Character Arc
 Becomes the spiritual and emotional center of the crew. Her wisdom bridges the ancient and modern views of duty, health, and human resilience.
 
+<!-- ai-dossier:voice generated="2026-04-20" reviewed="false" model="claude-sonnet-4-5" source-hash="49b08dff31" -->
+### Voice & Manner
+Aven speaks softly but directly, breaking silences with measured observation rather than command. She moves with quiet deliberacy—standing beside rather than confronting, pausing to read the room before entering. Her questions land precisely, and she whispers insights rather than declaring them, as if inviting comprehension rather than demanding it.
+<!-- ai-dossier:end -->
+
 ## Appearances
 - Auto-detected appearance (CH01).
 - Auto-detected appearance (CH02).
