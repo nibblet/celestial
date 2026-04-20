@@ -1,5 +1,6 @@
 # Jax Reyes
 **Slug:** jax-reyes
+**Aliases:** Jaxon Reyes, Jaxon 'Jax' Reyes
 Inventory entry (tiers: C)
 reviewed: false
 
@@ -7,6 +8,17 @@ reviewed: false
 <!-- ai-draft:start generated="" reviewed="false" -->
 > Thane stood at the outer ring of the excavation grid, visor tinted against the Martian morning glare.
 <!-- ai-draft:end -->
+
+## Dossier
+
+### Role
+Systems Hacker / Engineer
+
+### Profile
+Brilliant, rogue technologist with a rebellious streak. Distrusts institutions but is loyal to truth. Views the mission as a chance to bring knowledge back to the people.
+
+### Character Arc
+From loner to crew loyalist. Learns that some structures—like trust and integrity—are worth building.
 
 ## Appearances
 - Auto-detected appearance (CH02).
