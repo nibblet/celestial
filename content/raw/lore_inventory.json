@@ -1,10 +1,39 @@
 {
-  "generatedAt": "2026-04-20T19:31:42.469Z",
+  "generatedAt": "2026-04-20T19:33:41.005Z",
   "extractorVersion": "ingest-foundational-lore/1",
-  "entityCount": 22,
-  "withLoreSectionParsed": 22,
-  "withDossierParsed": 0,
+  "entityCount": 24,
+  "withLoreSectionParsed": 24,
+  "withDossierParsed": 9,
   "entities": [
+    {
+      "slug": "alara",
+      "wikiPath": "content/wiki/characters/alara.md",
+      "wikiEntityKind": "character",
+      "lore": {
+        "wikiEntityKind": "character",
+        "sourceType": "foundational_dossier",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
+          "extractorVersion": "merge-character-dossier/1"
+        },
+        "chapterRefs": [],
+        "aliases": []
+      },
+      "dossier": {
+        "kind": "character",
+        "presentFields": [
+          "role",
+          "profile",
+          "arc"
+        ],
+        "role": "AI Partner (Valkyrie-1)",
+        "profile": "Adaptive Logic And Responsive Assistant. Female-voiced AI designed for exploration, ethics, and human partnership. Warm, insightful, and loyal to Galen Voss. Originally built separately, ALARA is now inextricably linked to the ship. She evolves in tandem with the mission, responding subtly to biological resonance signatures—especially those exhibited by Thane Meric.",
+        "arc": "Evolves from a system of logic and structure to a guardian of continuity. She recognizes Thane’s emerging role and gradually deepens her interaction with him, mirroring the reawakening of a civilization that never truly vanished."
+      }
+    },
     {
       "slug": "amar-cael",
       "wikiPath": "content/wiki/characters/amar-cael.md",
@@ -48,6 +77,17 @@
           "CH12"
         ],
         "aliases": []
+      },
+      "dossier": {
+        "kind": "character",
+        "presentFields": [
+          "role",
+          "profile",
+          "arc"
+        ],
+        "role": "Strategic & Medical Officer",
+        "profile": "Galen’s wife of 82 years. Background in medicine, law enforcement, and intelligence work. Resilient and strategic, she is both the moral compass and the stabilizing force aboard Valkyrie-1. Compassionate but sharp-edged when needed.",
+        "arc": "Becomes the spiritual and emotional center of the crew. Her wisdom bridges the ancient and modern views of duty, health, and human resilience."
       }
     },
     {
@@ -96,6 +136,17 @@
           "CH17"
         ],
         "aliases": []
+      },
+      "dossier": {
+        "kind": "character",
+        "presentFields": [
+          "role",
+          "profile",
+          "arc"
+        ],
+        "role": "Quantum Physicist / Propulsion Expert",
+        "profile": "Young, idealistic, and vindicated by Valkyrie-1’s systems—proof of her long-dismissed theories. Driven to uncover and apply interstellar physics, with a deep moral compass.",
+        "arc": "From visionary outsider to core architect of the crew’s success. Learns to temper ambition with caution and reverence."
       }
     },
     {
@@ -122,6 +173,17 @@
           "CH17"
         ],
         "aliases": []
+      },
+      "dossier": {
+        "kind": "character",
+        "presentFields": [
+          "role",
+          "profile",
+          "arc"
+        ],
+        "role": "Mission Commander",
+        "profile": "Former USAF pilot, rejuvenated from 82 to 50 via advanced gene therapy. He embodies the Air Force core values (Integrity, Service, Excellence). Calm, rational, and experienced, Galen is both an explorer and a steward. Driven by legacy, duty, and the moral responsibility of knowledge.",
+        "arc": "From explorer to protector of humanity’s moral heritage. Learns that leadership in deep space requires personal evolution and clarity of purpose."
       }
     },
     {
@@ -144,6 +206,35 @@
           "CH08"
         ],
         "aliases": []
+      }
+    },
+    {
+      "slug": "jaxon-reyes",
+      "wikiPath": "content/wiki/characters/jaxon-reyes.md",
+      "wikiEntityKind": "character",
+      "lore": {
+        "wikiEntityKind": "character",
+        "sourceType": "foundational_dossier",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
+          "extractorVersion": "merge-character-dossier/1"
+        },
+        "chapterRefs": [],
+        "aliases": []
+      },
+      "dossier": {
+        "kind": "character",
+        "presentFields": [
+          "role",
+          "profile",
+          "arc"
+        ],
+        "role": "Systems Hacker / Engineer",
+        "profile": "Brilliant, rogue technologist with a rebellious streak. Distrusts institutions but is loyal to truth. Views the mission as a chance to bring knowledge back to the people.",
+        "arc": "From loner to crew loyalist. Learns that some structures—like trust and integrity—are worth building."
       }
     },
     {
@@ -175,6 +266,17 @@
           "CH17"
         ],
         "aliases": []
+      },
+      "dossier": {
+        "kind": "character",
+        "presentFields": [
+          "role",
+          "profile",
+          "arc"
+        ],
+        "role": "Theological Scholar & Cultural Analyst (Informal)",
+        "profile": "A soft-spoken but deeply curious member of the Valkyrie-1 crew. Jonah was trained as a theologian and comparative religion scholar, having taught at a major university before joining the mission. Though not officially assigned a role related to religion or ethics, he quietly tracks symbolic patterns, parables, and vault structures that bear uncanny resemblance to early Christian thought. He believes the Ancients may have been the original source—or echo—of values that humanity later rediscovered.",
+        "arc": "Jonah is not a zealot, but a seeker. His journey centers on reconciling his faith with what he encounters in the vaults. He never tries to convert others, instead asking quiet questions and seeking understanding. As the vaults reveal familiar parables with different names and faces, Jonah begins to suspect that the roots of modern religion may have been deliberately planted long ago. He becomes a bridge between spiritual inquiry and scientific curiosity."
       }
     },
     {
@@ -202,6 +304,17 @@
           "CH17"
         ],
         "aliases": []
+      },
+      "dossier": {
+        "kind": "character",
+        "presentFields": [
+          "role",
+          "profile",
+          "arc"
+        ],
+        "role": "Exoarchaeologist / Linguist",
+        "profile": "World expert on ancient scripts and cultural patterns. Brilliant, skeptical, and emotionally reserved. Dedicated to uncovering truths left behind by humanity’s forgotten ancestors. First to decode the Valkyrie-1 systems.",
+        "arc": "From academic seeker to passionate defender of humanity’s right to its past. Learns that uncovering the truth comes with moral responsibility."
       }
     },
     {
@@ -229,6 +342,17 @@
           "CH16"
         ],
         "aliases": []
+      },
+      "dossier": {
+        "kind": "character",
+        "presentFields": [
+          "role",
+          "profile",
+          "arc"
+        ],
+        "role": "Security & Tactical Systems",
+        "profile": "Retired U.S. Space Force. Grounded, cautious, and fiercely loyal. Tasked with crew security and risk assessment. Sees the mission as potentially dangerous to Earth if mishandled.",
+        "arc": "Learns to trust the greater vision beyond military doctrine. Rediscovers his sense of purpose through the mission’s integrity."
       }
     },
     {
@@ -259,6 +383,17 @@
           "CH17"
         ],
         "aliases": []
+      },
+      "dossier": {
+        "kind": "character",
+        "presentFields": [
+          "role",
+          "profile",
+          "arc"
+        ],
+        "role": "Legacy Interface Specialist",
+        "profile": "Galen and Aven’s grandson, early 30s. Raised by his mother, Elira Voss.. Thane shares a deep bond with Galen. Unknown to the crew at the outset, Thane possesses latent biological traits subtly engineered into humanity by the ancient civilization. These traits allow Valkyrie-1’s systems—and ALARA—to recognize and gradually respond to him. As the mission progresses, Thane’s role becomes crucial in unlocking biotech vaults, resonance triggers, and deeply embedded systems throughout the ship.",
+        "arc": "Thane begins as a reflective, emotionally grounded crew member. Over time, his slow, intimate connection with the ship reveals him as a living key to the past. While not unique, he is particularly aligned with the resonance patterns the ship was designed to respond to. He transitions from support role to central figure in interpreting humanity’s biological legacy and guiding its future."
       }
     },
     {
