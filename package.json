@@ -1,16 +1,19 @@
 {
-  "name": "kcobb",
+  "name": "celestial",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "npm run ingest:book && npm run ingest:lore && npx tsx scripts/generate-static-data.ts",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "test": "node --import tsx --test 'src/**/*.test.ts'",
-    "inventory:people": "node --import tsx scripts/inventory-people.ts",
-    "seed:people": "node --import tsx scripts/seed-people.ts",
-    "compile:wiki": "node --import tsx scripts/compile-wiki.ts"
+    "compile:wiki": "node --import tsx scripts/compile-wiki.ts",
+    "ingest:book": "node --import tsx scripts/ingest-celestial-book.ts",
+    "ingest:lore": "node --import tsx scripts/ingest-foundational-lore.ts",
+    "seed:lore-metadata": "node --import tsx scripts/seed-entity-lore-metadata.ts",
+    "merge:character-dossier": "node --import tsx scripts/merge-character-dossier.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.88.0",
