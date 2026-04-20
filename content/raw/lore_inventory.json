@@ -1,0 +1,509 @@
+{
+  "generatedAt": "2026-04-20T19:31:42.469Z",
+  "extractorVersion": "ingest-foundational-lore/1",
+  "entityCount": 22,
+  "withLoreSectionParsed": 22,
+  "withDossierParsed": 0,
+  "entities": [
+    {
+      "slug": "amar-cael",
+      "wikiPath": "content/wiki/characters/amar-cael.md",
+      "wikiEntityKind": "character",
+      "lore": {
+        "wikiEntityKind": "character",
+        "sourceType": "foundational_dossier",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [
+          "CH06"
+        ],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "aven-voss",
+      "wikiPath": "content/wiki/characters/aven-voss.md",
+      "wikiEntityKind": "character",
+      "lore": {
+        "wikiEntityKind": "character",
+        "sourceType": "foundational_dossier",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [
+          "CH01",
+          "CH02",
+          "CH04",
+          "CH06",
+          "CH10",
+          "CH12"
+        ],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "elara-varen",
+      "wikiPath": "content/wiki/characters/elara-varen.md",
+      "wikiEntityKind": "character",
+      "lore": {
+        "wikiEntityKind": "character",
+        "sourceType": "foundational_dossier",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [
+          "CH01"
+        ],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "evelyn-tran",
+      "wikiPath": "content/wiki/characters/evelyn-tran.md",
+      "wikiEntityKind": "character",
+      "lore": {
+        "wikiEntityKind": "character",
+        "sourceType": "foundational_dossier",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [
+          "CH02",
+          "CH03",
+          "CH05",
+          "CH07",
+          "CH09",
+          "CH10",
+          "CH11",
+          "CH16",
+          "CH17"
+        ],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "galen-voss",
+      "wikiPath": "content/wiki/characters/galen-voss.md",
+      "wikiEntityKind": "character",
+      "lore": {
+        "wikiEntityKind": "character",
+        "sourceType": "foundational_dossier",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage — Character Dossier (canonical crew baseline)",
+          "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
+          "extractorVersion": "ingest-foundational-lore/1"
+        },
+        "chapterRefs": [
+          "CH01",
+          "CH03",
+          "CH04",
+          "CH05",
+          "CH06",
+          "CH08",
+          "CH17"
+        ],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "jax-reyes",
+      "wikiPath": "content/wiki/characters/jax-reyes.md",
+      "wikiEntityKind": "character",
+      "lore": {
+        "wikiEntityKind": "character",
+        "sourceType": "foundational_dossier",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [
+          "CH02",
+          "CH06",
+          "CH08"
+        ],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "jonah-revas",
+      "wikiPath": "content/wiki/characters/jonah-revas.md",
+      "wikiEntityKind": "character",
+      "lore": {
+        "wikiEntityKind": "character",
+        "sourceType": "foundational_dossier",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [
+          "CH02",
+          "CH03",
+          "CH04",
+          "CH05",
+          "CH06",
+          "CH08",
+          "CH09",
+          "CH10",
+          "CH13",
+          "CH14",
+          "CH16",
+          "CH17"
+        ],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "lena-osei",
+      "wikiPath": "content/wiki/characters/lena-osei.md",
+      "wikiEntityKind": "character",
+      "lore": {
+        "wikiEntityKind": "character",
+        "sourceType": "foundational_dossier",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [
+          "CH02",
+          "CH03",
+          "CH06",
+          "CH07",
+          "CH09",
+          "CH10",
+          "CH14",
+          "CH17"
+        ],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "marco-ruiz",
+      "wikiPath": "content/wiki/characters/marco-ruiz.md",
+      "wikiEntityKind": "character",
+      "lore": {
+        "wikiEntityKind": "character",
+        "sourceType": "foundational_dossier",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [
+          "CH02",
+          "CH04",
+          "CH05",
+          "CH06",
+          "CH07",
+          "CH08",
+          "CH10",
+          "CH16"
+        ],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "thane-meric",
+      "wikiPath": "content/wiki/characters/thane-meric.md",
+      "wikiEntityKind": "character",
+      "lore": {
+        "wikiEntityKind": "character",
+        "sourceType": "foundational_dossier",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [
+          "CH03",
+          "CH04",
+          "CH05",
+          "CH06",
+          "CH07",
+          "CH09",
+          "CH10",
+          "CH14",
+          "CH15",
+          "CH16",
+          "CH17"
+        ],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "echo-core",
+      "wikiPath": "content/wiki/artifacts/echo-core.md",
+      "wikiEntityKind": "artifact",
+      "lore": {
+        "wikiEntityKind": "artifact",
+        "sourceType": "technical_brief",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage — vessel & artifact specifications",
+          "sourcePath": "celestial_original/Valkyrie-1 Technical Brief.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [
+          "CH02",
+          "CH04"
+        ],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "harmonic-key",
+      "wikiPath": "content/wiki/artifacts/harmonic-key.md",
+      "wikiEntityKind": "artifact",
+      "lore": {
+        "wikiEntityKind": "artifact",
+        "sourceType": "technical_brief",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage — vessel & artifact specifications",
+          "sourcePath": "celestial_original/Valkyrie-1 Technical Brief.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [
+          "CH05",
+          "CH06"
+        ],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "valkyrie-1",
+      "wikiPath": "content/wiki/artifacts/valkyrie-1.md",
+      "wikiEntityKind": "artifact",
+      "lore": {
+        "wikiEntityKind": "artifact",
+        "sourceType": "technical_brief",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage — vessel & artifact specifications",
+          "sourcePath": "celestial_original/Valkyrie-1 Technical Brief.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [
+          "CH01",
+          "CH02",
+          "CH03"
+        ],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "orbital-habitat-ix",
+      "wikiPath": "content/wiki/locations/orbital-habitat-ix.md",
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "series_bible",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible",
+          "sourcePath": "celestial_original/Celestial Heritage Series Bible.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [
+          "CH04",
+          "CH07"
+        ],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "south-trench",
+      "wikiPath": "content/wiki/locations/south-trench.md",
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "series_bible",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible",
+          "sourcePath": "celestial_original/Celestial Heritage Series Bible.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [
+          "CH01",
+          "CH03"
+        ],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "subsurface-vault",
+      "wikiPath": "content/wiki/locations/subsurface-vault.md",
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "series_bible",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible",
+          "sourcePath": "celestial_original/Celestial Heritage Series Bible.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [
+          "CH06",
+          "CH08"
+        ],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "council-of-orbits",
+      "wikiPath": "content/wiki/factions/council-of-orbits.md",
+      "wikiEntityKind": "faction",
+      "lore": {
+        "wikiEntityKind": "faction",
+        "sourceType": "series_bible",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible",
+          "sourcePath": "celestial_original/Celestial Heritage Series Bible.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [
+          "CH04",
+          "CH07"
+        ],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "expedition-command",
+      "wikiPath": "content/wiki/factions/expedition-command.md",
+      "wikiEntityKind": "faction",
+      "lore": {
+        "wikiEntityKind": "faction",
+        "sourceType": "series_bible",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible",
+          "sourcePath": "celestial_original/Celestial Heritage Series Bible.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [
+          "CH01",
+          "CH06"
+        ],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "shadow-salvage-ring",
+      "wikiPath": "content/wiki/factions/shadow-salvage-ring.md",
+      "wikiEntityKind": "faction",
+      "lore": {
+        "wikiEntityKind": "faction",
+        "sourceType": "series_bible",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible",
+          "sourcePath": "celestial_original/Celestial Heritage Series Bible.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [
+          "CH08",
+          "CH09"
+        ],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "consent-threshold",
+      "wikiPath": "content/wiki/rules/consent-threshold.md",
+      "wikiEntityKind": "rule",
+      "lore": {
+        "wikiEntityKind": "rule",
+        "sourceType": "series_bible",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible — inferred rule",
+          "sourcePath": "celestial_original/Celestial Heritage Series Bible.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "memory-imprint",
+      "wikiPath": "content/wiki/rules/memory-imprint.md",
+      "wikiEntityKind": "rule",
+      "lore": {
+        "wikiEntityKind": "rule",
+        "sourceType": "series_bible",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible — inferred rule",
+          "sourcePath": "celestial_original/Celestial Heritage Series Bible.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "resonance-field",
+      "wikiPath": "content/wiki/rules/resonance-field.md",
+      "wikiEntityKind": "rule",
+      "lore": {
+        "wikiEntityKind": "rule",
+        "sourceType": "series_bible",
+        "canonStatus": "adjacent",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible — inferred rule",
+          "sourcePath": "celestial_original/Celestial Heritage Series Bible.docx",
+          "extractorVersion": "seed-entity-lore-metadata/1"
+        },
+        "chapterRefs": [],
+        "aliases": []
+      }
+    }
+  ]
+}
