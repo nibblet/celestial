@@ -113,8 +113,36 @@ test("parsing stops at the next ## top-level heading after Full Text", () => {
   assert.ok(!scenes[0].body.includes("External link"));
 });
 
-test("returns empty array when no `## Full Text` block is present", () => {
+test("returns empty array when the input has no ### Scene headings", () => {
   assert.deepEqual(parseChapterScenes(NO_FULL_TEXT_BLOCK), []);
+});
+
+test("parses the pre-extracted body that getAllStories() returns on story.fullText", () => {
+  // parser.ts#getStoryFromFile strips the `## Full Text` header and the
+  // trailing `\n## NextSection`, so downstream callers like the ingest
+  // script receive only the inner body. parseChapterScenes must handle
+  // this shape as its primary input.
+  const preExtractedBody = `### Scene 1: Waking Dust
+
+First scene body.
+
+### Mission Log VLK-M001-CH01-A
+
+- Summary: something
+
+### Scene 2: Quiet Weight
+
+Second scene body.
+`;
+  const scenes = parseChapterScenes(preExtractedBody);
+  assert.equal(scenes.length, 2);
+  assert.deepEqual(
+    scenes.map((s) => s.title),
+    ["Waking Dust", "Quiet Weight"],
+  );
+  assert.ok(scenes[0].body.includes("First scene body"));
+  assert.ok(!scenes[0].body.includes("Mission Log"));
+  assert.ok(scenes[1].body.includes("Second scene body"));
 });
 
 test("returns empty array for empty input", () => {

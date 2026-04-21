@@ -49,12 +49,19 @@ function hashBody(body: string): string {
 }
 
 export function parseChapterScenes(fullText: string): ParsedScene[] {
-  const block = fullText.match(/## Full Text\s*\n\n([\s\S]*)/)?.[1];
-  if (!block) return [];
+  // Accept both raw chapter markdown (containing the `## Full Text`
+  // header) and the already-extracted body that
+  // `src/lib/wiki/parser.ts#getAllStories` returns on `story.fullText`
+  // (which strips the `## Full Text` header and trims at the next `## `).
+  // When the header is present we scope to its body; otherwise we treat
+  // the input as the body directly.
+  const headerMatch = fullText.match(/## Full Text\s*\n\n([\s\S]*)/);
+  const block = headerMatch?.[1] ?? fullText;
 
   // `## Full Text` may be followed by another `## SomethingElse` section
-  // (e.g. `## References` or `## Lore metadata`). Everything past that
-  // boundary is not part of the Full Text block.
+  // (e.g. `## References` or `## Mission Logs`). Everything past that
+  // boundary is not part of the Full Text block. When we've already been
+  // handed the pre-extracted body this split is a no-op.
   const beforeNextMajor = block.split(/\n## /)[0] ?? block;
   const lines = beforeNextMajor.split("\n");
 

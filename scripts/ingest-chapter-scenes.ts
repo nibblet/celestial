@@ -15,10 +15,28 @@
  * Requires NEXT_PUBLIC_SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY in env.
  */
 
+import * as fs from "node:fs";
+import * as path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { getAllStories } from "@/lib/wiki/parser";
 import { parseChapterScenes } from "@/lib/wiki/scene-parser";
 import { withCelTablePrefix } from "@/lib/supabase/table-prefix";
+
+// Load `.env.local` without requiring a dotenv dep — matches the pattern
+// used by scripts/enrich-character-dossier.ts and scripts/generate-connectors.ts.
+(() => {
+  const envPath = path.join(process.cwd(), ".env.local");
+  if (!fs.existsSync(envPath)) return;
+  for (const line of fs.readFileSync(envPath, "utf-8").split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const m = trimmed.match(/^([^=]+)=(.*)$/);
+    if (!m) continue;
+    const key = m[1].trim();
+    const value = m[2].trim().replace(/^['"]|['"]$/g, "");
+    if (!process.env[key]) process.env[key] = value;
+  }
+})();
 
 type Counters = { inserted: number; updated: number; unchanged: number };
 
