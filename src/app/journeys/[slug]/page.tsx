@@ -4,6 +4,9 @@ import { getJourneyBySlug } from "@/lib/wiki/journeys";
 import { getStoryById } from "@/lib/wiki/parser";
 import { JourneyIntroContinue } from "@/components/journeys/JourneyIntroContinue";
 import { JourneyExperienceBadge } from "@/components/journeys/JourneyExperienceBadge";
+import { BeatTimeline } from "@/components/journeys/BeatTimeline";
+import { listBeatsByJourney } from "@/lib/beats/repo";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function JourneyIntroPage({
   params,
@@ -20,6 +23,13 @@ export default async function JourneyIntroPage({
     return { id, title: s?.title || id };
   });
 
+  // Beats are a Phase F prototype — only present for one or two journeys
+  // right now. Fetching is a single indexed query and the render is a
+  // no-op when empty, so this is effectively free for the journeys that
+  // don't have beats yet.
+  const supabase = await createClient();
+  const beats = await listBeatsByJourney(supabase, journey.slug);
+
   return (
     <div className="mx-auto max-w-content px-[var(--page-padding-x)] py-6 md:py-10">
       <Link
@@ -33,6 +43,8 @@ export default async function JourneyIntroPage({
       <p className="type-body mb-6 text-pretty text-ink-muted">
         {journey.description}
       </p>
+
+      <BeatTimeline beats={beats} />
 
       <JourneyIntroContinue
         slug={journey.slug}

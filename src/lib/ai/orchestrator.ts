@@ -39,6 +39,7 @@ import type { ReaderProgress } from "@/lib/progress/reader-progress";
 import { isStoryUnlocked } from "@/lib/progress/reader-progress";
 import { getScenesForChapter } from "@/lib/wiki/scenes-db";
 import { listUnresolvedThroughChapter } from "@/lib/threads/repo";
+import { listBeatsByJourney } from "@/lib/beats/repo";
 
 export interface OrchestrateParams {
   anthropic: Anthropic;
@@ -107,16 +108,25 @@ async function buildPromptArgs(
   // chapter". Otherwise personas could see spoilery future mysteries.
   const threadCutoffChapter = readerProgress?.currentChapter ?? null;
 
-  const [wikiSummaries, stories, storyContextRaw, chapterScenes, openThreads] =
-    await Promise.all([
-      getCanonicalWikiSummaries(),
-      getCanonicalStories(),
-      storySlug ? getCanonicalStoryMarkdown(storySlug) : Promise.resolve(""),
-      storySlug ? getScenesForChapter(storySlug) : Promise.resolve([]),
-      threadCutoffChapter
-        ? listUnresolvedThroughChapter(supabase, threadCutoffChapter)
-        : Promise.resolve([]),
-    ]);
+  const [
+    wikiSummaries,
+    stories,
+    storyContextRaw,
+    chapterScenes,
+    openThreads,
+    journeyBeats,
+  ] = await Promise.all([
+    getCanonicalWikiSummaries(),
+    getCanonicalStories(),
+    storySlug ? getCanonicalStoryMarkdown(storySlug) : Promise.resolve(""),
+    storySlug ? getScenesForChapter(storySlug) : Promise.resolve([]),
+    threadCutoffChapter
+      ? listUnresolvedThroughChapter(supabase, threadCutoffChapter)
+      : Promise.resolve([]),
+    journeySlug
+      ? listBeatsByJourney(supabase, journeySlug)
+      : Promise.resolve([]),
+  ]);
   void storyContextRaw; // storyContext is assembled inside each persona builder
 
   const visibleStories = readerProgress
@@ -147,6 +157,13 @@ async function buildPromptArgs(
       question: t.question,
       openedInChapterId: t.openedInChapterId,
       resolved: t.resolved,
+    })),
+    beats: journeyBeats.map((b) => ({
+      act: b.act,
+      title: b.title,
+      whyItMatters: b.whyItMatters,
+      beatType: b.beatType,
+      chapterId: b.chapterId,
     })),
   };
 }

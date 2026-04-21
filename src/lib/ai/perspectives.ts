@@ -41,6 +41,7 @@ export type OpenThreadForContext = {
 /** Structural beat (Phase F). Reference for narrator/archivist when a
  *  journey is under discussion. */
 export type BeatForContext = {
+  act: number;
   title: string;
   whyItMatters: string;
   beatType: string;
@@ -128,12 +129,12 @@ function sharedContentBlock(args: PersonaPromptArgs): string {
     }
   }
   if (args.beats && args.beats.length > 0) {
-    const lines = args.beats.map(
-      (b) =>
-        `- **[${b.beatType}] ${b.title}** — ${b.whyItMatters}`,
-    );
+    const lines = args.beats.map((b) => {
+      const chapterSuffix = b.chapterId ? ` (${b.chapterId})` : "";
+      return `- **[Act ${b.act} · ${b.beatType}] ${b.title}**${chapterSuffix} — ${b.whyItMatters}`;
+    });
     parts.push(
-      `## Journey Beats (structural map)\n${lines.join("\n")}`,
+      `## Journey Beats (structural map)\nReference these beats by title when the user asks why a moment matters.\n${lines.join("\n")}`,
     );
   }
 

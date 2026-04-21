@@ -148,21 +148,39 @@ test("shared block skips chapter scenes when storySlug is absent", () => {
   assert.ok(!prompt.includes("## Scenes in this chapter"));
 });
 
-test("shared block renders beats when provided", () => {
+test("shared block renders beats with act + beatType + chapter suffix", () => {
   const prompt = getPersona("celestial_narrator").buildSystemPrompt({
     ...BASE_ARGS,
     beats: [
       {
+        act: 1,
         title: "A silence that listens back",
         whyItMatters: "Seeds the series' core question.",
         beatType: "opening",
         chapterId: "CH01",
       },
+      {
+        act: 2,
+        title: "Directive 14 is read aloud",
+        whyItMatters: "Abstract unease becomes a specific legal instrument.",
+        beatType: "midpoint",
+        chapterId: null,
+      },
     ],
   });
   assert.match(prompt, /## Journey Beats/);
-  assert.ok(prompt.includes("A silence that listens back"));
-  assert.ok(prompt.includes("Seeds the series' core question"));
+  // Act + beatType prefix, chapter suffix, whyItMatters payload
+  assert.ok(
+    prompt.includes(
+      "**[Act 1 · opening] A silence that listens back** (CH01) — Seeds the series' core question.",
+    ),
+  );
+  // No chapter suffix when chapterId is null
+  assert.ok(
+    prompt.includes(
+      "**[Act 2 · midpoint] Directive 14 is read aloud** — Abstract unease becomes a specific legal instrument.",
+    ),
+  );
 });
 
 test("editor persona is an explicit not-implemented placeholder", () => {
