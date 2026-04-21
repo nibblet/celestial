@@ -35,7 +35,7 @@ create policy "Keith admin can write beyond-media"
   with check (
     bucket_id = 'beyond-media'
     and exists (
-      select 1 from public.sb_profiles p
+      select 1 from public.cel_profiles p
       where p.id = auth.uid()
         and (p.role = 'keith' or p.role = 'admin')
     )
@@ -47,7 +47,7 @@ create policy "Keith admin can update beyond-media"
   using (
     bucket_id = 'beyond-media'
     and exists (
-      select 1 from public.sb_profiles p
+      select 1 from public.cel_profiles p
       where p.id = auth.uid()
         and (p.role = 'keith' or p.role = 'admin')
     )
@@ -59,7 +59,7 @@ create policy "Admin can delete beyond-media"
   using (
     bucket_id = 'beyond-media'
     and exists (
-      select 1 from public.sb_profiles p
+      select 1 from public.cel_profiles p
       where p.id = auth.uid() and p.role = 'admin'
     )
   );
