@@ -9,6 +9,10 @@
 
 import * as fs from "fs";
 import * as path from "path";
+import {
+  enrichLegacyStorySource,
+  normalizeChapterThemes,
+} from "../src/lib/wiki/taxonomy";
 
 const WIKI = path.join(process.cwd(), "content/wiki");
 const OUT = path.join(process.cwd(), "src/lib/wiki/static-data.ts");
@@ -26,6 +30,10 @@ interface StoryCard {
   themes: string[];
   wordCount: number;
   principles: string[];
+  contentType: ReturnType<typeof enrichLegacyStorySource>["contentType"];
+  sourceType: ReturnType<typeof enrichLegacyStorySource>["sourceType"];
+  canonStatus: ReturnType<typeof enrichLegacyStorySource>["canonStatus"];
+  visibilityPolicy: ReturnType<typeof enrichLegacyStorySource>["visibilityPolicy"];
 }
 
 interface ThemeCard {
@@ -60,8 +68,20 @@ interface TimelineEvent {
   sourceDetail?: string;
 }
 
-/** Matches any story ID: P1_S01, IV_S01, P2_S01, etc. */
-const STORY_ID_PAT = "(?:P\\d+|IV)_S\\d+";
+/** Matches memoir/interview IDs and fiction chapter refs (CH01…) — keep in sync with `src/lib/wiki/story-ids.ts`. */
+const STORY_ID_PAT = "(?:P\\d+|IV)_S\\d+|CH\\d{2,4}";
+
+function chapterSortKey(storyId: string): string {
+  const chapter = storyId.match(/^CH(\d{2,4})$/i);
+  if (chapter) return `1_${String(parseInt(chapter[1], 10)).padStart(4, "0")}`;
+  const memoir = storyId.match(/^P(\d+)_S(\d+)$/i);
+  if (memoir) {
+    return `2_${String(parseInt(memoir[1], 10)).padStart(3, "0")}_${String(parseInt(memoir[2], 10)).padStart(4, "0")}`;
+  }
+  const iv = storyId.match(/^IV_S(\d+)$/i);
+  if (iv) return `3_${String(parseInt(iv[1], 10)).padStart(4, "0")}`;
+  return `9_${storyId}`;
+}
 
 function deriveSource(storyId: string): StorySource {
   if (storyId.startsWith("IV_")) return "interview";
@@ -91,7 +111,8 @@ function main() {
   const storyIdRe = new RegExp(`\\*\\*Story ID:\\*\\*\\s*(${STORY_ID_PAT})`);
   const slugStripRe = new RegExp(`^${STORY_ID_PAT}-`);
 
-  const stories: StoryCard[] = fs
+  const stories: StoryCard[] = fs.existsSync(storiesDir)
+    ? fs
     .readdirSync(storiesDir)
     .filter((f) => f.endsWith(".md"))
     .map((f) => {
@@ -103,27 +124,39 @@ function main() {
       const summaryMatch = content.match(/^> (.+)/m);
       const slug = f.replace(/\.md$/, "").replace(slugStripRe, "");
       const source = deriveSource(storyIdMatch[1]);
+      const sid = storyIdMatch[1];
+      const rawThemes = extractMetadata(content, "Themes")
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean);
+      const themes = normalizeChapterThemes(sid, rawThemes);
+      const contract = enrichLegacyStorySource(sid, source);
 
       return {
-        storyId: storyIdMatch[1],
+        storyId: sid,
         slug,
         title: titleMatch?.[1] || "",
         summary: summaryMatch?.[1] || "",
         source,
         sourceDetail: extractMetadata(content, "Source"),
         lifeStage: extractMetadata(content, "Life Stage"),
-        themes: extractMetadata(content, "Themes").split(",").map((t) => t.trim()).filter(Boolean),
+        themes,
         wordCount: parseInt(extractMetadata(content, "Word Count")) || 0,
         principles: extractSection(content, "What This Story Shows"),
-        volume: storyIdMatch[1].match(/^(P\d+|IV)/)?.[1] || "P1",
+        volume: sid.match(/^(P\d+|IV)/)?.[1] || "P1",
+        ...contract,
       };
     })
     .filter(Boolean)
-    .sort((a, b) => a!.storyId.localeCompare(b!.storyId)) as StoryCard[];
+    .sort((a, b) =>
+      chapterSortKey(a!.storyId).localeCompare(chapterSortKey(b!.storyId))
+    ) as StoryCard[]
+    : [];
 
   // Themes
   const themesDir = path.join(WIKI, "themes");
-  const themes: ThemeCard[] = fs
+  const themes: ThemeCard[] = fs.existsSync(themesDir)
+    ? fs
     .readdirSync(themesDir)
     .filter((f) => f.endsWith(".md"))
     .map((f) => {
@@ -145,55 +178,98 @@ function main() {
         storyIds,
       };
     })
-    .sort((a, b) => b.storyCount - a.storyCount);
-
-  // People
-  const peopleDir = path.join(WIKI, "people");
-  const people: PersonCard[] = fs.existsSync(peopleDir)
-    ? fs
-        .readdirSync(peopleDir)
-        .filter((f) => f.endsWith(".md"))
-        .map((f) => {
-          const content = fs.readFileSync(path.join(peopleDir, f), "utf-8");
-          const nameMatch = content.match(/^# (.+)/m);
-          const slugMatch = content.match(/\*\*Slug:\*\*\s*(.+)/);
-          const tiersMatch = content.match(/tiers:\s*([A-D,\s]+)\)/);
-          const memoirSection = content.match(/## Memoir stories\n\n([\s\S]*?)(?=\n## |\n---|\n<!--|$)/);
-          const interviewSection = content.match(/## Interview stories\n\n([\s\S]*?)(?=\n## |\n---|\n<!--|$)/);
-          const noteSection = content.match(/## Note\n\n([\s\S]*?)(?=\n## |\n---|\n<!--|$)/);
-
-          const extractIds = (block: string | undefined): string[] => {
-            if (!block) return [];
-            const ids: string[] = [];
-            let m: RegExpExecArray | null;
-            const re = new RegExp(`\\((${STORY_ID_PAT})\\)`, "g");
-            while ((m = re.exec(block)) !== null) ids.push(m[1]);
-            return ids;
-          };
-
-          const slug = slugMatch?.[1]?.trim() || f.replace(/\.md$/, "");
-          const tiers = (tiersMatch?.[1] || "")
-            .split(",")
-            .map((t) => t.trim())
-            .filter((t): t is PersonTier => /^[A-D]$/.test(t));
-          const memoirStoryIds = extractIds(memoirSection?.[1]);
-          const interviewStoryIds = extractIds(interviewSection?.[1]);
-
-          return {
-            slug,
-            name: nameMatch?.[1]?.trim() || slug,
-            tiers,
-            memoirStoryIds,
-            interviewStoryIds,
-            storyCount: memoirStoryIds.length + interviewStoryIds.length,
-            note: noteSection?.[1]?.trim() || "",
-          };
-        })
-        .sort((a, b) => a.name.localeCompare(b.name))
+    .sort((a, b) => b.storyCount - a.storyCount)
     : [];
 
+  function buildPersonCards(
+    dirPath: string,
+    memoirHeading: string,
+    interviewHeading: string
+  ): PersonCard[] {
+    if (!fs.existsSync(dirPath)) return [];
+    return fs
+      .readdirSync(dirPath)
+      .filter((f) => f.endsWith(".md"))
+      .map((f) => {
+        const content = fs.readFileSync(path.join(dirPath, f), "utf-8");
+        const nameMatch = content.match(/^# (.+)/m);
+        const slugMatch = content.match(/\*\*Slug:\*\*\s*(.+)/);
+        const tiersMatch = content.match(/tiers:\s*([A-D,\s]+)\)/);
+        const memoirHeadingEscaped = memoirHeading.replace(
+          /[.*+?^${}()|[\]\\]/g,
+          "\\$&"
+        );
+        const interviewHeadingEscaped = interviewHeading.replace(
+          /[.*+?^${}()|[\]\\]/g,
+          "\\$&"
+        );
+        const memoirSection = content.match(
+          new RegExp(
+            `## ${memoirHeadingEscaped}\\n\\n([\\s\\S]*?)(?=\\n## |\\n---|\\n<!--|$)`
+          )
+        );
+        const interviewSection = content.match(
+          new RegExp(
+            `## ${interviewHeadingEscaped}\\n\\n([\\s\\S]*?)(?=\\n## |\\n---|\\n<!--|$)`
+          )
+        );
+        const noteSection = content.match(
+          /## Note\n\n([\s\S]*?)(?=\n## |\n---|\n<!--|$)/
+        );
+
+        const extractIds = (block: string | undefined): string[] => {
+          if (!block) return [];
+          const ids: string[] = [];
+          let m: RegExpExecArray | null;
+          const re = new RegExp(`\\((${STORY_ID_PAT})\\)`, "g");
+          while ((m = re.exec(block)) !== null) ids.push(m[1]!);
+          return ids;
+        };
+
+        const slug = slugMatch?.[1]?.trim() || f.replace(/\.md$/, "");
+        const tiers = (tiersMatch?.[1] || "")
+          .split(",")
+          .map((t) => t.trim())
+          .filter((t): t is PersonTier => /^[A-D]$/.test(t));
+        const memoirStoryIds = extractIds(memoirSection?.[1]);
+        const interviewStoryIds = extractIds(interviewSection?.[1]);
+
+        return {
+          slug,
+          name: nameMatch?.[1]?.trim() || slug,
+          tiers,
+          memoirStoryIds,
+          interviewStoryIds,
+          storyCount: memoirStoryIds.length + interviewStoryIds.length,
+          note: noteSection?.[1]?.trim() || "",
+        };
+      });
+  }
+
+  const peopleDir = path.join(WIKI, "people");
+  const charactersDir = path.join(WIKI, "characters");
+  const peopleFromLegacy = buildPersonCards(
+    peopleDir,
+    "Memoir stories",
+    "Interview stories"
+  );
+  const peopleFromFiction = buildPersonCards(
+    charactersDir,
+    "Appearances",
+    "Additional appearances"
+  );
+  const peopleBySlug = new Map<string, PersonCard>();
+  for (const p of peopleFromLegacy) peopleBySlug.set(p.slug, p);
+  for (const p of peopleFromFiction) peopleBySlug.set(p.slug, p);
+  const people = [...peopleBySlug.values()].sort((a, b) =>
+    a.name.localeCompare(b.name)
+  );
+
   // Timeline
-  const timelineContent = fs.readFileSync(path.join(WIKI, "timeline/career-timeline.md"), "utf-8");
+  const timelinePath = path.join(WIKI, "timeline/career-timeline.md");
+  const timelineContent = fs.existsSync(timelinePath)
+    ? fs.readFileSync(timelinePath, "utf-8")
+    : "";
   const timelineEvents: TimelineEvent[] = [];
   const tlRefRe = new RegExp(
     `- \\*\\*(\\d{4})\\*\\* — (.+?)(?:\\s*\\((.+?)\\))?(?:,\\s*(.+?))?\\s*—\\s*\\[\\[(${STORY_ID_PAT})\\]\\]\\s*(?:\\|\\s*(.+))?`
@@ -227,6 +303,13 @@ function main() {
   const output = `// Auto-generated by scripts/generate-static-data.ts
 // Do not edit manually. Run: npx tsx scripts/generate-static-data.ts
 
+import type {
+  CanonStatusV1,
+  ContentTypeV1,
+  SourceTypeV1,
+  VisibilityPolicyV1,
+} from "@/lib/wiki/taxonomy";
+
 export type StorySource = "memoir" | "interview" | "family";
 export type TimelineSource = "memoir" | "public_record" | "interview";
 
@@ -242,6 +325,10 @@ export interface StoryCard {
   wordCount: number;
   principles: string[];
   volume?: string;
+  contentType: ContentTypeV1;
+  sourceType: SourceTypeV1;
+  canonStatus: CanonStatusV1;
+  visibilityPolicy: VisibilityPolicyV1;
 }
 
 export interface ThemeCard {

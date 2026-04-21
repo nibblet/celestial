@@ -33,7 +33,7 @@ export function PersonLink({ slug, children }: Props) {
 
   if (!person) {
     return (
-      <Link href={`/people/${slug}`} className="text-ocean hover:underline">
+      <Link href={`/characters/${slug}`} className="text-ocean hover:underline">
         {children}
       </Link>
     );
@@ -48,7 +48,7 @@ export function PersonLink({ slug, children }: Props) {
       onBlur={hide}
     >
       <Link
-        href={`/people/${slug}`}
+        href={`/characters/${slug}`}
         className="text-ocean underline decoration-ocean/30 underline-offset-2 hover:decoration-ocean"
       >
         {children}

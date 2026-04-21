@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { book } from "@/config/book";
 
 export function HomeHero() {
   const [parallaxY, setParallaxY] = useState(0);
@@ -28,8 +29,6 @@ export function HomeHero() {
         <div
           className="absolute inset-0 bg-cover bg-[center_30%] bg-no-repeat will-change-transform"
           style={{
-            backgroundImage:
-              "linear-gradient(0deg, rgba(44,28,16,0.25), rgba(44,28,16,0.25)), url(/images/red-clay-road.jpg)",
             transform: reduceMotion ? undefined : `translateY(${parallaxY}px)`,
           }}
           aria-hidden
@@ -46,15 +45,13 @@ export function HomeHero() {
 
       <div className="relative z-10 mx-auto max-w-wide px-[var(--page-padding-x)] pb-16 pt-20 text-center md:pb-20 md:pt-24">
         <p className="type-era-label mb-4 text-[rgba(240,232,213,0.65)]">
-          A life in progress
+          Interactive companion
         </p>
         <h1 className="mb-5 font-[family-name:var(--font-playfair)] text-[clamp(3rem,6vw,5.5rem)] font-bold leading-[1.05] tracking-tight text-[#f0e8d5]">
-          Out of the
-          <br />
-          Red Clay Hills
+          {book.title}
         </h1>
         <p className="type-body mx-auto mb-10 max-w-[520px] text-pretty italic !text-[rgba(240,232,213,0.65)]">
-          A family library built from Keith&apos;s memoir and conversations.
+          {book.tagline}
         </p>
       </div>
 

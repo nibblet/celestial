@@ -5,9 +5,15 @@ import { usePathname } from "next/navigation";
 
 export function ExploreHubTabs() {
   const pathname = usePathname();
-  const onJourneys = pathname.startsWith("/journeys");
+  const onJourneys = pathname.startsWith("/journeys") || pathname.startsWith("/arcs");
   const onPrinciples = pathname.startsWith("/principles");
-  const onPeople = pathname.startsWith("/people");
+  const onCharacters =
+    pathname.startsWith("/characters") || pathname.startsWith("/people");
+  const onArtifacts = pathname.startsWith("/artifacts");
+  const onLocations = pathname.startsWith("/locations");
+  const onFactions = pathname.startsWith("/factions");
+  const onRules = pathname.startsWith("/rules");
+  const onMissionLogs = pathname.startsWith("/mission-logs");
 
   return (
     <div
@@ -15,9 +21,9 @@ export function ExploreHubTabs() {
       role="tablist"
       aria-label="Explore section"
     >
-      <div className="mx-auto flex max-w-content gap-1 px-[var(--page-padding-x)] py-2">
+      <div className="mx-auto flex max-w-content flex-wrap gap-1 px-[var(--page-padding-x)] py-2">
         <Link
-          href="/journeys"
+          href="/arcs"
           role="tab"
           aria-selected={onJourneys}
           className={`flex-1 rounded-full px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
@@ -26,7 +32,7 @@ export function ExploreHubTabs() {
               : "bg-transparent text-ink-muted hover:text-ink"
           }`}
         >
-          Journeys
+          Arcs
         </Link>
         <Link
           href="/principles"
@@ -41,16 +47,76 @@ export function ExploreHubTabs() {
           Principles
         </Link>
         <Link
-          href="/people"
+          href="/characters"
           role="tab"
-          aria-selected={onPeople}
+          aria-selected={onCharacters}
           className={`flex-1 rounded-full px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
-            onPeople
+            onCharacters
               ? "bg-ink text-warm-white"
               : "bg-transparent text-ink-muted hover:text-ink"
           }`}
         >
-          People
+          Characters
+        </Link>
+        <Link
+          href="/artifacts"
+          role="tab"
+          aria-selected={onArtifacts}
+          className={`flex-1 rounded-full px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
+            onArtifacts
+              ? "bg-ink text-warm-white"
+              : "bg-transparent text-ink-muted hover:text-ink"
+          }`}
+        >
+          Artifacts
+        </Link>
+        <Link
+          href="/locations"
+          role="tab"
+          aria-selected={onLocations}
+          className={`flex-1 rounded-full px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
+            onLocations
+              ? "bg-ink text-warm-white"
+              : "bg-transparent text-ink-muted hover:text-ink"
+          }`}
+        >
+          Locations
+        </Link>
+        <Link
+          href="/factions"
+          role="tab"
+          aria-selected={onFactions}
+          className={`flex-1 rounded-full px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
+            onFactions
+              ? "bg-ink text-warm-white"
+              : "bg-transparent text-ink-muted hover:text-ink"
+          }`}
+        >
+          Factions
+        </Link>
+        <Link
+          href="/rules"
+          role="tab"
+          aria-selected={onRules}
+          className={`flex-1 rounded-full px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
+            onRules
+              ? "bg-ink text-warm-white"
+              : "bg-transparent text-ink-muted hover:text-ink"
+          }`}
+        >
+          Rules
+        </Link>
+        <Link
+          href="/mission-logs"
+          role="tab"
+          aria-selected={onMissionLogs}
+          className={`flex-1 rounded-full px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
+            onMissionLogs
+              ? "bg-ink text-warm-white"
+              : "bg-transparent text-ink-muted hover:text-ink"
+          }`}
+        >
+          Mission Logs
         </Link>
       </div>
     </div>

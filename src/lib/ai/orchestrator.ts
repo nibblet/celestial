@@ -17,9 +17,11 @@ import { classifyQuestion } from "./classifier";
 import type { AgeMode } from "@/types";
 import {
   getCanonicalStoryMarkdown,
-  getCanonicalStoryLinkCatalog,
+  getCanonicalStories,
   getCanonicalWikiSummaries,
 } from "@/lib/wiki/corpus";
+import type { ReaderProgress } from "@/lib/progress/reader-progress";
+import { isStoryUnlocked } from "@/lib/progress/reader-progress";
 
 const MODEL = "claude-sonnet-4-20250514";
 
@@ -30,6 +32,7 @@ export interface OrchestrateParams {
   ageMode: AgeMode;
   storySlug?: string;
   journeySlug?: string;
+  readerProgress?: ReaderProgress;
 }
 
 export interface OrchestrateResult {
@@ -60,13 +63,23 @@ export async function orchestrateAsk(
 async function* simplePath(
   params: OrchestrateParams
 ): AsyncGenerator<string> {
-  const { anthropic, messages, ageMode, storySlug, journeySlug } = params;
+  const { anthropic, messages, ageMode, storySlug, journeySlug, readerProgress } = params;
 
-  const [wikiSummaries, storyCatalog, storyContext] = await Promise.all([
+  const [wikiSummaries, stories, storyContextRaw] = await Promise.all([
     getCanonicalWikiSummaries(),
-    getCanonicalStoryLinkCatalog(),
+    getCanonicalStories(),
     storySlug ? getCanonicalStoryMarkdown(storySlug) : Promise.resolve(""),
   ]);
+  const visibleStories = readerProgress
+    ? stories.filter((story) => isStoryUnlocked(story.storyId, readerProgress))
+    : stories;
+  const storyCatalog = visibleStories
+    .map((story) => `- ${story.storyId} — ${story.title}`)
+    .join("\n");
+  const storyContext =
+    storySlug && readerProgress && !isStoryUnlocked(storySlug, readerProgress)
+      ? ""
+      : storyContextRaw;
   const systemPrompt = buildSystemPrompt(
     ageMode,
     storySlug,
@@ -74,7 +87,8 @@ async function* simplePath(
     undefined,
     wikiSummaries,
     storyCatalog,
-    storyContext || undefined
+    storyContext || undefined,
+    readerProgress
   );
 
   const stream = anthropic.messages.stream({
@@ -99,11 +113,17 @@ async function* simplePath(
 async function* deepPath(
   params: OrchestrateParams
 ): AsyncGenerator<string> {
-  const { anthropic, messages, ageMode, storySlug, journeySlug } = params;
-  const [wikiSummaries, storyCatalog] = await Promise.all([
+  const { anthropic, messages, ageMode, storySlug, journeySlug, readerProgress } = params;
+  const [wikiSummaries, stories] = await Promise.all([
     getCanonicalWikiSummaries(),
-    getCanonicalStoryLinkCatalog(),
+    getCanonicalStories(),
   ]);
+  const visibleStories = readerProgress
+    ? stories.filter((story) => isStoryUnlocked(story.storyId, readerProgress))
+    : stories;
+  const storyCatalog = visibleStories
+    .map((story) => `- ${story.storyId} — ${story.title}`)
+    .join("\n");
 
   // Build perspective prompts
   const storytellerPrompt = buildStorytellerPrompt(
@@ -111,14 +131,16 @@ async function* deepPath(
     storySlug,
     journeySlug,
     wikiSummaries,
-    storyCatalog
+    storyCatalog,
+    readerProgress
   );
   const principlesPrompt = buildPrinciplesCoachPrompt(
     ageMode,
     storySlug,
     journeySlug,
     wikiSummaries,
-    storyCatalog
+    storyCatalog,
+    readerProgress
   );
 
   // Fire both perspective calls in parallel (non-streaming)
@@ -156,10 +178,10 @@ async function* deepPath(
       role: "user" as const,
       content: `Here are two perspectives on my question. Please synthesize them into one response.
 
----STORYTELLER PERSPECTIVE---
+---NARRATOR PERSPECTIVE---
 ${storytellerText}
 
----PRINCIPLES COACH PERSPECTIVE---
+---LORE-KEEPER PERSPECTIVE---
 ${principlesText}`,
     },
   ];

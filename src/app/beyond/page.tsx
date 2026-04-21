@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 };
 
 export default async function BeyondPage() {
-  const { user, isKeithSpecialAccess } = await getAuthenticatedProfileContext();
+  const { user, isAuthorSpecialAccess } = await getAuthenticatedProfileContext();
 
   if (!user) redirect("/login");
-  if (!isKeithSpecialAccess) redirect("/tell");
+  if (!isAuthorSpecialAccess) redirect("/tell");
 
   return <BeyondShell />;
 }

@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { book } from "@/config/book";
 import {
   getAllStories,
   getStoryById,
@@ -6,6 +7,7 @@ import {
   type WikiStory,
 } from "@/lib/wiki/parser";
 import { slugifyWikiTitle } from "@/lib/wiki/wiki-mirror";
+import { chapterSortKey } from "@/lib/wiki/story-ids";
 
 interface WikiDocumentRow {
   doc_key: string;
@@ -88,7 +90,7 @@ export async function getCanonicalStories(): Promise<WikiStory[]> {
   for (const story of dbStories) byId.set(story.storyId, story);
 
   return Array.from(byId.values()).sort((a, b) =>
-    a.storyId.localeCompare(b.storyId)
+    chapterSortKey(a.storyId).localeCompare(chapterSortKey(b.storyId))
   );
 }
 
@@ -127,7 +129,7 @@ export async function getCanonicalWikiSummaries(): Promise<string> {
   const dbStories = stories.filter((story) => story.source === "family");
 
   const lines = [
-    "# Keith Cobb Storybook — Wiki Index",
+    `# ${book.title} — Wiki Index`,
     "",
     "> Canonical merged index from filesystem wiki pages and active Supabase wiki mirror documents.",
     "",

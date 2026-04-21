@@ -8,6 +8,7 @@ import { AgeModeProvider } from "@/hooks/useAgeMode";
 import { BodyModeSync } from "@/components/layout/BodyModeSync";
 import { ageModeFromAge } from "@/lib/utils/age-mode";
 import type { AgeMode } from "@/types";
+import { book } from "@/config/book";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -28,9 +29,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Keith Cobb Storybook",
-  description:
-    "Stories and lessons from Keith Cobb's life — a family archive.",
+  title: book.title,
+  description: book.description,
 };
 
 async function getInitialAgeMode(): Promise<AgeMode> {

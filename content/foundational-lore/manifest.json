@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "defaults": {
+    "sourceType": "foundational_dossier",
+    "canonStatus": "adjacent",
+    "visibilityPolicy": "always_visible",
+    "notes": "Prefer explicit ## Lore metadata blocks per wiki entity; defaults here are documentation-only until wired into automation."
+  }
+}

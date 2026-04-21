@@ -2,17 +2,19 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { book } from "@/config/book";
 import type { StoryCard, StorySource } from "@/lib/wiki/static-data";
 import { Reveal } from "@/components/ui/Reveal";
 import { SourceBadge } from "@/components/ui/SourceBadge";
 import { lifeStageToEraAccent } from "@/lib/design/era";
 import { ReadBadgeAgeAware } from "@/components/story/ReadBadgeAgeAware";
+import { chapterNumberFromStoryId, chapterSortKey } from "@/lib/wiki/story-ids";
 
 const SOURCE_FILTERS: { label: string; value: StorySource | "all" }[] = [
-  { label: "All Sources", value: "all" },
-  { label: "Memoir", value: "memoir" },
+  { label: "All", value: "all" },
+  { label: "Book I chapters", value: "family" },
+  { label: "Legacy memoir", value: "memoir" },
   { label: "Interview", value: "interview" },
-  { label: "Family", value: "family" },
 ];
 
 const IV_PLACEMENT: Record<string, string> = {
@@ -48,9 +50,14 @@ function interleaveSort(stories: StoryCard[]): StoryCard[] {
     }
   }
 
-  return [...stories].sort(
-    (a, b) => (sortKey.get(a.storyId) || 0) - (sortKey.get(b.storyId) || 0)
-  );
+  return [...stories].sort((a, b) => {
+    const aSort = sortKey.get(a.storyId);
+    const bSort = sortKey.get(b.storyId);
+    if (aSort !== undefined || bSort !== undefined) {
+      return (aSort || 0) - (bSort || 0);
+    }
+    return chapterSortKey(a.storyId).localeCompare(chapterSortKey(b.storyId));
+  });
 }
 
 const LIFE_STAGES = [
@@ -67,9 +74,13 @@ const LIFE_STAGES = [
 export function StoriesPageClient({
   stories,
   readStoryIds,
+  currentChapterNumber,
+  showAllContent,
 }: {
   stories: StoryCard[];
   readStoryIds: string[];
+  currentChapterNumber: number;
+  showAllContent: boolean;
 }) {
   const [search, setSearch] = useState("");
   const [selectedSource, setSelectedSource] = useState<StorySource | "all">("all");
@@ -106,17 +117,22 @@ export function StoriesPageClient({
     });
   }, [sorted, search, selectedSource, selectedStage, selectedTheme]);
 
+  async function markStoryRead(storyId: string) {
+    await fetch(`/api/stories/${storyId}/read`, { method: "POST" });
+    window.location.reload();
+  }
+
   return (
     <div className="mx-auto max-w-content px-[var(--page-padding-x)] py-6 md:py-10">
-      <h1 className="type-page-title mb-2">Story Library</h1>
+      <h1 className="type-page-title mb-2">Chapter Library</h1>
       <p className="type-ui mb-6 text-ink-muted">
-        {`${stories.length} stories from Keith Cobb's memoir, interviews, and Beyond collection`}
+        {`${stories.length} chapters — ${book.title}. ${book.tagline}`}
       </p>
 
       <div className="mb-6 space-y-3">
         <input
           type="search"
-          placeholder="Search stories..."
+          placeholder="Search chapters..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="type-ui w-full rounded-lg border border-[var(--color-border)] bg-warm-white px-3 py-2 text-ink placeholder:text-ink-ghost"
@@ -174,17 +190,49 @@ export function StoriesPageClient({
       <div className="space-y-3">
         {filtered.length === 0 && (
           <p className="py-8 text-center text-sm text-ink-ghost">
-            No stories match your filters.
+            No chapters match your filters.
           </p>
         )}
         {filtered.map((story) => {
           const era = lifeStageToEraAccent(story.lifeStage);
           return (
             <Reveal key={story.storyId}>
-              <Link
-                href={`/stories/${story.storyId}`}
-                className="group block rounded-xl border border-[var(--color-border)] bg-warm-white p-4 transition-[transform,box-shadow,border-color] duration-[var(--duration-slow)] ease-[var(--ease-out-soft)] hover:-translate-y-0.5 hover:border-clay-border hover:shadow-[0_12px_40px_rgba(44,28,16,0.08)]"
-              >
+              {(() => {
+                const storyChapter = chapterNumberFromStoryId(story.storyId);
+                const locked =
+                  !showAllContent &&
+                  storyChapter !== null &&
+                  storyChapter > currentChapterNumber;
+                const cardClass =
+                  "group block rounded-xl border border-[var(--color-border)] bg-warm-white p-4 transition-[transform,box-shadow,border-color] duration-[var(--duration-slow)] ease-[var(--ease-out-soft)] hover:-translate-y-0.5 hover:border-clay-border hover:shadow-[0_12px_40px_rgba(44,28,16,0.08)]";
+                if (locked) {
+                  return (
+                    <div className={`${cardClass} opacity-90`}>
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <h2 className="font-[family-name:var(--font-playfair)] text-base font-semibold text-ink blur-[1.5px]">
+                            {story.title}
+                          </h2>
+                          <p className="mt-1 font-[family-name:var(--font-lora)] text-sm leading-relaxed text-ink-muted">
+                            Appears in an unread chapter. Mark prior chapters as
+                            read to unlock.
+                          </p>
+                          <div className="mt-2 flex gap-2">
+                            <button
+                              type="button"
+                              onClick={() => markStoryRead(story.storyId)}
+                              className="rounded-md border border-clay-border bg-warm-white px-2 py-1 text-xs text-ink hover:border-clay"
+                            >
+                              I&apos;ve read this chapter
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+                return (
+                  <Link href={`/stories/${story.storyId}`} className={cardClass}>
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <h2 className="font-[family-name:var(--font-playfair)] text-base font-semibold text-ink transition-colors group-hover:text-burgundy">
@@ -194,7 +242,11 @@ export function StoriesPageClient({
                       {story.summary}
                     </p>
                     <div className="mt-2 flex flex-wrap gap-1.5">
-                      <SourceBadge source={story.source} />
+                      <SourceBadge
+                        sourceType={story.sourceType}
+                        legacySource={story.source}
+                        variant="library"
+                      />
                       <span
                         className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${era.badgeClass}`}
                       >
@@ -221,7 +273,9 @@ export function StoriesPageClient({
                   </div>
                   {readSet.has(story.storyId) && <ReadBadgeAgeAware />}
                 </div>
-              </Link>
+                  </Link>
+                );
+              })()}
             </Reveal>
           );
         })}

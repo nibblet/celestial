@@ -1,6 +1,6 @@
 import type { PersonTier, WikiPerson } from "@/lib/wiki/parser";
 
-/** Order for sections on `/people` and for picking one bucket when someone has several tiers. */
+/** Order for sections on `/characters` and for picking one bucket when someone has several tiers. */
 export const PEOPLE_INDEX_SECTION_ORDER: PersonTier[] = ["A", "C", "B", "D"];
 
 /** Short label — tooltips, chips, compact UI (matches inventory meanings). */

@@ -1,6 +1,7 @@
 import { getThemeBySlug, getStoryById } from "@/lib/wiki/parser";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getReaderProgress, isStoryUnlocked } from "@/lib/progress/reader-progress";
 
 export default async function ThemeDetailPage({
   params,
@@ -9,6 +10,7 @@ export default async function ThemeDetailPage({
 }) {
   const { slug } = await params;
   const theme = getThemeBySlug(slug);
+  const progress = await getReaderProgress();
 
   if (!theme) notFound();
 
@@ -30,7 +32,9 @@ export default async function ThemeDetailPage({
         <div className="mb-6 rounded-xl border border-[var(--color-border)] bg-warm-white p-5">
           <h2 className="type-meta mb-3 text-ink">Key Principles</h2>
           <ul className="space-y-3">
-            {theme.principles.map((p, i) => (
+            {theme.principles
+              .filter((p) => !p.storyId || isStoryUnlocked(p.storyId, progress))
+              .map((p, i) => (
               <li
                 key={i}
                 className="font-[family-name:var(--font-lora)] text-sm text-ink-muted"
@@ -46,7 +50,7 @@ export default async function ThemeDetailPage({
                   </Link>
                 )}
               </li>
-            ))}
+              ))}
           </ul>
         </div>
       )}
@@ -75,7 +79,7 @@ export default async function ThemeDetailPage({
       <div>
         <h2 className="type-meta mb-3 text-ink">Stories</h2>
         <div className="space-y-2">
-          {theme.storyIds.map((sid) => {
+          {theme.storyIds.filter((sid) => isStoryUnlocked(sid, progress)).map((sid) => {
             const story = getStoryById(sid);
             if (!story) return null;
             return (

@@ -1,12 +1,13 @@
 import type { User } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/server";
-import { hasKeithSpecialAccess } from "@/lib/auth/special-access";
+import { hasAuthorSpecialAccess } from "@/lib/auth/special-access";
 import type { Profile } from "@/types";
 
 export interface AuthenticatedProfileContext {
   user: User | null;
   profile: Profile | null;
-  isKeithSpecialAccess: boolean;
+  /** Publisher / curator access (Beyond, drafts, bios). */
+  isAuthorSpecialAccess: boolean;
 }
 
 export async function getAuthenticatedProfileContext(): Promise<AuthenticatedProfileContext> {
@@ -19,7 +20,7 @@ export async function getAuthenticatedProfileContext(): Promise<AuthenticatedPro
     return {
       user: null,
       profile: null,
-      isKeithSpecialAccess: false,
+      isAuthorSpecialAccess: false,
     };
   }
 
@@ -34,6 +35,6 @@ export async function getAuthenticatedProfileContext(): Promise<AuthenticatedPro
   return {
     user,
     profile: profile ?? null,
-    isKeithSpecialAccess: hasKeithSpecialAccess(user.email, profile?.role),
+    isAuthorSpecialAccess: hasAuthorSpecialAccess(user.email, profile?.role),
   };
 }

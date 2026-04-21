@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { hasKeithSpecialAccess } from "@/lib/auth/special-access";
+import { hasAuthorSpecialAccess } from "@/lib/auth/special-access";
 
 export async function GET() {
   const supabase = await createClient();
@@ -11,7 +11,7 @@ export async function GET() {
     return Response.json({
       unreadAnswers: 0,
       pendingQuestions: 0,
-      isKeith: false,
+      isAuthor: false,
     });
   }
 
@@ -21,7 +21,7 @@ export async function GET() {
     .eq("id", user.id)
     .single();
 
-  const isKeith = hasKeithSpecialAccess(user.email, profile?.role);
+  const isAuthor = hasAuthorSpecialAccess(user.email, profile?.role);
 
   const { count: unreadAnswersCount } = await supabase
     .from("sb_chapter_questions")
@@ -31,7 +31,7 @@ export async function GET() {
     .eq("asker_seen", false);
 
   let pendingQuestionsCount = 0;
-  if (isKeith) {
+  if (isAuthor) {
     const { count } = await supabase
       .from("sb_chapter_questions")
       .select("id", { count: "exact", head: true })
@@ -42,6 +42,6 @@ export async function GET() {
   return Response.json({
     unreadAnswers: unreadAnswersCount ?? 0,
     pendingQuestions: pendingQuestionsCount,
-    isKeith,
+    isAuthor,
   });
 }

@@ -1,12 +1,12 @@
 import type { ProfileGalleryData } from "@/lib/analytics/profile-gallery-data";
 import { StoriesReadProgress } from "@/components/profile/StoriesReadProgress";
 import { FeaturedPassageTile } from "./tiles/FeaturedPassageTile";
-import { WithKeithSinceTile } from "./tiles/WithKeithSinceTile";
+import { ReaderSinceTile } from "./tiles/ReaderSinceTile";
 import { PrinciplesTile } from "./tiles/PrinciplesTile";
 import { DialogueTile } from "./tiles/DialogueTile";
 import { ThemesTile } from "./tiles/ThemesTile";
 import { KeepersTile } from "./tiles/KeepersTile";
-import { KeithsPeopleTile } from "./tiles/KeithsPeopleTile";
+import { LorePeopleTile } from "./tiles/LorePeopleTile";
 
 type Props = { data: ProfileGalleryData; totalStories: number };
 
@@ -44,13 +44,13 @@ export function ProfileGallery({ data, totalStories }: Props) {
             answeredCount={data.dialogue.answeredCount}
             className="lg:col-span-2"
           />
-          <WithKeithSinceTile
+          <ReaderSinceTile
             firstReadAt={data.readStats.firstReadAt}
             readCount={data.readStats.readCount}
             mostRecentReadAt={data.readStats.mostRecentReadAt}
             className="lg:col-span-2"
           />
-          <KeithsPeopleTile className="lg:col-span-6" />
+          <LorePeopleTile className="lg:col-span-6" />
         </div>
       </div>
     </section>

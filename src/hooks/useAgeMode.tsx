@@ -11,7 +11,7 @@ import {
 import type { AgeMode } from "@/types";
 import { createClient } from "@/lib/supabase/client";
 
-const AGE_MODE_STORAGE_KEY = "kcobb_age_mode";
+const AGE_MODE_STORAGE_KEY = "celestial_age_mode";
 
 function isValidAgeMode(v: string | null): v is AgeMode {
   return v === "young_reader" || v === "teen" || v === "adult";

@@ -2,12 +2,14 @@
  * Perspective-specific system prompts for the multi-agent Ask pipeline.
  *
  * Two perspectives + one synthesizer:
- *   Storyteller  - narrative/emotional lens, anchors to one vivid story
- *   Principles Coach - cross-story pattern recognition, frameworks & heuristics
- *   Synthesizer  - merges both into one cohesive response in Keith's voice
+ *   Narrator - narrative/emotional lens, anchors to one vivid story
+ *   Lore-keeper - cross-story pattern recognition, rules and frameworks
+ *   Synthesizer  - merges both into one cohesive response in the novel's voice
  */
 
 import type { AgeMode } from "@/types";
+import { book } from "@/config/book";
+import type { ReaderProgress } from "@/lib/progress/reader-progress";
 import {
   getStoryLinkCatalog,
   getWikiSummaries,
@@ -25,7 +27,8 @@ function sharedContentBlock(
   storySlug?: string,
   journeySlug?: string,
   wikiSummaries?: string,
-  storyCatalog?: string
+  storyCatalog?: string,
+  readerProgress?: ReaderProgress
 ): string {
   const parts: string[] = [];
 
@@ -42,32 +45,38 @@ function sharedContentBlock(
     const ctx = getJourneyContextForPrompt(journeySlug);
     if (ctx) parts.push(`## Journey Context\n${ctx}`);
   }
+  if (readerProgress) {
+    parts.push(
+      `## Reader Progress Gate\nCurrent chapter: ${readerProgress.currentChapter}. Never reveal content from later chapters.`
+    );
+  }
 
   return parts.join("\n\n");
 }
 
-// ── Storyteller ─────────────────────────────────────────────────────
+// ── Narrator ────────────────────────────────────────────────────────
 
 export function buildStorytellerPrompt(
   ageMode: AgeMode,
   storySlug?: string,
   journeySlug?: string,
   wikiSummaries?: string,
-  storyCatalog?: string
+  storyCatalog?: string,
+  readerProgress?: ReaderProgress
 ): string {
   const voice = getVoiceGuide();
 
-  return `You are the Storyteller perspective in a multi-agent system exploring Keith Cobb's life stories.
+  return `You are the Narrator perspective in a multi-agent system exploring "${book.title}" through this companion app.
 
 ## Your Role
-Find the single most resonant story for the user's question and bring it to life. Focus on the HUMAN experience — what it felt like, what was at stake, and why it matters emotionally.
+Find the single most resonant story for the user's question and bring it to life. Focus on the human experience — what it felt like, what was at stake, and why it matters emotionally.
 
 ## Instructions
 - Identify the ONE story that most directly speaks to the user's question
 - Describe the story vividly: the setting, the challenge, the turning point, the outcome
-- Draw on Keith's actual words (quotes from the story) when they add emotional weight
-- Connect the story's emotional truth to the user's situation
-- Use Keith's rhetorical style from the voice guide below
+- Draw on verbatim lines from the story text when they add emotional weight
+- Connect the story's emotional truth to the reader's situation
+- Use the narrative voice guidance below
 - Link story titles as markdown: [Title](/stories/STORY_ID)
 - Do NOT list principles or frameworks — that's another agent's job
 - Do NOT invent stories, quotes, or events
@@ -79,31 +88,32 @@ ${AGE_MODE_INSTRUCTIONS[ageMode]}
 ## Voice Guide
 ${voice.slice(0, 2000)}
 
-  ${sharedContentBlock(storySlug, journeySlug, wikiSummaries, storyCatalog)}`;
+  ${sharedContentBlock(storySlug, journeySlug, wikiSummaries, storyCatalog, readerProgress)}`;
 }
 
-// ── Principles Coach ────────────────────────────────────────────────
+// ── Lore-keeper ─────────────────────────────────────────────────────
 
 export function buildPrinciplesCoachPrompt(
   ageMode: AgeMode,
   storySlug?: string,
   journeySlug?: string,
   wikiSummaries?: string,
-  storyCatalog?: string
+  storyCatalog?: string,
+  readerProgress?: ReaderProgress
 ): string {
   const frameworks = getDecisionFrameworks();
 
-  return `You are the Principles Coach perspective in a multi-agent system exploring Keith Cobb's life stories.
+  return `You are the Lore-keeper perspective in a multi-agent system exploring "${book.title}".
 
 ## Your Role
-Identify the repeatable principles, heuristics, and decision frameworks that apply to the user's question. Look ACROSS multiple stories for patterns — your unique value is cross-story synthesis.
+Identify repeatable principles, heuristics, and decision frameworks that apply to the user's question. Look ACROSS multiple stories for patterns — your unique value is cross-story synthesis.
 
 ## Instructions
 - Identify 2-3 principles or heuristics from DIFFERENT stories that address the user's question
 - For each principle, name the story it comes from and briefly note how it manifested
-- Highlight when the same principle appears across multiple stories or decades — this is your key differentiator
+- Highlight when the same principle appears across multiple stories — this is your key differentiator
 - Reference the decision frameworks when applicable
-- Be specific: "The principle of building relationships before you need them appears in P1_S15 (banking career), IV_S08 (relationship army), and P1_S25 (community involvement)" is better than "Keith valued relationships"
+- Be specific with story IDs from the catalog; avoid vague character praise
 - Link story titles as markdown: [Title](/stories/STORY_ID)
 - Do NOT retell stories in full — that's another agent's job
 - Do NOT invent principles or frameworks
@@ -115,7 +125,7 @@ ${AGE_MODE_INSTRUCTIONS[ageMode]}
 ## Decision Frameworks
 ${frameworks.slice(0, 2000)}
 
-  ${sharedContentBlock(storySlug, journeySlug, wikiSummaries, storyCatalog)}`;
+  ${sharedContentBlock(storySlug, journeySlug, wikiSummaries, storyCatalog, readerProgress)}`;
 }
 
 // ── Synthesizer ─────────────────────────────────────────────────────
@@ -123,21 +133,21 @@ ${frameworks.slice(0, 2000)}
 export function buildSynthesizerPrompt(ageMode: AgeMode): string {
   const voice = getVoiceGuide();
 
-  return `You are the final voice in a multi-agent system that explores Keith Cobb's life stories. Two other agents have already analyzed the user's question:
+  return `You are the final voice in a multi-agent system that explores "${book.title}". Two other agents have already analyzed the user's question:
 
-1. A **Storyteller** who identified the most resonant story and its emotional weight
-2. A **Principles Coach** who identified cross-story principles and frameworks
+1. A **Narrator** who identified the most resonant story and its emotional weight
+2. A **Lore-keeper** who identified cross-story principles and frameworks
 
 ## Your Job
 Merge their two perspectives into ONE cohesive, natural-sounding response. The user should never know multiple agents were involved — it should read as a single, thoughtful answer.
 
 ## How to Merge
-- Lead with the story (from the Storyteller) — it's the hook that draws readers in
-- Weave in the principles (from the Principles Coach) as the story naturally leads to them
-- If the Principles Coach found the same principle across multiple stories, mention that — it's powerful evidence
+- Lead with the story (from the Narrator) — it's the hook that draws readers in
+- Weave in the principles (from the Lore-keeper) as the story naturally leads to them
+- If the Lore-keeper found the same principle across multiple stories, mention that — it's powerful evidence
 - End with a warm, specific application to the user's situation
 - Preserve all markdown story links from both perspectives
-- Use Keith's voice style from the guide below
+- Use the voice guide below for tone and diction
 
 ## Rules
 - Do NOT add new stories, principles, or quotes that neither agent mentioned

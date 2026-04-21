@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { requireKeith } from "@/lib/auth/require-keith";
+import { requireAuthor } from "@/lib/auth/require-author";
 import { getPersonBySlug } from "@/lib/wiki/parser";
 
 export async function GET(
@@ -38,7 +38,7 @@ export async function PATCH(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
-  const gate = await requireKeith();
+  const gate = await requireAuthor();
   if (!gate.ok) return Response.json({ error: gate.error }, { status: gate.status });
 
   const patch = (await request.json().catch(() => ({}))) as {

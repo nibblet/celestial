@@ -75,7 +75,7 @@ export function TipTapEditor({ initialHTML, onChange, placeholder, onReady }: Pr
           return [
             "a",
             {
-              href: `/people/${slug}`,
+              href: `/characters/${slug}`,
               class:
                 "inline-block rounded bg-clay-pale px-1 text-clay font-medium no-underline",
               "data-person-id": id,

@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
+import { withCelTablePrefix } from "@/lib/supabase/table-prefix";
 import {
   ONBOARDED_COOKIE,
   ONBOARDED_COOKIE_MAX_AGE,
@@ -25,7 +26,7 @@ export async function proxy(request: NextRequest) {
   }
 
   // 3. Cookie fast-path: if the user has completed onboarding before, the
-  //    sb_onboarded cookie is set and we can let them through without a DB
+  //    cel_onboarded cookie is set and we can let them through without a DB
   //    round-trip. This is the steady-state path for 99% of requests.
   if (request.cookies.get(ONBOARDED_COOKIE)?.value === "1") {
     return sessionResponse;
@@ -34,7 +35,7 @@ export async function proxy(request: NextRequest) {
   // 4. Check auth. If there's no user, updateSession would have redirected
   //    already (step 1), so reaching here means we have a user — but rebuild
   //    the client to verify and to query the profile row.
-  const supabase = createServerClient(
+  const rawSupabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -48,6 +49,8 @@ export async function proxy(request: NextRequest) {
       },
     }
   );
+
+  const supabase = withCelTablePrefix(rawSupabase);
 
   const {
     data: { user },

@@ -103,7 +103,7 @@ function parseJourneyContent(content: string, fallbackSlug: string): WikiJourney
   const narratedDek = extractMetadata(content, "Narrated Dek");
   const narratedDisclosure =
     extractMetadata(content, "Narrated Disclosure") ||
-    "This narrated journey is a newly composed story woven from Keith's memoir and interview materials. It is written to sound like Keith, but it is not an original memoir chapter or verbatim transcript.";
+    "This narrated journey is newly composed companion fiction woven from existing story materials in this app. It is not necessarily a verbatim chapter of the published novel.";
   const narratedSections = parseNarratedSections(content);
 
   if (storyIds.length === 0) return null;

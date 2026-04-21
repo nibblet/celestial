@@ -1,13 +1,35 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {
+  Children,
+  isValidElement,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 import ReactMarkdown from "react-markdown";
 import { PersonLink } from "@/components/people/PersonLink";
+import { slugifyHeading } from "@/lib/wiki/markdown-headings";
 
 type LightboxImage = {
   src: string;
   alt: string;
 };
+
+function flattenText(children: ReactNode): string {
+  let out = "";
+  Children.forEach(children, (child) => {
+    if (child == null || typeof child === "boolean") return;
+    if (typeof child === "string" || typeof child === "number") {
+      out += String(child);
+      return;
+    }
+    if (isValidElement<{ children?: ReactNode }>(child) && child.props.children) {
+      out += flattenText(child.props.children);
+    }
+  });
+  return out;
+}
 
 export function StoryMarkdown({ content }: { content: string }) {
   const [activeImage, setActiveImage] = useState<LightboxImage | null>(null);
@@ -29,6 +51,10 @@ export function StoryMarkdown({ content }: { content: string }) {
       <ReactMarkdown
         components={{
           a: ({ href, children }) => {
+            if (typeof href === "string" && href.startsWith("/characters/")) {
+              const slug = href.slice("/characters/".length).replace(/\/$/, "");
+              return <PersonLink slug={slug}>{children}</PersonLink>;
+            }
             if (typeof href === "string" && href.startsWith("/people/")) {
               const slug = href.slice("/people/".length).replace(/\/$/, "");
               return <PersonLink slug={slug}>{children}</PersonLink>;
@@ -37,6 +63,25 @@ export function StoryMarkdown({ content }: { content: string }) {
               <a href={href} target="_blank" rel="noopener noreferrer">
                 {children}
               </a>
+            );
+          },
+          h2: ({ children }) => {
+            const text = flattenText(children);
+            const id = slugifyHeading(text);
+            return (
+              <h2 id={id || undefined} className="scroll-mt-24">
+                {children}
+              </h2>
+            );
+          },
+          h3: ({ children }) => {
+            const text = flattenText(children);
+            const slug = slugifyHeading(text);
+            const id = slug ? `scene-${slug}` : undefined;
+            return (
+              <h3 id={id} className="scroll-mt-24">
+                {children}
+              </h3>
             );
           },
           img: ({ src, alt }) => {

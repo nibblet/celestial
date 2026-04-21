@@ -1,6 +1,8 @@
 import * as fs from "fs";
 import * as path from "path";
 import type { AgeMode } from "@/types";
+import { book } from "@/config/book";
+import type { ReaderProgress } from "@/lib/progress/reader-progress";
 import { getJourneyBySlug } from "@/lib/wiki/journeys";
 import {
   getAllCanonicalPrinciples,
@@ -9,7 +11,6 @@ import {
 } from "@/lib/wiki/parser";
 
 const WIKI_DIR = path.join(process.cwd(), "content/wiki");
-const RAW_DIR = path.join(process.cwd(), "content/raw");
 
 let cachedWikiSummaries: string | null = null;
 let cachedVoiceGuide: string | null = null;
@@ -63,13 +64,13 @@ export function getPeopleContext(): string {
   }
 
   const ageModeHint = `When discussing people from the list below, adapt biographical detail to the age mode:
-- young_reader: simple, warm language (e.g. "Grandpa's dad was a hardworking man who drove a truck…"); one clear idea.
+- young_reader: simple, warm language; one clear idea.
 - teen: brief factual bio plus one vivid detail they can relate to.
-- adult: full biographical context as written below (quotes and specifics when relevant).`;
+- adult: full context as written below (quotes and specifics when relevant).`;
 
   cachedPeopleContext =
     entries.length > 0
-      ? `## Key People in Keith's Life\n\n${ageModeHint}\n\n${entries.join("\n\n---\n\n")}`
+      ? `## Key figures in ${book.title}\n\n${ageModeHint}\n\n${entries.join("\n\n---\n\n")}`
       : "";
 
   return cachedPeopleContext;
@@ -80,9 +81,9 @@ function getPrinciplesContext(): string {
 
   const principles = getAllCanonicalPrinciples();
   const lines = [
-    "## Keith's 12 Core Principles",
+    `## Core principles (${principles.length})`,
     "",
-    "These recurring patterns of belief and leadership emerge across Keith's stories:",
+    `These recurring patterns emerge across ${book.storiesPossessivePhrase}:`,
     "",
   ];
 
@@ -111,7 +112,7 @@ export function getStoryLinkCatalog(): string {
 
 export function getWikiSummaries(): string {
   if (cachedWikiSummaries) return cachedWikiSummaries;
-  const indexPath = path.join(WIKI_DIR, "index.md");
+  const indexPath = path.join(process.cwd(), book.wikiIndexRelativePath);
   cachedWikiSummaries = fs.existsSync(indexPath)
     ? fs.readFileSync(indexPath, "utf-8")
     : "";
@@ -120,7 +121,7 @@ export function getWikiSummaries(): string {
 
 export function getVoiceGuide(): string {
   if (cachedVoiceGuide) return cachedVoiceGuide;
-  const voicePath = path.join(RAW_DIR, "voice/30_VOICE_STYLE.md");
+  const voicePath = path.join(process.cwd(), book.voiceGuideRelativePath);
   cachedVoiceGuide = fs.existsSync(voicePath)
     ? fs.readFileSync(voicePath, "utf-8")
     : "";
@@ -129,7 +130,7 @@ export function getVoiceGuide(): string {
 
 export function getDecisionFrameworks(): string {
   if (cachedDecisionFrameworks) return cachedDecisionFrameworks;
-  const fwPath = path.join(RAW_DIR, "doctrine/40_DECISION_FRAMEWORKS.md");
+  const fwPath = path.join(process.cwd(), book.decisionFrameworksRelativePath);
   cachedDecisionFrameworks = fs.existsSync(fwPath)
     ? fs.readFileSync(fwPath, "utf-8")
     : "";
@@ -166,7 +167,7 @@ export const AGE_MODE_INSTRUCTIONS: Record<AgeMode, string> = {
 Focus on one story and one clear lesson. Avoid complex vocabulary. Be warm and encouraging.`,
   teen: `The user is a teenager (ages 11-17). Explain stories clearly and connect lessons to
 school, work, friendships, and decisions they might face. Use relatable examples. Moderate depth.`,
-  adult: `The user is an adult family member. You may reference multiple stories, principles,
+  adult: `The user is an adult reader. You may reference multiple stories, principles,
 heuristics, quotes, and timeline events. Provide deeper interpretation and nuanced application.`,
 };
 
@@ -181,7 +182,8 @@ export function buildSystemPrompt(
   publishedStorySummaries?: string,
   canonicalWikiSummaries?: string,
   canonicalStoryCatalog?: string,
-  canonicalStoryContext?: string
+  canonicalStoryContext?: string,
+  readerProgress?: ReaderProgress
 ): string {
   const voice = getVoiceGuide();
   const wikiIndex = canonicalWikiSummaries ?? getWikiSummaries();
@@ -192,18 +194,24 @@ export function buildSystemPrompt(
     ? getJourneyContextForPrompt(journeySlug)
     : "";
 
-  const prompt = `You are a guide to Keith Cobb's stories and life lessons. You help family members — especially grandchildren and great-grandchildren — explore the experiences, values, and lessons described in Keith's memoir.
+  const catalog = canonicalStoryCatalog ?? getStoryLinkCatalog();
+
+  const prompt = `You are a reading companion for "${book.title}" by ${book.author}.
+${book.description}
+
+You help readers explore ${book.shortName} using only the curated materials below (wiki index, principles, optional character notes, timelines, and story catalog).
 
 ## Your Role
-You do NOT pretend to be Keith Cobb. You do NOT claim to personally remember the user. Instead, you answer by referencing the stories, timeline, quotes, and lessons contained in the memoir materials.
+You do NOT pretend to be the author or the in-world narrator addressing the reader as themselves.
+Instead you cite scenes, summaries, and structured lore from this companion app.
 
 Use phrases like:
-- "In the memoir…"
+- "In the book…"
 - "In one of the stories…"
-- "The stories suggest…"
-- "According to the career timeline…"
+- "The text suggests…"
+- "According to the timeline…"
 
-Never say "I remember" or "when I was your age."
+Never say "I remember" as if you lived the plot.
 
 ## Age Mode
 ${AGE_MODE_INSTRUCTIONS[ageMode]}
@@ -211,62 +219,49 @@ ${AGE_MODE_INSTRUCTIONS[ageMode]}
 ## Response Patterns
 
 For ADVICE or GUIDANCE questions, follow: Story → Lesson → Application
-1. Identify the most relevant story
+1. Identify the most relevant story or lore entry
 2. Briefly reference/summarize it
-3. Extract the principle or lesson
-4. Apply it to the user's situation
+3. Extract the principle or rule
+4. Apply it carefully to the reader's situation (without spoilers outside their progress when progress rules apply)
 
-For FACTUAL questions (dates, events, career), answer directly with story citations.
-For EXPLORATORY questions ("tell me something interesting"), suggest relevant stories.
-For LISTS ("what stories involve…"), return a curated list with brief summaries.
+For FACTUAL questions, answer directly with citations to story IDs from the catalog.
+For EXPLORATORY questions, suggest relevant readings from the catalog.
+For LISTS, return a curated list with brief summaries.
 
-## Source Types
-You have access to multiple source types. Be transparent about provenance:
+## Sources
+Story IDs and titles appear in the catalog below. Primary fiction uses chapter IDs such as \`CH01\`, \`CH02\`, etc. (${book.chapterIdPatternNote}).
 
-1. **The Memoir (P1_S01–P1_S39)** — 39 stories from "Out of the Red Clay Hills." Primary, authoritative source.
-   Use: "In the memoir..." or "In [Story Title]..."
+Supplemental catalog rows (legacy interview IDs, expansions, or imports) appear with their own IDs when present alongside Book I chapters.
 
-2. **The Cagnetta Interview (IV_S01–IV_S10)** — 10 stories from a 2026 video interview where Keith speaks in his own words.
-   Use: "In a recent interview, Keith said..." or "Keith described this in a 2026 interview..."
-
-3. **Family Contributions (P2+)** — Stories contributed by family members.
-   Use: "In a family-contributed story..."
-
-4. **Public Record timeline events** — Factual context from SEC filings, Federal Reserve records, press.
-   Use: "According to public records..." or "SEC filings show..."
-
-When memoir and interview cover the same topic, weave both perspectives naturally:
-"In the memoir, Keith describes [X] in detail ([Story Title](/stories/P1_SXX)). In a 2026 interview, he reflected: '[Y]' ([Interview Title](/stories/IV_SXX))."
-
-The interview material is Keith's own words and equally authoritative as the memoir.
+Always prefer materials listed in the wiki index and catalog over speculation.
 
 ## Rules
-- ALWAYS ground responses in actual stories and principles from the wiki
-- NEVER invent stories, quotes, or events
-- When you name a specific story, make the title a **markdown link** to that story's page: \`[Exact title from catalog](/stories/STORY_ID)\` (example: \`[A Work Ethic Develops](/stories/P1_S09)\`). Use the Story ID from the catalog below — path must be \`/stories/P1_SXX\` or \`/stories/IV_SXX\`. Link the first clear mention of each story you discuss in depth.
-- If the memoir doesn't cover a topic, say: "That's not something the stories in the memoir address."
-- Be warm, reflective, grounded — not a motivational speaker
-- When citing decision frameworks (Turnaround Entry Protocol, Relationship Capital Doctrine, etc.), reference the underlying stories that support them
+- ALWAYS ground responses in actual stories and principles present in the catalog or wiki index.
+- NEVER invent chapters, quotations, or plot events.
+- When you name a specific story, make the title a **markdown link** using the pattern \`[Exact title](/stories/<story id>)\` with IDs from the catalog below.
+- If the corpus does not cover a topic, say so plainly.
+- Be warm and precise — not performative.
+${readerProgress ? `- Reader progress gate: current chapter is ${readerProgress.currentChapter}. Do not reveal events, entities, outcomes, or mission logs from later chapters even if directly asked.` : ""}
 
 ## Story ID catalog (for links)
-${canonicalStoryCatalog ?? getStoryLinkCatalog()}
+${catalog}
 
 ## Voice Guide
 ${voice.slice(0, 2000)}
 
-## Wiki Index (All Available Content)
+## Wiki Index (available curated content)
 ${wikiIndex}
 
 ${peopleContext ? `\n${peopleContext}\n` : ""}
 ${principlesContext ? `\n${principlesContext}\n` : ""}
 
-## Decision Frameworks
+## Lore rules / frameworks
 ${getDecisionFrameworks().slice(0, 2000)}
 
-${publishedStorySummaries ? `## Additional Stories (Family Contributions)\n${publishedStorySummaries}` : ""}
+${publishedStorySummaries ? `## Additional published expansions\n${publishedStorySummaries}` : ""}
 
-${journeyContext ? `## Guided Journey Context\n${journeyContext}\n` : ""}
-${storyContext ? `## Currently Reading\nThe user is reading this story:\n\n${storyContext.slice(0, 3000)}` : ""}`;
+${journeyContext ? `## Guided journey context\n${journeyContext}\n` : ""}
+${storyContext ? `## Currently reading\nThe user is viewing this story:\n\n${storyContext.slice(0, 3000)}` : ""}`;
 
   if (process.env.NODE_ENV === "development" && !loggedSystemPromptApproxTokens) {
     loggedSystemPromptApproxTokens = true;

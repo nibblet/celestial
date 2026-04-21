@@ -37,7 +37,7 @@ export function addPeopleLinks(text: string, people: WikiPerson[]): string {
       const idx = match.index;
       working =
         working.slice(0, idx) +
-        `[${p.name}](/people/${p.slug})` +
+        `[${p.name}](/characters/${p.slug})` +
         working.slice(idx + p.name.length);
       linked.add(p.slug);
     }

@@ -1,19 +1,23 @@
 import type { StorySource } from "@/lib/wiki/parser";
+import type { SourceTypeV1 } from "@/lib/wiki/taxonomy";
 import { SourceBadge } from "@/components/ui/SourceBadge";
 import { ThemePillLink } from "@/components/themes/ThemePillLink";
 
 interface StoryDetailsDisclosureProps {
   source: StorySource;
+  sourceType: SourceTypeV1;
   lifeStage: string;
   themes: string[];
 }
 
 export function StoryDetailsDisclosure({
   source,
+  sourceType,
   lifeStage,
   themes,
 }: StoryDetailsDisclosureProps) {
-  const hasAnyMeta = source !== "memoir" || lifeStage || themes.length > 0;
+  const hasAnyMeta =
+    Boolean(lifeStage || themes.length > 0) || sourceType !== "book_i_chapter";
   if (!hasAnyMeta) return null;
 
   return (
@@ -30,7 +34,7 @@ export function StoryDetailsDisclosure({
 
       <div className="mt-3 space-y-3">
         <div className="flex flex-wrap items-center gap-2">
-          <SourceBadge source={source} />
+          <SourceBadge sourceType={sourceType} legacySource={source} />
           {lifeStage && (
             <span className="type-meta text-ink-ghost">{lifeStage}</span>
           )}

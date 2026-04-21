@@ -1,8 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
-import { hasKeithSpecialAccess } from "@/lib/auth/special-access";
+import { hasAuthorSpecialAccess } from "@/lib/auth/special-access";
 import { syncDraftMentions } from "@/lib/beyond/sync-mentions";
 
-async function requireKeith() {
+async function gateBeyondAuthor() {
   const supabase = await createClient();
   const {
     data: { user },
@@ -15,7 +15,7 @@ async function requireKeith() {
     .eq("id", user.id)
     .single();
 
-  if (!hasKeithSpecialAccess(user.email, profile?.role)) {
+  if (!hasAuthorSpecialAccess(user.email, profile?.role)) {
     return { error: "Forbidden" as const, status: 403, supabase, user };
   }
   return { error: null, status: 200, supabase, user };
@@ -26,7 +26,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const gate = await requireKeith();
+  const gate = await gateBeyondAuthor();
   if (gate.error) return Response.json({ error: gate.error }, { status: gate.status });
 
   const { data, error } = await gate.supabase
@@ -49,7 +49,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const gate = await requireKeith();
+  const gate = await gateBeyondAuthor();
   if (gate.error) return Response.json({ error: gate.error }, { status: gate.status });
 
   const patch = (await request.json().catch(() => ({}))) as {

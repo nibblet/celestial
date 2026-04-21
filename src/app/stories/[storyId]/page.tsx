@@ -1,4 +1,8 @@
-import { getStoryById, getPeopleByStoryId } from "@/lib/wiki/parser";
+import {
+  getStoryById,
+  getPeopleByStoryId,
+  getMissionLogInventory,
+} from "@/lib/wiki/parser";
 import { addPeopleLinks } from "@/lib/wiki/link-people";
 import { getCanonicalStoryById } from "@/lib/wiki/corpus";
 import Link from "next/link";
@@ -14,8 +18,12 @@ import { StoryDetailsDisclosure } from "@/components/story/StoryDetailsDisclosur
 import { StoryTOC, type StoryTOCSection } from "@/components/story/StoryTOC";
 import { AskAboutStory } from "@/components/stories/AskAboutStory";
 import { AnsweredQuestionsList } from "@/components/stories/AnsweredQuestionsList";
+import { StorySceneJump } from "@/components/story/StorySceneJump";
+import { enrichLegacyStorySource } from "@/lib/wiki/taxonomy";
+import { extractSceneSectionsFromChapterBody } from "@/lib/wiki/markdown-headings";
 import { lifeStageToEraAccent } from "@/lib/design/era";
 import { createClient } from "@/lib/supabase/server";
+import { getReaderProgress, isStoryUnlocked } from "@/lib/progress/reader-progress";
 
 export default async function StoryDetailPage({
   params,
@@ -26,9 +34,36 @@ export default async function StoryDetailPage({
   const story = await getCanonicalStoryById(storyId);
 
   if (!story) notFound();
+  const progress = await getReaderProgress();
+  const unlocked = isStoryUnlocked(storyId, progress);
+
+  if (!unlocked) {
+    return (
+      <div className="mx-auto max-w-content px-[var(--page-padding-x)] py-10">
+        <Link
+          href="/stories"
+          className="type-ui mb-4 inline-block text-ink-ghost no-underline transition-colors hover:text-ocean"
+        >
+          &larr; Chapter Library
+        </Link>
+        <div className="rounded-xl border border-[var(--color-border)] bg-warm-white p-6">
+          <h1 className="type-story-title blur-[2px]">{story.title}</h1>
+          <p className="mt-3 text-sm text-ink-muted">
+            This chapter is locked until you reach it in your reading progress.
+          </p>
+          <p className="mt-3 text-sm text-ink-muted">
+            Use the chapter library card action to mark it read and unlock this
+            page.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const peopleInStory = getPeopleByStoryId(storyId);
   const linkedFullText = addPeopleLinks(story.fullText, peopleInStory);
+  const chapterMeta = enrichLegacyStorySource(storyId, story.source);
+  const sceneSections = extractSceneSectionsFromChapterBody(story.fullText);
 
   const era = lifeStageToEraAccent(story.lifeStage);
   const supportsListenMode =
@@ -76,6 +111,10 @@ export default async function StoryDetailPage({
       story: (await getCanonicalStoryById(relId)) || getStoryById(relId),
     }))
   );
+  const inventory = getMissionLogInventory();
+  const missionLogs = inventory
+    ? inventory.missionLogs.filter((row) => row.chapterId === storyId)
+    : [];
 
   return (
     <>
@@ -88,7 +127,7 @@ export default async function StoryDetailPage({
               href="/stories"
               className="type-ui mb-4 inline-block text-ink-ghost no-underline transition-colors hover:text-ocean"
             >
-              &larr; All Stories
+              &larr; Chapter Library
             </Link>
 
             <div className={`mb-3 border-l-4 pl-4 ${era.accentBorder}`}>
@@ -116,6 +155,8 @@ export default async function StoryDetailPage({
               {story.summary}
             </p>
 
+            <StorySceneJump sections={sceneSections} />
+
             {supportsListenMode && (
               <StoryAudioControls
                 storyId={storyId}
@@ -127,6 +168,7 @@ export default async function StoryDetailPage({
 
             <StoryDetailsDisclosure
               source={story.source}
+              sourceType={chapterMeta.sourceType}
               lifeStage={story.lifeStage}
               themes={story.themes}
             />
@@ -230,6 +272,28 @@ export default async function StoryDetailPage({
               </div>
             )}
 
+            {missionLogs.length > 0 && (
+              <div className="mb-6">
+                <h2 className="type-meta mb-3 text-ink">Mission Logs</h2>
+                <div className="space-y-2">
+                  {missionLogs.map((log) => (
+                    <Link
+                      key={log.logId}
+                      href={`/mission-logs/${encodeURIComponent(log.logId)}`}
+                      className="block rounded-lg border border-[var(--color-border)] bg-warm-white p-3 transition-colors hover:border-clay-border"
+                    >
+                      <span className="type-ui block text-ink">
+                        {log.logId}
+                      </span>
+                      <span className="mt-0.5 line-clamp-1 font-[family-name:var(--font-lora)] text-xs text-ink-muted">
+                        {log.summary}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <AnsweredQuestionsList storyId={storyId} />
 
             <div id="ask" className="scroll-mt-20">
@@ -249,13 +313,13 @@ export default async function StoryDetailPage({
                 href="/stories"
                 className="flex-1 rounded-lg border border-[var(--color-border)] bg-warm-white py-2.5 text-center text-sm font-medium text-ink transition-colors hover:border-clay-border sm:max-w-[12rem] sm:self-center"
               >
-                <span className="sm:hidden">More stories</span>
-                <span className="hidden sm:inline">Browse more stories</span>
+                <span className="sm:hidden">More chapters</span>
+                <span className="hidden sm:inline">Browse more chapters</span>
               </Link>
             </div>
           </div>
 
-          <StoryTOC sections={tocSections} />
+          <StoryTOC sections={tocSections} sceneSections={sceneSections} />
         </div>
       </div>
     </>

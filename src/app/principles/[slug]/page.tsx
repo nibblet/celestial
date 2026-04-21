@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ThemePillLink } from "@/components/themes/ThemePillLink";
 import { getCanonicalPrincipleBySlug } from "@/lib/wiki/parser";
+import { getReaderProgress, isStoryUnlocked } from "@/lib/progress/reader-progress";
 
 export default async function PrincipleDetailPage({
   params,
@@ -10,6 +11,7 @@ export default async function PrincipleDetailPage({
 }) {
   const { slug } = await params;
   const principle = getCanonicalPrincipleBySlug(slug);
+  const progress = await getReaderProgress();
 
   if (!principle) notFound();
 
@@ -65,7 +67,9 @@ export default async function PrincipleDetailPage({
             Stories Where This Shows Up
           </h2>
           <div className="space-y-3">
-            {principle.stories.map((story) => (
+            {principle.stories
+              .filter((story) => isStoryUnlocked(story.storyId, progress))
+              .map((story) => (
               <Link
                 key={story.storyId}
                 href={`/stories/${story.storyId}`}
@@ -76,7 +80,7 @@ export default async function PrincipleDetailPage({
                   {story.summary}
                 </span>
               </Link>
-            ))}
+              ))}
           </div>
         </section>
       )}
@@ -87,7 +91,13 @@ export default async function PrincipleDetailPage({
             Supporting Evidence ({principle.supportingStatements.length})
           </summary>
           <ul className="mt-4 space-y-3">
-            {principle.supportingStatements.map((statement) => (
+            {principle.supportingStatements
+              .filter(
+                (statement) =>
+                  statement.stories.length === 0 ||
+                  isStoryUnlocked(statement.stories[0]!.storyId, progress)
+              )
+              .map((statement) => (
               <li
                 key={statement.id}
                 className="font-[family-name:var(--font-lora)] text-sm text-ink-muted"
@@ -103,7 +113,7 @@ export default async function PrincipleDetailPage({
                   </Link>
                 ) : null}
               </li>
-            ))}
+              ))}
           </ul>
         </details>
       )}

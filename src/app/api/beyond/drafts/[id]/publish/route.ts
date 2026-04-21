@@ -1,4 +1,4 @@
-import { requireKeith } from "@/lib/auth/require-keith";
+import { requireAuthor } from "@/lib/auth/require-author";
 import {
   publishStoryToWikiMirror,
   type StoryDraftForMirror,
@@ -24,7 +24,7 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id: draftId } = await params;
-  const gate = await requireKeith();
+  const gate = await requireAuthor();
   if (!gate.ok) {
     return Response.json({ error: gate.error }, { status: gate.status });
   }

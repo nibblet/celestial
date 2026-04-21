@@ -1,4 +1,4 @@
-import { requireKeith } from "@/lib/auth/require-keith";
+import { requireAuthor } from "@/lib/auth/require-author";
 import { getCanonicalStories } from "@/lib/wiki/corpus";
 
 /**
@@ -7,7 +7,7 @@ import { getCanonicalStories } from "@/lib/wiki/corpus";
  * Edit mode. Keith-gated because this powers an authoring surface.
  */
 export async function GET() {
-  const gate = await requireKeith();
+  const gate = await requireAuthor();
   if (!gate.ok) return Response.json({ error: gate.error }, { status: gate.status });
 
   const stories = (await getCanonicalStories()).map((s) => ({

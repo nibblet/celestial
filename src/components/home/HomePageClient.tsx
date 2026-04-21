@@ -1,5 +1,6 @@
 "use client";
 
+import { book } from "@/config/book";
 import Link from "next/link";
 import { useState } from "react";
 import { HomeHero } from "@/components/home/HomeHero";
@@ -8,24 +9,22 @@ import { Reveal } from "@/components/ui/Reveal";
 import { PhotoFrameOverlay } from "@/components/PhotoFrameOverlay";
 import { framePhotos } from "@/lib/wiki/frame-photos";
 
-const navCards = [
+const navCards = () => [
   {
-    href: "/stories",
-    title: "Read a Story",
-    description:
-      "Browse Keith's stories — from growing up in Mississippi to leading national organizations.",
+    href: "/stories/CH01",
+    title: "Start Reading",
+    description: `Begin at Chapter 1 and unlock the companion as you progress.`,
   },
   {
     href: "/principles",
     title: "Explore Principles",
     description:
-      "Follow the core principles shaping Keith's decisions, then trace how they show up across stories and themes.",
+      "Follow recurring ideas in the fiction, then trace how they surface across themes and arcs.",
   },
   {
     href: "/ask",
     title: "Ask a Question",
-    description:
-      "Ask questions about Keith's stories. You'll get answers drawn from Keith's stories, life, career, and family memories.",
+    description: `Ask the companion about ${book.shortName}. Answers stay grounded in curated story text.`,
   },
 ];
 
@@ -45,12 +44,8 @@ export function HomePageClient() {
 
       <div className="mx-auto max-w-content px-[var(--page-padding-x)] py-12 md:py-16">
         <Reveal className="mb-10 text-center">
-          <h2 className="type-page-title mb-3 text-balance">
-            The Keith Cobb Story Library
-          </h2>
-          <p className="type-ui mx-auto max-w-md text-ink-muted">
-            A family library built from Keith&apos;s memoir and conversations.
-          </p>
+          <h2 className="type-page-title mb-3 text-balance">{book.title}</h2>
+          <p className="type-ui mx-auto max-w-md text-ink-muted">{book.tagline}</p>
         </Reveal>
 
         <div className="mb-10 hidden justify-center md:flex">
@@ -58,7 +53,7 @@ export function HomePageClient() {
         </div>
 
         <div className="grid gap-4 md:grid-cols-[repeat(auto-fit,minmax(260px,1fr))]">
-          {navCards.map((card) => (
+          {navCards().map((card) => (
             <Reveal key={card.href}>
               <Link
                 href={card.href}
@@ -84,7 +79,7 @@ export function HomePageClient() {
                 Photo Frame
               </h3>
               <p className="font-[family-name:var(--font-lora)] text-sm leading-relaxed text-ink-muted">
-                Browse all memoir photos in a quiet, fullscreen slideshow — perfect for a family gathering.
+                When illustration assets exist, browse them fullscreen here.
               </p>
             </button>
           </Reveal>

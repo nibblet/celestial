@@ -1,17 +1,21 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { book } from "@/config/book";
 import { getProfileGalleryData } from "@/lib/analytics/profile-gallery-data";
 import { ProfileReflectionHero } from "@/components/profile/ProfileReflectionHero";
 import { ProfileGallery } from "@/components/profile/ProfileGallery";
 import { storiesData } from "@/lib/wiki/static-data";
-import { KeithProfileHero } from "@/components/profile/KeithProfileHero";
-import { getKeithDashboardData } from "@/lib/analytics/keith-dashboard";
+import { CompanionProfileHero } from "@/components/profile/CompanionProfileHero";
+import { getCompanionDashboardData } from "@/lib/analytics/companion-dashboard";
 import { getAuthenticatedProfileContext } from "@/lib/auth/profile-context";
 import { createClient } from "@/lib/supabase/server";
+import { getReaderProgress } from "@/lib/progress/reader-progress";
+import { ShowAllContentToggle } from "@/components/profile/ShowAllContentToggle";
+import { ReaderChapterProgressActions } from "@/components/profile/ReaderChapterProgressActions";
 
 export const metadata: Metadata = {
   title: "Profile",
-  description: "Your Keith Cobb Storybook profile.",
+  description: `Your reader profile — ${book.title}.`,
 };
 
 function resolveDisplayName(
@@ -30,7 +34,7 @@ function resolveDisplayName(
 }
 
 export default async function ProfilePage() {
-  const { user, profile, isKeithSpecialAccess } =
+  const { user, profile, isAuthorSpecialAccess } =
     await getAuthenticatedProfileContext();
 
   if (!user) redirect("/login");
@@ -41,17 +45,17 @@ export default async function ProfilePage() {
     user.email
   );
 
-  if (isKeithSpecialAccess) {
+  if (isAuthorSpecialAccess) {
     const supabase = await createClient();
     const { count: pendingQuestionCount } = await supabase
       .from("sb_chapter_questions")
       .select("id", { count: "exact", head: true })
       .eq("status", "pending");
 
-    const dashboard = await getKeithDashboardData();
+    const dashboard = await getCompanionDashboardData();
 
     return (
-      <KeithProfileHero
+      <CompanionProfileHero
         displayName={displayName}
         email={user.email ?? ""}
         pendingQuestionCount={pendingQuestionCount ?? 0}
@@ -61,6 +65,7 @@ export default async function ProfilePage() {
   }
 
   const data = await getProfileGalleryData(user.id);
+  const progress = await getReaderProgress();
   const hasAnyActivity =
     data.readStats.readCount > 0 ||
     data.savedPassageCount > 0 ||
@@ -75,6 +80,10 @@ export default async function ProfilePage() {
         reflection={data.reflection}
         hasAnyActivity={hasAnyActivity}
       />
+      <div className="mx-auto mt-6 flex max-w-content flex-col gap-4 px-[var(--page-padding-x)]">
+        <ShowAllContentToggle initialValue={progress.showAllContent} />
+        <ReaderChapterProgressActions />
+      </div>
       <ProfileGallery data={data} totalStories={storiesData.length} />
     </>
   );

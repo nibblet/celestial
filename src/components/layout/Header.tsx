@@ -1,5 +1,6 @@
 "use client";
 
+import { book } from "@/config/book";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AgeModeSwitcher } from "./AgeModeSwitcher";
@@ -19,7 +20,7 @@ export function Header() {
         className="min-w-0 shrink font-[family-name:var(--font-playfair)] text-lg font-semibold text-burgundy"
         aria-label="Home"
       >
-        Keith Cobb
+        {book.title}
       </Link>
       <div className="flex min-w-0 shrink-0 items-center gap-1.5">
         <AgeModeSwitcher variant="compact" />

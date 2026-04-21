@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { orchestrateAsk } from "@/lib/ai/orchestrator";
 import { checkRateLimit } from "@/lib/rate-limit";
 import type { AgeMode } from "@/types";
+import { getReaderProgress } from "@/lib/progress/reader-progress";
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY || "",
@@ -112,6 +113,7 @@ export async function POST(request: Request) {
   }));
 
   // Orchestrate response (simple or deep path based on question type)
+  const readerProgress = await getReaderProgress();
   const { stream: textStream } = await orchestrateAsk({
     anthropic,
     message,
@@ -119,6 +121,7 @@ export async function POST(request: Request) {
     ageMode: ageMode as AgeMode,
     storySlug,
     journeySlug,
+    readerProgress,
   });
 
   // Create a streaming response

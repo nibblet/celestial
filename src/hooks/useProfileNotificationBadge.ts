@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 type NotificationState = {
   unreadAnswers: number;
   pendingQuestions: number;
-  isKeith: boolean;
+  isAuthor: boolean;
 };
 
 export type ProfileNavBadge =
@@ -18,7 +18,7 @@ export function useProfileNotificationBadge(): ProfileNavBadge | null {
   const [notifications, setNotifications] = useState<NotificationState>({
     unreadAnswers: 0,
     pendingQuestions: 0,
-    isKeith: false,
+    isAuthor: false,
   });
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export function useProfileNotificationBadge(): ProfileNavBadge | null {
   }, [pathname]);
 
   if (
-    notifications.isKeith &&
+    notifications.isAuthor &&
     notifications.pendingQuestions > 0
   ) {
     return {
@@ -49,7 +49,7 @@ export function useProfileNotificationBadge(): ProfileNavBadge | null {
     };
   }
   if (
-    !notifications.isKeith &&
+    !notifications.isAuthor &&
     notifications.unreadAnswers > 0
   ) {
     return { kind: "dot" };

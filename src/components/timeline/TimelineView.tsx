@@ -1,10 +1,54 @@
 import Image from "next/image";
 import Link from "next/link";
+import { book } from "@/config/book";
 import { getTimeline, getStoryById } from "@/lib/wiki/parser";
+import type { TimelineSourceLegacy } from "@/lib/wiki/taxonomy";
 import { yearToEraAccent } from "@/lib/design/era";
+
+function TimelineSourceRibbon({ source }: { source: TimelineSourceLegacy }) {
+  if (source === "memoir") return null;
+  if (source === "public_record") {
+    return (
+      <span className="rounded-full bg-ocean-pale px-1.5 py-0.5 text-[9px] font-medium text-ocean">
+        World snapshot
+      </span>
+    );
+  }
+  return (
+    <span className="rounded-full bg-ocean-pale px-1.5 py-0.5 text-[9px] font-medium text-ocean">
+      Interview
+    </span>
+  );
+}
 
 export function TimelineView() {
   const events = getTimeline();
+
+  if (events.length === 0) {
+    return (
+      <div className="mx-auto max-w-content px-[var(--page-padding-x)] py-6 md:py-10">
+        <h1 className="type-page-title mb-2">Timeline</h1>
+        <div className="rounded-xl border border-[var(--color-border)] bg-warm-white p-5 text-sm text-ink-muted">
+          <p className="font-medium text-ink">No timeline rows parsed.</p>
+          <p className="mt-2">
+            Add bullet lines to{" "}
+            <code className="rounded bg-[var(--color-muted)] px-1 py-0.5 text-xs text-ink">
+              content/wiki/timeline/career-timeline.md
+            </code>{" "}
+            using the format{" "}
+            <code className="rounded bg-[var(--color-muted)] px-1 py-0.5 text-xs text-ink">
+              - **YYYY** — Event — [[CH01]]
+            </code>
+            , then run{" "}
+            <code className="rounded bg-[var(--color-muted)] px-1 py-0.5 text-xs text-ink">
+              npx tsx scripts/generate-static-data.ts
+            </code>{" "}
+            so the static fallback stays in sync.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const decades: Record<string, typeof events> = {};
   for (const evt of events) {
@@ -15,9 +59,9 @@ export function TimelineView() {
 
   return (
     <div className="mx-auto max-w-content px-[var(--page-padding-x)] py-6 md:py-10">
-      <h1 className="type-page-title mb-2">Life Timeline</h1>
+      <h1 className="type-page-title mb-2">Timeline</h1>
       <p className="type-ui mb-6 text-ink-muted">
-        {`${events.length} events spanning Keith Cobb's life and career`}
+        {`${events.length} events in the ${book.title} companion timeline`}
       </p>
 
       <div className="relative">
@@ -62,16 +106,7 @@ export function TimelineView() {
                               {evt.year}
                             </span>
                             <span className="text-sm text-ink">{evt.event}</span>
-                            {evt.source === "public_record" && (
-                              <span className="rounded-full bg-ocean-pale px-1.5 py-0.5 text-[9px] font-medium text-ocean">
-                                Public Record
-                              </span>
-                            )}
-                            {evt.source === "interview" && (
-                              <span className="rounded-full bg-ocean-pale px-1.5 py-0.5 text-[9px] font-medium text-ocean">
-                                Interview
-                              </span>
-                            )}
+                            <TimelineSourceRibbon source={evt.source} />
                           </div>
                           {(evt.organization || evt.location) && (
                             <p className="mt-0.5 text-xs text-ink-ghost">

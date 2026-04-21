@@ -1,10 +1,9 @@
-// Supabase table names are prefixed with sb_ to avoid collisions
-// with other projects sharing the same Supabase instance.
-// Tables: sb_profiles, sb_conversations, sb_messages
+// Celestial uses cel_* physical tables.
+// Runtime remap keeps legacy sb_* callsites working while targeting cel_*.
 
 export type AgeMode = "young_reader" | "teen" | "adult";
 
-export type UserRole = "admin" | "member" | "keith";
+export type UserRole = "admin" | "member" | "author";
 export type ContributionMode = "tell" | "beyond";
 
 export interface Profile {

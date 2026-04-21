@@ -5,12 +5,12 @@ export function getVolumeForContributionMode(mode: ContributionMode): string {
 }
 
 export function getContributionLabel(mode: ContributionMode): string {
-  return mode === "beyond" ? "Keith Beyond" : "Family Tell";
+  return mode === "beyond" ? "Author Beyond" : "Family Tell";
 }
 
 export function getContributorPersonaName(
   mode: ContributionMode,
   displayName: string
 ): string {
-  return mode === "beyond" ? "Keith Cobb" : displayName;
+  return mode === "beyond" ? "Author" : displayName;
 }

@@ -2,12 +2,12 @@
  * Onboarding gate helpers shared by the proxy and the completion API.
  *
  * The cookie is a hot-path signal so the proxy doesn't hit Supabase on every
- * request. It mirrors `sb_profiles.has_onboarded` and is the source of truth
+ * request. It mirrors `cel_profiles.has_onboarded` and is the source of truth
  * for middleware routing; the DB column is the source of truth for "did this
  * user ever finish the tour" and is what gets checked on cache miss.
  */
 
-export const ONBOARDED_COOKIE = "sb_onboarded";
+export const ONBOARDED_COOKIE = "cel_onboarded";
 export const ONBOARDED_COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 
 /**

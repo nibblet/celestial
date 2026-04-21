@@ -1,5 +1,6 @@
 "use client";
 
+import { book } from "@/config/book";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,24 +9,29 @@ import { ProfileNavLink } from "@/components/layout/ProfileNavLink";
 import { useProfileNotificationBadge } from "@/hooks/useProfileNotificationBadge";
 
 const primaryNavItems = [
-  { href: "/stories", label: "Stories" },
-  { href: "/journeys", label: "Explore" },
+  { href: "/stories", label: "Chapters" },
+  { href: "/arcs", label: "Explore" },
   { href: "/ask", label: "Ask" },
-  { href: "/tell", label: "Tell" },
 ] as const;
 
 function isNavActive(pathname: string, href: string): boolean {
   if (href === "/stories") return pathname.startsWith("/stories");
-  if (href === "/journeys") {
+  if (href === "/arcs") {
     return (
       pathname.startsWith("/journeys") ||
+      pathname.startsWith("/arcs") ||
       pathname.startsWith("/themes") ||
       pathname.startsWith("/principles") ||
-      pathname.startsWith("/people")
+      pathname.startsWith("/people") ||
+      pathname.startsWith("/characters") ||
+      pathname.startsWith("/artifacts") ||
+      pathname.startsWith("/locations") ||
+      pathname.startsWith("/factions") ||
+      pathname.startsWith("/rules") ||
+      pathname.startsWith("/mission-logs")
     );
   }
   if (href === "/ask") return pathname === "/ask" || pathname.startsWith("/ask/");
-  if (href === "/tell") return pathname === "/tell" || pathname.startsWith("/tell/");
   return false;
 }
 
@@ -67,7 +73,7 @@ function MobileNavIcon({
           />
         </svg>
       );
-    case "/journeys":
+    case "/arcs":
       return (
         <svg
           className={`h-5 w-5 ${c}`}
@@ -100,29 +106,6 @@ function MobileNavIcon({
         >
           <path
             d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
-            stroke="currentColor"
-            strokeWidth="1.75"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-    case "/tell":
-      return (
-        <svg
-          className={`h-5 w-5 ${c}`}
-          viewBox="0 0 24 24"
-          fill="none"
-          aria-hidden
-        >
-          <path
-            d="M12 20h9"
-            stroke="currentColor"
-            strokeWidth="1.75"
-            strokeLinecap="round"
-          />
-          <path
-            d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
             stroke="currentColor"
             strokeWidth="1.75"
             strokeLinecap="round"
@@ -168,7 +151,7 @@ export function Nav() {
           href="/"
           className="font-[family-name:var(--font-playfair)] text-base font-semibold tracking-tight text-burgundy"
         >
-          Keith Cobb Storybook
+          {book.title}
         </Link>
         <div className="flex min-w-0 flex-1 items-center justify-end gap-4 pl-6">
           <ul className="flex list-none items-center gap-6 lg:gap-8">

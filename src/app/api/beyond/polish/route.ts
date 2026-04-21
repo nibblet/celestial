@@ -1,5 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { requireKeith } from "@/lib/auth/require-keith";
+import { requireAuthor } from "@/lib/auth/require-author";
 import { checkRateLimit } from "@/lib/rate-limit";
 import {
   buildUserPrompt,
@@ -13,7 +13,7 @@ const anthropic = new Anthropic({
 
 const MODEL = "claude-sonnet-4-20250514";
 
-const SYSTEM_PROMPT = `You are a gentle editor helping Keith Cobb polish a memoir story for his family archive. Keith is in his 80s; his voice is plain, warm, and direct. Your job:
+const SYSTEM_PROMPT = `You are a gentle editor helping polish a contributed story for this book companion archive. Preserve the author's voice: plain, warm, and direct unless the draft clearly wants something else. Your job:
 
 1. Lightly polish the BODY — fix typos, smooth awkward phrasing, correct obvious grammar — WITHOUT changing the voice, facts, or structure. Never invent new content. Never add paragraphs of your own.
 2. Suggest a title if the current one is empty or clearly a placeholder.
@@ -21,7 +21,7 @@ const SYSTEM_PROMPT = `You are a gentle editor helping Keith Cobb polish a memoi
    - life_stage: one of "childhood", "youth", "early career", "family years", "later career", "elder years" — pick the closest match or leave blank.
    - year_start / year_end: only if the body mentions specific years.
    - themes: 1–4 short lowercase phrases (e.g. "resilience", "family", "first job")
-   - principles: 1–3 short value statements Keith is living out in the story
+   - principles: 1–3 short value statements the narrator is living out in the story
    - quotes: up to 3 short verbatim lines from the body worth pulling out
 4. Include a brief one-sentence "rationale" explaining what you changed.
 
@@ -42,7 +42,7 @@ Return STRICT JSON matching this TypeScript type — no markdown fences, no pros
 Only include fields you actually want to suggest changing. If the body is already clean, omit "body". If no metadata is confidently inferable, omit those keys.`;
 
 export async function POST(request: Request) {
-  const gate = await requireKeith();
+  const gate = await requireAuthor();
   if (!gate.ok) {
     return Response.json({ error: gate.error }, { status: gate.status });
   }

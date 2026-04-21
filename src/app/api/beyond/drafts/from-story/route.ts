@@ -1,4 +1,4 @@
-import { requireKeith } from "@/lib/auth/require-keith";
+import { requireAuthor } from "@/lib/auth/require-author";
 import { getCanonicalStoryById } from "@/lib/wiki/corpus";
 
 /**
@@ -11,7 +11,7 @@ import { getCanonicalStoryById } from "@/lib/wiki/corpus";
  * lands back in the same draft instead of spawning duplicates.
  */
 export async function POST(request: Request) {
-  const gate = await requireKeith();
+  const gate = await requireAuthor();
   if (!gate.ok) return Response.json({ error: gate.error }, { status: gate.status });
 
   const { storyId } = (await request.json().catch(() => ({}))) as {

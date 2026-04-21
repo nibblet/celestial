@@ -50,7 +50,7 @@ import Anthropic from "@anthropic-ai/sdk";
     ) {
       value = value.slice(1, -1);
     }
-    if (process.env[key] === undefined) process.env[key] = value;
+    if (!process.env[key]) process.env[key] = value;
   }
 })();
 
@@ -157,6 +157,48 @@ function extractAliases(raw: string): string[] {
     .filter(Boolean);
 }
 
+function buildNeedles(name: string, aliases: string[]): string[] {
+  const needles = new Set<string>();
+  if (name) needles.add(name);
+  for (const a of aliases) if (a) needles.add(a);
+  const firstName = name.split(/\s+/)[0];
+  if (firstName && firstName.length >= 3) needles.add(firstName);
+  return [...needles];
+}
+
+/**
+ * Derive chapter appearances by scanning story files for the character's
+ * name, first name, and aliases. Uses word-boundary checks so "Jax" doesn't
+ * match "Jaxon", etc. Falls back to whatever ids are in `fileIds` if the
+ * stories directory is unreadable.
+ */
+function deriveChapterIdsFromStories(
+  needles: string[],
+  fileIds: string[]
+): string[] {
+  let files: string[];
+  try {
+    files = fs.readdirSync(STORIES_DIR).filter((f) => /^CH\d{2,3}-.*\.md$/.test(f));
+  } catch {
+    return fileIds;
+  }
+  const escaped = needles
+    .filter((n) => n && n.length >= 3)
+    .map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  if (escaped.length === 0) return fileIds;
+  const re = new RegExp(`(?:^|[^A-Za-z])(?:${escaped.join("|")})(?:[^A-Za-z]|$)`);
+  const ids = new Set<string>();
+  for (const f of files) {
+    const chId = f.match(/^(CH\d{2,3})/)?.[1];
+    if (!chId) continue;
+    const text = fs.readFileSync(path.join(STORIES_DIR, f), "utf-8");
+    if (re.test(text)) ids.add(chId);
+  }
+  // Union with any ids explicitly mentioned in the character file (defensive).
+  for (const id of fileIds) ids.add(id);
+  return [...ids].sort();
+}
+
 function loadCharacter(filename: string): CharacterFile | null {
   const filepath = path.join(CHAR_DIR, filename);
   const raw = fs.readFileSync(filepath, "utf-8");
@@ -164,6 +206,10 @@ function loadCharacter(filename: string): CharacterFile | null {
   const slug =
     raw.match(/\*\*Slug:\*\*\s*(.+)/)?.[1]?.trim() || filename.replace(/\.md$/, "");
   const name = raw.match(/^# (.+)/m)?.[1]?.trim() || slug;
+  const aliases = extractAliases(raw);
+  const fileIds = extractChapterIds(raw);
+  const needles = buildNeedles(name, aliases);
+  const chapterIds = deriveChapterIdsFromStories(needles, fileIds);
   return {
     slug,
     name,
@@ -172,8 +218,8 @@ function loadCharacter(filename: string): CharacterFile | null {
     role: extractDossierSubField(raw, "Role"),
     profile: extractDossierSubField(raw, "Profile"),
     arc: extractDossierSubField(raw, "Character Arc"),
-    chapterIds: extractChapterIds(raw),
-    aliases: extractAliases(raw),
+    chapterIds,
+    aliases,
   };
 }
 
@@ -297,19 +343,23 @@ function upsertBlock(
 }
 
 function systemPrompt(): string {
-  return `You are writing entries for the Celestial story wiki. You will be given (a) the canonical dossier for ONE character, (b) chapter excerpts where they appear. Produce ONLY the requested section body, as markdown, WITHOUT the section heading line.
+  return `You are writing entries for the Celestial story wiki. You will be given (a) the canonical dossier for ONE character and (b) chapter excerpts where they appear. You will produce FOUR dossier sections in a single JSON response.
 
-Rules:
-- Ground every claim in the excerpts or canonical dossier. Do not invent chapter ids, relationships, or quotes.
+Output contract:
+- Respond with a SINGLE JSON object, no prose, no code fences.
+- Shape: {"relationships": string, "moments": string, "voice": string, "timeline": string}
+- Each value is the markdown body of that section, WITHOUT its heading line.
+- If evidence for a field is insufficient, set that field to the literal string "INSUFFICIENT_EVIDENCE".
+
+Grounding rules (apply to every field):
+- Ground every claim in the provided excerpts or canonical dossier.
 - Never cite a chapter id that isn't in the provided excerpts.
-- If evidence is insufficient, return the literal string INSUFFICIENT_EVIDENCE and nothing else.
-- Do not wrap output in code fences.`;
+- Never invent quotes, relationships, or events.`;
 }
 
-function fieldPrompt(
+function combinedPrompt(
   char: CharacterFile,
-  excerpts: ChapterExcerpt[],
-  field: DerivedField
+  excerpts: ChapterExcerpt[]
 ): string {
   const canonical = `## Canonical dossier (ground truth)
 
@@ -323,34 +373,7 @@ function fieldPrompt(
     .map((e) => `### ${e.chapterId} — ${e.title}\n\n${e.body}\n`)
     .join("\n");
 
-  const task: Record<DerivedField, string> = {
-    relationships: `## Task
-
-Produce 3–6 bullets describing this character's most important relationships in the book. Format each bullet as:
-
-\`- **Name** — short description (CHxx, CHyy).\`
-
-Only include relationships supported by the excerpts or canonical dossier. Keep total output under 400 characters. Emit ONLY the bullets, no heading.`,
-    moments: `## Task
-
-Pick 3–5 specific scenes that most define this character. Format each as:
-
-\`- **CHxx Title** — one-sentence description.\`
-
-Then, when a direct quote from or about this character appears in the excerpts and captures the moment, include ONE ≤30-word direct quote from the excerpts in quotation marks, after the description. Never invent a quote. Emit ONLY the bullets, no heading. Under 800 characters total.`,
-    voice: `## Task
-
-Write 2–3 sentences describing how this character speaks and carries themselves, grounded in the excerpts. No psychology, no inferred motivation — only observable voice and manner. Emit ONLY the sentences, no heading. Under 400 characters.`,
-    timeline: `## Task
-
-One bullet per chapter in which the character meaningfully appears, ordered by chapter number. Format:
-
-\`- **CHxx Title** — one-sentence beat.\`
-
-Only include chapters where the excerpt shows actual action, dialogue, or decision by the character. Skip mere mentions. Emit ONLY the bullets, no heading. Under 1500 characters total.`,
-  };
-
-  return `You are writing the **${HEADING[field]}** section of the dossier for **${char.name}**.
+  return `Character: **${char.name}**
 
 ${canonical}
 
@@ -358,27 +381,66 @@ ${canonical}
 
 ${excerptBlock}
 
-${task[field]}`;
+## Tasks (produce all four as one JSON object)
+
+**relationships** — 3–6 bullets of this character's most important relationships in the book. Format:
+\`- **Name** — short description (CHxx, CHyy).\`
+Only include relationships supported by the excerpts or canonical dossier. Under 400 characters total.
+
+**moments** — 3–5 specific scenes that most define this character. Format:
+\`- **CHxx Title** — one-sentence description.\`
+When a direct quote from or about this character captures the moment, append ONE ≤30-word direct quote from the excerpts in quotation marks after the description. Never invent a quote. Under 800 characters total.
+
+**voice** — 2–3 sentences describing how this character speaks and carries themselves, grounded in the excerpts. Only observable voice and manner — no psychology, no inferred motivation. Under 400 characters.
+
+**timeline** — One bullet per chapter in which the character meaningfully appears, ordered by chapter number. Format:
+\`- **CHxx Title** — one-sentence beat.\`
+Only include chapters where the excerpt shows actual action, dialogue, or decision by the character. Skip mere mentions. Under 1500 characters total.
+
+Respond with ONLY the JSON object.`;
 }
 
-async function generateField(
+function parseJsonResponse(text: string): Record<DerivedField, string> {
+  // Strip optional code fence wrapping and locate the JSON object.
+  const fenced = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+  const candidate = fenced ? fenced[1] : text;
+  const start = candidate.indexOf("{");
+  const end = candidate.lastIndexOf("}");
+  if (start === -1 || end === -1 || end <= start) {
+    throw new Error("No JSON object in model response");
+  }
+  const parsed = JSON.parse(candidate.slice(start, end + 1));
+  const out: Record<DerivedField, string> = {
+    relationships: String(parsed.relationships ?? "").trim(),
+    moments: String(parsed.moments ?? "").trim(),
+    voice: String(parsed.voice ?? "").trim(),
+    timeline: String(parsed.timeline ?? "").trim(),
+  };
+  return out;
+}
+
+async function generateAllFields(
   client: Anthropic,
   char: CharacterFile,
-  excerpts: ChapterExcerpt[],
-  field: DerivedField
-): Promise<string> {
-  const prompt = fieldPrompt(char, excerpts, field);
+  excerpts: ChapterExcerpt[]
+): Promise<Record<DerivedField, string>> {
   const res = await client.messages.create({
     model: MODEL,
-    max_tokens: 1500,
-    system: systemPrompt(),
-    messages: [{ role: "user", content: prompt }],
+    max_tokens: 2500,
+    system: [
+      {
+        type: "text",
+        text: systemPrompt(),
+        cache_control: { type: "ephemeral" },
+      },
+    ],
+    messages: [{ role: "user", content: combinedPrompt(char, excerpts) }],
   });
   const textBlock = res.content.find((c) => c.type === "text");
   if (!textBlock || textBlock.type !== "text") {
     throw new Error("No text in model response");
   }
-  return textBlock.text.trim();
+  return parseJsonResponse(textBlock.text);
 }
 
 function validateField(
@@ -424,11 +486,11 @@ async function processCharacter(
 
   const targetFields = opts.onlyField ? [opts.onlyField] : ALL_FIELDS;
 
-  let raw = char.raw;
-
+  // Decide per-field whether regeneration is needed. A single API call covers
+  // all fields, so if every target is up-to-date we skip the call entirely.
+  const fieldsToGenerate: DerivedField[] = [];
   for (const field of targetFields) {
     const prior = existingByField.get(field);
-
     if (prior?.reviewed && !opts.forceReviewed) {
       skipped.push(field);
       continue;
@@ -447,42 +509,55 @@ async function processCharacter(
       errors.push(`${char.slug}/${field}: no usable chapter excerpts`);
       continue;
     }
-
-    if (opts.dryRun) {
-      console.log(
-        `\n── DRY RUN: ${char.slug} / ${field} (hash=${hash}, prior=${prior ? (prior.reviewed ? "reviewed" : "draft") : "none"}) ──`
-      );
-      console.log(fieldPrompt(char, excerpts, field).slice(0, 1200) + "\n...");
-      wrote.push(field);
-      continue;
-    }
-
-    if (!client) throw new Error("API client not initialized");
-
-    try {
-      const body = await generateField(client, char, excerpts, field);
-      const validation = validateField(body, field, allowedChapters);
-      if (!validation.ok) {
-        errors.push(`${char.slug}/${field}: ${validation.reason}`);
-        continue;
-      }
-      const rendered = renderBlock(field, body, {
-        generated,
-        reviewed: false,
-        model: MODEL,
-        sourceHash: hash,
-      });
-      raw = upsertBlock(raw, field, rendered);
-      wrote.push(field);
-      console.log(`  ✓ ${char.slug}/${field}`);
-    } catch (err) {
-      errors.push(
-        `${char.slug}/${field}: ${err instanceof Error ? err.message : String(err)}`
-      );
-    }
+    fieldsToGenerate.push(field);
   }
 
-  if (!opts.dryRun && raw !== char.raw) {
+  let raw = char.raw;
+
+  if (fieldsToGenerate.length === 0) {
+    return { wrote, skipped, errors };
+  }
+
+  if (opts.dryRun) {
+    console.log(
+      `\n── DRY RUN: ${char.slug} (hash=${hash}, fields=${fieldsToGenerate.join(",")}) ──`
+    );
+    console.log(combinedPrompt(char, excerpts).slice(0, 1500) + "\n...");
+    wrote.push(...fieldsToGenerate);
+    return { wrote, skipped, errors };
+  }
+
+  if (!client) throw new Error("API client not initialized");
+
+  let generatedFields: Record<DerivedField, string>;
+  try {
+    generatedFields = await generateAllFields(client, char, excerpts);
+  } catch (err) {
+    errors.push(
+      `${char.slug}: ${err instanceof Error ? err.message : String(err)}`
+    );
+    return { wrote, skipped, errors };
+  }
+
+  for (const field of fieldsToGenerate) {
+    const body = generatedFields[field];
+    const validation = validateField(body, field, allowedChapters);
+    if (!validation.ok) {
+      errors.push(`${char.slug}/${field}: ${validation.reason}`);
+      continue;
+    }
+    const rendered = renderBlock(field, body, {
+      generated,
+      reviewed: false,
+      model: MODEL,
+      sourceHash: hash,
+    });
+    raw = upsertBlock(raw, field, rendered);
+    wrote.push(field);
+    console.log(`  ✓ ${char.slug}/${field}`);
+  }
+
+  if (raw !== char.raw) {
     fs.writeFileSync(char.path, raw);
   }
 

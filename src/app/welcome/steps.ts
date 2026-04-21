@@ -1,5 +1,6 @@
 import type { ComponentType } from "react";
 import type { AgeMode } from "@/types";
+import { book } from "@/config/book";
 import { ReadDemo } from "./demos/ReadDemo";
 import { AskDemo } from "./demos/AskDemo";
 import { TellDemo } from "./demos/TellDemo";
@@ -22,18 +23,18 @@ export function getSteps(ageMode: AgeMode): StepSpec[] {
   return [
     {
       key: "read",
-      title: isYoungReader ? "Find stories you love" : "Browse Keith's stories",
+      title: isYoungReader ? "Find stories you love" : `Browse ${book.title}`,
       body: isYoungReader
         ? "Tap a story to read it. Tap the heart to save your favorites. Paint over lines you like to keep them."
-        : "Every story is one chapter of Keith's life. Favorite the ones that move you; highlight lines you want to return to.",
+        : `Pick up ${book.shortName} chapter by chapter. Favorite what moves you; highlight lines worth revisiting.`,
       Demo: ReadDemo,
     },
     {
       key: "ask",
-      title: "Ask About Keith",
+      title: `Ask about ${book.title}`,
       body: isYoungReader
-        ? "Type a question like 'What was your favorite game as a kid?' — you'll get answers drawn from Keith's stories."
-        : "Ask questions about Keith's stories. You'll get answers drawn from his stories and pointed back to where they came from.",
+        ? "Ask what confuses or excites you — answers stay grounded in the companion's story catalog."
+        : `Ask lore and meaning questions about ${book.shortName}. Answers cite specific stories when they can.`,
       Demo: AskDemo,
     },
     {

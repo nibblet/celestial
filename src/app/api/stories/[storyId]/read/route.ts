@@ -1,4 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
+import { cookies } from "next/headers";
+import { chapterNumberFromStoryId } from "@/lib/wiki/story-ids";
+import { READER_CHAPTER_COOKIE } from "@/lib/progress/reader-progress";
 
 export async function POST(
   _request: Request,
@@ -10,12 +13,23 @@ export async function POST(
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
-    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  const chapterNum = chapterNumberFromStoryId(storyId.trim());
+  if (chapterNum !== null) {
+    const cookieStore = await cookies();
+    cookieStore.set(READER_CHAPTER_COOKIE, `CH${String(chapterNum).padStart(2, "0")}`, {
+      path: "/",
+      httpOnly: false,
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 365,
+    });
   }
 
   if (!storyId?.trim()) {
     return Response.json({ error: "storyId required" }, { status: 400 });
+  }
+
+  if (!user) {
+    return Response.json({ ok: true, guest: true });
   }
 
   const { error } = await supabase

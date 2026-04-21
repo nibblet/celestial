@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { book } from "@/config/book";
 import { GhostTile } from "./GhostTile";
 import type { GalleryDialogueItem } from "@/lib/analytics/profile-gallery-data";
 
@@ -18,8 +19,8 @@ export function DialogueTile({
   if (askedCount === 0 || recent.length === 0) {
     return (
       <GhostTile
-        label="Your questions about Keith"
-        body="Questions you ask about Keith's stories will live here."
+        label={`Questions about ${book.shortName}`}
+        body={`Questions you ask about ${book.title} will live here.`}
         className={className}
       />
     );
@@ -31,7 +32,7 @@ export function DialogueTile({
     >
       <div className="flex items-center justify-between">
         <h3 className="type-era-label text-[rgba(240,232,213,0.58)]">
-          Your questions about Keith
+          {`Your questions · ${book.title}`}
         </h3>
         <Link
           href="/profile/questions"
@@ -52,7 +53,7 @@ export function DialogueTile({
             <p className="mt-1 font-[family-name:var(--font-inter)] text-xs">
               {item.answered && item.answerText ? (
                 <span className="text-[#d4a843]">
-                  Keith: &ldquo;{item.answerText}&rdquo;
+                  {book.author}: &ldquo;{item.answerText}&rdquo;
                 </span>
               ) : (
                 <span className="text-[rgba(240,232,213,0.5)]">

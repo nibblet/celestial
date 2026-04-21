@@ -4,6 +4,7 @@ import { Suspense, useState, useRef, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { useAgeMode } from "@/hooks/useAgeMode";
 import type { AgeMode } from "@/types";
+import { book } from "@/config/book";
 import Link from "next/link";
 import ReactMarkdown, { type Components } from "react-markdown";
 
@@ -44,22 +45,22 @@ interface Message {
 
 const SUGGESTIONS_BY_AGE_MODE: Record<AgeMode, string[]> = {
   young_reader: [
-    "What was Keith like as a boy?",
-    "Did Keith have any pets growing up?",
-    "What games did Keith play when he was little?",
-    "What was Keith's favorite thing about school?",
+    "Who is the main character when the story starts?",
+    "What is the first world or place we see?",
+    "What is a small detail that makes the setting feel real?",
+    "What are the 'rules' of this world so far?",
   ],
   teen: [
-    "How did Keith decide what to do with his life?",
-    "What was Keith's first job like?",
-    "How did Keith handle making mistakes?",
-    "What advice would Keith give about choosing a career?",
+    "What is the main character trying to achieve early on?",
+    "What is the central conflict in the opening act?",
+    "How does the book foreshadow later events?",
+    "What would you read next if you want the same tone?",
   ],
   adult: [
-    "What shaped Keith's leadership style?",
-    "Tell me about Keith's early career",
-    "What did Keith learn from his father?",
-    "What are the most important lessons?",
+    "What themes is the book setting up in the early chapters?",
+    "How does the narrative voice treat reliability and knowledge?",
+    "What craft choices make a scene feel vivid here?",
+    "What are the most important ideas the story returns to?",
   ],
 };
 
@@ -320,7 +321,7 @@ function AskPageContent() {
       }
     } catch {
       setError(
-        "Ask About Keith is temporarily unavailable. Try browsing stories by topic in the meantime."
+        "The reading companion is temporarily unavailable. Try browsing stories by theme in the meantime."
       );
       setMessages((prev) => {
         if (prev[prev.length - 1]?.content === "") {
@@ -387,10 +388,10 @@ function AskPageContent() {
   return (
     <div className="mx-auto flex h-[calc(100vh-8rem)] max-w-content flex-col px-[var(--page-padding-x)] md:h-[calc(100vh-4rem)]">
       <div className="border-b border-[var(--color-border)] py-4">
-        <h1 className="type-page-title text-2xl">Ask About Keith</h1>
+        <h1 className="type-page-title text-2xl">Ask about {book.title}</h1>
         <p className="type-ui mt-1 text-ink-ghost">
-          Ask questions about Keith&apos;s stories. You&apos;ll get answers
-          drawn from Keith&apos;s stories and life lessons.
+          Ask questions about {book.title}. You&apos;ll get answers grounded in
+          the story material in this companion.
           {journeySlug && !storySlug && (
             <span className="text-clay">
               {" "}
@@ -440,7 +441,7 @@ function AskPageContent() {
           !(highlightIdFromUrl && highlightHydration === "loading") && (
           <div className="py-12 text-center">
             <p className="mb-4 text-sm text-ink-muted">
-              What would you like to know about Keith&apos;s stories?
+              What would you like to know about {book.title}?
             </p>
             <div className="flex flex-wrap justify-center gap-2">
               {SUGGESTIONS_BY_AGE_MODE[ageMode].map((suggestion) => (
@@ -520,7 +521,7 @@ function AskPageContent() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask about Keith's stories..."
+            placeholder={`Ask about ${book.title}...`}
             disabled={loading}
             className="type-ui flex-1 rounded-lg border border-[var(--color-border)] bg-warm-white-2 px-3 py-2 text-ink placeholder:text-ink-ghost disabled:opacity-50"
           />

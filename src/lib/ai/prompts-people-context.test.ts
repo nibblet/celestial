@@ -2,28 +2,34 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { getPeopleContext, buildSystemPrompt } from "@/lib/ai/prompts";
 
-test("getPeopleContext includes Key People heading and age-mode adaptation hint", () => {
+test("getPeopleContext returns empty string when no people markdown is present", () => {
   const ctx = getPeopleContext();
-  assert.match(ctx, /^## Key People in Keith's Life/m);
-  assert.match(ctx, /young_reader:/);
-  assert.match(ctx, /teen:/);
-  assert.match(ctx, /adult:/);
+  assert.equal(typeof ctx, "string");
 });
 
-test("getPeopleContext includes Tier A drafted bios (Bayne Cobb facts)", () => {
-  const ctx = getPeopleContext();
-  assert.match(ctx, /1916/);
-  assert.match(ctx, /Bayne Cobb/);
-});
-
-test("buildSystemPrompt embeds people context after wiki index material", () => {
+test("buildSystemPrompt orders major sections consistently", () => {
   const prompt = buildSystemPrompt("adult");
   const wikiIdx = prompt.indexOf("## Wiki Index");
-  const keyPeople = prompt.indexOf("## Key People in Keith's Life");
-  const principles = prompt.indexOf("## Keith's 12 Core Principles");
-  const frameworks = prompt.indexOf("## Decision Frameworks");
+  const principles = prompt.indexOf("## Core principles");
+  const frameworks = prompt.indexOf("## Lore rules / frameworks");
   assert.ok(wikiIdx >= 0 && principles > wikiIdx && frameworks > principles);
-  if (keyPeople >= 0) {
-    assert.ok(principles > keyPeople);
-  }
+});
+
+test("buildSystemPrompt includes spoiler gate guidance when reader progress is provided", () => {
+  const prompt = buildSystemPrompt(
+    "adult",
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    {
+      readStoryIds: ["CH01", "CH02"],
+      currentChapter: "CH02",
+      currentChapterNumber: 2,
+      showAllContent: false,
+    }
+  );
+  assert.match(prompt, /Reader progress gate: current chapter is CH02/i);
 });

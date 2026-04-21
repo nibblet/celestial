@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { book } from "@/config/book";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 
@@ -33,11 +34,9 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-parchment px-4">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <h1 className="type-page-title text-3xl">The Cobb Family</h1>
-          <h2 className="type-page-title mt-1 text-3xl">Story Library</h2>
-          <p className="type-ui mt-3 text-ink-muted">
-            Stories and lessons from Keith Cobb&apos;s life
-          </p>
+          <h1 className="type-page-title text-3xl">{book.title}</h1>
+          <h2 className="type-page-title mt-1 text-3xl">Sign in</h2>
+          <p className="type-ui mt-3 text-ink-muted">{book.tagline}</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">

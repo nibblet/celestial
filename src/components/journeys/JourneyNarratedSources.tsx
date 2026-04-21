@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getStoryById } from "@/lib/wiki/parser";
 import { SourceBadge } from "@/components/ui/SourceBadge";
+import { enrichLegacyStorySource } from "@/lib/wiki/taxonomy";
 
 export function JourneyNarratedSources({
   sourceStoryIds,
@@ -29,7 +30,10 @@ export function JourneyNarratedSources({
           >
             <div className="mb-1 flex flex-wrap items-center gap-2">
               <span className="type-ui text-ink">{story.title}</span>
-              <SourceBadge source={story.source} />
+              <SourceBadge
+                sourceType={enrichLegacyStorySource(story.storyId, story.source).sourceType}
+                legacySource={story.source}
+              />
             </div>
             <p className="font-[family-name:var(--font-lora)] text-xs leading-relaxed text-ink-muted">
               {story.summary}

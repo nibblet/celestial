@@ -1,10 +1,13 @@
 import type { StoryCard } from "@/lib/wiki/static-data";
+import { enrichLegacyStorySource } from "@/lib/wiki/taxonomy";
 import { getCanonicalStories } from "@/lib/wiki/corpus";
 import { createClient } from "@/lib/supabase/server";
 import { StoriesPageClient } from "./StoriesPageClient";
+import { getReaderProgress } from "@/lib/progress/reader-progress";
 
 export default async function StoriesPage() {
   const stories = await getCanonicalStories();
+  const progress = await getReaderProgress();
 
   const supabase = await createClient();
   const {
@@ -32,9 +35,15 @@ export default async function StoriesPage() {
     wordCount: story.wordCount,
     principles: story.principles,
     volume: story.volume,
+    ...enrichLegacyStorySource(story.storyId, story.source),
   }));
 
   return (
-    <StoriesPageClient stories={storyCards} readStoryIds={readStoryIds} />
+    <StoriesPageClient
+      stories={storyCards}
+      readStoryIds={readStoryIds}
+      currentChapterNumber={progress.currentChapterNumber}
+      showAllContent={progress.showAllContent}
+    />
   );
 }

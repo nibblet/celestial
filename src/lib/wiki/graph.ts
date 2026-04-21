@@ -1,11 +1,19 @@
+import { book } from "@/config/book";
 import {
+  getAllArtifacts,
+  getAllCharacters,
   getAllPeople,
   getAllCanonicalPrinciples,
+  getAllFactions,
+  getAllLocations,
+  getAllRules,
   getAllStories,
   getAllThemes,
   getClusteredPrinciples,
   getTimeline,
   type ClusteredPrinciple,
+  type WikiEntityRelation,
+  type WikiFictionNounEntity,
   type WikiPerson,
   type WikiStory,
   type WikiTheme,
@@ -180,9 +188,30 @@ export interface StorySankey {
 }
 
 export interface PeopleGraphOptions {
-  includeKeith?: boolean;
+  /** Include the subject / viewpoint character even when `peopleGraphExcludeSlug` would normally hide them. */
+  includeSubjectEntity?: boolean;
+  /** Override `book.peopleGraphExcludeSlug` for this build. */
+  subjectEntitySlug?: string | null;
   limit?: number;
   minSharedStories?: number;
+}
+
+export interface EntityRelationNode {
+  id: string;
+  label: string;
+  type: string;
+}
+
+export interface EntityRelationEdge {
+  id: string;
+  source: string;
+  target: string;
+  predicate: string;
+}
+
+export interface EntityRelationGraph {
+  nodes: EntityRelationNode[];
+  edges: EntityRelationEdge[];
 }
 
 export function slugifyTheme(name: string): string {
@@ -314,7 +343,15 @@ export function buildChordMatrix(): ChordMatrix {
 }
 
 export function buildPeopleGraph(options: PeopleGraphOptions = {}): PeopleGraph {
-  const { includeKeith = false, limit = 18, minSharedStories = 2 } = options;
+  const {
+    includeSubjectEntity = false,
+    subjectEntitySlug,
+    limit = 18,
+    minSharedStories = 2,
+  } = options;
+  const excludedSlug =
+    subjectEntitySlug !== undefined ? subjectEntitySlug : book.peopleGraphExcludeSlug;
+
   const storyMap = buildStoryMap();
 
   const ranked = getAllPeople()
@@ -328,7 +365,12 @@ export function buildPeopleGraph(options: PeopleGraphOptions = {}): PeopleGraph 
     })
     .filter(({ storyCount, person }) => {
       if (storyCount === 0) return false;
-      if (!includeKeith && person.slug === "keith-cobb") return false;
+      if (
+        !includeSubjectEntity &&
+        excludedSlug &&
+        person.slug === excludedSlug
+      )
+        return false;
       return true;
     })
     .sort((a, b) => {
@@ -714,6 +756,62 @@ export function buildStorySankey(limit = 10, minLinkValue = 2): StorySankey {
   });
 
   return { nodes, links };
+}
+
+function nounNodeTypeFromEntityType(
+  kind: WikiFictionNounEntity["entityType"]
+): string {
+  if (kind === "fiction_characters") return "character";
+  if (kind === "fiction_artifacts") return "artifact";
+  if (kind === "fiction_locations") return "location";
+  return "faction";
+}
+
+export function buildEntityRelationGraph(): EntityRelationGraph {
+  const nounRows: WikiFictionNounEntity[] = [
+    ...getAllCharacters(),
+    ...getAllArtifacts(),
+    ...getAllLocations(),
+    ...getAllFactions(),
+  ];
+  const ruleRows = getAllRules();
+  const nodes = new Map<string, EntityRelationNode>();
+  const edges = new Map<string, EntityRelationEdge>();
+
+  const ensureNode = (id: string, label: string, type: string) => {
+    if (!nodes.has(id)) nodes.set(id, { id, label, type });
+  };
+
+  const pushRelation = (rel: WikiEntityRelation) => {
+    const source = `${rel.sourceType}:${rel.sourceSlug}`;
+    const target = `${rel.targetType}:${rel.targetSlug}`;
+    const id = `${source}:${rel.predicate}:${target}`;
+    if (!edges.has(id)) {
+      edges.set(id, { id, source, target, predicate: rel.predicate });
+    }
+  };
+
+  for (const row of nounRows) {
+    const nodeType = nounNodeTypeFromEntityType(row.entityType);
+    ensureNode(`${nodeType}:${row.slug}`, row.name, nodeType);
+    for (const rel of row.relations) {
+      ensureNode(`${rel.targetType}:${rel.targetSlug}`, rel.targetSlug, rel.targetType);
+      pushRelation(rel);
+    }
+  }
+
+  for (const row of ruleRows) {
+    ensureNode(`rule:${row.slug}`, row.title, "rule");
+    for (const rel of row.relations) {
+      ensureNode(`${rel.targetType}:${rel.targetSlug}`, rel.targetSlug, rel.targetType);
+      pushRelation(rel);
+    }
+  }
+
+  return {
+    nodes: [...nodes.values()].sort((a, b) => a.id.localeCompare(b.id)),
+    edges: [...edges.values()].sort((a, b) => a.id.localeCompare(b.id)),
+  };
 }
 
 export type { ClusteredPrinciple, WikiTheme, WikiStory };

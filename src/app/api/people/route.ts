@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { requireKeith } from "@/lib/auth/require-keith";
+import { requireAuthor } from "@/lib/auth/require-author";
 
 /**
  * GET /api/people?q=ba — list people for autocomplete / directory.
@@ -31,7 +31,7 @@ export async function GET(request: Request) {
  * Body: { display_name, slug?, relationship?, bio_md?, birth_year?, death_year? }
  */
 export async function POST(request: Request) {
-  const gate = await requireKeith();
+  const gate = await requireAuthor();
   if (!gate.ok) return Response.json({ error: gate.error }, { status: gate.status });
 
   const body = (await request.json().catch(() => ({}))) as {

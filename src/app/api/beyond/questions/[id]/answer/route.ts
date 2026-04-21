@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { hasKeithSpecialAccess } from "@/lib/auth/special-access";
+import { hasAuthorSpecialAccess } from "@/lib/auth/special-access";
 import type { ChapterAnswerVisibility } from "@/types";
 
 const MAX_ANSWER_LENGTH = 5000;
@@ -29,7 +29,7 @@ export async function POST(
     .eq("id", user.id)
     .single();
 
-  if (!hasKeithSpecialAccess(user.email, profile?.role)) {
+  if (!hasAuthorSpecialAccess(user.email, profile?.role)) {
     return Response.json({ error: "Forbidden" }, { status: 403 });
   }
 

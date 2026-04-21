@@ -1,4 +1,5 @@
 import { createHash } from "crypto";
+import { book } from "@/config/book";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import {
   getAllStories,
@@ -226,7 +227,7 @@ export function buildStoryWikiMarkdown(integration: StoryIntegration): string {
     `> ${integration.summary}`,
     "",
     `**Story ID:** ${integration.storyId}`,
-    `**Source:** Beyond story by Keith Cobb`,
+    `**Source:** Beyond story (${book.title})`,
     `**Life Stage:** ${integration.lifeStage}`,
     `**Themes:** ${integration.themes.join(", ")}`,
     `**Word Count:** ${integration.wordCount}`,
@@ -491,7 +492,7 @@ function buildTimelineMarkdown(stories: WikiStory[]): string {
     .sort((a, b) => a.year - b.year || a.story.storyId.localeCompare(b.story.storyId));
 
   const lines = [
-    "# Keith Cobb — Life Timeline",
+    `# ${book.title} — Timeline`,
     "",
     "> Chronological events linked to stories in the canonical corpus.",
     "",
@@ -529,7 +530,7 @@ function buildIndexMarkdown(stories: WikiStory[]): string {
   ];
 
   return [
-    "# Keith Cobb Storybook — Wiki Index",
+    `# ${book.title} — Wiki Index`,
     "",
     "> Master index of filesystem wiki pages plus active Supabase wiki mirror documents.",
     "",
@@ -585,7 +586,7 @@ export async function rebuildDerivedWikiMirrorDocuments(
   docs.push({
     doc_type: "timeline",
     doc_key: "timeline:career",
-    title: "Keith Cobb — Life Timeline",
+    title: `${book.title} — Timeline`,
     markdown: timelineMarkdown,
     version: derivedVersion,
     status: "active",
@@ -598,7 +599,7 @@ export async function rebuildDerivedWikiMirrorDocuments(
   docs.push({
     doc_type: "index",
     doc_key: "main",
-    title: "Keith Cobb Storybook — Wiki Index",
+    title: `${book.title} — Wiki Index`,
     markdown: indexMarkdown,
     version: derivedVersion,
     status: "active",

@@ -32,7 +32,7 @@ const SIMPLE_PATTERNS = [
 /** Short factual starters — only treated as simple when the question is < 40 chars */
 const SHORT_FACTUAL_PATTERNS = [
   /^who\s+(is|was)\b/i,
-  /^what\s+(is|was)\s+(the|a|an|keith)/i,
+  /^what\s+(is|was)\s+(the|a|an)\b/i,
   /^where\s+(did|was|is)\b/i,
 ];
 

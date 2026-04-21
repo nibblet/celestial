@@ -1,38 +1,58 @@
-import type { StorySource } from "@/lib/wiki/parser";
-
-const SOURCE_STYLES: Record<
-  StorySource,
-  { label: string; className: string }
-> = {
-  memoir: {
-    label: "Memoir",
-    className: "bg-burgundy-light text-burgundy",
-  },
-  interview: {
-    label: "Interview",
-    className: "bg-ocean-pale text-ocean",
-  },
-  family: {
-    label: "Family Story",
-    className: "bg-green-pale text-green",
-  },
-};
+import type { LegacyStorySource, SourceTypeV1 } from "@/lib/wiki/taxonomy";
 
 export function SourceBadge({
-  source,
+  sourceType,
+  legacySource = "family",
   className = "",
+  variant = "default",
 }: {
-  source: StorySource;
+  sourceType?: SourceTypeV1;
+  legacySource?: LegacyStorySource;
   className?: string;
+  /** Library list shows a compact “Book I” chip for canon chapters; chapter detail omits it. */
+  variant?: "default" | "library";
 }) {
-  if (source === "memoir") return null; // memoir is the default — no badge needed
+  const resolved: SourceTypeV1 =
+    sourceType ??
+    (legacySource === "memoir" || legacySource === "interview"
+      ? "legacy_import"
+      : "book_i_chapter");
 
-  const style = SOURCE_STYLES[source];
+  if (resolved === "book_i_chapter") {
+    if (variant !== "library") return null;
+    return (
+      <span
+        className={`rounded-full px-2 py-0.5 text-[10px] font-medium bg-warm-white text-ink ring-1 ring-[var(--color-border)] ${className}`}
+      >
+        Book I
+      </span>
+    );
+  }
+
+  if (legacySource === "interview") {
+    return (
+      <span
+        className={`rounded-full px-2 py-0.5 text-[10px] font-medium bg-ocean-pale text-ocean ${className}`}
+      >
+        Interview
+      </span>
+    );
+  }
+  if (legacySource === "memoir") {
+    return (
+      <span
+        className={`rounded-full px-2 py-0.5 text-[10px] font-medium bg-burgundy-light text-burgundy ${className}`}
+      >
+        Legacy memoir
+      </span>
+    );
+  }
+
   return (
     <span
-      className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${style.className} ${className}`}
+      className={`rounded-full px-2 py-0.5 text-[10px] font-medium bg-green-pale text-green ${className}`}
     >
-      {style.label}
+      Supplemental
     </span>
   );
 }

@@ -17,7 +17,7 @@ import * as fs from "fs";
 import * as path from "path";
 
 const ROOT = process.cwd();
-const PUBLIC_INFO = path.join(ROOT, "cobb_brain_lab/public_info");
+const PUBLIC_INFO = path.join(ROOT, "brain_lab/public_info");
 const RAW_IV = path.join(ROOT, "content/raw/interview");
 const WIKI_STORIES = path.join(ROOT, "content/wiki/stories");
 const CURATED_STORY_IDS_PATH = path.join(RAW_IV, "CURATED_STORY_IDS.txt");

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { book } from "@/config/book";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { getAuthRedirectOrigin } from "@/lib/app-url";
@@ -80,8 +81,8 @@ export default function SignupPage() {
     <div className="flex min-h-screen items-center justify-center bg-parchment px-4">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <h1 className="type-page-title text-3xl">The Cobb Family</h1>
-          <h2 className="type-page-title mt-1 text-3xl">Story Library</h2>
+          <h1 className="type-page-title text-3xl">{book.title}</h1>
+          <h2 className="type-page-title mt-1 text-3xl">Create account</h2>
           <p className="type-ui mt-3 text-ink-muted">
             Create an account to explore the stories
           </p>

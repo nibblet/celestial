@@ -70,6 +70,16 @@ function main() {
   const withDossier = rows.filter(
     (r) => r.wikiEntityKind === "character" && r.dossier !== undefined
   ).length;
+  let enrichmentReviewed = 0;
+  let enrichmentDraft = 0;
+  for (const r of rows) {
+    if (!r.dossier?.enrichment) continue;
+    for (const meta of Object.values(r.dossier.enrichment)) {
+      if (!meta) continue;
+      if (meta.reviewed) enrichmentReviewed++;
+      else enrichmentDraft++;
+    }
+  }
 
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
   fs.writeFileSync(
@@ -81,6 +91,8 @@ function main() {
         entityCount: rows.length,
         withLoreSectionParsed: withLore,
         withDossierParsed: withDossier,
+        enrichmentReviewed,
+        enrichmentDraft,
         entities: rows,
       },
       null,
@@ -90,7 +102,7 @@ function main() {
 
   console.log(`✅ Lore inventory → ${OUT}`);
   console.log(
-    `   ${rows.length} wiki files, ${withLore} with lore, ${withDossier} with dossier`
+    `   ${rows.length} wiki files, ${withLore} with lore, ${withDossier} with dossier, enrichment: ${enrichmentReviewed} reviewed / ${enrichmentDraft} draft`
   );
 }
 
