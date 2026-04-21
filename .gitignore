@@ -48,3 +48,9 @@ next-env.d.ts
 
 # superpowers brainstorm session scratch (visual companion files)
 .superpowers/
+
+# reference-only source material (not tracked; reproducible from origin)
+/celestial_original/
+
+# scratch working dir (redundant with celestial_original/)
+/.tmp/
