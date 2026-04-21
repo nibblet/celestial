@@ -38,6 +38,7 @@ import {
 import type { ReaderProgress } from "@/lib/progress/reader-progress";
 import { isStoryUnlocked } from "@/lib/progress/reader-progress";
 import { getScenesForChapter } from "@/lib/wiki/scenes-db";
+import { listUnresolvedThroughChapter } from "@/lib/threads/repo";
 
 export interface OrchestrateParams {
   anthropic: Anthropic;
@@ -99,14 +100,22 @@ export async function orchestrateAsk(
 async function buildPromptArgs(
   params: OrchestrateParams,
 ): Promise<PersonaPromptArgs> {
-  const { ageMode, storySlug, journeySlug, readerProgress } = params;
+  const { supabase, ageMode, storySlug, journeySlug, readerProgress } = params;
 
-  const [wikiSummaries, stories, storyContextRaw, chapterScenes] =
+  // Only fetch open threads when we know what chapter the reader is on — the
+  // progress gate is what scopes them to "unresolved through current
+  // chapter". Otherwise personas could see spoilery future mysteries.
+  const threadCutoffChapter = readerProgress?.currentChapter ?? null;
+
+  const [wikiSummaries, stories, storyContextRaw, chapterScenes, openThreads] =
     await Promise.all([
       getCanonicalWikiSummaries(),
       getCanonicalStories(),
       storySlug ? getCanonicalStoryMarkdown(storySlug) : Promise.resolve(""),
       storySlug ? getScenesForChapter(storySlug) : Promise.resolve([]),
+      threadCutoffChapter
+        ? listUnresolvedThroughChapter(supabase, threadCutoffChapter)
+        : Promise.resolve([]),
     ]);
   void storyContextRaw; // storyContext is assembled inside each persona builder
 
@@ -132,6 +141,12 @@ async function buildPromptArgs(
       goal: s.goal,
       conflict: s.conflict,
       outcome: s.outcome,
+    })),
+    openThreads: openThreads.map((t) => ({
+      title: t.title,
+      question: t.question,
+      openedInChapterId: t.openedInChapterId,
+      resolved: t.resolved,
     })),
   };
 }
