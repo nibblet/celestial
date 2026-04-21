@@ -105,6 +105,49 @@ test("shared block renders open narrative threads when provided", () => {
   assert.ok(!prompt.includes("Resolved mystery"));
 });
 
+test("shared block renders chapter scenes when storySlug + chapterScenes are provided", () => {
+  const prompt = getPersona("celestial_narrator").buildSystemPrompt({
+    ...BASE_ARGS,
+    storySlug: "CH01",
+    chapterScenes: [
+      {
+        orderIndex: 1,
+        slug: "scene-scene-1-waking-dust",
+        title: "Waking Dust",
+        goal: "Find the resonance source.",
+      },
+      {
+        orderIndex: 2,
+        slug: "scene-scene-2-the-quiet-weight",
+        title: "The Quiet Weight",
+      },
+    ],
+  });
+  assert.match(prompt, /## Scenes in this chapter \(CH01\)/);
+  assert.ok(prompt.includes("scene-scene-1-waking-dust"));
+  assert.ok(prompt.includes("Waking Dust"));
+  assert.ok(prompt.includes("goal: Find the resonance source"));
+  // Scenes without annotations should still render.
+  assert.ok(prompt.includes("The Quiet Weight"));
+});
+
+test("shared block skips chapter scenes when storySlug is absent", () => {
+  // Scenes only make sense in the context of a specific chapter. Without
+  // a storySlug we don't have a valid chapter header to attach them to,
+  // so they must be silently skipped rather than rendered against "()".
+  const prompt = getPersona("celestial_narrator").buildSystemPrompt({
+    ...BASE_ARGS,
+    chapterScenes: [
+      {
+        orderIndex: 1,
+        slug: "scene-anything",
+        title: "Anything",
+      },
+    ],
+  });
+  assert.ok(!prompt.includes("## Scenes in this chapter"));
+});
+
 test("shared block renders beats when provided", () => {
   const prompt = getPersona("celestial_narrator").buildSystemPrompt({
     ...BASE_ARGS,

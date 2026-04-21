@@ -12,6 +12,7 @@
     "compile:wiki": "node --import tsx scripts/compile-wiki.ts",
     "ingest:book": "node --import tsx scripts/ingest-celestial-book.ts",
     "ingest:lore": "node --import tsx scripts/ingest-foundational-lore.ts",
+    "ingest:scenes": "node --import tsx scripts/ingest-chapter-scenes.ts",
     "seed:lore-metadata": "node --import tsx scripts/seed-entity-lore-metadata.ts",
     "merge:character-dossier": "node --import tsx scripts/merge-character-dossier.ts",
     "enrich:character-dossier": "node --import tsx scripts/enrich-character-dossier.ts"

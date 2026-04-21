@@ -21,6 +21,7 @@ import { AnsweredQuestionsList } from "@/components/stories/AnsweredQuestionsLis
 import { StorySceneJump } from "@/components/story/StorySceneJump";
 import { enrichLegacyStorySource } from "@/lib/wiki/taxonomy";
 import { extractSceneSectionsFromChapterBody } from "@/lib/wiki/markdown-headings";
+import { getSceneSectionsForChapter } from "@/lib/wiki/scenes-db";
 import { lifeStageToEraAccent } from "@/lib/design/era";
 import { createClient } from "@/lib/supabase/server";
 import { getReaderProgress, isStoryUnlocked } from "@/lib/progress/reader-progress";
@@ -63,7 +64,14 @@ export default async function StoryDetailPage({
   const peopleInStory = getPeopleByStoryId(storyId);
   const linkedFullText = addPeopleLinks(story.fullText, peopleInStory);
   const chapterMeta = enrichLegacyStorySource(storyId, story.source);
-  const sceneSections = extractSceneSectionsFromChapterBody(story.fullText);
+  // Prefer DB-backed scenes (`sb_chapter_scenes` via scenes-db), fall back
+  // to live markdown parsing for chapters that haven't been ingested yet.
+  // Anchor ids are identical between both sources, so clicks never break.
+  const dbSceneSections = await getSceneSectionsForChapter(storyId);
+  const sceneSections =
+    dbSceneSections.length > 0
+      ? dbSceneSections
+      : extractSceneSectionsFromChapterBody(story.fullText);
 
   const era = lifeStageToEraAccent(story.lifeStage);
   const supportsListenMode =

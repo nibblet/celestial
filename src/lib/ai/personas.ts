@@ -28,6 +28,7 @@ import {
 export type {
   OpenThreadForContext,
   BeatForContext,
+  SceneForContext,
   PersonaPromptArgs,
 } from "./perspectives";
 

@@ -47,6 +47,17 @@ export type BeatForContext = {
   chapterId: string | null;
 };
 
+/** Chapter scene (Phase D). Passed down from the orchestrator so personas
+ *  can cite scenes by slug when the user is reading a specific chapter. */
+export type SceneForContext = {
+  orderIndex: number;
+  slug: string;
+  title: string;
+  goal?: string | null;
+  conflict?: string | null;
+  outcome?: string | null;
+};
+
 export type PersonaPromptArgs = {
   ageMode: AgeMode;
   storySlug?: string;
@@ -56,6 +67,7 @@ export type PersonaPromptArgs = {
   readerProgress?: ReaderProgress;
   openThreads?: OpenThreadForContext[];
   beats?: BeatForContext[];
+  chapterScenes?: SceneForContext[];
   /** Synthesizer-only: display labels of the sub-personas it is merging. */
   personaLabels?: string[];
 };
@@ -76,6 +88,22 @@ function sharedContentBlock(args: PersonaPromptArgs): string {
   if (args.storySlug) {
     const ctx = getStoryContext(args.storySlug);
     if (ctx) parts.push(`## Currently Reading\n${ctx.slice(0, 3000)}`);
+  }
+  if (args.chapterScenes && args.chapterScenes.length > 0 && args.storySlug) {
+    const lines = args.chapterScenes.map((s) => {
+      const annotations = [
+        s.goal ? `goal: ${s.goal}` : null,
+        s.conflict ? `conflict: ${s.conflict}` : null,
+        s.outcome ? `outcome: ${s.outcome}` : null,
+      ]
+        .filter(Boolean)
+        .join("; ");
+      const suffix = annotations ? ` — ${annotations}` : "";
+      return `- [${s.orderIndex}] **${s.title}** (slug: \`${s.slug}\`)${suffix}`;
+    });
+    parts.push(
+      `## Scenes in this chapter (${args.storySlug})\nReference scenes by slug when citing specific moments.\n${lines.join("\n")}`,
+    );
   }
   if (args.journeySlug) {
     const ctx = getJourneyContextForPrompt(args.journeySlug);

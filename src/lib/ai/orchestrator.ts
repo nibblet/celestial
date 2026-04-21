@@ -37,6 +37,7 @@ import {
 } from "@/lib/wiki/corpus";
 import type { ReaderProgress } from "@/lib/progress/reader-progress";
 import { isStoryUnlocked } from "@/lib/progress/reader-progress";
+import { getScenesForChapter } from "@/lib/wiki/scenes-db";
 
 export interface OrchestrateParams {
   anthropic: Anthropic;
@@ -100,11 +101,13 @@ async function buildPromptArgs(
 ): Promise<PersonaPromptArgs> {
   const { ageMode, storySlug, journeySlug, readerProgress } = params;
 
-  const [wikiSummaries, stories, storyContextRaw] = await Promise.all([
-    getCanonicalWikiSummaries(),
-    getCanonicalStories(),
-    storySlug ? getCanonicalStoryMarkdown(storySlug) : Promise.resolve(""),
-  ]);
+  const [wikiSummaries, stories, storyContextRaw, chapterScenes] =
+    await Promise.all([
+      getCanonicalWikiSummaries(),
+      getCanonicalStories(),
+      storySlug ? getCanonicalStoryMarkdown(storySlug) : Promise.resolve(""),
+      storySlug ? getScenesForChapter(storySlug) : Promise.resolve([]),
+    ]);
   void storyContextRaw; // storyContext is assembled inside each persona builder
 
   const visibleStories = readerProgress
@@ -122,6 +125,14 @@ async function buildPromptArgs(
     wikiSummaries,
     storyCatalog,
     readerProgress,
+    chapterScenes: chapterScenes.map((s) => ({
+      orderIndex: s.orderIndex,
+      slug: s.slug,
+      title: s.title,
+      goal: s.goal,
+      conflict: s.conflict,
+      outcome: s.outcome,
+    })),
   };
 }
 
