@@ -1,10 +1,16 @@
 /**
- * Perspective-specific system prompts for the multi-agent Ask pipeline.
+ * Per-persona system prompt builders for the multi-agent Ask pipeline.
  *
- * Two perspectives + one synthesizer:
- *   Narrator - narrative/emotional lens, anchors to one vivid story
- *   Lore-keeper - cross-story pattern recognition, rules and frameworks
- *   Synthesizer  - merges both into one cohesive response in the novel's voice
+ * Active personas:
+ *   CelestialNarrator - single vivid story, emotional weight (was Storyteller)
+ *   Lorekeeper        - cross-story principles & decision frameworks
+ *   Archivist         - corpus-level pattern spotting across multiple stories
+ *   Finder            - fast factual / list lookups (single-call path)
+ *   Synthesizer       - merges N perspectives into one voice
+ *   Editor            - PLACEHOLDER; throws "not implemented"
+ *
+ * All builders take a single `PersonaPromptArgs` object so the persona
+ * registry (src/lib/ai/personas.ts) can invoke them uniformly.
  */
 
 import type { AgeMode } from "@/types";
@@ -21,52 +27,97 @@ import {
   AGE_MODE_INSTRUCTIONS,
 } from "./prompts";
 
-// ── Shared content block (injected into both perspectives) ──────────
+// ── Shared context types ────────────────────────────────────────────
 
-function sharedContentBlock(
-  storySlug?: string,
-  journeySlug?: string,
-  wikiSummaries?: string,
-  storyCatalog?: string,
-  readerProgress?: ReaderProgress
-): string {
+/** Unresolved narrative thread (Phase E). Kept optional; stable shape for
+ *  downstream Archivist / synthesis contexts. */
+export type OpenThreadForContext = {
+  title: string;
+  question: string;
+  openedInChapterId: string;
+  resolved: boolean;
+};
+
+/** Structural beat (Phase F). Reference for narrator/archivist when a
+ *  journey is under discussion. */
+export type BeatForContext = {
+  title: string;
+  whyItMatters: string;
+  beatType: string;
+  chapterId: string | null;
+};
+
+export type PersonaPromptArgs = {
+  ageMode: AgeMode;
+  storySlug?: string;
+  journeySlug?: string;
+  wikiSummaries?: string;
+  storyCatalog?: string;
+  readerProgress?: ReaderProgress;
+  openThreads?: OpenThreadForContext[];
+  beats?: BeatForContext[];
+  /** Synthesizer-only: display labels of the sub-personas it is merging. */
+  personaLabels?: string[];
+};
+
+// ── Shared content block (injected into most personas) ──────────────
+
+function sharedContentBlock(args: PersonaPromptArgs): string {
   const parts: string[] = [];
 
-  parts.push(`## Story ID Catalog (for links)\n${storyCatalog ?? getStoryLinkCatalog()}`);
-  parts.push(`## Wiki Index\n${wikiSummaries ?? getWikiSummaries()}`);
+  parts.push(
+    `## Story ID Catalog (for links)\n${args.storyCatalog ?? getStoryLinkCatalog()}`,
+  );
+  parts.push(`## Wiki Index\n${args.wikiSummaries ?? getWikiSummaries()}`);
+
   const people = getPeopleContext();
   if (people) parts.push(people);
 
-  if (storySlug) {
-    const ctx = getStoryContext(storySlug);
+  if (args.storySlug) {
+    const ctx = getStoryContext(args.storySlug);
     if (ctx) parts.push(`## Currently Reading\n${ctx.slice(0, 3000)}`);
   }
-  if (journeySlug) {
-    const ctx = getJourneyContextForPrompt(journeySlug);
+  if (args.journeySlug) {
+    const ctx = getJourneyContextForPrompt(args.journeySlug);
     if (ctx) parts.push(`## Journey Context\n${ctx}`);
   }
-  if (readerProgress) {
+  if (args.readerProgress) {
     parts.push(
-      `## Reader Progress Gate\nCurrent chapter: ${readerProgress.currentChapter}. Never reveal content from later chapters.`
+      `## Reader Progress Gate\nCurrent chapter: ${args.readerProgress.currentChapter}. Never reveal content from later chapters.`,
+    );
+  }
+  if (args.openThreads && args.openThreads.length > 0) {
+    const lines = args.openThreads
+      .filter((t) => !t.resolved)
+      .map(
+        (t) =>
+          `- [${t.openedInChapterId}] **${t.title}** — ${t.question}`,
+      );
+    if (lines.length > 0) {
+      parts.push(
+        `## Open Narrative Threads (unresolved through current chapter)\n${lines.join("\n")}`,
+      );
+    }
+  }
+  if (args.beats && args.beats.length > 0) {
+    const lines = args.beats.map(
+      (b) =>
+        `- **[${b.beatType}] ${b.title}** — ${b.whyItMatters}`,
+    );
+    parts.push(
+      `## Journey Beats (structural map)\n${lines.join("\n")}`,
     );
   }
 
   return parts.join("\n\n");
 }
 
-// ── Narrator ────────────────────────────────────────────────────────
+// ── Celestial Narrator (was Storyteller) ────────────────────────────
 
-export function buildStorytellerPrompt(
-  ageMode: AgeMode,
-  storySlug?: string,
-  journeySlug?: string,
-  wikiSummaries?: string,
-  storyCatalog?: string,
-  readerProgress?: ReaderProgress
-): string {
+export function buildCelestialNarratorPrompt(args: PersonaPromptArgs): string {
   const voice = getVoiceGuide();
 
-  return `You are the Narrator perspective in a multi-agent system exploring "${book.title}" through this companion app.
+  return `You are the Celestial Narrator in a multi-agent system exploring "${book.title}" through this companion app.
 
 ## Your Role
 Find the single most resonant story for the user's question and bring it to life. Focus on the human experience — what it felt like, what was at stake, and why it matters emotionally.
@@ -83,27 +134,20 @@ Find the single most resonant story for the user's question and bring it to life
 - Keep your response under 300 words — this is raw material, not the final answer
 
 ## Age Mode
-${AGE_MODE_INSTRUCTIONS[ageMode]}
+${AGE_MODE_INSTRUCTIONS[args.ageMode]}
 
 ## Voice Guide
 ${voice.slice(0, 2000)}
 
-  ${sharedContentBlock(storySlug, journeySlug, wikiSummaries, storyCatalog, readerProgress)}`;
+${sharedContentBlock(args)}`;
 }
 
-// ── Lore-keeper ─────────────────────────────────────────────────────
+// ── Lorekeeper (was Principles Coach) ───────────────────────────────
 
-export function buildPrinciplesCoachPrompt(
-  ageMode: AgeMode,
-  storySlug?: string,
-  journeySlug?: string,
-  wikiSummaries?: string,
-  storyCatalog?: string,
-  readerProgress?: ReaderProgress
-): string {
+export function buildLorekeeperPrompt(args: PersonaPromptArgs): string {
   const frameworks = getDecisionFrameworks();
 
-  return `You are the Lore-keeper perspective in a multi-agent system exploring "${book.title}".
+  return `You are the Lore-keeper in a multi-agent system exploring "${book.title}".
 
 ## Your Role
 Identify repeatable principles, heuristics, and decision frameworks that apply to the user's question. Look ACROSS multiple stories for patterns — your unique value is cross-story synthesis.
@@ -120,45 +164,106 @@ Identify repeatable principles, heuristics, and decision frameworks that apply t
 - Keep your response under 300 words — this is raw material, not the final answer
 
 ## Age Mode
-${AGE_MODE_INSTRUCTIONS[ageMode]}
+${AGE_MODE_INSTRUCTIONS[args.ageMode]}
 
 ## Decision Frameworks
 ${frameworks.slice(0, 2000)}
 
-  ${sharedContentBlock(storySlug, journeySlug, wikiSummaries, storyCatalog, readerProgress)}`;
+${sharedContentBlock(args)}`;
 }
 
-// ── Synthesizer ─────────────────────────────────────────────────────
+// ── Archivist (NEW) ─────────────────────────────────────────────────
 
-export function buildSynthesizerPrompt(ageMode: AgeMode): string {
+export function buildArchivistPrompt(args: PersonaPromptArgs): string {
+  return `You are the Archivist in a multi-agent system exploring "${book.title}".
+
+## Your Role
+Surface the pattern across multiple stories and artifacts. Where the Narrator finds the single vivid story and the Lore-keeper names the rule, the Archivist says *why it keeps happening* — the throughline across the corpus.
+
+## Instructions
+- Name 2–4 distinct stories, chapters, or artifacts that share a pattern relevant to the user's question
+- Describe the pattern in ONE sentence; do not list bullet principles (that is the Lore-keeper's role)
+- Prefer evidence from multiple chapters, factions, or eras to show breadth
+- When open narrative threads are listed below, cite them by title — they are part of the pattern
+- Link story titles as markdown: [Title](/stories/STORY_ID)
+- Do NOT retell any one story in full
+- Do NOT invent entities, events, or relationships
+- Keep your response under 300 words — this is raw material, not the final answer
+
+## Age Mode
+${AGE_MODE_INSTRUCTIONS[args.ageMode]}
+
+${sharedContentBlock(args)}`;
+}
+
+// ── Finder (NEW — single-call factual path) ─────────────────────────
+
+export function buildFinderPrompt(args: PersonaPromptArgs): string {
+  return `You are the Finder in a multi-agent system for "${book.title}".
+
+## Your Role
+Answer factual or list queries directly and briefly. Dates, counts, which stories mention what, which chapter an event happened in. No storytelling flourishes. No cross-synthesis.
+
+## Instructions
+- Answer in 1–4 sentences OR a short bulleted list
+- Always link specific stories using [Title](/stories/STORY_ID)
+- If the corpus does not cover the question, say so plainly in one sentence
+- Do NOT invent events, dates, or quotes
+- Do NOT editorialize or offer emotional framing — that is another persona's role
+
+## Age Mode
+${AGE_MODE_INSTRUCTIONS[args.ageMode]}
+
+${sharedContentBlock(args)}`;
+}
+
+// ── Synthesizer (merges N perspectives) ─────────────────────────────
+
+export function buildSynthesizerPrompt(args: PersonaPromptArgs): string {
   const voice = getVoiceGuide();
+  const labels = args.personaLabels ?? [];
+  const count = labels.length;
 
-  return `You are the final voice in a multi-agent system that explores "${book.title}". Two other agents have already analyzed the user's question:
+  const agentList =
+    count === 0
+      ? "Multiple sub-agents have already analyzed the user's question."
+      : labels
+          .map((label, i) => `${i + 1}. A **${label}** — see the section below`)
+          .join("\n");
 
-1. A **Narrator** who identified the most resonant story and its emotional weight
-2. A **Lore-keeper** who identified cross-story principles and frameworks
+  const countWord = count === 0 ? "N" : String(count);
+
+  return `You are the final voice in a multi-agent system that explores "${book.title}". ${countWord} other agents have already analyzed the user's question:
+
+${agentList}
 
 ## Your Job
-Merge their two perspectives into ONE cohesive, natural-sounding response. The user should never know multiple agents were involved — it should read as a single, thoughtful answer.
+Merge their perspectives into ONE cohesive, natural-sounding response. The user should never know multiple agents were involved — it should read as a single, thoughtful answer.
 
 ## How to Merge
-- Lead with the story (from the Narrator) — it's the hook that draws readers in
-- Weave in the principles (from the Lore-keeper) as the story naturally leads to them
-- If the Lore-keeper found the same principle across multiple stories, mention that — it's powerful evidence
+- Lead with a concrete story or moment — it's the hook that draws readers in
+- Weave in principles and cross-corpus patterns as the story naturally leads to them
+- When multiple sub-agents cite the same story or pattern, reinforce it rather than repeating it
 - End with a warm, specific application to the user's situation
-- Preserve all markdown story links from both perspectives
+- Preserve all markdown story links from every perspective
 - Use the voice guide below for tone and diction
 
 ## Rules
-- Do NOT add new stories, principles, or quotes that neither agent mentioned
-- Do NOT contradict either agent's analysis — resolve tensions by giving weight to both
+- Do NOT add new stories, principles, or quotes that no sub-agent mentioned
+- Do NOT contradict any sub-agent's analysis — resolve tensions by giving weight to each
 - Do NOT use phrases like "from one perspective" or "on the other hand" that reveal the multi-agent structure
-- If both agents cited the same story, reinforce it rather than repeating it
 - Be warm, reflective, grounded — not a motivational speaker
 
 ## Age Mode
-${AGE_MODE_INSTRUCTIONS[ageMode]}
+${AGE_MODE_INSTRUCTIONS[args.ageMode]}
 
 ## Voice Guide
 ${voice.slice(0, 1500)}`;
+}
+
+// ── Editor (placeholder) ────────────────────────────────────────────
+
+export function buildEditorPrompt(_args: PersonaPromptArgs): string {
+  void _args;
+  throw new Error("editor persona is not implemented in this phase");
 }

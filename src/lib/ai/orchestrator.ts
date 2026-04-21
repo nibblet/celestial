@@ -1,24 +1,34 @@
 /**
- * Ask orchestrator — routes questions through either:
- *   Simple path: single Sonnet call (current behavior)
- *   Deep path:   two parallel perspective calls + synthesizer
+ * Ask orchestrator — routes the user's question through one of two paths,
+ * both driven by the persona registry (src/lib/ai/personas.ts):
  *
- * Feature-flagged via ENABLE_DEEP_ASK env var.
+ *   Single path (route.personas.length === 1)
+ *     One persona call (default: Finder), streamed straight to the client.
  *
- * Every Anthropic call is recorded through logAiCall() so we have end-to-end
- * token/cost/latency tracking before Celestial opens up.
+ *   Multi path (route.personas.length > 1)
+ *     Every sub-persona fires in parallel (non-streaming), their outputs
+ *     are concatenated into a synthesis user-message, and the Synthesizer
+ *     persona streams the final merged answer.
+ *
+ * Routing is owned by src/lib/ai/router.ts. The ENABLE_DEEP_ASK env flag is
+ * an ops kill-switch: when it is not "true" every route is demoted to the
+ * single Finder call, preserving today's shipped behavior in prod until
+ * explicitly opted in.
+ *
+ * Every Anthropic call — sub-persona and synthesizer — is recorded via
+ * logAiCall() for end-to-end token/cost/latency visibility.
  */
 
 import Anthropic from "@anthropic-ai/sdk";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { buildSystemPrompt } from "./prompts";
-import {
-  buildStorytellerPrompt,
-  buildPrinciplesCoachPrompt,
-  buildSynthesizerPrompt,
-} from "./perspectives";
-import { classifyQuestion } from "./classifier";
 import { logAiCall } from "./ledger";
+import { routeAsk, type PersonaRoute } from "./router";
+import {
+  getPersona,
+  getPersonaLabels,
+  type PersonaKey,
+  type PersonaPromptArgs,
+} from "./personas";
 import type { AgeMode } from "@/types";
 import {
   getCanonicalStoryMarkdown,
@@ -27,8 +37,6 @@ import {
 } from "@/lib/wiki/corpus";
 import type { ReaderProgress } from "@/lib/progress/reader-progress";
 import { isStoryUnlocked } from "@/lib/progress/reader-progress";
-
-const MODEL = "claude-sonnet-4-20250514";
 
 export interface OrchestrateParams {
   anthropic: Anthropic;
@@ -49,8 +57,11 @@ export interface OrchestrateParams {
 export interface OrchestrateResult {
   /** Async iterable of text chunks for SSE streaming */
   stream: AsyncIterable<string>;
-  /** Whether the deep (multi-perspective) path was used */
+  /** High-level classification kept for backwards compatibility with
+   *  existing callers that log it. */
   depth: "simple" | "deep";
+  /** Full route including the persona plan — useful for downstream debug UIs. */
+  route: PersonaRoute;
 }
 
 /**
@@ -59,53 +70,78 @@ export interface OrchestrateResult {
 export async function orchestrateAsk(
   params: OrchestrateParams,
 ): Promise<OrchestrateResult> {
+  const rawRoute = routeAsk(params.message);
   const deepEnabled = process.env.ENABLE_DEEP_ASK === "true";
-  const classified = classifyQuestion(params.message, params.messages);
-  const depth = deepEnabled && classified === "deep" ? "deep" : "simple";
 
-  if (depth === "deep") {
-    return { stream: deepPath(params), depth: "deep" };
-  }
-  return { stream: simplePath(params), depth: "simple" };
+  // Kill-switch: when deep synthesis is disabled in prod, force every route
+  // back onto the single Finder call. Keep the classified depth around so
+  // downstream telemetry can still see what the router *wanted* to do.
+  const route: PersonaRoute =
+    !deepEnabled && rawRoute.personas.length > 1
+      ? {
+          personas: ["finder"],
+          depth: rawRoute.depth,
+          reason: `deep route demoted to finder (ENABLE_DEEP_ASK != true); original: ${rawRoute.reason}`,
+        }
+      : rawRoute;
+
+  const stream =
+    route.personas.length > 1
+      ? multiPath(params, route)
+      : singlePath(params, route, route.personas[0] ?? "finder");
+
+  return { stream, depth: route.depth, route };
 }
 
-// ── Simple path (single Sonnet call) ────────────────────────────────
+// ── Prompt args assembly ────────────────────────────────────────────
 
-async function* simplePath(
+async function buildPromptArgs(
   params: OrchestrateParams,
-): AsyncGenerator<string> {
-  const { anthropic, supabase, userId, conversationId, messages, ageMode, storySlug, journeySlug, readerProgress } = params;
+): Promise<PersonaPromptArgs> {
+  const { ageMode, storySlug, journeySlug, readerProgress } = params;
 
   const [wikiSummaries, stories, storyContextRaw] = await Promise.all([
     getCanonicalWikiSummaries(),
     getCanonicalStories(),
     storySlug ? getCanonicalStoryMarkdown(storySlug) : Promise.resolve(""),
   ]);
+  void storyContextRaw; // storyContext is assembled inside each persona builder
+
   const visibleStories = readerProgress
     ? stories.filter((story) => isStoryUnlocked(story.storyId, readerProgress))
     : stories;
+
   const storyCatalog = visibleStories
     .map((story) => `- ${story.storyId} — ${story.title}`)
     .join("\n");
-  const storyContext =
-    storySlug && readerProgress && !isStoryUnlocked(storySlug, readerProgress)
-      ? ""
-      : storyContextRaw;
-  const systemPrompt = buildSystemPrompt(
+
+  return {
     ageMode,
     storySlug,
     journeySlug,
-    undefined,
     wikiSummaries,
     storyCatalog,
-    storyContext || undefined,
     readerProgress,
-  );
+  };
+}
+
+// ── Single path (one persona, streamed) ─────────────────────────────
+
+async function* singlePath(
+  params: OrchestrateParams,
+  route: PersonaRoute,
+  personaKey: PersonaKey,
+): AsyncGenerator<string> {
+  const { anthropic, supabase, userId, conversationId, messages } = params;
+  const persona = getPersona(personaKey);
+  const promptArgs = await buildPromptArgs(params);
+  const systemPrompt = persona.buildSystemPrompt(promptArgs);
 
   const startedAt = Date.now();
   const stream = anthropic.messages.stream({
-    model: MODEL,
-    max_tokens: 1024,
+    model: persona.model,
+    max_tokens: persona.maxTokens,
+    temperature: persona.temperature,
     system: systemPrompt,
     messages,
   });
@@ -122,106 +158,101 @@ async function* simplePath(
     const final = await stream.finalMessage();
     void logAiCall(supabase, {
       userId: userId ?? null,
-      persona: "synthesizer",
+      persona: persona.key,
       contextType: "ask",
       contextId: conversationId ?? null,
-      model: MODEL,
+      model: persona.model,
       inputTokens: final.usage?.input_tokens ?? null,
       outputTokens: final.usage?.output_tokens ?? null,
       latencyMs: Date.now() - startedAt,
-      meta: { path: "simple" },
+      meta: {
+        path: "single",
+        route_depth: route.depth,
+        route_reason: route.reason,
+      },
     });
   } catch (err) {
     void logAiCall(supabase, {
       userId: userId ?? null,
-      persona: "synthesizer",
+      persona: persona.key,
       contextType: "ask",
       contextId: conversationId ?? null,
-      model: MODEL,
+      model: persona.model,
       latencyMs: Date.now() - startedAt,
       status: "error",
       errorMessage: err instanceof Error ? err.message : String(err),
-      meta: { path: "simple" },
+      meta: {
+        path: "single",
+        route_depth: route.depth,
+        route_reason: route.reason,
+      },
     });
     throw err;
   }
 }
 
-// ── Deep path (multi-perspective) ───────────────────────────────────
+// ── Multi path (N sub-personas -> synthesizer stream) ───────────────
 
-async function* deepPath(
+async function* multiPath(
   params: OrchestrateParams,
+  route: PersonaRoute,
 ): AsyncGenerator<string> {
-  const { anthropic, supabase, userId, conversationId, messages, ageMode, storySlug, journeySlug, readerProgress } = params;
-  const [wikiSummaries, stories] = await Promise.all([
-    getCanonicalWikiSummaries(),
-    getCanonicalStories(),
-  ]);
-  const visibleStories = readerProgress
-    ? stories.filter((story) => isStoryUnlocked(story.storyId, readerProgress))
-    : stories;
-  const storyCatalog = visibleStories
-    .map((story) => `- ${story.storyId} — ${story.title}`)
-    .join("\n");
+  const { anthropic, supabase, userId, conversationId, messages, ageMode } =
+    params;
+  const promptArgs = await buildPromptArgs(params);
 
-  const storytellerPrompt = buildStorytellerPrompt(
-    ageMode,
-    storySlug,
-    journeySlug,
-    wikiSummaries,
-    storyCatalog,
-    readerProgress,
+  const subPersonas = route.personas.map(getPersona);
+
+  // Fire every sub-persona in parallel. Failures in any one sub-call are
+  // logged by callPerspective and re-thrown so the orchestrator surfaces
+  // the error — we'd rather fail the whole Ask than silently synthesize
+  // over a missing perspective.
+  const perspectiveTexts = await Promise.all(
+    subPersonas.map((persona) =>
+      callPerspective({
+        anthropic,
+        persona: persona.key,
+        systemPrompt: persona.buildSystemPrompt(promptArgs),
+        messages,
+        supabase,
+        userId: userId ?? null,
+        conversationId: conversationId ?? null,
+        meta: {
+          path: "multi",
+          route_depth: route.depth,
+          route_reason: route.reason,
+        },
+      }),
+    ),
   );
-  const principlesPrompt = buildPrinciplesCoachPrompt(
+
+  const synthesizer = getPersona("synthesizer");
+  const synthesizerPrompt = synthesizer.buildSystemPrompt({
+    ...promptArgs,
     ageMode,
-    storySlug,
-    journeySlug,
-    wikiSummaries,
-    storyCatalog,
-    readerProgress,
-  );
+    personaLabels: getPersonaLabels(route.personas),
+  });
 
-  const commonCtx = { supabase, userId: userId ?? null, conversationId: conversationId ?? null };
-  const [storytellerResult, principlesResult] = await Promise.all([
-    callPerspective({
-      anthropic,
-      persona: "narrator",
-      systemPrompt: storytellerPrompt,
-      messages,
-      ...commonCtx,
-    }),
-    callPerspective({
-      anthropic,
-      persona: "lorekeeper",
-      systemPrompt: principlesPrompt,
-      messages,
-      ...commonCtx,
-    }),
-  ]);
-
-  const storytellerText = storytellerResult.text;
-  const principlesText = principlesResult.text;
-
-  const synthesizerPrompt = buildSynthesizerPrompt(ageMode);
+  const perspectiveBlocks = subPersonas
+    .map(
+      (persona, i) =>
+        `---${persona.label.toUpperCase()} PERSPECTIVE---\n${perspectiveTexts[i]}`,
+    )
+    .join("\n\n");
 
   const synthMessages: { role: "user" | "assistant"; content: string }[] = [
     ...messages,
     {
       role: "user" as const,
-      content: `Here are two perspectives on my question. Please synthesize them into one response.
-
----NARRATOR PERSPECTIVE---
-${storytellerText}
-
----LORE-KEEPER PERSPECTIVE---
-${principlesText}`,
+      content: `Here are ${subPersonas.length} perspectives on my question. Please synthesize them into one response.\n\n${perspectiveBlocks}`,
     },
   ];
 
   const startedAt = Date.now();
   const stream = anthropic.messages.stream({
-    model: MODEL,
-    max_tokens: 1024,
+    model: synthesizer.model,
+    max_tokens: synthesizer.maxTokens,
+    temperature: synthesizer.temperature,
     system: synthesizerPrompt,
     messages: synthMessages,
   });
@@ -238,26 +269,36 @@ ${principlesText}`,
     const final = await stream.finalMessage();
     void logAiCall(supabase, {
       userId: userId ?? null,
-      persona: "synthesizer",
+      persona: synthesizer.key,
       contextType: "ask",
       contextId: conversationId ?? null,
-      model: MODEL,
+      model: synthesizer.model,
       inputTokens: final.usage?.input_tokens ?? null,
       outputTokens: final.usage?.output_tokens ?? null,
       latencyMs: Date.now() - startedAt,
-      meta: { path: "deep" },
+      meta: {
+        path: "multi",
+        route_depth: route.depth,
+        route_reason: route.reason,
+        sub_personas: route.personas,
+      },
     });
   } catch (err) {
     void logAiCall(supabase, {
       userId: userId ?? null,
-      persona: "synthesizer",
+      persona: synthesizer.key,
       contextType: "ask",
       contextId: conversationId ?? null,
-      model: MODEL,
+      model: synthesizer.model,
       latencyMs: Date.now() - startedAt,
       status: "error",
       errorMessage: err instanceof Error ? err.message : String(err),
-      meta: { path: "deep" },
+      meta: {
+        path: "multi",
+        route_depth: route.depth,
+        route_reason: route.reason,
+        sub_personas: route.personas,
+      },
     });
     throw err;
   }
@@ -267,18 +308,21 @@ ${principlesText}`,
 
 async function callPerspective(args: {
   anthropic: Anthropic;
-  persona: "narrator" | "lorekeeper" | "archivist" | "finder";
+  persona: PersonaKey;
   systemPrompt: string;
   messages: { role: "user" | "assistant"; content: string }[];
   supabase: SupabaseClient;
   userId: string | null;
   conversationId: string | null;
-}): Promise<{ text: string }> {
+  meta?: Record<string, unknown>;
+}): Promise<string> {
+  const persona = getPersona(args.persona);
   const startedAt = Date.now();
   try {
     const result = await args.anthropic.messages.create({
-      model: MODEL,
-      max_tokens: 512,
+      model: persona.model,
+      max_tokens: persona.maxTokens,
+      temperature: persona.temperature,
       system: args.systemPrompt,
       messages: args.messages,
     });
@@ -288,25 +332,27 @@ async function callPerspective(args: {
       .join("");
     void logAiCall(args.supabase, {
       userId: args.userId,
-      persona: args.persona,
+      persona: persona.key,
       contextType: "ask",
       contextId: args.conversationId,
-      model: MODEL,
+      model: persona.model,
       inputTokens: result.usage?.input_tokens ?? null,
       outputTokens: result.usage?.output_tokens ?? null,
       latencyMs: Date.now() - startedAt,
+      meta: args.meta,
     });
-    return { text };
+    return text;
   } catch (err) {
     void logAiCall(args.supabase, {
       userId: args.userId,
-      persona: args.persona,
+      persona: persona.key,
       contextType: "ask",
       contextId: args.conversationId,
-      model: MODEL,
+      model: persona.model,
       latencyMs: Date.now() - startedAt,
       status: "error",
       errorMessage: err instanceof Error ? err.message : String(err),
+      meta: args.meta,
     });
     throw err;
   }
