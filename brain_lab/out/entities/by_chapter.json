@@ -1,0 +1,135 @@
+{
+  "CH06": {
+    "character": [
+      "amar-cael",
+      "aven-voss",
+      "galen-voss",
+      "jax-reyes",
+      "jonah-revas",
+      "lena-osei",
+      "marco-ruiz",
+      "thane-meric"
+    ]
+  },
+  "CH01": {
+    "character": [
+      "aven-voss",
+      "galen-voss"
+    ]
+  },
+  "CH02": {
+    "character": [
+      "aven-voss",
+      "evelyn-tran",
+      "jax-reyes",
+      "jonah-revas",
+      "lena-osei",
+      "marco-ruiz"
+    ]
+  },
+  "CH04": {
+    "character": [
+      "aven-voss",
+      "galen-voss",
+      "jonah-revas",
+      "marco-ruiz",
+      "thane-meric"
+    ]
+  },
+  "CH10": {
+    "character": [
+      "aven-voss",
+      "evelyn-tran",
+      "jonah-revas",
+      "lena-osei",
+      "marco-ruiz",
+      "thane-meric"
+    ]
+  },
+  "CH12": {
+    "character": [
+      "aven-voss"
+    ]
+  },
+  "CH03": {
+    "character": [
+      "evelyn-tran",
+      "galen-voss",
+      "jonah-revas",
+      "lena-osei",
+      "thane-meric"
+    ]
+  },
+  "CH05": {
+    "character": [
+      "evelyn-tran",
+      "galen-voss",
+      "jonah-revas",
+      "marco-ruiz",
+      "thane-meric"
+    ]
+  },
+  "CH07": {
+    "character": [
+      "evelyn-tran",
+      "lena-osei",
+      "marco-ruiz",
+      "thane-meric"
+    ]
+  },
+  "CH09": {
+    "character": [
+      "evelyn-tran",
+      "jonah-revas",
+      "lena-osei",
+      "thane-meric"
+    ]
+  },
+  "CH11": {
+    "character": [
+      "evelyn-tran"
+    ]
+  },
+  "CH16": {
+    "character": [
+      "evelyn-tran",
+      "jonah-revas",
+      "marco-ruiz",
+      "thane-meric"
+    ]
+  },
+  "CH17": {
+    "character": [
+      "evelyn-tran",
+      "galen-voss",
+      "jonah-revas",
+      "lena-osei",
+      "thane-meric"
+    ]
+  },
+  "CH08": {
+    "character": [
+      "galen-voss",
+      "jax-reyes",
+      "jonah-revas",
+      "marco-ruiz"
+    ]
+  },
+  "CH13": {
+    "character": [
+      "jonah-revas"
+    ]
+  },
+  "CH14": {
+    "character": [
+      "jonah-revas",
+      "lena-osei",
+      "thane-meric"
+    ]
+  },
+  "CH15": {
+    "character": [
+      "thane-meric"
+    ]
+  }
+}

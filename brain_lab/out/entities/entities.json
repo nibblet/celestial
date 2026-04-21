@@ -1,0 +1,152 @@
+{
+  "generatedAt": "2026-04-20T18:36:42.767809+00:00",
+  "source": "content/wiki/stories/CH*.md",
+  "entities": [
+    {
+      "type": "character",
+      "slug": "amar-cael",
+      "name": "Amar Cael",
+      "first_chapter_id": "CH06",
+      "summary": "> The corridor wasn\u2019t listed on any ship manifest.",
+      "story_ids": [
+        "CH06"
+      ]
+    },
+    {
+      "type": "character",
+      "slug": "aven-voss",
+      "name": "Aven Voss",
+      "first_chapter_id": "CH01",
+      "summary": "> The Martian wind didn\u2019t howl-it whispered, dragging red dust in long, ribboned currents across the excavation field.",
+      "story_ids": [
+        "CH01",
+        "CH02",
+        "CH04",
+        "CH06",
+        "CH10",
+        "CH12"
+      ]
+    },
+    {
+      "type": "character",
+      "slug": "evelyn-tran",
+      "name": "Evelyn Tran",
+      "first_chapter_id": "CH02",
+      "summary": "> Thane stood at the outer ring of the excavation grid, visor tinted against the Martian morning glare.",
+      "story_ids": [
+        "CH02",
+        "CH03",
+        "CH05",
+        "CH07",
+        "CH09",
+        "CH10",
+        "CH11",
+        "CH16",
+        "CH17"
+      ]
+    },
+    {
+      "type": "character",
+      "slug": "galen-voss",
+      "name": "Galen Voss",
+      "first_chapter_id": "CH01",
+      "summary": "> The Martian wind didn\u2019t howl-it whispered, dragging red dust in long, ribboned currents across the excavation field.",
+      "story_ids": [
+        "CH01",
+        "CH03",
+        "CH04",
+        "CH05",
+        "CH06",
+        "CH08",
+        "CH17"
+      ]
+    },
+    {
+      "type": "character",
+      "slug": "jax-reyes",
+      "name": "Jax Reyes",
+      "first_chapter_id": "CH02",
+      "summary": "> Thane stood at the outer ring of the excavation grid, visor tinted against the Martian morning glare.",
+      "story_ids": [
+        "CH02",
+        "CH06",
+        "CH08"
+      ]
+    },
+    {
+      "type": "character",
+      "slug": "jonah-revas",
+      "name": "Jonah Revas",
+      "first_chapter_id": "CH02",
+      "summary": "> Thane stood at the outer ring of the excavation grid, visor tinted against the Martian morning glare.",
+      "story_ids": [
+        "CH02",
+        "CH03",
+        "CH04",
+        "CH05",
+        "CH06",
+        "CH08",
+        "CH09",
+        "CH10",
+        "CH13",
+        "CH14",
+        "CH16",
+        "CH17"
+      ]
+    },
+    {
+      "type": "character",
+      "slug": "lena-osei",
+      "name": "Lena Osei",
+      "first_chapter_id": "CH02",
+      "summary": "> Thane stood at the outer ring of the excavation grid, visor tinted against the Martian morning glare.",
+      "story_ids": [
+        "CH02",
+        "CH03",
+        "CH06",
+        "CH07",
+        "CH09",
+        "CH10",
+        "CH14",
+        "CH17"
+      ]
+    },
+    {
+      "type": "character",
+      "slug": "marco-ruiz",
+      "name": "Marco Ruiz",
+      "first_chapter_id": "CH02",
+      "summary": "> Thane stood at the outer ring of the excavation grid, visor tinted against the Martian morning glare.",
+      "story_ids": [
+        "CH02",
+        "CH04",
+        "CH05",
+        "CH06",
+        "CH07",
+        "CH08",
+        "CH10",
+        "CH16"
+      ]
+    },
+    {
+      "type": "character",
+      "slug": "thane-meric",
+      "name": "Thane Meric",
+      "first_chapter_id": "CH03",
+      "summary": "> The descent platform hummed beneath Lena\u2019s boots, steady and deliberate, though she still felt the drop in her stomach.",
+      "story_ids": [
+        "CH03",
+        "CH04",
+        "CH05",
+        "CH06",
+        "CH07",
+        "CH09",
+        "CH10",
+        "CH14",
+        "CH15",
+        "CH16",
+        "CH17"
+      ]
+    }
+  ]
+}
