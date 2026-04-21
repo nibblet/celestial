@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { createClient } from "@/lib/supabase/server";
 import { buildTellSystemPrompt } from "@/lib/ai/tell-prompts";
+import { logAiCall } from "@/lib/ai/ledger";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { hasAuthorSpecialAccess } from "@/lib/auth/special-access";
 import { getContributorPersonaName } from "@/lib/tell/contribution";
@@ -10,6 +11,8 @@ import type { ContributionMode } from "@/types";
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY || "",
 });
+
+const DRAFT_MODEL = "claude-sonnet-4-20250514";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -122,11 +125,39 @@ export async function POST(request: Request) {
   );
 
   // Non-streaming — we need the full JSON response
-  const response = await anthropic.messages.create({
-    model: "claude-sonnet-4-20250514",
-    max_tokens: 4096,
-    system: systemPrompt,
-    messages,
+  const startedAt = Date.now();
+  let response;
+  try {
+    response = await anthropic.messages.create({
+      model: DRAFT_MODEL,
+      max_tokens: 4096,
+      system: systemPrompt,
+      messages,
+    });
+  } catch (err) {
+    void logAiCall(supabase, {
+      userId: user.id,
+      persona: "tell_draft",
+      contextType: "tell_session",
+      contextId: sessionId,
+      model: DRAFT_MODEL,
+      latencyMs: Date.now() - startedAt,
+      status: "error",
+      errorMessage: err instanceof Error ? err.message : String(err),
+      meta: { contribution_mode: contributionMode },
+    });
+    throw err;
+  }
+  void logAiCall(supabase, {
+    userId: user.id,
+    persona: "tell_draft",
+    contextType: "tell_session",
+    contextId: sessionId,
+    model: DRAFT_MODEL,
+    inputTokens: response.usage?.input_tokens ?? null,
+    outputTokens: response.usage?.output_tokens ?? null,
+    latencyMs: Date.now() - startedAt,
+    meta: { contribution_mode: contributionMode },
   });
 
   const rawText =

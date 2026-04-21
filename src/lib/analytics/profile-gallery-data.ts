@@ -2,6 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { storiesData } from "@/lib/wiki/static-data";
+import { logAiCall } from "@/lib/ai/ledger";
 import {
   computeInputSignature,
   generateReflection,
@@ -263,6 +264,16 @@ export async function getProfileGalleryData(
       const admin = createAdminClient();
       const signature = computeInputSignature(inputs);
       const now = new Date();
+      void logAiCall(admin, {
+        userId,
+        persona: "profile_reflection",
+        contextType: "profile",
+        contextId: userId,
+        model: generated.modelSlug,
+        inputTokens: generated.inputTokens,
+        outputTokens: generated.outputTokens,
+        latencyMs: generated.latencyMs,
+      });
       await admin.from("sb_profile_reflections").upsert(
         {
           user_id: userId,

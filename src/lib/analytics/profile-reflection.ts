@@ -136,15 +136,24 @@ export function buildReflectionPrompt(corpus: ReflectionCorpus): string {
   return lines.join("\n");
 }
 
+export type GeneratedReflection = {
+  text: string;
+  modelSlug: string;
+  inputTokens: number | null;
+  outputTokens: number | null;
+  latencyMs: number;
+};
+
 export async function generateReflection(
   corpus: ReflectionCorpus,
   anthropic: Anthropic
-): Promise<{ text: string; modelSlug: string } | null> {
+): Promise<GeneratedReflection | null> {
   const userPrompt = buildReflectionPrompt(corpus);
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), REFLECTION_TIMEOUT_MS);
 
+  const startedAt = Date.now();
   try {
     const response = await anthropic.messages.create(
       {
@@ -162,7 +171,13 @@ export async function generateReflection(
       .join("")
       .trim();
     if (!text) return null;
-    return { text, modelSlug: REFLECTION_MODEL };
+    return {
+      text,
+      modelSlug: REFLECTION_MODEL,
+      inputTokens: response.usage?.input_tokens ?? null,
+      outputTokens: response.usage?.output_tokens ?? null,
+      latencyMs: Date.now() - startedAt,
+    };
   } catch {
     return null;
   } finally {

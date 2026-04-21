@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { createClient } from "@/lib/supabase/server";
 import { buildTellSystemPrompt } from "@/lib/ai/tell-prompts";
+import { logAiCall } from "@/lib/ai/ledger";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { hasAuthorSpecialAccess } from "@/lib/auth/special-access";
 import {
@@ -13,6 +14,8 @@ import type { ContributionMode } from "@/types";
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY || "",
 });
+
+const TELL_MODEL = "claude-sonnet-4-20250514";
 
 type StorySessionRow = {
   id: string;
@@ -172,8 +175,9 @@ export async function POST(request: Request) {
     );
 
     // Stream response
+    const startedAt = Date.now();
     const stream = anthropic.messages.stream({
-      model: "claude-sonnet-4-20250514",
+      model: TELL_MODEL,
       max_tokens: 1024,
       system: systemPrompt,
       messages,
@@ -200,6 +204,19 @@ export async function POST(request: Request) {
             }
           }
 
+          const final = await stream.finalMessage();
+          void logAiCall(supabase, {
+            userId: user.id,
+            persona: "tell_gather",
+            contextType: "tell_session",
+            contextId: sessId ?? null,
+            model: TELL_MODEL,
+            inputTokens: final.usage?.input_tokens ?? null,
+            outputTokens: final.usage?.output_tokens ?? null,
+            latencyMs: Date.now() - startedAt,
+            meta: { contribution_mode: contributionMode },
+          });
+
           // Save assistant response
           await supabase.from("sb_story_messages").insert({
             session_id: sessId,
@@ -214,6 +231,17 @@ export async function POST(request: Request) {
           );
           controller.close();
         } catch (err) {
+          void logAiCall(supabase, {
+            userId: user.id,
+            persona: "tell_gather",
+            contextType: "tell_session",
+            contextId: sessId ?? null,
+            model: TELL_MODEL,
+            latencyMs: Date.now() - startedAt,
+            status: "error",
+            errorMessage: err instanceof Error ? err.message : String(err),
+            meta: { contribution_mode: contributionMode },
+          });
           if (!fullResponse) {
             await supabase
               .from("sb_story_messages")

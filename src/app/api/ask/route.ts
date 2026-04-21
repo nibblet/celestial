@@ -116,6 +116,9 @@ export async function POST(request: Request) {
   const readerProgress = await getReaderProgress();
   const { stream: textStream } = await orchestrateAsk({
     anthropic,
+    supabase,
+    userId: user.id,
+    conversationId: convId,
     message,
     messages,
     ageMode: ageMode as AgeMode,

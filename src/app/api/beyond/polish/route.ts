@@ -1,5 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { requireAuthor } from "@/lib/auth/require-author";
+import { createClient } from "@/lib/supabase/server";
+import { logAiCall } from "@/lib/ai/ledger";
 import { checkRateLimit } from "@/lib/rate-limit";
 import {
   buildUserPrompt,
@@ -82,12 +84,26 @@ export async function POST(request: Request) {
     );
   }
 
+  const supabase = await createClient();
+  const startedAt = Date.now();
+  const contextId = gate.user!.id;
   try {
     const message = await anthropic.messages.create({
       model: MODEL,
       max_tokens: 4096,
       system: SYSTEM_PROMPT,
       messages: [{ role: "user", content: buildUserPrompt(body) }],
+    });
+
+    void logAiCall(supabase, {
+      userId: gate.user!.id,
+      persona: "beyond_polish",
+      contextType: "beyond_polish",
+      contextId,
+      model: MODEL,
+      inputTokens: message.usage?.input_tokens ?? null,
+      outputTokens: message.usage?.output_tokens ?? null,
+      latencyMs: Date.now() - startedAt,
     });
 
     const textBlock = message.content.find((c) => c.type === "text");
@@ -108,6 +124,16 @@ export async function POST(request: Request) {
 
     return Response.json({ suggestion });
   } catch (err) {
+    void logAiCall(supabase, {
+      userId: gate.user!.id,
+      persona: "beyond_polish",
+      contextType: "beyond_polish",
+      contextId,
+      model: MODEL,
+      latencyMs: Date.now() - startedAt,
+      status: "error",
+      errorMessage: err instanceof Error ? err.message : String(err),
+    });
     console.error("Polish route failed:", err);
     return Response.json(
       { error: "Polish service unavailable." },
