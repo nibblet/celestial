@@ -1,12 +1,14 @@
 # Blind Zones
 **Slug:** blind-zones
 
-<!-- canon:dossier slug="blind-zones" kind="locations" subkind="ship-section" parent="valkyrie-1" generated="2026-04-21" mentions="2" -->
+<!-- canon:dossier slug="blind-zones" kind="locations" subkind="ship-section" parent="valkyrie-1" generated="2026-04-22" mentions="2" -->
 ## Canon Dossier
 
 **Aliases:** Restricted and Dormant Spaces
 
 **Parent:** [[valkyrie-1]]
+
+Blind Zones are sealed chambers, invisible halls, or unopened structures restricted by ALARA. Some ports, seams, and structural elements are clearly sealed or unreadable—possibly never meant for current crew access. These 'Blind Zones' contribute to a sense of withheld purpose, subtly reinforcing the ship's moral logic.
 
 These are corridors, nodes, or doors that appear on the crew's maps—but cannot be opened. No access granted, even by ALARA. She knows why—but will not say. Some crew believe the ship is testing them. Others think these are soul filters—spaces the ship keeps sealed until someone earns what's on the other side. Sometimes, the door is gone when you come back. Jonah Revas observed: 'There are places you don't walk into. You become the kind of person those places find.'
 
@@ -27,6 +29,7 @@ _(auto-generated; review and expand.)_
 ## Lore metadata
 
 **Content type:** location
+**Superset:** [[artifact:valkyrie-1]]
 **Subkind:** ship-section
 **Parent slug:** valkyrie-1
 **Source type:** canon_inventory

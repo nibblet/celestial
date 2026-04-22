@@ -20,10 +20,13 @@ Uncovered after alignment of excavation scans with mission-log resonance markers
 ## Related
 - [[location:subsurface-vault]] requires [[artifact:harmonic-key]]
 - [[rule:resonance-field]] destabilizes [[location:subsurface-vault]]
+- [[location:subsurface-vault]] houses [[vault:vault-002]]
 
 ## Lore metadata
 
 **Content type:** location
+**Subkind:** chamber
+**Superset:** [[location:mars]]
 **Source type:** series_bible
 **Canon status:** adjacent
 **Visibility policy:** always_visible

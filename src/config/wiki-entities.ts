@@ -48,6 +48,16 @@ export const FICTION_FACTIONS_NOUN: NounEntityTypeConfig = {
   relationsSectionHeading: "Related",
 };
 
+/** First-class vault pages under `content/wiki/vaults/` (decision 1A). */
+export const FICTION_VAULTS_NOUN: NounEntityTypeConfig = {
+  id: "fiction_vaults",
+  wikiSubdir: "vaults",
+  memoirSectionHeading: "Appearances",
+  interviewSectionHeading: "Additional appearances",
+  noteSectionHeading: "Note",
+  relationsSectionHeading: "Related",
+};
+
 export const WIKI_THEME_CONCEPT: ThemeConceptConfig = {
   wikiSubdir: "themes",
   storiesHeading: "Stories",

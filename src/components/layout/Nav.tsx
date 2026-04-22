@@ -25,6 +25,7 @@ function isNavActive(pathname: string, href: string): boolean {
       pathname.startsWith("/people") ||
       pathname.startsWith("/characters") ||
       pathname.startsWith("/artifacts") ||
+      pathname.startsWith("/vaults") ||
       pathname.startsWith("/locations") ||
       pathname.startsWith("/factions") ||
       pathname.startsWith("/rules") ||

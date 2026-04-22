@@ -5,10 +5,10 @@ export const PEOPLE_INDEX_SECTION_ORDER: PersonTier[] = ["A", "C", "B", "D"];
 
 /** Short label — tooltips, chips, compact UI (matches inventory meanings). */
 export const TIER_SHORT_LABEL: Record<PersonTier, string> = {
-  A: "Dedicated story",
-  B: "Recurring in memoir",
-  C: "Curated",
-  D: "Across memoir & interviews",
+  A: "Lead / POV",
+  B: "Recurring",
+  C: "Named",
+  D: "Historical / offscreen",
 };
 
 /** Section headings and plain-language blurbs for the people index. */
@@ -17,24 +17,24 @@ export const PEOPLE_INDEX_SECTIONS: Record<
   { heading: string; blurb: string }
 > = {
   A: {
-    heading: "Stories centered on them",
+    heading: "Leads and point-of-view characters",
     blurb:
-      "A memoir chapter is mainly about this person—not only a passing mention.",
-  },
-  C: {
-    heading: "Named on purpose",
-    blurb:
-      "Added deliberately to this index so they are easy to find alongside names spotted automatically from the text.",
+      "Characters who carry a viewpoint or drive the central decisions of the book.",
   },
   B: {
-    heading: "Keep coming up in the memoir",
+    heading: "Recurring crew and principals",
     blurb:
-      "Their name turns up again and again across different stories.",
+      "Named characters who appear across multiple chapters and shape key scenes.",
+  },
+  C: {
+    heading: "Named supporting cast",
+    blurb:
+      "Characters who appear on the page but sit outside the core ensemble.",
   },
   D: {
-    heading: "In the memoir and the interviews",
+    heading: "Historical, offscreen, and background",
     blurb:
-      "Shows up meaningfully in both the written memoir material and the spoken interviews.",
+      "Ancestors, Earth-side figures, and roles that exist in the canon without onscreen presence.",
   },
 };
 

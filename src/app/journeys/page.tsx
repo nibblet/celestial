@@ -1,62 +1,33 @@
-import { getAllJourneys } from "@/lib/wiki/journeys";
-import { JourneyStatusBadge } from "@/components/journeys/JourneyStatusBadge";
-import { JourneyCTAButtons } from "@/components/journeys/JourneyCTAButtons";
+import Link from "next/link";
 
 export default function JourneysPage() {
-  const journeys = getAllJourneys();
-
   return (
     <div className="mx-auto max-w-content px-[var(--page-padding-x)] py-6 md:py-10">
-      <h1 className="type-page-title mb-2">Journeys</h1>
-      <p className="type-ui mb-6 text-ink-muted">
-        Explore Keith&apos;s life as either a curated path through stories or a
-        woven retelling built from the memoir and interviews.
+      <h1 className="type-page-title mb-2">Arcs</h1>
+      <p className="type-ui mb-6 max-w-2xl text-ink-muted">
+        Arc-based exploration is part of the Celestial roadmap and is not yet
+        published in this release.
       </p>
 
-      <div className="grid gap-3 sm:grid-cols-2">
-        {journeys.map((journey) => {
-          const hasNarrated = journey.experienceModes.includes("narrated");
-          const hasGuided = journey.experienceModes.includes("guided");
-          const singleMode =
-            journey.experienceModes.length === 1
-              ? journey.experienceModes[0]
-              : null;
-
-          return (
-            <div
-              key={journey.slug}
-              className="relative rounded-xl border border-[var(--color-border)] bg-warm-white p-4 pb-5 pt-5 pr-16"
-            >
-              <JourneyStatusBadge
-                slug={journey.slug}
-                totalSteps={journey.storyIds.length}
-              />
-              <div className="group">
-                <h2 className="font-[family-name:var(--font-playfair)] text-base font-semibold text-ink transition-colors group-hover:text-burgundy">
-                  {journey.title}
-                </h2>
-                {singleMode && (
-                  <p className="type-meta mt-1.5 text-ink-ghost">
-                    {singleMode === "narrated"
-                      ? "Narrated experience only"
-                      : "Guided path only"}
-                  </p>
-                )}
-                <p className="mt-2 line-clamp-3 font-[family-name:var(--font-lora)] text-sm italic leading-snug text-ink-muted">
-                  {journey.description}
-                </p>
-                <p className="type-meta mt-3 normal-case tracking-normal text-ink-ghost">
-                  {journey.storyCount} stories
-                </p>
-              </div>
-              <JourneyCTAButtons
-                slug={journey.slug}
-                hasNarrated={hasNarrated}
-                hasGuided={hasGuided}
-              />
-            </div>
-          );
-        })}
+      <div className="rounded-2xl border border-[var(--color-border)] bg-warm-white p-5 md:p-6">
+        <p className="font-[family-name:var(--font-lora)] text-base text-ink">
+          Coming soon: curated arc views that connect story beats, turning
+          points, and thematic throughlines across the book.
+        </p>
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+          <Link
+            href="/stories"
+            className="type-ui inline-flex min-h-[44px] items-center justify-center rounded-lg bg-clay px-4 py-2.5 font-medium text-warm-white transition-colors hover:bg-clay-mid"
+          >
+            Browse Chapters
+          </Link>
+          <Link
+            href="/ask"
+            className="type-ui inline-flex min-h-[44px] items-center justify-center rounded-lg border border-[var(--color-border)] bg-warm-white px-4 py-2.5 font-medium text-ink transition-colors hover:border-clay-border"
+          >
+            Ask Celestial
+          </Link>
+        </div>
       </div>
     </div>
   );

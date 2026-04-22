@@ -147,3 +147,26 @@ export async function getCanonicalWikiSummaries(): Promise<string> {
 
   return lines.join("\n");
 }
+
+// ── Canon precedence (shared by prompts, verifier, future tooling) ─────
+
+/** Order: earlier = higher authority when sources conflict. */
+export const CANON_SOURCE_RANK = [
+  "chapter_text",
+  "wiki_canon",
+  "derived_inference",
+] as const;
+
+export type CanonSourceRank = (typeof CANON_SOURCE_RANK)[number];
+
+export function canonAuthorityOrder(rank: CanonSourceRank): number {
+  return CANON_SOURCE_RANK.indexOf(rank);
+}
+
+/** Negative if `a` should override `b`. */
+export function compareCanonAuthority(
+  a: CanonSourceRank,
+  b: CanonSourceRank,
+): number {
+  return canonAuthorityOrder(a) - canonAuthorityOrder(b);
+}

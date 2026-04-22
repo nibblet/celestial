@@ -1,0 +1,24 @@
+# Character tier overrides — applied on top of data-driven tiering from
+# brain_lab/out/entities/entities.json.
+#
+# Use this file for:
+#   1. Characters who do not appear in the ingested chapter entities set
+#      (Earth-side, AIs, ancestors).
+#   2. Characters where policy/canon should override per-chapter counts
+#      (e.g., a vault AI that's a lead even though she has no "speaking
+#      chapters" attributed to her slug in ingestion).
+#
+# Tiers:
+#   A — Leads / point-of-view characters
+#   B — Recurring crew / principals
+#   C — Named supporting cast
+#   D — Historical, offscreen, background
+#
+# Any slug NOT listed here is tiered from entities.json (see retier-characters).
+
+overrides:
+  alara: A           # sentient Valkyrie-1 AI; co-protagonist on the page
+  rhea-solari: B     # Captain, Rigel Ascendant (Earth-side principal)
+  sovrin: B          # moral adjudication engine aboard Rigel Ascendant
+  caeden: B          # Earth oversight AI on Valkyrie-1
+  elira-voss: D      # Thane's guardian figure; biographical only

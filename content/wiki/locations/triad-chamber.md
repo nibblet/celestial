@@ -1,7 +1,7 @@
 # Triad Chamber
 **Slug:** triad-chamber
 
-<!-- canon:dossier slug="triad-chamber" kind="locations" subkind="chamber" parent="" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="triad-chamber" kind="locations" subkind="chamber" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 **Aliases:** Triad Chamber Glyph Encoding
@@ -22,6 +22,7 @@ _(auto-generated; review and expand.)_
 ## Lore metadata
 
 **Content type:** location
+**Superset:** [[artifact:valkyrie-1]]
 **Subkind:** chamber
 **Source type:** canon_inventory
 **Canon status:** canonical

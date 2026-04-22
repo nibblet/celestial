@@ -1,7 +1,7 @@
 # Zone Theta
 **Slug:** zone-theta
 
-<!-- canon:dossier slug="zone-theta" kind="locations" subkind="exploration-zone" parent="mars" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="zone-theta" kind="locations" subkind="exploration-zone" parent="mars" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 **Parent:** [[mars]]
@@ -24,6 +24,7 @@ _(auto-generated; review and expand.)_
 ## Lore metadata
 
 **Content type:** location
+**Superset:** [[artifact:valkyrie-1]]
 **Subkind:** exploration-zone
 **Parent slug:** mars
 **Source type:** canon_inventory

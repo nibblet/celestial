@@ -1,7 +1,7 @@
 # Great Pyramid
 **Slug:** great-pyramid
 
-<!-- canon:dossier slug="great-pyramid" kind="locations" subkind="" parent="giza-plateau" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="great-pyramid" kind="locations" subkind="" parent="giza-plateau" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 **Aliases:** the Great Pyramid
@@ -25,6 +25,7 @@ _(auto-generated; review and expand.)_
 ## Lore metadata
 
 **Content type:** location
+**Superset:** [[location:earth]]
 **Parent slug:** giza-plateau
 **Source type:** canon_inventory
 **Canon status:** canonical

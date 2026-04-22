@@ -80,6 +80,11 @@ test("synthesizer prompt degrades gracefully when personaLabels omitted", () => 
   assert.match(prompt, /Multiple sub-agents|N other agents/i);
 });
 
+test("shared block includes world rules from content/wiki/rules", () => {
+  const prompt = getPersona("finder").buildSystemPrompt(BASE_ARGS);
+  assert.match(prompt, /## World rules \(canonical\)/);
+});
+
 test("shared block renders open narrative threads when provided", () => {
   const prompt = getPersona("archivist").buildSystemPrompt({
     ...BASE_ARGS,

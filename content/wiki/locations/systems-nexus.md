@@ -1,7 +1,7 @@
 # Systems Nexus
 **Slug:** systems-nexus
 
-<!-- canon:dossier slug="systems-nexus" kind="locations" subkind="" parent="valkyrie-1" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="systems-nexus" kind="locations" subkind="" parent="valkyrie-1" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 **Parent:** [[valkyrie-1]]
@@ -24,6 +24,7 @@ _(auto-generated; review and expand.)_
 ## Lore metadata
 
 **Content type:** location
+**Superset:** [[artifact:valkyrie-1]]
 **Parent slug:** valkyrie-1
 **Source type:** canon_inventory
 **Canon status:** canonical

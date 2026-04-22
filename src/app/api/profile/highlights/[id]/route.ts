@@ -12,7 +12,7 @@ export async function GET(
   if (!user) return Response.json({ error: "Unauthorized" }, { status: 401 });
 
   const { data: highlight, error } = await supabase
-    .from("sb_story_highlights")
+    .from("cel_story_highlights")
     .select(
       "id, story_id, story_title, passage_text, note, saved_at, passage_ask_conversation_id"
     )
@@ -40,7 +40,7 @@ export async function DELETE(
 
   // RLS guarantees users can only delete their own rows.
   const { error } = await supabase
-    .from("sb_story_highlights")
+    .from("cel_story_highlights")
     .delete()
     .eq("id", id)
     .eq("user_id", user.id);

@@ -16,7 +16,7 @@ export async function GET(
 
   // Get conversation (RLS ensures user can only see own)
   const { data: conversation, error: convError } = await supabase
-    .from("sb_conversations")
+    .from("cel_conversations")
     .select("*")
     .eq("id", id)
     .single();
@@ -27,8 +27,8 @@ export async function GET(
 
   // Get messages
   const { data: messages, error: msgError } = await supabase
-    .from("sb_messages")
-    .select("id, role, content, cited_story_slugs, created_at")
+    .from("cel_messages")
+    .select("id, role, content, cited_story_slugs, evidence, created_at")
     .eq("conversation_id", id)
     .order("created_at", { ascending: true });
 

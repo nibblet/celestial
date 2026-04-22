@@ -18,13 +18,28 @@ export type WikiEntityKind =
   | "faction"
   | "location"
   | "artifact"
-  | "rule";
+  | "rule"
+  | "vault";
 
 export interface WikiEntityLoreProvenance {
   sourceDocument: string;
   sourcePath?: string;
   extractedAt?: string;
   extractorVersion?: string;
+}
+
+/** Parable / rule status chip (see Parable Catalog v2). */
+export type WikiEntityStatus =
+  | "fully_manifested"
+  | "soft"
+  | "fragment"
+  | "foreshadowed"
+  | "cataloged";
+
+export interface WikiEntitySuperset {
+  /** `location`, `artifact`, etc. */
+  type: string;
+  slug: string;
 }
 
 export interface WikiEntityLoreMetadata {
@@ -36,6 +51,12 @@ export interface WikiEntityLoreMetadata {
   chapterRefs: string[];
   aliases: string[];
   conflictRef?: string;
+  /** Hub grouping: parent place or ship ([[location:mars]], [[artifact:valkyrie-1]]). */
+  superset?: WikiEntitySuperset;
+  /** Free-form subkind (e.g. parable, concept, site, planet, ship-section). */
+  subkind?: string;
+  /** Parable/rule manifestation state on the Parable Catalog v2 axis. */
+  status?: WikiEntityStatus;
 }
 
 const SOURCE_TYPES = new Set<SourceTypeV1>([
@@ -47,12 +68,22 @@ const SOURCE_TYPES = new Set<SourceTypeV1>([
   "technical_brief",
   "parable_catalog",
   "style_guide",
+  "canon_inventory",
   "ai_generated",
   "user_submitted",
   "legacy_import",
 ]);
 
 const CANON = new Set<CanonStatusV1>(["canon", "adjacent", "experimental"]);
+
+/** Normalize human-authored canon status labels onto the v1 type. */
+function normalizeCanonStatus(raw: string): CanonStatusV1 | undefined {
+  const t = raw.toLowerCase().trim();
+  if (!t) return undefined;
+  if (t === "canonical") return "canon";
+  if (CANON.has(t as CanonStatusV1)) return t as CanonStatusV1;
+  return undefined;
+}
 
 const VIS = new Set<VisibilityPolicyV1>([
   "progressive",
@@ -67,6 +98,7 @@ const ENTITY_KINDS = new Set<WikiEntityKind>([
   "location",
   "artifact",
   "rule",
+  "vault",
 ]);
 
 function metaLine(block: string, label: string): string {
@@ -86,6 +118,46 @@ function normalizeChapterRef(id: string): string {
   const m = id.trim().match(/^CH(\d{2,4})$/i);
   if (!m) return id.trim();
   return `CH${String(parseInt(m[1], 10)).padStart(2, "0")}`;
+}
+
+const SUPERSET_TYPES = new Set([
+  "location",
+  "artifact",
+  "vault",
+  "faction",
+  "character",
+  "rule",
+]);
+
+function parseSuperset(raw: string): WikiEntitySuperset | undefined {
+  const t = raw.trim();
+  if (!t) return undefined;
+  const typed = t.match(/\[\[([a-z]+):([a-z0-9-]+)\]\]/i);
+  if (typed) {
+    const type = typed[1]!.toLowerCase();
+    const slug = typed[2]!.toLowerCase();
+    if (SUPERSET_TYPES.has(type)) return { type, slug };
+    return undefined;
+  }
+  const bare = t.match(/^([a-z0-9-]+)$/i);
+  if (bare) return { type: "location", slug: bare[1]!.toLowerCase() };
+  return undefined;
+}
+
+const STATUS_VALUES = new Set<WikiEntityStatus>([
+  "fully_manifested",
+  "soft",
+  "fragment",
+  "foreshadowed",
+  "cataloged",
+]);
+
+function parseStatus(raw: string): WikiEntityStatus | undefined {
+  const t = raw.toLowerCase().trim().replace(/\s+/g, "_");
+  if (!t) return undefined;
+  return STATUS_VALUES.has(t as WikiEntityStatus)
+    ? (t as WikiEntityStatus)
+    : undefined;
 }
 
 export function parseWikiEntityLoreSection(
@@ -108,11 +180,8 @@ export function parseWikiEntityLoreSection(
     wikiEntityKind = kindRaw as WikiEntityKind;
   }
 
-  let canonStatus: CanonStatusV1 = "adjacent";
-  const canonRaw = metaLine(block, "Canon status").toLowerCase().trim();
-  if (canonRaw && CANON.has(canonRaw as CanonStatusV1)) {
-    canonStatus = canonRaw as CanonStatusV1;
-  }
+  const canonParsed = normalizeCanonStatus(metaLine(block, "Canon status"));
+  const canonStatus: CanonStatusV1 = canonParsed ?? "adjacent";
 
   let visibilityPolicy: VisibilityPolicyV1 = "always_visible";
   const visRaw = metaLine(block, "Visibility policy").toLowerCase().trim().replace(/\s+/g, "_");
@@ -130,6 +199,9 @@ export function parseWikiEntityLoreSection(
   const chapterRefs = splitList(metaLine(block, "Chapter refs")).map(normalizeChapterRef);
   const aliases = splitList(metaLine(block, "Aliases")).map((a) => a.toLowerCase());
   const conflictRef = metaLine(block, "Conflict ref") || undefined;
+  const superset = parseSuperset(metaLine(block, "Superset"));
+  const subkind = metaLine(block, "Subkind").toLowerCase().trim() || undefined;
+  const status = parseStatus(metaLine(block, "Status"));
 
   return {
     wikiEntityKind,
@@ -140,5 +212,8 @@ export function parseWikiEntityLoreSection(
     chapterRefs,
     aliases,
     conflictRef,
+    ...(superset ? { superset } : {}),
+    ...(subkind ? { subkind } : {}),
+    ...(status ? { status } : {}),
   };
 }

@@ -1,7 +1,7 @@
 # The Pattern
 **Slug:** the-pattern
 
-<!-- canon:dossier slug="the-pattern" kind="rules" subkind="principle" parent="" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="the-pattern" kind="rules" subkind="principle" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 **Aliases:** Pattern, universal consciousness

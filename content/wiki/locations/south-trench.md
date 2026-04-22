@@ -25,6 +25,7 @@ Established as primary dig zone after anomalous scans identified buried geometry
 ## Lore metadata
 
 **Content type:** location
+**Superset:** [[location:mars]]
 **Source type:** series_bible
 **Canon status:** adjacent
 **Visibility policy:** always_visible

@@ -3,13 +3,37 @@ import { createClient } from "@/lib/supabase/server";
 import { orchestrateAsk } from "@/lib/ai/orchestrator";
 import { checkRateLimit } from "@/lib/rate-limit";
 import type { AgeMode } from "@/types";
+import type { AskReaderMode } from "@/lib/ai/ask-evidence";
 import { getReaderProgress } from "@/lib/progress/reader-progress";
+import {
+  verifyAskAnswer,
+  ASK_VERIFICATION_FALLBACK_MESSAGE,
+} from "@/lib/ai/ask-verifier";
+
+export const dynamic = "force-dynamic";
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY || "",
 });
 
 export async function POST(request: Request) {
+  try {
+    return await postAsk(request);
+  } catch (err) {
+    console.error("[api/ask]", err);
+    return Response.json(
+      {
+        error:
+          err instanceof Error
+            ? err.message
+            : "Ask failed before streaming started.",
+      },
+      { status: 500 },
+    );
+  }
+}
+
+async function postAsk(request: Request) {
   // Auth check
   const supabase = await createClient();
   const {
@@ -44,6 +68,7 @@ export async function POST(request: Request) {
     journeySlug,
     ageMode = "adult",
     highlightId,
+    askMode,
   } = body as {
     message: string;
     conversationId?: string;
@@ -52,6 +77,8 @@ export async function POST(request: Request) {
     ageMode?: AgeMode;
     /** When set, successful responses link this saved passage to the conversation. */
     highlightId?: string;
+    /** Deep (default): normal routing. Fast: single Finder pass. */
+    askMode?: "deep" | "fast";
   };
 
   if (!message || typeof message !== "string" || message.length > 2000) {
@@ -61,8 +88,8 @@ export async function POST(request: Request) {
   // Get or create conversation
   let convId = conversationId;
   if (!convId) {
-    const { data: conv, error } = await supabase
-      .from("sb_conversations")
+    const { data: conv, error: convInsertError } = await supabase
+      .from("cel_conversations")
       .insert({
         user_id: user.id,
         age_mode: ageMode,
@@ -71,14 +98,21 @@ export async function POST(request: Request) {
       .select("id")
       .single();
 
-    if (error || !conv) {
-      return Response.json({ error: "Failed to create conversation" }, { status: 500 });
+    if (convInsertError || !conv) {
+      return Response.json(
+        {
+          error:
+            convInsertError?.message ??
+            "Failed to create conversation (check cel_conversations / RLS / profile FK).",
+        },
+        { status: 500 },
+      );
     }
     convId = conv.id;
   }
 
   const { data: savedUserMsg, error: userMsgError } = await supabase
-    .from("sb_messages")
+    .from("cel_messages")
     .insert({
       conversation_id: convId,
       role: "user",
@@ -89,8 +123,12 @@ export async function POST(request: Request) {
 
   if (userMsgError || !savedUserMsg) {
     return Response.json(
-      { error: "Failed to save message" },
-      { status: 500 }
+      {
+        error:
+          userMsgError?.message ??
+          "Failed to save message (check conversation access).",
+      },
+      { status: 500 },
     );
   }
 
@@ -98,7 +136,7 @@ export async function POST(request: Request) {
 
   // Load conversation history
   const { data: history } = await supabase
-    .from("sb_messages")
+    .from("cel_messages")
     .select("role, content")
     .eq("conversation_id", convId)
     .order("created_at", { ascending: true })
@@ -114,7 +152,10 @@ export async function POST(request: Request) {
 
   // Orchestrate response (simple or deep path based on question type)
   const readerProgress = await getReaderProgress();
-  const { stream: textStream } = await orchestrateAsk({
+  const normalizedAskMode: AskReaderMode | undefined =
+    askMode === "fast" || askMode === "deep" ? askMode : undefined;
+
+  const { stream: textStream, buildEvidence } = await orchestrateAsk({
     anthropic,
     supabase,
     userId: user.id,
@@ -125,6 +166,7 @@ export async function POST(request: Request) {
     storySlug,
     journeySlug,
     readerProgress,
+    ...(normalizedAskMode ? { askMode: normalizedAskMode } : {}),
   });
 
   // Create a streaming response
@@ -141,12 +183,51 @@ export async function POST(request: Request) {
           );
         }
 
-        // Save assistant response
-        await supabase.from("sb_messages").insert({
+        let evidence = buildEvidence(fullResponse);
+
+        const verification = await verifyAskAnswer({
+          userQuestion: message,
+          assistantText: fullResponse,
+          linksInAnswer: evidence.linksInAnswer,
+          readerProgress,
+        });
+
+        let assistantContent = fullResponse;
+        if (verification.shouldBlock) {
+          assistantContent = ASK_VERIFICATION_FALLBACK_MESSAGE;
+          evidence = {
+            ...evidence,
+            verification,
+            responseSuperseded: true,
+          };
+        } else {
+          evidence = { ...evidence, verification };
+        }
+
+        // Save assistant response (retry without evidence if DB not migrated)
+        let insertAssistant = await supabase.from("cel_messages").insert({
           conversation_id: convId,
           role: "assistant",
-          content: fullResponse,
+          content: assistantContent,
+          evidence,
         });
+        if (insertAssistant.error) {
+          const missingEvidenceCol =
+            /evidence|column|schema/i.test(insertAssistant.error.message) ||
+            insertAssistant.error.code === "PGRST204";
+          if (missingEvidenceCol) {
+            insertAssistant = await supabase.from("cel_messages").insert({
+              conversation_id: convId,
+              role: "assistant",
+              content: assistantContent,
+            });
+          }
+          if (insertAssistant.error) {
+            throw new Error(
+              `Failed to save assistant message: ${insertAssistant.error.message}`,
+            );
+          }
+        }
 
         if (
           highlightId &&
@@ -154,19 +235,28 @@ export async function POST(request: Request) {
           highlightId.length <= 80
         ) {
           await supabase
-            .from("sb_story_highlights")
+            .from("cel_story_highlights")
             .update({ passage_ask_conversation_id: convId })
             .eq("id", highlightId)
             .eq("user_id", user.id);
         }
 
         controller.enqueue(
-          encoder.encode(`data: ${JSON.stringify({ done: true, conversationId: convId })}\n\n`)
+          encoder.encode(
+            `data: ${JSON.stringify({
+              done: true,
+              conversationId: convId,
+              evidence,
+              ...(verification.shouldBlock
+                ? { replacementContent: ASK_VERIFICATION_FALLBACK_MESSAGE }
+                : {}),
+            })}\n\n`
+          )
         );
         controller.close();
       } catch (err) {
         if (!fullResponse) {
-          await supabase.from("sb_messages").delete().eq("id", userMessageId);
+          await supabase.from("cel_messages").delete().eq("id", userMessageId);
         }
         const errorMessage =
           err instanceof Error ? err.message : "Unknown error";

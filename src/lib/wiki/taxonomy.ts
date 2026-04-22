@@ -24,6 +24,7 @@ export type SourceTypeV1 =
   | "technical_brief"
   | "parable_catalog"
   | "style_guide"
+  | "canon_inventory"
   | "ai_generated"
   | "user_submitted"
   | "legacy_import";

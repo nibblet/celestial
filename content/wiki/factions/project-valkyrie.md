@@ -1,7 +1,7 @@
 # Project VALKYRIE
 **Slug:** project-valkyrie
 
-<!-- canon:dossier slug="project-valkyrie" kind="factions" subkind="political" parent="" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="project-valkyrie" kind="factions" subkind="political" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 **Aliases:** VALKYRIE

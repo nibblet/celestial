@@ -1,7 +1,7 @@
 # CNV Rigel Ascendant
 **Slug:** rigel-ascendant
 
-<!-- canon:dossier slug="rigel-ascendant" kind="artifacts" subkind="ship" parent="" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="rigel-ascendant" kind="artifacts" subkind="ship" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 **Aliases:** Rigel Ascendant, CNV-014-A

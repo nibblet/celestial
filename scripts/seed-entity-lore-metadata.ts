@@ -17,6 +17,7 @@ const SCANS: { subdir: string; kind: WikiEntityKind }[] = [
   { subdir: "artifacts", kind: "artifact" },
   { subdir: "locations", kind: "location" },
   { subdir: "factions", kind: "faction" },
+  { subdir: "vaults", kind: "vault" },
   { subdir: "rules", kind: "rule" },
 ];
 
@@ -63,6 +64,13 @@ const BY_KIND: Record<
     canonStatus: "adjacent",
     visibilityPolicy: "always_visible",
     sourceDocument: "Celestial Heritage Series Bible — inferred rule",
+    sourcePath: "celestial_original/Celestial Heritage Series Bible.docx",
+  },
+  vault: {
+    sourceType: "series_bible",
+    canonStatus: "adjacent",
+    visibilityPolicy: "always_visible",
+    sourceDocument: "Celestial Heritage Series Bible",
     sourcePath: "celestial_original/Celestial Heritage Series Bible.docx",
   },
 };

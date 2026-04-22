@@ -4,7 +4,8 @@
 
 export function extractSection(content: string, heading: string): string[] {
   const escapedHeading = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const regex = new RegExp(`## ${escapedHeading}\\n\\n([\\s\\S]*?)(?=\\n## |\\n---|$)`);
+  // Allow one or more newlines after the heading (authors often omit the blank line).
+  const regex = new RegExp(`## ${escapedHeading}\\n+([\\s\\S]*?)(?=\\n## |\\n---|$)`);
   const match = content.match(regex);
   if (!match) return [];
   return match[1]
@@ -16,7 +17,7 @@ export function extractSection(content: string, heading: string): string[] {
 /** Full block text after `## Heading` until next `## ` or `---` or EOF (no line filtering). */
 export function extractSectionBlock(content: string, heading: string): string {
   const escapedHeading = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const regex = new RegExp(`## ${escapedHeading}\\n\\n([\\s\\S]*?)(?=\\n## |\\n---|\\n<!--|$)`);
+  const regex = new RegExp(`## ${escapedHeading}\\n+([\\s\\S]*?)(?=\\n## |\\n---|\\n<!--|$)`);
   const match = content.match(regex);
   return match?.[1]?.trim() ?? "";
 }

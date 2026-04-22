@@ -294,16 +294,74 @@ function pickDisplayName(raws: RawEntity[]): string {
   return names[0];
 }
 
+/**
+ * Build a richer primary paragraph by concatenating every distinct source
+ * excerpt. Dedupes excerpts that are already substantially contained inside
+ * another (substring or high token overlap). This is the main lever that
+ * makes the web's CanonDossierCard surface content from multiple briefs,
+ * not just the single longest chunk.
+ */
+function mergeProse(sources: MergedSource[]): string {
+  const excerpts = sources
+    .map((s) => s.canonicalProse.trim())
+    .filter(Boolean);
+  if (excerpts.length === 0) return "";
+  // Sort longest-first so shorter fragments are measured against already-kept longer ones.
+  const ordered = [...excerpts].sort((a, b) => b.length - a.length);
+  const kept: string[] = [];
+  const norm = (s: string) => s.toLowerCase().replace(/\s+/g, " ").trim();
+  const tokens = (s: string) => new Set(norm(s).split(" ").filter((t) => t.length >= 4));
+  for (const e of ordered) {
+    const en = norm(e);
+    let skip = false;
+    for (const k of kept) {
+      const kn = norm(k);
+      if (kn.includes(en)) {
+        skip = true;
+        break;
+      }
+      // Token-overlap containment: if 80%+ of e's distinctive tokens are in k, drop e.
+      const et = tokens(e);
+      if (et.size === 0) continue;
+      const kt = tokens(k);
+      let overlap = 0;
+      for (const t of et) if (kt.has(t)) overlap++;
+      if (overlap / et.size >= 0.8) {
+        skip = true;
+        break;
+      }
+    }
+    if (!skip) kept.push(e);
+  }
+  // Restore original source order for readability (matches Canon sources list).
+  const originalOrder = excerpts.filter((e) => kept.includes(e));
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const e of originalOrder) {
+    if (seen.has(e)) continue;
+    seen.add(e);
+    out.push(e);
+  }
+  return out.join("\n\n");
+}
+
 function mergeSlug(slug: string, raws: RawEntity[]): { entity: MergedEntity; conflict: KindConflict | null } {
   const { kind, conflict } = resolveKind(slug, raws);
 
-  // When kind is overridden or majority-voted, drop "losing" raws' contributions
-  // to subkind/parentSlug so we don't inherit nonsense (e.g., artifact-flavored
-  // subkind bleeding onto a location).
+  // When kind is overridden, DO NOT drop raws from the "losing" kinds. The
+  // whole point of an override is that the LLM mistagged them — we still want
+  // their source material (name, aliases, crossRefs, canonicalProse) to flow
+  // through into the merged entity. We only suppress their subkind votes so
+  // an artifact-flavored subkind doesn't bleed onto a location.
+  //
+  // For non-override resolutions, keep the old behavior (prefer aligned raws
+  // so minority-kind noise doesn't pollute the merged record).
+  const isOverride = conflict?.reason === "override";
   const aligned = raws.filter((r) => r.kind === kind);
-  const source = aligned.length > 0 ? aligned : raws;
+  const source = isOverride ? raws : aligned.length > 0 ? aligned : raws;
+  const subkindSource = aligned.length > 0 ? aligned : raws;
 
-  const subkind = mostCommonNonNull<string>(source.map((r) => r.subkind));
+  const subkind = mostCommonNonNull<string>(subkindSource.map((r) => r.subkind));
   const parentSlug = mostCommonNonNull<string>(source.map((r) => r.parentSlug));
 
   const aliases = mergeStringList([
@@ -313,15 +371,22 @@ function mergeSlug(slug: string, raws: RawEntity[]): { entity: MergedEntity; con
 
   const crossRefs = mergeStringList(source.flatMap((r) => r.crossRefs));
 
-  const sources: MergedSource[] = source.map((r) => ({
-    sourceDoc: r.sourceDoc,
-    sourceAnchor: r.sourceAnchor,
-    canonicalProse: r.canonicalProse,
-  }));
+  // Dedupe sources by (doc + anchor + prose) so identical LLM re-extractions
+  // don't stack in the dossier.
+  const sourceKey = new Set<string>();
+  const sources: MergedSource[] = [];
+  for (const r of source) {
+    const key = `${r.sourceDoc}\u0001${r.sourceAnchor}\u0001${r.canonicalProse}`;
+    if (sourceKey.has(key)) continue;
+    sourceKey.add(key);
+    sources.push({
+      sourceDoc: r.sourceDoc,
+      sourceAnchor: r.sourceAnchor,
+      canonicalProse: r.canonicalProse,
+    });
+  }
 
-  const primaryProse = [...sources]
-    .sort((a, b) => b.canonicalProse.length - a.canonicalProse.length)[0]
-    ?.canonicalProse ?? "";
+  const primaryProse = mergeProse(sources);
 
   return {
     entity: {

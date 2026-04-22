@@ -7,6 +7,23 @@ import type { AgeMode } from "@/types";
 import { book } from "@/config/book";
 import Link from "next/link";
 import ReactMarkdown, { type Components } from "react-markdown";
+import type {
+  AskMessageEvidence,
+  AskReaderMode,
+} from "@/lib/ai/ask-evidence";
+
+const ASK_MODE_STORAGE_KEY = "celestial_ask_mode";
+
+function readStoredAskMode(): AskReaderMode {
+  if (typeof window === "undefined") return "deep";
+  try {
+    const v = window.localStorage.getItem(ASK_MODE_STORAGE_KEY);
+    if (v === "fast" || v === "deep") return v;
+  } catch {
+    /* ignore */
+  }
+  return "deep";
+}
 
 const ASSISTANT_MARKDOWN_COMPONENTS: Components = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -41,6 +58,122 @@ const ASSISTANT_MARKDOWN_COMPONENTS: Components = {
 interface Message {
   role: "user" | "assistant";
   content: string;
+  /** Present for assistant rows when sourced from API or Ask SSE */
+  id?: string;
+  evidence?: AskMessageEvidence | null;
+}
+
+function AskSourcesDisclosure({
+  evidence,
+}: {
+  evidence: AskMessageEvidence;
+}) {
+  const personas = evidence.route.personas.join(", ");
+  return (
+    <details className="mt-2 rounded-lg border border-[var(--color-border)] bg-warm-white-2/80 px-3 py-2 text-xs text-ink-muted open:bg-warm-white-2">
+      <summary className="cursor-pointer select-none font-medium text-ink hover:text-clay">
+        Sources
+      </summary>
+      <div className="mt-2 space-y-3 border-t border-[var(--color-border)] pt-2">
+        {(evidence.askModeRequested ?? evidence.askModeApplied) && (
+          <div>
+            <p className="type-meta mb-1 text-[10px] uppercase tracking-wide text-ink-ghost">
+              Answer mode
+            </p>
+            <p className="text-ink">
+              Requested:{" "}
+              <span className="font-medium capitalize">
+                {evidence.askModeRequested ?? "—"}
+              </span>
+              {" · "}
+              Applied:{" "}
+              <span className="font-medium capitalize">
+                {evidence.askModeApplied ?? "—"}
+              </span>
+            </p>
+            {evidence.askModeNote ? (
+              <p className="mt-1 text-ink-muted">{evidence.askModeNote}</p>
+            ) : null}
+          </div>
+        )}
+        <div>
+          <p className="type-meta mb-1 text-[10px] uppercase tracking-wide text-ink-ghost">
+            Retrieval path
+          </p>
+          <p className="text-ink">
+            <span className="font-medium capitalize">{evidence.modeUsed}</span>
+            {" · "}
+            {personas}
+            {!evidence.deepAskOperational && (
+              <span className="block text-ink-muted">
+                Multi-persona routing was off for this deployment (
+                <code className="rounded bg-gold-pale/40 px-1">ENABLE_DEEP_ASK</code>
+                ).
+              </span>
+            )}
+          </p>
+          <p className="mt-1 text-ink-muted">{evidence.route.reason}</p>
+        </div>
+        <div>
+          <p className="type-meta mb-1 text-[10px] uppercase tracking-wide text-ink-ghost">
+            Context included
+          </p>
+          <ul className="list-inside list-disc space-y-0.5 text-ink">
+            {evidence.contextSources.map((s) => (
+              <li key={`${s.kind}-${s.ref ?? ""}-${s.label}`}>{s.label}</li>
+            ))}
+          </ul>
+        </div>
+        {evidence.responseSuperseded ? (
+          <div className="rounded-md border border-amber-200 bg-amber-50 px-2 py-1.5 text-amber-950">
+            This reply was replaced by a safe fallback after verification flagged
+            broken or policy-breaking citations.
+          </div>
+        ) : null}
+        {evidence.verification && evidence.verification.issues.length > 0 ? (
+          <div>
+            <p className="type-meta mb-1 text-[10px] uppercase tracking-wide text-ink-ghost">
+              Verification ({evidence.verification.strictness})
+            </p>
+            <ul className="space-y-1">
+              {evidence.verification.issues.map((issue, idx) => (
+                <li
+                  key={`${issue.code}-${idx}`}
+                  className={
+                    issue.severity === "error"
+                      ? "text-red-800"
+                      : "text-ink-muted"
+                  }
+                >
+                  {issue.message}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+        {evidence.linksInAnswer.length > 0 ? (
+          <div>
+            <p className="type-meta mb-1 text-[10px] uppercase tracking-wide text-ink-ghost">
+              Links in this answer
+            </p>
+            <ul className="space-y-1">
+              {evidence.linksInAnswer.map((l) => (
+                <li key={`${l.href}-${l.text}`}>
+                  <Link
+                    href={l.href}
+                    className="font-medium text-clay underline underline-offset-2 hover:text-clay-mid"
+                  >
+                    {l.text}
+                  </Link>
+                  <span className="text-ink-ghost"> · {l.href}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+      </div>
+    </details>
+  );
 }
 
 const SUGGESTIONS_BY_AGE_MODE: Record<AgeMode, string[]> = {
@@ -116,6 +249,9 @@ function AskPageContent() {
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
+  const [askMode, setAskMode] = useState<AskReaderMode>(() =>
+    readStoredAskMode(),
+  );
   const [loading, setLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -141,6 +277,14 @@ function AskPageContent() {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(ASK_MODE_STORAGE_KEY, askMode);
+    } catch {
+      /* ignore */
+    }
+  }, [askMode]);
 
   useEffect(() => {
     if (!highlightIdFromUrl) {
@@ -182,11 +326,23 @@ function AskPageContent() {
         );
         if (cr.ok && !cancelled) {
           const cd: {
-            messages?: { role: string; content: string }[];
+            messages?: {
+              role: string;
+              content: string;
+              id?: string;
+              evidence?: unknown;
+            }[];
           } = await cr.json();
           const msgs: Message[] = (cd.messages ?? []).map((m) => ({
             role: m.role as "user" | "assistant",
             content: m.content,
+            id: typeof m.id === "string" ? m.id : undefined,
+            evidence:
+              m.role === "assistant" &&
+              m.evidence &&
+              typeof m.evidence === "object"
+                ? (m.evidence as AskMessageEvidence)
+                : undefined,
           }));
           setMessages(msgs);
           setConversationId(h.passage_ask_conversation_id);
@@ -248,6 +404,7 @@ function AskPageContent() {
           storySlug,
           journeySlug,
           ageMode,
+          askMode,
           ...(highlightIdFromUrl
             ? { highlightId: highlightIdFromUrl }
             : {}),
@@ -260,7 +417,17 @@ function AskPageContent() {
             "Too many questions! Please wait a moment before asking again."
           );
         }
-        throw new Error("Failed to get response");
+        let serverDetail = "";
+        try {
+          const errBody = (await res.json()) as { error?: string };
+          if (typeof errBody?.error === "string") serverDetail = errBody.error;
+        } catch {
+          /* not JSON */
+        }
+        throw new Error(
+          serverDetail ||
+            "The Ask service returned an error before streaming started."
+        );
       }
 
       const reader = res.body?.getReader();
@@ -296,6 +463,25 @@ function AskPageContent() {
               setConversationId(data.conversationId);
             }
 
+            if (data.done === true && data.evidence) {
+              const replacement =
+                typeof data.replacementContent === "string"
+                  ? data.replacementContent
+                  : undefined;
+              setMessages((prev) => {
+                const last = prev[prev.length - 1];
+                if (!last || last.role !== "assistant") return prev;
+                return [
+                  ...prev.slice(0, -1),
+                  {
+                    ...last,
+                    content: replacement ?? last.content,
+                    evidence: data.evidence as AskMessageEvidence,
+                  },
+                ];
+              });
+            }
+
             if (typeof data.text === "string" && data.text.length > 0) {
               sseTextBatch += data.text;
             }
@@ -319,10 +505,12 @@ function AskPageContent() {
 
         if (done) break;
       }
-    } catch {
-      setError(
-        "The reading companion is temporarily unavailable. Try browsing stories by theme in the meantime."
-      );
+    } catch (e) {
+      const msg =
+        e instanceof Error && e.message?.trim()
+          ? e.message
+          : "The reading companion is temporarily unavailable. Try browsing stories by theme in the meantime.";
+      setError(msg);
       setMessages((prev) => {
         if (prev[prev.length - 1]?.content === "") {
           return prev.slice(0, -1);
@@ -340,6 +528,7 @@ function AskPageContent() {
     journeySlug,
     ageMode,
     highlightIdFromUrl,
+    askMode,
   ]);
 
   const effectivePreloadPassage = urlPassage ?? passageFromHighlight;
@@ -388,17 +577,60 @@ function AskPageContent() {
   return (
     <div className="mx-auto flex h-[calc(100vh-8rem)] max-w-content flex-col px-[var(--page-padding-x)] md:h-[calc(100vh-4rem)]">
       <div className="border-b border-[var(--color-border)] py-4">
-        <h1 className="type-page-title text-2xl">Ask about {book.title}</h1>
-        <p className="type-ui mt-1 text-ink-ghost">
-          Ask questions about {book.title}. You&apos;ll get answers grounded in
-          the story material in this companion.
-          {journeySlug && !storySlug && (
-            <span className="text-clay">
-              {" "}
-              &middot; Journey: {journeySlug.replace(/-/g, " ")}
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <h1 className="type-page-title text-2xl">Ask about {book.title}</h1>
+            <p className="type-ui mt-1 text-ink-ghost">
+              Ask questions about {book.title}. You&apos;ll get answers grounded
+              in the story material in this companion.
+              {journeySlug && !storySlug && (
+                <span className="text-clay">
+                  {" "}
+                  &middot; Journey: {journeySlug.replace(/-/g, " ")}
+                </span>
+              )}
+            </p>
+          </div>
+          <div
+            className="flex shrink-0 flex-col gap-1 sm:items-end"
+            role="group"
+            aria-label="Answer mode"
+          >
+            <span className="type-meta text-[10px] uppercase tracking-wide text-ink-ghost">
+              Mode
             </span>
-          )}
-        </p>
+            <div className="inline-flex rounded-lg border border-[var(--color-border)] bg-warm-white-2 p-0.5">
+              <button
+                type="button"
+                onClick={() => setAskMode("deep")}
+                aria-pressed={askMode === "deep"}
+                className={`type-ui rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
+                  askMode === "deep"
+                    ? "bg-clay text-warm-white"
+                    : "text-ink-muted hover:text-ink"
+                }`}
+              >
+                Deep
+              </button>
+              <button
+                type="button"
+                onClick={() => setAskMode("fast")}
+                aria-pressed={askMode === "fast"}
+                className={`type-ui rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
+                  askMode === "fast"
+                    ? "bg-clay text-warm-white"
+                    : "text-ink-muted hover:text-ink"
+                }`}
+              >
+                Fast
+              </button>
+            </div>
+            <p className="max-w-[14rem] text-[10px] leading-snug text-ink-ghost sm:text-right">
+              Deep uses the full router (may run multiple perspectives). Fast is
+              one quick pass—best for lookups.
+            </p>
+          </div>
+        </div>
       </div>
 
       {storySlug && (
@@ -460,7 +692,7 @@ function AskPageContent() {
 
         {messages.map((msg, i) => (
           <div
-            key={i}
+            key={msg.id ?? `${msg.role}-${i}-${msg.content.slice(0, 24)}`}
             className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
           >
             <div
@@ -471,11 +703,16 @@ function AskPageContent() {
               }`}
             >
               {msg.role === "assistant" ? (
-                <div className="prose prose-story prose-sm max-w-none prose-p:my-1 prose-headings:my-2 prose-headings:text-sm prose-headings:font-semibold prose-ul:my-1 prose-li:my-0">
-                  <ReactMarkdown components={ASSISTANT_MARKDOWN_COMPONENTS}>
-                    {msg.content}
-                  </ReactMarkdown>
-                </div>
+                <>
+                  <div className="prose prose-story prose-sm max-w-none prose-p:my-1 prose-headings:my-2 prose-headings:text-sm prose-headings:font-semibold prose-ul:my-1 prose-li:my-0">
+                    <ReactMarkdown components={ASSISTANT_MARKDOWN_COMPONENTS}>
+                      {msg.content}
+                    </ReactMarkdown>
+                  </div>
+                  {msg.evidence ? (
+                    <AskSourcesDisclosure evidence={msg.evidence} />
+                  ) : null}
+                </>
               ) : (
                 msg.content
                   .split("\n")

@@ -1,7 +1,7 @@
 # The Silent Choir
 **Slug:** the-silent-choir
 
-<!-- canon:dossier slug="the-silent-choir" kind="rules" subkind="parable" parent="" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="the-silent-choir" kind="rules" subkind="parable" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 **Aliases:** Silent Choir
@@ -25,6 +25,10 @@ _(auto-generated; review and expand.)_
 
 **Content type:** rule
 **Subkind:** parable
+**Status:** fully_manifested
+**Recipient:** Thane Meric, ALARA
+**Vault:** vault-003
+**Chapter:** CH14
 **Source type:** canon_inventory
 **Canon status:** canonical
 **Visibility policy:** always_visible

@@ -1,7 +1,7 @@
 # Vault Builders
 **Slug:** vault-builders
 
-<!-- canon:dossier slug="vault-builders" kind="factions" subkind="civilization" parent="" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="vault-builders" kind="factions" subkind="civilization" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 **Aliases:** The Resonant, Predecessors, the Builders

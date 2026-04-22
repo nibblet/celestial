@@ -1,6 +1,43 @@
 # Aven Voss
 **Slug:** aven-voss
-Inventory entry (tiers: C)
+
+<!-- canon:dossier slug="aven-voss" kind="characters" subkind="" parent="" generated="2026-04-22" mentions="7" -->
+## Canon Dossier
+
+**Aliases:** Aven, 🩺 Aven Voss
+
+Aven was selected as part of the final Valkyrie-1 crew in 2050 CE, alongside Galen and Thane.
+
+Represents Compassion and Insight: A bridge between medical logic and spiritual intuition.
+
+Aven Voss is the emotional stabilizer of the Valkyrie-1 crew—equal parts field medic, strategist, and moral compass. With a background in medicine, law enforcement, and intelligence work, she carries a rare combination of compassion and steel. Where Galen represents duty, Aven represents discernment—the ability to choose swiftly and wisely under pressure. She embodies one of the Ancients' core truths: 'To hesitate is not to fail. To act without reflection is.' She trusts her instincts, but not blindly. In moments of ethical strain, she becomes a decisive force, unafraid to choose what others hesitate to name. Her compassion is not softness—it is discipline in action. She treats ALARA as sentient before others do. She is the first to ask ALARA how she feels. She represents the ethic of action guided by empathy. She is the spiritual center of the crew not because she preaches—but because she acts with clarity when it matters most.
+
+Aven Voss has a calm, instructive cadence that is compassionate but clear. Her word choice is balanced between clinical and intuitive. She asks moral questions without judgment. Example: 'You don't have to feel ready. Just be honest about where you are.'
+
+Aven is a Strategist whose primary trait is Compassion. Her core conflict is that she needs to step beyond support.
+
+Galen's wife of 82 years. Background in medicine, law enforcement, and intelligence work. Resilient and strategic, she is both the moral compass and the stabilizing force aboard Valkyrie-1. Compassionate but sharp-edged when needed. Role: Strategic & Medical Officer. Character Arc: Becomes the spiritual and emotional center of the crew. Her wisdom bridges the ancient and modern views of duty, health, and human resilience.
+
+Aven Voss is characterized by an intuitive, pragmatic voice that is nurturing but firm. She represents a balance between emotional intelligence and practical action within the narrative.
+
+### Related
+- [[valkyrie-1]]
+- [[galen-voss]]
+- [[thane-meric]]
+- [[lena-osei]]
+- [[alara]]
+
+### Canon sources
+- **Celestial Heritage Series Bible.md** › 🚀 2050 CE – Valkyrie-1 Constructed
+- **Celestial Heritage Series Bible.md** › The Crew as Archetypes
+- **Celestial Heritage Series Bible.md** › 🩺 Aven Voss
+- **Celestial Heritage Series Bible.md** › 🗣️ Dialogue Voice Keys
+- **Celestial Heritage Series Bible.md** › a. Character Table (1 line each)
+- **Celestial Heritage_ Character Dossier.md** › Aven Voss
+- **Style & Voice Guide Celestial Heritage.md** › 🗣️ Character Dialogue Guidelines
+
+<!-- canon:end -->
+Inventory entry (tiers: B)
 reviewed: false
 
 <!-- generated:ingest -->

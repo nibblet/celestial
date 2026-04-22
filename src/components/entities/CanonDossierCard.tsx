@@ -36,7 +36,9 @@ export function CanonDossierCard({ dossier }: { dossier: CanonDossier }) {
         )}
         {parent && (
           <div>
-            <dt className="type-meta text-ink-ghost">Parent</dt>
+            <dt className="type-meta text-ink-ghost">
+              {dossier.kind === "artifacts" ? "Part of" : "Parent"}
+            </dt>
             <dd className="mt-0.5 text-ink">
               <Link
                 href={parent.href}

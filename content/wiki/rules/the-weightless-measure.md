@@ -1,7 +1,7 @@
 # The Weightless Measure
 **Slug:** the-weightless-measure
 
-<!-- canon:dossier slug="the-weightless-measure" kind="rules" subkind="parable" parent="" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="the-weightless-measure" kind="rules" subkind="parable" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 **Aliases:** Weightless Measure
@@ -24,6 +24,10 @@ _(auto-generated; review and expand.)_
 
 **Content type:** rule
 **Subkind:** parable
+**Status:** soft
+**Recipient:** Jonah Revas
+**Vault:** vault-002
+**Chapter:** CH06
 **Source type:** canon_inventory
 **Canon status:** canonical
 **Visibility policy:** always_visible

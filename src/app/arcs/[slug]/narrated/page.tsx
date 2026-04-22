@@ -1,1 +1,5 @@
-export { default } from "@/app/journeys/[slug]/narrated/page";
+import { redirect } from "next/navigation";
+
+export default async function ArcNarratedPlaceholder() {
+  redirect("/arcs");
+}

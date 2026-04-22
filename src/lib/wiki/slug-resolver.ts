@@ -15,6 +15,7 @@ import { prettifySlug } from "@/lib/wiki/canon-dossier";
 export type ResolvedWikiKind =
   | "characters"
   | "artifacts"
+  | "vaults"
   | "locations"
   | "factions"
   | "rules";
@@ -31,6 +32,7 @@ const WIKI_DIR = path.join(process.cwd(), "content/wiki");
 const KIND_TO_BASE_PATH: Record<ResolvedWikiKind, string> = {
   characters: "/characters",
   artifacts: "/artifacts",
+  vaults: "/vaults",
   locations: "/locations",
   factions: "/factions",
   rules: "/rules",
@@ -45,6 +47,7 @@ const KIND_TO_BASE_PATH: Record<ResolvedWikiKind, string> = {
 const PROBE_ORDER: ResolvedWikiKind[] = [
   "characters",
   "artifacts",
+  "vaults",
   "locations",
   "factions",
   "rules",
@@ -60,9 +63,19 @@ function readH1(filePath: string): string | null {
   }
 }
 
+/**
+ * Canonical redirects for slugs that were merged/renamed after the seed pass.
+ * When an old link such as `[[martian-resonance-vault]]` is encountered, the
+ * resolver transparently lands on the canonical page.
+ */
+const SLUG_ALIASES: Record<string, string> = {
+  "martian-resonance-vault": "vault-002",
+};
+
 export function resolveWikiSlug(slug: string): ResolvedWikiSlug | null {
-  const normalized = slug.trim().toLowerCase();
-  if (!normalized) return null;
+  const raw = slug.trim().toLowerCase();
+  if (!raw) return null;
+  const normalized = SLUG_ALIASES[raw] ?? raw;
   for (const kind of PROBE_ORDER) {
     const filePath = path.join(WIKI_DIR, kind, `${normalized}.md`);
     if (fs.existsSync(filePath)) {

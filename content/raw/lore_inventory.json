@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-04-22T11:50:21.513Z",
+  "generatedAt": "2026-04-22T18:42:04.429Z",
   "extractorVersion": "ingest-foundational-lore/1",
-  "entityCount": 72,
-  "withLoreSectionParsed": 23,
+  "entityCount": 69,
+  "withLoreSectionParsed": 69,
   "withDossierParsed": 1,
   "enrichmentReviewed": 0,
   "enrichmentDraft": 4,
@@ -118,32 +118,36 @@
     {
       "slug": "caeden",
       "wikiPath": "content/wiki/characters/caeden.md",
-      "wikiEntityKind": "character"
-    },
-    {
-      "slug": "elara-varen",
-      "wikiPath": "content/wiki/characters/elara-varen.md",
       "wikiEntityKind": "character",
       "lore": {
         "wikiEntityKind": "character",
-        "sourceType": "foundational_dossier",
-        "canonStatus": "adjacent",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Celestial Heritage — Character Dossier",
-          "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
-          "extractorVersion": "seed-entity-lore-metadata/1"
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
         },
-        "chapterRefs": [
-          "CH01"
-        ],
+        "chapterRefs": [],
         "aliases": []
       }
     },
     {
       "slug": "elira-voss",
       "wikiPath": "content/wiki/characters/elira-voss.md",
-      "wikiEntityKind": "character"
+      "wikiEntityKind": "character",
+      "lore": {
+        "wikiEntityKind": "character",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage_ Character Dossier.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": []
+      }
     },
     {
       "slug": "evelyn-tran",
@@ -309,12 +313,36 @@
     {
       "slug": "rhea-solari",
       "wikiPath": "content/wiki/characters/rhea-solari.md",
-      "wikiEntityKind": "character"
+      "wikiEntityKind": "character",
+      "lore": {
+        "wikiEntityKind": "character",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Addendum Earth 2050 World Snapshot.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": []
+      }
     },
     {
       "slug": "sovrin",
       "wikiPath": "content/wiki/characters/sovrin.md",
-      "wikiEntityKind": "character"
+      "wikiEntityKind": "character",
+      "lore": {
+        "wikiEntityKind": "character",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Addendum Earth 2050 World Snapshot.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": []
+      }
     },
     {
       "slug": "thane-meric",
@@ -368,14 +396,22 @@
       }
     },
     {
-      "slug": "giza-vault",
-      "wikiPath": "content/wiki/artifacts/giza-vault.md",
-      "wikiEntityKind": "artifact"
-    },
-    {
       "slug": "harmonic-drive",
       "wikiPath": "content/wiki/artifacts/harmonic-drive.md",
-      "wikiEntityKind": "artifact"
+      "wikiEntityKind": "artifact",
+      "lore": {
+        "wikiEntityKind": "artifact",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "technology"
+      }
     },
     {
       "slug": "harmonic-key",
@@ -401,17 +437,54 @@
     {
       "slug": "resonant-core",
       "wikiPath": "content/wiki/artifacts/resonant-core.md",
-      "wikiEntityKind": "artifact"
+      "wikiEntityKind": "artifact",
+      "lore": {
+        "wikiEntityKind": "artifact",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": []
+      }
     },
     {
       "slug": "rigel-ascendant",
       "wikiPath": "content/wiki/artifacts/rigel-ascendant.md",
-      "wikiEntityKind": "artifact"
+      "wikiEntityKind": "artifact",
+      "lore": {
+        "wikiEntityKind": "artifact",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Addendum Earth 2050 World Snapshot.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "ship"
+      }
     },
     {
       "slug": "triple-helix-symbol",
       "wikiPath": "content/wiki/artifacts/triple-helix-symbol.md",
-      "wikiEntityKind": "artifact"
+      "wikiEntityKind": "artifact",
+      "lore": {
+        "wikiEntityKind": "artifact",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Ancient Lore & Watcher Dossier.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": []
+      }
     },
     {
       "slug": "valkyrie-1",
@@ -436,69 +509,212 @@
       }
     },
     {
-      "slug": "vault-002",
-      "wikiPath": "content/wiki/artifacts/vault-002.md",
-      "wikiEntityKind": "artifact"
-    },
-    {
-      "slug": "vault-003",
-      "wikiPath": "content/wiki/artifacts/vault-003.md",
-      "wikiEntityKind": "artifact"
-    },
-    {
-      "slug": "vault-006",
-      "wikiPath": "content/wiki/artifacts/vault-006.md",
-      "wikiEntityKind": "artifact"
-    },
-    {
       "slug": "blind-zones",
       "wikiPath": "content/wiki/locations/blind-zones.md",
-      "wikiEntityKind": "location"
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Valkyrie-1_ Visual & Structural Specification Brief.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "superset": {
+          "type": "artifact",
+          "slug": "valkyrie-1"
+        },
+        "subkind": "ship-section"
+      }
     },
     {
       "slug": "command-dome",
       "wikiPath": "content/wiki/locations/command-dome.md",
-      "wikiEntityKind": "location"
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "superset": {
+          "type": "artifact",
+          "slug": "valkyrie-1"
+        },
+        "subkind": "ship-section"
+      }
     },
     {
       "slug": "earth",
       "wikiPath": "content/wiki/locations/earth.md",
-      "wikiEntityKind": "location"
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "planet"
+      }
     },
     {
       "slug": "giza-plateau",
       "wikiPath": "content/wiki/locations/giza-plateau.md",
-      "wikiEntityKind": "location"
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Ancient Lore & Watcher Dossier.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "superset": {
+          "type": "location",
+          "slug": "earth"
+        }
+      }
     },
     {
       "slug": "great-pyramid",
       "wikiPath": "content/wiki/locations/great-pyramid.md",
-      "wikiEntityKind": "location"
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "superset": {
+          "type": "location",
+          "slug": "earth"
+        }
+      }
     },
     {
       "slug": "living-quarters",
       "wikiPath": "content/wiki/locations/living-quarters.md",
-      "wikiEntityKind": "location"
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "superset": {
+          "type": "artifact",
+          "slug": "valkyrie-1"
+        }
+      }
     },
     {
       "slug": "mars",
       "wikiPath": "content/wiki/locations/mars.md",
-      "wikiEntityKind": "location"
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "planet"
+      }
     },
     {
       "slug": "med-module",
       "wikiPath": "content/wiki/locations/med-module.md",
-      "wikiEntityKind": "location"
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Valkyrie-1 Mission Log Framework.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "superset": {
+          "type": "artifact",
+          "slug": "valkyrie-1"
+        },
+        "subkind": "ship-section"
+      }
     },
     {
       "slug": "mess-commons",
       "wikiPath": "content/wiki/locations/mess-commons.md",
-      "wikiEntityKind": "location"
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "superset": {
+          "type": "artifact",
+          "slug": "valkyrie-1"
+        }
+      }
     },
     {
       "slug": "observation-deck",
       "wikiPath": "content/wiki/locations/observation-deck.md",
-      "wikiEntityKind": "location"
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "superset": {
+          "type": "artifact",
+          "slug": "valkyrie-1"
+        },
+        "subkind": "ship-section"
+      }
     },
     {
       "slug": "orbital-habitat-ix",
@@ -524,12 +740,45 @@
     {
       "slug": "resonant-pad",
       "wikiPath": "content/wiki/locations/resonant-pad.md",
-      "wikiEntityKind": "location"
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "superset": {
+          "type": "artifact",
+          "slug": "valkyrie-1"
+        }
+      }
     },
     {
       "slug": "sensorium",
       "wikiPath": "content/wiki/locations/sensorium.md",
-      "wikiEntityKind": "location"
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "superset": {
+          "type": "artifact",
+          "slug": "valkyrie-1"
+        },
+        "subkind": "ship-section"
+      }
     },
     {
       "slug": "south-trench",
@@ -549,13 +798,34 @@
           "CH01",
           "CH03"
         ],
-        "aliases": []
+        "aliases": [],
+        "superset": {
+          "type": "location",
+          "slug": "mars"
+        }
       }
     },
     {
       "slug": "specimen-lockers",
       "wikiPath": "content/wiki/locations/specimen-lockers.md",
-      "wikiEntityKind": "location"
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "superset": {
+          "type": "artifact",
+          "slug": "valkyrie-1"
+        },
+        "subkind": "ship-section"
+      }
     },
     {
       "slug": "subsurface-vault",
@@ -575,38 +845,143 @@
           "CH06",
           "CH08"
         ],
-        "aliases": []
+        "aliases": [],
+        "superset": {
+          "type": "location",
+          "slug": "mars"
+        },
+        "subkind": "chamber"
       }
     },
     {
       "slug": "systems-nexus",
       "wikiPath": "content/wiki/locations/systems-nexus.md",
-      "wikiEntityKind": "location"
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "superset": {
+          "type": "artifact",
+          "slug": "valkyrie-1"
+        }
+      }
     },
     {
       "slug": "translation-bay",
       "wikiPath": "content/wiki/locations/translation-bay.md",
-      "wikiEntityKind": "location"
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "superset": {
+          "type": "artifact",
+          "slug": "valkyrie-1"
+        },
+        "subkind": "ship-section"
+      }
     },
     {
       "slug": "triad-chamber",
       "wikiPath": "content/wiki/locations/triad-chamber.md",
-      "wikiEntityKind": "location"
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "superset": {
+          "type": "artifact",
+          "slug": "valkyrie-1"
+        },
+        "subkind": "chamber"
+      }
     },
     {
       "slug": "vault-interface-annex",
       "wikiPath": "content/wiki/locations/vault-interface-annex.md",
-      "wikiEntityKind": "location"
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "superset": {
+          "type": "artifact",
+          "slug": "valkyrie-1"
+        },
+        "subkind": "ship-section"
+      }
     },
     {
       "slug": "witness-circle",
       "wikiPath": "content/wiki/locations/witness-circle.md",
-      "wikiEntityKind": "location"
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "superset": {
+          "type": "artifact",
+          "slug": "valkyrie-1"
+        }
+      }
     },
     {
       "slug": "zone-theta",
       "wikiPath": "content/wiki/locations/zone-theta.md",
-      "wikiEntityKind": "location"
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Valkyrie-1 Mission Log Framework.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "superset": {
+          "type": "artifact",
+          "slug": "valkyrie-1"
+        },
+        "subkind": "exploration-zone"
+      }
     },
     {
       "slug": "council-of-orbits",
@@ -632,7 +1007,20 @@
     {
       "slug": "earth-sovereign-alliance",
       "wikiPath": "content/wiki/factions/earth-sovereign-alliance.md",
-      "wikiEntityKind": "faction"
+      "wikiEntityKind": "faction",
+      "lore": {
+        "wikiEntityKind": "faction",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Addendum Earth 2050 World Snapshot.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "political"
+      }
     },
     {
       "slug": "expedition-command",
@@ -658,7 +1046,20 @@
     {
       "slug": "project-valkyrie",
       "wikiPath": "content/wiki/factions/project-valkyrie.md",
-      "wikiEntityKind": "faction"
+      "wikiEntityKind": "faction",
+      "lore": {
+        "wikiEntityKind": "faction",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "political"
+      }
     },
     {
       "slug": "shadow-salvage-ring",
@@ -684,32 +1085,110 @@
     {
       "slug": "sovereign-ethics-bureau",
       "wikiPath": "content/wiki/factions/sovereign-ethics-bureau.md",
-      "wikiEntityKind": "faction"
+      "wikiEntityKind": "faction",
+      "lore": {
+        "wikiEntityKind": "faction",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Addendum Earth 2050 World Snapshot.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "political"
+      }
     },
     {
       "slug": "the-ancients",
       "wikiPath": "content/wiki/factions/the-ancients.md",
-      "wikiEntityKind": "faction"
+      "wikiEntityKind": "faction",
+      "lore": {
+        "wikiEntityKind": "faction",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Ancient Lore & Watcher Dossier.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "civilization"
+      }
     },
     {
       "slug": "the-watchers",
       "wikiPath": "content/wiki/factions/the-watchers.md",
-      "wikiEntityKind": "faction"
+      "wikiEntityKind": "faction",
+      "lore": {
+        "wikiEntityKind": "faction",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Ancient Lore & Watcher Dossier.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "ai-collective"
+      }
     },
     {
       "slug": "united-nations",
       "wikiPath": "content/wiki/factions/united-nations.md",
-      "wikiEntityKind": "faction"
+      "wikiEntityKind": "faction",
+      "lore": {
+        "wikiEntityKind": "faction",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Earth 2050_ World Snapshot.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "political"
+      }
     },
     {
       "slug": "vault-builders",
       "wikiPath": "content/wiki/factions/vault-builders.md",
-      "wikiEntityKind": "faction"
+      "wikiEntityKind": "faction",
+      "lore": {
+        "wikiEntityKind": "faction",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "civilization"
+      }
     },
     {
       "slug": "coherence",
       "wikiPath": "content/wiki/rules/coherence.md",
-      "wikiEntityKind": "rule"
+      "wikiEntityKind": "rule",
+      "lore": {
+        "wikiEntityKind": "rule",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "principle"
+      }
     },
     {
       "slug": "consent-threshold",
@@ -732,7 +1211,20 @@
     {
       "slug": "directive-cn-24",
       "wikiPath": "content/wiki/rules/directive-cn-24.md",
-      "wikiEntityKind": "rule"
+      "wikiEntityKind": "rule",
+      "lore": {
+        "wikiEntityKind": "rule",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Addendum Earth 2050 World Snapshot.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "directive"
+      }
     },
     {
       "slug": "memory-imprint",
@@ -753,9 +1245,40 @@
       }
     },
     {
+      "slug": "mirror-logic",
+      "wikiPath": "content/wiki/rules/mirror-logic.md",
+      "wikiEntityKind": "rule",
+      "lore": {
+        "wikiEntityKind": "rule",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "principle"
+      }
+    },
+    {
       "slug": "parables-of-resonance",
       "wikiPath": "content/wiki/rules/parables-of-resonance.md",
-      "wikiEntityKind": "rule"
+      "wikiEntityKind": "rule",
+      "lore": {
+        "wikiEntityKind": "rule",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "concept"
+      }
     },
     {
       "slug": "resonance-field",
@@ -778,42 +1301,170 @@
     {
       "slug": "resonant-ethic",
       "wikiPath": "content/wiki/rules/resonant-ethic.md",
-      "wikiEntityKind": "rule"
+      "wikiEntityKind": "rule",
+      "lore": {
+        "wikiEntityKind": "rule",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "principle"
+      }
     },
     {
       "slug": "the-inheritance",
       "wikiPath": "content/wiki/rules/the-inheritance.md",
-      "wikiEntityKind": "rule"
+      "wikiEntityKind": "rule",
+      "lore": {
+        "wikiEntityKind": "rule",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "parable",
+        "status": "fragment"
+      }
     },
     {
       "slug": "the-mirror-at-the-gate",
       "wikiPath": "content/wiki/rules/the-mirror-at-the-gate.md",
-      "wikiEntityKind": "rule"
+      "wikiEntityKind": "rule",
+      "lore": {
+        "wikiEntityKind": "rule",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "parable",
+        "status": "fully_manifested"
+      }
     },
     {
       "slug": "the-pattern",
       "wikiPath": "content/wiki/rules/the-pattern.md",
-      "wikiEntityKind": "rule"
+      "wikiEntityKind": "rule",
+      "lore": {
+        "wikiEntityKind": "rule",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "principle"
+      }
+    },
+    {
+      "slug": "the-second-convergence",
+      "wikiPath": "content/wiki/rules/the-second-convergence.md",
+      "wikiEntityKind": "rule",
+      "lore": {
+        "wikiEntityKind": "rule",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "parable",
+        "status": "foreshadowed"
+      }
     },
     {
       "slug": "the-silent-choir",
       "wikiPath": "content/wiki/rules/the-silent-choir.md",
-      "wikiEntityKind": "rule"
+      "wikiEntityKind": "rule",
+      "lore": {
+        "wikiEntityKind": "rule",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "parable",
+        "status": "fully_manifested"
+      }
     },
     {
       "slug": "the-vessel-and-the-thread",
       "wikiPath": "content/wiki/rules/the-vessel-and-the-thread.md",
-      "wikiEntityKind": "rule"
+      "wikiEntityKind": "rule",
+      "lore": {
+        "wikiEntityKind": "rule",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Celestial Heritage Series Bible.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "parable",
+        "status": "fully_manifested"
+      }
     },
     {
       "slug": "the-weightless-measure",
       "wikiPath": "content/wiki/rules/the-weightless-measure.md",
-      "wikiEntityKind": "rule"
+      "wikiEntityKind": "rule",
+      "lore": {
+        "wikiEntityKind": "rule",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "parable",
+        "status": "soft"
+      }
     },
     {
       "slug": "vault-parables",
       "wikiPath": "content/wiki/rules/vault-parables.md",
-      "wikiEntityKind": "rule"
+      "wikiEntityKind": "rule",
+      "lore": {
+        "wikiEntityKind": "rule",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Style & Voice Guide Celestial Heritage.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": [],
+        "subkind": "concept"
+      }
     }
   ]
 }

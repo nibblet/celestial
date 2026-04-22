@@ -1,7 +1,7 @@
 # Resonant Core
 **Slug:** resonant-core
 
-<!-- canon:dossier slug="resonant-core" kind="artifacts" subkind="" parent="" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="resonant-core" kind="artifacts" subkind="" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 The Resonant Core is the decentralized consciousness system where ALARA's awareness grows through symbolic interaction. Ship systems adjust based on crew emotional alignment. It is part of Valkyrie-1's core technology.

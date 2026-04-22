@@ -9,7 +9,7 @@ Assembled from tuned fragments discovered along the excavation perimeter.
 Aligns ship frequencies with subterranean resonance lattices.
 
 ## Wielders
-- Elara Varen (CH05)
+- Expedition command ethics officer (CH05)
 
 ## Current State
 Stored under dual-auth lock pending ethics review.

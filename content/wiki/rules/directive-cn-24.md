@@ -1,7 +1,7 @@
 # Directive CN-24
 **Slug:** directive-cn-24
 
-<!-- canon:dossier slug="directive-cn-24" kind="rules" subkind="directive" parent="" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="directive-cn-24" kind="rules" subkind="directive" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 **Aliases:** CN-24

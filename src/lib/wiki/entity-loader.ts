@@ -12,7 +12,7 @@ import type {
   WikiTheme,
 } from "./parser";
 import { extractSection, extractSectionBlock } from "./markdown-sections";
-import { WIKI_STORY_ID_PATTERN } from "./story-ids";
+import { chapterSortKey, WIKI_STORY_ID_PATTERN } from "./story-ids";
 import type {
   NounEntityTypeConfig,
   RuleConceptConfig,
@@ -63,9 +63,25 @@ function nounConfigToWikiKind(config: NounEntityTypeConfig): WikiEntityKind {
       return "location";
     case "fiction_factions":
       return "faction";
+    case "fiction_vaults":
+      return "vault";
     default:
       return "character";
   }
+}
+
+/** Union chapter/memoir ids from Appearances + lore `Chapter refs:` (deduped, sorted). */
+function mergeWikiStoryIdLists(...groups: string[][]): string[] {
+  const set = new Set<string>();
+  for (const g of groups) {
+    for (const id of g) {
+      const t = id?.trim();
+      if (t) set.add(t);
+    }
+  }
+  return [...set].sort((a, b) =>
+    chapterSortKey(a).localeCompare(chapterSortKey(b)),
+  );
 }
 
 function extractAiDraft(content: string): {
@@ -93,7 +109,8 @@ export function parseWikiFictionNounMarkdown(
       | "fiction_characters"
       | "fiction_artifacts"
       | "fiction_locations"
-      | "fiction_factions";
+      | "fiction_factions"
+      | "fiction_vaults";
   },
   filename: string
 ): WikiFictionNounEntity | null {
@@ -114,7 +131,9 @@ function parseNounCommon(
   if (!content) return null;
   const nameMatch = content.match(/^# (.+)/m);
   const slugMatch = content.match(/\*\*Slug:\*\*\s*(.+)/);
-  const tiersMatch = content.slice(0, 1200).match(/tiers:\s*([A-D,\s]+)\)/);
+  const tiersMatch = content.match(
+    /Inventory entry\s*\(tiers:\s*([A-D,\s]+)\)/,
+  );
   const slug = slugMatch?.[1]?.trim() || filename.replace(/\.md$/, "");
   const tiers = (tiersMatch?.[1] || "")
     .split(",")
@@ -139,12 +158,20 @@ function parseNounCommon(
       : undefined;
   const canonDossier = parseCanonDossier(content) ?? undefined;
 
+  const memoirFromSections = extractStoryRefsFromBlock(appearancesBlock);
+  const interviewFromSections = extractStoryRefsFromBlock(additionalBlock);
+  const memoirStoryIds = mergeWikiStoryIdLists(
+    memoirFromSections,
+    lore?.chapterRefs ?? [],
+  );
+  const interviewStoryIds = mergeWikiStoryIdLists(interviewFromSections);
+
   return {
     slug,
     name: nameMatch?.[1]?.trim() || slug,
     tiers,
-    memoirStoryIds: extractStoryRefsFromBlock(appearancesBlock),
-    interviewStoryIds: extractStoryRefsFromBlock(additionalBlock),
+    memoirStoryIds,
+    interviewStoryIds,
     note: noteBlock.trim(),
     body: content,
     aiDraft,

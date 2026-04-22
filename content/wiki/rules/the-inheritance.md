@@ -1,7 +1,7 @@
 # The Inheritance
 **Slug:** the-inheritance
 
-<!-- canon:dossier slug="the-inheritance" kind="rules" subkind="parable" parent="" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="the-inheritance" kind="rules" subkind="parable" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 **Aliases:** Inheritance
@@ -24,6 +24,9 @@ _(auto-generated; review and expand.)_
 
 **Content type:** rule
 **Subkind:** parable
+**Status:** fragment
+**Recipient:** Witness Circle (Jonah-centered)
+**Chapter:** CH09
 **Source type:** canon_inventory
 **Canon status:** canonical
 **Visibility policy:** always_visible

@@ -40,6 +40,12 @@ import { isStoryUnlocked } from "@/lib/progress/reader-progress";
 import { getScenesForChapter } from "@/lib/wiki/scenes-db";
 import { listUnresolvedThroughChapter } from "@/lib/threads/repo";
 import { listBeatsByJourney } from "@/lib/beats/repo";
+import {
+  buildAskMessageEvidence,
+  type AskMessageEvidence,
+  type AskReaderMode,
+} from "./ask-evidence";
+import { getRulesContext } from "./prompts";
 
 export interface OrchestrateParams {
   anthropic: Anthropic;
@@ -55,6 +61,11 @@ export interface OrchestrateParams {
   storySlug?: string;
   journeySlug?: string;
   readerProgress?: ReaderProgress;
+  /**
+   * Reader preference: Deep uses normal routing (Finder vs multi-persona).
+   * Fast forces a single Finder pass for lower latency.
+   */
+  askMode?: AskReaderMode;
 }
 
 export interface OrchestrateResult {
@@ -65,6 +76,11 @@ export interface OrchestrateResult {
   depth: "simple" | "deep";
   /** Full route including the persona plan — useful for downstream debug UIs. */
   route: PersonaRoute;
+  /**
+   * Build structured evidence after the stream is fully read. Uses the same
+   * prompt args as the model call and parses in-answer markdown links.
+   */
+  buildEvidence: (fullAssistantText: string) => AskMessageEvidence;
 }
 
 /**
@@ -73,27 +89,78 @@ export interface OrchestrateResult {
 export async function orchestrateAsk(
   params: OrchestrateParams,
 ): Promise<OrchestrateResult> {
-  const rawRoute = routeAsk(params.message);
+  const classifiedRoute = routeAsk(params.message);
+  const askModeRequested: AskReaderMode = params.askMode ?? "deep";
+
+  const routeAfterAskMode: PersonaRoute =
+    askModeRequested === "fast"
+      ? {
+          personas: ["finder"],
+          depth: classifiedRoute.depth,
+          reason: `reader fast mode; classifier would have: ${classifiedRoute.reason}`,
+        }
+      : classifiedRoute;
+
   const deepEnabled = process.env.ENABLE_DEEP_ASK === "true";
 
   // Kill-switch: when deep synthesis is disabled in prod, force every route
-  // back onto the single Finder call. Keep the classified depth around so
-  // downstream telemetry can still see what the router *wanted* to do.
+  // back onto the single Finder call.
   const route: PersonaRoute =
-    !deepEnabled && rawRoute.personas.length > 1
+    !deepEnabled && routeAfterAskMode.personas.length > 1
       ? {
           personas: ["finder"],
-          depth: rawRoute.depth,
-          reason: `deep route demoted to finder (ENABLE_DEEP_ASK != true); original: ${rawRoute.reason}`,
+          depth: routeAfterAskMode.depth,
+          reason: `deep synthesis disabled (ENABLE_DEEP_ASK != true); prior: ${routeAfterAskMode.reason}`,
         }
-      : rawRoute;
+      : routeAfterAskMode;
+
+  const promptArgs = await buildPromptArgs(params);
 
   const stream =
     route.personas.length > 1
-      ? multiPath(params, route)
-      : singlePath(params, route, route.personas[0] ?? "finder");
+      ? multiPath(params, route, promptArgs)
+      : singlePath(params, route, route.personas[0] ?? "finder", promptArgs);
 
-  return { stream, depth: route.depth, route };
+  const askModeApplied: AskReaderMode =
+    route.personas.length > 1 ? "deep" : "fast";
+  const askModeNote = buildAskModeNote(
+    askModeRequested,
+    deepEnabled,
+    classifiedRoute,
+    route,
+  );
+
+  const buildEvidence = (fullAssistantText: string) =>
+    buildAskMessageEvidence(promptArgs, route, fullAssistantText, {
+      deepAskOperational: deepEnabled,
+      askModeRequested,
+      askModeApplied,
+      askModeNote,
+    });
+
+  return { stream, depth: route.depth, route, buildEvidence };
+}
+
+function buildAskModeNote(
+  requested: AskReaderMode,
+  deepEnabled: boolean,
+  classifiedRoute: PersonaRoute,
+  finalRoute: PersonaRoute,
+): string | undefined {
+  if (requested === "fast") {
+    return "Fast mode: single Finder pass (no multi-persona synthesis).";
+  }
+  if (!deepEnabled && classifiedRoute.personas.length > 1) {
+    return "Multi-persona synthesis is disabled for this deployment (ENABLE_DEEP_ASK).";
+  }
+  if (
+    requested === "deep" &&
+    finalRoute.personas.length === 1 &&
+    classifiedRoute.depth === "simple"
+  ) {
+    return "Classified as a short factual lookup — single Finder pass.";
+  }
+  return undefined;
 }
 
 // ── Prompt args assembly ────────────────────────────────────────────
@@ -165,6 +232,7 @@ async function buildPromptArgs(
       beatType: b.beatType,
       chapterId: b.chapterId,
     })),
+    rulesContextIncluded: getRulesContext().length > 0,
   };
 }
 
@@ -174,10 +242,10 @@ async function* singlePath(
   params: OrchestrateParams,
   route: PersonaRoute,
   personaKey: PersonaKey,
+  promptArgs: PersonaPromptArgs,
 ): AsyncGenerator<string> {
   const { anthropic, supabase, userId, conversationId, messages } = params;
   const persona = getPersona(personaKey);
-  const promptArgs = await buildPromptArgs(params);
   const systemPrompt = persona.buildSystemPrompt(promptArgs);
 
   const startedAt = Date.now();
@@ -239,10 +307,10 @@ async function* singlePath(
 async function* multiPath(
   params: OrchestrateParams,
   route: PersonaRoute,
+  promptArgs: PersonaPromptArgs,
 ): AsyncGenerator<string> {
   const { anthropic, supabase, userId, conversationId, messages, ageMode } =
     params;
-  const promptArgs = await buildPromptArgs(params);
 
   const subPersonas = route.personas.map(getPersona);
 

@@ -11,6 +11,8 @@ import { getReaderProgress, isStoryUnlocked } from "@/lib/progress/reader-progre
 import { EntityLoreCard } from "@/components/entities/EntityLoreCard";
 import { EntityDossier } from "@/components/entities/EntityDossier";
 import { CanonDossierCard } from "@/components/entities/CanonDossierCard";
+import { extractAuthoredBody, renderWikilinks } from "@/lib/wiki/authored-body";
+import { resolveWikiSlug } from "@/lib/wiki/slug-resolver";
 
 export default async function CharacterDetailPage({
   params,
@@ -77,6 +79,16 @@ export default async function CharacterDetailPage({
       {person.canonDossier && <CanonDossierCard dossier={person.canonDossier} />}
       {person.lore && <EntityLoreCard lore={person.lore} />}
       {person.dossier && <EntityDossier dossier={person.dossier} />}
+      {(() => {
+        const authored = extractAuthoredBody(person.body ?? "");
+        if (!authored) return null;
+        const rendered = renderWikilinks(authored, resolveWikiSlug);
+        return (
+          <section className="prose prose-story mb-6 max-w-none" aria-label="Authored detail">
+            <StoryMarkdown content={rendered} />
+          </section>
+        );
+      })()}
 
       <p className="type-ui mb-6 text-ink-muted">
         Appears in {refCount} {refCount === 1 ? "story" : "stories"}

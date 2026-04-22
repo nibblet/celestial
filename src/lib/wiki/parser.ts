@@ -11,6 +11,7 @@ import {
   FICTION_FACTIONS_NOUN,
   FICTION_LOCATIONS_NOUN,
   FICTION_RULES_CONCEPT,
+  FICTION_VAULTS_NOUN,
   LEGACY_PEOPLE_NOUN,
 } from "@/config/wiki-entities";
 import { extractSection, extractMetadata } from "@/lib/wiki/markdown-sections";
@@ -20,8 +21,7 @@ import {
   parseWikiRuleConceptMarkdown,
   parseWikiThemeMarkdown,
 } from "@/lib/wiki/entity-loader";
-import { WIKI_STORY_ID_PATTERN } from "@/lib/wiki/story-ids";
-import { chapterSortKey } from "@/lib/wiki/story-ids";
+import { chapterSortKey, WIKI_STORY_ID_PATTERN } from "@/lib/wiki/story-ids";
 import type { WikiEntityLoreMetadata } from "@/lib/wiki/lore-provenance";
 import type { CharacterDossier } from "@/lib/wiki/entity-dossier";
 import type { CanonDossier } from "@/lib/wiki/canon-dossier";
@@ -774,7 +774,8 @@ export type FictionNounEntityType =
   | "fiction_characters"
   | "fiction_artifacts"
   | "fiction_locations"
-  | "fiction_factions";
+  | "fiction_factions"
+  | "fiction_vaults";
 
 export interface WikiFictionNounEntity {
   kind: "fiction_noun";
@@ -867,7 +868,7 @@ export function getPeopleByStoryId(storyId: string): WikiPerson[] {
 
 function getFictionNounFromFile(
   filename: string,
-  subdir: "characters" | "artifacts" | "locations" | "factions",
+  subdir: "characters" | "artifacts" | "locations" | "factions" | "vaults",
   entityType: FictionNounEntityType
 ): WikiFictionNounEntity | null {
   const content = readWikiFile(`${subdir}/${filename}`);
@@ -879,7 +880,9 @@ function getFictionNounFromFile(
         ? FICTION_ARTIFACTS_NOUN
         : entityType === "fiction_locations"
           ? FICTION_LOCATIONS_NOUN
-          : FICTION_FACTIONS_NOUN;
+          : entityType === "fiction_factions"
+            ? FICTION_FACTIONS_NOUN
+            : FICTION_VAULTS_NOUN;
   const parsed = parseWikiFictionNounMarkdown(
     content,
     config as Parameters<typeof parseWikiFictionNounMarkdown>[1],
@@ -890,7 +893,7 @@ function getFictionNounFromFile(
 }
 
 function getFictionNounEntities(
-  subdir: "characters" | "artifacts" | "locations" | "factions",
+  subdir: "characters" | "artifacts" | "locations" | "factions" | "vaults",
   entityType: FictionNounEntityType
 ): WikiFictionNounEntity[] {
   const dir = path.join(WIKI_DIR, subdir);
@@ -941,6 +944,16 @@ export function getFactionBySlug(slug: string): WikiFictionNounEntity | null {
   const file = path.join(WIKI_DIR, "factions", `${slug}.md`);
   if (!fs.existsSync(file)) return null;
   return getFictionNounFromFile(`${slug}.md`, "factions", "fiction_factions");
+}
+
+export function getAllVaults(): WikiFictionNounEntity[] {
+  return getFictionNounEntities("vaults", "fiction_vaults");
+}
+
+export function getVaultBySlug(slug: string): WikiFictionNounEntity | null {
+  const file = path.join(WIKI_DIR, "vaults", `${slug}.md`);
+  if (!fs.existsSync(file)) return null;
+  return getFictionNounFromFile(`${slug}.md`, "vaults", "fiction_vaults");
 }
 
 function getRuleFromFile(filename: string): WikiRuleConcept | null {

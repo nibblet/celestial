@@ -24,6 +24,7 @@ import {
   getStoryContext,
   getJourneyContextForPrompt,
   getPeopleContext,
+  getRulesContext,
   AGE_MODE_INSTRUCTIONS,
 } from "./prompts";
 
@@ -71,6 +72,8 @@ export type PersonaPromptArgs = {
   chapterScenes?: SceneForContext[];
   /** Synthesizer-only: display labels of the sub-personas it is merging. */
   personaLabels?: string[];
+  /** Set when `content/wiki/rules` was loaded into this prompt. */
+  rulesContextIncluded?: boolean;
 };
 
 // ── Shared content block (injected into most personas) ──────────────
@@ -82,6 +85,9 @@ function sharedContentBlock(args: PersonaPromptArgs): string {
     `## Story ID Catalog (for links)\n${args.storyCatalog ?? getStoryLinkCatalog()}`,
   );
   parts.push(`## Wiki Index\n${args.wikiSummaries ?? getWikiSummaries()}`);
+
+  const rules = getRulesContext();
+  if (rules) parts.push(rules);
 
   const people = getPeopleContext();
   if (people) parts.push(people);

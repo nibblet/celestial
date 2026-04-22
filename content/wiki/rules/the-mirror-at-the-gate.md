@@ -1,7 +1,7 @@
 # The Mirror at the Gate
 **Slug:** the-mirror-at-the-gate
 
-<!-- canon:dossier slug="the-mirror-at-the-gate" kind="rules" subkind="parable" parent="" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="the-mirror-at-the-gate" kind="rules" subkind="parable" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 **Aliases:** Mirror at the Gate
@@ -25,6 +25,10 @@ _(auto-generated; review and expand.)_
 
 **Content type:** rule
 **Subkind:** parable
+**Status:** fully_manifested
+**Recipient:** Galen Voss
+**Vault:** vault-006
+**Chapter:** CH13
 **Source type:** canon_inventory
 **Canon status:** canonical
 **Visibility policy:** always_visible

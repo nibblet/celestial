@@ -29,6 +29,43 @@ test("parses Lore metadata section with dossier provenance", () => {
   assert.ok(lore!.aliases.includes("commander-alpha"));
 });
 
+test("accepts canon_inventory source_type and canonical status alias", () => {
+  const md = `
+# Vault Two
+## Lore metadata
+**Content type:** vault
+**Source type:** canon_inventory
+**Canon status:** canonical
+**Visibility policy:** always_visible
+**Source document:** Vault Encounter Tracker v2
+**Superset:** [[location:mars]]
+**Status:** cataloged
+**Subkind:** site
+`;
+  const lore = parseWikiEntityLoreSection(md, { wikiEntityKind: "vault" });
+  assert.ok(lore);
+  assert.equal(lore!.sourceType, "canon_inventory");
+  assert.equal(lore!.canonStatus, "canon");
+  assert.equal(lore!.status, "cataloged");
+  assert.equal(lore!.subkind, "site");
+  assert.deepEqual(lore!.superset, { type: "location", slug: "mars" });
+});
+
+test("parses typed superset for artifact ship", () => {
+  const md = `
+## Lore metadata
+**Content type:** location
+**Source type:** canon_inventory
+**Canon status:** canonical
+**Visibility policy:** always_visible
+**Source document:** Series Bible
+**Superset:** [[artifact:valkyrie-1]]
+`;
+  const lore = parseWikiEntityLoreSection(md, { wikiEntityKind: "location" });
+  assert.ok(lore);
+  assert.deepEqual(lore!.superset, { type: "artifact", slug: "valkyrie-1" });
+});
+
 test("returns undefined without Source document", () => {
   const md = `
 ## Lore metadata

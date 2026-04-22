@@ -1,6 +1,43 @@
 # Lena Osei
 **Slug:** lena-osei
-Inventory entry (tiers: C)
+
+<!-- canon:dossier slug="lena-osei" kind="characters" subkind="" parent="" generated="2026-04-22" mentions="6" -->
+## Canon Dossier
+
+**Aliases:** Lena Osei, Dr. Osei, Dr. Lena Osei, dr-lena-osei, Lena
+
+Represents Truth and Structure: A scientist devoted to patterns, but challenged by symbolic ambiguity.
+
+Dr. Lena Osei is the crew's translator of forgotten things. An elite archaeolinguist, she breaks down cultures, symbols, and ruins like puzzle-boxes—decoding what others consider mystical. To her, there are no miracles—only systems we don't yet understand. But deep beneath her skepticism is an ache she refuses to name: the quiet hope that some truths might actually be sacred. Lena is a stormy coast—fierce, eroded, shaped by unseen tides. Her control is a mask worn for precision. She claims to distrust belief, yet she carries a secret thought: that maybe the Ancients had their own version of Jesus. She wants the vaults to change her—but only on her terms. Lena reaches for books before intuition, yet the vaults speak in symbols that shift with mood, presence, and belief. This violates everything she trusts. She is the embodiment of humanity's demand for clarity—even when clarity fails. Her arc is not about becoming a believer. It's about becoming open to resonance—the idea that meaning can exist even without translation.
+
+Lena shares the Translation Bay with Evelyn; a zone for interpreting glyph systems and harmonic patterns.
+
+World expert on ancient scripts and cultural patterns. Brilliant, skeptical, and emotionally reserved. Dedicated to uncovering truths left behind by humanity's forgotten ancestors. First to decode the Valkyrie-1 systems. Role: Exoarchaeologist / Linguist. Character Arc: From academic seeker to passionate defender of humanity's right to its past. Learns that uncovering the truth comes with moral responsibility.
+
+Lena Osei is tactical, logical, and always searching for patterns. Her approach is analytical and methodical.
+
+Lena shares the Translation Bay with Evelyn, working on decryption of vault glyphs and emotional imprint data.
+
+### Related
+- [[thane-meric]]
+- [[jonah-revas]]
+- [[aven-voss]]
+- [[alara]]
+- [[evelyn-tran]]
+- [[translation-bay]]
+- [[valkyrie-1]]
+- [[the-ancients]]
+
+### Canon sources
+- **Celestial Heritage Series Bible.md** › The Crew as Archetypes
+- **Celestial Heritage Series Bible.md** › Dr. Lena Osei
+- **Celestial Heritage Series Bible.md** › Layout Summary
+- **Celestial Heritage_ Character Dossier.md** › Dr. Lena Osei
+- **Style & Voice Guide Celestial Heritage.md** › 🗣️ Character Dialogue Guidelines
+- **🛰️ Valkyrie-1 Interior Specifications.md** › 🔻 3. Mid-Level Systems – Science, Storage, Vault Analysis
+
+<!-- canon:end -->
+Inventory entry (tiers: A)
 reviewed: false
 
 <!-- generated:ingest -->

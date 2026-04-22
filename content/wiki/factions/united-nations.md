@@ -1,7 +1,7 @@
 # United Nations
 **Slug:** united-nations
 
-<!-- canon:dossier slug="united-nations" kind="factions" subkind="political" parent="" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="united-nations" kind="factions" subkind="political" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 The United Nations has devolved in relevance, but new multinational institutions have emerged through economic alliances and shared developmental goals.

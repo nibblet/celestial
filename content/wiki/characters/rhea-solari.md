@@ -1,7 +1,8 @@
 # Captain Rhea Solari
 **Slug:** rhea-solari
+Inventory entry (tiers: B)
 
-<!-- canon:dossier slug="rhea-solari" kind="characters" subkind="" parent="" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="rhea-solari" kind="characters" subkind="" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 **Aliases:** Rhea Solari, Solari

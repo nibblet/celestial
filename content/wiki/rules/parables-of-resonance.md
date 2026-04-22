@@ -1,7 +1,7 @@
 # Parables of Resonance
 **Slug:** parables-of-resonance
 
-<!-- canon:dossier slug="parables-of-resonance" kind="rules" subkind="parable" parent="" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="parables-of-resonance" kind="rules" subkind="parable" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 **Aliases:** vault-echo symbolism
@@ -24,7 +24,7 @@ _(auto-generated; review and expand.)_
 ## Lore metadata
 
 **Content type:** rule
-**Subkind:** parable
+**Subkind:** concept
 **Source type:** canon_inventory
 **Canon status:** canonical
 **Visibility policy:** always_visible

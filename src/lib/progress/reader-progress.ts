@@ -54,9 +54,9 @@ export async function getReaderProgress(): Promise<ReaderProgress> {
   }
 
   const [{ data: reads }, { data: profile }] = await Promise.all([
-    supabase.from("sb_story_reads").select("story_id").eq("user_id", user.id),
+    supabase.from("cel_story_reads").select("story_id").eq("user_id", user.id),
     supabase
-      .from("sb_profiles")
+      .from("cel_profiles")
       .select("show_all_content")
       .eq("id", user.id)
       .maybeSingle(),

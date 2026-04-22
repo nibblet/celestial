@@ -11,7 +11,7 @@ export async function GET() {
   }
 
   const { data, error } = await supabase
-    .from("sb_conversations")
+    .from("cel_conversations")
     .select("id, title, age_mode, created_at, updated_at")
     .eq("user_id", user.id)
     .order("updated_at", { ascending: false });

@@ -61,7 +61,7 @@ export async function proxy(request: NextRequest) {
   }
 
   const { data: profile } = await supabase
-    .from("sb_profiles")
+    .from("cel_profiles")
     .select("has_onboarded")
     .eq("id", user.id)
     .maybeSingle();

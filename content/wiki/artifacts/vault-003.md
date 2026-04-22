@@ -1,7 +1,7 @@
 # Vault 003
 **Slug:** vault-003
 
-<!-- canon:dossier slug="vault-003" kind="artifacts" subkind="vault" parent="" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="vault-003" kind="artifacts" subkind="vault" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 **Aliases:** Vault 3

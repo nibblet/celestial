@@ -36,7 +36,7 @@ export async function PUT(request: Request) {
         user_id: user.id,
         story_id,
       }));
-      await supabase.from("sb_story_reads").upsert(rows, {
+      await supabase.from("cel_story_reads").upsert(rows, {
         onConflict: "user_id,story_id",
         ignoreDuplicates: false,
       });
@@ -59,7 +59,7 @@ export async function PUT(request: Request) {
 
   if (user && body.markAllChaptersUnread === true) {
     await supabase
-      .from("sb_story_reads")
+      .from("cel_story_reads")
       .delete()
       .eq("user_id", user.id)
       .like("story_id", "CH%");
@@ -86,7 +86,7 @@ export async function PUT(request: Request) {
   if (typeof body.showAllContent === "boolean") {
     if (user) {
       await supabase
-        .from("sb_profiles")
+        .from("cel_profiles")
         .update({ show_all_content: body.showAllContent })
         .eq("id", user.id);
     }

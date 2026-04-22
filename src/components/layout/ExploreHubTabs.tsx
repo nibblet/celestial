@@ -10,6 +10,7 @@ export function ExploreHubTabs() {
   const onCharacters =
     pathname.startsWith("/characters") || pathname.startsWith("/people");
   const onArtifacts = pathname.startsWith("/artifacts");
+  const onVaults = pathname.startsWith("/vaults");
   const onLocations = pathname.startsWith("/locations");
   const onFactions = pathname.startsWith("/factions");
   const onRules = pathname.startsWith("/rules");
@@ -69,6 +70,18 @@ export function ExploreHubTabs() {
           }`}
         >
           Artifacts
+        </Link>
+        <Link
+          href="/vaults"
+          role="tab"
+          aria-selected={onVaults}
+          className={`flex-1 rounded-full px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
+            onVaults
+              ? "bg-ink text-warm-white"
+              : "bg-transparent text-ink-muted hover:text-ink"
+          }`}
+        >
+          Vaults
         </Link>
         <Link
           href="/locations"

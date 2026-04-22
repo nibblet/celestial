@@ -1,7 +1,8 @@
 # SOVRIN
 **Slug:** sovrin
+Inventory entry (tiers: B)
 
-<!-- canon:dossier slug="sovrin" kind="characters" subkind="" parent="" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="sovrin" kind="characters" subkind="" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 **Aliases:** SOVRIN, White Zero

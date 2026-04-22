@@ -391,7 +391,9 @@ export const peopleData: PersonCard[] = [
   {
     "slug": "alara",
     "name": "ALARA",
-    "tiers": [],
+    "tiers": [
+      "A"
+    ],
     "memoirStoryIds": [],
     "interviewStoryIds": [],
     "storyCount": 0,
@@ -422,7 +424,9 @@ export const peopleData: PersonCard[] = [
   {
     "slug": "caeden",
     "name": "CAEDEN",
-    "tiers": [],
+    "tiers": [
+      "B"
+    ],
     "memoirStoryIds": [],
     "interviewStoryIds": [],
     "storyCount": 0,
@@ -431,29 +435,20 @@ export const peopleData: PersonCard[] = [
   {
     "slug": "rhea-solari",
     "name": "Captain Rhea Solari",
-    "tiers": [],
+    "tiers": [
+      "B"
+    ],
     "memoirStoryIds": [],
     "interviewStoryIds": [],
     "storyCount": 0,
     "note": ""
   },
   {
-    "slug": "elara-varen",
-    "name": "Elara Varen",
-    "tiers": [
-      "A"
-    ],
-    "memoirStoryIds": [
-      "CH01"
-    ],
-    "interviewStoryIds": [],
-    "storyCount": 1,
-    "note": "Stub fiction character dropped in `content/wiki/characters/` so `/characters/elara-varen` renders without bespoke parser code."
-  },
-  {
     "slug": "elira-voss",
     "name": "Elira Voss",
-    "tiers": [],
+    "tiers": [
+      "D"
+    ],
     "memoirStoryIds": [],
     "interviewStoryIds": [],
     "storyCount": 0,
@@ -528,7 +523,9 @@ export const peopleData: PersonCard[] = [
   {
     "slug": "sovrin",
     "name": "SOVRIN",
-    "tiers": [],
+    "tiers": [
+      "B"
+    ],
     "memoirStoryIds": [],
     "interviewStoryIds": [],
     "storyCount": 0,

@@ -1,6 +1,37 @@
 # Jax Reyes
 **Slug:** jax-reyes
-Inventory entry (tiers: C)
+
+<!-- canon:dossier slug="jax-reyes" kind="characters" subkind="" parent="" generated="2026-04-22" mentions="5" -->
+## Canon Dossier
+
+**Aliases:** Jax, 🛠️ Jax Reyes, Jax Reyes, Jaxon Reyes, Jaxon 'Jax' Reyes, jaxon-reyes
+
+Represents Disruption and Truth: A hacker who distrusts systems, but finds one worth preserving.
+
+Jax Reyes is the sparkplug that might blow the whole engine. He's brilliant, unfiltered, and more than a little dangerous. Jax isn't here for awe. He's here for freedom. To tinker, to push, to find the fault line and press hard. He hides his spiritual yearning beneath cynicism—but it's there. His childhood scraped against belief. He mocks it now, but his eyes linger when the vaults respond. Jax is a liability wrapped in genius. He violates security thresholds, hacks subsystems, and makes ALARA flinch. He says it's all part of 'stress testing.' But some of what he does could end the mission—or worse. He's also one of the few who makes CAEDEN nervous. Jax is necessary friction. He breaks the silence, challenges moral consensus, and tests the mission's edges. But his arc is about realizing that even rebels must choose something to protect.
+
+Jax Reyes has a fast, clipped cadence that serves as a sarcastic defense mechanism. His word choice is techy, irreverent, and laced with challenge. He swears under breath and never ends a sentence clean. Example: 'You want me to *what*? Plug emotion into the wall and pray it purrs?'
+
+Brilliant, rogue technologist with a rebellious streak. Distrusts institutions but is loyal to truth. Views the mission as a chance to bring knowledge back to the people. Role: Systems Hacker / Engineer. Character Arc: From loner to crew loyalist. Learns that some structures—like trust and integrity—are worth building.
+
+Jax Reyes is witty, irreverent, and anti-institutional. He is a truth-seeker through chaos, bringing humor and skepticism to the narrative.
+
+### Related
+- [[alara]]
+- [[evelyn-tran]]
+- [[marco-ruiz]]
+- [[thane-meric]]
+- [[caeden]]
+
+### Canon sources
+- **Celestial Heritage Series Bible.md** › The Crew as Archetypes
+- **Celestial Heritage Series Bible.md** › 🛠️ Jax Reyes
+- **Celestial Heritage Series Bible.md** › 🗣️ Dialogue Voice Keys
+- **Celestial Heritage_ Character Dossier.md** › Jaxon 'Jax' Reyes
+- **Style & Voice Guide Celestial Heritage.md** › 🗣️ Character Dialogue Guidelines
+
+<!-- canon:end -->
+Inventory entry (tiers: B)
 reviewed: false
 
 <!-- generated:ingest -->

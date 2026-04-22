@@ -8,7 +8,7 @@ export async function GET() {
   if (!user) return Response.json({ error: "Unauthorized" }, { status: 401 });
 
   const { data } = await supabase
-    .from("sb_story_highlights")
+    .from("cel_story_highlights")
     .select(
       "id, story_id, story_title, passage_text, note, saved_at, passage_ask_conversation_id"
     )

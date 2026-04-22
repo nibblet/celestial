@@ -1,1 +1,5 @@
-export { default } from "@/app/journeys/[slug]/[step]/page";
+import { redirect } from "next/navigation";
+
+export default async function ArcStepPlaceholder() {
+  redirect("/arcs");
+}

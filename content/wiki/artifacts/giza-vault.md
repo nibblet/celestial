@@ -1,7 +1,7 @@
 # Giza Vault
 **Slug:** giza-vault
 
-<!-- canon:dossier slug="giza-vault" kind="artifacts" subkind="vault" parent="" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="giza-vault" kind="artifacts" subkind="vault" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 **Aliases:** Giza vault, vault

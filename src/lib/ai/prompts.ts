@@ -18,7 +18,10 @@ let cachedStoryLinkCatalog: string | null = null;
 let cachedDecisionFrameworks: string | null = null;
 let cachedPeopleContext: string | null = null;
 let cachedPrinciplesContext: string | null = null;
+let cachedRulesContext: string | null = null;
 let loggedSystemPromptApproxTokens = false;
+
+const RULES_CONTEXT_MAX_CHARS = 18_000;
 
 /** Inventory line lists tiers like "(tiers: A, B, D)" — Tier A bios are richest. */
 function peoplePageHasTierA(markdown: string): boolean {
@@ -135,6 +138,64 @@ export function getDecisionFrameworks(): string {
     ? fs.readFileSync(fwPath, "utf-8")
     : "";
   return cachedDecisionFrameworks;
+}
+
+/**
+ * Concatenates `content/wiki/rules/*.md` for Ask personas (always-on world law).
+ * Capped so prompts stay within budget alongside wiki index and stories.
+ */
+export function getRulesContext(): string {
+  if (cachedRulesContext !== null) return cachedRulesContext;
+
+  try {
+    const dir = path.join(WIKI_DIR, "rules");
+    if (!fs.existsSync(dir)) {
+      cachedRulesContext = "";
+      return "";
+    }
+
+    const files = fs.readdirSync(dir).filter((f) => f.endsWith(".md")).sort();
+    const chunks: string[] = [];
+    let total = 0;
+
+    for (const file of files) {
+      try {
+        const body = fs.readFileSync(path.join(dir, file), "utf-8");
+        const slug = file.replace(/\.md$/i, "");
+        const title = slug
+          .split("-")
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(" ");
+        const block = `### ${title} (\`/rules/${slug}\`)\n\n${body}`;
+        if (total + block.length > RULES_CONTEXT_MAX_CHARS) {
+          chunks.push(
+            "\n\n_(Remaining rules omitted to fit the context budget.)_",
+          );
+          break;
+        }
+        chunks.push(block);
+        total += block.length;
+      } catch {
+        /* skip unreadable rules file — never block Ask */
+      }
+    }
+
+    cachedRulesContext =
+      chunks.length > 0
+        ? [
+            "## World rules (canonical)",
+            "",
+            "These records define mechanics, ethics, and constraints. Prefer them over invention when answering lore questions. Cite using markdown links such as `[Title](/rules/slug)`.",
+            "",
+            ...chunks,
+          ].join("\n")
+        : "";
+
+    return cachedRulesContext;
+  } catch {
+    cachedRulesContext = "";
+    return "";
+  }
 }
 
 export function getStoryContext(storyId: string): string {

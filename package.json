@@ -18,7 +18,9 @@
     "review:ingestion": "node --import tsx scripts/review-ingestion.ts",
     "seed:lore-metadata": "node --import tsx scripts/seed-entity-lore-metadata.ts",
     "merge:character-dossier": "node --import tsx scripts/merge-character-dossier.ts",
-    "enrich:character-dossier": "node --import tsx scripts/enrich-character-dossier.ts"
+    "enrich:character-dossier": "node --import tsx scripts/enrich-character-dossier.ts",
+    "audit:migrations": "node scripts/audit-policies-from-migrations.mjs",
+    "audit:canon": "node --import tsx scripts/audit-canon-namespaces.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.88.0",

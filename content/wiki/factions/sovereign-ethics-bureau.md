@@ -1,7 +1,7 @@
 # Sovereign Ethics Bureau
 **Slug:** sovereign-ethics-bureau
 
-<!-- canon:dossier slug="sovereign-ethics-bureau" kind="factions" subkind="political" parent="" generated="2026-04-21" mentions="1" -->
+<!-- canon:dossier slug="sovereign-ethics-bureau" kind="factions" subkind="political" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
 **Aliases:** Earth's Sovereign Ethics Bureau

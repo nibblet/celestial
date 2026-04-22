@@ -5,7 +5,8 @@ export type NounEntityTypeConfig = {
     | "fiction_characters"
     | "fiction_artifacts"
     | "fiction_locations"
-    | "fiction_factions";
+    | "fiction_factions"
+    | "fiction_vaults";
   /** `content/wiki/<wikiSubdir>/*.md` */
   wikiSubdir: string;
   memoirSectionHeading: string;
