@@ -1,0 +1,892 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-04-22T11:35:52.176Z",
+  "entities": {
+    "giza-vault": {
+      "canonicalSlug": "giza-vault",
+      "kind": "artifacts",
+      "parentSlug": null,
+      "aliases": [
+        "Giza vault",
+        "vault"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md"
+      ]
+    },
+    "harmonic-drive": {
+      "canonicalSlug": "harmonic-drive",
+      "kind": "artifacts",
+      "parentSlug": null,
+      "aliases": [
+        "bioadaptive harmonic drive"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md",
+        "Valkyrie-1 Technical Brief.md",
+        "Valkyrie-1_ Visual & Structural Specification Brief.md"
+      ]
+    },
+    "resonant-core": {
+      "canonicalSlug": "resonant-core",
+      "kind": "artifacts",
+      "parentSlug": null,
+      "aliases": [],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md"
+      ]
+    },
+    "rigel-ascendant": {
+      "canonicalSlug": "rigel-ascendant",
+      "kind": "artifacts",
+      "parentSlug": null,
+      "aliases": [
+        "CNV-014-A",
+        "Rigel Ascendant"
+      ],
+      "lastSeenIn": [
+        "Addendum Earth 2050 World Snapshot.md"
+      ]
+    },
+    "triple-helix-symbol": {
+      "canonicalSlug": "triple-helix-symbol",
+      "kind": "artifacts",
+      "parentSlug": null,
+      "aliases": [
+        "harmonic wave circle",
+        "interlocking triple helix"
+      ],
+      "lastSeenIn": [
+        "Ancient Lore & Watcher Dossier.md"
+      ]
+    },
+    "valkyrie-1": {
+      "canonicalSlug": "valkyrie-1",
+      "kind": "artifacts",
+      "parentSlug": null,
+      "aliases": [
+        "Martian ship",
+        "The Ship",
+        "VLK",
+        "Valkyrie",
+        "Valkyrie-1",
+        "ship",
+        "the-ship"
+      ],
+      "lastSeenIn": [
+        "Addendum Earth 2050 World Snapshot.md",
+        "Ancient Lore & Watcher Dossier.md",
+        "Celestial Heritage Series Bible.md",
+        "Celestial Heritage_ Character Dossier.md",
+        "Earth 2050_ World Snapshot.md",
+        "Style & Voice Guide Celestial Heritage.md",
+        "Valkyrie-1 Mission Log Framework.md",
+        "Valkyrie-1 Technical Brief.md",
+        "Valkyrie-1_ Visual & Structural Specification Brief.md",
+        "content/wiki/artifacts/valkyrie-1.md",
+        "🛰️ Valkyrie-1 Interior Specifications.md"
+      ]
+    },
+    "vault-002": {
+      "canonicalSlug": "vault-002",
+      "kind": "artifacts",
+      "parentSlug": null,
+      "aliases": [
+        "First Light",
+        "Vault 002",
+        "Vault 2"
+      ],
+      "lastSeenIn": [
+        "Parable Catalog v2 – Celestial Heritage Series.md",
+        "Valkyrie-1 Mission Log Framework.md"
+      ]
+    },
+    "vault-003": {
+      "canonicalSlug": "vault-003",
+      "kind": "artifacts",
+      "parentSlug": null,
+      "aliases": [
+        "Vault 3"
+      ],
+      "lastSeenIn": [
+        "Parable Catalog v2 – Celestial Heritage Series.md"
+      ]
+    },
+    "vault-006": {
+      "canonicalSlug": "vault-006",
+      "kind": "artifacts",
+      "parentSlug": null,
+      "aliases": [
+        "Vault 6"
+      ],
+      "lastSeenIn": [
+        "Parable Catalog v2 – Celestial Heritage Series.md"
+      ]
+    },
+    "alara": {
+      "canonicalSlug": "alara",
+      "kind": "characters",
+      "parentSlug": null,
+      "aliases": [
+        "ALARA",
+        "ALARA System",
+        "Adaptive Logic and Responsive Assistant",
+        "She",
+        "🛰️ ALARA"
+      ],
+      "lastSeenIn": [
+        "Addendum Earth 2050 World Snapshot.md",
+        "Ancient Lore & Watcher Dossier.md",
+        "Celestial Heritage Series Bible.md",
+        "Celestial Heritage_ Character Dossier.md",
+        "Earth 2050_ World Snapshot.md",
+        "Parable Catalog v2 – Celestial Heritage Series.md",
+        "Style & Voice Guide Celestial Heritage.md",
+        "Valkyrie-1 Mission Log Framework.md",
+        "Valkyrie-1 Technical Brief.md",
+        "Valkyrie-1_ Visual & Structural Specification Brief.md",
+        "content/wiki/characters/alara.md",
+        "🛰️ Valkyrie-1 Interior Specifications.md"
+      ]
+    },
+    "aven-voss": {
+      "canonicalSlug": "aven-voss",
+      "kind": "characters",
+      "parentSlug": null,
+      "aliases": [
+        "Aven",
+        "🩺 Aven Voss"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md",
+        "Celestial Heritage_ Character Dossier.md",
+        "Style & Voice Guide Celestial Heritage.md",
+        "content/wiki/characters/aven-voss.md"
+      ]
+    },
+    "caeden": {
+      "canonicalSlug": "caeden",
+      "kind": "characters",
+      "parentSlug": null,
+      "aliases": [
+        "Corporate Adaptive Enforcement Node",
+        "📡 CAEDEN"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md"
+      ]
+    },
+    "elira-voss": {
+      "canonicalSlug": "elira-voss",
+      "kind": "characters",
+      "parentSlug": null,
+      "aliases": [
+        "Elira"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage_ Character Dossier.md"
+      ]
+    },
+    "evelyn-tran": {
+      "canonicalSlug": "evelyn-tran",
+      "kind": "characters",
+      "parentSlug": null,
+      "aliases": [
+        "Dr. Evelyn Tran",
+        "Dr. Tran",
+        "Evelyn",
+        "Evelyn Tran",
+        "dr-evelyn-tran",
+        "🧬 Dr. Evelyn Tran"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md",
+        "Celestial Heritage_ Character Dossier.md",
+        "Style & Voice Guide Celestial Heritage.md",
+        "content/wiki/characters/evelyn-tran.md",
+        "🛰️ Valkyrie-1 Interior Specifications.md"
+      ]
+    },
+    "galen-voss": {
+      "canonicalSlug": "galen-voss",
+      "kind": "characters",
+      "parentSlug": null,
+      "aliases": [
+        "Galen",
+        "Voss",
+        "👨‍🚀 Galen Voss"
+      ],
+      "lastSeenIn": [
+        "Addendum Earth 2050 World Snapshot.md",
+        "Celestial Heritage Series Bible.md",
+        "Celestial Heritage_ Character Dossier.md",
+        "Parable Catalog v2 – Celestial Heritage Series.md",
+        "Style & Voice Guide Celestial Heritage.md",
+        "Valkyrie-1 Mission Log Framework.md",
+        "Valkyrie-1 Technical Brief.md",
+        "content/wiki/characters/galen-voss.md",
+        "🛰️ Valkyrie-1 Interior Specifications.md"
+      ]
+    },
+    "jax-reyes": {
+      "canonicalSlug": "jax-reyes",
+      "kind": "characters",
+      "parentSlug": null,
+      "aliases": [
+        "Jax",
+        "Jax Reyes",
+        "Jaxon 'Jax' Reyes",
+        "Jaxon Reyes",
+        "jaxon-reyes",
+        "🛠️ Jax Reyes"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md",
+        "Celestial Heritage_ Character Dossier.md",
+        "Style & Voice Guide Celestial Heritage.md",
+        "content/wiki/characters/jax-reyes.md"
+      ]
+    },
+    "jonah-revas": {
+      "canonicalSlug": "jonah-revas",
+      "kind": "characters",
+      "parentSlug": null,
+      "aliases": [
+        "Dr. Jonah Revas",
+        "Jonah",
+        "Jonah Revas",
+        "Revas",
+        "dr-jonah-revas",
+        "📿 Jonah Revas"
+      ],
+      "lastSeenIn": [
+        "Ancient Lore & Watcher Dossier.md",
+        "Celestial Heritage Series Bible.md",
+        "Celestial Heritage_ Character Dossier.md",
+        "Parable Catalog v2 – Celestial Heritage Series.md",
+        "Style & Voice Guide Celestial Heritage.md",
+        "content/wiki/characters/jonah-revas.md",
+        "🛰️ Valkyrie-1 Interior Specifications.md"
+      ]
+    },
+    "lena-osei": {
+      "canonicalSlug": "lena-osei",
+      "kind": "characters",
+      "parentSlug": null,
+      "aliases": [
+        "Dr. Lena Osei",
+        "Dr. Osei",
+        "Lena",
+        "Lena Osei",
+        "dr-lena-osei"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md",
+        "Celestial Heritage_ Character Dossier.md",
+        "Style & Voice Guide Celestial Heritage.md",
+        "content/wiki/characters/lena-osei.md",
+        "🛰️ Valkyrie-1 Interior Specifications.md"
+      ]
+    },
+    "marco-ruiz": {
+      "canonicalSlug": "marco-ruiz",
+      "kind": "characters",
+      "parentSlug": null,
+      "aliases": [
+        "Major Marco Ruiz",
+        "Major Ruiz",
+        "Marco",
+        "Marco Ruiz",
+        "Ruiz",
+        "major-marco-ruiz",
+        "🛡️ Marco Ruiz"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md",
+        "Celestial Heritage_ Character Dossier.md",
+        "Style & Voice Guide Celestial Heritage.md",
+        "Valkyrie-1 Mission Log Framework.md",
+        "content/wiki/characters/marco-ruiz.md"
+      ]
+    },
+    "rhea-solari": {
+      "canonicalSlug": "rhea-solari",
+      "kind": "characters",
+      "parentSlug": null,
+      "aliases": [
+        "Rhea Solari",
+        "Solari"
+      ],
+      "lastSeenIn": [
+        "Addendum Earth 2050 World Snapshot.md"
+      ]
+    },
+    "sovrin": {
+      "canonicalSlug": "sovrin",
+      "kind": "characters",
+      "parentSlug": null,
+      "aliases": [
+        "SOVRIN",
+        "White Zero"
+      ],
+      "lastSeenIn": [
+        "Addendum Earth 2050 World Snapshot.md"
+      ]
+    },
+    "thane-meric": {
+      "canonicalSlug": "thane-meric",
+      "kind": "characters",
+      "parentSlug": null,
+      "aliases": [
+        "Thane",
+        "🌱 Thane Meric"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md",
+        "Celestial Heritage_ Character Dossier.md",
+        "Parable Catalog v2 – Celestial Heritage Series.md",
+        "Style & Voice Guide Celestial Heritage.md",
+        "Valkyrie-1 Mission Log Framework.md",
+        "Valkyrie-1 Technical Brief.md",
+        "content/wiki/characters/thane-meric.md",
+        "🛰️ Valkyrie-1 Interior Specifications.md"
+      ]
+    },
+    "earth-sovereign-alliance": {
+      "canonicalSlug": "earth-sovereign-alliance",
+      "kind": "factions",
+      "parentSlug": null,
+      "aliases": [
+        "Earth Sovereign Alliance"
+      ],
+      "lastSeenIn": [
+        "Addendum Earth 2050 World Snapshot.md"
+      ]
+    },
+    "project-valkyrie": {
+      "canonicalSlug": "project-valkyrie",
+      "kind": "factions",
+      "parentSlug": null,
+      "aliases": [
+        "VALKYRIE"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md"
+      ]
+    },
+    "sovereign-ethics-bureau": {
+      "canonicalSlug": "sovereign-ethics-bureau",
+      "kind": "factions",
+      "parentSlug": null,
+      "aliases": [
+        "Earth's Sovereign Ethics Bureau"
+      ],
+      "lastSeenIn": [
+        "Addendum Earth 2050 World Snapshot.md"
+      ]
+    },
+    "the-ancients": {
+      "canonicalSlug": "the-ancients",
+      "kind": "factions",
+      "parentSlug": null,
+      "aliases": [
+        "Ancient",
+        "Ancient Civilization",
+        "Ancients",
+        "Resonant civilization",
+        "Resonants",
+        "The Ancients",
+        "humanity's forgotten ancestors",
+        "resonant",
+        "resonant-civilization",
+        "the Resonant",
+        "the-resonant"
+      ],
+      "lastSeenIn": [
+        "Ancient Lore & Watcher Dossier.md",
+        "Celestial Heritage Series Bible.md",
+        "Celestial Heritage_ Character Dossier.md",
+        "Valkyrie-1 Mission Log Framework.md"
+      ]
+    },
+    "the-watchers": {
+      "canonicalSlug": "the-watchers",
+      "kind": "factions",
+      "parentSlug": null,
+      "aliases": [
+        "Watchers",
+        "the Watchers"
+      ],
+      "lastSeenIn": [
+        "Ancient Lore & Watcher Dossier.md",
+        "Celestial Heritage Series Bible.md",
+        "Valkyrie-1 Mission Log Framework.md"
+      ]
+    },
+    "united-nations": {
+      "canonicalSlug": "united-nations",
+      "kind": "factions",
+      "parentSlug": null,
+      "aliases": [],
+      "lastSeenIn": [
+        "Earth 2050_ World Snapshot.md"
+      ]
+    },
+    "vault-builders": {
+      "canonicalSlug": "vault-builders",
+      "kind": "factions",
+      "parentSlug": null,
+      "aliases": [
+        "Predecessors",
+        "The Resonant",
+        "the Builders"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md"
+      ]
+    },
+    "blind-zones": {
+      "canonicalSlug": "blind-zones",
+      "kind": "locations",
+      "parentSlug": "valkyrie-1",
+      "aliases": [
+        "Restricted and Dormant Spaces"
+      ],
+      "lastSeenIn": [
+        "Valkyrie-1_ Visual & Structural Specification Brief.md",
+        "🛰️ Valkyrie-1 Interior Specifications.md"
+      ]
+    },
+    "command-dome": {
+      "canonicalSlug": "command-dome",
+      "kind": "locations",
+      "parentSlug": "valkyrie-1",
+      "aliases": [
+        "Central Command Dome",
+        "Central Core",
+        "Command Dome",
+        "Command Section",
+        "The Command Dome",
+        "central-command-dome",
+        "command chamber",
+        "command deck",
+        "resonant core",
+        "the bridge"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md",
+        "Valkyrie-1 Technical Brief.md",
+        "Valkyrie-1_ Visual & Structural Specification Brief.md",
+        "🛰️ Valkyrie-1 Interior Specifications.md"
+      ]
+    },
+    "earth": {
+      "canonicalSlug": "earth",
+      "kind": "locations",
+      "parentSlug": null,
+      "aliases": [
+        "Earth"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md"
+      ]
+    },
+    "giza-plateau": {
+      "canonicalSlug": "giza-plateau",
+      "kind": "locations",
+      "parentSlug": null,
+      "aliases": [
+        "Giza",
+        "Giza plateau"
+      ],
+      "lastSeenIn": [
+        "Ancient Lore & Watcher Dossier.md",
+        "Celestial Heritage Series Bible.md",
+        "Earth 2050_ World Snapshot.md"
+      ]
+    },
+    "great-pyramid": {
+      "canonicalSlug": "great-pyramid",
+      "kind": "locations",
+      "parentSlug": "giza-plateau",
+      "aliases": [
+        "the Great Pyramid"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md"
+      ]
+    },
+    "living-quarters": {
+      "canonicalSlug": "living-quarters",
+      "kind": "locations",
+      "parentSlug": "valkyrie-1",
+      "aliases": [
+        "rooms"
+      ],
+      "lastSeenIn": [
+        "🛰️ Valkyrie-1 Interior Specifications.md"
+      ]
+    },
+    "mars": {
+      "canonicalSlug": "mars",
+      "kind": "locations",
+      "parentSlug": null,
+      "aliases": [
+        "Mars",
+        "Martian",
+        "Martian surface"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md",
+        "Earth 2050_ World Snapshot.md",
+        "Valkyrie-1 Technical Brief.md"
+      ]
+    },
+    "med-module": {
+      "canonicalSlug": "med-module",
+      "kind": "locations",
+      "parentSlug": "valkyrie-1",
+      "aliases": [],
+      "lastSeenIn": [
+        "Valkyrie-1 Mission Log Framework.md"
+      ]
+    },
+    "mess-commons": {
+      "canonicalSlug": "mess-commons",
+      "kind": "locations",
+      "parentSlug": "valkyrie-1",
+      "aliases": [],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md",
+        "🛰️ Valkyrie-1 Interior Specifications.md"
+      ]
+    },
+    "observation-deck": {
+      "canonicalSlug": "observation-deck",
+      "kind": "locations",
+      "parentSlug": "valkyrie-1",
+      "aliases": [
+        "Observation Deck",
+        "The Eye"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md",
+        "Valkyrie-1 Technical Brief.md",
+        "Valkyrie-1_ Visual & Structural Specification Brief.md",
+        "🛰️ Valkyrie-1 Interior Specifications.md"
+      ]
+    },
+    "resonant-pad": {
+      "canonicalSlug": "resonant-pad",
+      "kind": "locations",
+      "parentSlug": "valkyrie-1",
+      "aliases": [],
+      "lastSeenIn": [
+        "Parable Catalog v2 – Celestial Heritage Series.md"
+      ]
+    },
+    "sensorium": {
+      "canonicalSlug": "sensorium",
+      "kind": "locations",
+      "parentSlug": "valkyrie-1",
+      "aliases": [
+        "resonance analysis chamber"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md",
+        "Valkyrie-1 Technical Brief.md",
+        "Valkyrie-1_ Visual & Structural Specification Brief.md",
+        "🛰️ Valkyrie-1 Interior Specifications.md"
+      ]
+    },
+    "specimen-lockers": {
+      "canonicalSlug": "specimen-lockers",
+      "kind": "locations",
+      "parentSlug": "valkyrie-1",
+      "aliases": [
+        "Specimen Storage",
+        "specimen-storage"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md",
+        "Valkyrie-1_ Visual & Structural Specification Brief.md",
+        "🛰️ Valkyrie-1 Interior Specifications.md"
+      ]
+    },
+    "systems-nexus": {
+      "canonicalSlug": "systems-nexus",
+      "kind": "locations",
+      "parentSlug": "valkyrie-1",
+      "aliases": [],
+      "lastSeenIn": [
+        "🛰️ Valkyrie-1 Interior Specifications.md"
+      ]
+    },
+    "translation-bay": {
+      "canonicalSlug": "translation-bay",
+      "kind": "locations",
+      "parentSlug": "valkyrie-1",
+      "aliases": [],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md",
+        "Valkyrie-1 Technical Brief.md",
+        "Valkyrie-1_ Visual & Structural Specification Brief.md",
+        "🛰️ Valkyrie-1 Interior Specifications.md"
+      ]
+    },
+    "triad-chamber": {
+      "canonicalSlug": "triad-chamber",
+      "kind": "locations",
+      "parentSlug": null,
+      "aliases": [
+        "Triad Chamber Glyph Encoding"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md"
+      ]
+    },
+    "vault-interface-annex": {
+      "canonicalSlug": "vault-interface-annex",
+      "kind": "locations",
+      "parentSlug": "valkyrie-1",
+      "aliases": [
+        "Vault Annex",
+        "vault-annex"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md",
+        "Valkyrie-1 Technical Brief.md",
+        "Valkyrie-1_ Visual & Structural Specification Brief.md",
+        "🛰️ Valkyrie-1 Interior Specifications.md"
+      ]
+    },
+    "witness-circle": {
+      "canonicalSlug": "witness-circle",
+      "kind": "locations",
+      "parentSlug": "valkyrie-1",
+      "aliases": [],
+      "lastSeenIn": [
+        "Parable Catalog v2 – Celestial Heritage Series.md"
+      ]
+    },
+    "zone-theta": {
+      "canonicalSlug": "zone-theta",
+      "kind": "locations",
+      "parentSlug": "mars",
+      "aliases": [],
+      "lastSeenIn": [
+        "Valkyrie-1 Mission Log Framework.md"
+      ]
+    },
+    "coherence": {
+      "canonicalSlug": "coherence",
+      "kind": "rules",
+      "parentSlug": null,
+      "aliases": [
+        "Coherence"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md"
+      ]
+    },
+    "directive-cn-24": {
+      "canonicalSlug": "directive-cn-24",
+      "kind": "rules",
+      "parentSlug": null,
+      "aliases": [
+        "CN-24"
+      ],
+      "lastSeenIn": [
+        "Addendum Earth 2050 World Snapshot.md"
+      ]
+    },
+    "parables-of-resonance": {
+      "canonicalSlug": "parables-of-resonance",
+      "kind": "rules",
+      "parentSlug": null,
+      "aliases": [
+        "vault-echo symbolism"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md"
+      ]
+    },
+    "resonant-ethic": {
+      "canonicalSlug": "resonant-ethic",
+      "kind": "rules",
+      "parentSlug": null,
+      "aliases": [
+        "Ancient Philosophy"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md"
+      ]
+    },
+    "the-inheritance": {
+      "canonicalSlug": "the-inheritance",
+      "kind": "rules",
+      "parentSlug": null,
+      "aliases": [
+        "Inheritance"
+      ],
+      "lastSeenIn": [
+        "Parable Catalog v2 – Celestial Heritage Series.md"
+      ]
+    },
+    "the-mirror-at-the-gate": {
+      "canonicalSlug": "the-mirror-at-the-gate",
+      "kind": "rules",
+      "parentSlug": null,
+      "aliases": [
+        "Mirror at the Gate"
+      ],
+      "lastSeenIn": [
+        "Parable Catalog v2 – Celestial Heritage Series.md"
+      ]
+    },
+    "the-pattern": {
+      "canonicalSlug": "the-pattern",
+      "kind": "rules",
+      "parentSlug": null,
+      "aliases": [
+        "Pattern",
+        "universal consciousness"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md"
+      ]
+    },
+    "the-silent-choir": {
+      "canonicalSlug": "the-silent-choir",
+      "kind": "rules",
+      "parentSlug": null,
+      "aliases": [
+        "Silent Choir"
+      ],
+      "lastSeenIn": [
+        "Parable Catalog v2 – Celestial Heritage Series.md"
+      ]
+    },
+    "the-vessel-and-the-thread": {
+      "canonicalSlug": "the-vessel-and-the-thread",
+      "kind": "rules",
+      "parentSlug": null,
+      "aliases": [
+        "Vessel and the Thread"
+      ],
+      "lastSeenIn": [
+        "Celestial Heritage Series Bible.md",
+        "Parable Catalog v2 – Celestial Heritage Series.md"
+      ]
+    },
+    "the-weightless-measure": {
+      "canonicalSlug": "the-weightless-measure",
+      "kind": "rules",
+      "parentSlug": null,
+      "aliases": [
+        "Weightless Measure"
+      ],
+      "lastSeenIn": [
+        "Parable Catalog v2 – Celestial Heritage Series.md"
+      ]
+    },
+    "vault-parables": {
+      "canonicalSlug": "vault-parables",
+      "kind": "rules",
+      "parentSlug": null,
+      "aliases": [
+        "parables"
+      ],
+      "lastSeenIn": [
+        "Style & Voice Guide Celestial Heritage.md"
+      ]
+    }
+  },
+  "chapters": {
+    "CH01": {
+      "themes": [
+        "Fiction Narrative"
+      ]
+    },
+    "CH02": {
+      "themes": [
+        "Fiction Narrative"
+      ]
+    },
+    "CH03": {
+      "themes": [
+        "Fiction Narrative"
+      ]
+    },
+    "CH04": {
+      "themes": [
+        "Fiction Narrative"
+      ]
+    },
+    "CH05": {
+      "themes": [
+        "Fiction Narrative"
+      ]
+    },
+    "CH06": {
+      "themes": [
+        "Fiction Narrative"
+      ]
+    },
+    "CH07": {
+      "themes": [
+        "Fiction Narrative"
+      ]
+    },
+    "CH08": {
+      "themes": [
+        "Fiction Narrative"
+      ]
+    },
+    "CH09": {
+      "themes": [
+        "Fiction Narrative"
+      ]
+    },
+    "CH10": {
+      "themes": [
+        "Fiction Narrative"
+      ]
+    },
+    "CH11": {
+      "themes": [
+        "Fiction Narrative"
+      ]
+    },
+    "CH12": {
+      "themes": [
+        "Fiction Narrative"
+      ]
+    },
+    "CH13": {
+      "themes": [
+        "Fiction Narrative"
+      ]
+    },
+    "CH14": {
+      "themes": [
+        "Fiction Narrative"
+      ]
+    },
+    "CH15": {
+      "themes": [
+        "Fiction Narrative"
+      ]
+    },
+    "CH16": {
+      "themes": [
+        "Fiction Narrative"
+      ]
+    },
+    "CH17": {
+      "themes": [
+        "Fiction Narrative"
+      ]
+    }
+  }
+}

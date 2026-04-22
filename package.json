@@ -15,6 +15,7 @@
     "ingest:scenes": "node --import tsx scripts/ingest-chapter-scenes.ts",
     "seed:threads": "node --import tsx scripts/seed-open-threads.ts",
     "seed:beats": "node --import tsx scripts/seed-journey-beats.ts",
+    "review:ingestion": "node --import tsx scripts/review-ingestion.ts",
     "seed:lore-metadata": "node --import tsx scripts/seed-entity-lore-metadata.ts",
     "merge:character-dossier": "node --import tsx scripts/merge-character-dossier.ts",
     "enrich:character-dossier": "node --import tsx scripts/enrich-character-dossier.ts"
