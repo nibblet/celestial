@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-04-22T11:35:52.176Z",
+  "generatedAt": "2026-04-22T11:50:48.946Z",
   "entities": {
     "giza-vault": {
       "canonicalSlug": "giza-vault",
@@ -11,7 +11,8 @@
         "vault"
       ],
       "lastSeenIn": [
-        "Celestial Heritage Series Bible.md"
+        "Celestial Heritage Series Bible.md",
+        "content/wiki/artifacts/giza-vault.md"
       ]
     },
     "harmonic-drive": {
@@ -24,7 +25,8 @@
       "lastSeenIn": [
         "Celestial Heritage Series Bible.md",
         "Valkyrie-1 Technical Brief.md",
-        "Valkyrie-1_ Visual & Structural Specification Brief.md"
+        "Valkyrie-1_ Visual & Structural Specification Brief.md",
+        "content/wiki/artifacts/harmonic-drive.md"
       ]
     },
     "resonant-core": {
@@ -33,7 +35,8 @@
       "parentSlug": null,
       "aliases": [],
       "lastSeenIn": [
-        "Celestial Heritage Series Bible.md"
+        "Celestial Heritage Series Bible.md",
+        "content/wiki/artifacts/resonant-core.md"
       ]
     },
     "rigel-ascendant": {
@@ -45,7 +48,8 @@
         "Rigel Ascendant"
       ],
       "lastSeenIn": [
-        "Addendum Earth 2050 World Snapshot.md"
+        "Addendum Earth 2050 World Snapshot.md",
+        "content/wiki/artifacts/rigel-ascendant.md"
       ]
     },
     "triple-helix-symbol": {
@@ -57,7 +61,8 @@
         "interlocking triple helix"
       ],
       "lastSeenIn": [
-        "Ancient Lore & Watcher Dossier.md"
+        "Ancient Lore & Watcher Dossier.md",
+        "content/wiki/artifacts/triple-helix-symbol.md"
       ]
     },
     "valkyrie-1": {
@@ -98,7 +103,8 @@
       ],
       "lastSeenIn": [
         "Parable Catalog v2 – Celestial Heritage Series.md",
-        "Valkyrie-1 Mission Log Framework.md"
+        "Valkyrie-1 Mission Log Framework.md",
+        "content/wiki/artifacts/vault-002.md"
       ]
     },
     "vault-003": {
@@ -109,7 +115,8 @@
         "Vault 3"
       ],
       "lastSeenIn": [
-        "Parable Catalog v2 – Celestial Heritage Series.md"
+        "Parable Catalog v2 – Celestial Heritage Series.md",
+        "content/wiki/artifacts/vault-003.md"
       ]
     },
     "vault-006": {
@@ -120,7 +127,8 @@
         "Vault 6"
       ],
       "lastSeenIn": [
-        "Parable Catalog v2 – Celestial Heritage Series.md"
+        "Parable Catalog v2 – Celestial Heritage Series.md",
+        "content/wiki/artifacts/vault-006.md"
       ]
     },
     "alara": {
@@ -173,7 +181,8 @@
         "📡 CAEDEN"
       ],
       "lastSeenIn": [
-        "Celestial Heritage Series Bible.md"
+        "Celestial Heritage Series Bible.md",
+        "content/wiki/characters/caeden.md"
       ]
     },
     "elira-voss": {
@@ -184,7 +193,8 @@
         "Elira"
       ],
       "lastSeenIn": [
-        "Celestial Heritage_ Character Dossier.md"
+        "Celestial Heritage_ Character Dossier.md",
+        "content/wiki/characters/elira-voss.md"
       ]
     },
     "evelyn-tran": {
@@ -318,7 +328,8 @@
         "Solari"
       ],
       "lastSeenIn": [
-        "Addendum Earth 2050 World Snapshot.md"
+        "Addendum Earth 2050 World Snapshot.md",
+        "content/wiki/characters/rhea-solari.md"
       ]
     },
     "sovrin": {
@@ -330,7 +341,8 @@
         "White Zero"
       ],
       "lastSeenIn": [
-        "Addendum Earth 2050 World Snapshot.md"
+        "Addendum Earth 2050 World Snapshot.md",
+        "content/wiki/characters/sovrin.md"
       ]
     },
     "thane-meric": {
@@ -360,7 +372,8 @@
         "Earth Sovereign Alliance"
       ],
       "lastSeenIn": [
-        "Addendum Earth 2050 World Snapshot.md"
+        "Addendum Earth 2050 World Snapshot.md",
+        "content/wiki/factions/earth-sovereign-alliance.md"
       ]
     },
     "project-valkyrie": {
@@ -371,7 +384,8 @@
         "VALKYRIE"
       ],
       "lastSeenIn": [
-        "Celestial Heritage Series Bible.md"
+        "Celestial Heritage Series Bible.md",
+        "content/wiki/factions/project-valkyrie.md"
       ]
     },
     "sovereign-ethics-bureau": {
@@ -382,7 +396,8 @@
         "Earth's Sovereign Ethics Bureau"
       ],
       "lastSeenIn": [
-        "Addendum Earth 2050 World Snapshot.md"
+        "Addendum Earth 2050 World Snapshot.md",
+        "content/wiki/factions/sovereign-ethics-bureau.md"
       ]
     },
     "the-ancients": {
@@ -406,7 +421,8 @@
         "Ancient Lore & Watcher Dossier.md",
         "Celestial Heritage Series Bible.md",
         "Celestial Heritage_ Character Dossier.md",
-        "Valkyrie-1 Mission Log Framework.md"
+        "Valkyrie-1 Mission Log Framework.md",
+        "content/wiki/factions/the-ancients.md"
       ]
     },
     "the-watchers": {
@@ -420,7 +436,8 @@
       "lastSeenIn": [
         "Ancient Lore & Watcher Dossier.md",
         "Celestial Heritage Series Bible.md",
-        "Valkyrie-1 Mission Log Framework.md"
+        "Valkyrie-1 Mission Log Framework.md",
+        "content/wiki/factions/the-watchers.md"
       ]
     },
     "united-nations": {
@@ -429,7 +446,8 @@
       "parentSlug": null,
       "aliases": [],
       "lastSeenIn": [
-        "Earth 2050_ World Snapshot.md"
+        "Earth 2050_ World Snapshot.md",
+        "content/wiki/factions/united-nations.md"
       ]
     },
     "vault-builders": {
@@ -442,7 +460,8 @@
         "the Builders"
       ],
       "lastSeenIn": [
-        "Celestial Heritage Series Bible.md"
+        "Celestial Heritage Series Bible.md",
+        "content/wiki/factions/vault-builders.md"
       ]
     },
     "blind-zones": {
@@ -454,6 +473,7 @@
       ],
       "lastSeenIn": [
         "Valkyrie-1_ Visual & Structural Specification Brief.md",
+        "content/wiki/locations/blind-zones.md",
         "🛰️ Valkyrie-1 Interior Specifications.md"
       ]
     },
@@ -477,6 +497,7 @@
         "Celestial Heritage Series Bible.md",
         "Valkyrie-1 Technical Brief.md",
         "Valkyrie-1_ Visual & Structural Specification Brief.md",
+        "content/wiki/locations/command-dome.md",
         "🛰️ Valkyrie-1 Interior Specifications.md"
       ]
     },
@@ -488,7 +509,8 @@
         "Earth"
       ],
       "lastSeenIn": [
-        "Celestial Heritage Series Bible.md"
+        "Celestial Heritage Series Bible.md",
+        "content/wiki/locations/earth.md"
       ]
     },
     "giza-plateau": {
@@ -502,7 +524,8 @@
       "lastSeenIn": [
         "Ancient Lore & Watcher Dossier.md",
         "Celestial Heritage Series Bible.md",
-        "Earth 2050_ World Snapshot.md"
+        "Earth 2050_ World Snapshot.md",
+        "content/wiki/locations/giza-plateau.md"
       ]
     },
     "great-pyramid": {
@@ -513,7 +536,8 @@
         "the Great Pyramid"
       ],
       "lastSeenIn": [
-        "Celestial Heritage Series Bible.md"
+        "Celestial Heritage Series Bible.md",
+        "content/wiki/locations/great-pyramid.md"
       ]
     },
     "living-quarters": {
@@ -524,6 +548,7 @@
         "rooms"
       ],
       "lastSeenIn": [
+        "content/wiki/locations/living-quarters.md",
         "🛰️ Valkyrie-1 Interior Specifications.md"
       ]
     },
@@ -539,7 +564,8 @@
       "lastSeenIn": [
         "Celestial Heritage Series Bible.md",
         "Earth 2050_ World Snapshot.md",
-        "Valkyrie-1 Technical Brief.md"
+        "Valkyrie-1 Technical Brief.md",
+        "content/wiki/locations/mars.md"
       ]
     },
     "med-module": {
@@ -548,7 +574,8 @@
       "parentSlug": "valkyrie-1",
       "aliases": [],
       "lastSeenIn": [
-        "Valkyrie-1 Mission Log Framework.md"
+        "Valkyrie-1 Mission Log Framework.md",
+        "content/wiki/locations/med-module.md"
       ]
     },
     "mess-commons": {
@@ -558,6 +585,7 @@
       "aliases": [],
       "lastSeenIn": [
         "Celestial Heritage Series Bible.md",
+        "content/wiki/locations/mess-commons.md",
         "🛰️ Valkyrie-1 Interior Specifications.md"
       ]
     },
@@ -573,6 +601,7 @@
         "Celestial Heritage Series Bible.md",
         "Valkyrie-1 Technical Brief.md",
         "Valkyrie-1_ Visual & Structural Specification Brief.md",
+        "content/wiki/locations/observation-deck.md",
         "🛰️ Valkyrie-1 Interior Specifications.md"
       ]
     },
@@ -582,7 +611,8 @@
       "parentSlug": "valkyrie-1",
       "aliases": [],
       "lastSeenIn": [
-        "Parable Catalog v2 – Celestial Heritage Series.md"
+        "Parable Catalog v2 – Celestial Heritage Series.md",
+        "content/wiki/locations/resonant-pad.md"
       ]
     },
     "sensorium": {
@@ -596,6 +626,7 @@
         "Celestial Heritage Series Bible.md",
         "Valkyrie-1 Technical Brief.md",
         "Valkyrie-1_ Visual & Structural Specification Brief.md",
+        "content/wiki/locations/sensorium.md",
         "🛰️ Valkyrie-1 Interior Specifications.md"
       ]
     },
@@ -610,6 +641,7 @@
       "lastSeenIn": [
         "Celestial Heritage Series Bible.md",
         "Valkyrie-1_ Visual & Structural Specification Brief.md",
+        "content/wiki/locations/specimen-lockers.md",
         "🛰️ Valkyrie-1 Interior Specifications.md"
       ]
     },
@@ -619,6 +651,7 @@
       "parentSlug": "valkyrie-1",
       "aliases": [],
       "lastSeenIn": [
+        "content/wiki/locations/systems-nexus.md",
         "🛰️ Valkyrie-1 Interior Specifications.md"
       ]
     },
@@ -631,6 +664,7 @@
         "Celestial Heritage Series Bible.md",
         "Valkyrie-1 Technical Brief.md",
         "Valkyrie-1_ Visual & Structural Specification Brief.md",
+        "content/wiki/locations/translation-bay.md",
         "🛰️ Valkyrie-1 Interior Specifications.md"
       ]
     },
@@ -642,7 +676,8 @@
         "Triad Chamber Glyph Encoding"
       ],
       "lastSeenIn": [
-        "Celestial Heritage Series Bible.md"
+        "Celestial Heritage Series Bible.md",
+        "content/wiki/locations/triad-chamber.md"
       ]
     },
     "vault-interface-annex": {
@@ -657,6 +692,7 @@
         "Celestial Heritage Series Bible.md",
         "Valkyrie-1 Technical Brief.md",
         "Valkyrie-1_ Visual & Structural Specification Brief.md",
+        "content/wiki/locations/vault-interface-annex.md",
         "🛰️ Valkyrie-1 Interior Specifications.md"
       ]
     },
@@ -666,7 +702,8 @@
       "parentSlug": "valkyrie-1",
       "aliases": [],
       "lastSeenIn": [
-        "Parable Catalog v2 – Celestial Heritage Series.md"
+        "Parable Catalog v2 – Celestial Heritage Series.md",
+        "content/wiki/locations/witness-circle.md"
       ]
     },
     "zone-theta": {
@@ -675,7 +712,8 @@
       "parentSlug": "mars",
       "aliases": [],
       "lastSeenIn": [
-        "Valkyrie-1 Mission Log Framework.md"
+        "Valkyrie-1 Mission Log Framework.md",
+        "content/wiki/locations/zone-theta.md"
       ]
     },
     "coherence": {
@@ -686,7 +724,8 @@
         "Coherence"
       ],
       "lastSeenIn": [
-        "Celestial Heritage Series Bible.md"
+        "Celestial Heritage Series Bible.md",
+        "content/wiki/rules/coherence.md"
       ]
     },
     "directive-cn-24": {
@@ -697,7 +736,8 @@
         "CN-24"
       ],
       "lastSeenIn": [
-        "Addendum Earth 2050 World Snapshot.md"
+        "Addendum Earth 2050 World Snapshot.md",
+        "content/wiki/rules/directive-cn-24.md"
       ]
     },
     "parables-of-resonance": {
@@ -708,7 +748,8 @@
         "vault-echo symbolism"
       ],
       "lastSeenIn": [
-        "Celestial Heritage Series Bible.md"
+        "Celestial Heritage Series Bible.md",
+        "content/wiki/rules/parables-of-resonance.md"
       ]
     },
     "resonant-ethic": {
@@ -719,7 +760,8 @@
         "Ancient Philosophy"
       ],
       "lastSeenIn": [
-        "Celestial Heritage Series Bible.md"
+        "Celestial Heritage Series Bible.md",
+        "content/wiki/rules/resonant-ethic.md"
       ]
     },
     "the-inheritance": {
@@ -730,7 +772,8 @@
         "Inheritance"
       ],
       "lastSeenIn": [
-        "Parable Catalog v2 – Celestial Heritage Series.md"
+        "Parable Catalog v2 – Celestial Heritage Series.md",
+        "content/wiki/rules/the-inheritance.md"
       ]
     },
     "the-mirror-at-the-gate": {
@@ -741,7 +784,8 @@
         "Mirror at the Gate"
       ],
       "lastSeenIn": [
-        "Parable Catalog v2 – Celestial Heritage Series.md"
+        "Parable Catalog v2 – Celestial Heritage Series.md",
+        "content/wiki/rules/the-mirror-at-the-gate.md"
       ]
     },
     "the-pattern": {
@@ -753,7 +797,8 @@
         "universal consciousness"
       ],
       "lastSeenIn": [
-        "Celestial Heritage Series Bible.md"
+        "Celestial Heritage Series Bible.md",
+        "content/wiki/rules/the-pattern.md"
       ]
     },
     "the-silent-choir": {
@@ -764,7 +809,8 @@
         "Silent Choir"
       ],
       "lastSeenIn": [
-        "Parable Catalog v2 – Celestial Heritage Series.md"
+        "Parable Catalog v2 – Celestial Heritage Series.md",
+        "content/wiki/rules/the-silent-choir.md"
       ]
     },
     "the-vessel-and-the-thread": {
@@ -776,7 +822,8 @@
       ],
       "lastSeenIn": [
         "Celestial Heritage Series Bible.md",
-        "Parable Catalog v2 – Celestial Heritage Series.md"
+        "Parable Catalog v2 – Celestial Heritage Series.md",
+        "content/wiki/rules/the-vessel-and-the-thread.md"
       ]
     },
     "the-weightless-measure": {
@@ -787,7 +834,8 @@
         "Weightless Measure"
       ],
       "lastSeenIn": [
-        "Parable Catalog v2 – Celestial Heritage Series.md"
+        "Parable Catalog v2 – Celestial Heritage Series.md",
+        "content/wiki/rules/the-weightless-measure.md"
       ]
     },
     "vault-parables": {
@@ -798,7 +846,8 @@
         "parables"
       ],
       "lastSeenIn": [
-        "Style & Voice Guide Celestial Heritage.md"
+        "Style & Voice Guide Celestial Heritage.md",
+        "content/wiki/rules/vault-parables.md"
       ]
     }
   },
