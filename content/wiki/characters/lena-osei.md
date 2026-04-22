@@ -8,17 +8,6 @@ reviewed: false
 > Thane stood at the outer ring of the excavation grid, visor tinted against the Martian morning glare.
 <!-- ai-draft:end -->
 
-## Dossier
-
-### Role
-Exoarchaeologist / Linguist
-
-### Profile
-World expert on ancient scripts and cultural patterns. Brilliant, skeptical, and emotionally reserved. Dedicated to uncovering truths left behind by humanity’s forgotten ancestors. First to decode the Valkyrie-1 systems.
-
-### Character Arc
-From academic seeker to passionate defender of humanity’s right to its past. Learns that uncovering the truth comes with moral responsibility.
-
 ## Appearances
 - Auto-detected appearance (CH02).
 - Auto-detected appearance (CH03).

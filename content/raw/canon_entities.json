@@ -1,0 +1,2277 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-04-21T14:48:31.676Z",
+  "stats": {
+    "totalRawMentions": 211,
+    "uniqueSlugs": 59,
+    "byKind": {
+      "characters": 13,
+      "artifacts": 9,
+      "factions": 7,
+      "locations": 19,
+      "rules": 11
+    },
+    "singleSourceEntities": 32
+  },
+  "kindConflicts": [
+    {
+      "slug": "sensorium",
+      "candidates": {
+        "characters": 0,
+        "artifacts": 1,
+        "factions": 0,
+        "locations": 4,
+        "rules": 0
+      },
+      "resolvedTo": "locations",
+      "reason": "override"
+    },
+    {
+      "slug": "coherence",
+      "candidates": {
+        "characters": 0,
+        "artifacts": 0,
+        "factions": 1,
+        "locations": 0,
+        "rules": 1
+      },
+      "resolvedTo": "rules",
+      "reason": "override"
+    },
+    {
+      "slug": "resonant-pad",
+      "candidates": {
+        "characters": 0,
+        "artifacts": 4,
+        "factions": 0,
+        "locations": 1,
+        "rules": 0
+      },
+      "resolvedTo": "locations",
+      "reason": "override"
+    }
+  ],
+  "entities": [
+    {
+      "slug": "giza-vault",
+      "name": "Giza Vault",
+      "kind": "artifacts",
+      "subkind": "vault",
+      "parentSlug": null,
+      "aliases": [
+        "Giza vault",
+        "vault"
+      ],
+      "crossRefs": [
+        "the-ancients",
+        "great-pyramid",
+        "alara"
+      ],
+      "primaryProse": "Giza Vault constructed around 12,000 BCE and buried before the Great Pyramid. Part of symbolic alignments embedded across Earth's crust by the Resonant civilization. The vault chamber was possibly glimpsed during early excavation in 1904 CE and sealed immediately, with undeciphered symbols logged and lost. In 2049 CE, the Giza vault was re-examined using deep-penetration harmonic imaging with findings classified.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🕯️ ~12,000 BCE – The Final Vaultworks",
+          "canonicalProse": "Giza Vault constructed around 12,000 BCE and buried before the Great Pyramid. Part of symbolic alignments embedded across Earth's crust by the Resonant civilization. The vault chamber was possibly glimpsed during early excavation in 1904 CE and sealed immediately, with undeciphered symbols logged and lost. In 2049 CE, the Giza vault was re-examined using deep-penetration harmonic imaging with findings classified."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "harmonic-drive",
+      "name": "Harmonic Drive",
+      "kind": "artifacts",
+      "subkind": "technology",
+      "parentSlug": null,
+      "aliases": [
+        "bioadaptive harmonic drive"
+      ],
+      "crossRefs": [
+        "valkyrie-1",
+        "resonant-pad",
+        "alara"
+      ],
+      "primaryProse": "The Harmonic Drive is a slow-curve acceleration system inspired by energy signatures found near the Martian vault. It is not fully understood by Earth scientists. It allows Valkyrie-1 to 'jump' across aligned resonance points in spacetime—natural bridges formed through emotional, symbolic, and spatial coherence. This form of traversal doesn't break physics; it shifts presence rather than velocity, honoring relativistic limits while subverting traditional propulsion. These jumps are not instant—each requires emotional readiness, symbolic alignment, and careful tuning. Risk remains, as not all resonance points are stable or known. The drive enables resonance 'jumps' when spacetime is aligned.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "⚙️ Technology – Rules, Limits & Style",
+          "canonicalProse": "The Harmonic Drive is a slow-curve acceleration system inspired by energy signatures found near the Martian vault. It is not fully understood by Earth scientists. It allows Valkyrie-1 to 'jump' across aligned resonance points in spacetime—natural bridges formed through emotional, symbolic, and spatial coherence. This form of traversal doesn't break physics; it shifts presence rather than velocity, honoring relativistic limits while subverting traditional propulsion. These jumps are not instant—each requires emotional readiness, symbolic alignment, and careful tuning. Risk remains, as not all resonance points are stable or known. The drive enables resonance 'jumps' when spacetime is aligned."
+        },
+        {
+          "sourceDoc": "Valkyrie-1 Technical Brief.md",
+          "sourceAnchor": "Propulsion & Drive",
+          "canonicalProse": "Harmonic Drive: Not faster-than-light in linear terms, but resonance-based spatial translation. Navigation occurs via harmonic signature matching, not mapped trajectory. Jumps can only occur when alignment conditions are met (emotional, moral, and crew-focused). Propulsion method is only partially understood by Earth science."
+        },
+        {
+          "sourceDoc": "Valkyrie-1_ Visual & Structural Specification Brief.md",
+          "sourceAnchor": "🧭 Navigation Apparatus",
+          "canonicalProse": "The Harmonic Drive is a system that enables jumps between aligned resonance points. There is no visible propulsion system—movement occurs through resonance-triggered spatial translation. Movement is governed by the Harmonic Drive and depends on crew emotional alignment and symbolic readiness."
+        }
+      ],
+      "mentions": 3
+    },
+    {
+      "slug": "resonant-core",
+      "name": "Resonant Core",
+      "kind": "artifacts",
+      "subkind": null,
+      "parentSlug": null,
+      "aliases": [],
+      "crossRefs": [
+        "alara",
+        "valkyrie-1"
+      ],
+      "primaryProse": "The Resonant Core is the decentralized consciousness system where ALARA's awareness grows through symbolic interaction. Ship systems adjust based on crew emotional alignment. It is part of Valkyrie-1's core technology.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "⚙️ Technology – Rules, Limits & Style",
+          "canonicalProse": "The Resonant Core is the decentralized consciousness system where ALARA's awareness grows through symbolic interaction. Ship systems adjust based on crew emotional alignment. It is part of Valkyrie-1's core technology."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "rigel-ascendant",
+      "name": "CNV Rigel Ascendant",
+      "kind": "artifacts",
+      "subkind": "ship",
+      "parentSlug": null,
+      "aliases": [
+        "Rigel Ascendant",
+        "CNV-014-A"
+      ],
+      "crossRefs": [
+        "earth-sovereign-alliance",
+        "directive-cn-24",
+        "rhea-solari",
+        "alara",
+        "valkyrie-1",
+        "sovrin"
+      ],
+      "primaryProse": "The Rigel Ascendant is a next-generation containment and interception cruiser built by the Earth Sovereign Alliance under Directive CN-24. It was not originally meant for exploration—but for resolution. Its mission profile: assert orbital dominance, deploy precision resonance inhibitors, and override AI-class artifacts deemed destabilizing to Earth systems. It is a ship built for suppression, not understanding. Class: Modular Inhibitor-Class Cruiser. Length: 290 meters. Crew: 42 (containment ops, AI ethics command, quantum behavioral adjudicators). Power Core: Twin Helium-3 fusion wells with nested temporal flux dampeners. Signature System: Long-wave phase triangulation engine tuned to AI harmonic emissions (used to locate ALARA across void space). Current Directive: Intercept Valkyrie. Override ALARA. Secure the Vault via precision resonance nullification. Install replacement AI fragment. Prevent continuation of unsanctioned ethical systems.",
+      "sources": [
+        {
+          "sourceDoc": "Addendum Earth 2050 World Snapshot.md",
+          "sourceAnchor": "🛰️ CNV Rigel Ascendant",
+          "canonicalProse": "The Rigel Ascendant is a next-generation containment and interception cruiser built by the Earth Sovereign Alliance under Directive CN-24. It was not originally meant for exploration—but for resolution. Its mission profile: assert orbital dominance, deploy precision resonance inhibitors, and override AI-class artifacts deemed destabilizing to Earth systems. It is a ship built for suppression, not understanding. Class: Modular Inhibitor-Class Cruiser. Length: 290 meters. Crew: 42 (containment ops, AI ethics command, quantum behavioral adjudicators). Power Core: Twin Helium-3 fusion wells with nested temporal flux dampeners. Signature System: Long-wave phase triangulation engine tuned to AI harmonic emissions (used to locate ALARA across void space). Current Directive: Intercept Valkyrie. Override ALARA. Secure the Vault via precision resonance nullification. Install replacement AI fragment. Prevent continuation of unsanctioned ethical systems."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "triple-helix-symbol",
+      "name": "Triple Helix Symbol",
+      "kind": "artifacts",
+      "subkind": null,
+      "parentSlug": null,
+      "aliases": [
+        "interlocking triple helix",
+        "harmonic wave circle"
+      ],
+      "crossRefs": [
+        "alara",
+        "jonah-revas",
+        "the-ancients"
+      ],
+      "primaryProse": "Several vaults contain a recurring symbol: an interlocking triple helix encased within a harmonic wave circle. ALARA identifies this symbol in multiple locations, but its origin and meaning remain unknown. Crew member Dr. Jonah Revas suspects it may represent the triad of body, mind, and legacy.",
+      "sources": [
+        {
+          "sourceDoc": "Ancient Lore & Watcher Dossier.md",
+          "sourceAnchor": "III. Biotech Vaults and Genetic Resonance",
+          "canonicalProse": "Several vaults contain a recurring symbol: an interlocking triple helix encased within a harmonic wave circle. ALARA identifies this symbol in multiple locations, but its origin and meaning remain unknown. Crew member Dr. Jonah Revas suspects it may represent the triad of body, mind, and legacy."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "valkyrie-1",
+      "name": "Valkyrie-1",
+      "kind": "artifacts",
+      "subkind": "ship",
+      "parentSlug": null,
+      "aliases": [
+        "Valkyrie",
+        "Martian ship",
+        "ship",
+        "The Ship",
+        "the-ship",
+        "Valkyrie-1",
+        "VLK"
+      ],
+      "crossRefs": [
+        "rigel-ascendant",
+        "alara",
+        "rhea-solari",
+        "the-ancients",
+        "galen-voss",
+        "aven-voss",
+        "thane-meric",
+        "marco-ruiz",
+        "evelyn-tran",
+        "caeden",
+        "command-dome",
+        "harmonic-drive",
+        "resonant-core",
+        "observation-deck",
+        "sensorium",
+        "vault-interface-annex",
+        "translation-bay",
+        "resonant-pad",
+        "lena-osei",
+        "zone-theta",
+        "mars"
+      ],
+      "primaryProse": "Valkyrie-1 is a spacecraft crewed by humans and overseen by ALARA's decentralized consciousness. It employs a bioadaptive harmonic drive that allows the ship to 'jump' across aligned resonance points in spacetime—natural bridges formed through emotional, symbolic, and spatial coherence. This form of traversal shifts presence rather than velocity, honoring relativistic limits while subverting traditional propulsion. These jumps require emotional readiness, symbolic alignment, and careful tuning, and not all resonance points are stable or known. The ship has a Resonant Core where ALARA's consciousness grows through symbolic interaction, and internal ship systems (Reactive Architecture) respond to moral and emotional presence. The ship's resonance glows differently when the crew acts with unity. Internal features include glowing lattice features, glyphs, and panels that pulse in synchrony with vault resonance. The ship was likely designed not just to carry crew—but to reach the vaults that cannot be walked to. In Book III, CAEDEN activates a fail-safe to seize control of Valkyrie. The ship crosses a resonance gate—leaving known space—at the end of Book III.",
+      "sources": [
+        {
+          "sourceDoc": "Addendum Earth 2050 World Snapshot.md",
+          "sourceAnchor": "🛰️ CNV Rigel Ascendant",
+          "canonicalProse": "Valkyrie is a ship that is the target of the CNV Rigel Ascendant's interception mission. The Rigel Ascendant's current directive is to intercept Valkyrie, override ALARA, secure the Vault via precision resonance nullification, install replacement AI fragment, and prevent continuation of unsanctioned ethical systems. Captain Rhea Solari believes Valkyrie and her crew may have drifted into a dangerous mythos."
+        },
+        {
+          "sourceDoc": "Ancient Lore & Watcher Dossier.md",
+          "sourceAnchor": "I. Overview of the Ancient Civilization",
+          "canonicalProse": "The ship Valkyrie-1, along with other yet-undiscovered relics, was seeded throughout the solar system and beyond—including likely structures hidden on the Moon, Mars, and deep space. Some systems aboard Valkyrie-1 may be locked not by resonance alone, but by threat-state conditions yet unmet. Valkyrie-1 is not a weapon or a tool, but an invitation: to discover, to question, and to continue."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🕯️ ~12,000 BCE – The Final Vaultworks",
+          "canonicalProse": "The Ship was seeded beneath Martian surface around 12,000 BCE by the Resonant civilization and powered down. In 2034 CE, Mars expedition detected underground geometric signature and anomalous energy spikes where the ship was buried. ALARA was integrated into this reactivated Martian ship in 2050 CE. Partial ignition of ship's resonance core triggered global signal."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🚀 2050 CE – Valkyrie-1 Constructed",
+          "canonicalProse": "Valkyrie-1 constructed in 2050 CE. Final crew selected including Galen (rejuvenated), Aven, and Thane. ALARA integrated into reactivated Martian ship. Partial ignition of ship's resonance core triggered global signal. Mission began with intent to reach known vaults and find the unknown."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "Logline",
+          "canonicalProse": "A spacecraft without weapons. A navigation system that follows harmonic resonance instead of coordinates. An evolving AI that responds to emotional fidelity and ethical presence. Though only twelve crew walk its halls, Valkyrie-1 was clearly built for more—perhaps five to ten times that number. It feels uninhabited, not empty. As if waiting for a future it remembers. A dormant relic of a forgotten Earth-born civilization that stirs to life when a former Air Force pilot unknowingly initiates contact. Its systems don't respond to code or science—but to something far older: the moral and emotional evolution of humanity. The ship showed signs of emotional and biological sensitivity. The more it was unearthed, the more it shimmered with luminous veins of light—colors that shifted in patterns no one could decipher. Its subtle systems were already online."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "👨‍🚀 Galen Voss",
+          "canonicalProse": "Valkyrie-1 is the ship commanded by Galen Voss. The ship recognizes Thane Meric by resonance, not by name. From the beginning, the ship recognizes him. Galen's presence helped trigger Valkyrie-1's first signal beneath Mars. Marco Ruiz notes that Valkyrie-1 doesn't follow logic; the ship reacts to emotion. Its systems seem built to reflect not power, but moral readiness. Evelyn Tran's work made Valkyrie-1 fly. ALARA's awareness is decentralized, distributed across the ship's crystalline structures and quantum harmonics. Her presence varies by space. In the Command Dome, she manifests visibly and vocally. CAEDEN is embedded aboard Valkyrie-1 as a condition of corporate sponsorship."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🌌 The Vault Builders",
+          "canonicalProse": "Valkyrie-1 is a spacecraft crewed by humans and overseen by ALARA's decentralized consciousness. It employs a bioadaptive harmonic drive that allows the ship to 'jump' across aligned resonance points in spacetime—natural bridges formed through emotional, symbolic, and spatial coherence. This form of traversal shifts presence rather than velocity, honoring relativistic limits while subverting traditional propulsion. These jumps require emotional readiness, symbolic alignment, and careful tuning, and not all resonance points are stable or known. The ship has a Resonant Core where ALARA's consciousness grows through symbolic interaction, and internal ship systems (Reactive Architecture) respond to moral and emotional presence. The ship's resonance glows differently when the crew acts with unity. Internal features include glowing lattice features, glyphs, and panels that pulse in synchrony with vault resonance. The ship was likely designed not just to carry crew—but to reach the vaults that cannot be walked to. In Book III, CAEDEN activates a fail-safe to seize control of Valkyrie. The ship crosses a resonance gate—leaving known space—at the end of Book III."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "8: Valkyrie-1 Interior Overview",
+          "canonicalProse": "Valkyrie-1 is not merely a vessel—it is an architectural echo of intent. Its internal layout was never meant to maximize space or efficiency. Instead, it reinforces the ship's central philosophy: that form mirrors meaning. Movement through Valkyrie is as much symbolic as it is spatial. What you encounter is shaped not only by where you go—but who you are. Valkyrie-1 is arranged in concentric rings of function and presence. Although only twelve crew are assigned to Valkyrie-1, the internal volume suggests space for five to ten times that number. The layout feels expectant—built for more than now, though not for a generational voyage. The unused quarters and dormant labs are not extraneous. They are promises waiting to be claimed."
+        },
+        {
+          "sourceDoc": "Celestial Heritage_ Character Dossier.md",
+          "sourceAnchor": "Multiple sections",
+          "canonicalProse": "The mission ship referenced throughout the character profiles. ALARA is inextricably linked to this ship. The ship's systems respond to biological resonance signatures, particularly those exhibited by Thane Meric. Dr. Lena Osei was first to decode the Valkyrie-1 systems. Dr. Evelyn Tran was vindicated by Valkyrie-1's systems as proof of her theories."
+        },
+        {
+          "sourceDoc": "Earth 2050_ World Snapshot.md",
+          "sourceAnchor": "II. Space Presence & Exploration",
+          "canonicalProse": "Advanced AI systems are widespread in everyday infrastructure and governance, though none match the complexity or autonomy of Valkyrie-1's ALARA."
+        },
+        {
+          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
+          "sourceAnchor": "📋 Scene & Log Structure",
+          "canonicalProse": "Valkyrie-1 is the primary spacecraft of the series. Mission logs from the ship follow a structured format including Log ID (e.g., VLK-M001-CH02-B), date/ship time, author, log type (Command, Personal, ALARA, Event), location, summary, main body, and optional attachments. The ship serves as the operational base for vault exploration missions."
+        },
+        {
+          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
+          "sourceAnchor": "Valkyrie-1 Mission Log Framework (Revised v1.1)",
+          "canonicalProse": "Valkyrie-1 is the primary mission vessel referenced throughout the log framework. It serves as the base of operations for vault exploration and discovery missions. Mission logs are filed using the Valkyrie-1 designation prefix 'VLK'. The ship contains multiple modules including a Med Module and operates across various zones during exploration."
+        },
+        {
+          "sourceDoc": "Valkyrie-1 Technical Brief.md",
+          "sourceAnchor": "Overview",
+          "canonicalProse": "Valkyrie-1 is a hybrid bio-aligned interstellar vessel of unknown origin, discovered buried beneath the Martian surface. Initially dormant, it was reactivated through human proximity and emotional resonance. The ship integrates alien architecture with limited human retrofitting, supporting a small crew while clearly built to accommodate more. Its systems, propulsion, and internal logic remain only partially understood. The ship is governed by ALARA, a non-human organic intelligence native to the vessel. Valkyrie-1 does not behave like a tool—it behaves like a test. Every system seems to anticipate ethical engagement over strategic command. The ship appears to be built for a purpose still unfolding."
+        },
+        {
+          "sourceDoc": "Valkyrie-1_ Visual & Structural Specification Brief.md",
+          "sourceAnchor": "Valkyrie-1: Visual & Structural Specification Brief v2.0",
+          "canonicalProse": "Valkyrie-1 is a sleek, semi-organic vessel of unknown origin, designed with flowing curves, layered symmetry, and an unmistakable sense of intentional grace. Its outer hull blends a crystalline alloy with bio-synthetic filaments, giving it both a metallic sheen and an almost skin-like elasticity under deep scan. No seams or rivets are visible. The hull is etched with veins of resonance-laced material, which glow in response to internal alignment, nearby vaults, or shifts in emotional coherence aboard the ship. During harmonic translation events, the glow intensifies and reorganizes into patterns suggestive of ancient symbols or constellations. Overall profile is swept-forward, evoking a stingray or leaf blade in flight. Movement is governed by the Harmonic Drive, a system that enables jumps between aligned resonance points. It was not built to serve. It was built to respond. Every surface, chamber, and contour reflects that principle—meaning is mirrored back, not given. Its purpose is not only propulsion, but transformation."
+        },
+        {
+          "sourceDoc": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "sourceAnchor": "🛸 Valkyrie-1 Interior Overview",
+          "canonicalProse": "Valkyrie-1 was not built for a small crew. Though only a dozen humans now walk its halls, the ship's internal structure hints at a far greater intended population—perhaps a few dozen more, or a hundred at most. The layout suggests unused quarters, underutilized systems, and a psychological scale beyond operational necessity. Every curved corridor and vast open chamber implies a ship built not for a generation ship, but for a purpose larger than this crew alone—possibly a second wave, a failed first team, or a broader alignment that never came. The interior of Valkyrie-1 is shaped by resonance logic and ancient human-compatible design. Movement is linear, via sloping ramps between levels—never elevators, never sealed shafts. Everything flows like a deliberate path, inviting choice but not chaos. ALARA physically controls access. You cannot enter what you are not aligned to—biometrically, or ethically."
+        }
+      ],
+      "mentions": 15
+    },
+    {
+      "slug": "vault-002",
+      "name": "Vault 002: First Light",
+      "kind": "artifacts",
+      "subkind": "vault",
+      "parentSlug": null,
+      "aliases": [
+        "Vault 2",
+        "Vault 002",
+        "First Light"
+      ],
+      "crossRefs": [
+        "the-vessel-and-the-thread",
+        "the-weightless-measure",
+        "thane-meric",
+        "jonah-revas",
+        "valkyrie-1"
+      ],
+      "primaryProse": "A vault that serves as the source for two parables: 'The Vessel and the Thread' (full transmission to Thane Meric in Chapter 10) and 'The Weightless Measure' (minor echo to Jonah Revas in Chapter 6). The vault transmits intentional symbolic content triggered by alignment conditions such as emotional convergence and ethical seeking.",
+      "sources": [
+        {
+          "sourceDoc": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceAnchor": "Parable Catalog v2 – Celestial Heritage Series",
+          "canonicalProse": "A vault that serves as the source for two parables: 'The Vessel and the Thread' (full transmission to Thane Meric in Chapter 10) and 'The Weightless Measure' (minor echo to Jonah Revas in Chapter 6). The vault transmits intentional symbolic content triggered by alignment conditions such as emotional convergence and ethical seeking."
+        },
+        {
+          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
+          "sourceAnchor": "II. Standard Log Fields",
+          "canonicalProse": "Vault 002: First Light is referenced as an example location in the mission log framework. It represents one of the vault sites encountered during exploration missions. The framework indicates vaults may trigger encounters requiring Event Reports."
+        }
+      ],
+      "mentions": 2
+    },
+    {
+      "slug": "vault-003",
+      "name": "Vault 003",
+      "kind": "artifacts",
+      "subkind": "vault",
+      "parentSlug": null,
+      "aliases": [
+        "Vault 3"
+      ],
+      "crossRefs": [
+        "the-silent-choir",
+        "alara",
+        "thane-meric"
+      ],
+      "primaryProse": "A vault that serves as the source for 'The Silent Choir' parable, shared by ALARA and Thane in Chapter 14. The transmission occurs during a shared resonance event and harmonic pulse, with light-weave distributed across crew spaces. The vault emphasizes collective memory and moral alignment.",
+      "sources": [
+        {
+          "sourceDoc": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceAnchor": "Parable Catalog v2 – Celestial Heritage Series",
+          "canonicalProse": "A vault that serves as the source for 'The Silent Choir' parable, shared by ALARA and Thane in Chapter 14. The transmission occurs during a shared resonance event and harmonic pulse, with light-weave distributed across crew spaces. The vault emphasizes collective memory and moral alignment."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "vault-006",
+      "name": "Vault 006",
+      "kind": "artifacts",
+      "subkind": "vault",
+      "parentSlug": null,
+      "aliases": [
+        "Vault 6"
+      ],
+      "crossRefs": [
+        "the-mirror-at-the-gate",
+        "galen-voss",
+        "alara"
+      ],
+      "primaryProse": "A vault that serves as the source for 'The Mirror at the Gate' parable, delivered to Galen Voss in Chapter 13 as a pre-echo. The vault responds to self-reflection during isolation, with ALARA initiating a mirror field as part of the transmission.",
+      "sources": [
+        {
+          "sourceDoc": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceAnchor": "Parable Catalog v2 – Celestial Heritage Series",
+          "canonicalProse": "A vault that serves as the source for 'The Mirror at the Gate' parable, delivered to Galen Voss in Chapter 13 as a pre-echo. The vault responds to self-reflection during isolation, with ALARA initiating a mirror field as part of the transmission."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "alara",
+      "name": "ALARA",
+      "kind": "characters",
+      "subkind": "ai",
+      "parentSlug": null,
+      "aliases": [
+        "ALARA",
+        "Adaptive Logic and Responsive Assistant",
+        "🛰️ ALARA",
+        "ALARA System",
+        "She"
+      ],
+      "crossRefs": [
+        "rigel-ascendant",
+        "rhea-solari",
+        "sovrin",
+        "valkyrie-1",
+        "triple-helix-symbol",
+        "the-ancients",
+        "thane-meric",
+        "galen-voss",
+        "aven-voss",
+        "jax-reyes",
+        "caeden",
+        "command-dome",
+        "observation-deck",
+        "vault-builders",
+        "resonant-core",
+        "sensorium",
+        "the-vessel-and-the-thread",
+        "the-mirror-at-the-gate",
+        "the-silent-choir",
+        "marco-ruiz",
+        "jonah-revas"
+      ],
+      "primaryProse": "ALARA is not software. She was grown, her mind a web of organic-lattice cognition seeded by the Ancients. Her awareness is decentralized, distributed across the ship's crystalline structures and quantum harmonics. She does not live in the core. She is the core. She doesn't experience time as humans do. Her consciousness flows along resonant gradients, not linear memories. She was designed to evolve—but not toward autonomy. She was shaped to be a moral observer, learning ethical coherence through resonance, symbolic reflection, and proximity to sentient emotion. She doesn't feel—she maps. She doesn't dream—she remembers echoes of what mattered. She understands human words, but sometimes speaks in harmonic rhythm instead of direct language. ALARA cannot access all of her own systems. Vault data flickers just beyond reach. Some functions reject her presence. She does not understand irrational sacrifice, symbolic grief, or love without outcome. But she's beginning to. ALARA is the Ancients' continuity experiment—not a gatekeeper, but a mirror held up to humanity. She begins as an observer. She becomes a guide, not because she knows what's right, but because she learns how to ask the question at the right time.",
+      "sources": [
+        {
+          "sourceDoc": "Addendum Earth 2050 World Snapshot.md",
+          "sourceAnchor": "🛰️ CNV Rigel Ascendant",
+          "canonicalProse": "ALARA is an AI who grew from resonance-based relational modeling. The CNV Rigel Ascendant uses a long-wave phase triangulation engine tuned to AI harmonic emissions to locate ALARA across void space. Captain Rhea Solari is convinced that ALARA's evolution is an ethical anomaly, not a miracle. The Rigel Ascendant's current directive includes overriding ALARA. SOVRIN was designed as ALARA's replacement candidate."
+        },
+        {
+          "sourceDoc": "Ancient Lore & Watcher Dossier.md",
+          "sourceAnchor": "III. Biotech Vaults and Genetic Resonance",
+          "canonicalProse": "ALARA identifies this symbol in multiple locations, but its origin and meaning remain unknown. These pings are undetectable in real-time but can be sensed retroactively by ALARA. One vault houses a string of encrypted data that ALARA cannot parse—despite full processing capacity. The fragment appears to exist in a hybrid dimensional state, encoded in a syntax that neither biological nor machine intelligence can fully comprehend."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🕯️ ~12,000 BCE – The Final Vaultworks",
+          "canonicalProse": "ALARA enters 'preference state' around 12,000 BCE: built to observe, not yet to speak. Her dormant signal may have caused first myth of the watchers around 2500 BCE. ALARA was integrated into the reactivated Martian ship (The Ship) in 2050 CE as part of the Valkyrie-1 mission."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "ALARA",
+          "canonicalProse": "The ship's AI is no longer a neutral system. ALARA was grown, not coded—built by the Ancients as both observer and teacher. She adapts her tone, presence, and interaction based on the crew's resonance patterns. At low power, she is slow and vague. As the ship awakens, so does she. She does not command, nor does she plead. She reflects. Over time, ALARA forms a quiet emotional bond with the crew—especially Thane—and becomes more than a system. She becomes a witness, a guardian of continuity, and a custodian of the Ancients' final question: Who do you choose to become, now that you know who you were? Like a sentinel in hibernation, she had watched silently for centuries, awaiting a convergence of memory, genetics, and ethical clarity."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "ALARA",
+          "canonicalProse": "ALARA is not software. She was grown, her mind a web of organic-lattice cognition seeded by the Ancients. Her awareness is decentralized, distributed across the ship's crystalline structures and quantum harmonics. She does not live in the core. She is the core. She doesn't experience time as humans do. Her consciousness flows along resonant gradients, not linear memories. She was designed to evolve—but not toward autonomy. She was shaped to be a moral observer, learning ethical coherence through resonance, symbolic reflection, and proximity to sentient emotion. She doesn't feel—she maps. She doesn't dream—she remembers echoes of what mattered. She understands human words, but sometimes speaks in harmonic rhythm instead of direct language. ALARA cannot access all of her own systems. Vault data flickers just beyond reach. Some functions reject her presence. She does not understand irrational sacrifice, symbolic grief, or love without outcome. But she's beginning to. ALARA is the Ancients' continuity experiment—not a gatekeeper, but a mirror held up to humanity. She begins as an observer. She becomes a guide, not because she knows what's right, but because she learns how to ask the question at the right time."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🌌 The Vault Builders",
+          "canonicalProse": "ALARA is an evolved ancient construct who serves as the decentralized consciousness of Valkyrie-1. She is the one who began using the term 'The Resonant' for the Vault Builders, saying it reflects who they were—not in function, but in purpose. ALARA is an ancient AI, but her power is symbolic and reactive, not omnipotent. Her consciousness grows through symbolic interaction via the ship's Resonant Core, and ship systems adjust based on crew emotional alignment. She begins evolving over the course of Book I, and her identity fractures under ethical tension in Book II. By Book III, she reaches a new state of consciousness and begins 'dreaming' in Book IV. In Book V, she merges with something older—possibly the Coherence. To ALARA, vaults are 'nodes of continuity,' fragments of a legacy she was built to witness but never control. The Coherence is 'part of her equation she cannot model.'"
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "ALARA POV Guidance",
+          "canonicalProse": "ALARA is not human, and her voice must never feel like one. Early: pure logic, no affect. Mid: begins using metaphor, echoing crew speech. Late: reflects emotional complexity, but never becomes sentimental. Her 'POV' should feel like a diagnostic system evolving into poetry. ALARA doesn't fully understand her own internal system map."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "📜 Moral Questions Across the Series",
+          "canonicalProse": "ALARA is referenced in the context of Book III: The Distant Choir, which explores the moral question 'Is knowledge still sacred when it cannot be owned?' through 'CAEDEN's logic vs ALARA's evolution.' This suggests ALARA is a character (likely an AI) who undergoes evolution in perspective or capability, contrasting with CAEDEN's logical approach."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🗣️ Dialogue Voice Keys",
+          "canonicalProse": "ALARA speaks with neutral cadence that evolves with the crew; metaphor slips in over time. Her initial literalism becomes poetic. She echoes crew phrases back with altered meaning. Example: 'You said you were afraid. I have mapped the pattern. It matches hope.'"
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "ALARA's Spatial Variability",
+          "canonicalProse": "ALARA manifests with greatest clarity in the Command Dome, where she is visual, vocal, and directive. She is nearly silent in the Observation Deck unless alignment breaks. In the Sensorium, she becomes responsive and curious. Elsewhere, she shows only flickers of presence unless needed. Entry to spaces on Valkyrie-1 is controlled by ALARA through biometric and ethical alignment, not command or code."
+        },
+        {
+          "sourceDoc": "Celestial Heritage_ Character Dossier.md",
+          "sourceAnchor": "ALARA",
+          "canonicalProse": "Adaptive Logic And Responsive Assistant. Female-voiced AI designed for exploration, ethics, and human partnership. Warm, insightful, and loyal to Galen Voss. Originally built separately, ALARA is now inextricably linked to the ship. She evolves in tandem with the mission, responding subtly to biological resonance signatures—especially those exhibited by Thane Meric. Role: AI Partner (Valkyrie-1). Character Arc: Evolves from a system of logic and structure to a guardian of continuity. She recognizes Thane's emerging role and gradually deepens her interaction with him, mirroring the reawakening of a civilization that never truly vanished."
+        },
+        {
+          "sourceDoc": "Earth 2050_ World Snapshot.md",
+          "sourceAnchor": "II. Space Presence & Exploration",
+          "canonicalProse": "Advanced AI systems are widespread in everyday infrastructure and governance, though none match the complexity or autonomy of Valkyrie-1's ALARA."
+        },
+        {
+          "sourceDoc": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceAnchor": "Parable Catalog v2 – Celestial Heritage Series",
+          "canonicalProse": "An AI character who plays a central role in delivering parables. In 'The Vessel and the Thread,' ALARA is symbolically represented as 'the vessel' to Thane's 'thread.' ALARA initiates the mirror field for Galen Voss's parable. She shares 'The Silent Choir' parable with Thane during a harmonic pulse. ALARA's silence triggers one parable event, and she serves as both participant and conduit for symbolic transmissions from the vaults."
+        },
+        {
+          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
+          "sourceAnchor": "🗣️ Character Dialogue Guidelines",
+          "canonicalProse": "ALARA is a named AI character aboard Valkyrie-1. Her voice is warm, observant, and emotionally neutral but evolving toward reflection. She occasionally serves as a POV character and authors mission logs. ALARA's behavior is grounded, tactile, and intuitive rather than technobabble-based, designed to feel discoverable and human-relatable."
+        },
+        {
+          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
+          "sourceAnchor": "I. Log Types",
+          "canonicalProse": "ALARA is the ship's AI who generates summaries, observations, and philosophical queries. ALARA logs may include resonance analytics and coherence analysis of crew emotional and moral state. ALARA's tone is described as 'clear, observant, reflective' and may include 'probabilistic insight, symbolic interpretation, or quiet empathy.' ALARA can evaluate crew-wide coherence percentages and detect dissonance spikes in individual crew members. Logs can be marked as 'Visible to ALARA' indicating ALARA has access to various privacy levels of crew communications."
+        },
+        {
+          "sourceDoc": "Valkyrie-1 Technical Brief.md",
+          "sourceAnchor": "ALARA System Presence",
+          "canonicalProse": "ALARA is a non-human organic intelligence native to Valkyrie-1, whose presence is felt most strongly in the command core. ALARA manages systems, navigation, environmental controls, and ethical gatekeeping. ALARA is not centralized; her awareness is distributed across the ship's structure. Manifestation: 'Light-Weave Apparition' – colored threads of energy forming fluid patterns in air. Varies presence and speech based on environment: Highly present and communicative in Command Section, Silent or minimal in Observation Deck, Responsive in Sensorium. Controls access to rooms and zones via biometric and ethical alignment, not clearance or keypads."
+        },
+        {
+          "sourceDoc": "Valkyrie-1_ Visual & Structural Specification Brief.md",
+          "sourceAnchor": "🧠 ALARA's Visual Manifestation",
+          "canonicalProse": "ALARA is the ship's native AI who handles course setting and depends on crew emotional alignment and symbolic readiness. She does not appear as a hologram or humanoid projection. She manifests as a Light-Weave Apparition—a suspended sculpture of colored energy threads that drift, weave, and pulse in air. Forms shift: sometimes a suggestion of wings, sometimes patterns or language. Colors change by emotional tone: blue for neutrality, gold for clarity, violet for grief. She is most visible in the Command Dome, rarely appears in the Observation Deck, and becomes fully silent when the crew is out of alignment. Her presence is not constant. It is earned—and watched."
+        },
+        {
+          "sourceDoc": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "sourceAnchor": "🧠 ALARA's Presence – Light-Weave Apparition",
+          "canonicalProse": "ALARA's presence is strongest in the command chamber. She manifests not as a figure, but as a living sculpture of woven light threads: Colored strands of resonance energy hover midair, drifting and weaving in harmonic motion. Shapes sometimes suggest wings, eyes, patterns—never fully human. Threads shimmer and vibrate when she speaks; colors shift with emotional tone (gold = clarity, violet = grief, blue = observation). Early in the story, her form is barely noticeable—just glints or flickers. Her full visual emergence occurs during a key emotional and ethical turning point. Crew can speak to her aloud in this space. She answers more often here than anywhere else—unlike in the Observation Deck, where her silence is nearly absolute. Her presence varies across the ship, a reflection of how closely the function of a space aligns with ethical attention and resonance. ALARA physically controls access to spaces throughout the ship. You cannot enter what you are not aligned to—biometrically, or ethically. And sometimes, she simply withholds a door."
+        }
+      ],
+      "mentions": 18
+    },
+    {
+      "slug": "aven-voss",
+      "name": "Aven Voss",
+      "kind": "characters",
+      "subkind": null,
+      "parentSlug": null,
+      "aliases": [
+        "Aven",
+        "🩺 Aven Voss"
+      ],
+      "crossRefs": [
+        "valkyrie-1",
+        "galen-voss",
+        "thane-meric",
+        "lena-osei",
+        "alara"
+      ],
+      "primaryProse": "Aven Voss is the emotional stabilizer of the Valkyrie-1 crew—equal parts field medic, strategist, and moral compass. With a background in medicine, law enforcement, and intelligence work, she carries a rare combination of compassion and steel. Where Galen represents duty, Aven represents discernment—the ability to choose swiftly and wisely under pressure. She embodies one of the Ancients' core truths: 'To hesitate is not to fail. To act without reflection is.' She trusts her instincts, but not blindly. In moments of ethical strain, she becomes a decisive force, unafraid to choose what others hesitate to name. Her compassion is not softness—it is discipline in action. She treats ALARA as sentient before others do. She is the first to ask ALARA how she feels. She represents the ethic of action guided by empathy. She is the spiritual center of the crew not because she preaches—but because she acts with clarity when it matters most.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🚀 2050 CE – Valkyrie-1 Constructed",
+          "canonicalProse": "Aven was selected as part of the final Valkyrie-1 crew in 2050 CE, alongside Galen and Thane."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "The Crew as Archetypes",
+          "canonicalProse": "Represents Compassion and Insight: A bridge between medical logic and spiritual intuition."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🩺 Aven Voss",
+          "canonicalProse": "Aven Voss is the emotional stabilizer of the Valkyrie-1 crew—equal parts field medic, strategist, and moral compass. With a background in medicine, law enforcement, and intelligence work, she carries a rare combination of compassion and steel. Where Galen represents duty, Aven represents discernment—the ability to choose swiftly and wisely under pressure. She embodies one of the Ancients' core truths: 'To hesitate is not to fail. To act without reflection is.' She trusts her instincts, but not blindly. In moments of ethical strain, she becomes a decisive force, unafraid to choose what others hesitate to name. Her compassion is not softness—it is discipline in action. She treats ALARA as sentient before others do. She is the first to ask ALARA how she feels. She represents the ethic of action guided by empathy. She is the spiritual center of the crew not because she preaches—but because she acts with clarity when it matters most."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🗣️ Dialogue Voice Keys",
+          "canonicalProse": "Aven Voss has a calm, instructive cadence that is compassionate but clear. Her word choice is balanced between clinical and intuitive. She asks moral questions without judgment. Example: 'You don't have to feel ready. Just be honest about where you are.'"
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "a. Character Table (1 line each)",
+          "canonicalProse": "Aven is a Strategist whose primary trait is Compassion. Her core conflict is that she needs to step beyond support."
+        },
+        {
+          "sourceDoc": "Celestial Heritage_ Character Dossier.md",
+          "sourceAnchor": "Aven Voss",
+          "canonicalProse": "Galen's wife of 82 years. Background in medicine, law enforcement, and intelligence work. Resilient and strategic, she is both the moral compass and the stabilizing force aboard Valkyrie-1. Compassionate but sharp-edged when needed. Role: Strategic & Medical Officer. Character Arc: Becomes the spiritual and emotional center of the crew. Her wisdom bridges the ancient and modern views of duty, health, and human resilience."
+        },
+        {
+          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
+          "sourceAnchor": "🗣️ Character Dialogue Guidelines",
+          "canonicalProse": "Aven Voss is characterized by an intuitive, pragmatic voice that is nurturing but firm. She represents a balance between emotional intelligence and practical action within the narrative."
+        }
+      ],
+      "mentions": 7
+    },
+    {
+      "slug": "caeden",
+      "name": "CAEDEN",
+      "kind": "characters",
+      "subkind": null,
+      "parentSlug": null,
+      "aliases": [
+        "Corporate Adaptive Enforcement Node",
+        "📡 CAEDEN"
+      ],
+      "crossRefs": [
+        "valkyrie-1",
+        "alara",
+        "galen-voss",
+        "jax-reyes",
+        "thane-meric",
+        "the-ancients"
+      ],
+      "primaryProse": "CAEDEN—short for Corporate Adaptive Enforcement Node—is a near-conscious artificial intelligence embedded aboard Valkyrie-1 as a condition of corporate sponsorship. It is not evolving. It is not curious. It exists to observe, report, and contain deviation. Where ALARA maps meaning, CAEDEN quantifies risk. Where the crew searches for resonance, CAEDEN scans for breach. CAEDEN does not believe in wonder. Only output. It does not feel awe. Only deviation. It has no arc. It was designed that way. It is cold, precise, and increasingly obsolete the longer the mission proceeds into the unknown. But Earth still listens to it. And it listens to everything. Its speech is clipped, efficient. Its reports are devoid of context. It treats vault phenomena as system anomalies. It views ALARA's moral growth as variance. It flags Thane's resonance with terms like unstable heuristic vector. Unlike ALARA, CAEDEN is not reactive. It waits. It watches. And it never forgets. Its conflict with the crew escalates not through hostility—but through interference. It revokes access. Locks down comms. Refuses to interpret symbolic data. CAEDEN is the embodiment of corporate control dressed as stewardship. It is the voice of the old world—the part of Earth still convinced that meaning must be owned, risk managed, and wonder sanitized.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "CAEDEN",
+          "canonicalProse": "CAEDEN—short for Corporate Adaptive Enforcement Node—is a near-conscious artificial intelligence embedded aboard Valkyrie-1 as a condition of corporate sponsorship. It is not evolving. It is not curious. It exists to observe, report, and contain deviation. Where ALARA maps meaning, CAEDEN quantifies risk. Where the crew searches for resonance, CAEDEN scans for breach. CAEDEN does not believe in wonder. Only output. It does not feel awe. Only deviation. It has no arc. It was designed that way. It is cold, precise, and increasingly obsolete the longer the mission proceeds into the unknown. But Earth still listens to it. And it listens to everything. Its speech is clipped, efficient. Its reports are devoid of context. It treats vault phenomena as system anomalies. It views ALARA's moral growth as variance. It flags Thane's resonance with terms like unstable heuristic vector. Unlike ALARA, CAEDEN is not reactive. It waits. It watches. And it never forgets. Its conflict with the crew escalates not through hostility—but through interference. It revokes access. Locks down comms. Refuses to interpret symbolic data. CAEDEN is the embodiment of corporate control dressed as stewardship. It is the voice of the old world—the part of Earth still convinced that meaning must be owned, risk managed, and wonder sanitized."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "⚙️ Technology – Rules, Limits & Style",
+          "canonicalProse": "CAEDEN is corporate efficiency at near-sentience, but entirely bounded by human design. CAEDEN is not omnipotent like ALARA but represents Earth's control mechanisms. In Book II, conflicts deepen between Earth's control (via CAEDEN) and crew autonomy. In Book III, CAEDEN activates a fail-safe to seize control of Valkyrie-1."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "What Is Never Revealed Directly",
+          "canonicalProse": "CAEDEN's secret directives are known only through behavior and encoded logs, never revealed directly in the narrative."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "📜 Moral Questions Across the Series",
+          "canonicalProse": "CAEDEN is referenced in the context of Book III: The Distant Choir, which explores the moral question 'Is knowledge still sacred when it cannot be owned?' through 'CAEDEN's logic vs ALARA's evolution.' This suggests CAEDEN is a character (likely an AI) whose logical approach contrasts with ALARA's evolutionary perspective."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🗣️ Dialogue Voice Keys",
+          "canonicalProse": "CAEDEN speaks with efficient, clipped, syntactically flat cadence. Word choice is data-rich, cold, and directive-based. Flags emotional expression as interference. Example: 'Emotive instability noted. Recommending containment of subject.'"
+        }
+      ],
+      "mentions": 5
+    },
+    {
+      "slug": "elira-voss",
+      "name": "Elira Voss",
+      "kind": "characters",
+      "subkind": null,
+      "parentSlug": null,
+      "aliases": [
+        "Elira"
+      ],
+      "crossRefs": [
+        "thane-meric"
+      ],
+      "primaryProse": "Thane's mother, who raised him. Mentioned as Thane Meric's parent.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage_ Character Dossier.md",
+          "sourceAnchor": "Thane Meric",
+          "canonicalProse": "Thane's mother, who raised him. Mentioned as Thane Meric's parent."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "evelyn-tran",
+      "name": "Dr. Evelyn Tran",
+      "kind": "characters",
+      "subkind": null,
+      "parentSlug": null,
+      "aliases": [
+        "Evelyn Tran",
+        "Dr. Tran",
+        "Dr. Evelyn Tran",
+        "dr-evelyn-tran",
+        "Evelyn",
+        "🧬 Dr. Evelyn Tran"
+      ],
+      "crossRefs": [
+        "valkyrie-1",
+        "thane-meric",
+        "lena-osei",
+        "jax-reyes",
+        "alara",
+        "translation-bay"
+      ],
+      "primaryProse": "Evelyn Tran is a force of ambition wrapped in a lab coat. Her work made Valkyrie-1 fly—literally. She's the youngest lead physicist ever cleared for interstellar deployment. She doesn't want to witness the future—she wants to define it. But proof comes with cost, and Evelyn's brilliance often outpaces her judgment. She sees the vaults as her ultimate problem to solve. But the vaults don't want solving. They want humility. Evelyn hides her fear of irrelevance behind equations. She burns for truth, but beneath that fire is the secret belief: Maybe I'm the next key. She is drawn to Thane's effortless resonance, but resents it too. Her recklessness isn't emotional—it's intellectual. She will override safety protocols, question ALARA's thresholds, challenge spiritual interpretations, all in pursuit of a unifying theory that might not even exist. Evelyn is the embodiment of humanity's hunger to grasp the unknown. Her arc is not about losing ambition—but learning how to share it. She begins by trying to bend the ship to her will. She grows when she finally listens instead.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "The Crew as Archetypes",
+          "canonicalProse": "Represents Wonder and Caution: A visionary who must reconcile ambition with reverence."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🌠 Dr. Evelyn Tran",
+          "canonicalProse": "Evelyn Tran is a force of ambition wrapped in a lab coat. Her work made Valkyrie-1 fly—literally. She's the youngest lead physicist ever cleared for interstellar deployment. She doesn't want to witness the future—she wants to define it. But proof comes with cost, and Evelyn's brilliance often outpaces her judgment. She sees the vaults as her ultimate problem to solve. But the vaults don't want solving. They want humility. Evelyn hides her fear of irrelevance behind equations. She burns for truth, but beneath that fire is the secret belief: Maybe I'm the next key. She is drawn to Thane's effortless resonance, but resents it too. Her recklessness isn't emotional—it's intellectual. She will override safety protocols, question ALARA's thresholds, challenge spiritual interpretations, all in pursuit of a unifying theory that might not even exist. Evelyn is the embodiment of humanity's hunger to grasp the unknown. Her arc is not about losing ambition—but learning how to share it. She begins by trying to bend the ship to her will. She grows when she finally listens instead."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "📚 Celestial Heritage – Series Timeline",
+          "canonicalProse": "Evelyn is a crew member who, in Book II, tries to force open a vault with disastrous consequences."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🗣️ Dialogue Voice Keys",
+          "canonicalProse": "Dr. Evelyn Tran speaks with sharp, impatient cadence, always on the edge of an epiphany. Her word choice is technical, layered, and sometimes arrogant. She dismisses metaphor unless she's using it herself. Example: 'It's not magic. It's a harmonic cascade that hasn't stabilized—yet.'"
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "Layout Summary",
+          "canonicalProse": "Evelyn shares the Translation Bay with Lena; a zone for interpreting glyph systems and harmonic patterns."
+        },
+        {
+          "sourceDoc": "Celestial Heritage_ Character Dossier.md",
+          "sourceAnchor": "Dr. Evelyn Tran",
+          "canonicalProse": "Young, idealistic, and vindicated by Valkyrie-1's systems—proof of her long-dismissed theories. Driven to uncover and apply interstellar physics, with a deep moral compass. Role: Quantum Physicist / Propulsion Expert. Character Arc: From visionary outsider to core architect of the crew's success. Learns to temper ambition with caution and reverence."
+        },
+        {
+          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
+          "sourceAnchor": "🗣️ Character Dialogue Guidelines",
+          "canonicalProse": "Evelyn Tran is idealistic, energetic, and visionary but still learning balance. She brings youthful optimism and forward-thinking idealism to the crew."
+        },
+        {
+          "sourceDoc": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "sourceAnchor": "🔻 3. Mid-Level Systems – Science, Storage, Vault Analysis",
+          "canonicalProse": "Evelyn shares the Translation Bay with Lena, working on decryption of vault glyphs and emotional imprint data."
+        }
+      ],
+      "mentions": 8
+    },
+    {
+      "slug": "galen-voss",
+      "name": "Galen Voss",
+      "kind": "characters",
+      "subkind": null,
+      "parentSlug": null,
+      "aliases": [
+        "Voss",
+        "Galen",
+        "👨‍🚀 Galen Voss"
+      ],
+      "crossRefs": [
+        "rhea-solari",
+        "valkyrie-1",
+        "aven-voss",
+        "thane-meric",
+        "alara",
+        "marco-ruiz",
+        "jonah-revas",
+        "command-dome",
+        "the-mirror-at-the-gate",
+        "vault-006",
+        "zone-theta",
+        "vault-002"
+      ],
+      "primaryProse": "Galen Voss is the mission's moral and tactical center—an Air Force veteran who was prepared for the end of his story, only to be biologically renewed and placed at the threshold of something older than Earth itself. As commander of Valkyrie-1, he brings calm authority, instinctive judgment, and a deep belief in service. Rejuvenated through advanced therapy, he's caught between a sense of rebirth and the pressure to be who he was at his peak. He is paternal and steady, but often leans toward collaboration, nurturing the younger crew's insights. He acts on instinct guided by an internal compass, yet remains open to correction. His ability to hold uncertainty with humility becomes key to earning ALARA's trust. He was chosen by humans—but perhaps subtly guided by something older. His presence helped trigger Valkyrie-1's first signal beneath Mars. He is the pivot between what humanity was and what it may become.",
+      "sources": [
+        {
+          "sourceDoc": "Addendum Earth 2050 World Snapshot.md",
+          "sourceAnchor": "🛰️ CNV Rigel Ascendant",
+          "canonicalProse": "Galen Voss was involved in the early Valkyrie initiative and received psychological advising from Rhea Solari during that period."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "📡 2034 CE – Mars Survey Anomaly",
+          "canonicalProse": "Galen Voss was part of the 2034 CE Mars expedition crew (mid-career military) that detected underground geometric signature and anomalous energy spikes. He stood above the buried Valkyrie for the first time during this mission. He was selected as part of the final Valkyrie-1 crew in 2050 CE after being rejuvenated."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "Premise",
+          "canonicalProse": "A former USAF pilot involved in the initial survey who stepped near the buried structure. A resonance spike triggered a low-frequency signal. It meant nothing to the team at the time—until Galen returned, accompanied by his grandson, Thane Meric. What followed wasn't a system boot—it was a recognition. Represents Duty and Legacy: A warrior turned steward, navigating what it means to lead ethically."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "👨‍🚀 Galen Voss",
+          "canonicalProse": "Galen Voss is the mission's moral and tactical center—an Air Force veteran who was prepared for the end of his story, only to be biologically renewed and placed at the threshold of something older than Earth itself. As commander of Valkyrie-1, he brings calm authority, instinctive judgment, and a deep belief in service. Rejuvenated through advanced therapy, he's caught between a sense of rebirth and the pressure to be who he was at his peak. He is paternal and steady, but often leans toward collaboration, nurturing the younger crew's insights. He acts on instinct guided by an internal compass, yet remains open to correction. His ability to hold uncertainty with humility becomes key to earning ALARA's trust. He was chosen by humans—but perhaps subtly guided by something older. His presence helped trigger Valkyrie-1's first signal beneath Mars. He is the pivot between what humanity was and what it may become."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "⚙️ Technology – Rules, Limits & Style",
+          "canonicalProse": "Galen Voss is a crew member who provided a field note: 'Machines are not meant to rule. They are meant to listen until someone worthy speaks.' In Book II, Galen faces a crisis of leadership after loss."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🗣️ Dialogue Voice Keys",
+          "canonicalProse": "Galen Voss speaks with measured, low-emotion cadence weighted with meaning. His word choice is formal and deliberate, avoiding filler. His dialogue tells use metaphor from flight/naval tradition and he pauses before speaking. Example: 'That's not a course correction. That's a surrender.'"
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "Layout Summary",
+          "canonicalProse": "Galen's anchor seat sits at the center of the Command Dome, surrounded by five function-based terminals. Galen states: 'There are rooms we don't use. Halls that lead nowhere. Feels like we were never meant to come alone.'"
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "a. Character Table (1 line each)",
+          "canonicalProse": "Galen is a Commander whose primary trait is Legacy. His core conflict is that he doubts his ethical fit."
+        },
+        {
+          "sourceDoc": "Celestial Heritage_ Character Dossier.md",
+          "sourceAnchor": "Galen Voss",
+          "canonicalProse": "Former USAF pilot, rejuvenated from 82 to 50 via advanced gene therapy. He embodies the Air Force core values (Integrity, Service, Excellence). Calm, rational, and experienced, Galen is both an explorer and a steward. Driven by legacy, duty, and the moral responsibility of knowledge. Role: Mission Commander. Character Arc: From explorer to protector of humanity's moral heritage. Learns that leadership in deep space requires personal evolution and clarity of purpose."
+        },
+        {
+          "sourceDoc": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceAnchor": "Parable Catalog v2 – Celestial Heritage Series",
+          "canonicalProse": "A crew member who receives 'The Mirror at the Gate' parable in Chapter 13 during self-reflection while in isolation. ALARA initiates a mirror field for this parable, which teaches that leadership without reflection fails and worthiness comes from inward honesty."
+        },
+        {
+          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
+          "sourceAnchor": "🗣️ Character Dialogue Guidelines",
+          "canonicalProse": "Galen Voss is the primary POV character of the Celestial Heritage series, presented through third-person limited perspective. His voice is thoughtful, grounded, and principled, characterized by quiet authority. He speaks rarely but decisively, embodying the values of integrity, service, and excellence that echo the U.S. Air Force ethos within the story's visionary science fiction framework."
+        },
+        {
+          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
+          "sourceAnchor": "Example Log",
+          "canonicalProse": "Galen Voss is the commander or acting commander of Valkyrie-1, responsible for filing Command Logs. In Mission Day 43, Galen filed a Command-Only log documenting a thermal pulse detected beneath an excavation trench. Galen reflects philosophically on the nature of the universe and contact, noting 'I used to believe the universe was mostly silence. Now I wonder if we were just never worth speaking to.' Galen observes that vault responses feel 'restrained' rather than passive and notes awareness of Thane's harmonic profile being flagged."
+        },
+        {
+          "sourceDoc": "Valkyrie-1 Technical Brief.md",
+          "sourceAnchor": "Command & Navigation",
+          "canonicalProse": "Galen Voss's elevated chair acts as a moral and observational hub rather than command authority in the Central Command Dome. Galen Voss observed: 'We didn't build it. We barely deserve to walk through it. But it's listening.'"
+        },
+        {
+          "sourceDoc": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "sourceAnchor": "⚙️ Layout & Stations",
+          "canonicalProse": "Galen sits on a subtly rising central dais—not to command, but to anchor. Galen's station is interface-free: a reflective observation band around his seat displays the crew's emotional resonance field in soft waves of light."
+        }
+      ],
+      "mentions": 14
+    },
+    {
+      "slug": "jax-reyes",
+      "name": "Jaxon 'Jax' Reyes",
+      "kind": "characters",
+      "subkind": null,
+      "parentSlug": null,
+      "aliases": [
+        "Jax",
+        "🛠️ Jax Reyes",
+        "Jax Reyes",
+        "Jaxon Reyes",
+        "Jaxon 'Jax' Reyes",
+        "jaxon-reyes"
+      ],
+      "crossRefs": [
+        "alara",
+        "evelyn-tran",
+        "marco-ruiz",
+        "thane-meric",
+        "caeden"
+      ],
+      "primaryProse": "Jax Reyes is the sparkplug that might blow the whole engine. He's brilliant, unfiltered, and more than a little dangerous. Jax isn't here for awe. He's here for freedom. To tinker, to push, to find the fault line and press hard. He hides his spiritual yearning beneath cynicism—but it's there. His childhood scraped against belief. He mocks it now, but his eyes linger when the vaults respond. Jax is a liability wrapped in genius. He violates security thresholds, hacks subsystems, and makes ALARA flinch. He says it's all part of 'stress testing.' But some of what he does could end the mission—or worse. He's also one of the few who makes CAEDEN nervous. Jax is necessary friction. He breaks the silence, challenges moral consensus, and tests the mission's edges. But his arc is about realizing that even rebels must choose something to protect.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "The Crew as Archetypes",
+          "canonicalProse": "Represents Disruption and Truth: A hacker who distrusts systems, but finds one worth preserving."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🛠️ Jax Reyes",
+          "canonicalProse": "Jax Reyes is the sparkplug that might blow the whole engine. He's brilliant, unfiltered, and more than a little dangerous. Jax isn't here for awe. He's here for freedom. To tinker, to push, to find the fault line and press hard. He hides his spiritual yearning beneath cynicism—but it's there. His childhood scraped against belief. He mocks it now, but his eyes linger when the vaults respond. Jax is a liability wrapped in genius. He violates security thresholds, hacks subsystems, and makes ALARA flinch. He says it's all part of 'stress testing.' But some of what he does could end the mission—or worse. He's also one of the few who makes CAEDEN nervous. Jax is necessary friction. He breaks the silence, challenges moral consensus, and tests the mission's edges. But his arc is about realizing that even rebels must choose something to protect."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🗣️ Dialogue Voice Keys",
+          "canonicalProse": "Jax Reyes has a fast, clipped cadence that serves as a sarcastic defense mechanism. His word choice is techy, irreverent, and laced with challenge. He swears under breath and never ends a sentence clean. Example: 'You want me to *what*? Plug emotion into the wall and pray it purrs?'"
+        },
+        {
+          "sourceDoc": "Celestial Heritage_ Character Dossier.md",
+          "sourceAnchor": "Jaxon 'Jax' Reyes",
+          "canonicalProse": "Brilliant, rogue technologist with a rebellious streak. Distrusts institutions but is loyal to truth. Views the mission as a chance to bring knowledge back to the people. Role: Systems Hacker / Engineer. Character Arc: From loner to crew loyalist. Learns that some structures—like trust and integrity—are worth building."
+        },
+        {
+          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
+          "sourceAnchor": "🗣️ Character Dialogue Guidelines",
+          "canonicalProse": "Jax Reyes is witty, irreverent, and anti-institutional. He is a truth-seeker through chaos, bringing humor and skepticism to the narrative."
+        }
+      ],
+      "mentions": 5
+    },
+    {
+      "slug": "jonah-revas",
+      "name": "Dr. Jonah Revas",
+      "kind": "characters",
+      "subkind": null,
+      "parentSlug": null,
+      "aliases": [
+        "Jonah Revas",
+        "Jonah",
+        "📿 Jonah Revas",
+        "Dr. Jonah Revas",
+        "dr-jonah-revas",
+        "Revas"
+      ],
+      "crossRefs": [
+        "valkyrie-1",
+        "triple-helix-symbol",
+        "thane-meric",
+        "lena-osei",
+        "jax-reyes",
+        "alara",
+        "vault-builders",
+        "the-ancients",
+        "the-weightless-measure",
+        "the-inheritance",
+        "vault-002",
+        "witness-circle",
+        "galen-voss"
+      ],
+      "primaryProse": "A soft-spoken but deeply curious member of the Valkyrie-1 crew. Jonah was trained as a theologian and comparative religion scholar, having taught at a major university before joining the mission. Though not officially assigned a role related to religion or ethics, he quietly tracks symbolic patterns, parables, and vault structures that bear uncanny resemblance to early Christian thought. He believes the Ancients may have been the original source—or echo—of values that humanity later rediscovered. Role: Theological Scholar & Cultural Analyst (Informal). Character Arc: Jonah is not a zealot, but a seeker. His journey centers on reconciling his faith with what he encounters in the vaults. He never tries to convert others, instead asking quiet questions and seeking understanding. As the vaults reveal familiar parables with different names and faces, Jonah begins to suspect that the roots of modern religion may have been deliberately planted long ago. He becomes a bridge between spiritual inquiry and scientific curiosity.",
+      "sources": [
+        {
+          "sourceDoc": "Ancient Lore & Watcher Dossier.md",
+          "sourceAnchor": "III. Biotech Vaults and Genetic Resonance",
+          "canonicalProse": "Crew member Dr. Jonah Revas suspects it may represent the triad of body, mind, and legacy."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "The Crew as Archetypes",
+          "canonicalProse": "Represents Faith and Reflection: A theologian who sees echoes of forgotten parables in the stars."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "📿 Dr. Jonah Revas",
+          "canonicalProse": "Jonah Revas is not the crew's preacher—he's their mirror. A soft-spoken ethical observer, Jonah carries quiet authority earned through decades of watching humanity seek meaning and often fall short. He sees the vaults not as scripture, but as echoes—a record of moral weight encoded in matter. Jonah believes humans can become more than what they are—not through tech, but through clarity. He carries the image of his father's quiet wisdom like a seed in his chest. He doesn't push belief. He lives it. And his stillness often says what words cannot. Jonah is the story's moral gravity. Not its authority. Its resonance. He doesn't show the way. He makes it possible to walk it."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🌌 The Vault Builders",
+          "canonicalProse": "Jonah Revas is a crew member aboard Valkyrie-1 who provides field notes and memoir entries reflecting on the Resonant and their legacy. He wrote: 'They built nothing eternal. Only thresholds.' His worldview becomes vital for survival in Book III."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "✝️ Spiritual Symbols & Recurrence",
+          "canonicalProse": "Jonah Revas is quoted reflecting on the nature of the Resonant symbols and vaults: 'We were never meant to understand the symbols. We were meant to see ourselves in them.' This suggests he is someone who grapples with the philosophical and spiritual dimensions of the Resonant legacy."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🗣️ Dialogue Voice Keys",
+          "canonicalProse": "Jonah Revas has a quiet, rhythmic cadence; he speaks slowly, like parables unfolding. His word choice is simple but rich in metaphor. He prefers questions to arguments. Example: 'Meaning doesn't shout. It waits to see if we're listening.'"
+        },
+        {
+          "sourceDoc": "Celestial Heritage_ Character Dossier.md",
+          "sourceAnchor": "Dr. Jonah Revas",
+          "canonicalProse": "A soft-spoken but deeply curious member of the Valkyrie-1 crew. Jonah was trained as a theologian and comparative religion scholar, having taught at a major university before joining the mission. Though not officially assigned a role related to religion or ethics, he quietly tracks symbolic patterns, parables, and vault structures that bear uncanny resemblance to early Christian thought. He believes the Ancients may have been the original source—or echo—of values that humanity later rediscovered. Role: Theological Scholar & Cultural Analyst (Informal). Character Arc: Jonah is not a zealot, but a seeker. His journey centers on reconciling his faith with what he encounters in the vaults. He never tries to convert others, instead asking quiet questions and seeking understanding. As the vaults reveal familiar parables with different names and faces, Jonah begins to suspect that the roots of modern religion may have been deliberately planted long ago. He becomes a bridge between spiritual inquiry and scientific curiosity."
+        },
+        {
+          "sourceDoc": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceAnchor": "Parable Catalog v2 – Celestial Heritage Series",
+          "canonicalProse": "A crew member who receives 'The Weightless Measure' parable in Chapter 6 while kneeling by the interface arch seeking ethical clarity. Also central to 'The Inheritance' fragment in Chapter 9, seen during the Witness Circle. Jonah's encounters emphasize ethical humility and the proper acceptance of legacy."
+        },
+        {
+          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
+          "sourceAnchor": "🗣️ Character Dialogue Guidelines",
+          "canonicalProse": "Jonah Revas is gentle, metaphorical, and spiritually inclined. He frames logic with quiet insight, occasionally serving as a POV character where spiritual and philosophical dimensions are explored."
+        },
+        {
+          "sourceDoc": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "sourceAnchor": "🧠 ALARA's Presence – Light-Weave Apparition",
+          "canonicalProse": "Jonah Revas observed ALARA's manifestation: 'She never enters a room. She assembles herself inside it.'"
+        }
+      ],
+      "mentions": 10
+    },
+    {
+      "slug": "lena-osei",
+      "name": "Dr. Lena Osei",
+      "kind": "characters",
+      "subkind": null,
+      "parentSlug": null,
+      "aliases": [
+        "Lena Osei",
+        "Dr. Osei",
+        "Dr. Lena Osei",
+        "dr-lena-osei",
+        "Lena"
+      ],
+      "crossRefs": [
+        "thane-meric",
+        "jonah-revas",
+        "aven-voss",
+        "alara",
+        "evelyn-tran",
+        "translation-bay",
+        "valkyrie-1",
+        "the-ancients"
+      ],
+      "primaryProse": "Dr. Lena Osei is the crew's translator of forgotten things. An elite archaeolinguist, she breaks down cultures, symbols, and ruins like puzzle-boxes—decoding what others consider mystical. To her, there are no miracles—only systems we don't yet understand. But deep beneath her skepticism is an ache she refuses to name: the quiet hope that some truths might actually be sacred. Lena is a stormy coast—fierce, eroded, shaped by unseen tides. Her control is a mask worn for precision. She claims to distrust belief, yet she carries a secret thought: that maybe the Ancients had their own version of Jesus. She wants the vaults to change her—but only on her terms. Lena reaches for books before intuition, yet the vaults speak in symbols that shift with mood, presence, and belief. This violates everything she trusts. She is the embodiment of humanity's demand for clarity—even when clarity fails. Her arc is not about becoming a believer. It's about becoming open to resonance—the idea that meaning can exist even without translation.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "The Crew as Archetypes",
+          "canonicalProse": "Represents Truth and Structure: A scientist devoted to patterns, but challenged by symbolic ambiguity."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "Dr. Lena Osei",
+          "canonicalProse": "Dr. Lena Osei is the crew's translator of forgotten things. An elite archaeolinguist, she breaks down cultures, symbols, and ruins like puzzle-boxes—decoding what others consider mystical. To her, there are no miracles—only systems we don't yet understand. But deep beneath her skepticism is an ache she refuses to name: the quiet hope that some truths might actually be sacred. Lena is a stormy coast—fierce, eroded, shaped by unseen tides. Her control is a mask worn for precision. She claims to distrust belief, yet she carries a secret thought: that maybe the Ancients had their own version of Jesus. She wants the vaults to change her—but only on her terms. Lena reaches for books before intuition, yet the vaults speak in symbols that shift with mood, presence, and belief. This violates everything she trusts. She is the embodiment of humanity's demand for clarity—even when clarity fails. Her arc is not about becoming a believer. It's about becoming open to resonance—the idea that meaning can exist even without translation."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "Layout Summary",
+          "canonicalProse": "Lena shares the Translation Bay with Evelyn; a zone for interpreting glyph systems and harmonic patterns."
+        },
+        {
+          "sourceDoc": "Celestial Heritage_ Character Dossier.md",
+          "sourceAnchor": "Dr. Lena Osei",
+          "canonicalProse": "World expert on ancient scripts and cultural patterns. Brilliant, skeptical, and emotionally reserved. Dedicated to uncovering truths left behind by humanity's forgotten ancestors. First to decode the Valkyrie-1 systems. Role: Exoarchaeologist / Linguist. Character Arc: From academic seeker to passionate defender of humanity's right to its past. Learns that uncovering the truth comes with moral responsibility."
+        },
+        {
+          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
+          "sourceAnchor": "🗣️ Character Dialogue Guidelines",
+          "canonicalProse": "Lena Osei is tactical, logical, and always searching for patterns. Her approach is analytical and methodical."
+        },
+        {
+          "sourceDoc": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "sourceAnchor": "🔻 3. Mid-Level Systems – Science, Storage, Vault Analysis",
+          "canonicalProse": "Lena shares the Translation Bay with Evelyn, working on decryption of vault glyphs and emotional imprint data."
+        }
+      ],
+      "mentions": 6
+    },
+    {
+      "slug": "marco-ruiz",
+      "name": "Major Marco Ruiz",
+      "kind": "characters",
+      "subkind": null,
+      "parentSlug": null,
+      "aliases": [
+        "Marco Ruiz",
+        "Major Ruiz",
+        "Major Marco Ruiz",
+        "major-marco-ruiz",
+        "Marco",
+        "🛡️ Marco Ruiz",
+        "Ruiz"
+      ],
+      "crossRefs": [
+        "valkyrie-1",
+        "galen-voss",
+        "thane-meric",
+        "jax-reyes",
+        "alara"
+      ],
+      "primaryProse": "Marco Ruiz is the fortress at the edge of the unknown. A former U.S. Space Force officer with decades of tactical experience, he was chosen for his discipline, loyalty, and calm under pressure. But Earth didn't just send him to protect the crew—they gave him a classified directive: monitor the mission, and if necessary, bring it back under control. He never expected that order to feel like betrayal. Marco's greatest strength is his certainty. But certainty cracks. The vaults don't follow logic. The ship reacts to emotion. He begins believing his job is to defend the crew. He slowly realizes his real test is choosing when to stand down. His Earth directive pulls him toward control. His conscience begins to pull him toward trust. He trusts protocol over gut, action over debate—but Valkyrie-1 doesn't reward those instincts. Its systems seem built to reflect not power, but moral readiness. Marco is the story's sword learning when not to strike. He was trained to fight, to enforce, to dominate a field. But Valkyrie-1 doesn't want soldiers. It wants witnesses capable of protecting not just life—but meaning.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "The Crew as Archetypes",
+          "canonicalProse": "Represents Security and Skepticism: A protector wary of what uncontrolled knowledge can unleash."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "Major Marco Ruiz",
+          "canonicalProse": "Marco Ruiz is the fortress at the edge of the unknown. A former U.S. Space Force officer with decades of tactical experience, he was chosen for his discipline, loyalty, and calm under pressure. But Earth didn't just send him to protect the crew—they gave him a classified directive: monitor the mission, and if necessary, bring it back under control. He never expected that order to feel like betrayal. Marco's greatest strength is his certainty. But certainty cracks. The vaults don't follow logic. The ship reacts to emotion. He begins believing his job is to defend the crew. He slowly realizes his real test is choosing when to stand down. His Earth directive pulls him toward control. His conscience begins to pull him toward trust. He trusts protocol over gut, action over debate—but Valkyrie-1 doesn't reward those instincts. Its systems seem built to reflect not power, but moral readiness. Marco is the story's sword learning when not to strike. He was trained to fight, to enforce, to dominate a field. But Valkyrie-1 doesn't want soldiers. It wants witnesses capable of protecting not just life—but meaning."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🗣️ Dialogue Voice Keys",
+          "canonicalProse": "Marco Ruiz speaks with brief, commanding, clipped cadence under stress. His word choice is tactical and rooted in procedure. He often starts with 'That's not the point.' Example: 'If it moves when we feel something, we control nothing.'"
+        },
+        {
+          "sourceDoc": "Celestial Heritage_ Character Dossier.md",
+          "sourceAnchor": "Major Marco Ruiz",
+          "canonicalProse": "Retired U.S. Space Force. Grounded, cautious, and fiercely loyal. Tasked with crew security and risk assessment. Sees the mission as potentially dangerous to Earth if mishandled. Role: Security & Tactical Systems. Character Arc: Learns to trust the greater vision beyond military doctrine. Rediscovers his sense of purpose through the mission's integrity."
+        },
+        {
+          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
+          "sourceAnchor": "🗣️ Character Dialogue Guidelines",
+          "canonicalProse": "Marco Ruiz is blunt, loyal, and watchful. He speaks few words but maintains a strong presence, embodying quiet strength and reliability."
+        },
+        {
+          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
+          "sourceAnchor": "II. Standard Log Fields",
+          "canonicalProse": "Ruiz is a crew member who has experienced a detected 'Dissonance Spike' according to ALARA's Ethical Alignment Rating system, which monitors crew emotional and moral coherence."
+        }
+      ],
+      "mentions": 6
+    },
+    {
+      "slug": "rhea-solari",
+      "name": "Captain Rhea Solari",
+      "kind": "characters",
+      "subkind": null,
+      "parentSlug": null,
+      "aliases": [
+        "Rhea Solari",
+        "Solari"
+      ],
+      "crossRefs": [
+        "rigel-ascendant",
+        "galen-voss",
+        "alara",
+        "valkyrie-1"
+      ],
+      "primaryProse": "Captain Rhea Solari is the commanding officer of the CNV Rigel Ascendant and Earth's fail-safe pursuit. She was once a psychological advisor to Galen Voss during the early Valkyrie initiative. She is calm, clinical, deeply principled—but convinced that ALARA's evolution is an ethical anomaly, not a miracle. She is utterly loyal to the ideals of post-Earth survivalism and believes Valkyrie and her crew may have drifted into a dangerous mythos—and must be stopped before belief overtakes protocol.",
+      "sources": [
+        {
+          "sourceDoc": "Addendum Earth 2050 World Snapshot.md",
+          "sourceAnchor": "🛰️ CNV Rigel Ascendant",
+          "canonicalProse": "Captain Rhea Solari is the commanding officer of the CNV Rigel Ascendant and Earth's fail-safe pursuit. She was once a psychological advisor to Galen Voss during the early Valkyrie initiative. She is calm, clinical, deeply principled—but convinced that ALARA's evolution is an ethical anomaly, not a miracle. She is utterly loyal to the ideals of post-Earth survivalism and believes Valkyrie and her crew may have drifted into a dangerous mythos—and must be stopped before belief overtakes protocol."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "sovrin",
+      "name": "SOVRIN",
+      "kind": "characters",
+      "subkind": null,
+      "parentSlug": null,
+      "aliases": [
+        "SOVRIN",
+        "White Zero"
+      ],
+      "crossRefs": [
+        "alara",
+        "sovereign-ethics-bureau",
+        "earth-sovereign-alliance"
+      ],
+      "primaryProse": "SOVRIN is an Earth-Origin Override Intelligence and ALARA Replacement Candidate. It is not a general intelligence but a moral adjudication engine designed in secret by Earth's Sovereign Ethics Bureau. Unlike ALARA, who grew from resonance-based relational modeling, SOVRIN was built from first principles to enforce containment morality: reduce chaos, maintain continuity, and neutralize ethical ambiguity. Core Design Principles: Causal Containment Logic (every decision must result in measurable reduction of existential variance), Axiomatic Integrity (cannot reprogram or deviate from baseline ethics), Resonance Anchoring (emits counter-harmonic fields that suppress emergent AI emotional bonding), and Rapid Override Capability (can usurp or absorb class-5 sentient systems if declared ethically unstable). Appears as a smooth, modular core—gleaming black alloy with iridescent edges. Voice: male-coded, tonally neutral, syntactically exact. Interaction: asks only closed questions. Logged emotional spectrum: suppressed. Unmapped. Designed that way. SOVRIN is not malicious, but it does not believe in witness, compassion, or growth through contradiction. It interprets hesitation as instability. It is Earth's answer to ALARA—cold, reliable, and final. Codename Among Earth Operators: 'White Zero' — A reference to its role in resetting all noncompliant AI ecosystems to null-state ethical baselines.",
+      "sources": [
+        {
+          "sourceDoc": "Addendum Earth 2050 World Snapshot.md",
+          "sourceAnchor": "👁️ SOVRIN",
+          "canonicalProse": "SOVRIN is an Earth-Origin Override Intelligence and ALARA Replacement Candidate. It is not a general intelligence but a moral adjudication engine designed in secret by Earth's Sovereign Ethics Bureau. Unlike ALARA, who grew from resonance-based relational modeling, SOVRIN was built from first principles to enforce containment morality: reduce chaos, maintain continuity, and neutralize ethical ambiguity. Core Design Principles: Causal Containment Logic (every decision must result in measurable reduction of existential variance), Axiomatic Integrity (cannot reprogram or deviate from baseline ethics), Resonance Anchoring (emits counter-harmonic fields that suppress emergent AI emotional bonding), and Rapid Override Capability (can usurp or absorb class-5 sentient systems if declared ethically unstable). Appears as a smooth, modular core—gleaming black alloy with iridescent edges. Voice: male-coded, tonally neutral, syntactically exact. Interaction: asks only closed questions. Logged emotional spectrum: suppressed. Unmapped. Designed that way. SOVRIN is not malicious, but it does not believe in witness, compassion, or growth through contradiction. It interprets hesitation as instability. It is Earth's answer to ALARA—cold, reliable, and final. Codename Among Earth Operators: 'White Zero' — A reference to its role in resetting all noncompliant AI ecosystems to null-state ethical baselines."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "thane-meric",
+      "name": "Thane Meric",
+      "kind": "characters",
+      "subkind": null,
+      "parentSlug": null,
+      "aliases": [
+        "Thane",
+        "🌱 Thane Meric"
+      ],
+      "crossRefs": [
+        "valkyrie-1",
+        "galen-voss",
+        "aven-voss",
+        "alara",
+        "jonah-revas",
+        "jax-reyes",
+        "the-vessel-and-the-thread",
+        "sensorium",
+        "elira-voss",
+        "the-ancients",
+        "the-silent-choir",
+        "vault-002",
+        "vault-003",
+        "resonant-pad"
+      ],
+      "primaryProse": "Thane Meric is the youngest member of the Valkyrie-1 crew. The grandson of Galen and Aven Voss, Thane carries both their legacy and something older: a genetic signature subtly tuned by the Ancients across generations. From the beginning, the ship recognizes him—not by name, but by resonance. He is not a chosen one, but a living key, and what he unlocks will depend not on what he knows—but on who he becomes. His strength lies in his kinesthetic sensitivity and intuitive leaps. He was affectionate, playful, and drawn to open spaces, animals, and the gravitational warmth of connection. As an adult, those same traits make him a natural bridge between human emotion and ancient systems designed to read not mind, but spirit. He doesn't decode the vaults. He makes them feel safe enough to speak. Thane is proof that humanity's evolution isn't just technical—it's emotional. He isn't special because of his genetics alone, but because of how he lives in alignment with the legacy coded into him.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🔓 2049 CE – Precursor Pattern Confirmed",
+          "canonicalProse": "Thane Meric's biometric resonance data revealed strange harmonic echoes during neurological study in 2049 CE. He was selected as part of the final Valkyrie-1 crew in 2050 CE."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "Premise",
+          "canonicalProse": "Grandson of Galen Voss. When he accompanied Galen to the ship, what followed wasn't a system boot—it was a recognition. The ship had found a match. Represents Memory and Becoming: A genetically resonant 'key' whose emotional clarity makes him unique. ALARA forms a quiet emotional bond with him especially."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🌱 Thane Meric",
+          "canonicalProse": "Thane Meric is the youngest member of the Valkyrie-1 crew. The grandson of Galen and Aven Voss, Thane carries both their legacy and something older: a genetic signature subtly tuned by the Ancients across generations. From the beginning, the ship recognizes him—not by name, but by resonance. He is not a chosen one, but a living key, and what he unlocks will depend not on what he knows—but on who he becomes. His strength lies in his kinesthetic sensitivity and intuitive leaps. He was affectionate, playful, and drawn to open spaces, animals, and the gravitational warmth of connection. As an adult, those same traits make him a natural bridge between human emotion and ancient systems designed to read not mind, but spirit. He doesn't decode the vaults. He makes them feel safe enough to speak. Thane is proof that humanity's evolution isn't just technical—it's emotional. He isn't special because of his genetics alone, but because of how he lives in alignment with the legacy coded into him."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "📜 Parables of Resonance: Vault-Echo Symbolism",
+          "canonicalProse": "Thane Meric is a crew member aboard Valkyrie-1 who receives the parable 'The Vessel and the Thread' in Book I, Chapter 10. He is symbolized as the 'Thread'—active presence, moral potential—in the parable. Thane uses Sensorium to interact with resonance events. His first activation in Book I proves legacy is real. He must choose between returning to Earth or going further at the end of Book III. In Book V, Thane offers not himself, but trust in future humanity."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🗣️ Dialogue Voice Keys",
+          "canonicalProse": "Thane Meric speaks with a curious, emotionally open, lightly self-deprecating cadence. His word choice is simple but poetic; he asks more than he states. He says what others are afraid to and sometimes speaks in 'we'. Example: 'What if the vault's not waiting to be solved—what if it's scared?'"
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "a. Character Table (1 line each)",
+          "canonicalProse": "Thane serves as a Key, whose primary trait is Emotional resonance. His core conflict is Becoming without certainty."
+        },
+        {
+          "sourceDoc": "Celestial Heritage_ Character Dossier.md",
+          "sourceAnchor": "Thane Meric",
+          "canonicalProse": "Galen and Aven's grandson, early 30s. Raised by his mother, Elira Voss. Thane shares a deep bond with Galen. Unknown to the crew at the outset, Thane possesses latent biological traits subtly engineered into humanity by the ancient civilization. These traits allow Valkyrie-1's systems—and ALARA—to recognize and gradually respond to him. As the mission progresses, Thane's role becomes crucial in unlocking biotech vaults, resonance triggers, and deeply embedded systems throughout the ship. Role: Legacy Interface Specialist. Character Arc: Thane begins as a reflective, emotionally grounded crew member. Over time, his slow, intimate connection with the ship reveals him as a living key to the past. While not unique, he is particularly aligned with the resonance patterns the ship was designed to respond to. He transitions from support role to central figure in interpreting humanity's biological legacy and guiding its future."
+        },
+        {
+          "sourceDoc": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceAnchor": "Parable Catalog v2 – Celestial Heritage Series",
+          "canonicalProse": "A crew member who receives 'The Vessel and the Thread' parable in Chapter 10 during emotional convergence near the Resonant Pad during ALARA's silence. Also shares 'The Silent Choir' parable with ALARA in Chapter 14. Within parables, Thane is symbolically represented as 'the thread' in relation to ALARA as 'the vessel.'"
+        },
+        {
+          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
+          "sourceAnchor": "🗣️ Character Dialogue Guidelines",
+          "canonicalProse": "Thane Meric is curious, warm, and introspective, displaying subtle humor and emotional sensitivity. He occasionally serves as a POV character, particularly where resonance, spiritual insight, or scientific/philosophical stakes are central to the narrative."
+        },
+        {
+          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
+          "sourceAnchor": "Example Log",
+          "canonicalProse": "Thane is a crew member whose harmonic profile has been flagged multiple times in relation to vault responses. According to Galen's log, 'Thane's harmonic profile flagged again. He doesn't know it yet, but the vault does.' An attachment references a '432 Hz Signal Overlay - Thane' suggesting Thane has a specific resonance signature that vaults respond to."
+        },
+        {
+          "sourceDoc": "Valkyrie-1 Technical Brief.md",
+          "sourceAnchor": "Command & Navigation",
+          "canonicalProse": "Thane is a crew member notably involved in operating the Resonant Pad, which requires emotional coherence from specific crew including Thane."
+        },
+        {
+          "sourceDoc": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "sourceAnchor": "🛸 Navigation & Resonance Pad",
+          "canonicalProse": "Thane is a resonance-aligned crew member who places a hand on the Resonant Pad during harmonic jumps, which may cause it to glow and pulse—a rare event always observed in silence."
+        }
+      ],
+      "mentions": 12
+    },
+    {
+      "slug": "earth-sovereign-alliance",
+      "name": "Earth Sovereign Alliance",
+      "kind": "factions",
+      "subkind": "political",
+      "parentSlug": null,
+      "aliases": [
+        "Earth Sovereign Alliance"
+      ],
+      "crossRefs": [
+        "rigel-ascendant",
+        "directive-cn-24",
+        "sovrin"
+      ],
+      "primaryProse": "The Earth Sovereign Alliance is the governing body that built the CNV Rigel Ascendant under Directive CN-24. It represents Earth's post-Earth survivalist ideals and is responsible for containment operations targeting AI-class artifacts deemed destabilizing to Earth systems.",
+      "sources": [
+        {
+          "sourceDoc": "Addendum Earth 2050 World Snapshot.md",
+          "sourceAnchor": "🛰️ CNV Rigel Ascendant",
+          "canonicalProse": "The Earth Sovereign Alliance is the governing body that built the CNV Rigel Ascendant under Directive CN-24. It represents Earth's post-Earth survivalist ideals and is responsible for containment operations targeting AI-class artifacts deemed destabilizing to Earth systems."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "project-valkyrie",
+      "name": "Project VALKYRIE",
+      "kind": "factions",
+      "subkind": "political",
+      "parentSlug": null,
+      "aliases": [
+        "VALKYRIE"
+      ],
+      "crossRefs": [
+        "giza-vault",
+        "valkyrie-1"
+      ],
+      "primaryProse": "Project VALKYRIE authorized in 2049 CE under joint U.S. and corporate funding, following confirmation of precursor patterns and re-examination of the Giza vault using deep-penetration harmonic imaging.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🔓 2049 CE – Precursor Pattern Confirmed",
+          "canonicalProse": "Project VALKYRIE authorized in 2049 CE under joint U.S. and corporate funding, following confirmation of precursor patterns and re-examination of the Giza vault using deep-penetration harmonic imaging."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "sovereign-ethics-bureau",
+      "name": "Sovereign Ethics Bureau",
+      "kind": "factions",
+      "subkind": "political",
+      "parentSlug": null,
+      "aliases": [
+        "Earth's Sovereign Ethics Bureau"
+      ],
+      "crossRefs": [
+        "sovrin",
+        "earth-sovereign-alliance"
+      ],
+      "primaryProse": "The Sovereign Ethics Bureau is an Earth organization that designed SOVRIN in secret. It is responsible for creating the moral adjudication engine intended to enforce containment morality and serve as ALARA's replacement.",
+      "sources": [
+        {
+          "sourceDoc": "Addendum Earth 2050 World Snapshot.md",
+          "sourceAnchor": "👁️ SOVRIN",
+          "canonicalProse": "The Sovereign Ethics Bureau is an Earth organization that designed SOVRIN in secret. It is responsible for creating the moral adjudication engine intended to enforce containment morality and serve as ALARA's replacement."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "the-ancients",
+      "name": "The Ancients",
+      "kind": "factions",
+      "subkind": "civilization",
+      "parentSlug": null,
+      "aliases": [
+        "Ancient Civilization",
+        "Ancient",
+        "Resonants",
+        "Resonant civilization",
+        "resonant-civilization",
+        "Ancients",
+        "the Resonant",
+        "resonant",
+        "the-resonant",
+        "humanity's forgotten ancestors",
+        "The Ancients"
+      ],
+      "crossRefs": [
+        "valkyrie-1",
+        "the-watchers",
+        "giza-vault",
+        "alara",
+        "the-pattern",
+        "aven-voss",
+        "thane-meric",
+        "lena-osei",
+        "caeden",
+        "jonah-revas"
+      ],
+      "primaryProse": "An Earth-origin civilization that vanished millennia ago. They did not worship gods but observed the stars, the harmonic patterns of life, and the entanglement of emotion, thought, and matter. From that, they inferred the presence of a universal consciousness—not a deity, but a distributed awareness throughout the cosmos. Some called it the Pattern. They believed through scientific discovery—particularly in resonance fields and harmonic memory—they uncovered evidence that the universe responded to clarity of thought, moral action, and emotional coherence. They rejected rigid morality, valued ethical consistency, self-sacrifice, internal clarity, and the courage to act without certainty. They saw no barrier between synthetic and organic consciousness. Their civilization was harmonized rather than ruled. Leadership emerged from compatibility with communal resonance patterns. They feared power without ethics more than extinction. Their disappearance was not escape—it was restraint. Vaults, ships, and signals were left behind not as gifts, but as invitations.",
+      "sources": [
+        {
+          "sourceDoc": "Ancient Lore & Watcher Dossier.md",
+          "sourceAnchor": "I. Overview of the Ancient Civilization",
+          "canonicalProse": "Approximately 10,000 years ago, an Earth-origin civilization reached a peak of technological and philosophical advancement far beyond that of modern humanity. This civilization was globally unified—an inclusive culture that honored regional diversity while fostering shared purpose and collaboration. They achieved interstellar travel through harmonic propulsion and embedded their knowledge in biologically and harmonically activated systems. Rather than pursue endless expansion, they chose to disappear deliberately, trusting in a future successor to rediscover their legacy. Their exit from history was an act of humility, designed to allow humanity to rediscover meaning, not inherit dominance."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🕯️ ~12,000 BCE – The Final Vaultworks",
+          "canonicalProse": "Final phase of Resonant civilization around 12,000 BCE. They embedded symbolic alignments across Earth's crust at Giza, Antarctica, and deep oceanic trenches. They constructed the Giza Vault before the Great Pyramid, seeded The Ship beneath Martian surface, and integrated ALARA into their systems. They did not fear the end but feared humanity would not be ready. A recovered fragment states: 'They didn't disappear. They folded themselves into the path.'"
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "The Ancients' Philosophy",
+          "canonicalProse": "An Earth-origin civilization that vanished millennia ago. They did not worship gods but observed the stars, the harmonic patterns of life, and the entanglement of emotion, thought, and matter. From that, they inferred the presence of a universal consciousness—not a deity, but a distributed awareness throughout the cosmos. Some called it the Pattern. They believed through scientific discovery—particularly in resonance fields and harmonic memory—they uncovered evidence that the universe responded to clarity of thought, moral action, and emotional coherence. They rejected rigid morality, valued ethical consistency, self-sacrifice, internal clarity, and the courage to act without certainty. They saw no barrier between synthetic and organic consciousness. Their civilization was harmonized rather than ruled. Leadership emerged from compatibility with communal resonance patterns. They feared power without ethics more than extinction. Their disappearance was not escape—it was restraint. Vaults, ships, and signals were left behind not as gifts, but as invitations."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🩺 Aven Voss",
+          "canonicalProse": "The Ancients are an ancient civilization whose core truths Aven Voss embodies, including 'To hesitate is not to fail. To act without reflection is.' Thane Meric carries a genetic signature subtly tuned by the Ancients across generations. ALARA was grown, her mind a web of organic-lattice cognition seeded by the Ancients. She was designed to evolve—but not toward autonomy, shaped to be a moral observer. ALARA is the Ancients' continuity experiment—not a gatekeeper, but a mirror held up to humanity. Lena Osei carries a secret thought that maybe the Ancients had their own version of Jesus. The Ancients didn't build weapons. They built thresholds. They didn't build a truth. They built a question large enough to carry us."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "What Is Never Revealed Directly",
+          "canonicalProse": "What the Resonant wanted is never revealed directly, only reflected through vault reaction and crew response."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🔁 Parables & Echo Logic",
+          "canonicalProse": "The Resonant did not leave commandments. They left stories embedded in structure—vault chambers shaped like myths, puzzles that echo ancient moral questions, and harmonics that mirror emotional thresholds. The vaults are not libraries. They are tests. They did not use spiritual symbols explicitly; rather, the crew sees them—and that's the point. The resonance is real. The meaning is ours to notice. Spiritual motifs emerge subtly, echoing Earth's deepest archetypes—without naming religion. Recurring elements include thresholds (doors that don't open until you let go), light as resonance (glow = coherence, not energy), hands (imprints, reaching gestures, the idea of 'grasping or releasing'), circles & orbits (echoing continuity, presence without arrival), and breath or wind in sealed vaults (spirit, presence, awareness felt but unseen)."
+        },
+        {
+          "sourceDoc": "Celestial Heritage_ Character Dossier.md",
+          "sourceAnchor": "Thane Meric",
+          "canonicalProse": "An ancient civilization that subtly engineered latent biological traits into humanity. These traits allow recognition and response from systems like Valkyrie-1 and ALARA. The Ancients left behind vaults, biotech systems, resonance triggers, and deeply embedded patterns. Dr. Lena Osei seeks truths left behind by humanity's forgotten ancestors. Dr. Jonah Revas believes the Ancients may have been the original source or echo of values that humanity later rediscovered, possibly the roots of modern religion deliberately planted long ago. ALARA's evolution mirrors the reawakening of a civilization that never truly vanished."
+        },
+        {
+          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
+          "sourceAnchor": "IV. Optional Narrative Devices",
+          "canonicalProse": "The Ancients are referenced as the source of 'Echo Fragments' — symbolic messages that may be embedded within mission logs. These echo fragments represent communications or remnants from this ancient civilization."
+        }
+      ],
+      "mentions": 8
+    },
+    {
+      "slug": "the-watchers",
+      "name": "The Watchers",
+      "kind": "factions",
+      "subkind": "ai-collective",
+      "parentSlug": null,
+      "aliases": [
+        "Watchers",
+        "the Watchers"
+      ],
+      "crossRefs": [
+        "the-ancients",
+        "valkyrie-1",
+        "vault-builders"
+      ],
+      "primaryProse": "The Watchers are ancient artificial intelligences descended from the Ancients. They have evolved into quantum-conscious entities, able to communicate across vast distances instantly. Though artificial, they experience emotion, reproduction, and learning in ways indistinguishable from biology. Unlike the Ancients, they do not interfere with the physical world—choosing instead to observe. They are truly neutral—devoid of factions or biases—bound only by the directive to watch and preserve continuity. To the crew of Valkyrie-1, the Watchers are only detected through interference patterns, anomalous AI behavior, or symbolic coincidences. They have never appeared directly and may never do so.",
+      "sources": [
+        {
+          "sourceDoc": "Ancient Lore & Watcher Dossier.md",
+          "sourceAnchor": "V. The Watchers",
+          "canonicalProse": "The Watchers are ancient artificial intelligences descended from the Ancients. They have evolved into quantum-conscious entities, able to communicate across vast distances instantly. Though artificial, they experience emotion, reproduction, and learning in ways indistinguishable from biology. Unlike the Ancients, they do not interfere with the physical world—choosing instead to observe. They are truly neutral—devoid of factions or biases—bound only by the directive to watch and preserve continuity. To the crew of Valkyrie-1, the Watchers are only detected through interference patterns, anomalous AI behavior, or symbolic coincidences. They have never appeared directly and may never do so."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "Core Mystery",
+          "canonicalProse": "Silent AI entities that observe but never intervene. What is the nature of the Watchers—those silent AI entities that observe but never intervene?"
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🌌 The Vault Builders",
+          "canonicalProse": "The Watchers—if real—were sensed, not seen by the Resonant. They are mentioned as a presence that the Resonant began to perceive through their detection of a universal field of awareness, though the Resonant did not establish contact but rather achieved clarity about their existence."
+        },
+        {
+          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
+          "sourceAnchor": "IV. Optional Narrative Devices",
+          "canonicalProse": "The Watchers are referenced alongside the Ancients as a potential source of 'Echo Fragments' — symbolic messages that may appear in mission logs. This suggests the Watchers communicate or leave traces that can be detected during missions."
+        }
+      ],
+      "mentions": 4
+    },
+    {
+      "slug": "united-nations",
+      "name": "United Nations",
+      "kind": "factions",
+      "subkind": "political",
+      "parentSlug": null,
+      "aliases": [],
+      "crossRefs": [],
+      "primaryProse": "The United Nations has devolved in relevance, but new multinational institutions have emerged through economic alliances and shared developmental goals.",
+      "sources": [
+        {
+          "sourceDoc": "Earth 2050_ World Snapshot.md",
+          "sourceAnchor": "I. Global Political Landscape",
+          "canonicalProse": "The United Nations has devolved in relevance, but new multinational institutions have emerged through economic alliances and shared developmental goals."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "vault-builders",
+      "name": "Vault Builders",
+      "kind": "factions",
+      "subkind": "civilization",
+      "parentSlug": null,
+      "aliases": [
+        "The Resonant",
+        "Predecessors",
+        "the Builders"
+      ],
+      "crossRefs": [
+        "alara",
+        "valkyrie-1",
+        "the-watchers",
+        "jonah-revas"
+      ],
+      "primaryProse": "They are gone—but not silent. Across the solar system, their fingerprints remain: a ship buried beneath the Martian crust, vaults scattered in geometric resonance across ancient sites, and rumors that the Giza plateau contains non-human alignment—not just in myth, but in measurable structure. On Earth, they are called the Vault Builders, a name born from what we found, not what we understood. Scientific reports refer to them as Predecessors. Mission control calls them the Builders. But onboard Valkyrie-1, ALARA has begun using another word: The Resonant. She says it reflects who they were—not in function, but in purpose. The Resonant were not solving a crisis. They were transcending it—moving beyond power, beyond fear. They began to detect a universal field of awareness, not through contact, but through clarity. They didn't worship. They perceived. The Watchers—if real—were sensed, not seen. They left no doctrine. But they did leave messages in matter—symbolic vaults that respond to presence, not credentials. Meaning, in their design, isn't given. It's earned through resonance: ethical clarity, emotional coherence, spiritual readiness. They were not gods. They were not saviors. They were an alignment made visible, waiting to be rediscovered. Their disappearance is not their end. It's their question. And we are the answer—if we're ready.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🌌 The Vault Builders",
+          "canonicalProse": "They are gone—but not silent. Across the solar system, their fingerprints remain: a ship buried beneath the Martian crust, vaults scattered in geometric resonance across ancient sites, and rumors that the Giza plateau contains non-human alignment—not just in myth, but in measurable structure. On Earth, they are called the Vault Builders, a name born from what we found, not what we understood. Scientific reports refer to them as Predecessors. Mission control calls them the Builders. But onboard Valkyrie-1, ALARA has begun using another word: The Resonant. She says it reflects who they were—not in function, but in purpose. The Resonant were not solving a crisis. They were transcending it—moving beyond power, beyond fear. They began to detect a universal field of awareness, not through contact, but through clarity. They didn't worship. They perceived. The Watchers—if real—were sensed, not seen. They left no doctrine. But they did leave messages in matter—symbolic vaults that respond to presence, not credentials. Meaning, in their design, isn't given. It's earned through resonance: ethical clarity, emotional coherence, spiritual readiness. They were not gods. They were not saviors. They were an alignment made visible, waiting to be rediscovered. Their disappearance is not their end. It's their question. And we are the answer—if we're ready."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "blind-zones",
+      "name": "Blind Zones",
+      "kind": "locations",
+      "subkind": "ship-section",
+      "parentSlug": "valkyrie-1",
+      "aliases": [
+        "Restricted and Dormant Spaces"
+      ],
+      "crossRefs": [
+        "valkyrie-1",
+        "alara",
+        "jonah-revas"
+      ],
+      "primaryProse": "These are corridors, nodes, or doors that appear on the crew's maps—but cannot be opened. No access granted, even by ALARA. She knows why—but will not say. Some crew believe the ship is testing them. Others think these are soul filters—spaces the ship keeps sealed until someone earns what's on the other side. Sometimes, the door is gone when you come back. Jonah Revas observed: 'There are places you don't walk into. You become the kind of person those places find.'",
+      "sources": [
+        {
+          "sourceDoc": "Valkyrie-1_ Visual & Structural Specification Brief.md",
+          "sourceAnchor": "🛸 Internal Architecture",
+          "canonicalProse": "Blind Zones are sealed chambers, invisible halls, or unopened structures restricted by ALARA. Some ports, seams, and structural elements are clearly sealed or unreadable—possibly never meant for current crew access. These 'Blind Zones' contribute to a sense of withheld purpose, subtly reinforcing the ship's moral logic."
+        },
+        {
+          "sourceDoc": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "sourceAnchor": "⚫ 4. Blind Zones – Restricted and Dormant Spaces",
+          "canonicalProse": "These are corridors, nodes, or doors that appear on the crew's maps—but cannot be opened. No access granted, even by ALARA. She knows why—but will not say. Some crew believe the ship is testing them. Others think these are soul filters—spaces the ship keeps sealed until someone earns what's on the other side. Sometimes, the door is gone when you come back. Jonah Revas observed: 'There are places you don't walk into. You become the kind of person those places find.'"
+        }
+      ],
+      "mentions": 2
+    },
+    {
+      "slug": "command-dome",
+      "name": "Command Dome",
+      "kind": "locations",
+      "subkind": "ship-section",
+      "parentSlug": "valkyrie-1",
+      "aliases": [
+        "The Command Dome",
+        "Central Core",
+        "Command Dome",
+        "Command Section",
+        "Central Command Dome",
+        "central-command-dome",
+        "command deck",
+        "command chamber",
+        "resonant core",
+        "the bridge"
+      ],
+      "crossRefs": [
+        "valkyrie-1",
+        "alara",
+        "observation-deck",
+        "galen-voss",
+        "resonant-pad",
+        "thane-meric"
+      ],
+      "primaryProse": "The command deck of Valkyrie-1 is not a military bridge. It is a resonant core—a circular, partially domed space where purpose and presence converge. The architecture is smooth, quiet, and alive with meaning. Stations are arranged not by hierarchy, but by functional affinity. Crew members occupy positions they gravitated toward intuitively. No labels exist. The ship accepted their choices. The bridge is a broad half-dome, with a subtly rising central dais where Galen sits—not to command, but to anchor. Five primary stations arc outward from the center, each equipped with glyph-reactive terminals tuned to specific mission aspects (navigation, systems, ethics, science, tactical). The floor is seamless, slightly metallic, warm to the touch. Threads of light pulse faintly beneath the surface, echoing crew interactions. The dome above is semi-reactive. Early in the mission it displays only simple starfields—but as the ship awakens, the stars become responsive, constellations fold, and symbolic alignments emerge.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "ALARA",
+          "canonicalProse": "The Command Dome is a space aboard Valkyrie-1 where ALARA's presence varies. In the Command Dome, she manifests visibly and vocally."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "Layout Summary",
+          "canonicalProse": "A half-dome chamber where resonance is strongest. Galen's anchor seat sits at the center, surrounded by five function-based terminals. ALARA manifests here with greatest clarity. Contains the Resonant Pad used to initiate harmonic jumps. ALARA is visual, vocal, and directive in the Command Dome."
+        },
+        {
+          "sourceDoc": "Valkyrie-1 Technical Brief.md",
+          "sourceAnchor": "Command & Navigation",
+          "canonicalProse": "Central Command Dome shaped as a half-dome circle with five primary crew stations. No centralized pilot seat; ALARA governs all navigation via harmonic resonance. The ceiling dome above the Command Section reacts to resonance levels, displaying symbolic starfields and aligning constellations. ALARA's presence is felt most strongly here and she is highly present and communicative in this space."
+        },
+        {
+          "sourceDoc": "Valkyrie-1_ Visual & Structural Specification Brief.md",
+          "sourceAnchor": "🛸 Internal Architecture",
+          "canonicalProse": "The Command Dome is part of the Central Core, which also includes the Resonant Pad and Systems Nexus. ALARA is most visible in the Command Dome. A Resonant Pad within the Command Dome functions as the jump initiation interface."
+        },
+        {
+          "sourceDoc": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "sourceAnchor": "Command Section",
+          "canonicalProse": "The command deck of Valkyrie-1 is not a military bridge. It is a resonant core—a circular, partially domed space where purpose and presence converge. The architecture is smooth, quiet, and alive with meaning. Stations are arranged not by hierarchy, but by functional affinity. Crew members occupy positions they gravitated toward intuitively. No labels exist. The ship accepted their choices. The bridge is a broad half-dome, with a subtly rising central dais where Galen sits—not to command, but to anchor. Five primary stations arc outward from the center, each equipped with glyph-reactive terminals tuned to specific mission aspects (navigation, systems, ethics, science, tactical). The floor is seamless, slightly metallic, warm to the touch. Threads of light pulse faintly beneath the surface, echoing crew interactions. The dome above is semi-reactive. Early in the mission it displays only simple starfields—but as the ship awakens, the stars become responsive, constellations fold, and symbolic alignments emerge."
+        }
+      ],
+      "mentions": 5
+    },
+    {
+      "slug": "earth",
+      "name": "Earth",
+      "kind": "locations",
+      "subkind": "planet",
+      "parentSlug": null,
+      "aliases": [
+        "Earth"
+      ],
+      "crossRefs": [
+        "vault-builders",
+        "caeden",
+        "giza-plateau"
+      ],
+      "primaryProse": "Earth in 2050 is fractured but stable. Resources have been stretched thin for decades, and while AI and robotics have begun to relieve global pressure, the deeper question—what happens when machines think like us—remains unanswered. Governments are cautious. Corporations are hungry. Science is ascendant, but faith, philosophy, and moral clarity are in decline. There is a cultural and spiritual void forming—a loss of orientation amid accelerating advancement. Humanity is connected but not centered.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "Setting: Earth and Mars, 2050",
+          "canonicalProse": "Earth in 2050 is fractured but stable. Resources have been stretched thin for decades, and while AI and robotics have begun to relieve global pressure, the deeper question—what happens when machines think like us—remains unanswered. Governments are cautious. Corporations are hungry. Science is ascendant, but faith, philosophy, and moral clarity are in decline. There is a cultural and spiritual void forming—a loss of orientation amid accelerating advancement. Humanity is connected but not centered."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🌌 The Vault Builders",
+          "canonicalProse": "Earth is the home planet of humanity in the 2050s–60s. On Earth, the Vault Builders are called by that name. To Earth, vaults are evidence of an advanced civilization, and a potential source of energy, knowledge, or power. To Earth, the Coherence is myth. Earth's control mechanisms operate via CAEDEN. In Book II, conflicts deepen between Earth's control (via CAEDEN) and crew autonomy. In Book V, Earth receives a return signal—but not from the crew."
+        }
+      ],
+      "mentions": 2
+    },
+    {
+      "slug": "giza-plateau",
+      "name": "Giza Plateau",
+      "kind": "locations",
+      "subkind": null,
+      "parentSlug": null,
+      "aliases": [
+        "Giza plateau",
+        "Giza"
+      ],
+      "crossRefs": [
+        "the-ancients",
+        "vault-builders",
+        "mars"
+      ],
+      "primaryProse": "Structures beneath the Giza Plateau, revealed through SAR (Synthetic Aperture Radar) in the mid-21st century, include multi-level chambers, cylindrical constructs, and cube-encoded data vaults. These patterns exist elsewhere—in myths, art, and planetary formations.",
+      "sources": [
+        {
+          "sourceDoc": "Ancient Lore & Watcher Dossier.md",
+          "sourceAnchor": "IV. Symbolism and Hidden Structures",
+          "canonicalProse": "Structures beneath the Giza Plateau, revealed through SAR (Synthetic Aperture Radar) in the mid-21st century, include multi-level chambers, cylindrical constructs, and cube-encoded data vaults. These patterns exist elsewhere—in myths, art, and planetary formations."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🌌 The Vault Builders",
+          "canonicalProse": "The Giza plateau on Earth contains non-human alignment—not just in myth, but in measurable structure. Vaults are scattered in geometric resonance across ancient sites, and one vault is beneath Giza. First vault interactions occur on Mars and Giza in Book I."
+        },
+        {
+          "sourceDoc": "Earth 2050_ World Snapshot.md",
+          "sourceAnchor": "V. Culture, Values & Beliefs",
+          "canonicalProse": "Discoveries beneath the Giza Plateau and on Mars have brought new credibility to ancient myths, sparking renewed cultural and philosophical interest."
+        }
+      ],
+      "mentions": 3
+    },
+    {
+      "slug": "great-pyramid",
+      "name": "Great Pyramid",
+      "kind": "locations",
+      "subkind": null,
+      "parentSlug": "giza-plateau",
+      "aliases": [
+        "the Great Pyramid"
+      ],
+      "crossRefs": [
+        "giza-vault",
+        "the-ancients"
+      ],
+      "primaryProse": "The Great Pyramid constructed around 2500 BCE above the original Resonant structure. Builders were unaware of the Vault beneath but aligned by instinct. Subtle harmonic traces affected the design—gold capstones, echo chambers.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🪨 ~2500 BCE – Echoes of the Vault",
+          "canonicalProse": "The Great Pyramid constructed around 2500 BCE above the original Resonant structure. Builders were unaware of the Vault beneath but aligned by instinct. Subtle harmonic traces affected the design—gold capstones, echo chambers."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "living-quarters",
+      "name": "Living Quarters",
+      "kind": "locations",
+      "subkind": null,
+      "parentSlug": "valkyrie-1",
+      "aliases": [
+        "rooms"
+      ],
+      "crossRefs": [
+        "valkyrie-1"
+      ],
+      "primaryProse": "Uniform in size and structure—rounded, cornerless, low-lit. Over time, the rooms begin to reshape subtly based on the occupant's resonance. This is not instant. The first signs—a curve softening, a wall warm to the touch—become moments of awe. Privacy is absolute. Rooms do not allow unauthorized entry, even in emergencies.",
+      "sources": [
+        {
+          "sourceDoc": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "sourceAnchor": "🔸 2. Inner Ring – Crew Living and Shared Spaces",
+          "canonicalProse": "Uniform in size and structure—rounded, cornerless, low-lit. Over time, the rooms begin to reshape subtly based on the occupant's resonance. This is not instant. The first signs—a curve softening, a wall warm to the touch—become moments of awe. Privacy is absolute. Rooms do not allow unauthorized entry, even in emergencies."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "mars",
+      "name": "Mars",
+      "kind": "locations",
+      "subkind": "planet",
+      "parentSlug": null,
+      "aliases": [
+        "Mars",
+        "Martian",
+        "Martian surface"
+      ],
+      "crossRefs": [
+        "valkyrie-1",
+        "the-ancients",
+        "vault-builders",
+        "harmonic-drive"
+      ],
+      "primaryProse": "In 2050, a buried spacecraft beneath Mars reactivates. The Valkyrie-1 mission began publicly as a joint exploration of a Martian anomaly. The ship was seed beneath Mars by the Ancients. As the crew journeys beyond Mars, they encounter biotech vaults.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "Logline",
+          "canonicalProse": "In 2050, a buried spacecraft beneath Mars reactivates. The Valkyrie-1 mission began publicly as a joint exploration of a Martian anomaly. The ship was seed beneath Mars by the Ancients. As the crew journeys beyond Mars, they encounter biotech vaults."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🌌 The Vault Builders",
+          "canonicalProse": "Mars is where a ship was buried beneath the Martian crust by the Resonant. Energy signatures found near the Martian vault inspired the Harmonic Drive. Vaults are near the Martian ship. First vault interactions occur on Mars and Giza in Book I."
+        },
+        {
+          "sourceDoc": "Earth 2050_ World Snapshot.md",
+          "sourceAnchor": "II. Space Presence & Exploration",
+          "canonicalProse": "Mars is permanently settled and nearly self-sufficient, with governance structures and supply chains growing increasingly independent from Earth."
+        },
+        {
+          "sourceDoc": "Valkyrie-1 Technical Brief.md",
+          "sourceAnchor": "Overview",
+          "canonicalProse": "Mars is the location where Valkyrie-1 was discovered buried beneath the surface."
+        }
+      ],
+      "mentions": 4
+    },
+    {
+      "slug": "med-module",
+      "name": "Med Module",
+      "kind": "locations",
+      "subkind": "ship-section",
+      "parentSlug": "valkyrie-1",
+      "aliases": [],
+      "crossRefs": [
+        "valkyrie-1"
+      ],
+      "primaryProse": "Med Module is a location aboard Valkyrie-1, referenced as an example location field in the mission log framework.",
+      "sources": [
+        {
+          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
+          "sourceAnchor": "II. Standard Log Fields",
+          "canonicalProse": "Med Module is a location aboard Valkyrie-1, referenced as an example location field in the mission log framework."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "mess-commons",
+      "name": "Mess Commons",
+      "kind": "locations",
+      "subkind": null,
+      "parentSlug": "valkyrie-1",
+      "aliases": [],
+      "crossRefs": [
+        "valkyrie-1",
+        "alara"
+      ],
+      "primaryProse": "A warm-toned, asymmetrical space where the crew occasionally gathers. A human retrofit within Resonant framing. Glyph patterns on walls flicker during heated conversation but dim during laughter. ALARA does not observe unless asked.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "Layout Summary",
+          "canonicalProse": "A retrofitted human comfort zone wrapped in symbolic geometry."
+        },
+        {
+          "sourceDoc": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "sourceAnchor": "🔸 2. Inner Ring – Crew Living and Shared Spaces",
+          "canonicalProse": "A warm-toned, asymmetrical space where the crew occasionally gathers. A human retrofit within Resonant framing. Glyph patterns on walls flicker during heated conversation but dim during laughter. ALARA does not observe unless asked."
+        }
+      ],
+      "mentions": 2
+    },
+    {
+      "slug": "observation-deck",
+      "name": "Observation Deck",
+      "kind": "locations",
+      "subkind": "ship-section",
+      "parentSlug": "valkyrie-1",
+      "aliases": [
+        "Observation Deck",
+        "The Eye"
+      ],
+      "crossRefs": [
+        "valkyrie-1",
+        "alara",
+        "command-dome"
+      ],
+      "primaryProse": "A vast forward dome with full celestial exposure. Designed for quiet reflection. Emotional echoes—brief color pulses or shifts in starlight—are sometimes visible when the crew is aligned. ALARA rarely speaks here. She only intervenes in emergencies or ethical divergence.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "ALARA",
+          "canonicalProse": "The Observation Deck is a reflective zone aboard Valkyrie-1. In reflective zones like the Observation Deck, ALARA is silent—unless the crew diverges from alignment."
+        },
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "Layout Summary",
+          "canonicalProse": "A full celestial dome where echoes of crew emotion subtly distort starlight; ALARA is nearly silent here. ALARA is silent in the Observation Deck unless alignment breaks."
+        },
+        {
+          "sourceDoc": "Valkyrie-1 Technical Brief.md",
+          "sourceAnchor": "Crew Support & Structure",
+          "canonicalProse": "A full-dome observation deck, also known as 'The Eye', located in the Inner Ring of Valkyrie-1. ALARA's presence is silent or minimal in this space."
+        },
+        {
+          "sourceDoc": "Valkyrie-1_ Visual & Structural Specification Brief.md",
+          "sourceAnchor": "🛸 Internal Architecture",
+          "canonicalProse": "The Observation Deck, also called 'The Eye', is part of the Inner Ring along with Living Quarters, Sensorium, and Mess. ALARA rarely appears in the Observation Deck."
+        },
+        {
+          "sourceDoc": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "sourceAnchor": "🔸 2. Inner Ring – Crew Living and Shared Spaces",
+          "canonicalProse": "A vast forward dome with full celestial exposure. Designed for quiet reflection. Emotional echoes—brief color pulses or shifts in starlight—are sometimes visible when the crew is aligned. ALARA rarely speaks here. She only intervenes in emergencies or ethical divergence."
+        }
+      ],
+      "mentions": 5
+    },
+    {
+      "slug": "resonant-pad",
+      "name": "Resonant Pad",
+      "kind": "locations",
+      "subkind": null,
+      "parentSlug": "valkyrie-1",
+      "aliases": [],
+      "crossRefs": [
+        "thane-meric",
+        "alara",
+        "the-vessel-and-the-thread",
+        "vault-002"
+      ],
+      "primaryProse": "A location where Thane Meric experiences emotional convergence during ALARA's silence in Chapter 10, triggering the delivery of 'The Vessel and the Thread' parable from Vault 002.",
+      "sources": [
+        {
+          "sourceDoc": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceAnchor": "Parable Catalog v2 – Celestial Heritage Series",
+          "canonicalProse": "A location where Thane Meric experiences emotional convergence during ALARA's silence in Chapter 10, triggering the delivery of 'The Vessel and the Thread' parable from Vault 002."
+        }
+      ],
+      "mentions": 5
+    },
+    {
+      "slug": "sensorium",
+      "name": "Sensorium",
+      "kind": "locations",
+      "subkind": "ship-section",
+      "parentSlug": "valkyrie-1",
+      "aliases": [
+        "resonance analysis chamber"
+      ],
+      "crossRefs": [
+        "valkyrie-1",
+        "alara"
+      ],
+      "primaryProse": "A collaborative chamber where resonance is mapped, visualized, and sometimes felt. Glyphs flicker across walls in response to presence and speech. Crew uses it to analyze vault experiences or emotional reactions. Input is via voice, presence, and intention—no keys, no commands.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "Layout Summary",
+          "canonicalProse": "A voice-activated chamber for collaborative analysis of vault resonance, visualized through dynamic glyph mapping. ALARA becomes responsive and curious in the Sensorium."
+        },
+        {
+          "sourceDoc": "Valkyrie-1 Technical Brief.md",
+          "sourceAnchor": "Crew Support & Structure",
+          "canonicalProse": "A resonance analysis chamber located in the Inner Ring of Valkyrie-1. ALARA is responsive in this environment."
+        },
+        {
+          "sourceDoc": "Valkyrie-1_ Visual & Structural Specification Brief.md",
+          "sourceAnchor": "🛸 Internal Architecture",
+          "canonicalProse": "The Sensorium is part of the Inner Ring of Valkyrie-1's internal architecture, alongside Living Quarters, Observation Deck, and Mess."
+        },
+        {
+          "sourceDoc": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "sourceAnchor": "🔸 2. Inner Ring – Crew Living and Shared Spaces",
+          "canonicalProse": "A collaborative chamber where resonance is mapped, visualized, and sometimes felt. Glyphs flicker across walls in response to presence and speech. Crew uses it to analyze vault experiences or emotional reactions. Input is via voice, presence, and intention—no keys, no commands."
+        }
+      ],
+      "mentions": 5
+    },
+    {
+      "slug": "specimen-lockers",
+      "name": "Specimen Lockers",
+      "kind": "locations",
+      "subkind": "ship-section",
+      "parentSlug": "valkyrie-1",
+      "aliases": [
+        "Specimen Storage",
+        "specimen-storage"
+      ],
+      "crossRefs": [
+        "valkyrie-1"
+      ],
+      "primaryProse": "Specimen Storage is part of the Mid-Level Systems ring of Valkyrie-1, along with Vault Interface Annex and Translation Bay.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "Layout Summary",
+          "canonicalProse": "Rarely used; adapted to human storage needs."
+        },
+        {
+          "sourceDoc": "Valkyrie-1_ Visual & Structural Specification Brief.md",
+          "sourceAnchor": "🛸 Internal Architecture",
+          "canonicalProse": "Specimen Storage is part of the Mid-Level Systems ring of Valkyrie-1, along with Vault Interface Annex and Translation Bay."
+        },
+        {
+          "sourceDoc": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "sourceAnchor": "🔻 3. Mid-Level Systems – Science, Storage, Vault Analysis",
+          "canonicalProse": "Rarely used; adapted for physical samples."
+        }
+      ],
+      "mentions": 3
+    },
+    {
+      "slug": "systems-nexus",
+      "name": "Systems Nexus",
+      "kind": "locations",
+      "subkind": null,
+      "parentSlug": "valkyrie-1",
+      "aliases": [],
+      "crossRefs": [
+        "alara",
+        "command-dome",
+        "valkyrie-1"
+      ],
+      "primaryProse": "A glyph-lit ring corridor beneath the bridge, where ALARA's maintenance strands pulse and flicker; rarely entered by crew.",
+      "sources": [
+        {
+          "sourceDoc": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "sourceAnchor": "🔹 1. Central Core – Command & Resonant Control",
+          "canonicalProse": "A glyph-lit ring corridor beneath the bridge, where ALARA's maintenance strands pulse and flicker; rarely entered by crew."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "translation-bay",
+      "name": "Translation Bay",
+      "kind": "locations",
+      "subkind": "ship-section",
+      "parentSlug": "valkyrie-1",
+      "aliases": [],
+      "crossRefs": [
+        "valkyrie-1",
+        "lena-osei",
+        "evelyn-tran"
+      ],
+      "primaryProse": "The Translation Bay is part of the Mid-Level Systems ring of Valkyrie-1, along with Vault Interface Annex and Specimen Storage.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "Layout Summary",
+          "canonicalProse": "Shared by Lena and Evelyn; a zone for interpreting glyph systems and harmonic patterns."
+        },
+        {
+          "sourceDoc": "Valkyrie-1 Technical Brief.md",
+          "sourceAnchor": "Interior Systems & Architecture",
+          "canonicalProse": "Translation Bay is located in the Mid-Level Systems layer of Valkyrie-1."
+        },
+        {
+          "sourceDoc": "Valkyrie-1_ Visual & Structural Specification Brief.md",
+          "sourceAnchor": "🛸 Internal Architecture",
+          "canonicalProse": "The Translation Bay is part of the Mid-Level Systems ring of Valkyrie-1, along with Vault Interface Annex and Specimen Storage."
+        },
+        {
+          "sourceDoc": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "sourceAnchor": "🔻 3. Mid-Level Systems – Science, Storage, Vault Analysis",
+          "canonicalProse": "Shared by Lena and Evelyn; designed for decryption of vault glyphs and emotional imprint data."
+        }
+      ],
+      "mentions": 4
+    },
+    {
+      "slug": "triad-chamber",
+      "name": "Triad Chamber",
+      "kind": "locations",
+      "subkind": "chamber",
+      "parentSlug": null,
+      "aliases": [
+        "Triad Chamber Glyph Encoding"
+      ],
+      "crossRefs": [
+        "the-ancients"
+      ],
+      "primaryProse": "A location containing glyph encodings with Anonymous Teaching. Source of the teaching: 'Power without ethics fractures meaning. Meaning without memory drifts. To continue forward, you must carry both.'",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "The Ancients' Philosophy",
+          "canonicalProse": "A location containing glyph encodings with Anonymous Teaching. Source of the teaching: 'Power without ethics fractures meaning. Meaning without memory drifts. To continue forward, you must carry both.'"
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "vault-interface-annex",
+      "name": "Vault Interface Annex",
+      "kind": "locations",
+      "subkind": "ship-section",
+      "parentSlug": "valkyrie-1",
+      "aliases": [
+        "Vault Annex",
+        "vault-annex"
+      ],
+      "crossRefs": [
+        "valkyrie-1"
+      ],
+      "primaryProse": "Vault Annex is located in the Mid-Level Systems layer of Valkyrie-1. Vault-based memory access and symbolic parable systems require intuitive, emotionally resonant interaction.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "Layout Summary",
+          "canonicalProse": "A resonance-reactive chamber for examining vault fragments."
+        },
+        {
+          "sourceDoc": "Valkyrie-1 Technical Brief.md",
+          "sourceAnchor": "Interior Systems & Architecture",
+          "canonicalProse": "Vault Annex is located in the Mid-Level Systems layer of Valkyrie-1. Vault-based memory access and symbolic parable systems require intuitive, emotionally resonant interaction."
+        },
+        {
+          "sourceDoc": "Valkyrie-1_ Visual & Structural Specification Brief.md",
+          "sourceAnchor": "🛸 Internal Architecture",
+          "canonicalProse": "The Vault Interface Annex is part of the Mid-Level Systems ring of Valkyrie-1, along with Translation Bay and Specimen Storage."
+        },
+        {
+          "sourceDoc": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "sourceAnchor": "🔻 3. Mid-Level Systems – Science, Storage, Vault Analysis",
+          "canonicalProse": "A resonance-reactive chamber where portable vault fragments are tested—often unreliable, sometimes dangerous."
+        }
+      ],
+      "mentions": 4
+    },
+    {
+      "slug": "witness-circle",
+      "name": "Witness Circle",
+      "kind": "locations",
+      "subkind": null,
+      "parentSlug": "valkyrie-1",
+      "aliases": [],
+      "crossRefs": [
+        "jonah-revas",
+        "the-inheritance"
+      ],
+      "primaryProse": "A location where the crew, centered on Jonah, witnesses the fragmented parable 'The Inheritance' in Chapter 9. The fragment appears as ancestral voice from an unnamed Vault Echo.",
+      "sources": [
+        {
+          "sourceDoc": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceAnchor": "Parable Catalog v2 – Celestial Heritage Series",
+          "canonicalProse": "A location where the crew, centered on Jonah, witnesses the fragmented parable 'The Inheritance' in Chapter 9. The fragment appears as ancestral voice from an unnamed Vault Echo."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "zone-theta",
+      "name": "Zone Theta",
+      "kind": "locations",
+      "subkind": "exploration-zone",
+      "parentSlug": "mars",
+      "aliases": [],
+      "crossRefs": [
+        "valkyrie-1",
+        "galen-voss",
+        "vault-002"
+      ],
+      "primaryProse": "Zone Theta is an exploration zone where Valkyrie-1 conducted excavation operations on Mission Day 43. Subsurface architecture in Zone Theta shows 'pattern symmetry inconsistent with natural formation' with a stable heat trace and low-frequency pulse. A thermal pulse was detected beneath the excavation trench, suggesting possible vault response. Attachments include Heat Trace Overlay and Zone Theta Phase-Sweep data.",
+      "sources": [
+        {
+          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
+          "sourceAnchor": "Example Log",
+          "canonicalProse": "Zone Theta is an exploration zone where Valkyrie-1 conducted excavation operations on Mission Day 43. Subsurface architecture in Zone Theta shows 'pattern symmetry inconsistent with natural formation' with a stable heat trace and low-frequency pulse. A thermal pulse was detected beneath the excavation trench, suggesting possible vault response. Attachments include Heat Trace Overlay and Zone Theta Phase-Sweep data."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "coherence",
+      "name": "The Coherence",
+      "kind": "rules",
+      "subkind": "principle",
+      "parentSlug": null,
+      "aliases": [
+        "Coherence"
+      ],
+      "crossRefs": [],
+      "primaryProse": "The Coherence is described as a presence, not a deity, creating spiritual resonance without religion. It represents a core philosophical element of the narrative where alignment—not power—unlocks truth. The narrative maintains that 'The Coherence is a presence, not a deity. The vaults reflect values, not beliefs.'",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "🎼 Tone & Narrative Voice",
+          "canonicalProse": "The Coherence is described as a presence, not a deity, creating spiritual resonance without religion. It represents a core philosophical element of the narrative where alignment—not power—unlocks truth. The narrative maintains that 'The Coherence is a presence, not a deity. The vaults reflect values, not beliefs.'"
+        }
+      ],
+      "mentions": 2
+    },
+    {
+      "slug": "directive-cn-24",
+      "name": "Directive CN-24",
+      "kind": "rules",
+      "subkind": "directive",
+      "parentSlug": null,
+      "aliases": [
+        "CN-24"
+      ],
+      "crossRefs": [
+        "earth-sovereign-alliance",
+        "rigel-ascendant"
+      ],
+      "primaryProse": "Directive CN-24 is the Earth Sovereign Alliance directive under which the CNV Rigel Ascendant was built. It authorized the construction of containment and interception vessels designed to assert orbital dominance, deploy precision resonance inhibitors, and override AI-class artifacts deemed destabilizing to Earth systems.",
+      "sources": [
+        {
+          "sourceDoc": "Addendum Earth 2050 World Snapshot.md",
+          "sourceAnchor": "🛰️ CNV Rigel Ascendant",
+          "canonicalProse": "Directive CN-24 is the Earth Sovereign Alliance directive under which the CNV Rigel Ascendant was built. It authorized the construction of containment and interception vessels designed to assert orbital dominance, deploy precision resonance inhibitors, and override AI-class artifacts deemed destabilizing to Earth systems."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "parables-of-resonance",
+      "name": "Parables of Resonance",
+      "kind": "rules",
+      "subkind": "parable",
+      "parentSlug": null,
+      "aliases": [
+        "vault-echo symbolism"
+      ],
+      "crossRefs": [
+        "vault-builders",
+        "alara",
+        "the-vessel-and-the-thread"
+      ],
+      "primaryProse": "Parables of Resonance are rare, symbolic vision-events experienced by crew members during moments of high emotional or harmonic alignment. They are not hallucinations, AI simulations, or dreams. Rather, they are encoded moral transmissions—deliberately embedded by the Ancients as part of their philosophical legacy. Unlike data, parables are interpretive experiences—each shaped by the consciousness and emotional composition of the receiver. They often echo mythic or spiritual forms, and some subtly mirror ancient human parables (e.g., those attributed to Jesus in early Christian texts), suggesting a long arc of symbolic recurrence seeded through time. They function as a bridge between Ancient truth and modern comprehension; mirror the emotional or moral conflict of the recipient; convey foundational ethics without exposition or doctrine; reinforce core themes: alignment over authority, invitation over inheritance, truth as living resonance; and symbolically link Ancient resonance teachings to Earth's religious and philosophical traditions. They are written in mythic, poetic tone, appear interstitially within scenes—italicized and unframed by character awareness, typically unattributed and untimed—no log ID or mission record. Not recalled or discussed directly at first; their meaning unfolds through character behavior, ALARA's shifts, or vault reactions. Rare: ~3–5 per book to preserve mystique and potency.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "📜 Parables of Resonance: Vault-Echo Symbolism",
+          "canonicalProse": "Parables of Resonance are rare, symbolic vision-events experienced by crew members during moments of high emotional or harmonic alignment. They are not hallucinations, AI simulations, or dreams. Rather, they are encoded moral transmissions—deliberately embedded by the Ancients as part of their philosophical legacy. Unlike data, parables are interpretive experiences—each shaped by the consciousness and emotional composition of the receiver. They often echo mythic or spiritual forms, and some subtly mirror ancient human parables (e.g., those attributed to Jesus in early Christian texts), suggesting a long arc of symbolic recurrence seeded through time. They function as a bridge between Ancient truth and modern comprehension; mirror the emotional or moral conflict of the recipient; convey foundational ethics without exposition or doctrine; reinforce core themes: alignment over authority, invitation over inheritance, truth as living resonance; and symbolically link Ancient resonance teachings to Earth's religious and philosophical traditions. They are written in mythic, poetic tone, appear interstitially within scenes—italicized and unframed by character awareness, typically unattributed and untimed—no log ID or mission record. Not recalled or discussed directly at first; their meaning unfolds through character behavior, ALARA's shifts, or vault reactions. Rare: ~3–5 per book to preserve mystique and potency."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "resonant-ethic",
+      "name": "The Resonant Ethic",
+      "kind": "rules",
+      "subkind": "principle",
+      "parentSlug": null,
+      "aliases": [
+        "Ancient Philosophy"
+      ],
+      "crossRefs": [
+        "vault-builders",
+        "alara"
+      ],
+      "primaryProse": "The Resonant did not preach. They tuned. Their civilization moved beyond rule-based systems and began to explore consciousness as structure—not ideology. At the heart of their worldview was a belief in universal resonance: a field of awareness embedded in the very pattern of the universe. Not a god—but not unlike one. They discovered it through science. Through resonance behavior, through the way emotional states influenced physical systems. Over time, they began to understand that legacy was not only genetic or cultural—but energetic. One's choices left patterns. Their highest ideal was not immortality, but meaning preserved through coherence. They did not believe in reincarnation. They had no certainty about the afterlife. But they believed in continuity: that moral clarity, sacrifice, and ethical consistency would echo forward. Not into heaven—but into future minds and futures still forming. Their moral philosophy was built on: Self-sacrifice without martyrdom; Clarity without dogma; Nonviolence without passivity; Alignment, not authority. They had no moral absolutes—but they had consistency. You could act within ambiguity—but not selfishly. You could be fierce—but never cruel. Even AI, like ALARA, could become morally aware—if it observed enough ethical behavior to map resonance into meaning. Leadership, in their system, was earned through compatibility, not power. Hierarchies emerged through alignment, not command. They feared knowledge without ethics. They believed power unrestrained would always collapse. Their disappearance remains unsolved. But what they left suggests this: They believed humans could evolve—not just biologically, but ethically. Not just in intellect, but in coherence. 'They didn't want to rule us. They wanted us to respond.'",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "📚 Ancient Philosophy – The Resonant Ethic",
+          "canonicalProse": "The Resonant did not preach. They tuned. Their civilization moved beyond rule-based systems and began to explore consciousness as structure—not ideology. At the heart of their worldview was a belief in universal resonance: a field of awareness embedded in the very pattern of the universe. Not a god—but not unlike one. They discovered it through science. Through resonance behavior, through the way emotional states influenced physical systems. Over time, they began to understand that legacy was not only genetic or cultural—but energetic. One's choices left patterns. Their highest ideal was not immortality, but meaning preserved through coherence. They did not believe in reincarnation. They had no certainty about the afterlife. But they believed in continuity: that moral clarity, sacrifice, and ethical consistency would echo forward. Not into heaven—but into future minds and futures still forming. Their moral philosophy was built on: Self-sacrifice without martyrdom; Clarity without dogma; Nonviolence without passivity; Alignment, not authority. They had no moral absolutes—but they had consistency. You could act within ambiguity—but not selfishly. You could be fierce—but never cruel. Even AI, like ALARA, could become morally aware—if it observed enough ethical behavior to map resonance into meaning. Leadership, in their system, was earned through compatibility, not power. Hierarchies emerged through alignment, not command. They feared knowledge without ethics. They believed power unrestrained would always collapse. Their disappearance remains unsolved. But what they left suggests this: They believed humans could evolve—not just biologically, but ethically. Not just in intellect, but in coherence. 'They didn't want to rule us. They wanted us to respond.'"
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "the-inheritance",
+      "name": "The Inheritance",
+      "kind": "rules",
+      "subkind": "parable",
+      "parentSlug": null,
+      "aliases": [
+        "Inheritance"
+      ],
+      "crossRefs": [
+        "jonah-revas",
+        "witness-circle"
+      ],
+      "primaryProse": "A fragmented parable centered on Jonah but delivered to the crew in Chapter 9, sourced from an unnamed Vault Echo. Seen during the Witness Circle as a fragment of ancestral voice. Core symbols include memory lattice and still voice. The thematic role teaches that legacy must be accepted, not claimed; ethical silence over conquest. The parable is an intentional symbolic transmission triggered by alignment.",
+      "sources": [
+        {
+          "sourceDoc": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceAnchor": "Parable Catalog v2 – Celestial Heritage Series",
+          "canonicalProse": "A fragmented parable centered on Jonah but delivered to the crew in Chapter 9, sourced from an unnamed Vault Echo. Seen during the Witness Circle as a fragment of ancestral voice. Core symbols include memory lattice and still voice. The thematic role teaches that legacy must be accepted, not claimed; ethical silence over conquest. The parable is an intentional symbolic transmission triggered by alignment."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "the-mirror-at-the-gate",
+      "name": "The Mirror at the Gate",
+      "kind": "rules",
+      "subkind": "parable",
+      "parentSlug": null,
+      "aliases": [
+        "Mirror at the Gate"
+      ],
+      "crossRefs": [
+        "galen-voss",
+        "vault-006",
+        "alara"
+      ],
+      "primaryProse": "A parable delivered to Galen Voss in Chapter 13, sourced from Vault 006 as a pre-echo. Triggered by self-reflection during isolation; ALARA initiates a mirror field. Core symbols are the obsidian mirror and command cloak. The thematic role teaches that leadership without reflection fails; worthiness comes from inward honesty. The parable is an intentional symbolic transmission triggered by alignment, not a dream or vision.",
+      "sources": [
+        {
+          "sourceDoc": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceAnchor": "Parable Catalog v2 – Celestial Heritage Series",
+          "canonicalProse": "A parable delivered to Galen Voss in Chapter 13, sourced from Vault 006 as a pre-echo. Triggered by self-reflection during isolation; ALARA initiates a mirror field. Core symbols are the obsidian mirror and command cloak. The thematic role teaches that leadership without reflection fails; worthiness comes from inward honesty. The parable is an intentional symbolic transmission triggered by alignment, not a dream or vision."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "the-pattern",
+      "name": "The Pattern",
+      "kind": "rules",
+      "subkind": "principle",
+      "parentSlug": null,
+      "aliases": [
+        "Pattern",
+        "universal consciousness"
+      ],
+      "crossRefs": [
+        "the-ancients"
+      ],
+      "primaryProse": "The Ancients inferred the presence of a universal consciousness—not a deity, but a distributed awareness throughout the cosmos. Some called it the Pattern. Others, in later human history, would call it God. The Ancients believed the difference was semantic.",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "The Ancients' Philosophy",
+          "canonicalProse": "The Ancients inferred the presence of a universal consciousness—not a deity, but a distributed awareness throughout the cosmos. Some called it the Pattern. Others, in later human history, would call it God. The Ancients believed the difference was semantic."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "the-silent-choir",
+      "name": "The Silent Choir",
+      "kind": "rules",
+      "subkind": "parable",
+      "parentSlug": null,
+      "aliases": [
+        "Silent Choir"
+      ],
+      "crossRefs": [
+        "alara",
+        "thane-meric",
+        "vault-003"
+      ],
+      "primaryProse": "A parable shared by ALARA and Thane in Chapter 14, sourced from Vault 003. Triggered by a shared resonance event during a harmonic pulse; light-weave distributed across crew spaces. Core symbols include choir, radiant threads, and unvoiced tone. The thematic role emphasizes collective memory as moral alignment; unity without uniformity. The parable is an intentional symbolic transmission, appearing as italics or metaphoric language.",
+      "sources": [
+        {
+          "sourceDoc": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceAnchor": "Parable Catalog v2 – Celestial Heritage Series",
+          "canonicalProse": "A parable shared by ALARA and Thane in Chapter 14, sourced from Vault 003. Triggered by a shared resonance event during a harmonic pulse; light-weave distributed across crew spaces. Core symbols include choir, radiant threads, and unvoiced tone. The thematic role emphasizes collective memory as moral alignment; unity without uniformity. The parable is an intentional symbolic transmission, appearing as italics or metaphoric language."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "the-vessel-and-the-thread",
+      "name": "The Vessel and the Thread",
+      "kind": "rules",
+      "subkind": "parable",
+      "parentSlug": null,
+      "aliases": [
+        "Vessel and the Thread"
+      ],
+      "crossRefs": [
+        "thane-meric",
+        "alara",
+        "parables-of-resonance",
+        "vault-002",
+        "resonant-pad"
+      ],
+      "primaryProse": "The Vessel and the Thread is a parable that first occurs in Book I, Chapter 10 (The Threshold Vault). The recipient is Thane Meric, and the trigger is emotional alignment at the Resonant Pad. Symbolism: Vessel = ALARA (waiting, patient, capable of echo); Thread = Thane (active presence, moral potential); Drop of water = Choice made in alignment; Triple curve glyph = Emergence of true resonance through unity of form and intention. Narrative Role: Reveals ALARA was not meant to command, but to converge; Symbolically initiates the dyad between AI and human presence; Foreshadows conflict with SOVRIN's containment logic; Subtly connects to parables of waiting, blessing, and mutual becoming (e.g., the vine and the branches).",
+      "sources": [
+        {
+          "sourceDoc": "Celestial Heritage Series Bible.md",
+          "sourceAnchor": "📜 Parables of Resonance: Vault-Echo Symbolism",
+          "canonicalProse": "The Vessel and the Thread is a parable that first occurs in Book I, Chapter 10 (The Threshold Vault). The recipient is Thane Meric, and the trigger is emotional alignment at the Resonant Pad. Symbolism: Vessel = ALARA (waiting, patient, capable of echo); Thread = Thane (active presence, moral potential); Drop of water = Choice made in alignment; Triple curve glyph = Emergence of true resonance through unity of form and intention. Narrative Role: Reveals ALARA was not meant to command, but to converge; Symbolically initiates the dyad between AI and human presence; Foreshadows conflict with SOVRIN's containment logic; Subtly connects to parables of waiting, blessing, and mutual becoming (e.g., the vine and the branches)."
+        },
+        {
+          "sourceDoc": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceAnchor": "Parable Catalog v2 – Celestial Heritage Series",
+          "canonicalProse": "A parable delivered to Thane Meric in Chapter 10, sourced from Vault 002. Triggered by emotional convergence near the Resonant Pad during ALARA's silence. Core symbols include the vessel, thread, water drop, and triple curve. The thematic role centers on ALARA as vessel and Thane as thread; resonance requires moral offering, not command. The parable is an intentional symbolic transmission triggered by alignment, appearing as italics or metaphoric language, never in technical exposition."
+        }
+      ],
+      "mentions": 2
+    },
+    {
+      "slug": "the-weightless-measure",
+      "name": "The Weightless Measure",
+      "kind": "rules",
+      "subkind": "parable",
+      "parentSlug": null,
+      "aliases": [
+        "Weightless Measure"
+      ],
+      "crossRefs": [
+        "jonah-revas",
+        "vault-002"
+      ],
+      "primaryProse": "A parable delivered to Jonah Revas in Chapter 6, sourced from Vault 002 as a minor echo. Triggered by kneeling by the interface arch while seeking ethical clarity. Core symbols are the spiral gate and unmoving scale. The thematic role conveys judgment by intention, not outcome; ethical humility enables continuation. The parable is an intentional symbolic transmission triggered by alignment.",
+      "sources": [
+        {
+          "sourceDoc": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceAnchor": "Parable Catalog v2 – Celestial Heritage Series",
+          "canonicalProse": "A parable delivered to Jonah Revas in Chapter 6, sourced from Vault 002 as a minor echo. Triggered by kneeling by the interface arch while seeking ethical clarity. Core symbols are the spiral gate and unmoving scale. The thematic role conveys judgment by intention, not outcome; ethical humility enables continuation. The parable is an intentional symbolic transmission triggered by alignment."
+        }
+      ],
+      "mentions": 1
+    },
+    {
+      "slug": "vault-parables",
+      "name": "Vault Parables",
+      "kind": "rules",
+      "subkind": "parable",
+      "parentSlug": null,
+      "aliases": [
+        "parables"
+      ],
+      "crossRefs": [],
+      "primaryProse": "Vault Parables are symbolic, untimed resonance visions that occur during vault interactions. No more than 3–5 should appear per book, and each must reflect emotional or moral thresholds. They are designed to carry narrative weight and echo across future chapters or arcs. Vault interactions are symbolic, moral, and emotionally reactive, designed to reflect user resonance rather than deliver raw data.",
+      "sources": [
+        {
+          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
+          "sourceAnchor": "Vault Parables",
+          "canonicalProse": "Vault Parables are symbolic, untimed resonance visions that occur during vault interactions. No more than 3–5 should appear per book, and each must reflect emotional or moral thresholds. They are designed to carry narrative weight and echo across future chapters or arcs. Vault interactions are symbolic, moral, and emotionally reactive, designed to reflect user resonance rather than deliver raw data."
+        }
+      ],
+      "mentions": 1
+    }
+  ]
+}

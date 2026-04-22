@@ -8,17 +8,6 @@ reviewed: false
 > Thane stood at the outer ring of the excavation grid, visor tinted against the Martian morning glare.
 <!-- ai-draft:end -->
 
-## Dossier
-
-### Role
-Theological Scholar & Cultural Analyst (Informal)
-
-### Profile
-A soft-spoken but deeply curious member of the Valkyrie-1 crew. Jonah was trained as a theologian and comparative religion scholar, having taught at a major university before joining the mission. Though not officially assigned a role related to religion or ethics, he quietly tracks symbolic patterns, parables, and vault structures that bear uncanny resemblance to early Christian thought. He believes the Ancients may have been the original source—or echo—of values that humanity later rediscovered.
-
-### Character Arc
-Jonah is not a zealot, but a seeker. His journey centers on reconciling his faith with what he encounters in the vaults. He never tries to convert others, instead asking quiet questions and seeking understanding. As the vaults reveal familiar parables with different names and faces, Jonah begins to suspect that the roots of modern religion may have been deliberately planted long ago. He becomes a bridge between spiritual inquiry and scientific curiosity.
-
 ## Appearances
 - Auto-detected appearance (CH02).
 - Auto-detected appearance (CH03).

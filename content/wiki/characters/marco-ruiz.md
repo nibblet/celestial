@@ -8,17 +8,6 @@ reviewed: false
 > Thane stood at the outer ring of the excavation grid, visor tinted against the Martian morning glare.
 <!-- ai-draft:end -->
 
-## Dossier
-
-### Role
-Security & Tactical Systems
-
-### Profile
-Retired U.S. Space Force. Grounded, cautious, and fiercely loyal. Tasked with crew security and risk assessment. Sees the mission as potentially dangerous to Earth if mishandled.
-
-### Character Arc
-Learns to trust the greater vision beyond military doctrine. Rediscovers his sense of purpose through the mission’s integrity.
-
 ## Appearances
 - Auto-detected appearance (CH02).
 - Auto-detected appearance (CH04).

@@ -8,17 +8,6 @@ reviewed: false
 > Thane stood at the outer ring of the excavation grid, visor tinted against the Martian morning glare.
 <!-- ai-draft:end -->
 
-## Dossier
-
-### Role
-Quantum Physicist / Propulsion Expert
-
-### Profile
-Young, idealistic, and vindicated by Valkyrie-1’s systems—proof of her long-dismissed theories. Driven to uncover and apply interstellar physics, with a deep moral compass.
-
-### Character Arc
-From visionary outsider to core architect of the crew’s success. Learns to temper ambition with caution and reverence.
-
 ## Appearances
 - Auto-detected appearance (CH02).
 - Auto-detected appearance (CH03).

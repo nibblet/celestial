@@ -8,17 +8,6 @@ reviewed: false
 > The Martian wind didn’t howl-it whispered, dragging red dust in long, ribboned currents across the excavation field.
 <!-- ai-draft:end -->
 
-## Dossier
-
-### Role
-Mission Commander
-
-### Profile
-Former USAF pilot, rejuvenated from 82 to 50 via advanced gene therapy. He embodies the Air Force core values (Integrity, Service, Excellence). Calm, rational, and experienced, Galen is both an explorer and a steward. Driven by legacy, duty, and the moral responsibility of knowledge.
-
-### Character Arc
-From explorer to protector of humanity’s moral heritage. Learns that leadership in deep space requires personal evolution and clarity of purpose.
-
 ## Appearances
 - Auto-detected appearance (CH01).
 - Auto-detected appearance (CH03).

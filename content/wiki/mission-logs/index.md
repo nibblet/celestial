@@ -1,6 +1,6 @@
 # Mission Log Inventory
 
-Generated from `celestial_original/celestial-heritage.epub` on 2026-04-20T18:36:43.019Z.
+Generated from `celestial_original/celestial-heritage.epub` on 2026-04-22T11:50:21.245Z.
 
 **69 mission logs** across **17 chapters**.
 

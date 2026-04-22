@@ -8,17 +8,6 @@ reviewed: false
 > The descent platform hummed beneath Lena’s boots, steady and deliberate, though she still felt the drop in her stomach.
 <!-- ai-draft:end -->
 
-## Dossier
-
-### Role
-Legacy Interface Specialist
-
-### Profile
-Galen and Aven’s grandson, early 30s. Raised by his mother, Elira Voss.. Thane shares a deep bond with Galen. Unknown to the crew at the outset, Thane possesses latent biological traits subtly engineered into humanity by the ancient civilization. These traits allow Valkyrie-1’s systems—and ALARA—to recognize and gradually respond to him. As the mission progresses, Thane’s role becomes crucial in unlocking biotech vaults, resonance triggers, and deeply embedded systems throughout the ship.
-
-### Character Arc
-Thane begins as a reflective, emotionally grounded crew member. Over time, his slow, intimate connection with the ship reveals him as a living key to the past. While not unique, he is particularly aligned with the resonance patterns the ship was designed to respond to. He transitions from support role to central figure in interpreting humanity’s biological legacy and guiding its future.
-
 ## Appearances
 - Auto-detected appearance (CH03).
 - Auto-detected appearance (CH04).

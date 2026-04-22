@@ -389,6 +389,15 @@ export const themesData: ThemeCard[] = [];
 
 export const peopleData: PersonCard[] = [
   {
+    "slug": "alara",
+    "name": "ALARA",
+    "tiers": [],
+    "memoirStoryIds": [],
+    "interviewStoryIds": [],
+    "storyCount": 0,
+    "note": ""
+  },
+  {
     "slug": "amar-cael",
     "name": "Amar Cael",
     "tiers": [
@@ -411,6 +420,24 @@ export const peopleData: PersonCard[] = [
     "note": ""
   },
   {
+    "slug": "caeden",
+    "name": "CAEDEN",
+    "tiers": [],
+    "memoirStoryIds": [],
+    "interviewStoryIds": [],
+    "storyCount": 0,
+    "note": ""
+  },
+  {
+    "slug": "rhea-solari",
+    "name": "Captain Rhea Solari",
+    "tiers": [],
+    "memoirStoryIds": [],
+    "interviewStoryIds": [],
+    "storyCount": 0,
+    "note": ""
+  },
+  {
     "slug": "elara-varen",
     "name": "Elara Varen",
     "tiers": [
@@ -422,6 +449,15 @@ export const peopleData: PersonCard[] = [
     "interviewStoryIds": [],
     "storyCount": 1,
     "note": "Stub fiction character dropped in `content/wiki/characters/` so `/characters/elara-varen` renders without bespoke parser code."
+  },
+  {
+    "slug": "elira-voss",
+    "name": "Elira Voss",
+    "tiers": [],
+    "memoirStoryIds": [],
+    "interviewStoryIds": [],
+    "storyCount": 0,
+    "note": ""
   },
   {
     "slug": "evelyn-tran",
@@ -484,6 +520,15 @@ export const peopleData: PersonCard[] = [
     "tiers": [
       "C"
     ],
+    "memoirStoryIds": [],
+    "interviewStoryIds": [],
+    "storyCount": 0,
+    "note": ""
+  },
+  {
+    "slug": "sovrin",
+    "name": "SOVRIN",
+    "tiers": [],
     "memoirStoryIds": [],
     "interviewStoryIds": [],
     "storyCount": 0,

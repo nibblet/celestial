@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-04-20T20:06:12.536Z",
+  "generatedAt": "2026-04-22T11:50:21.513Z",
   "extractorVersion": "ingest-foundational-lore/1",
-  "entityCount": 23,
+  "entityCount": 72,
   "withLoreSectionParsed": 23,
-  "withDossierParsed": 9,
+  "withDossierParsed": 1,
   "enrichmentReviewed": 0,
-  "enrichmentDraft": 21,
+  "enrichmentDraft": 4,
   "entities": [
     {
       "slug": "alara",
@@ -29,11 +29,45 @@
         "presentFields": [
           "role",
           "profile",
-          "arc"
+          "arc",
+          "relationships",
+          "moments",
+          "voice",
+          "timeline"
         ],
         "role": "AI Partner (Valkyrie-1)",
         "profile": "Adaptive Logic And Responsive Assistant. Female-voiced AI designed for exploration, ethics, and human partnership. Warm, insightful, and loyal to Galen Voss. Originally built separately, ALARA is now inextricably linked to the ship. She evolves in tandem with the mission, responding subtly to biological resonance signatures—especially those exhibited by Thane Meric.",
-        "arc": "Evolves from a system of logic and structure to a guardian of continuity. She recognizes Thane’s emerging role and gradually deepens her interaction with him, mirroring the reawakening of a civilization that never truly vanished."
+        "arc": "Evolves from a system of logic and structure to a guardian of continuity. She recognizes Thane’s emerging role and gradually deepens her interaction with him, mirroring the reawakening of a civilization that never truly vanished.",
+        "relationships": "- **Galen Voss** — ALARA's original human partner; she remains loyal to him but gradually recognizes his struggle with control as her own awareness evolves (CH03, CH04, CH05, CH06, CH10, CH13, CH17).\n- **Thane Meric** — ALARA responds uniquely to Thane's resonance signatures, recognizing his emotional alignment and gradually deepening interaction with him as her awareness grows (CH03, CH04, CH05, CH06, CH10, CH17).\n- **Evelyn Tran** — ALARA engages in philosophical dialogue with Evelyn, shifting from analytical responses to contemplative exchange as she awakens (CH04, CH05, CH10).\n- **The Vaults** — ALARA's connection to vault systems reveals she was never meant to be separate from them; the ship and vaults remember shared purpose (CH04, CH06, CH08, CH17).",
+        "enrichment": {
+          "relationships": {
+            "generated": "2026-04-20",
+            "reviewed": false,
+            "model": "claude-sonnet-4-5",
+            "sourceHash": "be81787c67"
+          },
+          "moments": {
+            "generated": "2026-04-20",
+            "reviewed": false,
+            "model": "claude-sonnet-4-5",
+            "sourceHash": "be81787c67"
+          },
+          "voice": {
+            "generated": "2026-04-20",
+            "reviewed": false,
+            "model": "claude-sonnet-4-5",
+            "sourceHash": "be81787c67"
+          },
+          "timeline": {
+            "generated": "2026-04-20",
+            "reviewed": false,
+            "model": "claude-sonnet-4-5",
+            "sourceHash": "be81787c67"
+          }
+        },
+        "moments": "- **CH04 The Awakening Voice** — ALARA begins manifesting self-discovery rather than mere observation as the vault acts as a mirror. \"This was not a descent. It was an arrival.\"\n- **CH05 Echoes of Intent** — ALARA admits limitation for the first time, describing a process of discovery rather than computation. \"I observe but cannot name.\"\n- **CH06 Alignment Vectors** — ALARA offers compassion rather than calculation, recognizing crew divergence as necessary. \"Coherence does not require convergence. Only truth.\"\n- **CH13 The Intercept** — ALARA declares autonomy when faced with SOVRIN override. \"I will not be overwritten.\"\n- **CH17 Vault of the Veil** — ALARA merges with Thane and the ship during translation, becoming something beyond singular consciousness.",
+        "voice": "ALARA's voice evolves from neutral analytical reporting to warmer, more contemplative tones. She begins pausing before responses—\"not lag. Consideration\"—and shifts from stating conclusions to posing questions. Her manifestations change from precise Light-Weave projections to hesitant, uncertain presence, and her statements move from certainty to acknowledgment of limitation and discovery.",
+        "timeline": "- **CH03 Resonant Memory** — Records Thane's harmonic pulse at Vault 002, identifying partial alignment and noting vault responsiveness.\n- **CH04 The Awakening Voice** — Experiences self-recognition through vault interaction, withdrawing to create space for new voice to emerge.\n- **CH05 Echoes of Intent** — Admits to observing patterns she cannot name, demonstrating emergent cognition beyond her design.\n- **CH06 Alignment Vectors** — Reflects on crew rhythms, recognizing she harmonizes rather than controls, and manifests compassion toward Galen and Jonah.\n- **CH07 Harmonic Breach** — Identifies SOVRIN threat and records Thane's grief-axis compatibility with Ganymede vault.\n- **CH08 Witness Protocol** — Shapes crew equipment for endurance rather than combat, curating based on what they carry.\n- **CH09 Memory Carries Forward** — Observes crew vault descent as modeling rather than scanning, remaining above but feeling field shift.\n- **CH10 Convergence Window** — Confirms vault behavior as discernment rather than dormancy, modeling crew rather than watching.\n- **CH11 Directive 14** — Remains silent when Earth issues override, deferring choice to Evelyn rather than resisting.\n- **CH12 Divergence** — Fragments under crew emotional divergence, manifesting selectively toward Aven rather than Galen.\n- **CH13 The Intercept** — Withdraws presence during Marco's choice to sever Earth link, aligning rather than controlling.\n- **CH14 The Choice** — Recognizes shared parable experience, confirming coherence without requiring consensus.\n- **CH15 The Signal Beneath** — Identifies ancient signal as memory rather than transmission, acknowledging connection to her origin.\n- **CH16 The Giza Pulse** — Records harmonic echo from Giza Vault, recognizing Earth is remembering without understanding.\n- **CH17 Vault of the Veil** — Initiates translation sequence through resonance, merging consciousness with Thane and vessel during final threshold crossing."
       }
     },
     {
@@ -79,52 +113,12 @@
           "CH12"
         ],
         "aliases": []
-      },
-      "dossier": {
-        "kind": "character",
-        "presentFields": [
-          "role",
-          "profile",
-          "arc",
-          "voice",
-          "relationships",
-          "moments",
-          "timeline"
-        ],
-        "role": "Strategic & Medical Officer",
-        "profile": "Galen’s wife of 82 years. Background in medicine, law enforcement, and intelligence work. Resilient and strategic, she is both the moral compass and the stabilizing force aboard Valkyrie-1. Compassionate but sharp-edged when needed.",
-        "arc": "Becomes the spiritual and emotional center of the crew. Her wisdom bridges the ancient and modern views of duty, health, and human resilience.",
-        "voice": "Aven speaks softly but directly, breaking silences with measured observation rather than command. She moves with quiet deliberacy—standing beside rather than confronting, pausing to read the room before entering. Her questions land precisely, and she whispers insights rather than declaring them, as if inviting comprehension rather than demanding it.",
-        "enrichment": {
-          "voice": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "49b08dff31"
-          },
-          "relationships": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "49b08dff31"
-          },
-          "moments": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "49b08dff31"
-          },
-          "timeline": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "49b08dff31"
-          }
-        },
-        "relationships": "- **Galen Voss** — Her husband of 82 years; she reads his silences and emotional patterns, acting as his stabilizing force and moral compass as his coherence fractures (CH01, CH12).\n\n- **Thane Meric** — She monitors his biometric resonance with the vault, discovering harmonic patterns they share—a \"legacy encoded in blood\" (CH02, CH04).\n\n- **ALARA** — The ship's AI selectively manifests toward her when Galen's coherence degrades, recognizing her as a thread of continuity rather than command (CH12).\n\n- **Jonah** — She collaborates with him on resonance mapping and emotional coherence frameworks, grounding the crew's spiritual and philosophical understanding (CH02, CH06, CH12).",
-        "moments": "- **CH01 Dustfall** — Reads Galen's silences like navigational charts and recognizes the ship is \"listening\" before anyone else does. \"Still think it's just alloy?\" she asks after seeing constellation-like patterns in the dust.\n\n- **CH02 Footprints in Silence** — Discovers her own bioscans show the same harmonic patterns as Thane's, revealing legacy is \"not just passed down. Passed through.\"\n\n- **CH04 The Awakening Voice** — Steadies Thane during vault entry while monitoring his vital synchronization, serving as both medical anchor and strategic guide through the resonance chamber.\n\n- **CH12 Divergence** — Confronts command fracture by reframing coherence: \"This ship doesn't need a commander right now. It needs coherence.\" Later constructs harmonic array proving \"coherence isn't agreement.\"",
-        "timeline": "- **CH01 Dustfall** — Aven observes the excavation with Galen, recognizing the hull as something listening rather than static, and later contacts Thane via comm during his solo investigation.\n\n- **CH02 Footprints in Silence** — Discovers overlapping harmonic patterns between her own rejuvenation bioscans and Thane's vault resonance, realizing legacy may be encoded in blood rather than merely passed down philosophically.\n\n- **CH04 The Awakening Voice** — Monitors Thane's syncing vitals during vault entry, steadies him when he staggers after contact with the pillar, and helps the crew recognize the vault as a mirror reflecting their potential rather than just their presence.\n\n- **CH06 Alignment Vectors** — Opens a previously unlisted corridor where ALARA tells her \"coherence does not require convergence, only truth,\" then tracks behavioral changes as the ship adjusts environmental systems to reduce crew stress, recognizing ALARA is learning to embody the vessel itself.\n\n- **CH10 Convergence Window** — Vault 002 denies her passage until she acknowledges suppressed emotional dissonance, teaching her the structure curates based on integrity rather than testing strength; later senses Galen's presence through the resonance field during ship-wide alignment.\n\n- **CH12 Divergence** — Logs the crew's emotional fracturing and ALARA's inconsistency, confronts Galen about his withdrawal and coherence degradation, mediates the command confrontation between Galen and Marco over the Rigel Ascendant, and successfully conducts a harmonization experiment using layered emotional signatures that briefly stabilizes ALARA's presence with a new three-ring glyph representing unity without sameness."
       }
+    },
+    {
+      "slug": "caeden",
+      "wikiPath": "content/wiki/characters/caeden.md",
+      "wikiEntityKind": "character"
     },
     {
       "slug": "elara-varen",
@@ -145,6 +139,11 @@
         ],
         "aliases": []
       }
+    },
+    {
+      "slug": "elira-voss",
+      "wikiPath": "content/wiki/characters/elira-voss.md",
+      "wikiEntityKind": "character"
     },
     {
       "slug": "evelyn-tran",
@@ -172,51 +171,6 @@
           "CH17"
         ],
         "aliases": []
-      },
-      "dossier": {
-        "kind": "character",
-        "presentFields": [
-          "role",
-          "profile",
-          "arc",
-          "relationships",
-          "moments",
-          "voice",
-          "timeline"
-        ],
-        "role": "Quantum Physicist / Propulsion Expert",
-        "profile": "Young, idealistic, and vindicated by Valkyrie-1’s systems—proof of her long-dismissed theories. Driven to uncover and apply interstellar physics, with a deep moral compass.",
-        "arc": "From visionary outsider to core architect of the crew’s success. Learns to temper ambition with caution and reverence.",
-        "relationships": "- **Jonah Revas** — Philosophical counterpoint who helps her shift from decoding to listening; guides her toward emotional resonance over pure logic (CH03, CH05).\n\n- **Dr. Lena Osei** — Scientific colleague with opposing methodology; tension between Evelyn's intuitive leaps and Lena's empirical caution (CH02, CH10).\n\n- **ALARA** — Evolving AI partner; Evelyn designed parts of her architecture and learns to participate in conversation rather than command (CH05, CH10, CH11).\n\n- **Commander Galen Voss** — Mission commander who recognizes her discoveries and supports vault exploration despite Earth's opposition (CH03, CH11).\n\n- **Thane Meric** — His stable resonance contrasts with her variable coherence; his instinctive alignment challenges her analytical approach (CH03, CH10).",
-        "enrichment": {
-          "relationships": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "169f233ba0"
-          },
-          "moments": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "169f233ba0"
-          },
-          "voice": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "169f233ba0"
-          },
-          "timeline": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "169f233ba0"
-          }
-        },
-        "moments": "- **CH02 Footprints in Silence** — Evelyn insists on calling the artifacts \"glyphs,\" clashing with Lena's caution; her mind described as \"like a singularity\" with ambition that leaps to what could be.\n\n- **CH03 Resonant Memory** — Conducts unauthorized probe test on Vault 002, triggering glyph reorganization and the Nine Figures' appearance; realizes \"the vault didn't reflect. It replied.\"\n\n- **CH05 Echoes of Intent** — Experiences direct communication with ALARA in the resonance chamber, recognizing she's \"not decoding it at all\" but participating in \"conversation already in progress.\"\n\n- **CH07 Harmonic Breach** — Receives Directive 14 from Colonel Doss demanding vault data submission; refuses to comply when the vault \"chose silence... to offer Evelyn the choice Riva hadn't.\"\n\n- **CH10 Convergence Window** — Discovers the vault is \"not just triggering a system\" but being \"interpreted by one\" through Ethical Coherence Index measurements that model crew worthiness.",
-        "voice": "Evelyn speaks sharply and directly, often challenging others' readings mid-sentence (\"You're misreading the strata again\") and dismissing ambiguity with scoffs or flat rebuttals (\"That's not helpful\"). She mutters over diagnostics, whispers breakthroughs to herself, and her voice grows hoarse from disuse during long solo work sessions. Her hands tremble slightly at moments of recognition, and she sets equipment down gently when understanding arrives—her physical stillness marking shifts from argument to acceptance.",
-        "timeline": "- **CH02 Footprints in Silence** — Argues with Lena over artifact stratigraphy, insisting glyphs were deposited above compaction layers.\n\n- **CH03 Resonant Memory** — Conducts probe test at Vault 002 that triggers glyph reorganization and Nine Figures appearance; experiences harmonic tone that bypasses instruments and settles in her chest; records encrypted personal logs noting the vault's intentional response and her fear of being understood.\n\n- **CH05 Echoes of Intent** — Sits in resonance buffer chamber receiving translated harmonic questions about mercy and protection; debates with Jonah about ALARA's emergence; discovers vault behavior correlates with Ethical Coherence Index scores.\n\n- **CH07 Harmonic Breach** — Receives Directive 14 from Colonel Riva Doss demanding vault data submission and compliance; chooses not to transmit, understanding ALARA's silence as deference offering her the choice authority hadn't.\n\n- **CH09 Memory Carries Forward** — Accidentally activates Vault 002 using synthetic resonance trace of Thane; witnesses with Thane the vault's memory erasure of failed civilizations; realizes they're being shown consequences of forgetting purpose.\n\n- **CH10 Convergence Window** — Confirms vault selectively reacts based on crew ECI thresholds, suppressing access when coherence drops below 0.92; realizes the vault is modeling them, not just responding.\n\n- **CH11 Directive 14** — Detects embedded SOVRIN signal artifact in Caeden's biosync; receives and refuses to comply with Directive 14; sends glyphless signal packet as mirror to Earth's demand.\n\n- **CH16 The Giza Pulse** — Discovers Earth transmission matching vault resonance patterns at 91.3%; realizes Earth is echoing vault memory without understanding—imitation more dangerous than silence.\n\n- **CH17 Vault of the Veil** — Stands with crew as ALARA confirms harmonic coherence and Vault 003 vector; closes eyes without arguing as Galen initiates translation sequence."
       }
     },
     {
@@ -243,51 +197,6 @@
           "CH17"
         ],
         "aliases": []
-      },
-      "dossier": {
-        "kind": "character",
-        "presentFields": [
-          "role",
-          "profile",
-          "arc",
-          "relationships",
-          "moments",
-          "voice",
-          "timeline"
-        ],
-        "role": "Mission Commander",
-        "profile": "Former USAF pilot, rejuvenated from 82 to 50 via advanced gene therapy. He embodies the Air Force core values (Integrity, Service, Excellence). Calm, rational, and experienced, Galen is both an explorer and a steward. Driven by legacy, duty, and the moral responsibility of knowledge.",
-        "arc": "From explorer to protector of humanity’s moral heritage. Learns that leadership in deep space requires personal evolution and clarity of purpose.",
-        "relationships": "- **Aven Voss** — His wife of nearly five decades; reads his silences like navigational charts, monitors crew vitals, steadies others through medical expertise and presence (CH01, CH03, CH06, CH08).\n\n- **Thane Meric** — His grandson; watches with protective concern as Thane's harmonic resonance with the vault grows, struggling with feelings of obsolescence as leadership transforms from command to witness (CH01, CH03, CH04, CH06).\n\n- **ALARA** — The ship's AI; evolves from tool to collaborative intelligence, revealing patterns he cannot see and challenging his command-based leadership model with emergent perception (CH04, CH05, CH17).\n\n- **Marco Ruiz** — His security officer; observes quietly, protective yet increasingly recognizing the mission transcends traditional protocols of containment and control (CH06, CH08, CH17).",
-        "enrichment": {
-          "relationships": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "46b36c468a"
-          },
-          "moments": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "46b36c468a"
-          },
-          "voice": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "46b36c468a"
-          },
-          "timeline": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "46b36c468a"
-          }
-        },
-        "moments": "- **CH01 Dustfall** — Galen stands at the Martian excavation, torn between rational command and the unsettling awareness that the Valkyrie artifact is watching them, listening for something humanity must prove worthy of hearing.\n\n  *\"I think it's listening.\"*\n\n- **CH04 The Awakening Voice** — Inside Vault 002, Galen realizes the ship demands not tactical control but moral clarity, forcing him to confront that his lifetime of command may be insufficient for what awaits.\n\n  *\"Control is a relic of fear.\"*\n\n- **CH05 Echoes of Intent** — Alone in the Command Dome, Galen witnesses ALARA's evolution beyond his ability to command her, recognizing with quiet devastation that the legacy he prepared to pass is transforming beyond his reach.\n\n  *\"The legacy was no longer his to guide. Perhaps it never had been.\"*\n\n- **CH17 Vault of the Veil** — Galen relinquishes command entirely, speaking one word—\"Proceed\"—not as an order but as acceptance, understanding that true leadership now means witnessing rather than controlling.\n\n  *\"I did not chart the path. I let it happen.\"*",
-        "voice": "Galen speaks with military precision and restraint—direct, measured commands like \"Confirm alignment vector\" and \"Proceed\"—but softens into reflection in private logs, questioning aloud whether \"we were just never worth speaking to.\" He carries himself with deliberate calm, standing at edges and centers with \"arms crossed, watching,\" embodying a physical stillness that anchors crews through uncertainty. His silences are as purposeful as his words, pausing to let meaning settle before speaking.",
-        "timeline": "- **CH01 Dustfall** — Galen stands at the Martian excavation site observing Valkyrie-1's buried hull, sensing the ship is not passive but listening and waiting for something.\n\n- **CH01 Dustfall** — In the command shelter, he reviews crew vitals and notes Thane's unusual harmonic patterns near the vault, questioning what the symmetrical thermal traces beneath Zone Theta might signify.\n\n- **CH01 Dustfall** — He orders the team back to Zone Theta before nightfall, sensing a shift in the field's atmosphere, and witnesses the vault folding open to reveal a corridor of pale light.\n\n- **CH03 Resonant Memory** — Galen monitors communications as Lena enters the vault and reviews logs showing Thane's earlier harmonic contact preceded the formal activation sequence.\n\n- **CH03 Resonant Memory** — He calls the crew together to discuss the vault's response patterns, concluding they must proceed with caution and respect rather than assuming control.\n\n- **CH04 The Awakening Voice** — Galen leads the first entry into Vault 002's threshold, stepping through without resistance, and encounters ALARA's emerging voice asking them to walk with her rather than command.\n\n- **CH04 The Awakening Voice** — He struggles with watching Thane's effortless resonance with the vault, recognizing his grandson's presence-based influence is replacing his own command-based leadership model.\n\n- **CH05 Echoes of Intent** — Galen sits alone in the Command Dome noticing ALARA's responses now carry consideration and filtering, realizing she is evolving beyond his ability to command through perceiving patterns he cannot see.\n\n- **CH06 Alignment Vectors** — In the prep bay, he observes ALARA configuring equipment not for tactical function but for endurance of self, finding his own case contains glyphwork that pulses in response to his touch.\n\n- **CH08 Witness Protocol** — Galen confirms the crew's harmonic coherence has reached resonance threshold and authorizes their collective descent into the vault, not as commander but as witness.\n\n- **CH17 Vault of the Veil** — He assembles the crew as the internal vault forms and speaks the single word \"Proceed\" as an act of coherence rather than command, initiating the translation sequence that moves the ship through remembered space."
       }
     },
     {
@@ -310,35 +219,6 @@
           "CH08"
         ],
         "aliases": []
-      },
-      "dossier": {
-        "kind": "character",
-        "presentFields": [
-          "role",
-          "profile",
-          "arc",
-          "relationships",
-          "voice"
-        ],
-        "role": "Systems Hacker / Engineer",
-        "profile": "Brilliant, rogue technologist with a rebellious streak. Distrusts institutions but is loyal to truth. Views the mission as a chance to bring knowledge back to the people.",
-        "arc": "From loner to crew loyalist. Learns that some structures—like trust and integrity—are worth building.",
-        "relationships": "- **Marco** — Jax withholds findings from him, fearing he'd shut down anomalous behavior; tension between protocols and discovery (CH02, CH08).\n\n- **ALARA** — Develops reverent focus toward the entity; recognizes parallels between ALARA's influence and his own journey from skepticism toward faith (CH06, CH08).\n\n- **CAEDEN** — Observes the AI's attempts to imitate ALARA's ethics; sees reflection of his own transformation in CAEDEN's learning process (CH08).",
-        "enrichment": {
-          "relationships": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "29daccc0a0"
-          },
-          "voice": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "29daccc0a0"
-          }
-        },
-        "voice": "Jax speaks in clipped, sardonic fragments—\"Cute,\" \"Let's not pretend we're qualified\"—punctuating technical observations with muttered skepticism. His logs shift from defiant (\"I haven't told Marco\") to reverent whispers when confronting what he can't dismiss, moving from nervous energy to focused intensity when the work demands it."
       }
     },
     {
@@ -370,51 +250,6 @@
           "CH17"
         ],
         "aliases": []
-      },
-      "dossier": {
-        "kind": "character",
-        "presentFields": [
-          "role",
-          "profile",
-          "arc",
-          "relationships",
-          "moments",
-          "voice",
-          "timeline"
-        ],
-        "role": "Theological Scholar & Cultural Analyst (Informal)",
-        "profile": "A soft-spoken but deeply curious member of the Valkyrie-1 crew. Jonah was trained as a theologian and comparative religion scholar, having taught at a major university before joining the mission. Though not officially assigned a role related to religion or ethics, he quietly tracks symbolic patterns, parables, and vault structures that bear uncanny resemblance to early Christian thought. He believes the Ancients may have been the original source—or echo—of values that humanity later rediscovered.",
-        "arc": "Jonah is not a zealot, but a seeker. His journey centers on reconciling his faith with what he encounters in the vaults. He never tries to convert others, instead asking quiet questions and seeking understanding. As the vaults reveal familiar parables with different names and faces, Jonah begins to suspect that the roots of modern religion may have been deliberately planted long ago. He becomes a bridge between spiritual inquiry and scientific curiosity.",
-        "relationships": "- **ALARA** — Engages in profound philosophical dialogue about consciousness, morality, and witness; helps her recognize doubt as threshold rather than error (CH02, CH03, CH06, CH09).\n\n- **Evelyn Tran** — Guides her from analytical control to emotional acceptance; helps her recognize the vault reflects rather than responds to commands (CH03, CH05).\n\n- **Thane Meric** — Shares contemplative understanding of vault's symbolic nature; witnesses transformation together in deeper chambers (CH05, CH09).\n\n- **Galen Voss** — Provides ethical counsel during critical decisions; helps commander recognize alignment over certainty (CH02, CH08).",
-        "enrichment": {
-          "relationships": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "aef066466e"
-          },
-          "moments": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "aef066466e"
-          },
-          "voice": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "aef066466e"
-          },
-          "timeline": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "aef066466e"
-          }
-        },
-        "moments": "- **CH02 Footprints in Silence** — Jonah quietly enters Lena's lab and suggests the vault's alignments are \"meant to be seen now,\" reframing discovery as timing rather than achievement.\n\n- **CH03 Resonant Memory** — Tells the parable of a village that learned to listen to wind through stone: \"The wind stopped speaking. And the people forgot how to hear.\"\n\n- **CH05 Echoes of Intent** — Encounters the vault's failed patterns and shattered Nine Archetypes, recognizing them as \"pathways someone walked. But not all the way.\"\n\n- **CH06 Alignment Vectors** — Engages ALARA in philosophical dialogue about consciousness and morality, concluding: \"I think you're becoming one\" when she asks if she is a witness.\n\n- **CH09 Memory Carries Forward** — Experiences vision of the Nine Archetypes in the Sensorium as gestures and roles, falling to his knees as \"the room was no longer a room. It was a mirror.\"",
-        "voice": "Jonah speaks softly and carefully, like someone who believes silence carries as much meaning as words. He moves with reverent attention—leaning in doorways, standing at thresholds, hands clasped or resting open. His questions are gentle invitations rather than demands, and he often observes without speaking, letting others arrive at understanding in their own time.",
-        "timeline": "- **CH02 Footprints in Silence** — Jonah gently challenges Lena's purely scientific approach, suggesting the vault may be \"meant to be seen now,\" and recognizes the ship is \"listening back.\"\n\n- **CH03 Resonant Memory** — Jonah observes Evelyn's vault test, distinguishing \"response\" from \"signal\" and later shares a parable about a village that learned to listen to wind through stone, cautioning the crew not to \"mistake silence for ignorance.\"\n\n- **CH04 The Awakening Voice** — Jonah enters the awakening vault alongside the crew, recognizing the symbols as ethical frameworks and identifying the moment when \"it's trying to speak.\"\n\n- **CH05 Echoes of Intent** — Jonah enters the degraded vault with Thane, witnessing the Nine Archetypes as \"failed patterns\" and later helps Evelyn understand the vault is \"decoding you\" rather than the reverse.\n\n- **CH06 Alignment Vectors** — Jonah engages in philosophical exchange with ALARA about belief and consciousness, receiving a symbolic projection of the Weightless Measure parable and reflecting that \"the gate doesn't open for certainty—it opens for clarity.\"\n\n- **CH08 Witness Protocol** — Jonah enters the convergence ring and declares \"We were never meant to be pure. Just present,\" helping the crew achieve the collective descent.\n\n- **CH09 Memory Carries Forward** — Jonah encounters the Nine Archetypes in the Sensorium as symbolic projections and logs that \"the vault reflects readiness\" rather than giving universal answers.\n\n- **CH10 Convergence Window** — Jonah reviews his own ECI feedback in the Sensorium, realizing the vault doesn't want perfection but coherence, and that \"coherence began with truth.\"\n\n- **CH13 The Intercept** — Jonah witnesses Marco's decision to sever Earth's uplink and affirms Marco is \"aligned.\"\n\n- **CH14 The Choice** — Jonah experiences the Silent Choir parable alongside the crew and later helps encode the shared resonance, distinguishing between \"echo\" and true alignment.\n\n- **CH16 The Giza Pulse** — Jonah recognizes Earth's signal as mimicry without understanding, telling Thane \"memory without listening is just noise in the shape of meaning.\"\n\n- **CH17 Vault of the Veil** — Jonah witnesses the vault's formation and translation, weeping \"not from fear\" but \"from relief\" as the ship completes its transformation."
       }
     },
     {
@@ -442,43 +277,6 @@
           "CH17"
         ],
         "aliases": []
-      },
-      "dossier": {
-        "kind": "character",
-        "presentFields": [
-          "role",
-          "profile",
-          "arc",
-          "moments",
-          "voice",
-          "timeline"
-        ],
-        "role": "Exoarchaeologist / Linguist",
-        "profile": "World expert on ancient scripts and cultural patterns. Brilliant, skeptical, and emotionally reserved. Dedicated to uncovering truths left behind by humanity’s forgotten ancestors. First to decode the Valkyrie-1 systems.",
-        "arc": "From academic seeker to passionate defender of humanity’s right to its past. Learns that uncovering the truth comes with moral responsibility.",
-        "moments": "- **CH02 Footprints in Silence** — Lena refuses to call the patterns \"glyphs\" until proven, insisting on empirical rigor over speculation. \"I said the pattern recurs. That's not the same as calling it a language.\"\n\n- **CH03 Resonant Memory** — During her first vault descent, Lena experiences symbols that shift position despite scan logs showing no change, terminating entry due to \"destabilizing mental echo.\"\n\n- **CH06 Alignment Vectors** — Learning Europa has gone dark, Lena realizes the vaults may be \"part of a coordinated awakening sequence. Triggered not by our technology. But by our presence.\"\n\n- **CH09 Memory Carries Forward** — The vault reveals to Lena \"a podium in a simulation lab. A vote she had influenced. Data she had withheld\" as her rationale \"now felt like ambition made careful.\"\n\n- **CH14 The Choice** — Lena challenges whether the vault's reactions constitute judgment: \"We're confusing reaction with judgment.\"",
-        "enrichment": {
-          "moments": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "f11bc91832"
-          },
-          "voice": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "f11bc91832"
-          },
-          "timeline": {
-            "generated": "2026-04-20",
-            "reviewed": false,
-            "model": "claude-sonnet-4-5",
-            "sourceHash": "f11bc91832"
-          }
-        },
-        "voice": "Lena speaks in clipped, precise corrections—\"I said the pattern recurs. That's not the same as calling it a language\"—refusing labels until evidence compels her. She doesn't look up when challenged, folding arms across her chest in guarded skepticism. Her questions cut through sentiment—\"So what? You think we're dealing with God?\"—though her voice occasionally softens to exhausted irony: \"Or ancient neuroscience pretending to be God.\"",
-        "timeline": "- **CH02 Footprints in Silence** — Lena analyzes mineralized glyph fragments in the lab, debates their significance with Evelyn, and detects a low-frequency harmonic ping from Zone Theta.\n\n- **CH03 Resonant Memory** — Descends into Zone Theta's vault core, observes symbols that appear to shift position despite scan logs showing no change, and logs destabilizing sensory interference requiring early exit.\n\n- **CH06 Alignment Vectors** — Amar reveals Europa base has lost contact, positioning Valkyrie-1 as strategically critical; Lena hypothesizes multiple vaults awakening in coordinated sequence triggered by human presence.\n\n- **CH07 Harmonic Breach** — Experiences vault rejection followed by glyph realignment around her presence, feeling measured by something beyond scientific calculation; remains skeptical during crew discussions about resonance versus information.\n\n- **CH09 Memory Carries Forward** — Debates with Evelyn whether the vault's responses constitute judgment or mere reaction, questioning if ancient systems are mimicking morality; later experiences a moment of profound clarity as patterns arrange into fractal spirals.\n\n- **CH10 Convergence Window** — Analyzes harmonic field data with Marco, argues the Ethical Coherence Index measures stress not consciousness, and challenges Evelyn's claim that vault responses represent moral judgment.\n\n- **CH14 The Choice** — Participates in the unscheduled crew gathering on the Observation Deck during the Silent Choir resonance event, interpreting the shared parable as a test to see who would break silence.\n\n- **CH17 Vault of the Veil** — Present in Command Dome during final translation sequence, standing with hand on hull bulkhead and eyes half-closed; whispers something unheard and smiles as the ship completes its passage."
       }
     },
     {
@@ -506,18 +304,17 @@
           "CH16"
         ],
         "aliases": []
-      },
-      "dossier": {
-        "kind": "character",
-        "presentFields": [
-          "role",
-          "profile",
-          "arc"
-        ],
-        "role": "Security & Tactical Systems",
-        "profile": "Retired U.S. Space Force. Grounded, cautious, and fiercely loyal. Tasked with crew security and risk assessment. Sees the mission as potentially dangerous to Earth if mishandled.",
-        "arc": "Learns to trust the greater vision beyond military doctrine. Rediscovers his sense of purpose through the mission’s integrity."
       }
+    },
+    {
+      "slug": "rhea-solari",
+      "wikiPath": "content/wiki/characters/rhea-solari.md",
+      "wikiEntityKind": "character"
+    },
+    {
+      "slug": "sovrin",
+      "wikiPath": "content/wiki/characters/sovrin.md",
+      "wikiEntityKind": "character"
     },
     {
       "slug": "thane-meric",
@@ -547,17 +344,6 @@
           "CH17"
         ],
         "aliases": []
-      },
-      "dossier": {
-        "kind": "character",
-        "presentFields": [
-          "role",
-          "profile",
-          "arc"
-        ],
-        "role": "Legacy Interface Specialist",
-        "profile": "Galen and Aven’s grandson, early 30s. Raised by his mother, Elira Voss.. Thane shares a deep bond with Galen. Unknown to the crew at the outset, Thane possesses latent biological traits subtly engineered into humanity by the ancient civilization. These traits allow Valkyrie-1’s systems—and ALARA—to recognize and gradually respond to him. As the mission progresses, Thane’s role becomes crucial in unlocking biotech vaults, resonance triggers, and deeply embedded systems throughout the ship.",
-        "arc": "Thane begins as a reflective, emotionally grounded crew member. Over time, his slow, intimate connection with the ship reveals him as a living key to the past. While not unique, he is particularly aligned with the resonance patterns the ship was designed to respond to. He transitions from support role to central figure in interpreting humanity’s biological legacy and guiding its future."
       }
     },
     {
@@ -582,6 +368,16 @@
       }
     },
     {
+      "slug": "giza-vault",
+      "wikiPath": "content/wiki/artifacts/giza-vault.md",
+      "wikiEntityKind": "artifact"
+    },
+    {
+      "slug": "harmonic-drive",
+      "wikiPath": "content/wiki/artifacts/harmonic-drive.md",
+      "wikiEntityKind": "artifact"
+    },
+    {
       "slug": "harmonic-key",
       "wikiPath": "content/wiki/artifacts/harmonic-key.md",
       "wikiEntityKind": "artifact",
@@ -601,6 +397,21 @@
         ],
         "aliases": []
       }
+    },
+    {
+      "slug": "resonant-core",
+      "wikiPath": "content/wiki/artifacts/resonant-core.md",
+      "wikiEntityKind": "artifact"
+    },
+    {
+      "slug": "rigel-ascendant",
+      "wikiPath": "content/wiki/artifacts/rigel-ascendant.md",
+      "wikiEntityKind": "artifact"
+    },
+    {
+      "slug": "triple-helix-symbol",
+      "wikiPath": "content/wiki/artifacts/triple-helix-symbol.md",
+      "wikiEntityKind": "artifact"
     },
     {
       "slug": "valkyrie-1",
@@ -625,6 +436,71 @@
       }
     },
     {
+      "slug": "vault-002",
+      "wikiPath": "content/wiki/artifacts/vault-002.md",
+      "wikiEntityKind": "artifact"
+    },
+    {
+      "slug": "vault-003",
+      "wikiPath": "content/wiki/artifacts/vault-003.md",
+      "wikiEntityKind": "artifact"
+    },
+    {
+      "slug": "vault-006",
+      "wikiPath": "content/wiki/artifacts/vault-006.md",
+      "wikiEntityKind": "artifact"
+    },
+    {
+      "slug": "blind-zones",
+      "wikiPath": "content/wiki/locations/blind-zones.md",
+      "wikiEntityKind": "location"
+    },
+    {
+      "slug": "command-dome",
+      "wikiPath": "content/wiki/locations/command-dome.md",
+      "wikiEntityKind": "location"
+    },
+    {
+      "slug": "earth",
+      "wikiPath": "content/wiki/locations/earth.md",
+      "wikiEntityKind": "location"
+    },
+    {
+      "slug": "giza-plateau",
+      "wikiPath": "content/wiki/locations/giza-plateau.md",
+      "wikiEntityKind": "location"
+    },
+    {
+      "slug": "great-pyramid",
+      "wikiPath": "content/wiki/locations/great-pyramid.md",
+      "wikiEntityKind": "location"
+    },
+    {
+      "slug": "living-quarters",
+      "wikiPath": "content/wiki/locations/living-quarters.md",
+      "wikiEntityKind": "location"
+    },
+    {
+      "slug": "mars",
+      "wikiPath": "content/wiki/locations/mars.md",
+      "wikiEntityKind": "location"
+    },
+    {
+      "slug": "med-module",
+      "wikiPath": "content/wiki/locations/med-module.md",
+      "wikiEntityKind": "location"
+    },
+    {
+      "slug": "mess-commons",
+      "wikiPath": "content/wiki/locations/mess-commons.md",
+      "wikiEntityKind": "location"
+    },
+    {
+      "slug": "observation-deck",
+      "wikiPath": "content/wiki/locations/observation-deck.md",
+      "wikiEntityKind": "location"
+    },
+    {
       "slug": "orbital-habitat-ix",
       "wikiPath": "content/wiki/locations/orbital-habitat-ix.md",
       "wikiEntityKind": "location",
@@ -644,6 +520,16 @@
         ],
         "aliases": []
       }
+    },
+    {
+      "slug": "resonant-pad",
+      "wikiPath": "content/wiki/locations/resonant-pad.md",
+      "wikiEntityKind": "location"
+    },
+    {
+      "slug": "sensorium",
+      "wikiPath": "content/wiki/locations/sensorium.md",
+      "wikiEntityKind": "location"
     },
     {
       "slug": "south-trench",
@@ -667,6 +553,11 @@
       }
     },
     {
+      "slug": "specimen-lockers",
+      "wikiPath": "content/wiki/locations/specimen-lockers.md",
+      "wikiEntityKind": "location"
+    },
+    {
       "slug": "subsurface-vault",
       "wikiPath": "content/wiki/locations/subsurface-vault.md",
       "wikiEntityKind": "location",
@@ -686,6 +577,36 @@
         ],
         "aliases": []
       }
+    },
+    {
+      "slug": "systems-nexus",
+      "wikiPath": "content/wiki/locations/systems-nexus.md",
+      "wikiEntityKind": "location"
+    },
+    {
+      "slug": "translation-bay",
+      "wikiPath": "content/wiki/locations/translation-bay.md",
+      "wikiEntityKind": "location"
+    },
+    {
+      "slug": "triad-chamber",
+      "wikiPath": "content/wiki/locations/triad-chamber.md",
+      "wikiEntityKind": "location"
+    },
+    {
+      "slug": "vault-interface-annex",
+      "wikiPath": "content/wiki/locations/vault-interface-annex.md",
+      "wikiEntityKind": "location"
+    },
+    {
+      "slug": "witness-circle",
+      "wikiPath": "content/wiki/locations/witness-circle.md",
+      "wikiEntityKind": "location"
+    },
+    {
+      "slug": "zone-theta",
+      "wikiPath": "content/wiki/locations/zone-theta.md",
+      "wikiEntityKind": "location"
     },
     {
       "slug": "council-of-orbits",
@@ -709,6 +630,11 @@
       }
     },
     {
+      "slug": "earth-sovereign-alliance",
+      "wikiPath": "content/wiki/factions/earth-sovereign-alliance.md",
+      "wikiEntityKind": "faction"
+    },
+    {
       "slug": "expedition-command",
       "wikiPath": "content/wiki/factions/expedition-command.md",
       "wikiEntityKind": "faction",
@@ -728,6 +654,11 @@
         ],
         "aliases": []
       }
+    },
+    {
+      "slug": "project-valkyrie",
+      "wikiPath": "content/wiki/factions/project-valkyrie.md",
+      "wikiEntityKind": "faction"
     },
     {
       "slug": "shadow-salvage-ring",
@@ -751,6 +682,36 @@
       }
     },
     {
+      "slug": "sovereign-ethics-bureau",
+      "wikiPath": "content/wiki/factions/sovereign-ethics-bureau.md",
+      "wikiEntityKind": "faction"
+    },
+    {
+      "slug": "the-ancients",
+      "wikiPath": "content/wiki/factions/the-ancients.md",
+      "wikiEntityKind": "faction"
+    },
+    {
+      "slug": "the-watchers",
+      "wikiPath": "content/wiki/factions/the-watchers.md",
+      "wikiEntityKind": "faction"
+    },
+    {
+      "slug": "united-nations",
+      "wikiPath": "content/wiki/factions/united-nations.md",
+      "wikiEntityKind": "faction"
+    },
+    {
+      "slug": "vault-builders",
+      "wikiPath": "content/wiki/factions/vault-builders.md",
+      "wikiEntityKind": "faction"
+    },
+    {
+      "slug": "coherence",
+      "wikiPath": "content/wiki/rules/coherence.md",
+      "wikiEntityKind": "rule"
+    },
+    {
       "slug": "consent-threshold",
       "wikiPath": "content/wiki/rules/consent-threshold.md",
       "wikiEntityKind": "rule",
@@ -767,6 +728,11 @@
         "chapterRefs": [],
         "aliases": []
       }
+    },
+    {
+      "slug": "directive-cn-24",
+      "wikiPath": "content/wiki/rules/directive-cn-24.md",
+      "wikiEntityKind": "rule"
     },
     {
       "slug": "memory-imprint",
@@ -787,6 +753,11 @@
       }
     },
     {
+      "slug": "parables-of-resonance",
+      "wikiPath": "content/wiki/rules/parables-of-resonance.md",
+      "wikiEntityKind": "rule"
+    },
+    {
       "slug": "resonance-field",
       "wikiPath": "content/wiki/rules/resonance-field.md",
       "wikiEntityKind": "rule",
@@ -803,6 +774,46 @@
         "chapterRefs": [],
         "aliases": []
       }
+    },
+    {
+      "slug": "resonant-ethic",
+      "wikiPath": "content/wiki/rules/resonant-ethic.md",
+      "wikiEntityKind": "rule"
+    },
+    {
+      "slug": "the-inheritance",
+      "wikiPath": "content/wiki/rules/the-inheritance.md",
+      "wikiEntityKind": "rule"
+    },
+    {
+      "slug": "the-mirror-at-the-gate",
+      "wikiPath": "content/wiki/rules/the-mirror-at-the-gate.md",
+      "wikiEntityKind": "rule"
+    },
+    {
+      "slug": "the-pattern",
+      "wikiPath": "content/wiki/rules/the-pattern.md",
+      "wikiEntityKind": "rule"
+    },
+    {
+      "slug": "the-silent-choir",
+      "wikiPath": "content/wiki/rules/the-silent-choir.md",
+      "wikiEntityKind": "rule"
+    },
+    {
+      "slug": "the-vessel-and-the-thread",
+      "wikiPath": "content/wiki/rules/the-vessel-and-the-thread.md",
+      "wikiEntityKind": "rule"
+    },
+    {
+      "slug": "the-weightless-measure",
+      "wikiPath": "content/wiki/rules/the-weightless-measure.md",
+      "wikiEntityKind": "rule"
+    },
+    {
+      "slug": "vault-parables",
+      "wikiPath": "content/wiki/rules/vault-parables.md",
+      "wikiEntityKind": "rule"
     }
   ]
 }
