@@ -4,6 +4,57 @@
 
 ---
 
+## Run: 2026-04-22 (Run 10)
+
+### Summary
+- Scanned: 6 commits since Run 9 (884ac08 → 9b8bae4): Phase E (open threads admin API), Phase F (beats + BeatTimeline + seed script), Phase G (continuity-diff + review:ingestion CLI + snapshot), Phase H (session-wrap reflection + cache), wiki canon dossier rendering (CanonDossierCard, FictionEntityViews), canon entity seeding from lore sources
+- Issues found: 3 new (FIX-030 threads route keith role, FIX-031 fiction entity story gating, FIX-032 **P0** BeatTimeline leaks locked chapter content)
+- Issues existing: FIX-026, FIX-027, FIX-028 (scope expanded — 14+ Keith references including Phase E-H additions), FIX-029 all still open
+- Ideas: IDEA-025 advanced exploring → ready (dev plan written), IDEA-026 advanced seed → exploring, IDEA-028 seeded (enhance), IDEA-029 seeded + immediately → ready (dev plan written)
+- Plans written:
+  - `FIXPLAN-FIX-030-threads-route-keith-role.md`
+  - `FIXPLAN-FIX-031-fiction-entity-story-gating.md`
+  - `FIXPLAN-FIX-032-beat-timeline-chapter-gating.md`
+  - `DEVPLAN-IDEA-025-rules-in-ask.md`
+  - `DEVPLAN-IDEA-029-reader-arc-progress.md`
+
+### Build & Lint & Test Results
+- `npx next build`: **PASSES** — clean, 93 routes (up from 37 in Run 9). 1 expected Turbopack NFT warning on `prompts.ts` filesystem reads.
+- `npm run lint`: **PASSES** — 0 errors, 0 warnings.
+- `npm test`: **147 PASS** (up from 96). New test files cover canon-dossier, continuity-diff, beats/repo, threads/repo, session-wrap, and reflections.
+
+### Key Findings
+
+1. **FIX-032 (P0): BeatTimeline leaks locked chapter content.** `src/app/journeys/[slug]/page.tsx` fetches ALL beats via `listBeatsByJourney()` and passes them unfiltered to `BeatTimeline`. The `directive-14` journey has beats tied to CH08/CH11/CH13/CH14 with summaries that contain actual story events — including a verbatim story quote from CH11. A reader at CH01 sees this content. Fix: 3-line change to call `getReaderProgress()` and filter beats by `isStoryUnlocked(beat.chapterId, progress)` in the journey page. Plan written.
+
+2. **FIX-031 (P1): Faction/location/artifact detail pages show future chapter IDs.** `FictionEntityViews.tsx`'s `FictionEntityDetailPage` renders `memoirStoryIds` and `interviewStoryIds` without `isStoryUnlocked()` filtering. Character detail page correctly filters; the shared entity view component doesn't. Example: `/factions/council-of-orbits` at CH01 shows links to CH04 and CH07. Plan written.
+
+3. **FIX-030 (Medium): New `/api/admin/threads` route checks stale `'keith'` role.** Phase E introduced the threads admin API but the `requireAdmin()` helper checks `["admin", "keith"]` instead of `["admin", "author"]`. Author accounts get 403 from all thread CRUD operations. Same bug as FIX-027, different file. Plan written.
+
+4. **FIX-028 scope expanded.** 6 new "Keith" references found in Phase E-H code: `session-wrap.ts` system prompt, journey page fallback text, admin drafts page, principles page, themes page, welcome flow (2 locations). Total Keith references now 14+ files.
+
+5. **Phase E-H architectural additions confirmed clean.** Open threads repository (`threads/repo.ts`), beats repository (`beats/repo.ts`), continuity diff module (`continuity-diff.ts`), session-wrap reflection generator (`session-wrap.ts`), and reflection cache (`reflections.ts`) all build cleanly, lint 0 errors, and have full test coverage. The beats are wired into the Ask orchestrator (`sharedContentBlock` injects them when `journeySlug` is set). Open threads are correctly chapter-gated in the Ask context via `listUnresolvedThroughChapter()`.
+
+6. **Rules directory grew from 3 to 14 entries.** `content/wiki/rules/` now has 14 rule files (consent-threshold, directive-cn-24, memory-imprint, resonance-field, + 10 new including the-inheritance, vault-parables, the-pattern, etc.). None are in the Ask system prompt yet. IDEA-025 advanced to `ready` with a 35-minute dev plan.
+
+7. **Ask beats context has the same gap as FIX-032.** The orchestrator's `buildPromptArgs()` calls `listBeatsByJourney()` without a reader-progress cutoff. If the user has `journeySlug` set in their Ask call, they receive beat content from locked chapters in the AI context. This is a lower-priority Ask-specific instance of the same gating gap — the AI might cite future-chapter beats in its answers.
+
+8. **93 routes** (up from 37). New routes include `/api/admin/threads`, and the BeatTimeline and CanonDossierCard are now integrated into existing routes.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/FIXPLAN-FIX-032-beat-timeline-chapter-gating.md` — **P0 fix**: 3-line change, gating beats on journey pages (15 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-031-fiction-entity-story-gating.md` — Pass readerProgress to FictionEntityDetailPage (30 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-030-threads-route-keith-role.md` — 1-line fix in threads route (5 min)
+- `docs/nightshift/plans/DEVPLAN-IDEA-025-rules-in-ask.md` — Add getRulesContext() to Ask (35 min)
+- `docs/nightshift/plans/DEVPLAN-IDEA-029-reader-arc-progress.md` — Reader arc progress chip on journey pages (1.25 hrs, after FIX-032)
+
+### Recommendations
+- **If you have 15 min:** FIX-032 (P0, 15 min) alone. A reader at CH01 can currently see CH11 story content on the journey page. This is the app's only active P0. It is a 3-line change — add `getReaderProgress()` import, run both fetches in parallel, filter beats before passing to BeatTimeline.
+- **If you have 1 hour:** FIX-032 (15 min) + FIX-031 (30 min) + FIX-030 (5 min). All three gating/auth issues cleared. After this: locked readers are fully gated on all entity pages, and the author can use the threads admin API.
+- **If you have 2 hours:** The 1-hour batch above + IDEA-025 (35 min). After this: journey pages are gated, fiction entities are gated, author can manage threads, AND Ask answers about world rules (consent-threshold, directive-cn-24, etc.) are grounded in actual rule definitions.
+
+---
+
 ## Run: 2026-04-22 (Run 9)
 
 ### Summary

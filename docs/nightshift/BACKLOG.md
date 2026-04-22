@@ -17,6 +17,33 @@
 
 ## Category 1: Enhance / Mature / Expand Existing Features
 
+### [IDEA-028] Continuity Diff in Beyond Workspace
+- **Status:** seed
+- **Category:** enhance
+- **Seeded:** 2026-04-22
+- **Last Updated:** 2026-04-22
+- **Priority:** P2
+- **Plan:** *(not yet written)*
+- **Summary:** The Phase G `review:ingestion` CLI produces a `continuity-diff` report comparing canon snapshots. This is run from the terminal but has no Beyond UI surface. Adding a read-only panel to the Beyond workspace that loads `content/raw/.continuity/last-snapshot.json` and displays any blocking contradictions (alias_moved, relation_flipped) would give Paul a heads-up before new wiki content goes live. The diff module is pure TypeScript with no DB deps — easy to adapt as a server component.
+- **Night Notes:**
+  - 2026-04-22 (Run 10): Seeded. `src/lib/wiki/continuity-diff.ts` is fully built and tested. `content/raw/.continuity/last-snapshot.json` exists after running `review:ingestion`. The diff is a pure in-memory operation — no additional infra needed for a read-only display.
+
+---
+
+### [IDEA-025] Wire Celestial Rules into Ask Companion
+- **Status:** ready
+- **Category:** enhance
+- **Seeded:** 2026-04-22
+- **Last Updated:** 2026-04-22
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-025-rules-in-ask.md`
+- **Summary:** 14 rule files now exist in `content/wiki/rules/` (up from 3 in Run 9). Adding a `getRulesContext()` function in `prompts.ts` (analogous to `getPeopleContext()`) and injecting it into `sharedContentBlock()` would make Ask answers about Celestial world mechanics dramatically more accurate. Estimated 35 minutes, pure code — no content changes required.
+- **Night Notes:**
+  - 2026-04-22 (Run 9): Seeded. Confirmed `getAllRules()` returns rules. Injection point identified: `sharedContentBlock()` in `perspectives.ts`.
+  - 2026-04-22 (Run 10): Advanced to `ready`. Dev plan written. Rules directory has grown from 3 to 14 entries (consent-threshold, directive-cn-24, memory-imprint, resonance-field, plus 10 new). `getRulesContext()` pattern matches existing `getPeopleContext()` exactly. Estimated 35 minutes.
+
+---
+
 ### [IDEA-024] Fill in Voice Guide Placeholder
 - **Status:** seed
 - **Category:** enhance
@@ -24,22 +51,10 @@
 - **Last Updated:** 2026-04-22
 - **Priority:** P1
 - **Plan:** *(not yet written)*
-- **Summary:** `content/voice.md` is currently a stub template with placeholder text. Every Ask persona system prompt calls `getVoiceGuide()` and injects whatever is in this file. Filling it in with actual Celestial narrative voice guidance — tone, diction, narrator POV, what the guide should sound like — is the single highest-impact improvement to Ask response quality. This is author/content work, not code.
+- **Summary:** `content/voice.md` is currently a stub template. Every Ask persona system prompt injects whatever is in this file via `getVoiceGuide()`. Filling it with actual Celestial narrative voice guidance is the single highest-impact improvement to Ask quality. Author work, no code.
 - **Night Notes:**
-  - 2026-04-22: Seeded. Confirmed `content/voice.md` is a stub (3-line placeholder). `content/decision-frameworks.md` is also a stub. Both are called in every persona prompt. Author needs to fill both in. No code changes required.
-
----
-
-### [IDEA-025] Wire Celestial Rules into Ask Companion
-- **Status:** exploring
-- **Category:** enhance
-- **Seeded:** 2026-04-22
-- **Last Updated:** 2026-04-22
-- **Priority:** P2
-- **Plan:** *(not yet written)*
-- **Summary:** `content/wiki/rules/` has 3 rule concepts (consent-threshold, memory-imprint, resonance-field) parsed by `getAllRules()` in `parser.ts`. These lore rules are not yet in the Ask system prompt. Adding a `getRulesContext()` function in `prompts.ts` (analogous to `getPeopleContext()`) and injecting it into `sharedContentBlock()` would make Ask answers about the Celestial world's governance/physics dramatically more accurate. This is the Celestial equivalent of the memoir's IDEA-022 (Principles in Ask).
-- **Night Notes:**
-  - 2026-04-22: Seeded. Confirmed `getAllRules()` returns 3 rule concepts. The rules have thesis statements and examples. The `sharedContentBlock()` in `perspectives.ts` would be the injection point. Estimated 20 min.
+  - 2026-04-22 (Run 9): Seeded. Confirmed `content/voice.md` is a stub. `content/decision-frameworks.md` also a stub. Both are called in every persona prompt.
+  - 2026-04-22 (Run 10): Still seed. No code changes needed — this is author content work only.
 
 ---
 
@@ -50,25 +65,40 @@
 - **Last Updated:** 2026-04-22
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-023-explore-hub-celestial.md`
-- **Summary:** A dedicated `/explore` page with three tabs: Story Arc Map (chapter flow Sankey, gated by reader progress), Entity Map (character/faction-by-chapter grid, locked columns for future chapters), and Connections (cross-entity relation browser). All visualization infrastructure is already built in `graph.ts`, `StorySankey.tsx`, `ThemePrincipleMatrix.tsx`. Pure UI assembly + chapter-gating task.
+- **Summary:** A dedicated `/explore` page with three tabs: Story Arc Map, Entity Map, and Connections. Visualization infrastructure already built. Pure UI assembly + chapter-gating task.
 - **Night Notes:**
-  - 2026-04-19: Seeded. Verified viz components and graph data exist. No `/explore` route yet.
-  - 2026-04-22: Advanced to `planned`. Dev plan written. Celestial-specific gate logic designed (locked chapter columns, silhouette nodes). Estimated 2.5 hours.
+  - 2026-04-19: Seeded.
+  - 2026-04-22 (Run 9): Advanced to `planned`. Dev plan written. Estimated 2.5 hours.
+  - 2026-04-22 (Run 10): No change. Still planned, awaiting Paul execution.
 
 ---
 
 ## Category 2: New Features or Integrations
 
+### [IDEA-029] Reader Arc Progress — Gated BeatTimeline
+- **Status:** ready
+- **Category:** new
+- **Seeded:** 2026-04-22
+- **Last Updated:** 2026-04-22
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-029-reader-arc-progress.md`
+- **Summary:** After FIX-032 (BeatTimeline chapter gating), enhance the journey intro page so readers see how many beats they've revealed vs. total, a "N more unlock as you read on" tease, and a subtle checkmark on beats from chapters already read. Builds directly on FIX-032 — requires no new infrastructure.
+- **Night Notes:**
+  - 2026-04-22 (Run 10): Seeded and immediately advanced to `ready`. FIX-032 is the prerequisite. The data needed (total beats, visible beats, read chapter set) is all available in the journey page after FIX-032 is applied. Estimated 1.25 hours after FIX-032. Dev plan written.
+
+---
+
 ### [IDEA-026] Open Threads Reader Panel — Narrative Mysteries Page
-- **Status:** seed
+- **Status:** exploring
 - **Category:** new
 - **Seeded:** 2026-04-22
 - **Last Updated:** 2026-04-22
 - **Priority:** P2
 - **Plan:** *(not yet written)*
-- **Summary:** The `cel_open_threads` DB table tracks narrative mysteries, setups, contradictions, and gaps with fields for `opened_in_chapter_id`, `resolved`, and `resolved_in_chapter_id`. No reader-facing UI exists yet. A "Mysteries" or "Open Questions" page would surface unresolved threads (gated: only threads from unlocked chapters shown), giving readers a living list of plot questions to hold while reading. Especially engaging for re-readers who see which threads got resolved.
+- **Summary:** A reader-facing `/mysteries` page surfacing unresolved threads from `cel_open_threads`, gated by chapter — only threads opened in unlocked chapters shown. The `listUnresolvedThroughChapter()` function in `threads/repo.ts` already implements the right query. Especially engaging for re-readers who see which threads got resolved.
 - **Night Notes:**
-  - 2026-04-22: Seeded. `cel_open_threads` table confirmed (migration 026). RLS allows public reads. No rows exist yet (author needs to seed them via Beyond or direct DB insert). UI can be built now; content depends on author populating the table.
+  - 2026-04-22 (Run 9): Seeded. `cel_open_threads` confirmed. No rows yet.
+  - 2026-04-22 (Run 10): Advanced to `exploring`. The `listUnresolvedThroughChapter()` query in `src/lib/threads/repo.ts` is the exact right tool. The admin API (`/api/admin/threads`) is the population mechanism (after FIX-030 is applied). A reader page at `/mysteries` would: (1) call `getReaderProgress()`, (2) call `listUnresolvedThroughChapter(supabase, currentChapter)`, (3) render thread cards grouped by kind (mystery / setup / contradiction / gap). Server Component, no client JS needed. Feasibility: high. Blocking: FIX-030 (author must seed threads first). Estimated 1 hour once threads are seeded.
 
 ---
 
@@ -79,9 +109,10 @@
 - **Last Updated:** 2026-04-22
 - **Priority:** P3
 - **Plan:** *(not yet written)*
-- **Summary:** When a reader marks the final chapter (CH17) as read for the first time, show a fullscreen "You've completed Celestial" overlay — similar to `PhotoFrameOverlay.tsx` — with a brief congratulatory message and a prompt to enable re-reader mode (`show_all_content`). The `ReadTracker` component already fires on every chapter visit; a count query on `cel_story_reads` where `story_id LIKE 'CH%'` after each POST would detect completion. No new DB columns needed.
+- **Summary:** When a reader marks CH17 as read for the first time, show a fullscreen overlay with a congratulatory message and prompt to enable re-reader mode. `ReadTracker` is the hook point; `PhotoFrameOverlay.tsx` provides the pattern.
 - **Night Notes:**
-  - 2026-04-22: Seeded. `ReadTracker` is the right hook point. `PhotoFrameOverlay.tsx` provides the fullscreen overlay pattern. The `PUT /api/reader/progress` endpoint already handles `showAllContent` toggle — the overlay could link directly to it.
+  - 2026-04-22 (Run 9): Seeded.
+  - 2026-04-22 (Run 10): Still seed. Low priority until CH17 content is complete.
 
 ---
 
@@ -106,12 +137,12 @@ All of the following were designed for the Keith Cobb memoir shell and are no lo
 - **IDEA-011** Story Photos — SHIPPED; memoir photos — not applicable to Celestial fiction
 - **IDEA-012** Letter to Keith — Parked 2026-04-18 (memoir-specific)
 - **IDEA-013** Story Reading Progress — SHIPPED; `cel_story_reads` carries to Celestial
-- **IDEA-014** Story Read Progress UI — **SHIPPED** — `ReadBadgeAgeAware` confirmed rendering in `StoriesPageClient.tsx` for unlocked chapters with `readSet.has(story.storyId)`
+- **IDEA-014** Story Read Progress UI — **SHIPPED** — `ReadBadgeAgeAware` confirmed rendering in `StoriesPageClient.tsx`
 - **IDEA-015** Enable Deep Ask — Parked 2026-04-19; multi-persona orchestrator fully implemented, kill-switch via `ENABLE_DEEP_ASK=true`
 - **IDEA-016** Save a Passage — SHIPPED; highlights carry to Celestial
 - **IDEA-017** Photo Frame Mode — SHIPPED; PhotoFrameOverlay carries to Celestial
 - **IDEA-018** Ask from Passage — SHIPPED; `?highlight=` param on Ask page
 - **IDEA-019** People Biographical Context in Ask — SHIPPED; getPeopleContext() in prompts.ts
 - **IDEA-020** Profile as Reflection Gallery — SHIPPED; cel_profile_reflections
-- **IDEA-021** Reading Milestone Celebration (39 memoir stories) — Parked 2026-04-22. Memoir-specific (39 P1_S* stories). Celestial equivalent: IDEA-027 (Chapter Completion Milestone, CH17).
-- **IDEA-022** Principles Context in Ask — Parked 2026-04-22. Memoir's 12 canonical principles do not map directly to Celestial. Celestial equivalent: IDEA-025 (Rules in Ask).
+- **IDEA-021** Reading Milestone Celebration (39 memoir stories) — Parked 2026-04-22. Memoir-specific. Celestial equivalent: IDEA-027 (CH17).
+- **IDEA-022** Principles Context in Ask — Parked 2026-04-22. Memoir's 12 canonical principles do not map to Celestial. Celestial equivalent: IDEA-025 (Rules in Ask).
