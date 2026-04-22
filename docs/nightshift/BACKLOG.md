@@ -1,6 +1,8 @@
-# BACKLOG — Keith Cobb Interactive Storybook
+# BACKLOG — Celestial Interactive Book Companion
 
 > Ideas backlog with maturity tracking. Two categories: enhance existing features, and new features.
+> **Context note:** This backlog was reset on 2026-04-22 (Run 9) after the Celestial Phase 1 migration.
+> All Keith Cobb memoir-specific ideas from Runs 1–8 have been moved to the Parked section.
 
 ## Maturity Levels
 
@@ -8,361 +10,108 @@
 - `exploring` — Validated against codebase, feasibility assessed
 - `planned` — User stories, technical approach defined
 - `ready` — Dev plan written, waiting for Paul to execute
-- `parked` — Stale 3+ days or deprioritized
+- `parked` — Stale 3+ days or deprioritized / superseded by migration
 - `shipped` — Implemented and in production
 
 ---
 
 ## Category 1: Enhance / Mature / Expand Existing Features
 
-### [IDEA-001] Guided Journeys — Curated Paths Through Stories
-
-- **Status:** shipped
+### [IDEA-024] Fill in Voice Guide Placeholder
+- **Status:** seed
 - **Category:** enhance
-- **Seeded:** 2026-04-12
-- **Last Updated:** 2026-04-14
+- **Seeded:** 2026-04-22
+- **Last Updated:** 2026-04-22
 - **Priority:** P1
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-001-guided-journeys.md`
-- **Summary:** Curated, themed paths through the 39 stories with reflection prompts and progress tracking via localStorage.
+- **Plan:** *(not yet written)*
+- **Summary:** `content/voice.md` is currently a stub template with placeholder text. Every Ask persona system prompt calls `getVoiceGuide()` and injects whatever is in this file. Filling it in with actual Celestial narrative voice guidance — tone, diction, narrator POV, what the guide should sound like — is the single highest-impact improvement to Ask response quality. This is author/content work, not code.
 - **Night Notes:**
-  - 2026-04-12: Seeded by Paul. Nightshift wrote the dev plan.
-  - 2026-04-14: **SHIPPED.** Four journeys live at `/journeys`. Full UI including progress bar, reflection prompts, completion page.
+  - 2026-04-22: Seeded. Confirmed `content/voice.md` is a stub (3-line placeholder). `content/decision-frameworks.md` is also a stub. Both are called in every persona prompt. Author needs to fill both in. No code changes required.
 
 ---
 
-### [IDEA-003] Age-Aware Ask Keith Suggestion Chips
-
-- **Status:** shipped
+### [IDEA-025] Wire Celestial Rules into Ask Companion
+- **Status:** exploring
 - **Category:** enhance
-- **Seeded:** 2026-04-12
-- **Last Updated:** 2026-04-19
+- **Seeded:** 2026-04-22
+- **Last Updated:** 2026-04-22
 - **Priority:** P2
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-003-age-aware-suggestion-chips.md`
-- **Summary:** Ask Keith uses `SUGGESTIONS_BY_AGE_MODE` in `src/app/ask/page.tsx` so the four empty-state chips follow the active age mode (young_reader, teen, adult) from `useAgeMode()`.
+- **Plan:** *(not yet written)*
+- **Summary:** `content/wiki/rules/` has 3 rule concepts (consent-threshold, memory-imprint, resonance-field) parsed by `getAllRules()` in `parser.ts`. These lore rules are not yet in the Ask system prompt. Adding a `getRulesContext()` function in `prompts.ts` (analogous to `getPeopleContext()`) and injecting it into `sharedContentBlock()` would make Ask answers about the Celestial world's governance/physics dramatically more accurate. This is the Celestial equivalent of the memoir's IDEA-022 (Principles in Ask).
 - **Night Notes:**
-  - 2026-04-12: Seeded. `useAgeMode()` hook already imported.
-  - 2026-04-13: Advanced to `ready`. Dev plan written.
-  - 2026-04-15: Previously marked parked as stale; implementation was already in line with the plan.
-  - 2026-04-19: **SHIPPED** — validated: `SUGGESTIONS_BY_AGE_MODE[ageMode].map(...)` in `AskPageContent`.
+  - 2026-04-22: Seeded. Confirmed `getAllRules()` returns 3 rule concepts. The rules have thesis statements and examples. The `sharedContentBlock()` in `perspectives.ts` would be the injection point. Estimated 20 min.
 
 ---
 
-### [IDEA-007] Resume Tell Session — Continue an In-Progress Story
-
-- **Status:** shipped
-- **Category:** enhance
-- **Seeded:** 2026-04-14
-- **Last Updated:** 2026-04-15
+### [IDEA-023] Explore Hub — Fiction Entity Graph
+- **Status:** planned
+- **Category:** new
+- **Seeded:** 2026-04-19
+- **Last Updated:** 2026-04-22
 - **Priority:** P2
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-007-resume-tell-session.md`
-- **Summary:** "Continue your story" banner on Tell/Beyond pages. Detects in-progress sessions and lets contributors resume mid-conversation.
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-023-explore-hub-celestial.md`
+- **Summary:** A dedicated `/explore` page with three tabs: Story Arc Map (chapter flow Sankey, gated by reader progress), Entity Map (character/faction-by-chapter grid, locked columns for future chapters), and Connections (cross-entity relation browser). All visualization infrastructure is already built in `graph.ts`, `StorySankey.tsx`, `ThemePrincipleMatrix.tsx`. Pure UI assembly + chapter-gating task.
 - **Night Notes:**
-  - 2026-04-14: Seeded and advanced to `ready` same night.
-  - 2026-04-15: **SHIPPED.** `GET /api/tell/sessions` + `GET /api/tell/sessions/[id]`. Implemented in `StoryContributionWorkspace.tsx`. Works for both tell and beyond modes.
-
----
-
-### [IDEA-009] Story Voice Playback — Audio Narration
-
-- **Status:** shipped
-- **Category:** enhance
-- **Seeded:** 2026-04-14
-- **Last Updated:** 2026-04-16
-- **Priority:** P1
-- **Plan:** *(no dev plan written — Paul implemented directly)*
-- **Summary:** Web Speech API TTS on all story pages. Play/Pause/Stop controls, estimated listen time from wordCount. No server cost, no audio files.
-- **Night Notes:**
-  - 2026-04-14: Seeded by Paul.
-  - 2026-04-16: **SHIPPED.** `StoryAudioControls.tsx` + `src/lib/story-audio.ts` confirmed in codebase. Accessible, aria-live status, `useSyncExternalStore` for SSR safety.
-
----
-
-### [IDEA-005] Reading Time Estimate
-
-- **Status:** shipped
-- **Category:** enhance
-- **Seeded:** 2026-04-13
-- **Last Updated:** 2026-04-19
-- **Priority:** P2
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-005-reading-time-estimate.md`
-- **Summary:** Estimated duration from `wordCount` is surfaced as **listen time** (`formatEstimatedListenLabel`, `StoryAudioControls`) for memoir and interview sources — shipped alongside IDEA-009. The DEVPLAN’s separate “~min read” line on **every** story library card (`StoriesPageClient`) and optional header label is **not** built; card-level read labels remain a small optional follow-up if desired.
-- **Night Notes:**
-  - 2026-04-16: Parked (stale) while card UI was untouched.
-  - 2026-04-19: **SHIPPED (primary intent via voice)** — duration affordance merged with narration controls; aligns deployment with IDEA-005’s word-count-based estimate for the listening path.
-
----
-
-### [IDEA-013] Story Reading Progress — Track the Journey Through 39 Stories
-
-- **Status:** shipped
-- **Category:** enhance
-- **Seeded:** 2026-04-15
-- **Last Updated:** 2026-04-17
-- **Priority:** P2
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-013-story-reading-progress.md` *(infra portion)*
-- **Summary:** Track which of Keith's 39 stories each family member has read. Show progress on profile and read badges on story cards.
-- **Night Notes:**
-  - 2026-04-15: Seeded and advanced to `planned` same night.
-  - 2026-04-16: **Infra SHIPPED** (migration `005_story_reads.sql`, `ReadTracker` on story pages, `/api/stories/[storyId]/read`, Keith analytics dashboard). UI elements (profile progress bar + story card badges) remain. See IDEA-014 for UI plan.
-  - 2026-04-17: **Profile reading dashboard SHIPPED** — `ProfileReadingDashboard.tsx` shows read count, most-recent date, top themes, top principles on `/profile`. Story card read badges still pending (see IDEA-014). Marking this shipped; IDEA-014 handles the remaining badge work.
-
----
-
-### [IDEA-014] Story Read Progress UI — Story Card Read Badges
-
-- **Status:** ready
-- **Category:** enhance
-- **Seeded:** 2026-04-16
-- **Last Updated:** 2026-04-17
-- **Priority:** P2
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-014-story-read-progress-ui.md`
-- **Summary:** The profile reading dashboard (count, themes, principles) shipped in Run 6. The remaining piece: small "Read" badges on story cards in the story library, so family members can spot which stories they've already visited without clicking each one.
-- **Night Notes:**
-  - 2026-04-16: Seeded and advanced to `ready` same night. DB + API + ReadTracker all confirmed working. Only UI elements remain. Plan written.
-  - 2026-04-17: **Profile progress dashboard portion SHIPPED** (ProfileReadingDashboard on `/profile`). Story card badges (Phase 2 of the plan) remain. Plan still valid — only Phase 2 needs execution now. Estimated ~45 min remaining work.
-  - 2026-04-18: `ProfileReadingDashboard` has been superseded by the new reflection gallery (IDEA-020). Story card "Read" badges (Phase 2) are still open and remain the only outstanding piece.
-
----
-
-### [IDEA-020] Profile as Reflection Gallery
-
-- **Status:** shipped
-- **Category:** enhance
-- **Seeded:** 2026-04-18
-- **Last Updated:** 2026-04-18
-- **Priority:** P1
-- **Spec:** `docs/nightshift/specs/2026-04-18-profile-reflection-gallery-design.md`
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-020-profile-reflection-gallery.md`
-- **Summary:** Reworked `/profile` (non-Keith users) into a reflective mirror: AI narrator reflection as hero, gallery of signal tiles (featured passage, with-Keith-since, principles, dialogue with Keith, themes, keepers, ghosted future "Keith's people" tile). Utility actions demoted to subtle top-right icons (tour, admin, sign-out). Keith special-access profile untouched.
-- **Night Notes:**
-  - 2026-04-18: Spec + plan written and implemented end-to-end on `feat/profile-reflection-gallery`. New table `sb_profile_reflections` (migration 019) with cooldown (24h) + trigger (+3 reads, +1 saved, +1 asked) logic. Reuses Claude Sonnet 4 via the existing Anthropic wiring. Deprecated `ProfileHero`, `ProfileReadingDashboard`, and `profile-dashboard.ts` deleted. Pre-existing IDEA-014 Phase 2 (story card read badges) still pending.
+  - 2026-04-19: Seeded. Verified viz components and graph data exist. No `/explore` route yet.
+  - 2026-04-22: Advanced to `planned`. Dev plan written. Celestial-specific gate logic designed (locked chapter columns, silhouette nodes). Estimated 2.5 hours.
 
 ---
 
 ## Category 2: New Features or Integrations
 
-### [IDEA-002] Keith's Story Workshop — Author & Source Material Intake
-
-- **Status:** shipped
-- **Category:** new
-- **Seeded:** 2026-04-12
-- **Last Updated:** 2026-04-19
-- **Priority:** P1
-- **Plan:** *(full dev plan not yet written)*
-- **Summary:** Family `/tell`, Beyond (AI-assisted + TipTap direct-write `origin='write'`), and Supabase wiki mirror publish form the full workshop. A separate admin raw-markdown editor is superseded by TipTap + mirror; optional raw import can reuse `wiki-mirror.ts` later if needed.
-- **Night Notes:**
-  - 2026-04-12: Seeded by Paul.
-  - 2026-04-14: Track 1 SHIPPED as `/tell`.
-  - 2026-04-16: Beyond workspace SHIPPED.
-  - 2026-04-19: **SHIPPED** — TipTap direct-write + wiki mirror match deployment; status updated from parked.
-
----
-
-### [IDEA-004] Bookmark a Story as a Favorite
-
-- **Status:** shipped
-- **Category:** new
-- **Seeded:** 2026-04-12
-- **Last Updated:** 2026-04-17
-- **Priority:** P1
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-004-story-favorites.md`
-- **Summary:** Heart icon on every story detail page. Favorited stories collected at `/profile/favorites`, linked from ProfileHero. `sb_story_favorites` table (migration 011), optimistic toggle, clean empty state. Pairs with IDEA-016 (passage highlights) — both surface on the profile page.
-- **Night Notes:**
-  - 2026-04-12: Seeded by Nightshift.
-  - 2026-04-15: Parked — superseded by IDEA-013.
-  - 2026-04-16: **Unparked and advanced to `ready`** — Paul explicitly requested. Full dev plan written. Estimated 1.5–2 hours.
-  - 2026-04-17: **SHIPPED.** `FavoriteButton.tsx`, migration 011, `/api/stories/[storyId]/favorite`, `/api/profile/favorites`, `/profile/favorites/page.tsx`, ProfileHero link all confirmed in commit `d8af9cc`.
-
----
-
-### [IDEA-008] "New Stories" Feed on Home Page
-
-- **Status:** parked
-- **Category:** new
-- **Seeded:** 2026-04-14
-- **Last Updated:** 2026-04-17
-- **Priority:** P2
-- **Plan:** *(not yet written)*
-- **Summary:** Home page section showing most recent family-contributed stories (from `getPublishedStories()`). Pairs naturally with IDEA-006.
-- **Night Notes:**
-  - 2026-04-14: Seeded. `getPublishedStories()` already exists. Pure UI addition, no DB changes.
-  - 2026-04-17: Stale 3 days — likely low priority while Paul is shipping bigger features. Demoting to parked. Easy to revisit (no DB changes, pure UI).
-
----
-
-### [IDEA-010] Public Media Integration — Podcasts, Videos, and Public Sources
-
-- **Status:** shipped
-- **Category:** new
-- **Seeded:** 2026-04-14
-- **Last Updated:** 2026-04-19
-- **Priority:** P2
-- **Plan:** *(not yet written)*
-- **Summary:** Delivered as **Coffee with Cagnetta** interview content: `IV_S01`–`IV_S10` wiki stories, timeline/index hooks, and Ask corpus context (`prompts.ts`). The original sketch of a separate link gallery under `content/wiki/media/` was not built; first-person public interview is in the story graph instead.
-- **Night Notes:**
-  - 2026-04-14: Seeded by Paul (curated external links angle).
-  - 2026-04-17: Previously parked pending a media URL list.
-  - 2026-04-19: **SHIPPED** — validated: interview markdown, `Coffee with Cagnetta` attribution, IV story series in library and compiler pipeline.
-
----
-
-### [IDEA-011] Story Photos — Images That Surface During Reading
-
-- **Status:** shipped
-- **Category:** enhance
-- **Seeded:** 2026-04-14
-- **Last Updated:** 2026-04-17
-- **Priority:** P1
-- **Plan:** *(no dev plan written — Paul implemented directly)*
-- **Summary:** Associate photos with specific stories via inline markdown syntax. Images render inline as the reader scrolls, with a click-to-expand lightbox. Especially powerful in young_reader mode.
-- **Night Notes:**
-  - 2026-04-14: Seeded by Paul. Timeline already has 14 photos in `public/timeline/`.
-  - 2026-04-17: **SHIPPED.** Commit `c7ebef7` added 35 original book images to `public/book-images/`, updated 17 story wiki files with inline `![...]` image references, and created `StoryMarkdown.tsx` (ReactMarkdown-based renderer with click-to-expand lightbox, "Fit to Screen" / "Actual Size" / "Open Original" controls, keyboard Escape support).
-
----
-
-### [IDEA-012] Letter to Keith — Personal Takeaway from an Ask Conversation
-
-- **Status:** parked
-- **Category:** new
-- **Seeded:** 2026-04-15
-- **Last Updated:** 2026-04-18
-- **Priority:** P2
-- **Plan:** *(not yet written)*
-- **Summary:** After an Ask conversation, generate a short personal letter (from the user's perspective) summarizing what they learned. Downloadable. Especially meaningful for grandchildren.
-- **Night Notes:**
-  - 2026-04-15: Seeded. Non-streaming `/api/ask/letter` endpoint reusing conversation messages state.
-  - 2026-04-18: **Stale 3 days — likely low priority while Paul ships Beyond/People/Audio features. Demoting to parked.** Plan would be: POST `/api/ask/letter` with conversation history → single Sonnet call → return formatted letter text → client download as `.txt`. No new DB. Easy to revisit (~45 min).
-
----
-
-### [IDEA-016] Save a Passage — Highlight Text from Stories
-
-- **Status:** shipped
-- **Category:** new
-- **Seeded:** 2026-04-16
-- **Last Updated:** 2026-04-17
-- **Priority:** P1
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-016-passage-highlights.md`
-- **Summary:** Select any text in a story body → floating "Save this passage" button appears → one click saves it to Supabase. All saved passages collected at `/profile/highlights`, grouped by story in a reading-journal layout with blockquote styling. Individual passages can be removed. `sb_story_highlights` table (migration 012). Pairs with IDEA-004 (favorites) — both accessible from the profile page.
-- **Night Notes:**
-  - 2026-04-16: Seeded and advanced to `ready` same session (Paul explicitly requested). Full dev plan written.
-  - 2026-04-17: **SHIPPED.** `StoryBodyWithHighlighting.tsx`, migration 012, all API routes, `/profile/highlights/page.tsx`, `DeleteHighlightButton.tsx`, ProfileHero "✎ My passages" link all confirmed in commit `5dd3116`.
-
----
-
-### [IDEA-017] Photo Frame Mode — Fullscreen Rotating Memoir Photos
-
-- **Status:** shipped
-- **Category:** new
-- **Seeded:** 2026-04-17
-- **Last Updated:** 2026-04-18
-- **Priority:** P2
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-017-photo-frame.md`
-- **Summary:** A "Photo Frame" button on the home page triggers fullscreen mode where all chrome disappears and the 35 memoir photos cycle with a slow crossfade every 8 seconds. Subtle caption (story title + era) at the bottom. Close button reveals on hover; Escape exits. Designed for a tablet left on the table at a family gathering.
-- **Night Notes:**
-  - 2026-04-17: Seeded as a gallery page; revised to photo frame mode same session (Paul's direction — more evocative, kiosk-style). 35 photos already in `public/book-images/`. Key component: `PhotoFrameOverlay.tsx` — fixed-position, Fullscreen API, crossfade via opacity transition, preloads next image. No new routes, no DB. Estimated 1.5–2 hours.
-  - 2026-04-18: **SHIPPED.** `PhotoFrameOverlay.tsx` confirmed in commit `be2d3fd`. Fullscreen API, 8-second advance, 1.2s crossfade, 30s pause-on-tap, preloads next image. Escape and fullscreen exit both close.
-
----
-
-### [IDEA-018] Ask Keith About a Saved Passage
-
-- **Status:** shipped
-- **Category:** new
-- **Seeded:** 2026-04-17
-- **Last Updated:** 2026-04-19
-- **Priority:** P1
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-018-ask-from-passage.md`
-- **Summary:** "Ask about this passage →" button on each saved passage in `/profile/highlights`. Migration 018 adds `passage_ask_conversation_id` to `sb_story_highlights`. Ask page gained `?prompt=` URL param and `?highlight=` param for direct highlight context.
-- **Night Notes:**
-  - 2026-04-17: Seeded and advanced to `ready` same night.
-  - 2026-04-19: **SHIPPED.** Migration 018 confirmed; highlights page has "Ask about this passage →" link with `?highlight=...`; ask page has `getPreloadPrompt()` for `?prompt=` URL param; `promptHydratedRef` prevents repeat prefills. Both the highlight-to-conversation link and the principle "Ask About This" CTA use this infrastructure.
-
----
-
-### [IDEA-019] People Biographical Context in Ask Keith
-
-- **Status:** shipped
-- **Category:** enhance
-- **Seeded:** 2026-04-18
-- **Last Updated:** 2026-04-19
-- **Priority:** P1
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-019-people-in-ask-keith.md`
-- **Summary:** `getPeopleContext()` in `src/lib/ai/prompts.ts` reads Tier A/B bios from `content/wiki/people/` and injects them into the Ask system prompt. Ask Keith now knows who Bayne Cobb, Frances Cobb, and other key figures were.
-- **Night Notes:**
-  - 2026-04-18: Seeded and advanced to `planned` same night.
-  - 2026-04-19: **SHIPPED.** Confirmed in commit `c0411d6`.
-
----
-
-### [IDEA-022] Principles Context in Ask Keith
-
-- **Status:** ready
-- **Category:** enhance
-- **Seeded:** 2026-04-19
-- **Last Updated:** 2026-04-19
-- **Priority:** P1
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-022-principles-in-ask-keith.md`
-- **Summary:** The 12 canonical principles with thesis statements and rich `aiNarrative` text exist in `parser.ts` but are NOT in the Ask system prompt. Adding `getPrinciplesContext()` to `prompts.ts` would make Ask dramatically better at questions about Keith's values, leadership philosophy, and life lessons. Pure prompt enhancement — no DB, no new routes. Estimated 30 min.
-- **Night Notes:**
-  - 2026-04-19: Seeded, validated against codebase, and advanced to `ready` same night. Verified gap: orchestrator passes corpus summaries but not canonical principles context. Dev plan written. Highest-value 30-min improvement currently available.
-
----
-
-### [IDEA-023] Explore Hub — Interactive Story Map
-
-- **Status:** exploring
-- **Category:** new
-- **Seeded:** 2026-04-19
-- **Last Updated:** 2026-04-19
-- **Priority:** P2
-- **Plan:** *(not yet written)*
-- **Summary:** The `StorySankey`, `ThemePrincipleMatrix`, and `buildPeopleGraph` data are scattered across `/themes` and `/people`. A dedicated `/explore` page combining all three in a tabbed interface would give family members a visual "map" of the storybook — especially engaging for adult readers. All visualization infrastructure is already built in `graph.ts`; this is a pure UI assembly task. Estimated 1.5–2 hours.
-- **Night Notes:**
-  - 2026-04-19: Seeded. Verified: `buildPeopleGraph()`, `buildStorySankey()`, `buildThemePrincipleMatrix()` all work (41 tests pass). Components: `StorySankey.tsx`, `ThemePrincipleMatrix.tsx` on `/themes`; `ChordDiagram.tsx` on `/themes`; `PrincipleFormationTimeline.tsx` on `/principles`; no dedicated explore page exists. Data infra complete. Need to assess whether to reuse existing components or create a layout-only wrapper page.
-
----
-
-### [IDEA-021] Reading Milestone Celebration — Complete All 39 Memoir Stories
-
+### [IDEA-026] Open Threads Reader Panel — Narrative Mysteries Page
 - **Status:** seed
 - **Category:** new
-- **Seeded:** 2026-04-18
-- **Last Updated:** 2026-04-18
+- **Seeded:** 2026-04-22
+- **Last Updated:** 2026-04-22
 - **Priority:** P2
 - **Plan:** *(not yet written)*
-- **Summary:** When a family member reads their 39th memoir story (`sb_story_reads` count reaches 39 for P1_S* stories), show a special congratulations moment — "You've walked the full journey with Grandpa" — as a fullscreen overlay or celebratory toast with a meaningful message. The `sb_story_reads` infrastructure is fully in place; this is purely a celebration UI layer on top of the ReadTracker component. Especially meaningful for grandchildren who read the whole book.
+- **Summary:** The `cel_open_threads` DB table tracks narrative mysteries, setups, contradictions, and gaps with fields for `opened_in_chapter_id`, `resolved`, and `resolved_in_chapter_id`. No reader-facing UI exists yet. A "Mysteries" or "Open Questions" page would surface unresolved threads (gated: only threads from unlocked chapters shown), giving readers a living list of plot questions to hold while reading. Especially engaging for re-readers who see which threads got resolved.
 - **Night Notes:**
-  - 2026-04-18: Seeded. Implementation sketch: `ReadTracker` component checks total memoir story read count after each successful POST; if it hits 39 for the first time, fires a callback to parent page. Parent page shows `MilestoneOverlay.tsx` (similar pattern to `PhotoFrameOverlay.tsx`). No new DB columns needed — just a count query on `sb_story_reads` where story_id like `P1_%`.
+  - 2026-04-22: Seeded. `cel_open_threads` table confirmed (migration 026). RLS allows public reads. No rows exist yet (author needs to seed them via Beyond or direct DB insert). UI can be built now; content depends on author populating the table.
 
 ---
 
-### [IDEA-015] Enable Deep Ask — Multi-Perspective Responses in Production
-
-- **Status:** parked
+### [IDEA-027] Chapter Completion Milestone — "You've Finished the Story"
+- **Status:** seed
 - **Category:** new
-- **Seeded:** 2026-04-16
-- **Last Updated:** 2026-04-19
-- **Priority:** P2
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-015-deep-ask-activation.md`
-- **Summary:** The multi-perspective Ask orchestrator (storyteller + principles coach → synthesizer) is fully implemented and feature-flagged via `ENABLE_DEEP_ASK=true`. Activating requires reviewing perspective prompts and setting the Vercel env var.
+- **Seeded:** 2026-04-22
+- **Last Updated:** 2026-04-22
+- **Priority:** P3
+- **Plan:** *(not yet written)*
+- **Summary:** When a reader marks the final chapter (CH17) as read for the first time, show a fullscreen "You've completed Celestial" overlay — similar to `PhotoFrameOverlay.tsx` — with a brief congratulatory message and a prompt to enable re-reader mode (`show_all_content`). The `ReadTracker` component already fires on every chapter visit; a count query on `cel_story_reads` where `story_id LIKE 'CH%'` after each POST would detect completion. No new DB columns needed.
 - **Night Notes:**
-  - 2026-04-16: Seeded and advanced to `ready` same night.
-  - 2026-04-19: **Stale 3 days — parked.** Plan still valid. The orchestrator was updated in Run 8 to use corpus data, so perspective prompts are more accurate than before. Good candidate for re-activation when Paul has time to eval the deep path quality.
+  - 2026-04-22: Seeded. `ReadTracker` is the right hook point. `PhotoFrameOverlay.tsx` provides the fullscreen overlay pattern. The `PUT /api/reader/progress` endpoint already handles `showAllContent` toggle — the overlay could link directly to it.
 
 ---
 
 ## Parked
 
-*(Ideas demoted after 3+ days without action — full entries remain in category sections above with status: parked)*
+*(Ideas demoted after 3+ days without action, or superseded by Celestial migration.)*
 
-- *(IDEA-002 SHIPPED 2026-04-19 — TipTap + wiki mirror; was listed here while incorrectly parked.)*
-- *(IDEA-003 SHIPPED 2026-04-19 — age-aware suggestion chips in `ask/page.tsx`.)*
-- *(IDEA-004 unparked 2026-04-16 — SHIPPED 2026-04-17)*
-- *(IDEA-005 SHIPPED 2026-04-19 — listen-duration via `story-audio` + `StoryAudioControls` with IDEA-009; optional card “min read” follow-up remains.)*
-- *(IDEA-010 SHIPPED 2026-04-19 — Cagnetta interview as IV story series.)*
-- **IDEA-006** Featured Story of the Week — parked 2026-04-16. Stale 3 days. Wiki-first, no DB changes. Parked — revisit when home page refresh is prioritized.
-- **IDEA-008** New Stories Feed — parked 2026-04-17. Stale 3 days. Pure UI addition. Parked — low priority while larger features are landing.
-- **IDEA-012** Letter to Keith — parked 2026-04-18. Non-streaming `/api/ask/letter` endpoint. Parked — revisit when conversational features take priority.
-- **IDEA-015** Enable Deep Ask — parked 2026-04-19. Stale 3 days. Orchestrator updated with corpus data in Run 8; perspective prompts are better now. Re-evaluate when Paul has time for quality eval.
+### Memoir-Era Ideas (Parked 2026-04-22 — Superseded by Celestial Migration)
+
+All of the following were designed for the Keith Cobb memoir shell and are no longer applicable in the Celestial fiction companion. Kept for historical reference; do not un-park without explicit author instruction.
+
+- **IDEA-001** Guided Journeys — SHIPPED in memoir shell; carried to Celestial as `/journeys`
+- **IDEA-002** Keith's Story Workshop — SHIPPED in memoir shell; maps to Beyond/Tell in Celestial
+- **IDEA-003** Age-Aware Suggestion Chips — SHIPPED; age mode system is a FIX-029 legacy remnant
+- **IDEA-004** Bookmark a Story as Favorite — SHIPPED in memoir shell; carries to Celestial `/stories/[storyId]`
+- **IDEA-005** Reading Time Estimate — SHIPPED; listen time via StoryAudioControls
+- **IDEA-006** Featured Story of the Week — Parked 2026-04-16 (memoir context)
+- **IDEA-007** Resume Tell Session — SHIPPED in memoir shell
+- **IDEA-008** New Stories Feed — Parked 2026-04-17 (memoir context)
+- **IDEA-009** Story Voice Playback — SHIPPED; StoryAudioControls carries to Celestial
+- **IDEA-010** Public Media Integration — SHIPPED as interview story series
+- **IDEA-011** Story Photos — SHIPPED; memoir photos — not applicable to Celestial fiction
+- **IDEA-012** Letter to Keith — Parked 2026-04-18 (memoir-specific)
+- **IDEA-013** Story Reading Progress — SHIPPED; `cel_story_reads` carries to Celestial
+- **IDEA-014** Story Read Progress UI — **SHIPPED** — `ReadBadgeAgeAware` confirmed rendering in `StoriesPageClient.tsx` for unlocked chapters with `readSet.has(story.storyId)`
+- **IDEA-015** Enable Deep Ask — Parked 2026-04-19; multi-persona orchestrator fully implemented, kill-switch via `ENABLE_DEEP_ASK=true`
+- **IDEA-016** Save a Passage — SHIPPED; highlights carry to Celestial
+- **IDEA-017** Photo Frame Mode — SHIPPED; PhotoFrameOverlay carries to Celestial
+- **IDEA-018** Ask from Passage — SHIPPED; `?highlight=` param on Ask page
+- **IDEA-019** People Biographical Context in Ask — SHIPPED; getPeopleContext() in prompts.ts
+- **IDEA-020** Profile as Reflection Gallery — SHIPPED; cel_profile_reflections
+- **IDEA-021** Reading Milestone Celebration (39 memoir stories) — Parked 2026-04-22. Memoir-specific (39 P1_S* stories). Celestial equivalent: IDEA-027 (Chapter Completion Milestone, CH17).
+- **IDEA-022** Principles Context in Ask — Parked 2026-04-22. Memoir's 12 canonical principles do not map directly to Celestial. Celestial equivalent: IDEA-025 (Rules in Ask).

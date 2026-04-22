@@ -1,6 +1,59 @@
-# NIGHTLOG — Keith Cobb Interactive Storybook
+# NIGHTLOG — Celestial Interactive Book Companion
 
 > Append-only history of every nightly run. Most recent at the top.
+
+---
+
+## Run: 2026-04-22 (Run 9)
+
+### Summary
+- Scanned: 9 commits since Run 8 (e565702 → c678a6e): brain_lab rename, Phase 1 Celestial migration (brand + routes + gating), db namespace (cel_*), author role, reader show_all_content, 5 new migrations (025–029), persona registry + router + orchestrator, AI ledger + admin endpoint, chapter scenes ingest + reader page integration
+- Issues found: 4 new (FIX-026 stale RLS keith role, FIX-027 ai-activity route, FIX-028 legacy keith UI copy, FIX-029 age mode UI exposed)
+- Issues resolved: FIX-014 read badge confirmed shipped in StoriesPageClient; FIX-023/024/025 confirmed resolved (Run 8)
+- Ideas: IDEA-014 marked shipped; IDEA-021/022 parked (memoir-specific); IDEA-023 advanced from exploring → planned (dev plan written); IDEA-024/025/026/027 seeded
+- Plans written:
+  - `FIXPLAN-FIX-026-stale-keith-role-rls.md`
+  - `FIXPLAN-FIX-027-ai-activity-route-keith-role.md`
+  - `DEVPLAN-IDEA-023-explore-hub-celestial.md`
+- STATUS.md rewritten from scratch for Celestial context (was still describing Keith Cobb memoir app)
+- BACKLOG.md reset for Celestial: all memoir-specific ideas parked, new Celestial ideas seeded
+
+### Build & Lint & Test Results
+- `npm run build`: **PASSES** — clean, 37 routes. 1 Turbopack NFT warning on `prompts.ts` filesystem reads (expected behavior, not an error).
+- `npm run lint`: **PASSES** — 0 errors, 0 warnings.
+- `npm test`: **96 PASS** — up from 41 in Run 8. New test files: `scene-parser.test.ts`, `ledger.test.ts`, `personas.test.ts`, `router.test.ts`, and others.
+
+### Key Findings
+
+1. **STATUS.md was completely stale — described the Keith Cobb memoir app, not Celestial.** The last 9 commits are a wholesale Phase 1 migration: renamed brain_lab, purged memoir content/assets, created cel_* DB namespace, introduced author role, reader progress gating, and 5 new tables. STATUS.md has been fully rewritten.
+
+2. **FIX-026 (MEDIUM): Stale `role = 'keith'` in 4 migrations.** Migration 021 renamed the author role but migrations 025–028 were written after 021 and still check `role = 'keith'` in RLS policies. Author accounts cannot write to `cel_open_threads`, `cel_chapter_scenes`, or `cel_beats`. Fix: new migration 030 recreates affected policies with `role = 'author'`. Plan written.
+
+3. **FIX-027 (MEDIUM): `/api/admin/ai-activity` also checks stale `'keith'` role.** Code-layer check on line 31: `["admin", "keith"].includes(profile.role)`. One-line fix; plan written.
+
+4. **Major architecture additions (Phase C + D):** Persona registry (`personas.ts`) with 6 named personas; router (`router.ts`) mapping question depth to persona plans; multi-persona orchestrator (parallel sub-persona calls → synthesizer); AI call ledger (`ledger.ts`) recording tokens/cost/latency for every Anthropic call; chapter scene ingestion into `cel_chapter_scenes`; scene-aware AI context in `sharedContentBlock()`.
+
+5. **Chapter gating is solid.** `getReaderProgress()` + `isStoryUnlocked()` applied correctly to: story library (silhouette cards), story detail page (hard lock + friendly error), mission logs (filtered list). Ask orchestrator filters `visibleStories` before building the story catalog and injects "Reader Progress Gate" rule into every persona system prompt. Re-reader mode (`show_all_content`) honored throughout.
+
+6. **FIX-028 (LOW): Legacy "Keith" UI copy in 6+ files.** `AskAboutStory.tsx` says "Write to Keith"; `StoryContributionWorkspace.tsx` says "Share a memory about Keith"; `beyond/page.tsx` metadata says "Keith's dedicated space". These are Phase 1 copy cleanup gaps. No functional impact.
+
+7. **FIX-029 (LOW-MEDIUM): Age mode system UI exposed for adult fiction.** `AgeModeSwitcher` visible in Nav, Header, and HomePageClient. `JourneyProgressBar`, `JourneyReflection`, `JourneyCompleteSummary` render age-aware copy branches including `young_reader` mode. Adult fiction only per Celestial spec. Flagged as legacy remnant.
+
+8. **`content/voice.md` and `content/decision-frameworks.md` are stub placeholders.** Both files contain template text only. Every Ask persona prompt calls these via `getVoiceGuide()` / `getDecisionFrameworks()`. Voice guide quality is the single highest-impact improvement available. No code needed — author work only (IDEA-024).
+
+9. **IDEA-014 confirmed SHIPPED.** `StoriesPageClient.tsx` line ~285: `{readSet.has(story.storyId) && <ReadBadgeAgeAware />}` — read badges render on unlocked story cards in the chapter library. Marked shipped.
+
+10. **Review queue: 9 character files.** `brain_lab/out/review-queue.md` lists 9 characters with `reviewed: false`. These are AI-extracted stubs awaiting human editorial review before they can be considered stable wiki content.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/FIXPLAN-FIX-026-stale-keith-role-rls.md` — New migration 030 fixes 4 RLS policies across 4 tables (30 min + migration apply)
+- `docs/nightshift/plans/FIXPLAN-FIX-027-ai-activity-route-keith-role.md` — 1-line fix in api/admin/ai-activity/route.ts (5 min)
+- `docs/nightshift/plans/DEVPLAN-IDEA-023-explore-hub-celestial.md` — `/explore` page with 3-tab fiction entity hub (2.5 hours)
+
+### Recommendations
+- **If you have 10 min:** FIX-026 + FIX-027 together. Create `030_fix_author_role_in_rls.sql`, apply it, and change one line in `api/admin/ai-activity/route.ts`. Unblocks all author-level DB operations for open_threads, chapter_scenes, beats, and the AI activity dashboard.
+- **If you have 1 hour:** The 10-min fixes above + fill in `content/voice.md` with actual Celestial narrative voice guidance. Zero code, maximum Ask quality improvement. The current stub makes every persona prompt inject template text.
+- **If you have 2–3 hours:** FIX-026/027 (10 min) + voice guide content (30 min) + IDEA-023 Explore Hub Phase 1+2 (1.5 hrs). After this session: author writes are unblocked, Ask sounds like Celestial, and readers have a visual chapter map.
 
 ---
 
