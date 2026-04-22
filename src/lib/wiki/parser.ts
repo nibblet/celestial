@@ -24,6 +24,8 @@ import { WIKI_STORY_ID_PATTERN } from "@/lib/wiki/story-ids";
 import { chapterSortKey } from "@/lib/wiki/story-ids";
 import type { WikiEntityLoreMetadata } from "@/lib/wiki/lore-provenance";
 import type { CharacterDossier } from "@/lib/wiki/entity-dossier";
+import type { CanonDossier } from "@/lib/wiki/canon-dossier";
+export type { CanonDossier, CanonDossierSource } from "@/lib/wiki/canon-dossier";
 import { normalizeChapterThemes } from "@/lib/wiki/taxonomy";
 import { timelineData } from "@/lib/wiki/static-data";
 
@@ -764,6 +766,8 @@ export interface WikiPerson {
   lore?: WikiEntityLoreMetadata;
   /** Optional Phase 5 foundational dossier block (Role / Profile / Character Arc). */
   dossier?: CharacterDossier;
+  /** Canon-seeded dossier block (aliases, narrative prose, related slugs, sources). */
+  canonDossier?: CanonDossier;
 }
 
 export type FictionNounEntityType =
@@ -788,6 +792,8 @@ export interface WikiFictionNounEntity {
   relations: WikiEntityRelation[];
   lore?: WikiEntityLoreMetadata;
   dossier?: CharacterDossier;
+  /** Canon-seeded dossier block (aliases, narrative prose, related slugs, sources). */
+  canonDossier?: CanonDossier;
 }
 
 export interface WikiRuleConcept {
@@ -802,6 +808,8 @@ export interface WikiRuleConcept {
   body: string;
   relations: WikiEntityRelation[];
   lore?: WikiEntityLoreMetadata;
+  /** Canon-seeded dossier block (aliases, narrative prose, related slugs, sources). */
+  canonDossier?: CanonDossier;
 }
 
 function getLegacyPersonFromFile(filename: string): WikiPerson | null {

@@ -23,6 +23,7 @@ import type { WikiEntityKind, WikiEntityLoreMetadata } from "./lore-provenance";
 import { parseWikiEntityLoreSection } from "./lore-provenance";
 import type { CharacterDossier } from "./entity-dossier";
 import { parseCharacterDossierSection } from "./entity-dossier";
+import { parseCanonDossier } from "./canon-dossier";
 
 function extractStoryRefsFromBlock(block: string): string[] {
   const re = new RegExp(`\\((${WIKI_STORY_ID_PATTERN})\\)`, "g");
@@ -136,6 +137,7 @@ function parseNounCommon(
     kind === "character"
       ? parseCharacterDossierSection(content).dossier
       : undefined;
+  const canonDossier = parseCanonDossier(content) ?? undefined;
 
   return {
     slug,
@@ -151,6 +153,7 @@ function parseNounCommon(
     relations: parseEntityRelations(relationBlock),
     lore,
     dossier,
+    canonDossier,
   };
 }
 
@@ -177,6 +180,7 @@ export function parseWikiNounMarkdown(
       config.id === "fiction_characters" ? "characters" : "people",
     lore: base.lore,
     dossier: base.dossier,
+    canonDossier: base.canonDossier,
   };
 }
 
@@ -201,6 +205,7 @@ export function parseWikiRuleConceptMarkdown(
     : "";
 
   const lore = parseWikiEntityLoreSection(content, { wikiEntityKind: "rule" });
+  const canonDossier = parseCanonDossier(content) ?? undefined;
 
   return {
     kind: "rule_concept",
@@ -214,6 +219,7 @@ export function parseWikiRuleConceptMarkdown(
     body: content,
     relations: parseEntityRelations(relationBlock),
     lore,
+    canonDossier,
   };
 }
 

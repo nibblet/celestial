@@ -10,6 +10,7 @@ import { TIER_SHORT_LABEL } from "@/lib/wiki/people-tiers";
 import { getReaderProgress, isStoryUnlocked } from "@/lib/progress/reader-progress";
 import { EntityLoreCard } from "@/components/entities/EntityLoreCard";
 import { EntityDossier } from "@/components/entities/EntityDossier";
+import { CanonDossierCard } from "@/components/entities/CanonDossierCard";
 
 export default async function CharacterDetailPage({
   params,
@@ -73,6 +74,7 @@ export default async function CharacterDetailPage({
         </div>
       )}
 
+      {person.canonDossier && <CanonDossierCard dossier={person.canonDossier} />}
       {person.lore && <EntityLoreCard lore={person.lore} />}
       {person.dossier && <EntityDossier dossier={person.dossier} />}
 

@@ -1,8 +1,17 @@
-"use client";
-
 import Link from "next/link";
 import type { WikiFictionNounEntity, WikiRuleConcept } from "@/lib/wiki/parser";
 import { EntityLoreCard } from "@/components/entities/EntityLoreCard";
+import { CanonDossierCard } from "@/components/entities/CanonDossierCard";
+
+function renderRefCount(entity: WikiFictionNounEntity): string {
+  const refs = entity.memoirStoryIds.length + entity.interviewStoryIds.length;
+  if (refs > 0) return `${refs} ${refs === 1 ? "ref" : "refs"}`;
+  const mentions = entity.canonDossier?.mentions ?? 0;
+  if (mentions > 0) {
+    return `${mentions} ${mentions === 1 ? "mention" : "mentions"}`;
+  }
+  return "0 refs";
+}
 
 export function FictionEntityIndexPage({
   title,
@@ -32,7 +41,7 @@ export function FictionEntityIndexPage({
                   {entity.name}
                 </span>
                 <span className="type-meta shrink-0 normal-case tracking-normal text-ink-ghost">
-                  {entity.memoirStoryIds.length + entity.interviewStoryIds.length} refs
+                  {renderRefCount(entity)}
                 </span>
               </Link>
             </li>
@@ -61,6 +70,7 @@ export function FictionEntityDetailPage({
         &larr; All {heading.toLowerCase()}
       </Link>
       <h1 className="type-page-title mb-2">{entity.name}</h1>
+      {entity.canonDossier && <CanonDossierCard dossier={entity.canonDossier} />}
       {entity.lore && <EntityLoreCard lore={entity.lore} />}
       {entity.note && <p className="type-ui mb-4 text-ink-muted">{entity.note}</p>}
       {entity.memoirStoryIds.length > 0 && (
@@ -150,6 +160,7 @@ export function RuleDetailPage({ rule }: { rule: WikiRuleConcept }) {
         &larr; All rules
       </Link>
       <h1 className="type-page-title mb-4">{rule.title}</h1>
+      {rule.canonDossier && <CanonDossierCard dossier={rule.canonDossier} />}
       {rule.lore && <EntityLoreCard lore={rule.lore} />}
       {rule.thesis && <p className="type-ui mb-6 text-ink">{rule.thesis}</p>}
       {rule.examples.length > 0 && (
