@@ -106,7 +106,7 @@ function CharacterNameGrid({ people }: { people: WikiPerson[] }) {
         <li key={p.slug}>
           <Link
             href={`/characters/${p.slug}`}
-            className="group flex items-baseline justify-between gap-3 rounded-lg border border-[var(--color-border)] bg-warm-white px-3 py-2 transition-[border-color,box-shadow] hover:border-clay-border hover:shadow-[0_4px_12px_rgba(44,28,16,0.06)]"
+            className="sci-panel sci-card-link group flex items-baseline justify-between gap-3 px-3 py-2"
           >
             <span className="font-[family-name:var(--font-playfair)] text-base text-ink transition-colors group-hover:text-burgundy">
               {p.name}

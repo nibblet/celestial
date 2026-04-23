@@ -8,7 +8,7 @@ type Props = {
 };
 
 const ICON_BTN =
-  "inline-flex h-11 w-11 items-center justify-center rounded-full text-[rgba(240,232,213,0.55)] transition-colors duration-[var(--duration-normal)] hover:bg-[rgba(240,232,213,0.10)] hover:text-[#f0e8d5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(240,232,213,0.6)]";
+  "inline-flex h-11 w-11 items-center justify-center rounded-full text-[rgba(242,238,228,0.55)] transition-colors duration-[var(--duration-normal)] hover:bg-[rgba(242,238,228,0.10)] hover:text-[#f2eee4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(242,238,228,0.6)]";
 
 export function ProfileUtilityIcons({ isAdmin }: Props) {
   async function handleSignOut() {

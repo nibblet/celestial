@@ -6,7 +6,7 @@
 export function ReadDemo() {
   return (
     <div className="grid gap-3 sm:grid-cols-2">
-      <div className="relative rounded-xl border border-[var(--color-border)] bg-warm-white p-4 shadow-[0_4px_18px_rgba(44,28,16,0.06)]">
+      <div className="relative rounded-xl border border-[var(--color-border)] bg-warm-white p-4 shadow-[0_4px_18px_rgba(7,11,17,0.06)]">
         <p className="type-era-label mb-1 text-ink-muted">Mississippi, 1952</p>
         <h4 className="type-story-title mb-2 text-base leading-snug">
           The dirt road home

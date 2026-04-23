@@ -56,7 +56,7 @@ export function PersonLink({ slug, children }: Props) {
       {open && (
         <span
           role="tooltip"
-          className="not-prose absolute left-1/2 top-full z-50 mt-1 w-64 -translate-x-1/2 rounded-lg border border-[var(--color-border)] bg-warm-white p-3 text-left shadow-[0_8px_24px_rgba(44,28,16,0.12)]"
+          className="not-prose absolute left-1/2 top-full z-50 mt-1 w-64 -translate-x-1/2 rounded-lg border border-[var(--color-border)] bg-warm-white p-3 text-left shadow-[0_8px_24px_rgba(7,11,17,0.12)]"
         >
           <span className="block font-[family-name:var(--font-playfair)] text-sm font-semibold text-ink">
             {person.name}

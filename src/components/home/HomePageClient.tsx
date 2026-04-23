@@ -57,7 +57,7 @@ export function HomePageClient() {
             <Reveal key={card.href}>
               <Link
                 href={card.href}
-                className="group block h-full rounded-xl border border-[var(--color-border)] bg-warm-white p-6 shadow-none transition-[transform,box-shadow,border-color] duration-[var(--duration-slow)] ease-[var(--ease-out-soft)] hover:-translate-y-0.5 hover:border-clay-border hover:shadow-[0_12px_40px_rgba(44,28,16,0.08)]"
+                className="sci-panel sci-card-link group block h-full p-6"
               >
                 <h3 className="type-story-title mb-2 transition-colors group-hover:text-burgundy">
                   {card.title}
@@ -73,7 +73,7 @@ export function HomePageClient() {
             <button
               type="button"
               onClick={() => setPhotoFrame(true)}
-              className="group block h-full w-full rounded-xl border border-[var(--color-border)] bg-warm-white p-6 text-left shadow-none transition-[transform,box-shadow,border-color] duration-[var(--duration-slow)] ease-[var(--ease-out-soft)] hover:-translate-y-0.5 hover:border-clay-border hover:shadow-[0_12px_40px_rgba(44,28,16,0.08)] opacity-80 hover:opacity-100"
+              className="sci-panel sci-card-link group block h-full w-full p-6 text-left opacity-80 hover:opacity-100"
             >
               <h3 className="type-story-title mb-2 transition-colors group-hover:text-burgundy">
                 Photo Frame

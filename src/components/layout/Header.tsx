@@ -14,7 +14,7 @@ export function Header() {
   if (pathname === "/signup" || pathname === "/login") return null;
 
   return (
-    <header className="md:hidden flex items-center justify-between gap-2 border-b border-[var(--color-border)] bg-warm-white px-4 py-3">
+    <header className="md:hidden flex items-center justify-between gap-2 border-b border-[var(--color-border)] bg-[rgba(13,20,28,0.94)] px-4 py-3 backdrop-blur-md">
       <Link
         href="/"
         className="min-w-0 shrink font-[family-name:var(--font-playfair)] text-lg font-semibold text-burgundy"

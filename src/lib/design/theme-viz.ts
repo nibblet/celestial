@@ -1,20 +1,20 @@
 export const THEME_COLORS: Record<string, string> = {
-  integrity: "#8b2c2c",
-  leadership: "#b5451b",
-  "work-ethic": "#c8662a",
-  mentorship: "#d4a843",
-  family: "#6b1e1e",
-  community: "#3d6b35",
-  curiosity: "#4a7fa0",
-  identity: "#a04a4a",
-  gratitude: "#6ba35a",
-  adversity: "#6b5040",
-  "financial-responsibility": "#7ab3c9",
-  "career-choices": "#2f5d7a",
+  integrity: "#efe8da",
+  leadership: "#a24b2e",
+  "work-ethic": "#a24b2e",
+  mentorship: "#7fe7e1",
+  family: "#cfd8d6",
+  community: "#4fa886",
+  curiosity: "#6fd6df",
+  identity: "#d7a190",
+  gratitude: "#77c9aa",
+  adversity: "#b8c2bf",
+  "financial-responsibility": "#a8f2f0",
+  "career-choices": "#4da7b7",
 };
 
 export function themeColor(slug: string): string {
-  return THEME_COLORS[slug] || "#b5451b";
+  return THEME_COLORS[slug] || "#a24b2e";
 }
 
 export function withAlpha(hex: string, alpha: number): string {

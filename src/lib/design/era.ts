@@ -29,7 +29,7 @@ const ACCENTS: Record<EraKey, EraAccent> = {
   red_clay: {
     key: "red_clay",
     label: "Red Clay Hills",
-    hex: "#8b2c2c",
+    hex: "#efe8da",
     dot: "bg-burgundy",
     yearText: "text-burgundy",
     border: "border-burgundy/25",
@@ -51,7 +51,7 @@ const ACCENTS: Record<EraKey, EraAccent> = {
   building: {
     key: "building",
     label: "Building",
-    hex: "#d4a843",
+    hex: "#7fe7e1",
     dot: "bg-gold",
     yearText: "text-gold",
     border: "border-gold/40",
@@ -62,7 +62,7 @@ const ACCENTS: Record<EraKey, EraAccent> = {
   leadership: {
     key: "leadership",
     label: "Leadership",
-    hex: "#4a7fa0",
+    hex: "#6fd6df",
     dot: "bg-ocean",
     yearText: "text-ocean",
     border: "border-ocean/25",
@@ -73,7 +73,7 @@ const ACCENTS: Record<EraKey, EraAccent> = {
   legacy: {
     key: "legacy",
     label: "Legacy",
-    hex: "#6ba35a",
+    hex: "#77c9aa",
     dot: "bg-green",
     yearText: "text-green",
     border: "border-green/25",

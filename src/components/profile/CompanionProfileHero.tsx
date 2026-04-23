@@ -34,16 +34,16 @@ export function CompanionProfileHero({
 
   return (
     <>
-      <section className="relative overflow-hidden bg-[#1d130d] text-[#f7f3ed]">
+      <section className="relative overflow-hidden bg-[#0d141c] text-[#f2eee4]">
         <div
-          className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(212,168,67,0.24),transparent_35%),radial-gradient(circle_at_85%_15%,rgba(74,127,160,0.22),transparent_28%),linear-gradient(180deg,rgba(15,9,6,0.84),rgba(29,19,13,0.96))]"
+          className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(127,231,225,0.2),transparent_34%),radial-gradient(circle_at_85%_15%,rgba(168,242,240,0.16),transparent_24%),radial-gradient(ellipse_at_bottom,rgba(182,90,54,0.2),transparent_50%),linear-gradient(180deg,rgba(7,11,17,0.9),rgba(13,20,28,0.98))]"
           aria-hidden
         />
         <div
           className="absolute inset-0 opacity-30"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(247,243,237,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(247,243,237,0.08) 1px, transparent 1px)",
+              "linear-gradient(rgba(242,238,228,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(242,238,228,0.08) 1px, transparent 1px)",
             backgroundSize: "48px 48px",
           }}
           aria-hidden
@@ -51,18 +51,18 @@ export function CompanionProfileHero({
 
         <div className="relative mx-auto max-w-wide px-[var(--page-padding-x)] py-16 md:py-24">
           <div className="max-w-3xl">
-            <p className="type-era-label mb-4 text-[rgba(247,243,237,0.68)]">
+            <p className="type-era-label mb-4 text-[rgba(242,238,228,0.68)]">
               {`${book.author} · story workspace`}
             </p>
-            <h1 className="mb-4 font-[family-name:var(--font-playfair)] text-[clamp(2.5rem,6vw,4.75rem)] font-semibold leading-[1.02] tracking-tight text-[#f7f3ed]">
+            <h1 className="mb-4 font-[family-name:var(--font-playfair)] text-[clamp(2.5rem,6vw,4.75rem)] font-semibold leading-[1.02] tracking-tight text-[#f2eee4]">
               Welcome back, {displayName}.
             </h1>
-            <p className="max-w-2xl font-[family-name:var(--font-lora)] text-lg leading-relaxed text-[rgba(247,243,237,0.82)]">
+            <p className="max-w-2xl font-[family-name:var(--font-lora)] text-lg leading-relaxed text-[rgba(242,238,228,0.82)]">
               Beyond is the launch point for shaping untold stories into new
               stories for the collection. Turn memories, scenes, and
               reflections into additions to the family library.
             </p>
-            <p className="type-ui mt-4 text-sm !text-[rgba(247,243,237,0.65)]">
+            <p className="type-ui mt-4 text-sm !text-[rgba(242,238,228,0.65)]">
               Signed in as {email}
             </p>
           </div>
@@ -70,19 +70,19 @@ export function CompanionProfileHero({
           <div className="mt-10 grid gap-4 sm:grid-cols-[1.4fr_1fr]">
             <Link
               href="/beyond"
-              className="group rounded-[24px] border border-[rgba(247,243,237,0.18)] bg-[#1e3a4a] p-6 transition-[transform,border-color,background-color] duration-[var(--duration-normal)] hover:-translate-y-1 hover:border-[rgba(247,243,237,0.36)] hover:bg-[#26475a]"
+              className="sci-panel sci-card-link group p-6 transition-[background-color] duration-[var(--duration-normal)] hover:bg-[#1d303a]"
             >
               <div className="flex items-center justify-between gap-2">
-                <p className="type-ui text-base font-semibold !text-[#f7f3ed]">
+                <p className="type-ui text-base font-semibold !text-[#f2eee4]">
                   Enter Beyond
                 </p>
                 {badge && (
-                  <span className="type-ui rounded-full bg-gold px-2.5 py-0.5 text-xs font-semibold text-[#2c1c10]">
+                  <span className="type-ui rounded-full bg-gold px-2.5 py-0.5 text-xs font-semibold text-[#0d141c]">
                     {badge}
                   </span>
                 )}
               </div>
-              <p className="mt-2 font-[family-name:var(--font-lora)] text-sm leading-relaxed text-[rgba(247,243,237,0.75)]">
+              <p className="mt-2 font-[family-name:var(--font-lora)] text-sm leading-relaxed text-[rgba(242,238,228,0.75)]">
                 Capture expansions aligned with {book.shortName}&apos;s narrative
                 voice for the collection.
               </p>
@@ -91,7 +91,7 @@ export function CompanionProfileHero({
             <button
               type="button"
               onClick={handleSignOut}
-              className="type-ui inline-flex min-h-[46px] items-center justify-center self-start rounded-full border border-[rgba(247,243,237,0.2)] px-6 py-2.5 text-sm font-semibold !text-[rgba(247,243,237,0.9)] transition-colors duration-[var(--duration-normal)] hover:!text-[#f7f3ed]"
+              className="type-ui inline-flex min-h-[46px] items-center justify-center self-start rounded-full border border-[rgba(242,238,228,0.2)] px-6 py-2.5 text-sm font-semibold !text-[rgba(242,238,228,0.9)] transition-colors duration-[var(--duration-normal)] hover:!text-[#f2eee4]"
             >
               Sign out
             </button>

@@ -15,7 +15,7 @@ export function StoriesHubTabs() {
 
   return (
     <div
-      className="sticky top-0 z-[40] border-b border-[var(--color-border)] bg-warm-white/95 backdrop-blur-md md:top-[60px]"
+      className="sticky top-0 z-[40] border-b border-[rgba(127,231,225,0.18)] bg-[rgba(13,20,28,0.94)] backdrop-blur-md md:top-[60px]"
       role="tablist"
       aria-label="Reading companion sections"
     >
@@ -24,10 +24,10 @@ export function StoriesHubTabs() {
           href="/stories"
           role="tab"
           aria-selected={onChapters}
-          className={`flex-1 rounded-full px-2 py-2 text-center text-xs font-medium transition-colors sm:px-3 md:text-sm ${
+          className={`sci-chip flex-1 px-2 py-2 text-center text-xs font-medium transition-colors sm:px-3 md:text-sm ${
             onChapters
-              ? "bg-ink text-warm-white"
-              : "bg-transparent text-ink-muted hover:text-ink"
+              ? "bg-[#12343d] text-[#a8f2f0] shadow-[inset_0_0_0_1px_rgba(127,231,225,0.35)]"
+              : "bg-transparent text-[#b8c2bf] hover:text-[#f2eee4]"
           }`}
         >
           Chapters
@@ -36,10 +36,10 @@ export function StoriesHubTabs() {
           href="/stories/timeline"
           role="tab"
           aria-selected={onTimeline}
-          className={`flex-1 rounded-full px-2 py-2 text-center text-xs font-medium transition-colors sm:px-3 md:text-sm ${
+          className={`sci-chip flex-1 px-2 py-2 text-center text-xs font-medium transition-colors sm:px-3 md:text-sm ${
             onTimeline
-              ? "bg-ink text-warm-white"
-              : "bg-transparent text-ink-muted hover:text-ink"
+              ? "bg-[#12343d] text-[#a8f2f0] shadow-[inset_0_0_0_1px_rgba(127,231,225,0.35)]"
+              : "bg-transparent text-[#b8c2bf] hover:text-[#f2eee4]"
           }`}
         >
           Timeline
@@ -48,10 +48,10 @@ export function StoriesHubTabs() {
           href="/mission-logs"
           role="tab"
           aria-selected={onMissionLogs}
-          className={`flex-1 rounded-full px-2 py-2 text-center text-xs font-medium transition-colors sm:px-3 md:text-sm ${
+          className={`sci-chip flex-1 px-2 py-2 text-center text-xs font-medium transition-colors sm:px-3 md:text-sm ${
             onMissionLogs
-              ? "bg-ink text-warm-white"
-              : "bg-transparent text-ink-muted hover:text-ink"
+              ? "bg-[#12343d] text-[#a8f2f0] shadow-[inset_0_0_0_1px_rgba(127,231,225,0.35)]"
+              : "bg-transparent text-[#b8c2bf] hover:text-[#f2eee4]"
           }`}
         >
           Mission Logs

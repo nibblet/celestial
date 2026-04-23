@@ -22,7 +22,7 @@ export function SourceBadge({
     if (variant !== "library") return null;
     return (
       <span
-        className={`rounded-full px-2 py-0.5 text-[10px] font-medium bg-warm-white text-ink ring-1 ring-[var(--color-border)] ${className}`}
+        className={`sci-chip px-2 py-0.5 text-[10px] font-medium bg-warm-white text-ink ring-1 ring-[var(--color-border)] ${className}`}
       >
         Book I
       </span>
@@ -32,7 +32,7 @@ export function SourceBadge({
   if (legacySource === "interview") {
     return (
       <span
-        className={`rounded-full px-2 py-0.5 text-[10px] font-medium bg-ocean-pale text-ocean ${className}`}
+        className={`sci-chip px-2 py-0.5 text-[10px] font-medium bg-ocean-pale text-ocean ${className}`}
       >
         Interview
       </span>
@@ -41,7 +41,7 @@ export function SourceBadge({
   if (legacySource === "memoir") {
     return (
       <span
-        className={`rounded-full px-2 py-0.5 text-[10px] font-medium bg-burgundy-light text-burgundy ${className}`}
+        className={`sci-chip px-2 py-0.5 text-[10px] font-medium bg-burgundy-light text-burgundy ${className}`}
       >
         Legacy memoir
       </span>
@@ -50,7 +50,7 @@ export function SourceBadge({
 
   return (
     <span
-      className={`rounded-full px-2 py-0.5 text-[10px] font-medium bg-green-pale text-green ${className}`}
+      className={`sci-chip px-2 py-0.5 text-[10px] font-medium bg-green-pale text-green ${className}`}
     >
       Supplemental
     </span>

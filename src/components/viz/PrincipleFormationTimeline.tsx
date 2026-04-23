@@ -81,7 +81,7 @@ export function PrincipleFormationTimeline({ data }: Props) {
                   y1={y + ROW_H / 2}
                   x2={LABEL_W + data.eras.length * ERA_W}
                   y2={y + ROW_H / 2}
-                  stroke="rgba(44,28,16,0.10)"
+                  stroke="rgba(242,238,228,0.10)"
                   strokeWidth={1}
                 />
                 {firstCol !== null && lastCol !== null && (
@@ -90,7 +90,7 @@ export function PrincipleFormationTimeline({ data }: Props) {
                     y1={y + ROW_H / 2}
                     x2={dotX(lastCol)}
                     y2={y + ROW_H / 2}
-                    stroke="#b5451b"
+                    stroke="#a24b2e"
                     strokeOpacity={0.28}
                     strokeWidth={7}
                     strokeLinecap="round"

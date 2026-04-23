@@ -675,7 +675,7 @@ export function buildStorySankey(limit = 10, minLinkValue = 2): StorySankey {
     id: `principle:${cluster.fingerprint}`,
     kind: "principle",
     label: cluster.displayText,
-    color: "#8d7b67",
+    color: "#788991",
     layer: 2,
     storyIds: [],
     value: 0,

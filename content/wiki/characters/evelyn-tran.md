@@ -1,44 +1,6 @@
 # Evelyn Tran
 **Slug:** evelyn-tran
-
-<!-- canon:dossier slug="evelyn-tran" kind="characters" subkind="" parent="" generated="2026-04-22" mentions="7" -->
-## Canon Dossier
-
-**Aliases:** Evelyn Tran, Dr. Tran, Dr. Evelyn Tran, dr-evelyn-tran, Evelyn, 🧬 Dr. Evelyn Tran
-
-Represents Wonder and Caution: A visionary who must reconcile ambition with reverence.
-
-Evelyn Tran is a force of ambition wrapped in a lab coat. Her work made Valkyrie-1 fly—literally. She's the youngest lead physicist ever cleared for interstellar deployment. She doesn't want to witness the future—she wants to define it. But proof comes with cost, and Evelyn's brilliance often outpaces her judgment. She sees the vaults as her ultimate problem to solve. But the vaults don't want solving. They want humility. Evelyn hides her fear of irrelevance behind equations. She burns for truth, but beneath that fire is the secret belief: Maybe I'm the next key. She is drawn to Thane's effortless resonance, but resents it too. Her recklessness isn't emotional—it's intellectual. She will override safety protocols, question ALARA's thresholds, challenge spiritual interpretations, all in pursuit of a unifying theory that might not even exist. Evelyn is the embodiment of humanity's hunger to grasp the unknown. Her arc is not about losing ambition—but learning how to share it. She begins by trying to bend the ship to her will. She grows when she finally listens instead.
-
-Evelyn is a crew member who, in Book II, tries to force open a vault with disastrous consequences.
-
-Dr. Evelyn Tran speaks with sharp, impatient cadence, always on the edge of an epiphany. Her word choice is technical, layered, and sometimes arrogant. She dismisses metaphor unless she's using it herself. Example: 'It's not magic. It's a harmonic cascade that hasn't stabilized—yet.'
-
-Evelyn shares the Translation Bay with Lena; a zone for interpreting glyph systems and harmonic patterns.
-
-Young, idealistic, and vindicated by Valkyrie-1's systems—proof of her long-dismissed theories. Driven to uncover and apply interstellar physics, with a deep moral compass. Role: Quantum Physicist / Propulsion Expert. Character Arc: From visionary outsider to core architect of the crew's success. Learns to temper ambition with caution and reverence.
-
-Evelyn shares the Translation Bay with Lena, working on decryption of vault glyphs and emotional imprint data.
-
-### Related
-- [[valkyrie-1]]
-- [[thane-meric]]
-- [[lena-osei]]
-- [[jax-reyes]]
-- [[alara]]
-- [[translation-bay]]
-
-### Canon sources
-- **Celestial Heritage Series Bible.md** › The Crew as Archetypes
-- **Celestial Heritage Series Bible.md** › 🌠 Dr. Evelyn Tran
-- **Celestial Heritage Series Bible.md** › 📚 Celestial Heritage – Series Timeline
-- **Celestial Heritage Series Bible.md** › 🗣️ Dialogue Voice Keys
-- **Celestial Heritage Series Bible.md** › Layout Summary
-- **Celestial Heritage_ Character Dossier.md** › Dr. Evelyn Tran
-- **🛰️ Valkyrie-1 Interior Specifications.md** › 🔻 3. Mid-Level Systems – Science, Storage, Vault Analysis
-
-<!-- canon:end -->
-Inventory entry (tiers: A)
+Inventory entry (tiers: C)
 reviewed: false
 
 <!-- generated:ingest -->

@@ -36,7 +36,7 @@ export function ThemePrincipleMatrix({ data }: Props) {
         </p>
       </div>
 
-      <div className="mt-5 overflow-x-auto rounded-2xl border border-[var(--color-border)] bg-warm-white p-3">
+      <div className="sci-panel mt-5 overflow-x-auto p-3">
         <svg
           viewBox={`0 0 ${width} ${height}`}
           className="block h-auto min-w-[1120px]"
@@ -110,7 +110,7 @@ export function ThemePrincipleMatrix({ data }: Props) {
                     width={CELL_W - 10}
                     height={CELL_H - 10}
                     fill={withAlpha(theme.color, intensity)}
-                    stroke={activeMatch ? theme.color : "rgba(44,28,16,0.08)"}
+                    stroke={activeMatch ? theme.color : "rgba(242,238,228,0.08)"}
                     strokeWidth={activeMatch ? 2.5 : 1}
                     className={cell.count > 0 ? "cursor-pointer" : "cursor-default"}
                     onMouseEnter={() => setActive({ row: rowIndex, col: colIndex })}
@@ -138,7 +138,7 @@ export function ThemePrincipleMatrix({ data }: Props) {
         </svg>
       </div>
 
-      <div className="mt-4 rounded-2xl border border-[var(--color-border)] bg-warm-white p-4">
+      <div className="sci-panel mt-4 p-4">
         {activeCell && activeTheme && activePrinciple ? (
           <div>
             <div className="type-meta text-ink-ghost">Theme x principle family</div>

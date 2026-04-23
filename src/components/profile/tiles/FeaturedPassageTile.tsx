@@ -30,27 +30,27 @@ export function FeaturedPassageTile({ passage, totalCount, className = "" }: Pro
 
   return (
     <section
-      className={`rounded-[20px] border border-[rgba(240,232,213,0.14)] bg-[rgba(240,232,213,0.03)] p-5 md:p-6 ${className}`}
+      className={`sci-panel p-5 md:p-6 ${className}`}
     >
       <div className="flex items-center justify-between">
-        <h3 className="type-era-label text-[rgba(240,232,213,0.58)]">
+        <h3 className="type-era-label text-[rgba(242,238,228,0.58)]">
           A passage you kept
         </h3>
         <Link
           href="/profile/highlights"
-          className="type-era-label text-[rgba(240,232,213,0.5)] hover:text-[#f0e8d5]"
+          className="type-era-label text-[rgba(242,238,228,0.5)] hover:text-[#f2eee4]"
         >
           {totalCount} saved →
         </Link>
       </div>
-      <blockquote className="mt-4 border-l-2 border-[rgba(212,168,67,0.5)] pl-4 font-[family-name:var(--font-lora)] text-base italic leading-relaxed text-[#f0e8d5] md:text-lg">
+      <blockquote className="mt-4 border-l-2 border-[rgba(127,231,225,0.5)] pl-4 font-[family-name:var(--font-lora)] text-base italic leading-relaxed text-[#f2eee4] md:text-lg">
         &ldquo;{passage.text}&rdquo;
       </blockquote>
-      <p className="mt-3 font-[family-name:var(--font-inter)] text-xs text-[rgba(240,232,213,0.5)]">
+      <p className="mt-3 font-[family-name:var(--font-inter)] text-xs text-[rgba(242,238,228,0.5)]">
         From{" "}
         <Link
           href={`/stories/${passage.storyId}`}
-          className="text-[#d4a843] hover:underline"
+          className="text-[#7fe7e1] hover:underline"
         >
           {passage.storyTitle}
         </Link>{" "}

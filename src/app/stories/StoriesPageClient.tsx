@@ -135,7 +135,7 @@ export function StoriesPageClient({
           placeholder="Search chapters..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="type-ui w-full rounded-lg border border-[var(--color-border)] bg-warm-white px-3 py-2 text-ink placeholder:text-ink-ghost"
+          className="sci-input type-ui w-full border border-[var(--color-border)] bg-warm-white px-3 py-2 text-ink placeholder:text-ink-ghost"
         />
         <div className="flex gap-2 overflow-x-auto pb-1">
           {SOURCE_FILTERS.map((sf) => (
@@ -143,7 +143,7 @@ export function StoriesPageClient({
               key={sf.value}
               type="button"
               onClick={() => setSelectedSource(sf.value)}
-              className={`type-meta shrink-0 rounded-full px-3 py-1 transition-colors ${
+              className={`sci-chip type-meta shrink-0 px-3 py-1 transition-colors ${
                 selectedSource === sf.value
                   ? "bg-ocean text-warm-white"
                   : "bg-warm-white text-ink-muted ring-1 ring-[var(--color-border)] hover:text-ink"
@@ -159,7 +159,7 @@ export function StoriesPageClient({
               key={stage}
               type="button"
               onClick={() => setSelectedStage(stage)}
-              className={`type-meta shrink-0 rounded-full px-3 py-1 transition-colors ${
+              className={`sci-chip type-meta shrink-0 px-3 py-1 transition-colors ${
                 selectedStage === stage
                   ? "bg-clay text-warm-white"
                   : "bg-warm-white text-ink-muted ring-1 ring-[var(--color-border)] hover:text-ink"
@@ -175,7 +175,7 @@ export function StoriesPageClient({
               key={theme}
               type="button"
               onClick={() => setSelectedTheme(theme)}
-              className={`type-meta shrink-0 rounded-full px-3 py-1 transition-colors ${
+              className={`sci-chip type-meta shrink-0 px-3 py-1 transition-colors ${
                 selectedTheme === theme
                   ? "bg-burgundy text-warm-white"
                   : "bg-warm-white text-ink-muted ring-1 ring-[var(--color-border)] hover:text-ink"
@@ -203,8 +203,7 @@ export function StoriesPageClient({
                   !showAllContent &&
                   storyChapter !== null &&
                   storyChapter > currentChapterNumber;
-                const cardClass =
-                  "group block rounded-xl border border-[var(--color-border)] bg-warm-white p-4 transition-[transform,box-shadow,border-color] duration-[var(--duration-slow)] ease-[var(--ease-out-soft)] hover:-translate-y-0.5 hover:border-clay-border hover:shadow-[0_12px_40px_rgba(44,28,16,0.08)]";
+                const cardClass = "sci-panel sci-card-link group block p-4";
                 if (locked) {
                   return (
                     <div className={`${cardClass} opacity-90`}>
@@ -221,7 +220,7 @@ export function StoriesPageClient({
                             <button
                               type="button"
                               onClick={() => markStoryRead(story.storyId)}
-                              className="rounded-md border border-clay-border bg-warm-white px-2 py-1 text-xs text-ink hover:border-clay"
+                              className="sci-button border border-clay-border bg-warm-white px-2 py-1 text-xs text-ink hover:border-clay"
                             >
                               I&apos;ve read this chapter
                             </button>
@@ -248,7 +247,7 @@ export function StoriesPageClient({
                         variant="library"
                       />
                       <span
-                        className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${era.badgeClass}`}
+                        className={`sci-chip px-2 py-0.5 text-[10px] font-medium ${era.badgeClass}`}
                       >
                         {story.lifeStage}
                       </span>
@@ -259,7 +258,7 @@ export function StoriesPageClient({
                         return (
                           <span
                             key={theme}
-                            className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${
+                            className={`sci-chip px-2 py-0.5 text-[10px] font-medium ${
                               isLeadership
                                 ? "bg-ocean-pale text-ocean"
                                 : "bg-green-pale text-green"

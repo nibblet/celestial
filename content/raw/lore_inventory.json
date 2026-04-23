@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-04-22T18:42:04.429Z",
+  "generatedAt": "2026-04-23T11:21:31.945Z",
   "extractorVersion": "ingest-foundational-lore/1",
-  "entityCount": 69,
-  "withLoreSectionParsed": 69,
+  "entityCount": 82,
+  "withLoreSectionParsed": 73,
   "withDossierParsed": 1,
   "enrichmentReviewed": 0,
   "enrichmentDraft": 4,
@@ -509,6 +509,40 @@
       }
     },
     {
+      "slug": "andes-glacial-lake",
+      "wikiPath": "content/wiki/locations/andes-glacial-lake.md",
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Vault Encounter Tracker v2.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "asteroid-belt",
+      "wikiPath": "content/wiki/locations/asteroid-belt.md",
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Vault Encounter Tracker v2.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": []
+      }
+    },
+    {
       "slug": "blind-zones",
       "wikiPath": "content/wiki/locations/blind-zones.md",
       "wikiEntityKind": "location",
@@ -571,6 +605,40 @@
       }
     },
     {
+      "slug": "europa",
+      "wikiPath": "content/wiki/locations/europa.md",
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Vault Encounter Tracker v2.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": []
+      }
+    },
+    {
+      "slug": "ganymede",
+      "wikiPath": "content/wiki/locations/ganymede.md",
+      "wikiEntityKind": "location",
+      "lore": {
+        "wikiEntityKind": "location",
+        "sourceType": "canon_inventory",
+        "canonStatus": "canon",
+        "visibilityPolicy": "always_visible",
+        "provenance": {
+          "sourceDocument": "Vault Encounter Tracker v2.md",
+          "extractorVersion": "seed-canon-entities/1"
+        },
+        "chapterRefs": [],
+        "aliases": []
+      }
+    },
+    {
       "slug": "giza-plateau",
       "wikiPath": "content/wiki/locations/giza-plateau.md",
       "wikiEntityKind": "location",
@@ -608,7 +676,7 @@
         "aliases": [],
         "superset": {
           "type": "location",
-          "slug": "earth"
+          "slug": "giza-plateau"
         }
       }
     },
@@ -977,8 +1045,8 @@
         "chapterRefs": [],
         "aliases": [],
         "superset": {
-          "type": "artifact",
-          "slug": "valkyrie-1"
+          "type": "location",
+          "slug": "mars"
         },
         "subkind": "exploration-zone"
       }
@@ -1173,6 +1241,11 @@
       }
     },
     {
+      "slug": "ancients-philosophy",
+      "wikiPath": "content/wiki/rules/ancients-philosophy.md",
+      "wikiEntityKind": "rule"
+    },
+    {
       "slug": "coherence",
       "wikiPath": "content/wiki/rules/coherence.md",
       "wikiEntityKind": "rule",
@@ -1189,6 +1262,11 @@
         "aliases": [],
         "subkind": "principle"
       }
+    },
+    {
+      "slug": "conscious-machines",
+      "wikiPath": "content/wiki/rules/conscious-machines.md",
+      "wikiEntityKind": "rule"
     },
     {
       "slug": "consent-threshold",
@@ -1209,6 +1287,11 @@
       }
     },
     {
+      "slug": "containment-morality",
+      "wikiPath": "content/wiki/rules/containment-morality.md",
+      "wikiEntityKind": "rule"
+    },
+    {
       "slug": "directive-cn-24",
       "wikiPath": "content/wiki/rules/directive-cn-24.md",
       "wikiEntityKind": "rule",
@@ -1225,6 +1308,11 @@
         "aliases": [],
         "subkind": "directive"
       }
+    },
+    {
+      "slug": "earth-2050",
+      "wikiPath": "content/wiki/rules/earth-2050.md",
+      "wikiEntityKind": "rule"
     },
     {
       "slug": "memory-imprint",
@@ -1263,6 +1351,11 @@
       }
     },
     {
+      "slug": "moral-questions",
+      "wikiPath": "content/wiki/rules/moral-questions.md",
+      "wikiEntityKind": "rule"
+    },
+    {
       "slug": "parables-of-resonance",
       "wikiPath": "content/wiki/rules/parables-of-resonance.md",
       "wikiEntityKind": "rule",
@@ -1279,6 +1372,11 @@
         "aliases": [],
         "subkind": "concept"
       }
+    },
+    {
+      "slug": "prologue-timeline",
+      "wikiPath": "content/wiki/rules/prologue-timeline.md",
+      "wikiEntityKind": "rule"
     },
     {
       "slug": "resonance-field",
@@ -1315,6 +1413,16 @@
         "aliases": [],
         "subkind": "principle"
       }
+    },
+    {
+      "slug": "spiritual-symbols",
+      "wikiPath": "content/wiki/rules/spiritual-symbols.md",
+      "wikiEntityKind": "rule"
+    },
+    {
+      "slug": "technology-limits",
+      "wikiPath": "content/wiki/rules/technology-limits.md",
+      "wikiEntityKind": "rule"
     },
     {
       "slug": "the-inheritance",
@@ -1447,6 +1555,11 @@
         "subkind": "parable",
         "status": "soft"
       }
+    },
+    {
+      "slug": "vault-network",
+      "wikiPath": "content/wiki/rules/vault-network.md",
+      "wikiEntityKind": "rule"
     },
     {
       "slug": "vault-parables",

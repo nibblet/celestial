@@ -27,13 +27,13 @@ export function KeepersTile({ top, totalCount, className = "" }: Props) {
 
   return (
     <section
-      className={`rounded-[20px] border border-[rgba(240,232,213,0.14)] bg-[rgba(240,232,213,0.03)] p-5 ${className}`}
+      className={`sci-panel p-5 ${className}`}
     >
       <div className="flex items-center justify-between">
-        <h3 className="type-era-label text-[rgba(240,232,213,0.58)]">Keepers</h3>
+        <h3 className="type-era-label text-[rgba(242,238,228,0.58)]">Keepers</h3>
         <Link
           href="/profile/favorites"
-          className="type-era-label text-[rgba(240,232,213,0.5)] hover:text-[#f0e8d5]"
+          className="type-era-label text-[rgba(242,238,228,0.5)] hover:text-[#f2eee4]"
         >
           {totalCount} →
         </Link>
@@ -43,11 +43,11 @@ export function KeepersTile({ top, totalCount, className = "" }: Props) {
           <li key={f.storyId}>
             <Link
               href={`/stories/${f.storyId}`}
-              className="font-[family-name:var(--font-playfair)] text-base text-[#f0e8d5] hover:underline"
+              className="font-[family-name:var(--font-playfair)] text-base text-[#f2eee4] hover:underline"
             >
               {f.storyTitle}
             </Link>
-            <p className="mt-1 font-[family-name:var(--font-inter)] text-xs text-[rgba(240,232,213,0.5)]">
+            <p className="mt-1 font-[family-name:var(--font-inter)] text-xs text-[rgba(242,238,228,0.5)]">
               Saved {formatSavedAt(f.favoritedAt)}
             </p>
           </li>

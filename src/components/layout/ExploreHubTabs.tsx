@@ -18,7 +18,7 @@ export function ExploreHubTabs() {
 
   return (
     <div
-      className="sticky top-0 z-[40] border-b border-[var(--color-border)] bg-warm-white/95 backdrop-blur-md md:top-[60px]"
+      className="sticky top-0 z-[40] border-b border-[var(--color-border)] bg-[rgba(13,20,28,0.92)] backdrop-blur-md md:top-[60px]"
       role="tablist"
       aria-label="Explore section"
     >
@@ -27,7 +27,7 @@ export function ExploreHubTabs() {
           href="/arcs"
           role="tab"
           aria-selected={onJourneys}
-          className={`flex-1 rounded-full px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
+          className={`sci-chip flex-1 px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
             onJourneys
               ? "bg-ink text-warm-white"
               : "bg-transparent text-ink-muted hover:text-ink"
@@ -39,7 +39,7 @@ export function ExploreHubTabs() {
           href="/principles"
           role="tab"
           aria-selected={onPrinciples}
-          className={`flex-1 rounded-full px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
+          className={`sci-chip flex-1 px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
             onPrinciples
               ? "bg-ink text-warm-white"
               : "bg-transparent text-ink-muted hover:text-ink"
@@ -51,7 +51,7 @@ export function ExploreHubTabs() {
           href="/characters"
           role="tab"
           aria-selected={onCharacters}
-          className={`flex-1 rounded-full px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
+          className={`sci-chip flex-1 px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
             onCharacters
               ? "bg-ink text-warm-white"
               : "bg-transparent text-ink-muted hover:text-ink"
@@ -63,7 +63,7 @@ export function ExploreHubTabs() {
           href="/artifacts"
           role="tab"
           aria-selected={onArtifacts}
-          className={`flex-1 rounded-full px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
+          className={`sci-chip flex-1 px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
             onArtifacts
               ? "bg-ink text-warm-white"
               : "bg-transparent text-ink-muted hover:text-ink"
@@ -75,7 +75,7 @@ export function ExploreHubTabs() {
           href="/vaults"
           role="tab"
           aria-selected={onVaults}
-          className={`flex-1 rounded-full px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
+          className={`sci-chip flex-1 px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
             onVaults
               ? "bg-ink text-warm-white"
               : "bg-transparent text-ink-muted hover:text-ink"
@@ -87,7 +87,7 @@ export function ExploreHubTabs() {
           href="/locations"
           role="tab"
           aria-selected={onLocations}
-          className={`flex-1 rounded-full px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
+          className={`sci-chip flex-1 px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
             onLocations
               ? "bg-ink text-warm-white"
               : "bg-transparent text-ink-muted hover:text-ink"
@@ -99,7 +99,7 @@ export function ExploreHubTabs() {
           href="/factions"
           role="tab"
           aria-selected={onFactions}
-          className={`flex-1 rounded-full px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
+          className={`sci-chip flex-1 px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
             onFactions
               ? "bg-ink text-warm-white"
               : "bg-transparent text-ink-muted hover:text-ink"
@@ -111,7 +111,7 @@ export function ExploreHubTabs() {
           href="/rules"
           role="tab"
           aria-selected={onRules}
-          className={`flex-1 rounded-full px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
+          className={`sci-chip flex-1 px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
             onRules
               ? "bg-ink text-warm-white"
               : "bg-transparent text-ink-muted hover:text-ink"
@@ -123,7 +123,7 @@ export function ExploreHubTabs() {
           href="/mission-logs"
           role="tab"
           aria-selected={onMissionLogs}
-          className={`flex-1 rounded-full px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
+          className={`sci-chip flex-1 px-3 py-2 text-center text-xs font-medium transition-colors md:text-sm ${
             onMissionLogs
               ? "bg-ink text-warm-white"
               : "bg-transparent text-ink-muted hover:text-ink"

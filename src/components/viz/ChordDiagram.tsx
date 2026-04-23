@@ -172,7 +172,7 @@ export function ChordDiagram({ data }: Props) {
 
   return (
     <div className="relative">
-      <div className="overflow-hidden rounded-xl border border-[var(--color-border)] bg-warm-white-2 p-2">
+      <div className="sci-panel overflow-hidden p-2">
         <svg
           viewBox={`0 0 ${SIZE} ${SIZE}`}
           role="img"
@@ -238,7 +238,7 @@ export function ChordDiagram({ data }: Props) {
       </div>
 
       {/* Hover summary panel */}
-      <div className="mt-4 min-h-[120px] rounded-xl border border-[var(--color-border)] bg-warm-white p-4">
+      <div className="sci-panel mt-4 min-h-[120px] p-4">
         {hoveredName && hoveredPairs ? (
           <>
             <div className="type-meta text-ink-ghost">Co-occurrences with</div>

@@ -9,7 +9,7 @@ export default function JourneysPage() {
         published in this release.
       </p>
 
-      <div className="rounded-2xl border border-[var(--color-border)] bg-warm-white p-5 md:p-6">
+      <div className="sci-panel p-5 md:p-6">
         <p className="font-[family-name:var(--font-lora)] text-base text-ink">
           Coming soon: curated arc views that connect story beats, turning
           points, and thematic throughlines across the book.
@@ -17,13 +17,13 @@ export default function JourneysPage() {
         <div className="mt-5 flex flex-col gap-3 sm:flex-row">
           <Link
             href="/stories"
-            className="type-ui inline-flex min-h-[44px] items-center justify-center rounded-lg bg-clay px-4 py-2.5 font-medium text-warm-white transition-colors hover:bg-clay-mid"
+            className="sci-button type-ui inline-flex min-h-[44px] items-center justify-center bg-clay px-4 py-2.5 font-medium text-warm-white transition-colors hover:bg-clay-mid"
           >
             Browse Chapters
           </Link>
           <Link
             href="/ask"
-            className="type-ui inline-flex min-h-[44px] items-center justify-center rounded-lg border border-[var(--color-border)] bg-warm-white px-4 py-2.5 font-medium text-ink transition-colors hover:border-clay-border"
+            className="sci-button type-ui inline-flex min-h-[44px] items-center justify-center border border-[var(--color-border)] bg-warm-white px-4 py-2.5 font-medium text-ink transition-colors hover:border-clay-border"
           >
             Ask Celestial
           </Link>

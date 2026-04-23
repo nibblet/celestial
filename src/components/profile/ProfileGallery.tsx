@@ -12,9 +12,9 @@ type Props = { data: ProfileGalleryData; totalStories: number };
 
 export function ProfileGallery({ data, totalStories }: Props) {
   return (
-    <section className="relative border-t border-[rgba(240,232,213,0.12)] bg-[#241710] text-[#f0e8d5]">
+    <section className="relative border-t border-[rgba(242,238,228,0.12)] bg-[#0d141c] text-[#f2eee4]">
       <div
-        className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,168,67,0.16),transparent_30%),linear-gradient(180deg,rgba(255,255,255,0.02),transparent)]"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(127,231,225,0.14),transparent_30%),radial-gradient(ellipse_at_bottom,rgba(182,90,54,0.16),transparent_42%),linear-gradient(180deg,rgba(255,255,255,0.025),transparent)]"
         aria-hidden
       />
       <div className="relative mx-auto max-w-wide px-[var(--page-padding-x)] py-12 md:py-16">

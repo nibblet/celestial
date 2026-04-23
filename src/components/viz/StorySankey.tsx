@@ -41,7 +41,7 @@ export function StorySankey({ data }: Props) {
         </p>
       </div>
 
-      <div className="mt-5 overflow-x-auto rounded-2xl border border-[var(--color-border)] bg-warm-white p-3">
+      <div className="sci-panel mt-5 overflow-x-auto p-3">
         <svg
           viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
           className="block h-auto min-w-[980px]"
@@ -72,7 +72,7 @@ export function StorySankey({ data }: Props) {
                 key={link.id}
                 d={`M ${x1} ${y1} C ${mid} ${y1}, ${mid} ${y2}, ${x2} ${y2}`}
                 fill="none"
-                stroke={active ? "#8b2c2c" : "#8d7b67"}
+                stroke={active ? "#7fe7e1" : "#788991"}
                 strokeOpacity={muted}
                 strokeWidth={Math.max(2, link.value * 2.3)}
                 strokeLinecap="round"
@@ -147,7 +147,7 @@ export function StorySankey({ data }: Props) {
         </svg>
       </div>
 
-      <div className="mt-4 rounded-2xl border border-[var(--color-border)] bg-warm-white p-4">
+      <div className="sci-panel mt-4 p-4">
         {activeLink ? (
           <LinkDetail link={activeLink} nodes={data.nodes} />
         ) : activeNode ? (

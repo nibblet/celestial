@@ -1,34 +1,6 @@
 # Marco Ruiz
 **Slug:** marco-ruiz
-
-<!-- canon:dossier slug="marco-ruiz" kind="characters" subkind="" parent="" generated="2026-04-22" mentions="4" -->
-## Canon Dossier
-
-**Aliases:** Marco Ruiz, Major Ruiz, Major Marco Ruiz, major-marco-ruiz, Marco, 🛡️ Marco Ruiz, Ruiz
-
-Represents Security and Skepticism: A protector wary of what uncontrolled knowledge can unleash.
-
-Marco Ruiz is the fortress at the edge of the unknown. A former U.S. Space Force officer with decades of tactical experience, he was chosen for his discipline, loyalty, and calm under pressure. But Earth didn't just send him to protect the crew—they gave him a classified directive: monitor the mission, and if necessary, bring it back under control. He never expected that order to feel like betrayal. Marco's greatest strength is his certainty. But certainty cracks. The vaults don't follow logic. The ship reacts to emotion. He begins believing his job is to defend the crew. He slowly realizes his real test is choosing when to stand down. His Earth directive pulls him toward control. His conscience begins to pull him toward trust. He trusts protocol over gut, action over debate—but Valkyrie-1 doesn't reward those instincts. Its systems seem built to reflect not power, but moral readiness. Marco is the story's sword learning when not to strike. He was trained to fight, to enforce, to dominate a field. But Valkyrie-1 doesn't want soldiers. It wants witnesses capable of protecting not just life—but meaning.
-
-Marco Ruiz speaks with brief, commanding, clipped cadence under stress. His word choice is tactical and rooted in procedure. He often starts with 'That's not the point.' Example: 'If it moves when we feel something, we control nothing.'
-
-Retired U.S. Space Force. Grounded, cautious, and fiercely loyal. Tasked with crew security and risk assessment. Sees the mission as potentially dangerous to Earth if mishandled. Role: Security & Tactical Systems. Character Arc: Learns to trust the greater vision beyond military doctrine. Rediscovers his sense of purpose through the mission's integrity.
-
-### Related
-- [[valkyrie-1]]
-- [[galen-voss]]
-- [[thane-meric]]
-- [[jax-reyes]]
-- [[alara]]
-
-### Canon sources
-- **Celestial Heritage Series Bible.md** › The Crew as Archetypes
-- **Celestial Heritage Series Bible.md** › Major Marco Ruiz
-- **Celestial Heritage Series Bible.md** › 🗣️ Dialogue Voice Keys
-- **Celestial Heritage_ Character Dossier.md** › Major Marco Ruiz
-
-<!-- canon:end -->
-Inventory entry (tiers: A)
+Inventory entry (tiers: C)
 reviewed: false
 
 <!-- generated:ingest -->

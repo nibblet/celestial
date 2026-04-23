@@ -139,7 +139,7 @@ export function Nav() {
   if (pathname === "/login" || pathname === "/signup") return null;
 
   const desktopNavSurface = navSolid
-    ? "border-[var(--color-border)] bg-[rgba(247,243,237,0.92)] backdrop-blur-md shadow-sm"
+    ? "border-[var(--color-border)] bg-[rgba(13,20,28,0.88)] backdrop-blur-md shadow-[0_10px_30px_rgba(0,0,0,0.22)]"
     : "border-transparent bg-transparent backdrop-blur-sm";
 
   return (
@@ -183,7 +183,7 @@ export function Nav() {
 
       <nav
         aria-label="Main navigation"
-        className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-[var(--color-border)] bg-warm-white/95 backdrop-blur-md"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-[var(--color-border)] bg-[rgba(13,20,28,0.94)] backdrop-blur-md"
       >
         <ul className="flex list-none justify-around py-2">
           {primaryNavItems.map((item) => {

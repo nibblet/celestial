@@ -25,23 +25,23 @@ export function StoriesReadProgress({ readCount, totalStories }: Props) {
 
   return (
     <div className="lg:col-span-6">
-      <div className="rounded-[20px] border border-[rgba(240,232,213,0.14)] bg-[rgba(240,232,213,0.03)] p-5">
+      <div className="sci-panel p-5">
         <div className="mb-2 flex items-baseline justify-between gap-3">
-          <p className="type-era-label text-[rgba(240,232,213,0.58)]">
+          <p className="type-era-label text-[rgba(242,238,228,0.58)]">
             Stories read
           </p>
-          <p className="font-[family-name:var(--font-inter)] text-xs tabular-nums text-[rgba(240,232,213,0.72)]">
+          <p className="font-[family-name:var(--font-inter)] text-xs tabular-nums text-[rgba(242,238,228,0.72)]">
             {readCount} of {totalStories}
           </p>
         </div>
-        <div className="h-2 overflow-hidden rounded-full bg-[rgba(240,232,213,0.12)]">
+        <div className="h-2 overflow-hidden rounded-full bg-[rgba(242,238,228,0.12)]">
           <div
             className="h-full rounded-full bg-[var(--color-gold)] transition-[width] duration-500 ease-out"
             style={{ width: `${pct}%` }}
           />
         </div>
         {showYoungCelebration && (
-          <p className="mt-3 font-[family-name:var(--font-lora)] text-sm leading-snug text-[rgba(240,232,213,0.92)]">
+          <p className="mt-3 font-[family-name:var(--font-lora)] text-sm leading-snug text-[rgba(242,238,228,0.92)]">
             You read ALL of Grandpa&apos;s stories! 🎉
           </p>
         )}

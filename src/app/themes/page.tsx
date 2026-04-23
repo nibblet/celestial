@@ -44,7 +44,7 @@ export default function ThemesPage() {
             <Link
               key={theme.slug}
               href={`/themes/${theme.slug}`}
-              className="group rounded-xl border border-[var(--color-border)] bg-warm-white p-4 transition-[border-color,box-shadow] hover:border-clay-border hover:shadow-[0_8px_24px_rgba(44,28,16,0.06)]"
+              className="sci-panel sci-card-link group p-4"
             >
               <h3 className="font-[family-name:var(--font-playfair)] text-base font-semibold text-ink transition-colors group-hover:text-burgundy">
                 {theme.name}

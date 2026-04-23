@@ -46,13 +46,13 @@ export function ReaderSinceTile({
 
   return (
     <section
-      className={`rounded-[20px] border border-[rgba(240,232,213,0.14)] bg-[rgba(240,232,213,0.03)] p-5 ${className}`}
+      className={`sci-panel p-5 ${className}`}
     >
-      <p className="type-era-label text-[rgba(240,232,213,0.58)]">Reading since</p>
-      <p className="mt-3 font-[family-name:var(--font-playfair)] text-2xl font-semibold text-[#f0e8d5]">
+      <p className="type-era-label text-[rgba(242,238,228,0.58)]">Reading since</p>
+      <p className="mt-3 font-[family-name:var(--font-playfair)] text-2xl font-semibold text-[#f2eee4]">
         {formatMonthYear(firstReadAt)}
       </p>
-      <p className="mt-2 font-[family-name:var(--font-inter)] text-xs text-[rgba(240,232,213,0.62)]">
+      <p className="mt-2 font-[family-name:var(--font-inter)] text-xs text-[rgba(242,238,228,0.62)]">
         {readCount} {readCount === 1 ? "story" : "stories"} · most recent{" "}
         {formatRelative(mostRecentReadAt)}
       </p>

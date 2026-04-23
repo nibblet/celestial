@@ -3,30 +3,30 @@
 
 /* --- Design tokens (spec sections 2, 4, 7) --- */
 :root {
-  --color-burgundy: #8b2c2c;
-  --color-burgundy-dark: #6b1e1e;
-  --color-burgundy-light: #f5e8e8;
-  --color-clay: #b5451b;
-  --color-clay-mid: #c8662a;
-  --color-clay-light: #fdf0e8;
-  --color-clay-border: #e8b090;
-  --color-parchment: #f0e8d5;
-  --color-warm-white: #f7f3ed;
-  --color-warm-white-2: #fbf8f4;
-  --color-ink: #2c1c10;
-  --color-ink-muted: #6b5040;
-  --color-ink-ghost: #a89070;
-  --color-ocean: #4a7fa0;
-  --color-ocean-light: #7ab3c9;
-  --color-ocean-pale: #e8f4f8;
-  --color-green: #3d6b35;
-  --color-green-mid: #6ba35a;
-  --color-green-pale: #eef4ec;
-  --color-gold: #d4a843;
-  --color-gold-pale: #f5e8c8;
-  --color-border: rgba(44, 28, 16, 0.12);
-  --color-border-strong: rgba(44, 28, 16, 0.25);
-  --color-divider: rgba(44, 28, 16, 0.08);
+  --color-burgundy: #efe8da;
+  --color-burgundy-dark: #cfd8d6;
+  --color-burgundy-light: #24333a;
+  --color-clay: #a24b2e;
+  --color-clay-mid: #b65a36;
+  --color-clay-light: #2c211d;
+  --color-clay-border: rgba(182, 90, 54, 0.38);
+  --color-parchment: #0d141c;
+  --color-warm-white: #15222b;
+  --color-warm-white-2: #1d303a;
+  --color-ink: #f2eee4;
+  --color-ink-muted: #b8c2bf;
+  --color-ink-ghost: #788991;
+  --color-ocean: #6fd6df;
+  --color-ocean-light: #a8f2f0;
+  --color-ocean-pale: #12343d;
+  --color-green: #4fa886;
+  --color-green-mid: #77c9aa;
+  --color-green-pale: #17372f;
+  --color-gold: #7fe7e1;
+  --color-gold-pale: #143c42;
+  --color-border: rgba(242, 238, 228, 0.13);
+  --color-border-strong: rgba(127, 231, 225, 0.32);
+  --color-divider: rgba(242, 238, 228, 0.08);
 
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -48,9 +48,9 @@
   --page-padding-x: clamp(1rem, 4vw, 3rem);
 
   --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
   --radius-full: 9999px;
 
   --ease-out-soft: cubic-bezier(0.25, 1, 0.5, 1);
@@ -112,41 +112,36 @@ body[data-age-mode="teen"] {
   --max-width-max: 1280px;
 
   --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
 }
 
 /* --- Beyond workspace theme (Keith's private space) ---
-   Scoped override inspired by the back-of-dust-jacket portrait:
-   deep ocean teal background, warm cream text, red cap as accent.
+   A slightly brighter command-deck variant of the global dust-cover palette.
    Applied only inside /beyond/* via <div class="beyond-theme">. */
 .beyond-theme {
-  /* Accent: red cap replaces clay */
-  --color-clay: #b84336;
-  --color-clay-mid: #9e3529;
-  --color-clay-light: #3d2622;
-  --color-clay-border: rgba(184, 67, 54, 0.35);
+  --color-clay: #a24b2e;
+  --color-clay-mid: #ec8a55;
+  --color-clay-light: #352820;
+  --color-clay-border: rgba(182, 90, 54, 0.42);
 
-  /* Surfaces: ocean teal replaces warm white */
-  --color-warm-white: #1e3a4a;
-  --color-warm-white-2: #26475a;
-  --color-parchment: #17303d;
+  --color-warm-white: #192b35;
+  --color-warm-white-2: #213945;
+  --color-parchment: #101c25;
 
-  /* Text: warm cream inverted */
-  --color-ink: #f5ede0;
-  --color-ink-muted: #c8c1b2;
-  --color-ink-ghost: #8a9398;
+  --color-ink: #f5efe5;
+  --color-ink-muted: #c4cfcc;
+  --color-ink-ghost: #81949a;
 
   /* Borders softened for dark surface */
-  --color-border: rgba(247, 237, 224, 0.15);
-  --color-border-strong: rgba(247, 237, 224, 0.3);
-  --color-divider: rgba(247, 237, 224, 0.1);
+  --color-border: rgba(245, 239, 229, 0.15);
+  --color-border-strong: rgba(127, 231, 225, 0.34);
+  --color-divider: rgba(245, 239, 229, 0.1);
 
-  /* Burgundy headings stay but lean warmer against teal */
-  --color-burgundy: #e8b4a8;
-  --color-burgundy-dark: #d19a8c;
-  --color-burgundy-light: #2a3d48;
+  --color-burgundy: #f2eadc;
+  --color-burgundy-dark: #d7dedb;
+  --color-burgundy-light: #243a43;
 
   background: var(--color-parchment);
   color: var(--color-ink);
@@ -399,4 +394,292 @@ body {
   font-family: var(--font-inter), "Helvetica Neue", sans-serif;
   background: var(--color-parchment);
   color: var(--color-ink);
+}
+
+/* --- Celestial sci-fi surfaces ---
+   Angular panels replace the previous soft storybook card language. */
+.sci-panel {
+  position: relative;
+  border: 1px solid color-mix(in srgb, var(--color-ocean) 24%, transparent);
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(135deg, rgba(127, 231, 225, 0.075), transparent 34%),
+    linear-gradient(180deg, rgba(242, 238, 228, 0.035), transparent 42%),
+    var(--color-warm-white);
+  box-shadow:
+    inset 0 1px 0 rgba(242, 238, 228, 0.08),
+    inset 0 -1px 0 rgba(127, 231, 225, 0.055),
+    0 16px 44px rgba(0, 0, 0, 0.2);
+  clip-path: polygon(
+    0 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% 100%,
+    12px 100%,
+    0 calc(100% - 12px)
+  );
+}
+
+.sci-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(127, 231, 225, 0.38), transparent 18%) top left / 72px 1px no-repeat,
+    linear-gradient(180deg, rgba(127, 231, 225, 0.24), transparent 22%) top left / 1px 64px no-repeat;
+  opacity: 0.62;
+}
+
+.sci-panel:hover {
+  border-color: color-mix(in srgb, var(--color-ocean-light) 42%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(242, 238, 228, 0.1),
+    0 18px 48px rgba(0, 0, 0, 0.28),
+    0 0 28px rgba(127, 231, 225, 0.07);
+}
+
+:is(div, section, article, aside, li, a).bg-warm-white.border,
+:is(div, section, article, aside, li, a).bg-warm-white-2.border {
+  border-color: color-mix(in srgb, var(--color-ocean) 18%, transparent);
+  border-radius: var(--radius-md);
+  background-image:
+    linear-gradient(135deg, rgba(127, 231, 225, 0.04), transparent 32%),
+    linear-gradient(180deg, rgba(242, 238, 228, 0.025), transparent 44%);
+}
+
+.sci-card-link {
+  transition:
+    transform var(--duration-normal) var(--ease-out-soft),
+    border-color var(--duration-normal),
+    box-shadow var(--duration-normal),
+    background-color var(--duration-normal);
+}
+
+.sci-card-link:hover {
+  transform: translateY(-2px);
+}
+
+.sci-button {
+  border-radius: var(--radius-sm);
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  box-shadow:
+    inset 0 1px 0 rgba(242, 238, 228, 0.12),
+    0 0 0 1px rgba(127, 231, 225, 0.08);
+}
+
+button.bg-clay,
+a.bg-clay,
+button.border.bg-warm-white,
+a.border.bg-warm-white {
+  border-radius: var(--radius-sm);
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+}
+
+.sci-chip {
+  border-radius: var(--radius-sm);
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+}
+
+.sci-input {
+  border-radius: var(--radius-sm);
+  background-image: linear-gradient(180deg, rgba(127, 231, 225, 0.04), transparent);
+}
+
+input,
+textarea,
+select {
+  border-radius: var(--radius-sm);
+}
+
+button,
+a {
+  text-underline-offset: 0.18em;
+}
+
+/* In the dark palette, warm-white is a surface color. Existing rust CTA
+   markup still uses text-warm-white, so force ivory text on clay fills. */
+.bg-clay.text-warm-white,
+.hover\:bg-clay.hover\:text-warm-white:hover {
+  color: var(--color-ink);
+}
+
+/* Hard semantic utility overrides.
+   These keep deployed/generated Tailwind utility colors aligned with the
+   Celestial dust-cover palette across every page and legacy component. */
+html,
+body,
+main {
+  background: var(--color-parchment) !important;
+  color: var(--color-ink) !important;
+}
+
+.bg-parchment {
+  background-color: var(--color-parchment) !important;
+}
+
+.bg-warm-white,
+.bg-warm-white\/95 {
+  background-color: var(--color-warm-white) !important;
+}
+
+.bg-warm-white-2 {
+  background-color: var(--color-warm-white-2) !important;
+}
+
+.bg-ink {
+  background-color: var(--color-ink) !important;
+}
+
+.bg-burgundy {
+  background-color: var(--color-burgundy) !important;
+}
+
+.bg-burgundy\/10 {
+  background-color: color-mix(in srgb, var(--color-burgundy) 10%, transparent) !important;
+}
+
+.bg-burgundy-light {
+  background-color: var(--color-burgundy-light) !important;
+}
+
+.bg-clay {
+  background-color: var(--color-clay) !important;
+}
+
+.bg-clay-mid {
+  background-color: var(--color-clay-mid) !important;
+}
+
+.bg-clay-light {
+  background-color: var(--color-clay-light) !important;
+}
+
+.bg-ocean {
+  background-color: var(--color-ocean) !important;
+}
+
+.bg-ocean-pale {
+  background-color: var(--color-ocean-pale) !important;
+}
+
+.bg-green {
+  background-color: var(--color-green) !important;
+}
+
+.bg-green-pale {
+  background-color: var(--color-green-pale) !important;
+}
+
+.bg-gold {
+  background-color: var(--color-gold) !important;
+}
+
+.bg-gold-pale {
+  background-color: var(--color-gold-pale) !important;
+}
+
+.text-ink {
+  color: var(--color-ink) !important;
+}
+
+.text-ink-muted {
+  color: var(--color-ink-muted) !important;
+}
+
+.text-ink-ghost {
+  color: var(--color-ink-ghost) !important;
+}
+
+.text-warm-white {
+  color: var(--color-warm-white) !important;
+}
+
+.text-burgundy {
+  color: var(--color-burgundy) !important;
+}
+
+.text-clay {
+  color: var(--color-clay-mid) !important;
+}
+
+.text-ocean {
+  color: var(--color-ocean) !important;
+}
+
+.text-ocean-light {
+  color: var(--color-ocean-light) !important;
+}
+
+.text-green {
+  color: var(--color-green) !important;
+}
+
+.text-gold {
+  color: var(--color-gold) !important;
+}
+
+.border-clay {
+  border-color: var(--color-clay) !important;
+}
+
+.border-clay-border {
+  border-color: var(--color-clay-border) !important;
+}
+
+.border-burgundy {
+  border-color: var(--color-burgundy) !important;
+}
+
+.border-ocean {
+  border-color: var(--color-ocean) !important;
+}
+
+.border-warm-white {
+  border-color: var(--color-warm-white) !important;
+}
+
+.ring-warm-white {
+  --tw-ring-color: var(--color-warm-white) !important;
+}
+
+.hover\:bg-clay:hover {
+  background-color: var(--color-clay) !important;
+}
+
+.hover\:bg-clay-mid:hover {
+  background-color: var(--color-clay-mid) !important;
+}
+
+.hover\:bg-burgundy\/90:hover {
+  background-color: color-mix(in srgb, var(--color-burgundy) 90%, transparent) !important;
+}
+
+.hover\:bg-gold-pale\/80:hover {
+  background-color: color-mix(in srgb, var(--color-gold-pale) 80%, transparent) !important;
+}
+
+.hover\:border-clay-border:hover {
+  border-color: var(--color-clay-border) !important;
+}
+
+.hover\:border-ocean:hover {
+  border-color: var(--color-ocean) !important;
+}
+
+.hover\:text-burgundy:hover {
+  color: var(--color-burgundy) !important;
+}
+
+.hover\:text-clay:hover {
+  color: var(--color-clay-mid) !important;
+}
+
+.hover\:text-ocean:hover {
+  color: var(--color-ocean) !important;
+}
+
+.bg-clay.text-warm-white,
+.hover\:bg-clay.hover\:text-warm-white:hover {
+  color: var(--color-ink) !important;
 }
