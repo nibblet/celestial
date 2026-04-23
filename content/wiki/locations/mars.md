@@ -10,21 +10,23 @@ In 2050, a buried spacecraft beneath Mars reactivates. The Valkyrie-1 mission be
 
 Mars is where a ship was buried beneath the Martian crust by the Resonant. Energy signatures found near the Martian vault inspired the Harmonic Drive. Vaults are near the Martian ship. First vault interactions occur on Mars and Giza in Book I.
 
-Mars is permanently settled and nearly self-sufficient, with governance structures and supply chains growing increasingly independent from Earth.
-
 Mars is the location where Valkyrie-1 was discovered buried beneath the surface.
+
+Planet where Vault 002 (Vault of First Light) is located beneath Valkyrie-1, and where Vault 008 (The Silent Twin) is located opposite the Valkyrie site.
 
 ### Related
 - [[valkyrie-1]]
 - [[the-ancients]]
 - [[vault-builders]]
 - [[harmonic-drive]]
+- [[vault-002]]
+- [[vault-008]]
 
 ### Canon sources
 - **Celestial Heritage Series Bible.md** › Logline
 - **Celestial Heritage Series Bible.md** › 🌌 The Vault Builders
-- **Earth 2050_ World Snapshot.md** › II. Space Presence & Exploration
 - **Valkyrie-1 Technical Brief.md** › Overview
+- **Vault Encounter Tracker v2.md** › Vault 002: Vault of First Light
 
 <!-- canon:end -->
 

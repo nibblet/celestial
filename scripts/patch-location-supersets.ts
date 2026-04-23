@@ -19,7 +19,7 @@ const SUPERSET_BY_SLUG: Record<string, string> = {
   sensorium: "[[artifact:valkyrie-1]]",
   "translation-bay": "[[artifact:valkyrie-1]]",
   "resonant-pad": "[[artifact:valkyrie-1]]",
-  "zone-theta": "[[artifact:valkyrie-1]]",
+  "zone-theta": "[[location:mars]]",
   "mess-commons": "[[artifact:valkyrie-1]]",
   "med-module": "[[artifact:valkyrie-1]]",
   "living-quarters": "[[artifact:valkyrie-1]]",
@@ -32,7 +32,7 @@ const SUPERSET_BY_SLUG: Record<string, string> = {
   "south-trench": "[[location:mars]]",
   "subsurface-vault": "[[location:mars]]",
   "giza-plateau": "[[location:earth]]",
-  "great-pyramid": "[[location:earth]]",
+  "great-pyramid": "[[location:giza-plateau]]",
 };
 
 let touched = 0;

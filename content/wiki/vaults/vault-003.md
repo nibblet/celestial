@@ -1,21 +1,25 @@
 # Vault 003: Vault of the Veil
 **Slug:** vault-003
 
-<!-- canon:dossier slug="vault-003" kind="vaults" subkind="site" parent="" generated="2026-04-22" mentions="1" -->
+<!-- canon:dossier slug="vault-003" kind="vaults" subkind="vault" parent="" generated="2026-04-22" mentions="2" -->
 ## Canon Dossier
 
-**Aliases:** Vault 3, Vault of the Veil
+**Aliases:** Vault 3, Vault of the Veil, Vault 003, Vault 003: Vault of the Veil, vault-003-vault-of-the-veil
 
-A shifting phase-state vault detected in Ganymede orbit, phase-locked to Jovian resonance. Associated in the parable record with 'The Silent Choir', shared by ALARA and Thane in Chapter 14 during a harmonic pulse that distributes light-weave across crew spaces. The vault emphasizes collective memory and moral alignment, and its physical entry mechanism remains an unresolved phase-lock structure.
+A vault that serves as the source for 'The Silent Choir' parable, shared by ALARA and Thane in Chapter 14. The transmission occurs during a shared resonance event and harmonic pulse, with light-weave distributed across crew spaces. The vault emphasizes collective memory and moral alignment.
+
+Discovery Order: 3; Activation Order: TBD; Location: Ganymede orbit – harmonic veil phase-locked to Jovian resonance; Status: Detected / Awaiting; Trigger: Crew resonance + symbolic act; Symbolic Response: Shifting phase-state vault; Unresolved Elements: Phase-lock structure; entry mechanism; Narrative Function: Book I climax / identity convergence / Watcher signal echo
 
 ### Related
 - [[the-silent-choir]]
 - [[alara]]
 - [[thane-meric]]
+- [[ganymede]]
+- [[the-watchers]]
 
 ### Canon sources
-- **Vault Encounter Tracker v2.md** › Vault 003: Vault of the Veil
 - **Parable Catalog v2 – Celestial Heritage Series.md** › Parable Catalog v2 – Celestial Heritage Series
+- **Vault Encounter Tracker v2.md** › Vault 003: Vault of the Veil
 
 <!-- canon:end -->
 

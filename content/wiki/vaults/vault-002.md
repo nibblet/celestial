@@ -1,12 +1,14 @@
 # Vault 002: Vault of First Light
 **Slug:** vault-002
 
-<!-- canon:dossier slug="vault-002" kind="vaults" subkind="site" parent="" generated="2026-04-22" mentions="2" -->
+<!-- canon:dossier slug="vault-002" kind="vaults" subkind="vault" parent="" generated="2026-04-22" mentions="2" -->
 ## Canon Dossier
 
-**Aliases:** Vault 2, Vault 002, First Light, Vault of First Light, Martian Resonance Vault, martian-resonance-vault
+**Aliases:** Vault 2, Vault of First Light, Vault 002, Vault 002: Vault of First Light, vault-002-vault-of-first-light
 
-A vault that serves as the source for two parables: 'The Vessel and the Thread' (full transmission to Thane Meric in Chapter 10) and 'The Weightless Measure' (minor echo to Jonah Revas in Chapter 6). The vault transmits intentional symbolic content triggered by alignment conditions such as emotional convergence and ethical seeking. Discovered second, activated first; it sits beneath Valkyrie-1 on Mars, inside the South Trench excavation.
+A vault that serves as the source for two parables: 'The Vessel and the Thread' (full transmission to Thane Meric in Chapter 10) and 'The Weightless Measure' (minor echo to Jonah Revas in Chapter 6). The vault transmits intentional symbolic content triggered by alignment conditions such as emotional convergence and ethical seeking.
+
+Discovery Order: 2; Activation Order: 1; Location: Mars – Beneath Valkyrie-1; Status: Activated; Characters Involved: Galen, Aven, Thane; Trigger: Thane's emotional resonance; Symbolic Response: Nine shadow-figures; tailored visions; Effects: ALARA empathy mod; Thane's 432Hz signal; recurring glyphs; Unresolved Elements: Purpose of nine figures; activation scope; Narrative Function: Initiates Book I thematic arc and resonance principle
 
 ### Related
 - [[the-vessel-and-the-thread]]
@@ -14,14 +16,14 @@ A vault that serves as the source for two parables: 'The Vessel and the Thread' 
 - [[thane-meric]]
 - [[jonah-revas]]
 - [[valkyrie-1]]
-- [[subsurface-vault]]
-- [[south-trench]]
 - [[mars]]
+- [[galen-voss]]
+- [[aven-voss]]
+- [[alara]]
 
 ### Canon sources
-- **Vault Encounter Tracker v2.md** › Vault 002: Vault of First Light
 - **Parable Catalog v2 – Celestial Heritage Series.md** › Parable Catalog v2 – Celestial Heritage Series
-- **Valkyrie-1 Mission Log Framework.md** › II. Standard Log Fields
+- **Vault Encounter Tracker v2.md** › Vault 002: Vault of First Light
 
 <!-- canon:end -->
 

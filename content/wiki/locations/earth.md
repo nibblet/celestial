@@ -1,7 +1,7 @@
 # Earth
 **Slug:** earth
 
-<!-- canon:dossier slug="earth" kind="locations" subkind="planet" parent="" generated="2026-04-22" mentions="2" -->
+<!-- canon:dossier slug="earth" kind="locations" subkind="planet" parent="" generated="2026-04-22" mentions="3" -->
 ## Canon Dossier
 
 **Aliases:** Earth
@@ -10,14 +10,19 @@ Earth in 2050 is fractured but stable. Resources have been stretched thin for de
 
 Earth is the home planet of humanity in the 2050s–60s. On Earth, the Vault Builders are called by that name. To Earth, vaults are evidence of an advanced civilization, and a potential source of energy, knowledge, or power. To Earth, the Coherence is myth. Earth's control mechanisms operate via CAEDEN. In Book II, conflicts deepen between Earth's control (via CAEDEN) and crew autonomy. In Book V, Earth receives a return signal—but not from the crew.
 
+Home planet where Vault 001 (Giza Vault) is located beneath the Giza plateau, and where Vault 005 (Covenant Stone) is located in an Andes glacial lake.
+
 ### Related
 - [[vault-builders]]
 - [[caeden]]
 - [[giza-plateau]]
+- [[giza-vault]]
+- [[vault-005]]
 
 ### Canon sources
 - **Celestial Heritage Series Bible.md** › Setting: Earth and Mars, 2050
 - **Celestial Heritage Series Bible.md** › 🌌 The Vault Builders
+- **Vault Encounter Tracker v2.md** › Vault 001: Giza Vault
 
 <!-- canon:end -->
 

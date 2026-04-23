@@ -24,7 +24,7 @@ _(auto-generated; review and expand.)_
 ## Lore metadata
 
 **Content type:** location
-**Superset:** [[artifact:valkyrie-1]]
+**Superset:** [[location:mars]]
 **Subkind:** exploration-zone
 **Parent slug:** mars
 **Source type:** canon_inventory

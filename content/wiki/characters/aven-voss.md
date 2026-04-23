@@ -18,7 +18,7 @@ Aven is a Strategist whose primary trait is Compassion. Her core conflict is tha
 
 Galen's wife of 82 years. Background in medicine, law enforcement, and intelligence work. Resilient and strategic, she is both the moral compass and the stabilizing force aboard Valkyrie-1. Compassionate but sharp-edged when needed. Role: Strategic & Medical Officer. Character Arc: Becomes the spiritual and emotional center of the crew. Her wisdom bridges the ancient and modern views of duty, health, and human resilience.
 
-Aven Voss is characterized by an intuitive, pragmatic voice that is nurturing but firm. She represents a balance between emotional intelligence and practical action within the narrative.
+A character involved in the activation of Vault 002 (Vault of First Light) on Mars.
 
 ### Related
 - [[valkyrie-1]]
@@ -26,6 +26,7 @@ Aven Voss is characterized by an intuitive, pragmatic voice that is nurturing bu
 - [[thane-meric]]
 - [[lena-osei]]
 - [[alara]]
+- [[vault-002]]
 
 ### Canon sources
 - **Celestial Heritage Series Bible.md** › 🚀 2050 CE – Valkyrie-1 Constructed
@@ -34,7 +35,7 @@ Aven Voss is characterized by an intuitive, pragmatic voice that is nurturing bu
 - **Celestial Heritage Series Bible.md** › 🗣️ Dialogue Voice Keys
 - **Celestial Heritage Series Bible.md** › a. Character Table (1 line each)
 - **Celestial Heritage_ Character Dossier.md** › Aven Voss
-- **Style & Voice Guide Celestial Heritage.md** › 🗣️ Character Dialogue Guidelines
+- **Vault Encounter Tracker v2.md** › Vault 002: Vault of First Light
 
 <!-- canon:end -->
 Inventory entry (tiers: B)

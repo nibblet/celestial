@@ -1,7 +1,7 @@
 # Marco Ruiz
 **Slug:** marco-ruiz
 
-<!-- canon:dossier slug="marco-ruiz" kind="characters" subkind="" parent="" generated="2026-04-22" mentions="6" -->
+<!-- canon:dossier slug="marco-ruiz" kind="characters" subkind="" parent="" generated="2026-04-22" mentions="4" -->
 ## Canon Dossier
 
 **Aliases:** Marco Ruiz, Major Ruiz, Major Marco Ruiz, major-marco-ruiz, Marco, 🛡️ Marco Ruiz, Ruiz
@@ -13,10 +13,6 @@ Marco Ruiz is the fortress at the edge of the unknown. A former U.S. Space Force
 Marco Ruiz speaks with brief, commanding, clipped cadence under stress. His word choice is tactical and rooted in procedure. He often starts with 'That's not the point.' Example: 'If it moves when we feel something, we control nothing.'
 
 Retired U.S. Space Force. Grounded, cautious, and fiercely loyal. Tasked with crew security and risk assessment. Sees the mission as potentially dangerous to Earth if mishandled. Role: Security & Tactical Systems. Character Arc: Learns to trust the greater vision beyond military doctrine. Rediscovers his sense of purpose through the mission's integrity.
-
-Marco Ruiz is blunt, loyal, and watchful. He speaks few words but maintains a strong presence, embodying quiet strength and reliability.
-
-Ruiz is a crew member who has experienced a detected 'Dissonance Spike' according to ALARA's Ethical Alignment Rating system, which monitors crew emotional and moral coherence.
 
 ### Related
 - [[valkyrie-1]]
@@ -30,8 +26,6 @@ Ruiz is a crew member who has experienced a detected 'Dissonance Spike' accordin
 - **Celestial Heritage Series Bible.md** › Major Marco Ruiz
 - **Celestial Heritage Series Bible.md** › 🗣️ Dialogue Voice Keys
 - **Celestial Heritage_ Character Dossier.md** › Major Marco Ruiz
-- **Style & Voice Guide Celestial Heritage.md** › 🗣️ Character Dialogue Guidelines
-- **Valkyrie-1 Mission Log Framework.md** › II. Standard Log Fields
 
 <!-- canon:end -->
 Inventory entry (tiers: A)

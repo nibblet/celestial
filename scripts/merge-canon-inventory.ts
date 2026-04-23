@@ -26,14 +26,35 @@ import * as path from "path";
 const IN_PATH = path.join(process.cwd(), "content/raw/canon_inventory.json");
 const OUT_PATH = path.join(process.cwd(), "content/raw/canon_entities.json");
 
-type Kind = "characters" | "artifacts" | "factions" | "locations" | "rules";
+type Kind =
+  | "characters"
+  | "artifacts"
+  | "factions"
+  | "locations"
+  | "rules"
+  | "vaults";
 
 // Hard kind overrides. Slugs listed here are forced to the specified kind
 // regardless of what Phase A chose. Add entries when review surfaces a miss.
+//
+// Vaults are a first-class wiki section (content/wiki/vaults/) — Phase A almost
+// always mistags them as `artifacts` because they're physical objects. We force
+// them here so the seeder writes to the right directory and the /artifacts
+// index doesn't double-list them.
 const KIND_OVERRIDES: Record<string, Kind> = {
   sensorium: "locations",
   "resonant-pad": "locations",
   coherence: "rules",
+  "giza-vault": "vaults",
+  "vault-002": "vaults",
+  "vault-003": "vaults",
+  "vault-004": "vaults",
+  "vault-005": "vaults",
+  "vault-006": "vaults",
+  "vault-007": "vaults",
+  "vault-008": "vaults",
+  "vault-009": "vaults",
+  "vault-010": "vaults",
 };
 
 // Alias → canonical slug. Entries here collapse synonym slugs (e.g. first-name
@@ -67,6 +88,21 @@ const SLUG_ALIASES: Record<string, string> = {
   "specimen-storage": "specimen-lockers",
   giza: "giza-plateau",
   "vault-annex": "vault-interface-annex",
+
+  // vaults — collapse the Vault Encounter Tracker's verbose slugs
+  // ("vault-002-vault-of-first-light") onto the canonical short forms that
+  // already back content/wiki/vaults/*.md. Keep giza-vault as the Earth vault
+  // (it predates the numeric sequence in the tracker).
+  "vault-001-giza-vault": "giza-vault",
+  "vault-002-vault-of-first-light": "vault-002",
+  "vault-003-vault-of-the-veil": "vault-003",
+  "vault-004-the-fracture-well": "vault-004",
+  "vault-005-covenant-stone": "vault-005",
+  "vault-006-vault-of-mirrors": "vault-006",
+  "vault-007-the-drowned-archive": "vault-007",
+  "vault-008-the-silent-twin": "vault-008",
+  "vault-009-vault-of-chains": "vault-009",
+  "vault-010-the-last-gate": "vault-010",
 };
 
 // Slugs to drop from the merged output. Use for non-canonical constructs,
@@ -104,7 +140,13 @@ const PARENT_OVERRIDES: Record<string, string> = {
 const SUBKIND_OVERRIDES: Record<string, string> = {
   "vault-002": "vault",
   "vault-003": "vault",
+  "vault-004": "vault",
+  "vault-005": "vault",
   "vault-006": "vault",
+  "vault-007": "vault",
+  "vault-008": "vault",
+  "vault-009": "vault",
+  "vault-010": "vault",
   "giza-vault": "vault",
 };
 
@@ -238,6 +280,7 @@ function resolveKind(
     factions: 0,
     locations: 0,
     rules: 0,
+    vaults: 0,
   };
   for (const r of raws) {
     if (counts[r.kind] !== undefined) counts[r.kind]++;
@@ -469,6 +512,7 @@ function main() {
     factions: 0,
     locations: 0,
     rules: 0,
+    vaults: 0,
   };
   for (const e of merged) byKind[e.kind]++;
 

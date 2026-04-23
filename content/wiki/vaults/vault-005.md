@@ -1,16 +1,16 @@
 # Vault 005: Covenant Stone
 **Slug:** vault-005
 
-<!-- canon:dossier slug="vault-005" kind="vaults" subkind="site" parent="" generated="2026-04-22" mentions="0" -->
+<!-- canon:dossier slug="vault-005" kind="vaults" subkind="vault" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
-**Aliases:** Vault 5, Covenant Stone
+**Aliases:** Covenant Stone, Vault 005, Vault 005: Covenant Stone, vault-005-covenant-stone
 
-An Earth-side vault partially activated beneath the Andes glacial lake. Shared dreams are the recorded trigger; symbolic response manifests as sensorium glyphs. Narratively it ties Earth myth to ancient tech; its link to pre-Valkyrie myths is unresolved.
+Discovery Order: 5; Activation Order: Partial; Location: Earth – Andes glacial lake; Status: Partially Activated; Trigger: Shared dreams; Symbolic Response: Sensorium glyphs; Unresolved Elements: Link to pre-Valkyrie myths; Narrative Function: Ties Earth myth to ancient tech
 
 ### Related
 - [[earth]]
-- [[sensorium]]
+- [[andes-glacial-lake]]
 
 ### Canon sources
 - **Vault Encounter Tracker v2.md** › Vault 005: Covenant Stone

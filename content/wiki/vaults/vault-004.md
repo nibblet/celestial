@@ -1,12 +1,15 @@
 # Vault 004: The Fracture Well
 **Slug:** vault-004
 
-<!-- canon:dossier slug="vault-004" kind="vaults" subkind="site" parent="" generated="2026-04-22" mentions="0" -->
+<!-- canon:dossier slug="vault-004" kind="vaults" subkind="vault" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
-**Aliases:** Vault 4, Fracture Well
+**Aliases:** The Fracture Well, Vault 004, Vault 004: The Fracture Well, vault-004-the-fracture-well
 
-A dormant asteroid-belt vault that repels crew emotionally on approach. Counter-resonance in structure — its narrative role is moral contrast: the vault that pushes back. Entry conditions and any moral-inversion mechanic remain unresolved.
+Discovery Order: 4; Activation Order: Unknown; Location: Asteroid Belt; Status: Dormant; Effects: Repels crew emotionally; Unresolved Elements: Entry condition; moral inversion?; Narrative Function: Counter-resonance vault; moral contrast
+
+### Related
+- [[asteroid-belt]]
 
 ### Canon sources
 - **Vault Encounter Tracker v2.md** › Vault 004: The Fracture Well

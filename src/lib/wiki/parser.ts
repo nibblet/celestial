@@ -365,15 +365,24 @@ function parseTimelineMarkdown(content: string): WikiTimelineEvent[] {
   const lines = content.split("\n");
 
   const storyRefPat = WIKI_STORY_ID_PATTERN;
+  // Original strict format — kept first so existing career-timeline.md rows
+  // match identically (optional org/location parens + mandatory chapter ref +
+  // optional trailing illustration/source/detail pipe).
+  const strictRe = new RegExp(
+    `^- \\*\\*(\\d{4})\\*\\* — (.+?)(?:\\s*\\((.+?)\\))?(?:,\\s*(.+?))?\\s*—\\s*\\[\\[(${storyRefPat})\\]\\]\\s*(?:\\|\\s*(.+))?$`
+  );
+  // Prologue-friendly format: `- **YEAR** — Event`
+  //   YEAR ::= ("~")? <digits> (" BCE" | " CE")?   (e.g. ~12000 BCE, 2034 CE, 2050)
+  //   Chapter ref [[CHxx]] optional; if present it's captured.
+  // BCE years are stored as negative ints so sorting keeps chronology.
+  const looseRe = new RegExp(
+    `^- \\*\\*~?(\\d{1,6})\\s*(BCE|CE)?\\*\\* — (.+?)(?:\\s*—\\s*\\[\\[(${storyRefPat})\\]\\])?\\s*$`
+  );
 
   for (const line of lines) {
-    const match = line.match(
-      new RegExp(
-        `- \\*\\*(\\d{4})\\*\\* — (.+?)(?:\\s*\\((.+?)\\))?(?:,\\s*(.+?))?\\s*—\\s*\\[\\[(${storyRefPat})\\]\\]\\s*(?:\\|\\s*(.+))?`
-      )
-    );
-    if (match) {
-      const trailing = match[6] || "";
+    const strict = line.match(strictRe);
+    if (strict) {
+      const trailing = strict[6] || "";
       const sourcePart = trailing.match(/source:(\w+)/)?.[1] as TimelineSource | undefined;
       const detailPart = trailing.match(/detail:(.+?)(?:\s*\||$)/)?.[1]?.trim();
       const illustration = trailing
@@ -381,16 +390,30 @@ function parseTimelineMarkdown(content: string): WikiTimelineEvent[] {
         .replace(/detail:.+?(?:\s*\||$)/g, "")
         .replace(/\|/g, "")
         .trim() || undefined;
-
       events.push({
-        year: parseInt(match[1]),
-        event: match[2].trim(),
-        organization: match[3] || "",
-        location: match[4] || "",
-        storyRef: match[5],
+        year: parseInt(strict[1]),
+        event: strict[2].trim(),
+        organization: strict[3] || "",
+        location: strict[4] || "",
+        storyRef: strict[5],
         illustration: illustration || undefined,
         source: sourcePart || "memoir",
         sourceDetail: detailPart,
+      });
+      continue;
+    }
+
+    const loose = line.match(looseRe);
+    if (loose) {
+      const magnitude = parseInt(loose[1], 10);
+      const isBce = loose[2] === "BCE";
+      events.push({
+        year: isBce ? -magnitude : magnitude,
+        event: loose[3].trim(),
+        organization: "",
+        location: "",
+        storyRef: loose[4] || "",
+        source: "public_record",
       });
     }
   }
@@ -403,6 +426,17 @@ export function getTimeline(): WikiTimelineEvent[] {
   const fromFile = parseTimelineMarkdown(content);
   if (fromFile.length > 0) return fromFile;
   return timelineData.map((e) => ({ ...e })) as WikiTimelineEvent[];
+}
+
+/**
+ * Pre-Valkyrie world events from `content/wiki/timeline/prologue.md`.
+ * Rendered as a separate "Before Valkyrie" section on /stories/timeline and
+ * fed to Ask via `getMissionTimelineContext()`. Years may be BCE (negative
+ * ints after parse) or CE; chapter refs are optional.
+ */
+export function getPrologueTimeline(): WikiTimelineEvent[] {
+  const content = readWikiFile("timeline/prologue.md");
+  return parseTimelineMarkdown(content);
 }
 
 export function getWikiSummaries(): string {

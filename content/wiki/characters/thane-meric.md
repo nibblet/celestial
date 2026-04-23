@@ -1,7 +1,7 @@
 # Thane Meric
 **Slug:** thane-meric
 
-<!-- canon:dossier slug="thane-meric" kind="characters" subkind="" parent="" generated="2026-04-22" mentions="12" -->
+<!-- canon:dossier slug="thane-meric" kind="characters" subkind="" parent="" generated="2026-04-22" mentions="11" -->
 ## Canon Dossier
 
 **Aliases:** Thane, 🌱 Thane Meric
@@ -22,11 +22,9 @@ Galen and Aven's grandson, early 30s. Raised by his mother, Elira Voss. Thane sh
 
 A crew member who receives 'The Vessel and the Thread' parable in Chapter 10 during emotional convergence near the Resonant Pad during ALARA's silence. Also shares 'The Silent Choir' parable with ALARA in Chapter 14. Within parables, Thane is symbolically represented as 'the thread' in relation to ALARA as 'the vessel.'
 
-Thane Meric is curious, warm, and introspective, displaying subtle humor and emotional sensitivity. He occasionally serves as a POV character, particularly where resonance, spiritual insight, or scientific/philosophical stakes are central to the narrative.
-
-Thane is a crew member whose harmonic profile has been flagged multiple times in relation to vault responses. According to Galen's log, 'Thane's harmonic profile flagged again. He doesn't know it yet, but the vault does.' An attachment references a '432 Hz Signal Overlay - Thane' suggesting Thane has a specific resonance signature that vaults respond to.
-
 Thane is a crew member notably involved in operating the Resonant Pad, which requires emotional coherence from specific crew including Thane.
+
+A character involved in the activation of Vault 002 (Vault of First Light) on Mars. The vault was triggered by Thane's emotional resonance, producing a 432Hz signal.
 
 Thane is a resonance-aligned crew member who places a hand on the Resonant Pad during harmonic jumps, which may cause it to glow and pulse—a rare event always observed in silence.
 
@@ -55,9 +53,8 @@ Thane is a resonance-aligned crew member who places a hand on the Resonant Pad d
 - **Celestial Heritage Series Bible.md** › a. Character Table (1 line each)
 - **Celestial Heritage_ Character Dossier.md** › Thane Meric
 - **Parable Catalog v2 – Celestial Heritage Series.md** › Parable Catalog v2 – Celestial Heritage Series
-- **Style & Voice Guide Celestial Heritage.md** › 🗣️ Character Dialogue Guidelines
-- **Valkyrie-1 Mission Log Framework.md** › Example Log
 - **Valkyrie-1 Technical Brief.md** › Command & Navigation
+- **Vault Encounter Tracker v2.md** › Vault 002: Vault of First Light
 - **🛰️ Valkyrie-1 Interior Specifications.md** › 🛸 Navigation & Resonance Pad
 
 <!-- canon:end -->

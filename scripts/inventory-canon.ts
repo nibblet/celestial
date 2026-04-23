@@ -48,6 +48,30 @@ const MODEL = "claude-sonnet-4-5";
 const CANON_DIR = path.join(process.cwd(), "celestial_original");
 const OUT_PATH = path.join(process.cwd(), "content/raw/canon_inventory.json");
 
+// Docs in celestial_original/ that are NOT entity-bearing canon and must not
+// be run through the entity extractor. These fall into two buckets:
+//
+//   - World-state prose (setting snapshots) — belongs in content/wiki/rules/
+//     as always-on world law, not as extracted entities. The LLM would
+//     otherwise emit thin shells like "united-nations" or re-surface already-
+//     canonical entities (Mars, Valkyrie-1) with prose stripped of the
+//     actual setting context we care about.
+//
+//   - Author meta (style guides, log/template frameworks) — not in-universe
+//     canon at all. Extraction just pollutes entity sources with author-facing
+//     tables ("character voice qualities") and template example logs.
+//
+// Every entity these docs previously contributed is already present in a
+// proper entity-bearing doc (Series Bible, Character Dossier, Vault Tracker,
+// Ancient Lore, Valkyrie-1 Technical Brief, Interior Specifications, Visual
+// & Structural Brief, Addendum Earth 2050 World Snapshot, Parable Catalog).
+// See docs/canon-integrity-program.md §2.3 for the lore-vs-plot split.
+const SKIP_DOCS = new Set<string>([
+  "Earth 2050_ World Snapshot.md",
+  "Style & Voice Guide Celestial Heritage.md",
+  "Valkyrie-1 Mission Log Framework.md",
+]);
+
 // Inline approximation of tokens: ~4 chars per token. Cap a chunk at ~6K tokens
 // of source material; the Series Bible (~1454 lines, ~45K chars) needs splitting.
 const MAX_CHUNK_CHARS = 24_000;
@@ -296,7 +320,15 @@ async function main() {
   const files = fs
     .readdirSync(CANON_DIR)
     .filter((f) => f.endsWith(".md"))
+    .filter((f) => !SKIP_DOCS.has(f))
     .filter((f) => !opts.onlyDoc || f === opts.onlyDoc);
+
+  const skipped = [...SKIP_DOCS].filter((f) =>
+    fs.existsSync(path.join(CANON_DIR, f))
+  );
+  if (skipped.length > 0) {
+    console.log(`→ skipping non-entity docs: ${skipped.join(", ")}`);
+  }
 
   if (files.length === 0) {
     console.error(`No canon .md files found (onlyDoc=${opts.onlyDoc ?? "*"})`);

@@ -1,12 +1,15 @@
 # Vault 007: The Drowned Archive
 **Slug:** vault-007
 
-<!-- canon:dossier slug="vault-007" kind="vaults" subkind="site" parent="" generated="2026-04-22" mentions="0" -->
+<!-- canon:dossier slug="vault-007" kind="vaults" subkind="vault" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
-**Aliases:** Vault 7, Drowned Archive
+**Aliases:** The Drowned Archive, Vault 007, Vault 007: The Drowned Archive, vault-007-the-drowned-archive
 
-Dormant vault located in the Europa subsurface ocean. Pulses in an ancient rhythm; deep resonance is the recorded trigger. Narrative function is aquatic moral memory. Access requirements are unresolved.
+Discovery Order: 7; Activation Order: Unknown; Location: Europa – subsurface ocean; Status: Dormant; Trigger: Deep resonance; Effects: Pulses in ancient rhythm; Unresolved Elements: Access requirements; Narrative Function: Aquatic moral memory vault
+
+### Related
+- [[europa]]
 
 ### Canon sources
 - **Vault Encounter Tracker v2.md** › Vault 007: The Drowned Archive

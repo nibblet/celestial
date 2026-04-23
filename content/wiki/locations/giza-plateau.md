@@ -1,7 +1,7 @@
 # Giza Plateau
 **Slug:** giza-plateau
 
-<!-- canon:dossier slug="giza-plateau" kind="locations" subkind="" parent="" generated="2026-04-22" mentions="3" -->
+<!-- canon:dossier slug="giza-plateau" kind="locations" subkind="" parent="" generated="2026-04-22" mentions="2" -->
 ## Canon Dossier
 
 **Aliases:** Giza plateau, Giza
@@ -10,17 +10,13 @@ Structures beneath the Giza Plateau, revealed through SAR (Synthetic Aperture Ra
 
 The Giza plateau on Earth contains non-human alignment—not just in myth, but in measurable structure. Vaults are scattered in geometric resonance across ancient sites, and one vault is beneath Giza. First vault interactions occur on Mars and Giza in Book I.
 
-Discoveries beneath the Giza Plateau and on Mars have brought new credibility to ancient myths, sparking renewed cultural and philosophical interest.
-
 ### Related
 - [[the-ancients]]
 - [[vault-builders]]
-- [[mars]]
 
 ### Canon sources
 - **Ancient Lore & Watcher Dossier.md** › IV. Symbolism and Hidden Structures
 - **Celestial Heritage Series Bible.md** › 🌌 The Vault Builders
-- **Earth 2050_ World Snapshot.md** › V. Culture, Values & Beliefs
 
 <!-- canon:end -->
 

@@ -1,12 +1,12 @@
 # Vault 009: Vault of Chains
 **Slug:** vault-009
 
-<!-- canon:dossier slug="vault-009" kind="vaults" subkind="site" parent="" generated="2026-04-22" mentions="0" -->
+<!-- canon:dossier slug="vault-009" kind="vaults" subkind="vault" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
-**Aliases:** Vault 9, Vault of Chains
+**Aliases:** Vault of Chains, Vault 009, Vault 009: Vault of Chains, vault-009-vault-of-chains
 
-Near-sun-orbit vault, currently unapproachable. A gravitational anomaly surrounds the site. Narrative function is forbidden knowledge; what originally bound the vault is unresolved.
+Discovery Order: 9; Activation Order: Unknown; Location: Near-sun orbit; Status: Unapproachable; Effects: Gravitational anomaly; Unresolved Elements: What bound it; Narrative Function: Forbidden knowledge vault
 
 ### Canon sources
 - **Vault Encounter Tracker v2.md** › Vault 009: Vault of Chains

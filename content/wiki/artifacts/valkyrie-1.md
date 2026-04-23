@@ -1,10 +1,10 @@
 # Valkyrie-1
 **Slug:** valkyrie-1
 
-<!-- canon:dossier slug="valkyrie-1" kind="artifacts" subkind="ship" parent="" generated="2026-04-22" mentions="15" -->
+<!-- canon:dossier slug="valkyrie-1" kind="artifacts" subkind="ship" parent="" generated="2026-04-22" mentions="13" -->
 ## Canon Dossier
 
-**Aliases:** Valkyrie, Martian ship, ship, The Ship, the-ship, Valkyrie-1, VLK
+**Aliases:** Valkyrie, Martian ship, ship, The Ship, the-ship, Valkyrie-1, Valkyrie site
 
 Valkyrie is a ship that is the target of the CNV Rigel Ascendant's interception mission. The Rigel Ascendant's current directive is to intercept Valkyrie, override ALARA, secure the Vault via precision resonance nullification, install replacement AI fragment, and prevent continuation of unsanctioned ethical systems. Captain Rhea Solari believes Valkyrie and her crew may have drifted into a dangerous mythos.
 
@@ -24,15 +24,11 @@ Valkyrie-1 is not merely a vessel—it is an architectural echo of intent. Its i
 
 The mission ship referenced throughout the character profiles. ALARA is inextricably linked to this ship. The ship's systems respond to biological resonance signatures, particularly those exhibited by Thane Meric. Dr. Lena Osei was first to decode the Valkyrie-1 systems. Dr. Evelyn Tran was vindicated by Valkyrie-1's systems as proof of her theories.
 
-Advanced AI systems are widespread in everyday infrastructure and governance, though none match the complexity or autonomy of Valkyrie-1's ALARA.
-
-Valkyrie-1 is the primary spacecraft of the series. Mission logs from the ship follow a structured format including Log ID (e.g., VLK-M001-CH02-B), date/ship time, author, log type (Command, Personal, ALARA, Event), location, summary, main body, and optional attachments. The ship serves as the operational base for vault exploration missions.
-
-Valkyrie-1 is the primary mission vessel referenced throughout the log framework. It serves as the base of operations for vault exploration and discovery missions. Mission logs are filed using the Valkyrie-1 designation prefix 'VLK'. The ship contains multiple modules including a Med Module and operates across various zones during exploration.
-
 Valkyrie-1 is a hybrid bio-aligned interstellar vessel of unknown origin, discovered buried beneath the Martian surface. Initially dormant, it was reactivated through human proximity and emotional resonance. The ship integrates alien architecture with limited human retrofitting, supporting a small crew while clearly built to accommodate more. Its systems, propulsion, and internal logic remain only partially understood. The ship is governed by ALARA, a non-human organic intelligence native to the vessel. Valkyrie-1 does not behave like a tool—it behaves like a test. Every system seems to anticipate ethical engagement over strategic command. The ship appears to be built for a purpose still unfolding.
 
 Valkyrie-1 is a sleek, semi-organic vessel of unknown origin, designed with flowing curves, layered symmetry, and an unmistakable sense of intentional grace. Its outer hull blends a crystalline alloy with bio-synthetic filaments, giving it both a metallic sheen and an almost skin-like elasticity under deep scan. No seams or rivets are visible. The hull is etched with veins of resonance-laced material, which glow in response to internal alignment, nearby vaults, or shifts in emotional coherence aboard the ship. During harmonic translation events, the glow intensifies and reorganizes into patterns suggestive of ancient symbols or constellations. Overall profile is swept-forward, evoking a stingray or leaf blade in flight. Movement is governed by the Harmonic Drive, a system that enables jumps between aligned resonance points. It was not built to serve. It was built to respond. Every surface, chamber, and contour reflects that principle—meaning is mirrored back, not given. Its purpose is not only propulsion, but transformation.
+
+A site on Mars beneath which Vault 002 is located; has glyph match with Vault 001 (Giza Vault). The Valkyrie site serves as a key location in the vault network.
 
 Valkyrie-1 was not built for a small crew. Though only a dozen humans now walk its halls, the ship's internal structure hints at a far greater intended population—perhaps a few dozen more, or a hundred at most. The layout suggests unused quarters, underutilized systems, and a psychological scale beyond operational necessity. Every curved corridor and vast open chamber implies a ship built not for a generation ship, but for a purpose larger than this crew alone—possibly a second wave, a failed first team, or a broader alignment that never came. The interior of Valkyrie-1 is shaped by resonance logic and ancient human-compatible design. Movement is linear, via sloping ramps between levels—never elevators, never sealed shafts. Everything flows like a deliberate path, inviting choice but not chaos. ALARA physically controls access. You cannot enter what you are not aligned to—biometrically, or ethically.
 
@@ -56,8 +52,9 @@ Valkyrie-1 was not built for a small crew. Though only a dozen humans now walk i
 - [[translation-bay]]
 - [[resonant-pad]]
 - [[lena-osei]]
-- [[zone-theta]]
 - [[mars]]
+- [[giza-vault]]
+- [[vault-002]]
 
 ### Canon sources
 - **Addendum Earth 2050 World Snapshot.md** › 🛰️ CNV Rigel Ascendant
@@ -69,11 +66,9 @@ Valkyrie-1 was not built for a small crew. Though only a dozen humans now walk i
 - **Celestial Heritage Series Bible.md** › 🌌 The Vault Builders
 - **Celestial Heritage Series Bible.md** › 8: Valkyrie-1 Interior Overview
 - **Celestial Heritage_ Character Dossier.md** › Multiple sections
-- **Earth 2050_ World Snapshot.md** › II. Space Presence & Exploration
-- **Style & Voice Guide Celestial Heritage.md** › 📋 Scene & Log Structure
-- **Valkyrie-1 Mission Log Framework.md** › Valkyrie-1 Mission Log Framework (Revised v1.1)
 - **Valkyrie-1 Technical Brief.md** › Overview
 - **Valkyrie-1_ Visual & Structural Specification Brief.md** › Valkyrie-1: Visual & Structural Specification Brief v2.0
+- **Vault Encounter Tracker v2.md** › Vault 001: Giza Vault
 - **🛰️ Valkyrie-1 Interior Specifications.md** › 🛸 Valkyrie-1 Interior Overview
 
 <!-- canon:end -->

@@ -1,7 +1,7 @@
 # Jonah Revas
 **Slug:** jonah-revas
 
-<!-- canon:dossier slug="jonah-revas" kind="characters" subkind="" parent="" generated="2026-04-22" mentions="10" -->
+<!-- canon:dossier slug="jonah-revas" kind="characters" subkind="" parent="" generated="2026-04-22" mentions="9" -->
 ## Canon Dossier
 
 **Aliases:** Jonah Revas, Jonah, 📿 Jonah Revas, Dr. Jonah Revas, dr-jonah-revas, Revas
@@ -22,8 +22,6 @@ A soft-spoken but deeply curious member of the Valkyrie-1 crew. Jonah was traine
 
 A crew member who receives 'The Weightless Measure' parable in Chapter 6 while kneeling by the interface arch seeking ethical clarity. Also central to 'The Inheritance' fragment in Chapter 9, seen during the Witness Circle. Jonah's encounters emphasize ethical humility and the proper acceptance of legacy.
 
-Jonah Revas is gentle, metaphorical, and spiritually inclined. He frames logic with quiet insight, occasionally serving as a POV character where spiritual and philosophical dimensions are explored.
-
 Jonah Revas observed ALARA's manifestation: 'She never enters a room. She assembles herself inside it.'
 
 ### Related
@@ -39,7 +37,6 @@ Jonah Revas observed ALARA's manifestation: 'She never enters a room. She assemb
 - [[the-inheritance]]
 - [[vault-002]]
 - [[witness-circle]]
-- [[galen-voss]]
 
 ### Canon sources
 - **Ancient Lore & Watcher Dossier.md** › III. Biotech Vaults and Genetic Resonance
@@ -50,7 +47,6 @@ Jonah Revas observed ALARA's manifestation: 'She never enters a room. She assemb
 - **Celestial Heritage Series Bible.md** › 🗣️ Dialogue Voice Keys
 - **Celestial Heritage_ Character Dossier.md** › Dr. Jonah Revas
 - **Parable Catalog v2 – Celestial Heritage Series.md** › Parable Catalog v2 – Celestial Heritage Series
-- **Style & Voice Guide Celestial Heritage.md** › 🗣️ Character Dialogue Guidelines
 - **🛰️ Valkyrie-1 Interior Specifications.md** › 🧠 ALARA's Presence – Light-Weave Apparition
 
 <!-- canon:end -->

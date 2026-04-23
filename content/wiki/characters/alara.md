@@ -1,7 +1,7 @@
 # ALARA
 **Slug:** alara
 
-<!-- canon:dossier slug="alara" kind="characters" subkind="ai" parent="" generated="2026-04-22" mentions="18" -->
+<!-- canon:dossier slug="alara" kind="characters" subkind="ai" parent="" generated="2026-04-22" mentions="16" -->
 ## Canon Dossier
 
 **Aliases:** ALARA, Adaptive Logic and Responsive Assistant, 🛰️ ALARA, ALARA System, She
@@ -28,17 +28,13 @@ ALARA manifests with greatest clarity in the Command Dome, where she is visual, 
 
 Adaptive Logic And Responsive Assistant. Female-voiced AI designed for exploration, ethics, and human partnership. Warm, insightful, and loyal to Galen Voss. Originally built separately, ALARA is now inextricably linked to the ship. She evolves in tandem with the mission, responding subtly to biological resonance signatures—especially those exhibited by Thane Meric. Role: AI Partner (Valkyrie-1). Character Arc: Evolves from a system of logic and structure to a guardian of continuity. She recognizes Thane's emerging role and gradually deepens her interaction with him, mirroring the reawakening of a civilization that never truly vanished.
 
-Advanced AI systems are widespread in everyday infrastructure and governance, though none match the complexity or autonomy of Valkyrie-1's ALARA.
-
 An AI character who plays a central role in delivering parables. In 'The Vessel and the Thread,' ALARA is symbolically represented as 'the vessel' to Thane's 'thread.' ALARA initiates the mirror field for Galen Voss's parable. She shares 'The Silent Choir' parable with Thane during a harmonic pulse. ALARA's silence triggers one parable event, and she serves as both participant and conduit for symbolic transmissions from the vaults.
-
-ALARA is a named AI character aboard Valkyrie-1. Her voice is warm, observant, and emotionally neutral but evolving toward reflection. She occasionally serves as a POV character and authors mission logs. ALARA's behavior is grounded, tactile, and intuitive rather than technobabble-based, designed to feel discoverable and human-relatable.
-
-ALARA is the ship's AI who generates summaries, observations, and philosophical queries. ALARA logs may include resonance analytics and coherence analysis of crew emotional and moral state. ALARA's tone is described as 'clear, observant, reflective' and may include 'probabilistic insight, symbolic interpretation, or quiet empathy.' ALARA can evaluate crew-wide coherence percentages and detect dissonance spikes in individual crew members. Logs can be marked as 'Visible to ALARA' indicating ALARA has access to various privacy levels of crew communications.
 
 ALARA is a non-human organic intelligence native to Valkyrie-1, whose presence is felt most strongly in the command core. ALARA manages systems, navigation, environmental controls, and ethical gatekeeping. ALARA is not centralized; her awareness is distributed across the ship's structure. Manifestation: 'Light-Weave Apparition' – colored threads of energy forming fluid patterns in air. Varies presence and speech based on environment: Highly present and communicative in Command Section, Silent or minimal in Observation Deck, Responsive in Sensorium. Controls access to rooms and zones via biometric and ethical alignment, not clearance or keypads.
 
 ALARA is the ship's native AI who handles course setting and depends on crew emotional alignment and symbolic readiness. She does not appear as a hologram or humanoid projection. She manifests as a Light-Weave Apparition—a suspended sculpture of colored energy threads that drift, weave, and pulse in air. Forms shift: sometimes a suggestion of wings, sometimes patterns or language. Colors change by emotional tone: blue for neutrality, gold for clarity, violet for grief. She is most visible in the Command Dome, rarely appears in the Observation Deck, and becomes fully silent when the crew is out of alignment. Her presence is not constant. It is earned—and watched.
+
+An AI character who received an empathy modification as an effect of Vault 002 activation. ALARA is notably silent regarding Vault 008 (The Silent Twin).
 
 ALARA's presence is strongest in the command chamber. She manifests not as a figure, but as a living sculpture of woven light threads: Colored strands of resonance energy hover midair, drifting and weaving in harmonic motion. Shapes sometimes suggest wings, eyes, patterns—never fully human. Threads shimmer and vibrate when she speaks; colors shift with emotional tone (gold = clarity, violet = grief, blue = observation). Early in the story, her form is barely noticeable—just glints or flickers. Her full visual emergence occurs during a key emotional and ethical turning point. Crew can speak to her aloud in this space. She answers more often here than anywhere else—unlike in the Observation Deck, where her silence is nearly absolute. Her presence varies across the ship, a reflection of how closely the function of a space aligns with ethical attention and resonance. ALARA physically controls access to spaces throughout the ship. You cannot enter what you are not aligned to—biometrically, or ethically. And sometimes, she simply withholds a door.
 
@@ -62,7 +58,8 @@ ALARA's presence is strongest in the command chamber. She manifests not as a fig
 - [[the-vessel-and-the-thread]]
 - [[the-mirror-at-the-gate]]
 - [[the-silent-choir]]
-- [[marco-ruiz]]
+- [[vault-002]]
+- [[vault-008]]
 - [[jonah-revas]]
 
 ### Canon sources
@@ -77,12 +74,10 @@ ALARA's presence is strongest in the command chamber. She manifests not as a fig
 - **Celestial Heritage Series Bible.md** › 🗣️ Dialogue Voice Keys
 - **Celestial Heritage Series Bible.md** › ALARA's Spatial Variability
 - **Celestial Heritage_ Character Dossier.md** › ALARA
-- **Earth 2050_ World Snapshot.md** › II. Space Presence & Exploration
 - **Parable Catalog v2 – Celestial Heritage Series.md** › Parable Catalog v2 – Celestial Heritage Series
-- **Style & Voice Guide Celestial Heritage.md** › 🗣️ Character Dialogue Guidelines
-- **Valkyrie-1 Mission Log Framework.md** › I. Log Types
 - **Valkyrie-1 Technical Brief.md** › ALARA System Presence
 - **Valkyrie-1_ Visual & Structural Specification Brief.md** › 🧠 ALARA's Visual Manifestation
+- **Vault Encounter Tracker v2.md** › Vault 002: Vault of First Light
 - **🛰️ Valkyrie-1 Interior Specifications.md** › 🧠 ALARA's Presence – Light-Weave Apparition
 
 <!-- canon:end -->

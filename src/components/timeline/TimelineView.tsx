@@ -1,9 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
 import { book } from "@/config/book";
-import { getTimeline, getStoryById } from "@/lib/wiki/parser";
+import {
+  getTimeline,
+  getStoryById,
+  getPrologueTimeline,
+} from "@/lib/wiki/parser";
 import type { TimelineSourceLegacy } from "@/lib/wiki/taxonomy";
 import { yearToEraAccent } from "@/lib/design/era";
+
+function formatYearLabel(year: number): string {
+  if (year < 0) {
+    const magnitude = Math.abs(year);
+    return magnitude >= 5000 ? `~${magnitude} BCE` : `${magnitude} BCE`;
+  }
+  return `${year}`;
+}
 
 function TimelineSourceRibbon({ source }: { source: TimelineSourceLegacy }) {
   if (source === "memoir") return null;
@@ -23,6 +35,7 @@ function TimelineSourceRibbon({ source }: { source: TimelineSourceLegacy }) {
 
 export function TimelineView() {
   const events = getTimeline();
+  const prologue = getPrologueTimeline().sort((a, b) => a.year - b.year);
 
   if (events.length === 0) {
     return (
@@ -66,6 +79,36 @@ export function TimelineView() {
 
       <div className="relative">
         <div className="absolute bottom-0 left-4 top-0 w-px bg-[var(--color-divider)]" />
+
+        {prologue.length > 0 && (
+          <div className="mb-8">
+            <h2 className="type-story-title mb-3 ml-10 text-burgundy">
+              Before Valkyrie
+            </h2>
+            <div className="space-y-4" role="list">
+              {prologue.map((evt, i) => (
+                <div
+                  key={`prologue-${i}`}
+                  className="relative ml-0 flex items-start gap-4"
+                  role="listitem"
+                  aria-label={`Prologue event, ${formatYearLabel(evt.year)}`}
+                >
+                  <div className="flex w-8 shrink-0 justify-center pt-1.5">
+                    <div className="h-2.5 w-2.5 rounded-full bg-ink-ghost ring-2 ring-warm-white" />
+                  </div>
+                  <div className="min-w-0 flex-1 rounded-lg border border-dashed border-[var(--color-border)] bg-warm-white p-3">
+                    <div className="flex flex-wrap items-baseline gap-2">
+                      <span className="text-xs font-bold text-ink-muted">
+                        {formatYearLabel(evt.year)}
+                      </span>
+                      <span className="text-sm text-ink">{evt.event}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {Object.entries(decades)
           .sort(([a], [b]) => a.localeCompare(b))

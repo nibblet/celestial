@@ -1,22 +1,23 @@
 # Vault 006: Vault of Mirrors
 **Slug:** vault-006
 
-<!-- canon:dossier slug="vault-006" kind="vaults" subkind="site" parent="" generated="2026-04-22" mentions="1" -->
+<!-- canon:dossier slug="vault-006" kind="vaults" subkind="vault" parent="" generated="2026-04-22" mentions="2" -->
 ## Canon Dossier
 
-**Aliases:** Vault 6, Vault of Mirrors
+**Aliases:** Vault 6, Vault of Mirrors, Vault 006, Vault 006: Vault of Mirrors, vault-006-vault-of-mirrors
 
-A vault on an uncharted interstellar orbit whose physical presence remains unclear. It serves as the source for 'The Mirror at the Gate' parable, delivered to Galen Voss in Chapter 13 as a pre-echo during a leadership crisis — ALARA initiates a mirror field as part of the transmission. The vault's logic (reality responding to internal-state reflection) is catalogued system-wide as Mirror Logic.
+A vault that serves as the source for 'The Mirror at the Gate' parable, delivered to Galen Voss in Chapter 13 as a pre-echo. The vault responds to self-reflection during isolation, with ALARA initiating a mirror field as part of the transmission.
+
+Discovery Order: 6; Activation Order: TBD; Location: Interstellar – uncharted orbit; Status: Unknown; Symbolic Response: Reflective psychological test; Unresolved Elements: Physical presence unclear; Narrative Function: Mirror logic / internal reckoning
 
 ### Related
 - [[the-mirror-at-the-gate]]
-- [[mirror-logic]]
 - [[galen-voss]]
 - [[alara]]
 
 ### Canon sources
-- **Vault Encounter Tracker v2.md** › Vault 006: Vault of Mirrors
 - **Parable Catalog v2 – Celestial Heritage Series.md** › Parable Catalog v2 – Celestial Heritage Series
+- **Vault Encounter Tracker v2.md** › Vault 006: Vault of Mirrors
 
 <!-- canon:end -->
 

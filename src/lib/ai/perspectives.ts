@@ -25,6 +25,8 @@ import {
   getJourneyContextForPrompt,
   getPeopleContext,
   getRulesContext,
+  getMissionTimelineContext,
+  getMissionLogsForChapter,
   AGE_MODE_INSTRUCTIONS,
 } from "./prompts";
 
@@ -89,12 +91,17 @@ function sharedContentBlock(args: PersonaPromptArgs): string {
   const rules = getRulesContext();
   if (rules) parts.push(rules);
 
+  const missionTimeline = getMissionTimelineContext();
+  if (missionTimeline) parts.push(missionTimeline);
+
   const people = getPeopleContext();
   if (people) parts.push(people);
 
   if (args.storySlug) {
     const ctx = getStoryContext(args.storySlug);
     if (ctx) parts.push(`## Currently Reading\n${ctx.slice(0, 3000)}`);
+    const chapterLogs = getMissionLogsForChapter(args.storySlug);
+    if (chapterLogs) parts.push(chapterLogs);
   }
   if (args.chapterScenes && args.chapterScenes.length > 0 && args.storySlug) {
     const lines = args.chapterScenes.map((s) => {

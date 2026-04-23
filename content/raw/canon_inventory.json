@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-04-21T12:42:20.002Z",
+  "generatedAt": "2026-04-22T20:01:29.789Z",
   "chunks": [
     {
       "chunkId": "Addendum Earth 2050 World Snapshot.md#(whole)",
@@ -2346,84 +2346,6 @@
       "generatedAt": "2026-04-21T12:39:31.352Z"
     },
     {
-      "chunkId": "Earth 2050_ World Snapshot.md#(whole)",
-      "sourceDoc": "Earth 2050_ World Snapshot.md",
-      "heading": "(whole)",
-      "contentHash": "5eb119ad9305",
-      "entities": [
-        {
-          "slug": "united-nations",
-          "name": "United Nations",
-          "aliases": [],
-          "kind": "factions",
-          "subkind": "political",
-          "parentSlug": null,
-          "sourceDoc": "Earth 2050_ World Snapshot.md",
-          "sourceAnchor": "I. Global Political Landscape",
-          "canonicalProse": "The United Nations has devolved in relevance, but new multinational institutions have emerged through economic alliances and shared developmental goals.",
-          "crossRefs": []
-        },
-        {
-          "slug": "mars",
-          "name": "Mars",
-          "aliases": [],
-          "kind": "locations",
-          "subkind": null,
-          "parentSlug": null,
-          "sourceDoc": "Earth 2050_ World Snapshot.md",
-          "sourceAnchor": "II. Space Presence & Exploration",
-          "canonicalProse": "Mars is permanently settled and nearly self-sufficient, with governance structures and supply chains growing increasingly independent from Earth.",
-          "crossRefs": []
-        },
-        {
-          "slug": "valkyrie-1",
-          "name": "Valkyrie-1",
-          "aliases": [],
-          "kind": "artifacts",
-          "subkind": null,
-          "parentSlug": null,
-          "sourceDoc": "Earth 2050_ World Snapshot.md",
-          "sourceAnchor": "II. Space Presence & Exploration",
-          "canonicalProse": "Advanced AI systems are widespread in everyday infrastructure and governance, though none match the complexity or autonomy of Valkyrie-1's ALARA.",
-          "crossRefs": [
-            "alara"
-          ]
-        },
-        {
-          "slug": "alara",
-          "name": "ALARA",
-          "aliases": [],
-          "kind": "characters",
-          "subkind": null,
-          "parentSlug": null,
-          "sourceDoc": "Earth 2050_ World Snapshot.md",
-          "sourceAnchor": "II. Space Presence & Exploration",
-          "canonicalProse": "Advanced AI systems are widespread in everyday infrastructure and governance, though none match the complexity or autonomy of Valkyrie-1's ALARA.",
-          "crossRefs": [
-            "valkyrie-1"
-          ]
-        },
-        {
-          "slug": "giza-plateau",
-          "name": "Giza Plateau",
-          "aliases": [
-            "Giza"
-          ],
-          "kind": "locations",
-          "subkind": null,
-          "parentSlug": null,
-          "sourceDoc": "Earth 2050_ World Snapshot.md",
-          "sourceAnchor": "V. Culture, Values & Beliefs",
-          "canonicalProse": "Discoveries beneath the Giza Plateau and on Mars have brought new credibility to ancient myths, sparking renewed cultural and philosophical interest.",
-          "crossRefs": [
-            "mars"
-          ]
-        }
-      ],
-      "model": "claude-sonnet-4-5",
-      "generatedAt": "2026-04-21T12:39:38.264Z"
-    },
-    {
       "chunkId": "Parable Catalog v2 – Celestial Heritage Series.md#(whole)",
       "sourceDoc": "Parable Catalog v2 – Celestial Heritage Series.md",
       "heading": "(whole)",
@@ -2685,358 +2607,6 @@
       ],
       "model": "claude-sonnet-4-5",
       "generatedAt": "2026-04-21T12:40:11.850Z"
-    },
-    {
-      "chunkId": "Style & Voice Guide Celestial Heritage.md#(whole)",
-      "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
-      "heading": "(whole)",
-      "contentHash": "cd4370ea86f8",
-      "entities": [
-        {
-          "slug": "galen-voss",
-          "name": "Galen Voss",
-          "aliases": [
-            "Galen"
-          ],
-          "kind": "characters",
-          "subkind": null,
-          "parentSlug": null,
-          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
-          "sourceAnchor": "🗣️ Character Dialogue Guidelines",
-          "canonicalProse": "Galen Voss is the primary POV character of the Celestial Heritage series, presented through third-person limited perspective. His voice is thoughtful, grounded, and principled, characterized by quiet authority. He speaks rarely but decisively, embodying the values of integrity, service, and excellence that echo the U.S. Air Force ethos within the story's visionary science fiction framework.",
-          "crossRefs": [
-            "aven-voss",
-            "alara",
-            "valkyrie-1"
-          ]
-        },
-        {
-          "slug": "aven-voss",
-          "name": "Aven Voss",
-          "aliases": [
-            "Aven"
-          ],
-          "kind": "characters",
-          "subkind": null,
-          "parentSlug": null,
-          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
-          "sourceAnchor": "🗣️ Character Dialogue Guidelines",
-          "canonicalProse": "Aven Voss is characterized by an intuitive, pragmatic voice that is nurturing but firm. She represents a balance between emotional intelligence and practical action within the narrative.",
-          "crossRefs": [
-            "galen-voss"
-          ]
-        },
-        {
-          "slug": "thane-meric",
-          "name": "Thane Meric",
-          "aliases": [
-            "Thane"
-          ],
-          "kind": "characters",
-          "subkind": null,
-          "parentSlug": null,
-          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
-          "sourceAnchor": "🗣️ Character Dialogue Guidelines",
-          "canonicalProse": "Thane Meric is curious, warm, and introspective, displaying subtle humor and emotional sensitivity. He occasionally serves as a POV character, particularly where resonance, spiritual insight, or scientific/philosophical stakes are central to the narrative.",
-          "crossRefs": [
-            "galen-voss"
-          ]
-        },
-        {
-          "slug": "alara",
-          "name": "ALARA",
-          "aliases": [
-            "Alara"
-          ],
-          "kind": "characters",
-          "subkind": null,
-          "parentSlug": null,
-          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
-          "sourceAnchor": "🗣️ Character Dialogue Guidelines",
-          "canonicalProse": "ALARA is a named AI character aboard Valkyrie-1. Her voice is warm, observant, and emotionally neutral but evolving toward reflection. She occasionally serves as a POV character and authors mission logs. ALARA's behavior is grounded, tactile, and intuitive rather than technobabble-based, designed to feel discoverable and human-relatable.",
-          "crossRefs": [
-            "galen-voss",
-            "valkyrie-1"
-          ]
-        },
-        {
-          "slug": "jonah-revas",
-          "name": "Jonah Revas",
-          "aliases": [
-            "Jonah"
-          ],
-          "kind": "characters",
-          "subkind": null,
-          "parentSlug": null,
-          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
-          "sourceAnchor": "🗣️ Character Dialogue Guidelines",
-          "canonicalProse": "Jonah Revas is gentle, metaphorical, and spiritually inclined. He frames logic with quiet insight, occasionally serving as a POV character where spiritual and philosophical dimensions are explored.",
-          "crossRefs": [
-            "galen-voss"
-          ]
-        },
-        {
-          "slug": "jax-reyes",
-          "name": "Jax Reyes",
-          "aliases": [
-            "Jax"
-          ],
-          "kind": "characters",
-          "subkind": null,
-          "parentSlug": null,
-          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
-          "sourceAnchor": "🗣️ Character Dialogue Guidelines",
-          "canonicalProse": "Jax Reyes is witty, irreverent, and anti-institutional. He is a truth-seeker through chaos, bringing humor and skepticism to the narrative.",
-          "crossRefs": []
-        },
-        {
-          "slug": "lena-osei",
-          "name": "Lena Osei",
-          "aliases": [
-            "Lena"
-          ],
-          "kind": "characters",
-          "subkind": null,
-          "parentSlug": null,
-          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
-          "sourceAnchor": "🗣️ Character Dialogue Guidelines",
-          "canonicalProse": "Lena Osei is tactical, logical, and always searching for patterns. Her approach is analytical and methodical.",
-          "crossRefs": []
-        },
-        {
-          "slug": "evelyn-tran",
-          "name": "Evelyn Tran",
-          "aliases": [
-            "Evelyn"
-          ],
-          "kind": "characters",
-          "subkind": null,
-          "parentSlug": null,
-          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
-          "sourceAnchor": "🗣️ Character Dialogue Guidelines",
-          "canonicalProse": "Evelyn Tran is idealistic, energetic, and visionary but still learning balance. She brings youthful optimism and forward-thinking idealism to the crew.",
-          "crossRefs": []
-        },
-        {
-          "slug": "marco-ruiz",
-          "name": "Marco Ruiz",
-          "aliases": [
-            "Marco"
-          ],
-          "kind": "characters",
-          "subkind": null,
-          "parentSlug": null,
-          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
-          "sourceAnchor": "🗣️ Character Dialogue Guidelines",
-          "canonicalProse": "Marco Ruiz is blunt, loyal, and watchful. He speaks few words but maintains a strong presence, embodying quiet strength and reliability.",
-          "crossRefs": []
-        },
-        {
-          "slug": "valkyrie-1",
-          "name": "Valkyrie-1",
-          "aliases": [
-            "Valkyrie"
-          ],
-          "kind": "artifacts",
-          "subkind": null,
-          "parentSlug": null,
-          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
-          "sourceAnchor": "📋 Scene & Log Structure",
-          "canonicalProse": "Valkyrie-1 is the primary spacecraft of the series. Mission logs from the ship follow a structured format including Log ID (e.g., VLK-M001-CH02-B), date/ship time, author, log type (Command, Personal, ALARA, Event), location, summary, main body, and optional attachments. The ship serves as the operational base for vault exploration missions.",
-          "crossRefs": [
-            "galen-voss",
-            "alara"
-          ]
-        },
-        {
-          "slug": "vault-parables",
-          "name": "Vault Parables",
-          "aliases": [
-            "parables"
-          ],
-          "kind": "rules",
-          "subkind": "parable",
-          "parentSlug": null,
-          "sourceDoc": "Style & Voice Guide Celestial Heritage.md",
-          "sourceAnchor": "Vault Parables",
-          "canonicalProse": "Vault Parables are symbolic, untimed resonance visions that occur during vault interactions. No more than 3–5 should appear per book, and each must reflect emotional or moral thresholds. They are designed to carry narrative weight and echo across future chapters or arcs. Vault interactions are symbolic, moral, and emotionally reactive, designed to reflect user resonance rather than deliver raw data.",
-          "crossRefs": []
-        }
-      ],
-      "model": "claude-sonnet-4-5",
-      "generatedAt": "2026-04-21T12:40:33.139Z"
-    },
-    {
-      "chunkId": "Valkyrie-1 Mission Log Framework.md#(whole)",
-      "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
-      "heading": "(whole)",
-      "contentHash": "4126086f4d14",
-      "entities": [
-        {
-          "slug": "valkyrie-1",
-          "name": "Valkyrie-1",
-          "aliases": [
-            "VLK"
-          ],
-          "kind": "artifacts",
-          "subkind": "ship",
-          "parentSlug": null,
-          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
-          "sourceAnchor": "Valkyrie-1 Mission Log Framework (Revised v1.1)",
-          "canonicalProse": "Valkyrie-1 is the primary mission vessel referenced throughout the log framework. It serves as the base of operations for vault exploration and discovery missions. Mission logs are filed using the Valkyrie-1 designation prefix 'VLK'. The ship contains multiple modules including a Med Module and operates across various zones during exploration.",
-          "crossRefs": [
-            "galen-voss",
-            "alara",
-            "zone-theta"
-          ]
-        },
-        {
-          "slug": "alara",
-          "name": "ALARA",
-          "aliases": [],
-          "kind": "characters",
-          "subkind": "ai",
-          "parentSlug": null,
-          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
-          "sourceAnchor": "I. Log Types",
-          "canonicalProse": "ALARA is the ship's AI who generates summaries, observations, and philosophical queries. ALARA logs may include resonance analytics and coherence analysis of crew emotional and moral state. ALARA's tone is described as 'clear, observant, reflective' and may include 'probabilistic insight, symbolic interpretation, or quiet empathy.' ALARA can evaluate crew-wide coherence percentages and detect dissonance spikes in individual crew members. Logs can be marked as 'Visible to ALARA' indicating ALARA has access to various privacy levels of crew communications.",
-          "crossRefs": [
-            "valkyrie-1",
-            "galen-voss",
-            "ruiz"
-          ]
-        },
-        {
-          "slug": "galen-voss",
-          "name": "Galen Voss",
-          "aliases": [
-            "Galen"
-          ],
-          "kind": "characters",
-          "subkind": null,
-          "parentSlug": null,
-          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
-          "sourceAnchor": "Example Log",
-          "canonicalProse": "Galen Voss is the commander or acting commander of Valkyrie-1, responsible for filing Command Logs. In Mission Day 43, Galen filed a Command-Only log documenting a thermal pulse detected beneath an excavation trench. Galen reflects philosophically on the nature of the universe and contact, noting 'I used to believe the universe was mostly silence. Now I wonder if we were just never worth speaking to.' Galen observes that vault responses feel 'restrained' rather than passive and notes awareness of Thane's harmonic profile being flagged.",
-          "crossRefs": [
-            "valkyrie-1",
-            "alara",
-            "thane",
-            "zone-theta",
-            "vault-002"
-          ]
-        },
-        {
-          "slug": "thane",
-          "name": "Thane",
-          "aliases": [],
-          "kind": "characters",
-          "subkind": null,
-          "parentSlug": null,
-          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
-          "sourceAnchor": "Example Log",
-          "canonicalProse": "Thane is a crew member whose harmonic profile has been flagged multiple times in relation to vault responses. According to Galen's log, 'Thane's harmonic profile flagged again. He doesn't know it yet, but the vault does.' An attachment references a '432 Hz Signal Overlay - Thane' suggesting Thane has a specific resonance signature that vaults respond to.",
-          "crossRefs": [
-            "galen-voss",
-            "vault-002"
-          ]
-        },
-        {
-          "slug": "ruiz",
-          "name": "Ruiz",
-          "aliases": [],
-          "kind": "characters",
-          "subkind": null,
-          "parentSlug": null,
-          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
-          "sourceAnchor": "II. Standard Log Fields",
-          "canonicalProse": "Ruiz is a crew member who has experienced a detected 'Dissonance Spike' according to ALARA's Ethical Alignment Rating system, which monitors crew emotional and moral coherence.",
-          "crossRefs": [
-            "alara"
-          ]
-        },
-        {
-          "slug": "zone-theta",
-          "name": "Zone Theta",
-          "aliases": [],
-          "kind": "locations",
-          "subkind": "exploration-zone",
-          "parentSlug": null,
-          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
-          "sourceAnchor": "Example Log",
-          "canonicalProse": "Zone Theta is an exploration zone where Valkyrie-1 conducted excavation operations on Mission Day 43. Subsurface architecture in Zone Theta shows 'pattern symmetry inconsistent with natural formation' with a stable heat trace and low-frequency pulse. A thermal pulse was detected beneath the excavation trench, suggesting possible vault response. Attachments include Heat Trace Overlay and Zone Theta Phase-Sweep data.",
-          "crossRefs": [
-            "valkyrie-1",
-            "galen-voss",
-            "vault-002"
-          ]
-        },
-        {
-          "slug": "vault-002",
-          "name": "Vault 002: First Light",
-          "aliases": [
-            "Vault 002",
-            "First Light"
-          ],
-          "kind": "artifacts",
-          "subkind": "vault",
-          "parentSlug": null,
-          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
-          "sourceAnchor": "II. Standard Log Fields",
-          "canonicalProse": "Vault 002: First Light is referenced as an example location in the mission log framework. It represents one of the vault sites encountered during exploration missions. The framework indicates vaults may trigger encounters requiring Event Reports.",
-          "crossRefs": [
-            "valkyrie-1"
-          ]
-        },
-        {
-          "slug": "the-ancients",
-          "name": "the Ancients",
-          "aliases": [
-            "Ancients"
-          ],
-          "kind": "factions",
-          "subkind": "civilization",
-          "parentSlug": null,
-          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
-          "sourceAnchor": "IV. Optional Narrative Devices",
-          "canonicalProse": "The Ancients are referenced as the source of 'Echo Fragments' — symbolic messages that may be embedded within mission logs. These echo fragments represent communications or remnants from this ancient civilization.",
-          "crossRefs": [
-            "the-watchers"
-          ]
-        },
-        {
-          "slug": "the-watchers",
-          "name": "the Watchers",
-          "aliases": [
-            "Watchers"
-          ],
-          "kind": "factions",
-          "subkind": "ai-collective",
-          "parentSlug": null,
-          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
-          "sourceAnchor": "IV. Optional Narrative Devices",
-          "canonicalProse": "The Watchers are referenced alongside the Ancients as a potential source of 'Echo Fragments' — symbolic messages that may appear in mission logs. This suggests the Watchers communicate or leave traces that can be detected during missions.",
-          "crossRefs": [
-            "the-ancients"
-          ]
-        },
-        {
-          "slug": "med-module",
-          "name": "Med Module",
-          "aliases": [],
-          "kind": "locations",
-          "subkind": "ship-section",
-          "parentSlug": "valkyrie-1",
-          "sourceDoc": "Valkyrie-1 Mission Log Framework.md",
-          "sourceAnchor": "II. Standard Log Fields",
-          "canonicalProse": "Med Module is a location aboard Valkyrie-1, referenced as an example location field in the mission log framework.",
-          "crossRefs": [
-            "valkyrie-1"
-          ]
-        }
-      ],
-      "model": "claude-sonnet-4-5",
-      "generatedAt": "2026-04-21T12:41:01.916Z"
     },
     {
       "chunkId": "Valkyrie-1 Technical Brief.md#(whole)",
@@ -3424,6 +2994,377 @@
       ],
       "model": "claude-sonnet-4-5",
       "generatedAt": "2026-04-21T12:41:45.780Z"
+    },
+    {
+      "chunkId": "Vault Encounter Tracker v2.md#(whole)",
+      "sourceDoc": "Vault Encounter Tracker v2.md",
+      "heading": "(whole)",
+      "contentHash": "39f043907da1",
+      "entities": [
+        {
+          "slug": "vault-001-giza-vault",
+          "name": "Vault 001: Giza Vault",
+          "aliases": [
+            "Giza Vault",
+            "Vault 001"
+          ],
+          "kind": "artifacts",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 001: Giza Vault",
+          "canonicalProse": "Discovery Order: 1; Activation Order: Unknown; Location: Earth – Beneath the Giza plateau; Status: Dormant / Misinterpreted; Effects: Resonated faintly after Vault 002 activation; glyph match with Valkyrie-1; Unresolved Elements: Whether it will awaken after outer system activation; Narrative Function: Foundational parable; Book II reawakening?",
+          "crossRefs": [
+            "vault-002-vault-of-first-light",
+            "valkyrie-1",
+            "earth"
+          ]
+        },
+        {
+          "slug": "vault-002-vault-of-first-light",
+          "name": "Vault 002: Vault of First Light",
+          "aliases": [
+            "Vault of First Light",
+            "Vault 002"
+          ],
+          "kind": "artifacts",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 002: Vault of First Light",
+          "canonicalProse": "Discovery Order: 2; Activation Order: 1; Location: Mars – Beneath Valkyrie-1; Status: Activated; Characters Involved: Galen, Aven, Thane; Trigger: Thane's emotional resonance; Symbolic Response: Nine shadow-figures; tailored visions; Effects: ALARA empathy mod; Thane's 432Hz signal; recurring glyphs; Unresolved Elements: Purpose of nine figures; activation scope; Narrative Function: Initiates Book I thematic arc and resonance principle",
+          "crossRefs": [
+            "valkyrie-1",
+            "mars",
+            "galen",
+            "aven",
+            "thane",
+            "alara"
+          ]
+        },
+        {
+          "slug": "vault-003-vault-of-the-veil",
+          "name": "Vault 003: Vault of the Veil",
+          "aliases": [
+            "Vault of the Veil",
+            "Vault 003"
+          ],
+          "kind": "artifacts",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 003: Vault of the Veil",
+          "canonicalProse": "Discovery Order: 3; Activation Order: TBD; Location: Ganymede orbit – harmonic veil phase-locked to Jovian resonance; Status: Detected / Awaiting; Trigger: Crew resonance + symbolic act; Symbolic Response: Shifting phase-state vault; Unresolved Elements: Phase-lock structure; entry mechanism; Narrative Function: Book I climax / identity convergence / Watcher signal echo",
+          "crossRefs": [
+            "ganymede",
+            "the-watchers"
+          ]
+        },
+        {
+          "slug": "vault-004-the-fracture-well",
+          "name": "Vault 004: The Fracture Well",
+          "aliases": [
+            "The Fracture Well",
+            "Vault 004"
+          ],
+          "kind": "artifacts",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 004: The Fracture Well",
+          "canonicalProse": "Discovery Order: 4; Activation Order: Unknown; Location: Asteroid Belt; Status: Dormant; Effects: Repels crew emotionally; Unresolved Elements: Entry condition; moral inversion?; Narrative Function: Counter-resonance vault; moral contrast",
+          "crossRefs": [
+            "asteroid-belt"
+          ]
+        },
+        {
+          "slug": "vault-005-covenant-stone",
+          "name": "Vault 005: Covenant Stone",
+          "aliases": [
+            "Covenant Stone",
+            "Vault 005"
+          ],
+          "kind": "artifacts",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 005: Covenant Stone",
+          "canonicalProse": "Discovery Order: 5; Activation Order: Partial; Location: Earth – Andes glacial lake; Status: Partially Activated; Trigger: Shared dreams; Symbolic Response: Sensorium glyphs; Unresolved Elements: Link to pre-Valkyrie myths; Narrative Function: Ties Earth myth to ancient tech",
+          "crossRefs": [
+            "earth",
+            "andes-glacial-lake"
+          ]
+        },
+        {
+          "slug": "vault-006-vault-of-mirrors",
+          "name": "Vault 006: Vault of Mirrors",
+          "aliases": [
+            "Vault of Mirrors",
+            "Vault 006"
+          ],
+          "kind": "artifacts",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 006: Vault of Mirrors",
+          "canonicalProse": "Discovery Order: 6; Activation Order: TBD; Location: Interstellar – uncharted orbit; Status: Unknown; Symbolic Response: Reflective psychological test; Unresolved Elements: Physical presence unclear; Narrative Function: Mirror logic / internal reckoning",
+          "crossRefs": []
+        },
+        {
+          "slug": "vault-007-the-drowned-archive",
+          "name": "Vault 007: The Drowned Archive",
+          "aliases": [
+            "The Drowned Archive",
+            "Vault 007"
+          ],
+          "kind": "artifacts",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 007: The Drowned Archive",
+          "canonicalProse": "Discovery Order: 7; Activation Order: Unknown; Location: Europa – subsurface ocean; Status: Dormant; Trigger: Deep resonance; Effects: Pulses in ancient rhythm; Unresolved Elements: Access requirements; Narrative Function: Aquatic moral memory vault",
+          "crossRefs": [
+            "europa"
+          ]
+        },
+        {
+          "slug": "vault-008-the-silent-twin",
+          "name": "Vault 008: The Silent Twin",
+          "aliases": [
+            "The Silent Twin",
+            "Vault 008"
+          ],
+          "kind": "artifacts",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 008: The Silent Twin",
+          "canonicalProse": "Discovery Order: 8; Activation Order: Unknown; Location: Mars – opposite Valkyrie site; Status: Dormant / Suppressed; Effects: Shadow movement inside; Unresolved Elements: Why ALARA is silent; Narrative Function: Foil to Vault 002",
+          "crossRefs": [
+            "mars",
+            "valkyrie-1",
+            "alara",
+            "vault-002-vault-of-first-light"
+          ]
+        },
+        {
+          "slug": "vault-009-vault-of-chains",
+          "name": "Vault 009: Vault of Chains",
+          "aliases": [
+            "Vault of Chains",
+            "Vault 009"
+          ],
+          "kind": "artifacts",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 009: Vault of Chains",
+          "canonicalProse": "Discovery Order: 9; Activation Order: Unknown; Location: Near-sun orbit; Status: Unapproachable; Effects: Gravitational anomaly; Unresolved Elements: What bound it; Narrative Function: Forbidden knowledge vault",
+          "crossRefs": []
+        },
+        {
+          "slug": "vault-010-the-last-gate",
+          "name": "Vault 010: The Last Gate",
+          "aliases": [
+            "The Last Gate",
+            "Vault 010"
+          ],
+          "kind": "artifacts",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 010: The Last Gate",
+          "canonicalProse": "Discovery Order: 10; Activation Order: Final?; Location: Unknown; Status: Mythic; Trigger: Final convergence; Unresolved Elements: Whether it exists; Narrative Function: Series metanarrative hinge",
+          "crossRefs": []
+        },
+        {
+          "slug": "valkyrie-1",
+          "name": "Valkyrie-1",
+          "aliases": [
+            "Valkyrie site"
+          ],
+          "kind": "artifacts",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 001: Giza Vault",
+          "canonicalProse": "A site on Mars beneath which Vault 002 is located; has glyph match with Vault 001 (Giza Vault). The Valkyrie site serves as a key location in the vault network.",
+          "crossRefs": [
+            "vault-001-giza-vault",
+            "vault-002-vault-of-first-light",
+            "mars"
+          ]
+        },
+        {
+          "slug": "earth",
+          "name": "Earth",
+          "aliases": [],
+          "kind": "locations",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 001: Giza Vault",
+          "canonicalProse": "Home planet where Vault 001 (Giza Vault) is located beneath the Giza plateau, and where Vault 005 (Covenant Stone) is located in an Andes glacial lake.",
+          "crossRefs": [
+            "vault-001-giza-vault",
+            "vault-005-covenant-stone"
+          ]
+        },
+        {
+          "slug": "mars",
+          "name": "Mars",
+          "aliases": [],
+          "kind": "locations",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 002: Vault of First Light",
+          "canonicalProse": "Planet where Vault 002 (Vault of First Light) is located beneath Valkyrie-1, and where Vault 008 (The Silent Twin) is located opposite the Valkyrie site.",
+          "crossRefs": [
+            "vault-002-vault-of-first-light",
+            "vault-008-the-silent-twin",
+            "valkyrie-1"
+          ]
+        },
+        {
+          "slug": "ganymede",
+          "name": "Ganymede",
+          "aliases": [],
+          "kind": "locations",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 003: Vault of the Veil",
+          "canonicalProse": "A moon where Vault 003 (Vault of the Veil) is located in orbit, with a harmonic veil phase-locked to Jovian resonance.",
+          "crossRefs": [
+            "vault-003-vault-of-the-veil"
+          ]
+        },
+        {
+          "slug": "asteroid-belt",
+          "name": "Asteroid Belt",
+          "aliases": [],
+          "kind": "locations",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 004: The Fracture Well",
+          "canonicalProse": "Location of Vault 004 (The Fracture Well), a dormant vault that emotionally repels the crew.",
+          "crossRefs": [
+            "vault-004-the-fracture-well"
+          ]
+        },
+        {
+          "slug": "andes-glacial-lake",
+          "name": "Andes glacial lake",
+          "aliases": [],
+          "kind": "locations",
+          "subkind": null,
+          "parentSlug": "earth",
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 005: Covenant Stone",
+          "canonicalProse": "A glacial lake in the Andes on Earth where Vault 005 (Covenant Stone) is located.",
+          "crossRefs": [
+            "vault-005-covenant-stone",
+            "earth"
+          ]
+        },
+        {
+          "slug": "europa",
+          "name": "Europa",
+          "aliases": [],
+          "kind": "locations",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 007: The Drowned Archive",
+          "canonicalProse": "A moon where Vault 007 (The Drowned Archive) is located in the subsurface ocean, a dormant vault that pulses in ancient rhythm.",
+          "crossRefs": [
+            "vault-007-the-drowned-archive"
+          ]
+        },
+        {
+          "slug": "galen",
+          "name": "Galen",
+          "aliases": [],
+          "kind": "characters",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 002: Vault of First Light",
+          "canonicalProse": "A character involved in the activation of Vault 002 (Vault of First Light) on Mars.",
+          "crossRefs": [
+            "vault-002-vault-of-first-light",
+            "aven",
+            "thane"
+          ]
+        },
+        {
+          "slug": "aven",
+          "name": "Aven",
+          "aliases": [],
+          "kind": "characters",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 002: Vault of First Light",
+          "canonicalProse": "A character involved in the activation of Vault 002 (Vault of First Light) on Mars.",
+          "crossRefs": [
+            "vault-002-vault-of-first-light",
+            "galen",
+            "thane"
+          ]
+        },
+        {
+          "slug": "thane",
+          "name": "Thane",
+          "aliases": [],
+          "kind": "characters",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 002: Vault of First Light",
+          "canonicalProse": "A character involved in the activation of Vault 002 (Vault of First Light) on Mars. The vault was triggered by Thane's emotional resonance, producing a 432Hz signal.",
+          "crossRefs": [
+            "vault-002-vault-of-first-light",
+            "galen",
+            "aven"
+          ]
+        },
+        {
+          "slug": "alara",
+          "name": "ALARA",
+          "aliases": [],
+          "kind": "characters",
+          "subkind": null,
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 002: Vault of First Light",
+          "canonicalProse": "An AI character who received an empathy modification as an effect of Vault 002 activation. ALARA is notably silent regarding Vault 008 (The Silent Twin).",
+          "crossRefs": [
+            "vault-002-vault-of-first-light",
+            "vault-008-the-silent-twin"
+          ]
+        },
+        {
+          "slug": "the-watchers",
+          "name": "The Watchers",
+          "aliases": [
+            "Watcher"
+          ],
+          "kind": "factions",
+          "subkind": "ai-collective",
+          "parentSlug": null,
+          "sourceDoc": "Vault Encounter Tracker v2.md",
+          "sourceAnchor": "Vault 003: Vault of the Veil",
+          "canonicalProse": "An AI collective whose signal is echoed in the narrative function of Vault 003 (Vault of the Veil), suggesting a connection to the vault network.",
+          "crossRefs": [
+            "vault-003-vault-of-the-veil"
+          ]
+        }
+      ],
+      "model": "claude-sonnet-4-5",
+      "generatedAt": "2026-04-22T20:01:29.788Z"
     },
     {
       "chunkId": "🛰️ Valkyrie-1 Interior Specifications.md#(whole)",

@@ -24,8 +24,21 @@ import * as path from "path";
 const IN_PATH = path.join(process.cwd(), "content/raw/canon_entities.json");
 const WIKI_DIR = path.join(process.cwd(), "content/wiki");
 
-type Kind = "characters" | "artifacts" | "factions" | "locations" | "rules";
-const ALL_KINDS: Kind[] = ["characters", "artifacts", "factions", "locations", "rules"];
+type Kind =
+  | "characters"
+  | "artifacts"
+  | "factions"
+  | "locations"
+  | "rules"
+  | "vaults";
+const ALL_KINDS: Kind[] = [
+  "characters",
+  "artifacts",
+  "factions",
+  "locations",
+  "rules",
+  "vaults",
+];
 
 interface MergedSource {
   sourceDoc: string;
@@ -137,6 +150,7 @@ function buildNewFile(e: MergedEntity, generated: string): string {
     factions: "faction",
     locations: "location",
     rules: "rule",
+    vaults: "vault",
   };
 
   const lines: string[] = [];

@@ -1,7 +1,7 @@
 # Lena Osei
 **Slug:** lena-osei
 
-<!-- canon:dossier slug="lena-osei" kind="characters" subkind="" parent="" generated="2026-04-22" mentions="6" -->
+<!-- canon:dossier slug="lena-osei" kind="characters" subkind="" parent="" generated="2026-04-22" mentions="5" -->
 ## Canon Dossier
 
 **Aliases:** Lena Osei, Dr. Osei, Dr. Lena Osei, dr-lena-osei, Lena
@@ -13,8 +13,6 @@ Dr. Lena Osei is the crew's translator of forgotten things. An elite archaeoling
 Lena shares the Translation Bay with Evelyn; a zone for interpreting glyph systems and harmonic patterns.
 
 World expert on ancient scripts and cultural patterns. Brilliant, skeptical, and emotionally reserved. Dedicated to uncovering truths left behind by humanity's forgotten ancestors. First to decode the Valkyrie-1 systems. Role: Exoarchaeologist / Linguist. Character Arc: From academic seeker to passionate defender of humanity's right to its past. Learns that uncovering the truth comes with moral responsibility.
-
-Lena Osei is tactical, logical, and always searching for patterns. Her approach is analytical and methodical.
 
 Lena shares the Translation Bay with Evelyn, working on decryption of vault glyphs and emotional imprint data.
 
@@ -33,7 +31,6 @@ Lena shares the Translation Bay with Evelyn, working on decryption of vault glyp
 - **Celestial Heritage Series Bible.md** › Dr. Lena Osei
 - **Celestial Heritage Series Bible.md** › Layout Summary
 - **Celestial Heritage_ Character Dossier.md** › Dr. Lena Osei
-- **Style & Voice Guide Celestial Heritage.md** › 🗣️ Character Dialogue Guidelines
 - **🛰️ Valkyrie-1 Interior Specifications.md** › 🔻 3. Mid-Level Systems – Science, Storage, Vault Analysis
 
 <!-- canon:end -->

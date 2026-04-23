@@ -1,7 +1,7 @@
 # Galen Voss
 **Slug:** galen-voss
 
-<!-- canon:dossier slug="galen-voss" kind="characters" subkind="" parent="" generated="2026-04-22" mentions="14" -->
+<!-- canon:dossier slug="galen-voss" kind="characters" subkind="" parent="" generated="2026-04-22" mentions="13" -->
 ## Canon Dossier
 
 **Aliases:** Voss, Galen, 👨‍🚀 Galen Voss
@@ -26,11 +26,9 @@ Former USAF pilot, rejuvenated from 82 to 50 via advanced gene therapy. He embod
 
 A crew member who receives 'The Mirror at the Gate' parable in Chapter 13 during self-reflection while in isolation. ALARA initiates a mirror field for this parable, which teaches that leadership without reflection fails and worthiness comes from inward honesty.
 
-Galen Voss is the primary POV character of the Celestial Heritage series, presented through third-person limited perspective. His voice is thoughtful, grounded, and principled, characterized by quiet authority. He speaks rarely but decisively, embodying the values of integrity, service, and excellence that echo the U.S. Air Force ethos within the story's visionary science fiction framework.
-
-Galen Voss is the commander or acting commander of Valkyrie-1, responsible for filing Command Logs. In Mission Day 43, Galen filed a Command-Only log documenting a thermal pulse detected beneath an excavation trench. Galen reflects philosophically on the nature of the universe and contact, noting 'I used to believe the universe was mostly silence. Now I wonder if we were just never worth speaking to.' Galen observes that vault responses feel 'restrained' rather than passive and notes awareness of Thane's harmonic profile being flagged.
-
 Galen Voss's elevated chair acts as a moral and observational hub rather than command authority in the Central Command Dome. Galen Voss observed: 'We didn't build it. We barely deserve to walk through it. But it's listening.'
+
+A character involved in the activation of Vault 002 (Vault of First Light) on Mars.
 
 Galen sits on a subtly rising central dais—not to command, but to anchor. Galen's station is interface-free: a reflective observation band around his seat displays the crew's emotional resonance field in soft waves of light.
 
@@ -45,7 +43,6 @@ Galen sits on a subtly rising central dais—not to command, but to anchor. Gale
 - [[command-dome]]
 - [[the-mirror-at-the-gate]]
 - [[vault-006]]
-- [[zone-theta]]
 - [[vault-002]]
 
 ### Canon sources
@@ -59,9 +56,8 @@ Galen sits on a subtly rising central dais—not to command, but to anchor. Gale
 - **Celestial Heritage Series Bible.md** › a. Character Table (1 line each)
 - **Celestial Heritage_ Character Dossier.md** › Galen Voss
 - **Parable Catalog v2 – Celestial Heritage Series.md** › Parable Catalog v2 – Celestial Heritage Series
-- **Style & Voice Guide Celestial Heritage.md** › 🗣️ Character Dialogue Guidelines
-- **Valkyrie-1 Mission Log Framework.md** › Example Log
 - **Valkyrie-1 Technical Brief.md** › Command & Navigation
+- **Vault Encounter Tracker v2.md** › Vault 002: Vault of First Light
 - **🛰️ Valkyrie-1 Interior Specifications.md** › ⚙️ Layout & Stations
 
 <!-- canon:end -->

@@ -19,9 +19,17 @@ let cachedDecisionFrameworks: string | null = null;
 let cachedPeopleContext: string | null = null;
 let cachedPrinciplesContext: string | null = null;
 let cachedRulesContext: string | null = null;
+let cachedMissionTimelineContext: string | null = null;
 let loggedSystemPromptApproxTokens = false;
 
-const RULES_CONTEXT_MAX_CHARS = 18_000;
+// Raised from 18k to 60k after the Series Bible ingestion (ancients-philosophy,
+// technology-limits, vault-network, moral-questions, spiritual-symbols,
+// prologue-timeline, earth-2050, containment-morality, conscious-machines)
+// plus the existing parable and principle rules put the total at ~49k chars.
+// Truncation at 18k was alphabetically dropping `technology-limits` and
+// `vault-network`, which are critical for preventing Ask from inventing
+// off-canon tech or vault mechanics. 60k leaves headroom for more rules.
+const RULES_CONTEXT_MAX_CHARS = 60_000;
 
 /** Inventory line lists tiers like "(tiers: A, B, D)" — Tier A bios are richest. */
 function peoplePageHasTierA(markdown: string): boolean {
@@ -194,6 +202,201 @@ export function getRulesContext(): string {
     return cachedRulesContext;
   } catch {
     cachedRulesContext = "";
+    return "";
+  }
+}
+
+/**
+ * Compact chapter → mission-date index from `content/raw/mission_logs_inventory.json`.
+ * Gives Ask in-universe temporal anchors for "when does X happen?" questions
+ * without leaking log bodies (plot content stays gated by reader progress and
+ * the story catalog). Logs aren't always chronological within a chapter
+ * (flashbacks, delayed filings, parallel events), so each row shows the
+ * Mission Day span and UTC date span actually filed in that chapter.
+ */
+export function getMissionTimelineContext(): string {
+  if (cachedMissionTimelineContext !== null) return cachedMissionTimelineContext;
+
+  try {
+    const invPath = path.join(
+      process.cwd(),
+      "content/raw/mission_logs_inventory.json",
+    );
+    if (!fs.existsSync(invPath)) {
+      cachedMissionTimelineContext = "";
+      return "";
+    }
+
+    const raw = fs.readFileSync(invPath, "utf-8");
+    const parsed = JSON.parse(raw) as {
+      missionLogs?: Array<{
+        chapterId?: string;
+        chapterNumber?: number;
+        chapterTitle?: string;
+        dateShipTime?: string;
+      }>;
+    };
+    const logs = parsed.missionLogs ?? [];
+    if (logs.length === 0) {
+      cachedMissionTimelineContext = "";
+      return "";
+    }
+
+    // Parse "Mission Day 43 / 2050-10-22 15:20 UTC" (and partial variants).
+    const dateRe = /(\d{4}-\d{2}-\d{2})/;
+    const dayRe = /Mission Day\s+(\d+)/i;
+
+    type Chapter = {
+      num: number;
+      id: string;
+      title: string;
+      days: Set<number>;
+      dates: Set<string>;
+    };
+    const byChapter = new Map<string, Chapter>();
+
+    for (const log of logs) {
+      const id = log.chapterId?.trim();
+      if (!id) continue;
+      const num = typeof log.chapterNumber === "number" ? log.chapterNumber : 9999;
+      const title = log.chapterTitle?.trim() || "";
+      let entry = byChapter.get(id);
+      if (!entry) {
+        entry = { num, id, title, days: new Set(), dates: new Set() };
+        byChapter.set(id, entry);
+      }
+      const ts = log.dateShipTime ?? "";
+      const day = ts.match(dayRe)?.[1];
+      const date = ts.match(dateRe)?.[1];
+      if (day) entry.days.add(parseInt(day, 10));
+      if (date) entry.dates.add(date);
+    }
+
+    const rows = [...byChapter.values()]
+      .sort((a, b) => a.num - b.num)
+      .map((c) => {
+        const days = [...c.days].sort((a, b) => a - b);
+        const dates = [...c.dates].sort();
+        const dayPart =
+          days.length === 0
+            ? ""
+            : days.length === 1
+              ? `Mission Day ${days[0]}`
+              : `Mission Days ${days[0]}–${days[days.length - 1]}`;
+        const datePart =
+          dates.length === 0
+            ? ""
+            : dates.length === 1
+              ? `(${dates[0]})`
+              : `(${dates[0]} to ${dates[dates.length - 1]})`;
+        const anchor = [dayPart, datePart].filter(Boolean).join(" ");
+        const title = c.title ? ` *${c.title}*` : "";
+        return `- ${c.id}${title} — ${anchor || "date unknown"}`;
+      });
+
+    cachedMissionTimelineContext = [
+      "## Mission chronology (in-universe dates)",
+      "",
+      "Mission logs anchor each Book I chapter to specific Mission Days aboard Valkyrie-1 (launched 2050-09-10 UTC). Use these when answering \"when does X happen?\" questions. Logs within a chapter are not always chronological — flashbacks, delayed filings, and parallel events occur.",
+      "",
+      ...rows,
+      "",
+      "Do not invent log entries, dates, or Mission Days beyond this index. If a reader's current chapter is earlier than a chapter listed here, treat later rows as spoilers.",
+    ].join("\n");
+
+    return cachedMissionTimelineContext;
+  } catch {
+    cachedMissionTimelineContext = "";
+    return "";
+  }
+}
+
+/**
+ * Full mission logs for a single chapter, for injection into Ask *only when*
+ * the reader is currently viewing that chapter. Scoped this way so per-log
+ * summaries and bodies never leak beyond what the reader has access to.
+ *
+ * Accepts either a chapter id (`CH07`) or a full story slug (`CH07-harmonic-breach`)
+ * in any case; extracts the CH## prefix and filters the inventory. Returns ""
+ * if the inventory is missing or no logs match.
+ */
+const missionLogsForChapterCache = new Map<string, string>();
+export function getMissionLogsForChapter(chapterOrSlug: string): string {
+  if (!chapterOrSlug) return "";
+  const chapterMatch = chapterOrSlug.toUpperCase().match(/CH\d{2}/);
+  if (!chapterMatch) return "";
+  const chapterId = chapterMatch[0];
+  const cached = missionLogsForChapterCache.get(chapterId);
+  if (cached !== undefined) return cached;
+
+  try {
+    const invPath = path.join(
+      process.cwd(),
+      "content/raw/mission_logs_inventory.json",
+    );
+    if (!fs.existsSync(invPath)) {
+      missionLogsForChapterCache.set(chapterId, "");
+      return "";
+    }
+    const parsed = JSON.parse(fs.readFileSync(invPath, "utf-8")) as {
+      missionLogs?: Array<{
+        logId?: string;
+        chapterId?: string;
+        dateShipTime?: string;
+        author?: string;
+        logType?: string;
+        location?: string;
+        privacyLevel?: string;
+        summary?: string;
+        mainBody?: string;
+      }>;
+    };
+    const logs = (parsed.missionLogs ?? []).filter(
+      (l) => l.chapterId === chapterId,
+    );
+    if (logs.length === 0) {
+      missionLogsForChapterCache.set(chapterId, "");
+      return "";
+    }
+
+    // Cap body per log so a fat chapter doesn't dominate the prompt. 600 chars
+    // preserves the voice while leaving room for multiple logs + other context.
+    const MAX_BODY = 600;
+    const blocks = logs.map((l) => {
+      const header = [l.logId, l.dateShipTime].filter(Boolean).join(" · ");
+      const meta = [l.author, l.logType, l.location, l.privacyLevel]
+        .filter(Boolean)
+        .join(" · ");
+      const summary = l.summary?.trim()
+        ? `**Summary:** ${l.summary.trim()}`
+        : "";
+      const body = l.mainBody?.trim() ?? "";
+      const bodyOut =
+        body.length > MAX_BODY
+          ? `${body.slice(0, MAX_BODY).trimEnd()}…`
+          : body;
+      return [
+        `### ${header}`,
+        meta,
+        summary,
+        bodyOut ? `**Log:** ${bodyOut}` : "",
+      ]
+        .filter(Boolean)
+        .join("\n");
+    });
+
+    const out = [
+      `## Mission logs for ${chapterId}`,
+      "",
+      "These in-universe logs are tied to the chapter the reader is currently viewing. Quote them directly when the reader asks about events, intent, or emotional context within this chapter. Do not reference logs from other chapters here.",
+      "",
+      ...blocks,
+    ].join("\n\n");
+
+    missionLogsForChapterCache.set(chapterId, out);
+    return out;
+  } catch {
+    missionLogsForChapterCache.set(chapterId, "");
     return "";
   }
 }

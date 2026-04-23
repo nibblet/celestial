@@ -1,7 +1,7 @@
 # Jax Reyes
 **Slug:** jax-reyes
 
-<!-- canon:dossier slug="jax-reyes" kind="characters" subkind="" parent="" generated="2026-04-22" mentions="5" -->
+<!-- canon:dossier slug="jax-reyes" kind="characters" subkind="" parent="" generated="2026-04-22" mentions="4" -->
 ## Canon Dossier
 
 **Aliases:** Jax, 🛠️ Jax Reyes, Jax Reyes, Jaxon Reyes, Jaxon 'Jax' Reyes, jaxon-reyes
@@ -13,8 +13,6 @@ Jax Reyes is the sparkplug that might blow the whole engine. He's brilliant, unf
 Jax Reyes has a fast, clipped cadence that serves as a sarcastic defense mechanism. His word choice is techy, irreverent, and laced with challenge. He swears under breath and never ends a sentence clean. Example: 'You want me to *what*? Plug emotion into the wall and pray it purrs?'
 
 Brilliant, rogue technologist with a rebellious streak. Distrusts institutions but is loyal to truth. Views the mission as a chance to bring knowledge back to the people. Role: Systems Hacker / Engineer. Character Arc: From loner to crew loyalist. Learns that some structures—like trust and integrity—are worth building.
-
-Jax Reyes is witty, irreverent, and anti-institutional. He is a truth-seeker through chaos, bringing humor and skepticism to the narrative.
 
 ### Related
 - [[alara]]
@@ -28,7 +26,6 @@ Jax Reyes is witty, irreverent, and anti-institutional. He is a truth-seeker thr
 - **Celestial Heritage Series Bible.md** › 🛠️ Jax Reyes
 - **Celestial Heritage Series Bible.md** › 🗣️ Dialogue Voice Keys
 - **Celestial Heritage_ Character Dossier.md** › Jaxon 'Jax' Reyes
-- **Style & Voice Guide Celestial Heritage.md** › 🗣️ Character Dialogue Guidelines
 
 <!-- canon:end -->
 Inventory entry (tiers: B)

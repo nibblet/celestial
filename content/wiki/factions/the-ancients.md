@@ -1,7 +1,7 @@
 # The Ancients
 **Slug:** the-ancients
 
-<!-- canon:dossier slug="the-ancients" kind="factions" subkind="civilization" parent="" generated="2026-04-22" mentions="8" -->
+<!-- canon:dossier slug="the-ancients" kind="factions" subkind="civilization" parent="" generated="2026-04-22" mentions="7" -->
 ## Canon Dossier
 
 **Aliases:** Ancient Civilization, Ancient, Resonants, Resonant civilization, resonant-civilization, Ancients, the Resonant, resonant, the-resonant, humanity's forgotten ancestors, The Ancients
@@ -19,8 +19,6 @@ What the Resonant wanted is never revealed directly, only reflected through vaul
 The Resonant did not leave commandments. They left stories embedded in structure—vault chambers shaped like myths, puzzles that echo ancient moral questions, and harmonics that mirror emotional thresholds. The vaults are not libraries. They are tests. They did not use spiritual symbols explicitly; rather, the crew sees them—and that's the point. The resonance is real. The meaning is ours to notice. Spiritual motifs emerge subtly, echoing Earth's deepest archetypes—without naming religion. Recurring elements include thresholds (doors that don't open until you let go), light as resonance (glow = coherence, not energy), hands (imprints, reaching gestures, the idea of 'grasping or releasing'), circles & orbits (echoing continuity, presence without arrival), and breath or wind in sealed vaults (spirit, presence, awareness felt but unseen).
 
 An ancient civilization that subtly engineered latent biological traits into humanity. These traits allow recognition and response from systems like Valkyrie-1 and ALARA. The Ancients left behind vaults, biotech systems, resonance triggers, and deeply embedded patterns. Dr. Lena Osei seeks truths left behind by humanity's forgotten ancestors. Dr. Jonah Revas believes the Ancients may have been the original source or echo of values that humanity later rediscovered, possibly the roots of modern religion deliberately planted long ago. ALARA's evolution mirrors the reawakening of a civilization that never truly vanished.
-
-The Ancients are referenced as the source of 'Echo Fragments' — symbolic messages that may be embedded within mission logs. These echo fragments represent communications or remnants from this ancient civilization.
 
 ### Related
 - [[valkyrie-1]]
@@ -42,7 +40,6 @@ The Ancients are referenced as the source of 'Echo Fragments' — symbolic messa
 - **Celestial Heritage Series Bible.md** › What Is Never Revealed Directly
 - **Celestial Heritage Series Bible.md** › 🔁 Parables & Echo Logic
 - **Celestial Heritage_ Character Dossier.md** › Thane Meric
-- **Valkyrie-1 Mission Log Framework.md** › IV. Optional Narrative Devices
 
 <!-- canon:end -->
 
