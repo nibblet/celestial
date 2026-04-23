@@ -9,6 +9,7 @@ import {
   getAllStories,
   getStoryById,
 } from "@/lib/wiki/parser";
+import { getChapterTagsPromptBlock } from "@/lib/wiki/chapter-tags";
 
 const WIKI_DIR = path.join(process.cwd(), "content/wiki");
 
@@ -454,6 +455,7 @@ export function buildSystemPrompt(
   const peopleContext = getPeopleContext();
   const principlesContext = getPrinciplesContext();
   const storyContext = canonicalStoryContext ?? (storySlug ? getStoryContext(storySlug) : "");
+  const chapterTagsBlock = storySlug ? getChapterTagsPromptBlock(storySlug) : "";
   const journeyContext = journeySlug
     ? getJourneyContextForPrompt(journeySlug)
     : "";
@@ -525,7 +527,8 @@ ${getDecisionFrameworks().slice(0, 2000)}
 ${publishedStorySummaries ? `## Additional published expansions\n${publishedStorySummaries}` : ""}
 
 ${journeyContext ? `## Guided journey context\n${journeyContext}\n` : ""}
-${storyContext ? `## Currently reading\nThe user is viewing this story:\n\n${storyContext.slice(0, 3000)}` : ""}`;
+${storyContext ? `## Currently reading\nThe user is viewing this story:\n\n${storyContext.slice(0, 3000)}` : ""}
+${chapterTagsBlock ? `\n${chapterTagsBlock}\n` : ""}`;
 
   if (process.env.NODE_ENV === "development" && !loggedSystemPromptApproxTokens) {
     loggedSystemPromptApproxTokens = true;

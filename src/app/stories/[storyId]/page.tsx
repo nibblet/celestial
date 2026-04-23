@@ -20,6 +20,7 @@ import { AskAboutStory } from "@/components/stories/AskAboutStory";
 import { AnsweredQuestionsList } from "@/components/stories/AnsweredQuestionsList";
 import { StorySceneJump } from "@/components/story/StorySceneJump";
 import { enrichLegacyStorySource } from "@/lib/wiki/taxonomy";
+import { getChapterTags } from "@/lib/wiki/chapter-tags";
 import { extractSceneSectionsFromChapterBody } from "@/lib/wiki/markdown-headings";
 import { getSceneSectionsForChapter } from "@/lib/wiki/scenes-db";
 import { lifeStageToEraAccent } from "@/lib/design/era";
@@ -64,6 +65,7 @@ export default async function StoryDetailPage({
   const peopleInStory = getPeopleByStoryId(storyId);
   const linkedFullText = addPeopleLinks(story.fullText, peopleInStory);
   const chapterMeta = enrichLegacyStorySource(storyId, story.source);
+  const chapterTags = getChapterTags(storyId);
   // Prefer DB-backed scenes (`sb_chapter_scenes` via scenes-db), fall back
   // to live markdown parsing for chapters that haven't been ingested yet.
   // Anchor ids are identical between both sources, so clicks never break.
@@ -179,6 +181,7 @@ export default async function StoryDetailPage({
               sourceType={chapterMeta.sourceType}
               lifeStage={story.lifeStage}
               themes={story.themes}
+              chapterTags={chapterTags}
             />
 
             <div id="story-body">

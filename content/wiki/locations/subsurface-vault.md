@@ -18,7 +18,6 @@ Uncovered after alignment of excavation scans with mission-log resonance markers
 - Temporarily quarantined after memory bleed incidents (CH08).
 
 ## Related
-- [[location:subsurface-vault]] requires [[artifact:harmonic-key]]
 - [[rule:resonance-field]] destabilizes [[location:subsurface-vault]]
 - [[location:subsurface-vault]] houses [[vault:vault-002]]
 

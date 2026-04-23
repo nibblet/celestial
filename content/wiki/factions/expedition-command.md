@@ -23,7 +23,6 @@ Formed to unify scientific, logistics, and security lines under one field charte
 
 ## Related
 - [[faction:expedition-command]] supervises [[location:south-trench]]
-- [[faction:expedition-command]] authorizes [[artifact:harmonic-key]]
 
 ## Lore metadata
 

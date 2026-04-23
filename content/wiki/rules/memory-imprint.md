@@ -14,7 +14,6 @@ Resonant artifacts can capture and replay perceptual traces that blur objective 
 - Resonance Field
 
 ## Related
-- [[rule:memory-imprint]] manifests-through [[artifact:echo-core]]
 - [[character:aven]] documents [[rule:memory-imprint]]
 
 ## Lore metadata

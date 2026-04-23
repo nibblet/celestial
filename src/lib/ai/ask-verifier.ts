@@ -3,6 +3,10 @@ import path from "node:path";
 import { getCanonicalStoryById } from "@/lib/wiki/corpus";
 import type { ReaderProgress } from "@/lib/progress/reader-progress";
 import { isStoryUnlocked } from "@/lib/progress/reader-progress";
+import {
+  getChapterTagSlugSet,
+  getChapterTags,
+} from "@/lib/wiki/chapter-tags";
 import type {
   AskVerificationResult,
   AskVerifierStrictness,
@@ -73,6 +77,14 @@ export async function verifyAskAnswer(input: {
   assistantText: string;
   linksInAnswer: Array<{ href: string; text: string }>;
   readerProgress?: ReaderProgress | null;
+  /**
+   * When the Ask turn is scoped to a chapter (the reader is viewing that
+   * story), the verifier cross-checks wiki links in the answer against the
+   * chapter's curated tag list. Entities not tagged for this chapter emit
+   * `off_chapter_entity_link` at warn severity — they may be legitimate
+   * cross-references, but deserve a reviewer flag.
+   */
+  storySlug?: string | null;
 }): Promise<AskVerificationResult> {
   const strictness = getAskVerifierStrictnessFromEnv();
   const ranAt = new Date().toISOString();
@@ -88,6 +100,16 @@ export async function verifyAskAnswer(input: {
 
   const issues: VerificationIssue[] = [];
   const progress = input.readerProgress ?? null;
+
+  // Load chapter tags once per turn. `chapterTagRecord` is null when the
+  // reader is not on a chapter page or when no tags exist for the chapter;
+  // in either case, the off-chapter check becomes a no-op.
+  const chapterTagRecord = input.storySlug
+    ? getChapterTags(input.storySlug)
+    : null;
+  const allowedChapterEntities: Set<string> | null = chapterTagRecord
+    ? getChapterTagSlugSet(chapterTagRecord.chapterId)
+    : null;
 
   for (const link of input.linksInAnswer) {
     let pathname = link.href;
@@ -144,6 +166,24 @@ export async function verifyAskAnswer(input: {
           message: `Wiki page not found for ${link.href}`,
           href: link.href,
         });
+        continue;
+      }
+
+      // Off-chapter entity warning: the link points at a valid wiki page, but
+      // this chapter's curated tag list didn't include it. The chapter tagger
+      // is high-precision, so an off-list citation is usually either a
+      // legitimate cross-chapter reference or a hallucinated relevance claim.
+      // We warn (never error) so authors can eyeball Ask's answers.
+      if (allowedChapterEntities && chapterTagRecord) {
+        const key = `${wikiDir}:${slug}`;
+        if (!allowedChapterEntities.has(key)) {
+          issues.push({
+            code: "off_chapter_entity_link",
+            severity: "warn",
+            message: `Answer cites ${link.href} but ${chapterTagRecord.chapterId} wasn't tagged with that entity.`,
+            href: link.href,
+          });
+        }
       }
     }
   }

@@ -11,8 +11,17 @@ import { resolveWikiSlug } from "@/lib/wiki/slug-resolver";
 import { extractAuthoredBody, renderWikilinks } from "@/lib/wiki/authored-body";
 import { StoryMarkdown } from "@/components/story/StoryMarkdown";
 
-function AuthoredBody({ raw }: { raw: string | undefined | null }) {
-  const body = extractAuthoredBody(raw ?? "");
+function AuthoredBody({
+  raw,
+  preserveAiDossier = false,
+}: {
+  raw: string | undefined | null;
+  /** When true, artifact (and other fiction noun) AI-derived sections render in prose. */
+  preserveAiDossier?: boolean;
+}) {
+  const body = extractAuthoredBody(raw ?? "", {
+    stripAiDossier: preserveAiDossier ? "none" : "character",
+  });
   if (!body) return null;
   const rendered = renderWikilinks(body, resolveWikiSlug);
   return (
@@ -235,7 +244,7 @@ export function FictionEntityDetailPage({
         </p>
       )}
       {entity.canonDossier && <CanonDossierCard dossier={entity.canonDossier} />}
-      <AuthoredBody raw={entity.body} />
+      <AuthoredBody raw={entity.body} preserveAiDossier />
       {entity.lore && <EntityLoreCard lore={entity.lore} />}
       {entity.note && <p className="type-ui mb-4 text-ink-muted">{entity.note}</p>}
       {entity.memoirStoryIds.length > 0 && (

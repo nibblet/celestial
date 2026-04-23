@@ -24,6 +24,11 @@ The Harmonic Drive is a system that enables jumps between aligned resonance poin
 
 <!-- canon:end -->
 
+<!-- ai-dossier:thematic-role generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="fe48f03a73" -->
+## Thematic Role
+The Harmonic Drive symbolizes a departure from conquest-based exploration toward alignment-based traversal. It requires emotional coherence and moral readiness from the crew, making movement itself a test of collective integrity. The drive embodies the story's core premise: that advancement comes not from force, but from resonance with deeper universal patterns.
+<!-- ai-dossier:end -->
+
 ## Appearances
 _(auto-generated; review and expand.)_
 

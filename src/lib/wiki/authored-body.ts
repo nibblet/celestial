@@ -7,7 +7,30 @@
  * The result is safe to render with `StoryMarkdown` below the structured
  * dossier cards so hand-authored ## sub-sections (e.g. "Exterior Form",
  * "Interior Architecture", "Manifestation") appear on the web.
+ *
+ * AI dossier markers:
+ * - Character enricher uses `relationships` | `moments` | `voice` | `timeline`.
+ *   Those blocks are stripped by default because `EntityDossier` renders them.
+ * - Artifact enricher uses `appearances` | `wielders` | `thematic-role` |
+ *   `timeline`. Fiction noun detail pages pass `stripAiDossier: "none"` so those
+ *   sections render in the authored body (there is no parallel dossier card).
  */
+
+/** Character-derived AI blocks rendered by `EntityDossier`; strip from authored MD. */
+const CHARACTER_AI_DOSSIER_FIELDS = [
+  "relationships",
+  "moments",
+  "voice",
+  "timeline",
+] as const;
+
+export type ExtractAuthoredBodyOptions = {
+  /**
+   * - `"character"` (default): remove character `ai-dossier:*` blocks only.
+   * - `"none"`: leave all `ai-dossier:*` content (artifact derived sections).
+   */
+  stripAiDossier?: "character" | "none";
+};
 
 // H2 headings that are rendered by dedicated UI components and must be
 // stripped from the authored body so they don't render twice.
@@ -45,12 +68,31 @@ function stripSection(content: string, heading: string): string {
   return content.replace(re, "$1");
 }
 
-export function extractAuthoredBody(raw: string): string {
+function stripCharacterAiDossierBlocks(content: string): string {
+  let out = content;
+  for (const field of CHARACTER_AI_DOSSIER_FIELDS) {
+    out = stripHtmlComment(
+      out,
+      new RegExp(`<!--\\s*ai-dossier:${field}\\b`, "i"),
+      /<!--\s*ai-dossier:end\s*-->/i,
+    );
+  }
+  return out;
+}
+
+export function extractAuthoredBody(
+  raw: string,
+  options?: ExtractAuthoredBodyOptions,
+): string {
   if (!raw) return "";
   let out = raw;
 
+  const stripAi = options?.stripAiDossier ?? "character";
+
   out = stripHtmlComment(out, /<!--\s*canon:dossier\b/, /<!--\s*canon:end\s*-->/);
-  out = stripHtmlComment(out, /<!--\s*ai-dossier:[a-z-]+\b/i, /<!--\s*ai-dossier:end\s*-->/i);
+  if (stripAi === "character") {
+    out = stripCharacterAiDossierBlocks(out);
+  }
   out = stripHtmlComment(out, /<!--\s*ai-draft:start\b/, /<!--\s*ai-draft:end\s*-->/);
 
   out = out.replace(/^#\s+.+\n?/m, "");

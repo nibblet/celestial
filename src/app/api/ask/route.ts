@@ -190,6 +190,7 @@ async function postAsk(request: Request) {
           assistantText: fullResponse,
           linksInAnswer: evidence.linksInAnswer,
           readerProgress,
+          storySlug,
         });
 
         let assistantContent = fullResponse;

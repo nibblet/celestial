@@ -21,7 +21,6 @@ Emerges in mission logs once excavation telemetry leaks beyond controlled channe
 - Attempts a corridor breach near the trench perimeter (CH09).
 
 ## Related
-- [[faction:shadow-salvage-ring]] targets [[artifact:echo-core]]
 - [[faction:shadow-salvage-ring]] infiltrates [[location:south-trench]]
 
 ## Lore metadata

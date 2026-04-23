@@ -25,6 +25,24 @@ _LORE_METADATA_RE = re.compile(
     re.MULTILINE,
 )
 
+# Markers written by the TS canon seeders (seed-canon-entities.ts,
+# merge-character-dossier.ts). If any of these are present the file has been
+# enriched beyond this script's template and regeneration would destroy data.
+# Regression history: commit 631dc5b silently stripped 8 crew character
+# dossiers because this script rewrote them from the thin template while those
+# files still carried a <!-- generated:ingest --> sentinel above the seeded
+# Canon Dossier block. The sentinel check is not sufficient on its own.
+_ENRICHED_MARKERS = (
+    "<!-- canon:dossier",
+    "<!-- ai-dossier:",
+    "## Canon Dossier",
+    "## Dossier",
+)
+
+
+def is_enriched(existing: str) -> bool:
+    return any(marker in existing for marker in _ENRICHED_MARKERS)
+
 
 def preserve_lore_metadata(existing: str, new_md: str) -> str:
     """If the previous file had a Lore metadata section, splice it before ## Note."""
@@ -41,6 +59,11 @@ def write_if_generated(path: Path, content: str) -> None:
     if path.exists():
         existing = path.read_text(encoding="utf-8")
         if "<!-- generated:ingest -->" not in existing:
+            return
+        if is_enriched(existing):
+            # Enriched files are owned by the TS canon seeders; regenerating
+            # from this thin template would destroy the Canon Dossier /
+            # ai-dossier blocks. Skip writing entirely.
             return
         content = preserve_lore_metadata(existing, content)
     path.write_text(content, encoding="utf-8")
@@ -103,8 +126,13 @@ def main() -> None:
             if path.name in expected_names:
                 continue
             existing = path.read_text(encoding="utf-8")
-            if "<!-- generated:ingest -->" in existing:
-                path.unlink()
+            if "<!-- generated:ingest -->" not in existing:
+                continue
+            if is_enriched(existing):
+                # Do not delete files the TS canon seeders own, even if the
+                # current entity extraction did not surface them this run.
+                continue
+            path.unlink()
 
     print(f"Compiled {count} wiki files from {ENTITY_JSON}")
 

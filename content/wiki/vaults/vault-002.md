@@ -35,7 +35,6 @@ Discovery Order: 2; Activation Order: 1; Location: Mars – Beneath Valkyrie-1; 
 
 ## Related
 - [[location:south-trench]] adjoins [[vault:vault-002]]
-- [[faction:expedition-command]] authorizes [[artifact:harmonic-key]] for [[vault:vault-002]]
 
 ## Lore metadata
 

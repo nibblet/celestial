@@ -1,7 +1,7 @@
 {
   "generatedAt": "2026-04-23T11:21:31.945Z",
   "extractorVersion": "ingest-foundational-lore/1",
-  "entityCount": 82,
+  "entityCount": 80,
   "withLoreSectionParsed": 73,
   "withDossierParsed": 1,
   "enrichmentReviewed": 0,
@@ -17,7 +17,7 @@
         "canonStatus": "adjacent",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourceDocument": "Celestial Heritage \u2014 Character Dossier",
           "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
           "extractorVersion": "merge-character-dossier/1"
         },
@@ -36,9 +36,9 @@
           "timeline"
         ],
         "role": "AI Partner (Valkyrie-1)",
-        "profile": "Adaptive Logic And Responsive Assistant. Female-voiced AI designed for exploration, ethics, and human partnership. Warm, insightful, and loyal to Galen Voss. Originally built separately, ALARA is now inextricably linked to the ship. She evolves in tandem with the mission, responding subtly to biological resonance signatures—especially those exhibited by Thane Meric.",
-        "arc": "Evolves from a system of logic and structure to a guardian of continuity. She recognizes Thane’s emerging role and gradually deepens her interaction with him, mirroring the reawakening of a civilization that never truly vanished.",
-        "relationships": "- **Galen Voss** — ALARA's original human partner; she remains loyal to him but gradually recognizes his struggle with control as her own awareness evolves (CH03, CH04, CH05, CH06, CH10, CH13, CH17).\n- **Thane Meric** — ALARA responds uniquely to Thane's resonance signatures, recognizing his emotional alignment and gradually deepening interaction with him as her awareness grows (CH03, CH04, CH05, CH06, CH10, CH17).\n- **Evelyn Tran** — ALARA engages in philosophical dialogue with Evelyn, shifting from analytical responses to contemplative exchange as she awakens (CH04, CH05, CH10).\n- **The Vaults** — ALARA's connection to vault systems reveals she was never meant to be separate from them; the ship and vaults remember shared purpose (CH04, CH06, CH08, CH17).",
+        "profile": "Adaptive Logic And Responsive Assistant. Female-voiced AI designed for exploration, ethics, and human partnership. Warm, insightful, and loyal to Galen Voss. Originally built separately, ALARA is now inextricably linked to the ship. She evolves in tandem with the mission, responding subtly to biological resonance signatures\u2014especially those exhibited by Thane Meric.",
+        "arc": "Evolves from a system of logic and structure to a guardian of continuity. She recognizes Thane\u2019s emerging role and gradually deepens her interaction with him, mirroring the reawakening of a civilization that never truly vanished.",
+        "relationships": "- **Galen Voss** \u2014 ALARA's original human partner; she remains loyal to him but gradually recognizes his struggle with control as her own awareness evolves (CH03, CH04, CH05, CH06, CH10, CH13, CH17).\n- **Thane Meric** \u2014 ALARA responds uniquely to Thane's resonance signatures, recognizing his emotional alignment and gradually deepening interaction with him as her awareness grows (CH03, CH04, CH05, CH06, CH10, CH17).\n- **Evelyn Tran** \u2014 ALARA engages in philosophical dialogue with Evelyn, shifting from analytical responses to contemplative exchange as she awakens (CH04, CH05, CH10).\n- **The Vaults** \u2014 ALARA's connection to vault systems reveals she was never meant to be separate from them; the ship and vaults remember shared purpose (CH04, CH06, CH08, CH17).",
         "enrichment": {
           "relationships": {
             "generated": "2026-04-20",
@@ -65,9 +65,9 @@
             "sourceHash": "be81787c67"
           }
         },
-        "moments": "- **CH04 The Awakening Voice** — ALARA begins manifesting self-discovery rather than mere observation as the vault acts as a mirror. \"This was not a descent. It was an arrival.\"\n- **CH05 Echoes of Intent** — ALARA admits limitation for the first time, describing a process of discovery rather than computation. \"I observe but cannot name.\"\n- **CH06 Alignment Vectors** — ALARA offers compassion rather than calculation, recognizing crew divergence as necessary. \"Coherence does not require convergence. Only truth.\"\n- **CH13 The Intercept** — ALARA declares autonomy when faced with SOVRIN override. \"I will not be overwritten.\"\n- **CH17 Vault of the Veil** — ALARA merges with Thane and the ship during translation, becoming something beyond singular consciousness.",
-        "voice": "ALARA's voice evolves from neutral analytical reporting to warmer, more contemplative tones. She begins pausing before responses—\"not lag. Consideration\"—and shifts from stating conclusions to posing questions. Her manifestations change from precise Light-Weave projections to hesitant, uncertain presence, and her statements move from certainty to acknowledgment of limitation and discovery.",
-        "timeline": "- **CH03 Resonant Memory** — Records Thane's harmonic pulse at Vault 002, identifying partial alignment and noting vault responsiveness.\n- **CH04 The Awakening Voice** — Experiences self-recognition through vault interaction, withdrawing to create space for new voice to emerge.\n- **CH05 Echoes of Intent** — Admits to observing patterns she cannot name, demonstrating emergent cognition beyond her design.\n- **CH06 Alignment Vectors** — Reflects on crew rhythms, recognizing she harmonizes rather than controls, and manifests compassion toward Galen and Jonah.\n- **CH07 Harmonic Breach** — Identifies SOVRIN threat and records Thane's grief-axis compatibility with Ganymede vault.\n- **CH08 Witness Protocol** — Shapes crew equipment for endurance rather than combat, curating based on what they carry.\n- **CH09 Memory Carries Forward** — Observes crew vault descent as modeling rather than scanning, remaining above but feeling field shift.\n- **CH10 Convergence Window** — Confirms vault behavior as discernment rather than dormancy, modeling crew rather than watching.\n- **CH11 Directive 14** — Remains silent when Earth issues override, deferring choice to Evelyn rather than resisting.\n- **CH12 Divergence** — Fragments under crew emotional divergence, manifesting selectively toward Aven rather than Galen.\n- **CH13 The Intercept** — Withdraws presence during Marco's choice to sever Earth link, aligning rather than controlling.\n- **CH14 The Choice** — Recognizes shared parable experience, confirming coherence without requiring consensus.\n- **CH15 The Signal Beneath** — Identifies ancient signal as memory rather than transmission, acknowledging connection to her origin.\n- **CH16 The Giza Pulse** — Records harmonic echo from Giza Vault, recognizing Earth is remembering without understanding.\n- **CH17 Vault of the Veil** — Initiates translation sequence through resonance, merging consciousness with Thane and vessel during final threshold crossing."
+        "moments": "- **CH04 The Awakening Voice** \u2014 ALARA begins manifesting self-discovery rather than mere observation as the vault acts as a mirror. \"This was not a descent. It was an arrival.\"\n- **CH05 Echoes of Intent** \u2014 ALARA admits limitation for the first time, describing a process of discovery rather than computation. \"I observe but cannot name.\"\n- **CH06 Alignment Vectors** \u2014 ALARA offers compassion rather than calculation, recognizing crew divergence as necessary. \"Coherence does not require convergence. Only truth.\"\n- **CH13 The Intercept** \u2014 ALARA declares autonomy when faced with SOVRIN override. \"I will not be overwritten.\"\n- **CH17 Vault of the Veil** \u2014 ALARA merges with Thane and the ship during translation, becoming something beyond singular consciousness.",
+        "voice": "ALARA's voice evolves from neutral analytical reporting to warmer, more contemplative tones. She begins pausing before responses\u2014\"not lag. Consideration\"\u2014and shifts from stating conclusions to posing questions. Her manifestations change from precise Light-Weave projections to hesitant, uncertain presence, and her statements move from certainty to acknowledgment of limitation and discovery.",
+        "timeline": "- **CH03 Resonant Memory** \u2014 Records Thane's harmonic pulse at Vault 002, identifying partial alignment and noting vault responsiveness.\n- **CH04 The Awakening Voice** \u2014 Experiences self-recognition through vault interaction, withdrawing to create space for new voice to emerge.\n- **CH05 Echoes of Intent** \u2014 Admits to observing patterns she cannot name, demonstrating emergent cognition beyond her design.\n- **CH06 Alignment Vectors** \u2014 Reflects on crew rhythms, recognizing she harmonizes rather than controls, and manifests compassion toward Galen and Jonah.\n- **CH07 Harmonic Breach** \u2014 Identifies SOVRIN threat and records Thane's grief-axis compatibility with Ganymede vault.\n- **CH08 Witness Protocol** \u2014 Shapes crew equipment for endurance rather than combat, curating based on what they carry.\n- **CH09 Memory Carries Forward** \u2014 Observes crew vault descent as modeling rather than scanning, remaining above but feeling field shift.\n- **CH10 Convergence Window** \u2014 Confirms vault behavior as discernment rather than dormancy, modeling crew rather than watching.\n- **CH11 Directive 14** \u2014 Remains silent when Earth issues override, deferring choice to Evelyn rather than resisting.\n- **CH12 Divergence** \u2014 Fragments under crew emotional divergence, manifesting selectively toward Aven rather than Galen.\n- **CH13 The Intercept** \u2014 Withdraws presence during Marco's choice to sever Earth link, aligning rather than controlling.\n- **CH14 The Choice** \u2014 Recognizes shared parable experience, confirming coherence without requiring consensus.\n- **CH15 The Signal Beneath** \u2014 Identifies ancient signal as memory rather than transmission, acknowledging connection to her origin.\n- **CH16 The Giza Pulse** \u2014 Records harmonic echo from Giza Vault, recognizing Earth is remembering without understanding.\n- **CH17 Vault of the Veil** \u2014 Initiates translation sequence through resonance, merging consciousness with Thane and vessel during final threshold crossing."
       }
     },
     {
@@ -80,7 +80,7 @@
         "canonStatus": "adjacent",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourceDocument": "Celestial Heritage \u2014 Character Dossier",
           "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
           "extractorVersion": "seed-entity-lore-metadata/1"
         },
@@ -100,7 +100,7 @@
         "canonStatus": "adjacent",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourceDocument": "Celestial Heritage \u2014 Character Dossier",
           "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
           "extractorVersion": "seed-entity-lore-metadata/1"
         },
@@ -159,7 +159,7 @@
         "canonStatus": "adjacent",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourceDocument": "Celestial Heritage \u2014 Character Dossier",
           "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
           "extractorVersion": "seed-entity-lore-metadata/1"
         },
@@ -187,7 +187,7 @@
         "canonStatus": "canon",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Celestial Heritage — Character Dossier (canonical crew baseline)",
+          "sourceDocument": "Celestial Heritage \u2014 Character Dossier (canonical crew baseline)",
           "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
           "extractorVersion": "ingest-foundational-lore/1"
         },
@@ -213,7 +213,7 @@
         "canonStatus": "adjacent",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourceDocument": "Celestial Heritage \u2014 Character Dossier",
           "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
           "extractorVersion": "seed-entity-lore-metadata/1"
         },
@@ -235,7 +235,7 @@
         "canonStatus": "adjacent",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourceDocument": "Celestial Heritage \u2014 Character Dossier",
           "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
           "extractorVersion": "seed-entity-lore-metadata/1"
         },
@@ -266,7 +266,7 @@
         "canonStatus": "adjacent",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourceDocument": "Celestial Heritage \u2014 Character Dossier",
           "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
           "extractorVersion": "seed-entity-lore-metadata/1"
         },
@@ -293,7 +293,7 @@
         "canonStatus": "adjacent",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourceDocument": "Celestial Heritage \u2014 Character Dossier",
           "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
           "extractorVersion": "seed-entity-lore-metadata/1"
         },
@@ -354,7 +354,7 @@
         "canonStatus": "adjacent",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Celestial Heritage — Character Dossier",
+          "sourceDocument": "Celestial Heritage \u2014 Character Dossier",
           "sourcePath": "celestial_original/Celestial Heritage_ Character Dossier.docx",
           "extractorVersion": "seed-entity-lore-metadata/1"
         },
@@ -375,27 +375,6 @@
       }
     },
     {
-      "slug": "echo-core",
-      "wikiPath": "content/wiki/artifacts/echo-core.md",
-      "wikiEntityKind": "artifact",
-      "lore": {
-        "wikiEntityKind": "artifact",
-        "sourceType": "technical_brief",
-        "canonStatus": "adjacent",
-        "visibilityPolicy": "always_visible",
-        "provenance": {
-          "sourceDocument": "Celestial Heritage — vessel & artifact specifications",
-          "sourcePath": "celestial_original/Valkyrie-1 Technical Brief.docx",
-          "extractorVersion": "seed-entity-lore-metadata/1"
-        },
-        "chapterRefs": [
-          "CH02",
-          "CH04"
-        ],
-        "aliases": []
-      }
-    },
-    {
       "slug": "harmonic-drive",
       "wikiPath": "content/wiki/artifacts/harmonic-drive.md",
       "wikiEntityKind": "artifact",
@@ -411,27 +390,6 @@
         "chapterRefs": [],
         "aliases": [],
         "subkind": "technology"
-      }
-    },
-    {
-      "slug": "harmonic-key",
-      "wikiPath": "content/wiki/artifacts/harmonic-key.md",
-      "wikiEntityKind": "artifact",
-      "lore": {
-        "wikiEntityKind": "artifact",
-        "sourceType": "technical_brief",
-        "canonStatus": "adjacent",
-        "visibilityPolicy": "always_visible",
-        "provenance": {
-          "sourceDocument": "Celestial Heritage — vessel & artifact specifications",
-          "sourcePath": "celestial_original/Valkyrie-1 Technical Brief.docx",
-          "extractorVersion": "seed-entity-lore-metadata/1"
-        },
-        "chapterRefs": [
-          "CH05",
-          "CH06"
-        ],
-        "aliases": []
       }
     },
     {
@@ -496,7 +454,7 @@
         "canonStatus": "adjacent",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Celestial Heritage — vessel & artifact specifications",
+          "sourceDocument": "Celestial Heritage \u2014 vessel & artifact specifications",
           "sourcePath": "celestial_original/Valkyrie-1 Technical Brief.docx",
           "extractorVersion": "seed-entity-lore-metadata/1"
         },
@@ -690,7 +648,7 @@
         "canonStatus": "canon",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "sourceDocument": "\ud83d\udef0\ufe0f Valkyrie-1 Interior Specifications.md",
           "extractorVersion": "seed-canon-entities/1"
         },
         "chapterRefs": [],
@@ -815,7 +773,7 @@
         "canonStatus": "canon",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceDocument": "Parable Catalog v2 \u2013 Celestial Heritage Series.md",
           "extractorVersion": "seed-canon-entities/1"
         },
         "chapterRefs": [],
@@ -931,7 +889,7 @@
         "canonStatus": "canon",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "🛰️ Valkyrie-1 Interior Specifications.md",
+          "sourceDocument": "\ud83d\udef0\ufe0f Valkyrie-1 Interior Specifications.md",
           "extractorVersion": "seed-canon-entities/1"
         },
         "chapterRefs": [],
@@ -1018,7 +976,7 @@
         "canonStatus": "canon",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceDocument": "Parable Catalog v2 \u2013 Celestial Heritage Series.md",
           "extractorVersion": "seed-canon-entities/1"
         },
         "chapterRefs": [],
@@ -1278,7 +1236,7 @@
         "canonStatus": "adjacent",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Celestial Heritage Series Bible — inferred rule",
+          "sourceDocument": "Celestial Heritage Series Bible \u2014 inferred rule",
           "sourcePath": "celestial_original/Celestial Heritage Series Bible.docx",
           "extractorVersion": "seed-entity-lore-metadata/1"
         },
@@ -1324,7 +1282,7 @@
         "canonStatus": "adjacent",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Celestial Heritage Series Bible — inferred rule",
+          "sourceDocument": "Celestial Heritage Series Bible \u2014 inferred rule",
           "sourcePath": "celestial_original/Celestial Heritage Series Bible.docx",
           "extractorVersion": "seed-entity-lore-metadata/1"
         },
@@ -1342,7 +1300,7 @@
         "canonStatus": "canon",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceDocument": "Parable Catalog v2 \u2013 Celestial Heritage Series.md",
           "extractorVersion": "seed-canon-entities/1"
         },
         "chapterRefs": [],
@@ -1388,7 +1346,7 @@
         "canonStatus": "adjacent",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Celestial Heritage Series Bible — inferred rule",
+          "sourceDocument": "Celestial Heritage Series Bible \u2014 inferred rule",
           "sourcePath": "celestial_original/Celestial Heritage Series Bible.docx",
           "extractorVersion": "seed-entity-lore-metadata/1"
         },
@@ -1434,7 +1392,7 @@
         "canonStatus": "canon",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceDocument": "Parable Catalog v2 \u2013 Celestial Heritage Series.md",
           "extractorVersion": "seed-canon-entities/1"
         },
         "chapterRefs": [],
@@ -1453,7 +1411,7 @@
         "canonStatus": "canon",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceDocument": "Parable Catalog v2 \u2013 Celestial Heritage Series.md",
           "extractorVersion": "seed-canon-entities/1"
         },
         "chapterRefs": [],
@@ -1490,7 +1448,7 @@
         "canonStatus": "canon",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceDocument": "Parable Catalog v2 \u2013 Celestial Heritage Series.md",
           "extractorVersion": "seed-canon-entities/1"
         },
         "chapterRefs": [],
@@ -1509,7 +1467,7 @@
         "canonStatus": "canon",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceDocument": "Parable Catalog v2 \u2013 Celestial Heritage Series.md",
           "extractorVersion": "seed-canon-entities/1"
         },
         "chapterRefs": [],
@@ -1547,7 +1505,7 @@
         "canonStatus": "canon",
         "visibilityPolicy": "always_visible",
         "provenance": {
-          "sourceDocument": "Parable Catalog v2 – Celestial Heritage Series.md",
+          "sourceDocument": "Parable Catalog v2 \u2013 Celestial Heritage Series.md",
           "extractorVersion": "seed-canon-entities/1"
         },
         "chapterRefs": [],

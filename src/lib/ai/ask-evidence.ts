@@ -34,7 +34,8 @@ export type VerificationIssueCode =
   | "unknown_story_link"
   | "unknown_wiki_link"
   | "spoiler_story_link"
-  | "missing_citations";
+  | "missing_citations"
+  | "off_chapter_entity_link";
 
 export type VerificationIssue = {
   code: VerificationIssueCode;
