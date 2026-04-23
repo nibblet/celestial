@@ -4,6 +4,57 @@
 
 ---
 
+## Run: 2026-04-23 (Run 11)
+
+### Summary
+- Scanned: 1 commit since Run 10 (8f2771d → 0ff28dd): "fixing characters. still not sure vaults and locations are correct" — 150 files changed, 6153 insertions. Massive content + feature commit: 10 new vault entities, 2 new rules, vault routes, ExploreHubTabs, ask-evidence/verifier system, fast/deep mode toggle, migrations 030–034, new audit scripts, character content fixes.
+- Issues found: 3 new (FIX-033 test failure: vault slug probe order, FIX-034 test failure: parables Status field, FIX-035 P1: vault detail story gating)
+- Issues existing: FIX-032 (P0) still NOT fixed; FIX-031, FIX-030, FIX-027, FIX-026 (needs migration 035 not 030) all still open
+- Ideas: IDEA-025 marked SHIPPED; IDEA-026 advanced exploring → planned (dev plan written); IDEA-028 advanced seed → exploring; IDEA-030 and IDEA-031 seeded
+- Plans written: FIXPLAN-FIX-033, FIXPLAN-FIX-034, FIXPLAN-FIX-035, DEVPLAN-IDEA-026
+
+### Build & Lint & Test Results
+- `npm install --prefer-offline`: required — node_modules not present in fresh clone (offline cache available)
+- `npx next build`: **PASSES** — clean, 95 routes (up from 93). 1 expected Turbopack NFT warning.
+- `npm run lint`: **PASSES** — 0 errors, 0 warnings
+- `npm test`: **158 PASS / 2 FAIL** (160 total, up from 147 in Run 10). **Two new test failures introduced by commit 0ff28dd:**
+  - Test 108: `martian-resonance-vault alias resolves to vault-002` — slug resolver returns `kind: "artifacts"` instead of `"vaults"` (probe order bug, FIX-033)
+  - Test 110: `all parables carry Status in Lore metadata` — `parables-of-resonance.md` missing `**Status:**` (FIX-034)
+
+### Key Findings
+
+1. **FIX-032 (P0) STILL NOT FIXED.** `src/app/journeys/[slug]/page.tsx` unchanged since Run 10 — `listBeatsByJourney()` called without `getReaderProgress()` filter, beats passed unfiltered to `BeatTimeline`. The plan is ready; a 3-line fix is all that's needed. Priority #3 after the two test failures.
+
+2. **FIX-033 (Low — test 108 fails): Vault slug probe order bug.** `slug-resolver.ts` PROBE_ORDER has `"artifacts"` before `"vaults"`. Four vault entity files (`giza-vault.md`, `vault-002.md`, `vault-003.md`, `vault-006.md`) exist in BOTH `artifacts/` and `vaults/` directories (duplicated, not moved, in commit 0ff28dd). Resolver hits artifacts first. 1-line fix: swap order in PROBE_ORDER array. Plan written.
+
+3. **FIX-034 (Low — test 110 fails): `parables-of-resonance.md` content gap.** Lore metadata has `**Subkind:** concept` but canon dossier says `subkind="parable"`. Missing `**Status:**` field. All other parable rule files have this. Content-only fix; no `<!-- generated:ingest -->` marker. Plan written.
+
+4. **FIX-035 (P1): Vault detail pages inherit FIX-031 gating gap.** New `/vaults/[slug]/page.tsx` uses `FictionEntityDetailPage` without `readerProgress`. Vault entities have `memoirStoryIds` extracted from `## Appearances` via `(CH0X)` patterns — e.g., vault-002 has CH06 and CH11. A CH01 reader sees these story links. Plan written; coordinate with FIX-031 since both touch `FictionEntityViews.tsx`.
+
+5. **IDEA-025 SHIPPED: Rules wired into Ask.** `getRulesContext()` added to `prompts.ts` (lines 147–196), injected in `perspectives.ts` (lines 89–90). All 16 rules now in every Ask system prompt with a 10,000-character budget cap. New test `rules-context.test.ts` confirms. Ask answers about world mechanics (consent-threshold, directive-cn-24, vault parables, etc.) are now grounded in actual rule definitions.
+
+6. **Major new AI infrastructure (Run 11):** `ask-evidence.ts` defines structured evidence schema (context sources, links in answer, verification result). `ask-verifier.ts` post-processes Ask answers: extracts in-answer links, checks story links against `isStoryUnlocked()` (spoiler_story_link issue code), checks wiki links against filesystem. Controlled by `ASK_VERIFIER_STRICTNESS` env (`warn` default). Evidence panel in `ask/page.tsx` shows debug info. Fast/Deep mode toggle persisted in localStorage.
+
+7. **10 new vault entities in `content/wiki/vaults/`.** First-class wiki entity type: `getAllVaults()`, `getVaultBySlug()`, `/vaults`, `/vaults/[slug]` routes. `ExploreHubTabs.tsx` adds a sticky tab bar across all explore-section pages. `authored-body.ts` extracts hand-authored body from wiki files, stripping managed blocks.
+
+8. **Migrations 030–034 address multiple previously unflagged gaps.** Notably: `033_cel_conversations_messages_rls.sql` adds missing RLS policies to `cel_conversations` and `cel_messages` (since `LIKE INCLUDING ALL` doesn't copy policies — conversations were RLS-on with zero policies, silently denying all writes). `034_cel_ai_interactions_insert_policy.sql` adds INSERT policy for AI ledger. **FIX-026 (stale keith role) still unaddressed — now needs migration 035.**
+
+9. **15 characters in `content/wiki/characters/` (down from 16).** `elara-varen.md` deleted in this commit. No broken refs found in `src/` or other `content/wiki/` files — deletion appears clean. Review queue still 9 files.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/FIXPLAN-FIX-033-vault-slug-probe-order.md` — 1-line PROBE_ORDER fix, unblocks test 108 (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-034-parables-status-field.md` — content fix, unblocks test 110 (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-032-beat-timeline-chapter-gating.md` — **P0** BeatTimeline gating (15 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-035-vault-detail-story-gating.md` — vault story ID gating, coordinate with FIX-031 (30 min)
+- `docs/nightshift/plans/DEVPLAN-IDEA-026-open-threads-mysteries-page.md` — mysteries reader page (1.2 hrs, after FIX-030)
+
+### Recommendations
+- **If you have 10 min:** FIX-033 (5 min) + FIX-034 (5 min). Two content/config fixes that restore all tests to passing. Zero risk.
+- **If you have 30 min:** The 10-min batch above + FIX-032 (15 min P0). After this: tests pass, BeatTimeline is gated, no locked reader can see future chapter beats on journey pages.
+- **If you have 1.5 hours:** The 30-min batch above + FIX-031 + FIX-035 (40 min combined). After this: every entity detail page (characters, factions, locations, artifacts, vaults) properly gates story links by reader progress. Full chapter-gating coverage on wiki entity pages.
+
+---
+
 ## Run: 2026-04-22 (Run 10)
 
 ### Summary

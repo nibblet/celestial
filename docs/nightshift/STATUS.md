@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-04-22 (Nightshift Run 10)
+> Last updated: 2026-04-23 (Nightshift Run 11)
 
 ## App Summary
 
@@ -17,11 +17,14 @@
 - All fiction chapters (CH01–CH17) live in `content/wiki/stories/` as markdown files
 - Fiction entities: `content/wiki/characters/`, `content/wiki/factions/`, `content/wiki/locations/`, `content/wiki/artifacts/`, `content/wiki/rules/`
 - Mission logs in `content/wiki/mission-logs/` (extracted from chapters)
-- **14 rules** in `content/wiki/rules/` (up from 3 in Run 9 — canon-seeded via Phase G)
+- **16 rules** in `content/wiki/rules/` (Run 11 added `mirror-logic.md`, `the-second-convergence.md`)
 - Compiled by `scripts/compile-wiki.ts` + `scripts/generate-static-data.ts` → `src/lib/wiki/static-data.ts`
 - Canon dossier blocks (`<!-- canon:dossier ... --> ... <!-- canon:end -->`) seeded by `scripts/seed-canon-entities.ts` — parsed by `src/lib/wiki/canon-dossier.ts`
 - Continuity snapshots: `content/raw/.continuity/last-snapshot.json` — updated by `scripts/review-ingestion.ts` (Phase G)
 - Canon inventory: `content/raw/canon_entities.json`, `content/raw/canon_inventory.json`, `content/raw/lore_inventory.json`
+- **10 vault entities** in `content/wiki/vaults/` (new directory, Run 11 — giza-vault, vault-002 through vault-010)
+- ⚠️ **Duplicate vault files** in `artifacts/`: giza-vault.md, vault-002.md, vault-003.md, vault-006.md exist in both `artifacts/` and `vaults/` — content audit pending (see FIX-033 note)
+- `content/wiki/characters/tiers.override.yaml` — character tier overrides (Run 11)
 - Voice guide: `content/voice.md` (**currently a stub placeholder**)
 - Decision frameworks: `content/decision-frameworks.md` (**currently a stub placeholder**)
 - Foundational lore from `content/foundational-lore/manifest.json`
@@ -30,7 +33,7 @@
 
 ### Database (Supabase)
 
-- **29 migrations** (no new since Run 9):
+- **34 migrations** (5 new in Run 11: 030–034):
   - `001–020`: original schema (carried from memoir shell — sb_* namespace)
   - `021_author_role.sql` — renames profile role `'keith'` → `'author'`
   - `022_reader_show_all_content.sql` — adds `show_all_content` boolean to `sb_profiles`
@@ -41,7 +44,12 @@
   - `027_chapter_scenes.sql` — `cel_chapter_scenes` (DB mirror of `### Scene N:` headings)
   - `028_beats.sql` — `cel_beats` (structural beats per act, journey, or chapter)
   - `029_beyond_reflections.sql` — `cel_beyond_reflections` (author session-wrap summaries)
-  - **⚠️ FIX-026**: Migrations 025–028 have RLS write policies checking `role = 'keith'` — this role no longer exists. Author accounts blocked from writing to `cel_open_threads`, `cel_chapter_scenes`, `cel_beats`. Fix: new migration 030.
+  - `030_ask_message_evidence.sql` — adds `evidence` jsonb column to `cel_messages` and `sb_messages`
+  - `031_cel_messages_evidence_repair.sql` — defensive repair if `cel_messages` was missing
+  - `032_cel_story_reads_delete_policy.sql` — reader can delete own `cel_story_reads`
+  - `033_cel_conversations_messages_rls.sql` — full RLS policies for `cel_conversations` + `cel_messages` (since `LIKE INCLUDING ALL` doesn't copy policies)
+  - `034_cel_ai_interactions_insert_policy.sql` — INSERT policy for `cel_ai_interactions` (was missing; blocked ledger writes)
+  - **⚠️ FIX-026**: Migrations 025–028 still have RLS write policies checking `role = 'keith'`. Fix: new migration **035** (030–034 were used by other features).
 
 - **Key cel_* tables:**
   - `cel_profiles` — user profiles (display_name, role: admin|member|author, show_all_content)
@@ -73,11 +81,14 @@
 - `/locations/[slug]` — Location detail (**⚠️ FIX-031**: story IDs not gated)
 - `/artifacts` — Artifact index
 - `/artifacts/[slug]` — Artifact detail (**⚠️ FIX-031**: story IDs not gated)
-- `/rules` — Rules/concepts index (14 entries)
+- `/rules` — Rules/concepts index (16 entries)
 - `/rules/[slug]` — Rule detail
+- `/vaults` — Vault index (10 vault entities — new Run 11)
+- `/vaults/[slug]` — Vault detail (**⚠️ FIX-035**: story IDs not gated — same gap as FIX-031)
 - `/mission-logs` — Mission log index (gated)
 - `/mission-logs/[logId]` — Mission log detail (gated)
-- `/arcs` → alias for `/journeys`
+- `/arcs` — Coming-soon placeholder ("Arc-based exploration not yet published in this release")
+- `/arcs/[slug]`, `/arcs/[slug]/[step]`, `/arcs/[slug]/complete`, `/arcs/[slug]/narrated` — route stubs (redirect/aliases)
 - `/journeys` — Arc/journey list
 - `/journeys/[slug]` — Journey intro (BeatTimeline) (**⚠️ FIX-032 P0**: beats not gated by reader progress)
 - `/journeys/[slug]/[step]` — Journey step
@@ -101,7 +112,7 @@
 - `/api/admin/threads` — Open threads CRUD (**⚠️ FIX-030**: checks `'keith'` role)
 - All legacy story/tell/beyond/people/media/audio API routes
 
-**Total routes: 93** (up from 37 in Run 9; build confirms all dynamic ƒ)
+**Total routes: 95** (up from 93 in Run 10; +/vaults + /vaults/[slug])
 
 ### Auth / Middleware
 
@@ -116,6 +127,7 @@
 - `isStoryUnlocked(storyId, progress)` returns true if `chapterNumber ≤ currentChapterNumber` or `showAllContent = true`
 - **Correctly applied:** story detail page, story library card (silhouette), mission logs, character detail page story refs
 - **⚠️ NOT applied (FIX-031):** faction/location/artifact detail pages — story appearance IDs shown unfiltered
+- **⚠️ NOT applied (FIX-035):** vault detail pages — same gap as FIX-031, new entity type
 - **⚠️ NOT applied (FIX-032 P0):** BeatTimeline on journey pages — beat content from locked chapters visible
 
 ### AI / Ask Companion
@@ -133,12 +145,15 @@
 - AI ledger: all Anthropic calls recorded in `cel_ai_interactions`
 - Beyond session-wrap: `src/lib/beyond/session-wrap.ts` + reflection cache (`src/lib/ai/reflections.ts`)
 - **Gap:** `content/voice.md` and `content/decision-frameworks.md` are stub placeholders
-- **Gap:** Rules (`content/wiki/rules/`) are not in the Ask system prompt — IDEA-025 addresses this
+- **SHIPPED (IDEA-025):** `getRulesContext()` added to `prompts.ts`, injected into `sharedContentBlock()` in `perspectives.ts` — 16 rules now in every Ask system prompt
+- **New (Run 11):** `ask-evidence.ts` + `ask-verifier.ts` — structured evidence schema, in-answer link extraction, spoiler-safe citation verifier (checks `isStoryUnlocked` for story links in answers). Controlled by `ASK_VERIFIER_STRICTNESS` env (`off|warn|fail`, default `warn`).
+- **New (Run 11):** Ask page has Fast/Deep mode toggle (localStorage-persisted), evidence panel shows context sources + verification issues + links in answer.
 
 ### Content Pipeline (brain_lab/ + scripts/)
 
 - Python pipeline for EPUB ingest + entity extraction
-- `brain_lab/out/review-queue.md`: **9 character files** still marked `reviewed: false`
+- `brain_lab/out/review-queue.md`: **9 character files** still marked `reviewed: false` (unchanged from Run 9–10)
+- New audit scripts (Run 11): `scripts/audit-canon-namespaces.ts`, `scripts/audit-policies-from-migrations.mjs`, `scripts/audit-sb-cel-rls.sql`, `scripts/patch-location-supersets.ts`, `scripts/retier-characters.ts`
 - Phase G: `scripts/review-ingestion.ts` — CLI for snapshot diff + continuity review
 - Phase H: `scripts/inventory-canon.ts`, `scripts/merge-canon-inventory.ts`, `scripts/seed-canon-entities.ts` — canon entity seeding from lore sources
 - Canon inventory: `content/raw/canon_entities.json` + `content/raw/canon_inventory.json` + `content/raw/lore_inventory.json` — built by `npm run inventory:canon` + `npm run merge:canon`
@@ -166,29 +181,35 @@
 
 ## Build / Test Status
 
-- **Build:** PASSES — clean, 93 routes (up from 37 in Run 9). 1 expected Turbopack NFT warning on `prompts.ts` filesystem reads.
+- **Build:** PASSES — clean, 95 routes (up from 93 in Run 10). 1 expected Turbopack NFT warning on `prompts.ts` filesystem reads.
 - **Lint:** PASSES — 0 errors, 0 warnings
-- **Tests:** 147 PASS (up from 96 in Run 9). New test files: `canon-dossier.test.ts`, `continuity-diff.test.ts`, `beats/repo.test.ts`, `threads/repo.test.ts`, `session-wrap.test.ts`, `reflections.test.ts`.
+- **Tests:** 160 total / **158 PASS / 2 FAIL** (up from 147 in Run 10). Failing: test 108 (vault alias probe order → FIX-033), test 110 (parables Status field → FIX-034).
+  New test files (Run 11): `ask-evidence.test.ts`, `ask-verifier.test.ts`, `rules-context.test.ts`, `canon-hubs.test.ts`, `corpus-rank.test.ts`, `lore-provenance.test.ts`.
 
 ## Known Issues (See FIXES.md)
 
+- **FIX-033 (Low — test failure):** `slug-resolver.ts` PROBE_ORDER puts artifacts before vaults → `martian-resonance-vault` resolves wrong → test 108 fails. 1-line fix.
+- **FIX-034 (Low — test failure + content):** `parables-of-resonance.md` Lore metadata missing `**Status:**` → test 110 fails. Content fix.
 - **FIX-032 (P0):** BeatTimeline on journey pages shows locked chapter content — 3-line fix in `journeys/[slug]/page.tsx`
+- **FIX-035 (P1):** Vault detail pages show story IDs from locked chapters — same gap as FIX-031
 - **FIX-031 (P1):** Fiction entity detail pages (factions/locations/artifacts) show future chapter IDs without gating
 - **FIX-030 (Medium):** `/api/admin/threads` checks `'keith'` role — author blocked from threads API
 - FIX-027 (Medium): `/api/admin/ai-activity` checks `'keith'` role
-- FIX-026 (Medium): RLS policies in migrations 025–028 check `role = 'keith'`
-- FIX-028 (Low): Legacy "Keith" UI copy in 14+ files including Phase E-H additions
+- FIX-026 (Medium): RLS policies in migrations 025–028 check `role = 'keith'` — fix now requires migration **035**
+- FIX-028 (Low): Legacy "Keith" UI copy in 14+ files
 - FIX-029 (Low-Medium): Age mode system exposed in UI (adult fiction only)
 - FIX-013, FIX-014, FIX-016, FIX-017: Tell pipeline defensive coding
 
 ## Next Actions (Priority Order)
 
-1. **FIX-032** — Fix BeatTimeline P0 gating (15 min; 3-line change in `journeys/[slug]/page.tsx`)
-2. **FIX-031** — Fix fiction entity story ID gating (30 min; `FictionEntityViews.tsx` + 3 page files)
-3. **FIX-026 + FIX-027 + FIX-030** — Three stale 'keith' role fixes (30 min combined): new migration 030 + 2 one-line API route changes
-4. **IDEA-025** — Wire rules into Ask (35 min; `prompts.ts` + `perspectives.ts`)
-5. **Voice guide content** — Fill in `content/voice.md` (author work, no code)
-6. **FIX-028** — Legacy Keith UI copy sweep (30 min + Paul copy decisions)
-7. **FIX-029** — Remove AgeModeSwitcher from UI (1 hr)
-8. **IDEA-029** — Reader Arc Progress (1.25 hrs; requires FIX-032 first)
-9. **IDEA-023** — Explore Hub (2.5 hrs)
+1. **FIX-033** (5 min): 1-line probe order fix in `slug-resolver.ts` — unblocks test 108
+2. **FIX-034** (5 min): Add `**Status:** active` to `parables-of-resonance.md` Lore metadata — unblocks test 110
+3. **FIX-032** — Fix BeatTimeline P0 gating (15 min; 3-line change in `journeys/[slug]/page.tsx`)
+4. **FIX-031 + FIX-035** — Fix fiction entity + vault story ID gating (40 min combined; `FictionEntityViews.tsx` + 4 page files)
+5. **FIX-026 + FIX-027 + FIX-030** — Three stale 'keith' role fixes (30 min combined): new migration 035 + 2 one-line API route changes
+6. **Voice guide content** — Fill in `content/voice.md` (author work, no code)
+7. **IDEA-026** — Open Threads Mysteries page (1.2 hrs, after FIX-030)
+8. **FIX-028** — Legacy Keith UI copy sweep (30 min + Paul copy decisions)
+9. **FIX-029** — Remove AgeModeSwitcher from UI (1 hr)
+10. **IDEA-029** — Reader Arc Progress (1.25 hrs; requires FIX-032 first)
+11. **IDEA-023** — Explore Hub (2.5 hrs)

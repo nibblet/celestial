@@ -1,7 +1,7 @@
 # FIXES — Celestial Interactive Book Companion
 
 > Bug and issue tracker. Updated each nightshift run.
-> Numbering continues from Run 9 (last entry was FIX-029).
+> Numbering continues from Run 11 (last new entry is FIX-035).
 
 ## Statuses
 - `found` — Issue identified, no plan yet
@@ -11,6 +11,33 @@
 ---
 
 ## Open Issues
+
+### [FIX-035] Vault Detail Pages Leak Story IDs Without Chapter Gating
+- **Status:** planned
+- **Severity:** P1 — chapter-gating gap. Vault entities extract `memoirStoryIds` from `## Appearances` sections via the `(CH0X)` pattern. `/vaults/[slug]/page.tsx` uses `FictionEntityDetailPage` without passing `readerProgress`, so all story links render to all readers unfiltered.
+- **Found:** 2026-04-23 (Run 11)
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-035-vault-detail-story-gating.md`
+- **Summary:** Same root cause as FIX-031 (factions/locations/artifacts). `vault-002` has CH06 in Appearances and CH11 in Additional appearances; these render as story links regardless of reader progress. Fix: fetch `getReaderProgress()` in `/vaults/[slug]/page.tsx` and pass as `readerProgress` prop to `FictionEntityDetailPage`. Coordinate with FIX-031 since both touch `FictionEntityViews.tsx`.
+
+---
+
+### [FIX-034] `parables-of-resonance.md` Missing `**Status:**` in Lore Metadata — Test Failure
+- **Status:** planned
+- **Severity:** Low — test 110 fails; no runtime impact. Content inconsistency: canon dossier says `subkind="parable"` but Lore metadata says `**Subkind:** concept` and lacks `**Status:**`.
+- **Found:** 2026-04-23 (Run 11)
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-034-parables-status-field.md`
+- **Summary:** `content/wiki/rules/parables-of-resonance.md` Lore metadata section: change `**Subkind:** concept` → `**Subkind:** parable` and add `**Status:** active`. No `<!-- generated:ingest -->` marker — safe to edit directly.
+
+---
+
+### [FIX-033] Vault Alias Resolution Returns Wrong Kind — Test Failure
+- **Status:** planned
+- **Severity:** Low — test 108 fails; vault dossier cross-references (`[[martian-resonance-vault]]`) route to `/artifacts/vault-002` instead of `/vaults/vault-002`.
+- **Found:** 2026-04-23 (Run 11)
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-033-vault-slug-probe-order.md`
+- **Summary:** `src/lib/wiki/slug-resolver.ts` PROBE_ORDER has `"artifacts"` before `"vaults"`. Since `vault-002.md` exists in both `artifacts/` and `vaults/` directories (duplicate from Run 11 commit), the resolver hits the artifact copy first. Fix: move `"vaults"` before `"artifacts"` in PROBE_ORDER (1-line change). Content note: 4 vault files are duplicated in `artifacts/` and should be removed there once routing is confirmed.
+
+---
 
 ### [FIX-032] BeatTimeline Leaks Locked Chapter Content on Journey Pages
 - **Status:** planned
@@ -84,7 +111,7 @@
 - **Severity:** Medium — author accounts cannot write to `cel_open_threads`, `cel_chapter_scenes`, or `cel_beats`
 - **Found:** 2026-04-22 (Run 9)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-026-stale-keith-role-rls.md`
-- **Summary:** Migrations 025–028 check `p.role = 'keith'` in RLS policies. Fix: new migration 030 drops and recreates policies with `p.role = 'author'`.
+- **Summary:** Migrations 025–028 check `p.role = 'keith'` in RLS policies. Fix: new migration **035** (migration numbers 030–034 were used by other features in Run 11). Plan file still describes the approach correctly — just update the migration number when executing.
 
 ---
 
