@@ -1,7 +1,7 @@
 # FIXES — Celestial Interactive Book Companion
 
 > Bug and issue tracker. Updated each nightshift run.
-> Numbering continues from Run 11 (last new entry is FIX-035).
+> Numbering continues from Run 12 (last new entry is FIX-037).
 
 ## Statuses
 - `found` — Issue identified, no plan yet
@@ -11,6 +11,24 @@
 ---
 
 ## Open Issues
+
+### [FIX-036] `storySlug` Not Validated Against Reader Progress in Ask API — P0 Spoiler Leak
+- **Status:** planned
+- **Severity:** P0 — spoiler leak. Any authenticated reader can pass a locked chapter's slug in the Ask API POST body and receive that chapter's story body (first 3 000 chars), mission log entries (up to 600 chars each), and scene data injected into the AI system prompt. The AI's "Reader Progress Gate" instruction is a prompt-level hint, not a code gate.
+- **Found:** 2026-04-24 (Run 12)
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-036-ask-story-slug-spoiler-gate.md`
+- **Summary:** In `src/app/api/ask/route.ts`, `storySlug` is destructured from the request body and passed to `orchestrateAsk` without checking `isStoryUnlocked(storySlug, readerProgress)`. Fix: add one validation statement after `getReaderProgress()` and use `validatedStorySlug` in the orchestrate call. Re-reader (`show_all_content=true`) and unlocked-chapter paths are unaffected.
+
+---
+
+### [FIX-037] `andes-glacial-lake.md` Missing `**Superset:**` in Lore Metadata — Test Failures
+- **Status:** planned
+- **Severity:** Low — tests 113 and 117 fail; no runtime impact.
+- **Found:** 2026-04-24 (Run 12)
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-037-andes-glacial-lake-superset.md`
+- **Summary:** New location file `content/wiki/locations/andes-glacial-lake.md` (seeded by `seed-canon-entities.ts` in commit `145a753`) has `parent="earth"` in its canon dossier but is missing `**Superset:** [[earth]]` in the Lore metadata section. The canon-hubs and canon-integrity tests require these to match. No `<!-- generated:ingest -->` marker — safe to edit directly. One-line content fix.
+
+---
 
 ### [FIX-035] Vault Detail Pages Leak Story IDs Without Chapter Gating
 - **Status:** planned
@@ -23,19 +41,10 @@
 
 ### [FIX-034] `parables-of-resonance.md` Missing `**Status:**` in Lore Metadata — Test Failure
 - **Status:** planned
-- **Severity:** Low — test 110 fails; no runtime impact. Content inconsistency: canon dossier says `subkind="parable"` but Lore metadata says `**Subkind:** concept` and lacks `**Status:**`.
+- **Severity:** Low — test 114 fails (was test 110 in Run 11, renumbered by new tests); no runtime impact. Content inconsistency: canon dossier says `subkind="parable"` but Lore metadata says `**Subkind:** concept` and lacks `**Status:**`.
 - **Found:** 2026-04-23 (Run 11)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-034-parables-status-field.md`
 - **Summary:** `content/wiki/rules/parables-of-resonance.md` Lore metadata section: change `**Subkind:** concept` → `**Subkind:** parable` and add `**Status:** active`. No `<!-- generated:ingest -->` marker — safe to edit directly.
-
----
-
-### [FIX-033] Vault Alias Resolution Returns Wrong Kind — Test Failure
-- **Status:** planned
-- **Severity:** Low — test 108 fails; vault dossier cross-references (`[[martian-resonance-vault]]`) route to `/artifacts/vault-002` instead of `/vaults/vault-002`.
-- **Found:** 2026-04-23 (Run 11)
-- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-033-vault-slug-probe-order.md`
-- **Summary:** `src/lib/wiki/slug-resolver.ts` PROBE_ORDER has `"artifacts"` before `"vaults"`. Since `vault-002.md` exists in both `artifacts/` and `vaults/` directories (duplicate from Run 11 commit), the resolver hits the artifact copy first. Fix: move `"vaults"` before `"artifacts"` in PROBE_ORDER (1-line change). Content note: 4 vault files are duplicated in `artifacts/` and should be removed there once routing is confirmed.
 
 ---
 
@@ -70,30 +79,15 @@
 - **Status:** found
 - **Severity:** Low — cosmetic/brand. No functional impact.
 - **Found:** 2026-04-22 (Run 9)
-- **Summary:** Scope expanded in Run 10. Full list of Keith references in src/:
-  - `src/app/beyond/page.tsx` (metadata description): "Keith's dedicated space for shaping untold stories"
-  - `src/app/journeys/page.tsx`: "Explore Keith's life as either a curated path..."
-  - `src/app/journeys/[slug]/page.tsx:64` (fallback text): "woven from Keith's memoir stories and interviews" — NEW (Phase F)
-  - `src/app/profile/highlights/page.tsx`: "saved from Keith's stories"
-  - `src/app/profile/questions/page.tsx`: "asked about Keith's stories"
-  - `src/app/admin/drafts/page.tsx:93` (body text): "Keith Beyond drafts" — NEW (Phase E)
-  - `src/app/principles/page.tsx:55,57`: "Keith's Principles", "Keith's stories" — NEW
-  - `src/app/themes/page.tsx:23`: "Keith's decisions" — NEW
-  - `src/app/welcome/page.tsx:10` (metadata description): "A quick tour of the Keith Cobb Storybook" — NEW
-  - `src/app/welcome/OnboardingStepper.tsx:60`: "The Keith Cobb Story Library" — NEW
-  - `src/components/stories/AskAboutStory.tsx`: "A note for Keith", "Write to Keith", "Send to Keith"
-  - `src/components/tell/StoryContributionWorkspace.tsx`: "Share a memory about Keith...", "Which untold Keith story..."
-  - `src/lib/beyond/session-wrap.ts:139` (system prompt): "welcoming Keith back to Beyond" — NEW (Phase H)
-  - Comments (not rendered): `src/lib/threads/repo.ts:12`, `src/lib/beats/repo.ts:12`
-  Fix requires Paul to define preferred copy for each surface. Session-wrap system prompt should use a generic "the author" reference instead of "Keith".
+- **Summary:** Scope unchanged from Run 11. 14+ Keith/Cobb references remain in `src/`. Key surfaces: `session-wrap.ts` system prompt, `AskAboutStory.tsx`, `StoryContributionWorkspace.tsx`, `welcome/page.tsx`, `OnboardingStepper.tsx`, `journeys/page.tsx`, `themes/page.tsx`, `profile/highlights/page.tsx`, `profile/questions/page.tsx`, `admin/threads/route.ts` (comment), `admin/ai-activity/route.ts` (comment). Fix requires Paul to define preferred copy for each surface.
 
 ---
 
 ### [FIX-029] Age Mode System UI Exposed in Adult-Only Celestial App
 - **Status:** found
-- **Severity:** Low-Medium — `AgeModeSwitcher` visible in Nav, Header, and Home. Journey components render `young_reader` copy branches. Adult fiction only per spec.
+- **Severity:** Low-Medium — `AgeModeSwitcher` visible in Nav (`Nav.tsx:178`) and Header (`Header.tsx:26`). Journey components render `young_reader` copy branches. Adult fiction only per spec.
 - **Found:** 2026-04-22 (Run 9)
-- **Summary:** Age mode infrastructure carried from memoir shell. Fix: remove `AgeModeSwitcher` from UI surfaces; hardcode `ageMode = "adult"` in journey components.
+- **Summary:** Age mode infrastructure carried from memoir shell. Fix: remove `AgeModeSwitcher` from Nav and Header; hardcode `ageMode = "adult"` in journey components.
 
 ---
 
@@ -111,7 +105,7 @@
 - **Severity:** Medium — author accounts cannot write to `cel_open_threads`, `cel_chapter_scenes`, or `cel_beats`
 - **Found:** 2026-04-22 (Run 9)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-026-stale-keith-role-rls.md`
-- **Summary:** Migrations 025–028 check `p.role = 'keith'` in RLS policies. Fix: new migration **035** (migration numbers 030–034 were used by other features in Run 11). Plan file still describes the approach correctly — just update the migration number when executing.
+- **Summary:** Migrations 025–028 check `p.role = 'keith'` in RLS policies. Fix: new migration **035** (migrations 030–034 used by other features). Plan file still describes approach correctly — update migration number to 035 when executing.
 
 ---
 
@@ -120,7 +114,7 @@
 - **Severity:** Low — no functional impact
 - **Found:** 2026-04-18 (Run 7)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-022-dual-013-migration.md` *(recreate if needed)*
-- **Summary:** Two migrations with `013_` prefix. New migrations start at `030_`. Documentation-only fix.
+- **Summary:** Two migrations with `013_` prefix. New migrations start at `035_`. Documentation-only fix.
 
 ---
 
@@ -158,6 +152,10 @@
 ---
 
 ## Recently Resolved
+
+### [FIX-033] Vault Alias Resolution Returns Wrong Kind — Test Failure
+- **Status:** resolved
+- **Resolved:** 2026-04-24 (Run 12) — symptom resolved by commit `145a753` which deleted the four duplicate vault files from `content/wiki/artifacts/` (giza-vault.md, vault-002.md, vault-003.md, vault-006.md). Test 108 now passes. Note: PROBE_ORDER in `src/lib/wiki/slug-resolver.ts` still has `"artifacts"` before `"vaults"` — this is a latent risk if vault files are ever accidentally placed in `artifacts/` again, but it is not currently causing test failures. The 1-line probe order fix from the original plan remains advisable but is not blocking.
 
 ### [FIX-025] Paragraph Text Used as React Key on Principle Detail Page
 - **Status:** resolved / **Resolved:** 2026-04-19

@@ -4,6 +4,57 @@
 
 ---
 
+## Run: 2026-04-24 (Run 12)
+
+### Summary
+- Scanned: 3 commits since Run 11 (fddb8c0 → 49ccf15): `145a753` continuity improvements (9 new rules, 4 new locations, new timeline content, canon entity updates, `ingest-bible-rules.ts`, `getMissionLogsForChapter` + `getMissionTimelineContext` added to Ask context), `631dc5b` new color scheme (53 files, CSS overhaul, character content cleanup), `49ccf15` added artifacts (`tag-chapter-entities.ts`, `chapter-tags.ts`, `chapter_tags.json`, `enrich-artifact-dossier.ts`, chapter summary in StoryDetailsDisclosure)
+- Issues: 2 new (FIX-036 P0 storySlug spoiler leak, FIX-037 Low andes-glacial-lake Superset), 1 resolved (FIX-033 vault probe order symptom resolved by content fix), 1 unchanged (FIX-034 still failing test 114)
+- Ideas: 2 new seeds (IDEA-032 chapter tag quality gate, IDEA-033 mission timeline enhancement), 1 promoted (IDEA-028 exploring → planned), IDEA-025 budget cap noted
+- Plans written: FIXPLAN-FIX-036, FIXPLAN-FIX-037, DEVPLAN-IDEA-028
+
+### Build & Lint & Test Results
+- `npx next build`: **PASSES** — clean, 96 routes (up from 95; +/timeline redirect). 1 expected Turbopack NFT warning.
+- `npm run lint`: **PASSES** — 0 errors, 0 warnings
+- `npm test`: **170 PASS / 3 FAIL** (173 total, up from 160 in Run 11; 13 new tests added by these commits). Failing:
+  - Test 113: `every location has Superset: or is on root allow-list` — `andes-glacial-lake.md` missing `**Superset:** [[earth]]` (FIX-037)
+  - Test 114: `all parables carry Status in Lore metadata` — `parables-of-resonance.md` still missing `**Status:**` (FIX-034, renumbered from 110 due to new tests)
+  - Test 117: `wiki: location Superset: line matches canon parent when canon has one` — same root as Test 113 (FIX-037)
+  - Test 108 (vault probe order): **NOW PASSING** — vault duplicates removed from `artifacts/` in commit `145a753`. FIX-033 resolved.
+
+### Key Findings
+
+1. **FIX-036 (P0 — NEW): `storySlug` not validated against reader progress in `/api/ask/route.ts`.** A reader at CH01 can POST `{ storySlug: "CH17" }` to the Ask API and receive: (a) the first 3 000 chars of CH17 story body via `getStoryContext()` in `sharedContentBlock`, (b) CH17 mission log entries (up to 600 chars each) via `getMissionLogsForChapter()` added in commit `145a753`, (c) CH17 scene data via `getScenesForChapter()`. The `visibleStories` story catalog is correctly gated, but the per-chapter context block bypasses it entirely. Fix: `route.ts` — after `getReaderProgress()`, check `isStoryUnlocked(storySlug, readerProgress)` and strip storySlug if false. 10-minute fix. Note: `getChapterTagsPromptBlock` (chapter summary) is in the dead-code `buildSystemPrompt` from `prompts.ts` — not active in the multi-persona orchestrator path, so not an active leak, but should be cleaned up.
+
+2. **FIX-033 RESOLVED: Vault duplicate files removed.** Commit `145a753` deleted `content/wiki/artifacts/giza-vault.md`, `vault-002.md`, `vault-003.md`, `vault-006.md` — the duplicates that caused the slug resolver to find vaults in the artifacts/ directory first. Test 108 now passes. PROBE_ORDER in `slug-resolver.ts` still has `"artifacts"` before `"vaults"` (latent risk), but no active test failure.
+
+3. **FIX-037 (Low — NEW — 2 tests fail): `andes-glacial-lake.md` missing `**Superset:**`.** Commit `145a753` seeded 4 new location files. Three (asteroid-belt, europa, ganymede) have empty `parent=""` in their canon dossier — no superset required. But `andes-glacial-lake` has `parent="earth"` in the canon dossier, so the canon-hubs and canon-integrity tests require a matching `**Superset:** [[earth]]` in the Lore metadata. One-line content fix.
+
+4. **FIX-034 still open (test 114): `parables-of-resonance.md`** Lore metadata still has `**Subkind:** concept` and still missing `**Status:**`. Renumbered from test 110 to 114 by the 13 new tests added in these commits. Plan ready; no code changes needed — direct content edit.
+
+5. **9 new Series Bible rules added.** `scripts/ingest-bible-rules.ts` (474 lines) seeded ancients-philosophy, conscious-machines, containment-morality, earth-2050, moral-questions, prologue-timeline, spiritual-symbols, technology-limits, vault-network into `content/wiki/rules/`. Total rules: 25 (up from 16). `RULES_CONTEXT_MAX_CHARS` raised from 18k to 60k in `prompts.ts` to accommodate all 25 rules in the Ask system prompt (previous cap was alphabetically truncating technology-limits and vault-network).
+
+6. **New chapter tagging infrastructure.** `scripts/tag-chapter-entities.ts` produced `content/raw/chapter_tags.json` (2413 lines) — AI-generated entity + summary tags for all 17 chapters. `src/lib/wiki/chapter-tags.ts` provides typed access. `StoryDetailsDisclosure.tsx` now shows chapter summary and themes from chapter_tags when available. `ask-verifier.ts` cross-checks wiki links in Ask answers against the chapter's approved entity list (`off_chapter_entity_link` issue at warn severity). ⚠️ IDEA-032: `reviewed` flag on `ChapterTagRecord` is not checked before showing the summary to readers.
+
+7. **Major color scheme overhaul (commit `631dc5b`).** 53 files changed. New `sci-panel`, `sci-card-link` CSS classes used across entity index pages. `TimelineView.tsx` significantly refactored. Character content cleaned up (8 characters had dossier data reset/simplified). No functional regressions detected in build or tests.
+
+8. **FIX-028 (Keith UI copy) unchanged.** Color scheme commit did not address any Keith references. Still 14+ files.
+
+9. **New artifacts: harmonic-drive.md added; echo-core.md and harmonic-key.md deleted.** Artifact count reduced from 7 to 5. No broken cross-references found in wiki or src/.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/FIXPLAN-FIX-036-ask-story-slug-spoiler-gate.md` — **P0**: storySlug validation in Ask API (10 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-037-andes-glacial-lake-superset.md` — content fix, unblocks tests 113+117 (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-034-parables-status-field.md` — content fix, unblocks test 114 (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-032-beat-timeline-chapter-gating.md` — **P0** BeatTimeline gating (15 min)
+- `docs/nightshift/plans/DEVPLAN-IDEA-028-continuity-diff-beyond-panel.md` — Continuity diff panel in Beyond (1.5 hrs)
+
+### Recommendations
+- **If you have 10 min:** FIX-036 (P0, 10 min alone). The new `getMissionLogsForChapter` call added in this batch of commits makes the storySlug bypass significantly more dangerous — readers can now extract mission log bodies for locked chapters. Single import + one-line validation.
+- **If you have 30 min:** FIX-036 (10 min) + FIX-037 (5 min) + FIX-034 (5 min) + FIX-032 (15 min P0). After this: two P0s patched, all tests passing, the most critical spoiler surfaces sealed.
+- **If you have 2 hours:** The 30-min batch above + DEVPLAN-IDEA-028 (1.5 hrs). After this: both P0s gone, tests clean, and the Beyond workspace has a live continuity health check for the author.
+
+---
+
 ## Run: 2026-04-23 (Run 11)
 
 ### Summary
