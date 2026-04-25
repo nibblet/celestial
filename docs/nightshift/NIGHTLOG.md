@@ -4,6 +4,58 @@
 
 ---
 
+## Run: 2026-04-25 (Run 13)
+
+### Summary
+- Scanned: 0 new code commits since Run 12 (last commit is `7b2d1b9` nightshift). Full codebase audit of AI context paths, chapter-gating gaps, and idea maturity.
+- Issues: 2 new (FIX-038 P1: orchestrator journey beats not gated; FIX-039 P2: journey context story summaries not gated), 0 resolved, all prior open issues unchanged
+- Ideas: 2 new seeds (IDEA-034 enhance: chapter arc progress bar; IDEA-035 new: author chapter review dashboard), 1 promoted seed→planned (IDEA-032 + dev plan written), 1 promoted seed→exploring (IDEA-030), 2 parked (IDEA-024 voice guide stub stale 3 days, IDEA-027 CH17 milestone stale 3 days)
+- Plans written: FIXPLAN-FIX-038, FIXPLAN-FIX-039, DEVPLAN-IDEA-032
+
+### Build & Lint & Test Results
+- `npm install --prefer-offline`: required — fresh sandbox clone, offline cache available
+- `npx next build`: **PASSES** — clean, 96 routes, 1 expected Turbopack NFT warning
+- `npm run lint`: **PASSES** — 0 errors, 0 warnings
+- `npm test`: **170 PASS / 3 FAIL** (173 total) — unchanged from Run 12
+  - Test 113: `every location has Superset:` → FIX-037 still open
+  - Test 114: `all parables carry Status` → FIX-034 still open
+  - Test 117: `location Superset: matches canon parent` → FIX-037 still open
+
+### Key Findings
+
+1. **FIX-038 (P1 — NEW): Journey beats injected into AI prompts without reader progress filter.** In `src/lib/ai/orchestrator.ts` `buildPromptArgs()`, `listBeatsByJourney()` is called at line ~194 and the resulting beats are mapped into `PersonaPromptArgs.beats` without any `isStoryUnlocked` filter. Any reader passing `journeySlug` to the `/api/ask` endpoint receives all beats (including locked-chapter `whyItMatters` narrative) in the AI system prompt. `readerProgress` and `isStoryUnlocked` are already imported — the fix is one filter chain before the `.map()`. Note: STATUS.md previously said "FIX-032 in Ask path too" but FIXPLAN-FIX-032 only covered the journey page rendering, not the orchestrator. New plan FIXPLAN-FIX-038 covers the orchestrator path specifically.
+
+2. **FIX-039 (P2 — NEW): `getJourneyContextForPrompt` injects all journey story summaries without progress gate.** `src/lib/ai/prompts.ts` lines 413–428: iterates ALL `journey.storyIds` and injects each story's `title` and `summary` (opening paragraph). Called in `perspectives.ts` `sharedContentBlock` at line 122 when `args.journeySlug` is set. Story summaries are opening paragraphs (not full body), so severity is P2 vs P1 for beats. Fix: add `readerProgress?` parameter to `getJourneyContextForPrompt` and filter by `isStoryUnlocked`. Update call site in `perspectives.ts` to pass `args.readerProgress`. Legacy `buildSystemPrompt` call at `prompts.ts:459` unaffected (optional param, dead code path anyway).
+
+3. **IDEA-032 advanced to `planned`.** Confirmed `content/raw/chapter_tags.json` has 0 reviewed entries (all 17 `reviewed: false`). `StoryDetailsDisclosure.tsx` line 86 renders `{chapterTags && chapterTags.summary && ...}` without checking `chapterTags.reviewed`. If the quality gate shipped today, all summaries would be hidden until Paul runs the review CLI. Dev plan written: Phase 1 is a single `chapterTags.reviewed &&` addition; Phase 2 is `scripts/review-chapter-tags.ts` interactive CLI. Themes tag display is intentionally NOT gated (structural tags, not narrative prose).
+
+4. **IDEA-030 advanced to `exploring`.** Confirmed the data path: `AskMessageEvidence.linksInAnswer` is already extracted and returned to the client as a final SSE event. Each link has `{ text, href, resolvedKind }`. Rendering 1–3 chips below the assistant message bubble is a pure UI change in `ask/page.tsx`. No additional gating needed — links come from AI-generated text that was already filtered through `visibleStories`. Estimated 1 hour.
+
+5. **IDEA-024 and IDEA-027 parked.** Both were seeds since 2026-04-22 with no action for 3 days. IDEA-024 (voice guide) is P1 author content work, not code — un-park when Paul is ready to draft. IDEA-027 (CH17 overlay) remains P3 until CH17 content is complete.
+
+6. **ASK_VERIFIER_STRICTNESS at `warn` by default means verifier never blocks responses.** `shouldBlock = strictness === "fail" && hasError` — at `warn` (default) this is always false. The verifier's `spoiler_story_link` detection is purely diagnostic. The actual spoiler protection relies on source-level gating (FIX-036, FIX-038, FIX-039). Noted in STATUS.md.
+
+7. **All prior P0 issues still open.** FIX-036 (storySlug bypass), FIX-032 (BeatTimeline on journey pages) — neither was fixed in the zero-commit window since Run 12.
+
+8. **FIX-028: 45 Keith/Cobb references confirmed in 20+ src/ files.** Grepped `src/` with case-insensitive pattern — count is 45 (higher than the "14+" noted previously; that was file count not occurrence count). Key functional surfaces: `session-wrap.ts` system prompt line 139 explicitly addresses "Keith" in the AI persona; `AskDemo.tsx` demo copy; `AskAboutStory.tsx` "Write to Keith" UI.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/FIXPLAN-FIX-036-ask-story-slug-spoiler-gate.md` — **P0**: storySlug validation in Ask API (10 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-032-beat-timeline-chapter-gating.md` — **P0**: BeatTimeline gating on journey page (15 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-038-orchestrator-journey-beats-gating.md` — **P1** NEW: filter journey beats in orchestrator (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-037-andes-glacial-lake-superset.md` — restores tests 113+117 (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-034-parables-status-field.md` — restores test 114 (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-039-journey-context-prompt-story-gating.md` — P2: gate journey story summaries in AI prompt (20 min)
+- `docs/nightshift/plans/DEVPLAN-IDEA-032-chapter-tag-quality-gate.md` — chapter tag quality gate + review CLI (45 min)
+- `docs/nightshift/plans/DEVPLAN-IDEA-028-continuity-diff-beyond-panel.md` — Continuity diff panel in Beyond (1.5 hrs)
+
+### Recommendations
+- **If you have 30 min:** FIX-036 (10 min P0) + FIX-032 (15 min P0) + FIX-038 (5 min P1). After this: both AI-path spoiler gates sealed, journey beats gated on both the page and the AI prompt.
+- **If you have 45 min:** The 30-min batch above + FIX-037 + FIX-034 (5 min each). After this: all P0/P1 issues patched on the AI context side and all 3 test failures cleared.
+- **If you have 2 hours:** The 45-min batch above + FIX-039 (20 min) + IDEA-032 Phase 1+2 (45 min). After this: full Ask journey context gated, chapter tag review CLI ready for Paul to use.
+
+---
+
 ## Run: 2026-04-24 (Run 12)
 
 ### Summary

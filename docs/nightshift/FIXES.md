@@ -1,7 +1,7 @@
 # FIXES — Celestial Interactive Book Companion
 
 > Bug and issue tracker. Updated each nightshift run.
-> Numbering continues from Run 12 (last new entry is FIX-037).
+> Numbering continues from Run 13 (last new entry is FIX-039).
 
 ## Statuses
 - `found` — Issue identified, no plan yet
@@ -11,6 +11,24 @@
 ---
 
 ## Open Issues
+
+### [FIX-039] `getJourneyContextForPrompt` Injects Locked Chapter Summaries into AI Prompt
+- **Status:** planned
+- **Severity:** P2 — secondary chapter-gating gap. When a reader passes `journeySlug` to the Ask API, `getJourneyContextForPrompt()` iterates ALL story IDs in the journey and injects each story's `title` and `summary` (opening paragraph of the chapter) into every AI persona system prompt, regardless of reader progress. A CH01 reader asking with `journeySlug: "directive-14"` has CH08–CH14 opening paragraphs in the AI context.
+- **Found:** 2026-04-25 (Run 13)
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-039-journey-context-prompt-story-gating.md`
+- **Summary:** Add `readerProgress?: ReaderProgress | null` parameter to `getJourneyContextForPrompt` in `prompts.ts`. Filter story iteration to `isStoryUnlocked(id, readerProgress)`. Update the call site in `perspectives.ts` `sharedContentBlock` to pass `args.readerProgress`. Re-reader and no-`readerProgress` paths unaffected (optional param defaults to `undefined`).
+
+---
+
+### [FIX-038] Journey Beats in Ask Orchestrator Not Filtered by Reader Progress
+- **Status:** planned
+- **Severity:** P1 — chapter-gating gap in the Ask AI context layer. When a reader sends `journeySlug` to the `/api/ask` endpoint, the orchestrator fetches ALL published beats via `listBeatsByJourney()` and injects them into every AI persona system prompt without filtering by reader progress. Beat `whyItMatters` text contains verbatim story events from named chapters. FIX-032 covers the journey page BeatTimeline rendering; this fix covers the orchestrator/AI path specifically noted as "FIX-032 in Ask path too" in STATUS.md but absent from FIXPLAN-FIX-032.
+- **Found:** 2026-04-25 (Run 13)
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-038-orchestrator-journey-beats-gating.md`
+- **Summary:** In `src/lib/ai/orchestrator.ts` `buildPromptArgs()`, filter `journeyBeats` by `isStoryUnlocked(b.chapterId, readerProgress)` before mapping them into `PersonaPromptArgs.beats`. `readerProgress` is already in scope; `isStoryUnlocked` is already imported. One filter chain addition.
+
+---
 
 ### [FIX-036] `storySlug` Not Validated Against Reader Progress in Ask API — P0 Spoiler Leak
 - **Status:** planned

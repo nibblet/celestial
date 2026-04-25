@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-04-24 (Nightshift Run 12)
+> Last updated: 2026-04-25 (Nightshift Run 13)
 
 ## App Summary
 
@@ -95,10 +95,11 @@
   1. `visibleStories` filtered by `isStoryUnlocked()` before building story catalog ✓
   2. "Reader Progress Gate" block injected into every persona system prompt ✓
   3. Open threads: `listUnresolvedThroughChapter()` gates threads to current chapter ✓
-  4. Journey beats: filtered to published-only — **NOT gated by reader progress (FIX-032 in Ask path too)**
-  5. **`storySlug` NOT validated against reader progress (FIX-036 P0)** — story body + mission logs for any chapter injectable
-- Ask verifier: post-processes responses; checks story links against `isStoryUnlocked`, wiki links against filesystem, off-chapter entity links against chapter tags. Controlled by `ASK_VERIFIER_STRICTNESS` env (`off|warn|fail`, default `warn`).
-- Chapter tags (`chapter_tags.json`): AI-generated per-chapter entity list + summary. Used by verifier (`ask-verifier.ts`) to flag off-chapter entity citations. `getChapterTagsPromptBlock` in legacy `buildSystemPrompt` (dead code path — not injected via active multi-persona orchestrator).
+  4. Journey beats in orchestrator: **NOT gated (⚠️ FIX-038 P1)** — `listBeatsByJourney()` in `buildPromptArgs` returns all beats; filter added to FIXPLAN-FIX-038
+  5. Journey story summaries: **NOT gated (⚠️ FIX-039 P2)** — `getJourneyContextForPrompt` injects all journey `storyIds` summaries; fix in FIXPLAN-FIX-039
+  6. **`storySlug` NOT validated against reader progress (⚠️ FIX-036 P0)** — story body + mission logs for any chapter injectable
+- Ask verifier: post-processes responses; checks story links against `isStoryUnlocked`, wiki links against filesystem, off-chapter entity links against chapter tags. Controlled by `ASK_VERIFIER_STRICTNESS` env (`off|warn|fail`, default `warn`). **At default `warn`, verifier NEVER blocks responses** — only `fail` strictness blocks. The verifier is a diagnostic tool, not an active spoiler blocker.
+- Chapter tags (`chapter_tags.json`): AI-generated per-chapter entity list + summary. Used by verifier (`ask-verifier.ts`) to flag off-chapter entity citations. `getChapterTagsPromptBlock` in legacy `buildSystemPrompt` (dead code path — not injected via active multi-persona orchestrator). **All 17 chapters have `reviewed: false`** — `StoryDetailsDisclosure` shows the summary without checking this flag (⚠️ IDEA-032 planned).
 - Mission timeline: `getMissionTimelineContext()` injects compact chapter→Mission Day/date index into all persona prompts. Prompt instruction tells model to treat future chapter rows as spoilers.
 - Mission logs: `getMissionLogsForChapter(storySlug)` injects chapter-specific log bodies (up to 600 chars each) — gated only by `storySlug` presence, not reader progress (**part of FIX-036**).
 - Rules context: `getRulesContext()` with 60 000-char budget cap (25 rules injected into all prompts)
@@ -133,37 +134,41 @@
 
 ## Build / Test Status
 
-- **Build:** PASSES — clean, 96 routes (up from 95 in Run 11; +/timeline redirect). 1 expected Turbopack NFT warning on `prompts.ts` filesystem reads.
+- **Build:** PASSES — clean, 96 routes. 1 expected Turbopack NFT warning on `prompts.ts` filesystem reads.
 - **Lint:** PASSES — 0 errors, 0 warnings
-- **Tests:** 173 total / **170 PASS / 3 FAIL** (up from 160 in Run 11; 13 new tests added by Run 12 commits). Failing:
+- **Tests:** 173 total / **170 PASS / 3 FAIL** (unchanged from Run 12 — no new code commits). Failing:
   - Test 113 (`every location has Superset: or is on root allow-list`) → FIX-037
-  - Test 114 (`all parables carry Status in Lore metadata`) → FIX-034 (still open, renumbered from 110)
+  - Test 114 (`all parables carry Status in Lore metadata`) → FIX-034
   - Test 117 (`wiki: location Superset: line matches canon parent when canon has one`) → FIX-037
 
 ## Known Issues (See FIXES.md)
 
-- **FIX-036 (P0 — NEW):** `storySlug` not validated in Ask API — locked chapter body + mission logs injectable
-- **FIX-032 (P0):** BeatTimeline on journey pages shows locked chapter content
-- **FIX-037 (Low — NEW — test failure):** `andes-glacial-lake.md` missing `**Superset:**` → tests 113 + 117 fail
+- **FIX-036 (P0):** `storySlug` not validated in Ask API — locked chapter body + mission logs injectable
+- **FIX-038 (P1 — NEW Run 13):** Journey beats in orchestrator not filtered by reader progress — `whyItMatters` from locked chapters injected into AI prompt when `journeySlug` provided
+- **FIX-032 (P0):** BeatTimeline on journey pages shows locked chapter content (UI path; FIX-038 = AI context path)
+- **FIX-039 (P2 — NEW Run 13):** `getJourneyContextForPrompt` injects all journey story summaries without reader progress gate
+- **FIX-037 (Low — test failure):** `andes-glacial-lake.md` missing `**Superset:**` → tests 113 + 117 fail
 - **FIX-034 (Low — test failure):** `parables-of-resonance.md` missing `**Status:**` → test 114 fails
 - **FIX-035 (P1):** Vault detail pages show story IDs from locked chapters
 - **FIX-031 (P1):** Fiction entity detail pages (factions/locations/artifacts) show future chapter IDs
 - **FIX-030 (Medium):** `/api/admin/threads` checks `'keith'` role
 - FIX-027 (Medium): `/api/admin/ai-activity` checks `'keith'` role
 - FIX-026 (Medium): RLS policies in migrations 025–028 check `role = 'keith'` — fix requires migration **035**
-- FIX-028 (Low): Legacy "Keith" UI copy in 14+ files
+- FIX-028 (Low): Legacy "Keith" UI copy in 45 locations across 20+ src/ files
 - FIX-029 (Low-Medium): Age mode system exposed in UI (adult fiction only)
 - FIX-013, FIX-014, FIX-016, FIX-017: Tell pipeline defensive coding
 
 ## Next Actions (Priority Order)
 
-1. **FIX-036 (P0 — NEW, 10 min):** Add `isStoryUnlocked` gate to `storySlug` in `/api/ask/route.ts`. Single import + one validation statement.
-2. **FIX-037 (5 min):** Add `**Superset:** [[earth]]` to `andes-glacial-lake.md` — restores 2 failing tests.
-3. **FIX-034 (5 min):** Fix `parables-of-resonance.md` Lore metadata — restores test 114.
-4. **FIX-032 (P0, 15 min):** Filter beats by reader progress in `journeys/[slug]/page.tsx`.
-5. **FIX-031 + FIX-035 (40 min combined):** Gate story IDs on all fiction entity + vault detail pages.
-6. **FIX-026 + FIX-027 + FIX-030 (30 min combined):** Three stale `'keith'` role fixes.
-7. **IDEA-028 (1.5 hrs):** Continuity Diff panel in Beyond workspace.
-8. **Voice guide content** — Fill in `content/voice.md` (author work, no code).
-9. **FIX-028 (30 min + author copy decisions):** Legacy Keith UI sweep.
-10. **FIX-029 (1 hr):** Remove AgeModeSwitcher from Nav/Header.
+1. **FIX-036 (P0, 10 min):** Add `isStoryUnlocked` gate to `storySlug` in `/api/ask/route.ts`.
+2. **FIX-032 (P0, 15 min):** Filter beats by reader progress in `journeys/[slug]/page.tsx`.
+3. **FIX-038 (P1, 5 min):** Filter `journeyBeats` in `orchestrator.ts` `buildPromptArgs` — one filter chain.
+4. **FIX-037 (5 min):** Add `**Superset:** [[earth]]` to `andes-glacial-lake.md` — restores 2 failing tests.
+5. **FIX-034 (5 min):** Fix `parables-of-resonance.md` Lore metadata — restores test 114.
+6. **FIX-039 (P2, 20 min):** Add `readerProgress` param to `getJourneyContextForPrompt`; update call site.
+7. **IDEA-032 (45 min):** Chapter tag quality gate + review CLI — Phase 1 is 1-line fix in `StoryDetailsDisclosure`.
+8. **FIX-031 + FIX-035 (40 min combined):** Gate story IDs on fiction entity + vault detail pages.
+9. **FIX-026 + FIX-027 + FIX-030 (30 min combined):** Three stale `'keith'` role fixes.
+10. **IDEA-028 (1.5 hrs):** Continuity Diff panel in Beyond workspace.
+11. **FIX-028 (30 min + author copy decisions):** Legacy Keith UI sweep.
+12. **FIX-029 (1 hr):** Remove AgeModeSwitcher from Nav/Header.

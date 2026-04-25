@@ -3,7 +3,7 @@
 > Ideas backlog with maturity tracking. Two categories: enhance existing features, and new features.
 > **Context note:** This backlog was reset on 2026-04-22 (Run 9) after the Celestial Phase 1 migration.
 > All Keith Cobb memoir-specific ideas from Runs 1–8 have been moved to the Parked section.
-> Last updated: 2026-04-24 (Run 12)
+> Last updated: 2026-04-25 (Run 13)
 
 ## Maturity Levels
 
@@ -18,29 +18,44 @@
 
 ## Category 1: Enhance / Mature / Expand Existing Features
 
-### [IDEA-032] Chapter Tag Quality Gate in StoryDetailsDisclosure
+### [IDEA-034] Chapter Arc Progress Indicator on /stories
 - **Status:** seed
 - **Category:** enhance
-- **Seeded:** 2026-04-24
-- **Last Updated:** 2026-04-24
+- **Seeded:** 2026-04-25
+- **Last Updated:** 2026-04-25
 - **Priority:** P2
 - **Plan:** *(not yet written)*
-- **Summary:** Commit `49ccf15` wired `chapterTags.summary` (AI-generated chapter summary) into `StoryDetailsDisclosure`, showing it on the story detail page. The `ChapterTagRecord` type has a `reviewed: boolean` field, but the component doesn't check it — unreviewd AI summaries could appear to readers. Adding a `reviewed` gate (`chapterTags.reviewed === true`) before rendering the summary prevents raw/low-quality AI text from appearing in the reader-facing UI.
+- **Summary:** Add a visual "N of 17 chapters read" progress bar or badge at the top of the `/stories` chapter library page. The data is already available via `getReaderProgress()` — `currentChapterNumber` gives chapters read. A slim progress bar (sci-fi styling: segmented, neon accent) above the chapter grid would give readers a clear sense of their arc position without modifying any gating logic. The re-reader variant would show "17/17" with a "Full access — re-reader mode" label.
 - **Night Notes:**
-  - 2026-04-24 (Run 12): Seeded. `StoryDetailsDisclosure.tsx` line ~87 renders `{chapterTags && chapterTags.summary && <p>…</p>}`. Should be `{chapterTags && chapterTags.reviewed && chapterTags.summary && …}`. Check `chapter_tags.json` for current `reviewed` values before implementing — if all are `false`, this would hide all summaries until Paul reviews them.
+  - 2026-04-25 (Run 13): Seeded. `src/app/stories/page.tsx` uses `StoriesPageClient`. Progress data available from `useReaderProgress()` hook or server-side from `getReaderProgress()`. Display target: above the chapter grid in `StoriesPageClient`. Guest-cookie path: cookie-based progress still gives a valid chapter number.
+
+---
+
+### [IDEA-032] Chapter Tag Quality Gate in StoryDetailsDisclosure
+- **Status:** planned
+- **Category:** enhance
+- **Seeded:** 2026-04-24
+- **Last Updated:** 2026-04-25
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-032-chapter-tag-quality-gate.md`
+- **Summary:** Gate `chapterTags.summary` display in `StoryDetailsDisclosure` behind `chapterTags.reviewed === true`. All 17 chapters currently have `reviewed: false`. Also add `scripts/review-chapter-tags.ts` — an interactive CLI for Paul to approve/skip/edit each AI summary. Themes tags are not gated (they're structural, not narrative prose). Dev plan written.
+- **Night Notes:**
+  - 2026-04-24 (Run 12): Seeded. `StoryDetailsDisclosure.tsx` line ~87 renders `{chapterTags && chapterTags.summary && <p>…</p>}`. Should be `{chapterTags && chapterTags.reviewed && chapterTags.summary && …}`.
+  - 2026-04-25 (Run 13): Advanced to `planned`. Confirmed all 17 chapter_tags entries have `reviewed: false` (0 reviewed). Gate would hide all summaries until Paul runs the review script. Dev plan written: Phase 1 is a 1-line fix, Phase 2 adds the review CLI. Estimated 0.75 hours.
 
 ---
 
 ### [IDEA-030] Ask Evidence Inline Citation Chips
-- **Status:** seed
+- **Status:** exploring
 - **Category:** enhance
 - **Seeded:** 2026-04-23
-- **Last Updated:** 2026-04-23
+- **Last Updated:** 2026-04-25
 - **Priority:** P2
 - **Plan:** *(not yet written)*
-- **Summary:** The new `ask-evidence.ts` evidence schema extracts `linksInAnswer` (markdown links from the AI response) and `contextSources` (what layers were injected). Currently these only appear in the collapsible evidence debug panel. Surfacing 1–3 inline citation chips in the assistant message bubble itself (e.g. "See: [Vault 002], [The Vessel and the Thread]") would make Ask responses feel grounded and trustworthy for everyday readers without requiring them to expand the panel. The data is already extracted — this is a pure UI change in `ask/page.tsx`.
+- **Summary:** The `ask-evidence.ts` evidence schema extracts `linksInAnswer` (markdown links from the AI response) and `contextSources` (what layers were injected). Currently these only appear in the collapsible evidence debug panel. Surfacing 1–3 inline citation chips in the assistant message bubble itself (e.g. "See: [Vault 002], [The Vessel and the Thread]") would make Ask responses feel grounded and trustworthy for everyday readers without requiring them to expand the panel.
 - **Night Notes:**
   - 2026-04-23 (Run 11): Seeded. `AskMessageEvidence.linksInAnswer` already extracted. `evidence.linksInAnswer.slice(0, 3)` would be the source — show as small pill links below the assistant message bubble.
+  - 2026-04-25 (Run 13): Advanced to `exploring`. Confirmed the data flow: `verifyAskAnswer()` returns an `AskMessageEvidence` object with `linksInAnswer: AskEvidenceLink[]`. Each link has `{ text: string; href: string; resolvedKind: string | null }`. The evidence is streamed back to the client as a final SSE event (`data: {...evidence...}`). In `ask/page.tsx`, the `evidence` state is set in the message object. The citation chips would live in `AssistantMessageBubble` (or similar component) — rendered only when `evidence.linksInAnswer.length > 0`. Spoiler safety: `linksInAnswer` is extracted from the AI's own text, which is already gated by the `visibleStories` catalog. No additional gating needed. Estimated 1 hour.
 
 ---
 
@@ -75,19 +90,6 @@
 
 ---
 
-### [IDEA-024] Fill in Voice Guide Placeholder
-- **Status:** seed
-- **Category:** enhance
-- **Seeded:** 2026-04-22
-- **Last Updated:** 2026-04-22
-- **Priority:** P1
-- **Plan:** *(not yet written)*
-- **Summary:** `content/voice.md` is currently a stub template. Every Ask persona system prompt injects whatever is in this file via `getVoiceGuide()`. Filling it with actual Celestial narrative voice guidance is the single highest-impact improvement to Ask quality. Author work, no code.
-- **Night Notes:**
-  - 2026-04-22 (Run 9): Seeded. Confirmed `content/voice.md` is a stub. `content/decision-frameworks.md` also a stub. Both are called in every persona prompt.
-  - 2026-04-22 (Run 10): Still seed. No code changes needed — this is author content work only.
-
----
 
 ### [IDEA-023] Explore Hub — Fiction Entity Graph
 - **Status:** planned
@@ -105,6 +107,19 @@
 ---
 
 ## Category 2: New Features or Integrations
+
+### [IDEA-035] Author Chapter Review Dashboard — `/admin/chapter-review`
+- **Status:** seed
+- **Category:** new
+- **Seeded:** 2026-04-25
+- **Last Updated:** 2026-04-25
+- **Priority:** P2
+- **Plan:** *(not yet written)*
+- **Summary:** A browser-based review page at `/admin/chapter-review` (author-gated) that renders each chapter's AI-generated summary and entity tags, with an "Approve" button that sets `reviewed: true` in `chapter_tags.json` via a server action. Companion to IDEA-032 (quality gate) — provides a more ergonomic review UX than the CLI script planned in DEVPLAN-IDEA-032. Works by reading `chapter_tags.json` at request time, rendering each unreviewed entry as a card with the full summary and tag lists, and calling a server action to write the `reviewed` flag back to the JSON file.
+- **Night Notes:**
+  - 2026-04-25 (Run 13): Seeded. Depends on IDEA-032 Phase 1 shipping (the gate must be in place for this to have purpose). Key concern: `chapter_tags.json` is a generated file — if `scripts/tag-chapter-entities.ts` is re-run, `reviewed` flags would be reset. The review dashboard should include a warning about this. Implementation: Server Component reads the JSON, Client Component handles the approve interaction via `use server` action writing the file. Author-gated via `hasAuthorSpecialAccess()`.
+
+---
 
 ### [IDEA-033] Mission Timeline Enhancement — In-Universe Dates on /stories/timeline
 - **Status:** seed
@@ -160,23 +175,35 @@
 
 ---
 
-### [IDEA-027] Chapter Completion Milestone — "You've Finished the Story"
-- **Status:** seed
-- **Category:** new
-- **Seeded:** 2026-04-22
-- **Last Updated:** 2026-04-22
-- **Priority:** P3
-- **Plan:** *(not yet written)*
-- **Summary:** When a reader marks CH17 as read for the first time, show a fullscreen overlay with a congratulatory message and prompt to enable re-reader mode. `ReadTracker` is the hook point; `PhotoFrameOverlay.tsx` provides the pattern.
-- **Night Notes:**
-  - 2026-04-22 (Run 9): Seeded.
-  - 2026-04-22 (Run 10): Still seed. Low priority until CH17 content is complete.
-
----
 
 ## Parked
 
 *(Ideas demoted after 3+ days without action, or superseded by Celestial migration.)*
+
+### [IDEA-027] Chapter Completion Milestone — "You've Finished the Story"
+- **Status:** parked
+- **Category:** new
+- **Seeded:** 2026-04-22
+- **Last Updated:** 2026-04-25
+- **Priority:** P3
+- **Summary:** Fullscreen overlay when reader marks CH17 as read for the first time; prompt to enable re-reader mode.
+- **Night Notes:**
+  - 2026-04-22 (Run 9): Seeded.
+  - 2026-04-22 (Run 10): Still seed.
+  - 2026-04-25 (Run 13): Stale 3 days — likely low priority or too complex. Demoting to parked.
+
+### [IDEA-024] Fill in Voice Guide Placeholder
+- **Status:** parked
+- **Category:** enhance
+- **Seeded:** 2026-04-22
+- **Last Updated:** 2026-04-25
+- **Priority:** P1
+- **Summary:** `content/voice.md` is a stub template. Filling it with Celestial narrative voice guidance is the highest-impact improvement to Ask quality — pure author content work, no code.
+- **Night Notes:**
+  - 2026-04-22 (Run 9): Seeded. Confirmed `content/voice.md` is a stub.
+  - 2026-04-25 (Run 13): Stale 3 days — likely low priority or too complex. Demoting to parked. Note: this is actually P1 author content work, not a code task. Un-park explicitly when Paul is ready to draft voice guidance.
+
+---
 
 ### Memoir-Era Ideas (Parked 2026-04-22 — Superseded by Celestial Migration)
 
