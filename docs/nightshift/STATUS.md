@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-04-25 (Nightshift Run 13)
+> Last updated: 2026-04-26 (Nightshift Run 14)
 
 ## App Summary
 
@@ -136,7 +136,7 @@
 
 - **Build:** PASSES — clean, 96 routes. 1 expected Turbopack NFT warning on `prompts.ts` filesystem reads.
 - **Lint:** PASSES — 0 errors, 0 warnings
-- **Tests:** 173 total / **170 PASS / 3 FAIL** (unchanged from Run 12 — no new code commits). Failing:
+- **Tests:** 173 total / **170 PASS / 3 FAIL** (unchanged from Run 13 — no new code commits). Failing:
   - Test 113 (`every location has Superset: or is on root allow-list`) → FIX-037
   - Test 114 (`all parables carry Status in Lore metadata`) → FIX-034
   - Test 117 (`wiki: location Superset: line matches canon parent when canon has one`) → FIX-037
@@ -144,9 +144,10 @@
 ## Known Issues (See FIXES.md)
 
 - **FIX-036 (P0):** `storySlug` not validated in Ask API — locked chapter body + mission logs injectable
-- **FIX-038 (P1 — NEW Run 13):** Journey beats in orchestrator not filtered by reader progress — `whyItMatters` from locked chapters injected into AI prompt when `journeySlug` provided
+- **FIX-038 (P1):** Journey beats in orchestrator not filtered by reader progress — `whyItMatters` from locked chapters injected into AI prompt when `journeySlug` provided
 - **FIX-032 (P0):** BeatTimeline on journey pages shows locked chapter content (UI path; FIX-038 = AI context path)
-- **FIX-039 (P2 — NEW Run 13):** `getJourneyContextForPrompt` injects all journey story summaries without reader progress gate
+- **FIX-039 (P2):** `getJourneyContextForPrompt` injects all journey story summaries without reader progress gate
+- **FIX-040 (Low-Medium — NEW Run 14):** Dead `storyContextRaw` DB fetch in `orchestrator.ts buildPromptArgs` — wasted Supabase call on every Ask with `storySlug`, result immediately discarded; prompts read story from filesystem instead of canonical DB version
 - **FIX-037 (Low — test failure):** `andes-glacial-lake.md` missing `**Superset:**` → tests 113 + 117 fail
 - **FIX-034 (Low — test failure):** `parables-of-resonance.md` missing `**Status:**` → test 114 fails
 - **FIX-035 (P1):** Vault detail pages show story IDs from locked chapters
@@ -165,10 +166,11 @@
 3. **FIX-038 (P1, 5 min):** Filter `journeyBeats` in `orchestrator.ts` `buildPromptArgs` — one filter chain.
 4. **FIX-037 (5 min):** Add `**Superset:** [[earth]]` to `andes-glacial-lake.md` — restores 2 failing tests.
 5. **FIX-034 (5 min):** Fix `parables-of-resonance.md` Lore metadata — restores test 114.
-6. **FIX-039 (P2, 20 min):** Add `readerProgress` param to `getJourneyContextForPrompt`; update call site.
-7. **IDEA-032 (45 min):** Chapter tag quality gate + review CLI — Phase 1 is 1-line fix in `StoryDetailsDisclosure`.
-8. **FIX-031 + FIX-035 (40 min combined):** Gate story IDs on fiction entity + vault detail pages.
-9. **FIX-026 + FIX-027 + FIX-030 (30 min combined):** Three stale `'keith'` role fixes.
-10. **IDEA-028 (1.5 hrs):** Continuity Diff panel in Beyond workspace.
-11. **FIX-028 (30 min + author copy decisions):** Legacy Keith UI sweep.
-12. **FIX-029 (1 hr):** Remove AgeModeSwitcher from Nav/Header.
+6. **FIX-040 (5 min):** Remove dead `storyContextRaw` lines from `orchestrator.ts buildPromptArgs`.
+7. **FIX-039 (P2, 20 min):** Add `readerProgress` param to `getJourneyContextForPrompt`; update call site.
+8. **IDEA-032 (45 min):** Chapter tag quality gate + review CLI — Phase 1 is 1-line fix in `StoryDetailsDisclosure`.
+9. **FIX-031 + FIX-035 (40 min combined):** Gate story IDs on fiction entity + vault detail pages.
+10. **FIX-026 + FIX-027 + FIX-030 (30 min combined):** Three stale `'keith'` role fixes.
+11. **IDEA-028 (1.5 hrs):** Continuity Diff panel in Beyond workspace.
+12. **FIX-028 (30 min + author copy decisions):** Legacy Keith UI sweep.
+13. **FIX-029 (1 hr):** Remove AgeModeSwitcher from Nav/Header.

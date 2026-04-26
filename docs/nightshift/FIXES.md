@@ -1,7 +1,7 @@
 # FIXES — Celestial Interactive Book Companion
 
 > Bug and issue tracker. Updated each nightshift run.
-> Numbering continues from Run 13 (last new entry is FIX-039).
+> Numbering continues from Run 14 (last new entry is FIX-040).
 
 ## Statuses
 - `found` — Issue identified, no plan yet
@@ -11,6 +11,15 @@
 ---
 
 ## Open Issues
+
+### [FIX-040] Dead `storyContextRaw` DB Fetch in Ask Orchestrator — Wasted Latency
+- **Status:** planned
+- **Severity:** Low-Medium — unnecessary Supabase DB call on every Ask request with a `storySlug`; result immediately discarded. Secondary risk: AI prompts use filesystem content instead of DB-canonical version (could diverge if story edited via Beyond).
+- **Found:** 2026-04-26 (Run 14)
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-040-dead-story-context-raw-fetch.md`
+- **Summary:** `src/lib/ai/orchestrator.ts buildPromptArgs()` calls `getCanonicalStoryMarkdown(storySlug)` in the `Promise.all` at line 188 and assigns to `storyContextRaw`, then immediately discards with `void storyContextRaw` (line 197). The actual story context used in AI prompts comes from `getStoryContext()` in `perspectives.ts` (filesystem read). Fix: remove the 3 dead lines from the orchestrator. Optional follow-up: wire `storyContextRaw` through properly so prompts always use the DB-canonical version.
+
+---
 
 ### [FIX-039] `getJourneyContextForPrompt` Injects Locked Chapter Summaries into AI Prompt
 - **Status:** planned

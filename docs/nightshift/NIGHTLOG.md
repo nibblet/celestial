@@ -4,6 +4,59 @@
 
 ---
 
+## Run: 2026-04-26 (Run 14)
+
+### Summary
+- Scanned: 0 new code commits since Run 13 (last commit is `20edb3d` nightshift). Focused deep scan on Ask API route, orchestrator internals, fiction entity pages, admin routes, timeline view, and Beyond API.
+- Issues: 1 new (FIX-040 Low-Medium: dead `storyContextRaw` DB fetch in orchestrator), 0 resolved, all prior open issues unchanged
+- Ideas: 2 new seeds (IDEA-036 enhance: wiki entity audit page; IDEA-037 new: chapter recall mode), 2 advanced (IDEA-034 seed→exploring; IDEA-033 seed→exploring), 1 parked (IDEA-031 vault discovery map — 3-day stale rule)
+- Plans written: FIXPLAN-FIX-040
+
+### Build & Lint & Test Results
+- `npm install --prefer-offline`: clean
+- `npx next build`: **PASSES** — clean, 96 routes, 1 expected Turbopack NFT warning
+- `npm run lint`: **PASSES** — 0 errors, 0 warnings
+- `npm test`: **170 PASS / 3 FAIL** (173 total) — unchanged from Run 13
+  - Test 113: `every location has Superset:` → FIX-037 still open
+  - Test 114: `all parables carry Status` → FIX-034 still open
+  - Test 117: `location Superset: matches canon parent` → FIX-037 still open
+
+### Key Findings
+
+1. **FIX-040 (Low-Medium — NEW): Dead `storyContextRaw` DB fetch wastes Ask latency.** `orchestrator.ts buildPromptArgs()` at line 188 calls `getCanonicalStoryMarkdown(storySlug)` — an async Supabase DB call — and assigns the result to `storyContextRaw`. Line 197 immediately discards it with `void storyContextRaw;`. Meanwhile, the actual story context used in AI prompts comes from `getStoryContext(args.storySlug)` in `perspectives.ts sharedContentBlock()` — which reads from the **filesystem**, not the DB. Every Ask request with a `storySlug` makes this redundant DB round-trip. Secondary concern: if a story was edited via Beyond (content in Supabase), the AI context uses the stale on-disk copy, not the canonical DB version. Fix is 3 deleted lines; Option B (wiring through properly) is a future enhancement.
+
+2. **All P0/P1 issues still open.** FIX-036 (storySlug validation), FIX-032 (BeatTimeline UI gating), FIX-038 (orchestrator beats gating), FIX-039 (journey context story summaries), FIX-031 (entity pages), FIX-035 (vault pages) — none fixed since Run 12. Plans are all written and ready to execute.
+
+3. **FIX-028 (legacy Keith) confirmed in Beyond API routes.** Beyond API routes `questions/[id]/seed-session/route.ts`, `drafts/[id]/publish/route.ts`, `drafts/from-story/route.ts`, and `published-stories/route.ts` all contain Keith-specific comments. `session-wrap.ts SYSTEM_PROMPT` (line 139) directly addresses "Keith" in AI persona text. All cosmetic; no functional impact.
+
+4. **IDEA-034 advanced to `exploring`.** `StoriesPageClient.tsx` already receives `currentChapterNumber` (lines 77–83) and `showAllContent` as props from the server component. A progress bar above the chapter grid is a pure UI addition — no new API, no DB. Total chapters derived from `stories.filter(s => /^CH\d+/i.test(s.storyId)).length`. All three reader paths handled: new reader (0/17), mid-reader (N/17), re-reader (`showAllContent: true` → "Full archive"). Estimated 0.5 hours.
+
+5. **IDEA-033 advanced to `exploring`.** `TimelineView.tsx` (199 lines) confirmed as a pure Server Component that calls `getTimeline()` + `getPrologueTimeline()`. Neither sources mission log data or applies chapter gating. A third "Valkyrie Mission" section reading from `getMissionLogInventory()` and gating rows by `isStoryUnlocked(row.chapterId, progress)` would complete the mission timeline story. `TimelineView` would need to become an async Server Component to call `getReaderProgress()`. Estimated 1.5 hours.
+
+6. **IDEA-031 parked (3-day rule).** Seeded 2026-04-23 with no advancement. Its prerequisite FIX-035 (vault story gating) has been open for 4 days. Un-park explicitly after FIX-035 ships.
+
+7. **Confirmed: `getReaderProgress()` is used correctly in character detail pages.** `src/app/characters/[slug]/page.tsx` imports and applies `isStoryUnlocked` at lines 139 and 181 — `memoirStoryIds` and `interviewStoryIds` are filtered before rendering story link lists. This is the correct pattern that FIX-031 needs to replicate for factions/locations/artifacts and FIX-035 for vaults.
+
+8. **Review queue stable.** `brain_lab/out/review-queue.md`: still 9 character files marked `reviewed: false` — unchanged since Run 9. `chapter_tags.json`: all 17 chapters still have `reviewed: false`.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/FIXPLAN-FIX-036-ask-story-slug-spoiler-gate.md` — **P0**: storySlug validation in Ask API (10 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-032-beat-timeline-chapter-gating.md` — **P0**: BeatTimeline gating on journey page (15 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-038-orchestrator-journey-beats-gating.md` — **P1**: filter journey beats in orchestrator (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-040-dead-story-context-raw-fetch.md` — **NEW Low-Medium**: remove dead storyContextRaw DB fetch (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-037-andes-glacial-lake-superset.md` — restores tests 113+117 (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-034-parables-status-field.md` — restores test 114 (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-039-journey-context-prompt-story-gating.md` — P2: gate journey story summaries in AI prompt (20 min)
+- `docs/nightshift/plans/DEVPLAN-IDEA-032-chapter-tag-quality-gate.md` — chapter tag quality gate + review CLI (45 min)
+- `docs/nightshift/plans/DEVPLAN-IDEA-028-continuity-diff-beyond-panel.md` — Continuity diff panel in Beyond (1.5 hrs)
+
+### Recommendations
+- **If you have 30 min:** FIX-036 (10 min P0) + FIX-032 (15 min P0) + FIX-038 (5 min P1). Three gating fixes seal all P0/P1 AI-path spoiler gaps.
+- **If you have 1 hour:** The 30-min batch above + FIX-040 (5 min) + FIX-037 + FIX-034 (5 min each). After this: all P0/P1 gaps sealed + all 3 test failures cleared + wasted DB call removed.
+- **If you have 2 hours:** The 1-hour batch above + FIX-039 (20 min) + IDEA-032 Phase 1+2 (45 min). After this: full Ask journey context gated end-to-end, chapter tag review CLI ready for Paul.
+
+---
+
 ## Run: 2026-04-25 (Run 13)
 
 ### Summary

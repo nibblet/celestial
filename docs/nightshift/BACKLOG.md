@@ -3,7 +3,7 @@
 > Ideas backlog with maturity tracking. Two categories: enhance existing features, and new features.
 > **Context note:** This backlog was reset on 2026-04-22 (Run 9) after the Celestial Phase 1 migration.
 > All Keith Cobb memoir-specific ideas from Runs 1–8 have been moved to the Parked section.
-> Last updated: 2026-04-25 (Run 13)
+> Last updated: 2026-04-26 (Run 14)
 
 ## Maturity Levels
 
@@ -18,16 +18,30 @@
 
 ## Category 1: Enhance / Mature / Expand Existing Features
 
-### [IDEA-034] Chapter Arc Progress Indicator on /stories
+### [IDEA-036] Wiki Entity Completeness Audit — `/admin/wiki-audit` Page
 - **Status:** seed
 - **Category:** enhance
+- **Seeded:** 2026-04-26
+- **Last Updated:** 2026-04-26
+- **Priority:** P2
+- **Plan:** *(not yet written)*
+- **Summary:** An author-accessible `/admin/wiki-audit` page that surfaces wiki entity completeness failures in the browser: entities missing `**Status:**`, `**Superset:**`, `**Subkind:**`, or other required lore fields. The test suite (`canon-integrity.test.ts`) already validates these rules and identifies exact file paths + field names. Surfacing the same checks live (server-side scan on page load) removes the friction of running tests to find content gaps.
+- **Night Notes:**
+  - 2026-04-26 (Run 14): Seeded. `npm test` has 3 persistent failures (FIX-034, FIX-037) from exactly these checks — test output already identifies the offending files. A live browser view would let Paul fix these between Nightshift runs without needing a terminal. Gate with `hasAuthorSpecialAccess()`. No new infra — pure read/scan of content/ directory at request time.
+
+---
+
+### [IDEA-034] Chapter Arc Progress Indicator on /stories
+- **Status:** exploring
+- **Category:** enhance
 - **Seeded:** 2026-04-25
-- **Last Updated:** 2026-04-25
+- **Last Updated:** 2026-04-26
 - **Priority:** P2
 - **Plan:** *(not yet written)*
 - **Summary:** Add a visual "N of 17 chapters read" progress bar or badge at the top of the `/stories` chapter library page. The data is already available via `getReaderProgress()` — `currentChapterNumber` gives chapters read. A slim progress bar (sci-fi styling: segmented, neon accent) above the chapter grid would give readers a clear sense of their arc position without modifying any gating logic. The re-reader variant would show "17/17" with a "Full access — re-reader mode" label.
 - **Night Notes:**
   - 2026-04-25 (Run 13): Seeded. `src/app/stories/page.tsx` uses `StoriesPageClient`. Progress data available from `useReaderProgress()` hook or server-side from `getReaderProgress()`. Display target: above the chapter grid in `StoriesPageClient`. Guest-cookie path: cookie-based progress still gives a valid chapter number.
+  - 2026-04-26 (Run 14): Advanced to `exploring`. Confirmed data flow: `StoriesPageClient` already receives `currentChapterNumber: number` and `showAllContent: boolean` as props (lines 77–83 of `StoriesPageClient.tsx`). Total chapter count: `stories.filter(s => /^CH\d+/i.test(s.storyId)).length` (17). Implementation target: in `StoriesPageClient` JSX, above the chapter grid, add a `<div>` containing a progress bar element. Filled width = `(Math.min(currentChapterNumber, totalChapters) / totalChapters) * 100%`. Re-reader path: `showAllContent` → show "Full archive — re-reader mode" label. Guest path: `currentChapterNumber = 0` → progress bar shows 0/17. All three paths handled cleanly. No DB, no new API. Estimated 0.5 hours.
 
 ---
 
@@ -108,6 +122,19 @@
 
 ## Category 2: New Features or Integrations
 
+### [IDEA-037] Chapter Recall Mode — Post-Read Comprehension Prompts
+- **Status:** seed
+- **Category:** new
+- **Seeded:** 2026-04-26
+- **Last Updated:** 2026-04-26
+- **Priority:** P3
+- **Plan:** *(not yet written)*
+- **Summary:** After a reader marks a chapter as read, optionally offer 3 short in-world comprehension prompts ("What was Amar-Cael's goal in this chapter?", "Name one decision that surprised you") generated on-demand by the Ask AI. Responses are ephemeral — the value is in the reader's reflection process, not storing their answers. The chapter body + mission logs are already fed to the AI via the Ask pipeline; this feature just surfaces a new entry point. Gated naturally: the chapter must already be unlocked to trigger it.
+- **Night Notes:**
+  - 2026-04-26 (Run 14): Seeded. Trigger point: after `markStoryRead()` succeeds in `StoriesPageClient.tsx`, show a small "Want a quick recall check?" CTA that opens a modal. Modal fetches 3 prompts from a new `/api/stories/[storyId]/recall-prompts` endpoint (author-controlled, AI-generated, cached once per chapter hash). Spoiler safety: prompts generated from only the unlocked chapter's content. Estimated 3 hours (new API route + modal UI + caching). Depends on FIX-036 and IDEA-032 being shipped first.
+
+---
+
 ### [IDEA-035] Author Chapter Review Dashboard — `/admin/chapter-review`
 - **Status:** seed
 - **Category:** new
@@ -122,28 +149,16 @@
 ---
 
 ### [IDEA-033] Mission Timeline Enhancement — In-Universe Dates on /stories/timeline
-- **Status:** seed
+- **Status:** exploring
 - **Category:** new
 - **Seeded:** 2026-04-24
-- **Last Updated:** 2026-04-24
+- **Last Updated:** 2026-04-26
 - **Priority:** P2
 - **Plan:** *(not yet written)*
 - **Summary:** The new `getMissionTimelineContext()` function (commit `145a753`) produces a compact Mission Day + UTC date range per chapter from `content/raw/mission_logs_inventory.json`. `/stories/timeline` already exists but shows only publication ordering. Surfacing in-universe dates alongside chapters ("CH01 — Mission Days 1–42, Oct 2050") would ground the reading experience in the sci-fi setting and give readers a temporal anchor. The new `content/wiki/timeline/prologue.md` adds pre-Valkyrie world events (12000 BCE → 2050 CE) that could appear above CH01 as a "Before Valkyrie" section. All data is already on disk; this is a UI enhancement to the timeline view.
 - **Night Notes:**
   - 2026-04-24 (Run 12): Seeded. `getMissionTimelineContext()` in `prompts.ts` (lines 218–308) already parses mission logs into a per-chapter date table. `content/wiki/timeline/prologue.md` has pre-Valkyrie entries formatted as `- **YEAR** — Event`. `src/components/timeline/TimelineView.tsx` is the render target.
-
----
-
-### [IDEA-031] Vault Discovery Map
-- **Status:** seed
-- **Category:** new
-- **Seeded:** 2026-04-23
-- **Last Updated:** 2026-04-23
-- **Priority:** P2
-- **Plan:** *(not yet written)*
-- **Summary:** The 10 vault entities each have chapter appearance data via `memoirStoryIds`. The `/vaults` index currently shows all vaults as flat cards regardless of reader progress. A "discovery" layer would show vaults as: locked/undiscovered (silhouette, no first appearance chapter reached), known (basic info only, after first appearance chapter), or fully mapped (complete detail, after last appearance chapter). This is a natural sci-fi companion feature — vaults are literally ancient sites being discovered through the plot. Data is all available; this is a UI enhancement to the vaults index page.
-- **Night Notes:**
-  - 2026-04-23 (Run 11): Seeded. Vault entities now fully populated (10 vaults). FIX-035 (vault story gating) is the prerequisite — after that fix, `memoirStoryIds` + `isStoryUnlocked()` already provide the discovery-state data needed.
+  - 2026-04-26 (Run 14): Advanced to `exploring`. Confirmed architecture: `TimelineView.tsx` (199 lines) is a Server Component that calls `getTimeline()` (career-timeline.md — legacy memoir) and `getPrologueTimeline()` (prologue.md — pre-Valkyrie). Neither reads `mission_logs_inventory.json` or applies chapter gating. Enhancement plan: (1) add a third data source — chapter timeline entries derived from `getMissionLogInventory()` (already gated by `isStoryUnlocked` at the missions page level); (2) render a new "Valkyrie Mission" section in `TimelineView` showing "CH01 — Mission Days X–Y, Month YYYY" rows, gated by reader progress. Spoiler concern: **chapter-gated** — only unlocked chapters' mission rows shown. `TimelineView` needs to become an async Server Component to call `getReaderProgress()`. Estimated 1.5 hours.
 
 ---
 
@@ -179,6 +194,17 @@
 ## Parked
 
 *(Ideas demoted after 3+ days without action, or superseded by Celestial migration.)*
+
+### [IDEA-031] Vault Discovery Map
+- **Status:** parked
+- **Category:** new
+- **Seeded:** 2026-04-23
+- **Last Updated:** 2026-04-26
+- **Priority:** P2
+- **Summary:** The 10 vault entities each have chapter appearance data via `memoirStoryIds`. A "discovery" layer for the `/vaults` index would show vaults as: undiscovered (silhouette), known (basic info), or fully mapped (complete detail) based on chapter progress.
+- **Night Notes:**
+  - 2026-04-23 (Run 11): Seeded. FIX-035 (vault story gating) is the prerequisite.
+  - 2026-04-26 (Run 14): Stale 3 days — likely low priority or too complex. Demoting to parked. FIX-035 (the prerequisite) is still unexecuted. Un-park after FIX-035 ships.
 
 ### [IDEA-027] Chapter Completion Milestone — "You've Finished the Story"
 - **Status:** parked
