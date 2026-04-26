@@ -1,5 +1,6 @@
 # Council of Orbits
 **Slug:** council-of-orbits
+**Aliases:** Council of Orbits, inter-orbital ethics, civilian oversight coalition, disclosure policy coalition, Habitat IX delegates
 Inventory entry (tiers: B)
 
 ## Purpose

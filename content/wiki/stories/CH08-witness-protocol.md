@@ -190,7 +190,7 @@ But not completely.
 ### Mission Log VLK-M001-CH08-F
 
 - **Date / Ship Time:** Mission Day 49 / 2050-10-28 04:37 UTC
-- **Author:** Jax Delcor
+- **Author:** Jax Reyes
 - **Log Type:** Personal (Encrypted)
 - **Location:** Valkyrie-1 | Perimeter Uplink Node
 - **Privacy Level:** —
@@ -488,7 +488,7 @@ Vault Fragment Echo - Post-Threshold Activation
 
 ### Mission Log VLK-A900-CH08-X
 
-- **Date / Ship Time:** Mission Day 113 / 2051-01-14 03:42 UTC
+- **Date / Ship Time:** Mission Day 113 / 2050-12-31 03:42 UTC
 - **Author:** ALARA
 - **Log Type:** ALARA Observational Log
 - **Location:** Valkyrie-1 | Descent Module | Vault Threshold (Unlabeled)

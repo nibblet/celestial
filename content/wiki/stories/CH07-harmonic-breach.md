@@ -11,7 +11,7 @@
 
 ### Mission Log VLK-A731-CH07-X
 
-- **Date / Ship Time:** Mission Day 43 / 2050-11-01 04:14 UTC
+- **Date / Ship Time:** Mission Day 53 / 2050-11-01 04:14 UTC
 - **Author:** ALARA
 - **Log Type:** Observational
 - **Location:** Valkyrie-1 | Systems Deck
@@ -266,7 +266,7 @@ The question was whether that disturbance was invitation or warning.
 
 ### Mission Log VLK-A733-CH07-B
 
-- **Date / Ship Time:** Mission Day 43 / 2050-11-01 06:02 UTC
+- **Date / Ship Time:** Mission Day 53 / 2050-11-01 06:02 UTC
 - **Author:** ALARA
 - **Log Type:** Observational - Partial Encryption
 - **Location:** Vault Communion Chamber

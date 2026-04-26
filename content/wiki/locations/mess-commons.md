@@ -1,5 +1,6 @@
 # Mess Commons
 **Slug:** mess-commons
+**Aliases:** Mess Commons, warm-toned asymmetrical space, human comfort zone, inner ring shared space, symbolic geometry, crew gathering space
 
 <!-- canon:dossier slug="mess-commons" kind="locations" subkind="" parent="valkyrie-1" generated="2026-04-22" mentions="2" -->
 ## Canon Dossier

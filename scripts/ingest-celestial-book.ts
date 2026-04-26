@@ -5,6 +5,10 @@
  * - Emit a machine-readable mission-log inventory JSON
  * - Emit a human-readable mission-log index markdown
  *
+ * EPUB parsing (rewrites CH## wiki stories and mission inventory) is opt-in only:
+ * `REGENERATE_CHAPTERS_FROM_EPUB=1 npm run ingest:book` — deletes existing CH## story
+ * files first. Default run only executes brain_lab (if present) and the review queue.
+ *
  * Run: npx tsx scripts/ingest-celestial-book.ts
  */
 
@@ -403,16 +407,29 @@ function main() {
   ensureDir(MISSION_LOGS_DIR);
   ensureDir(RAW_DIR);
 
+  const epubPath = path.join(SOURCE_DIR, "celestial-heritage.epub");
+  const regenFromEpub = process.env.REGENERATE_CHAPTERS_FROM_EPUB === "1";
+  if (!regenFromEpub || !fs.existsSync(epubPath)) {
+    if (!fs.existsSync(epubPath)) {
+      console.warn(`[ingest] No EPUB at ${epubPath}; skipping EPUB-derived outputs.`);
+    } else if (!regenFromEpub) {
+      console.warn(
+        `[ingest] Skipping EPUB regeneration (opt-in). To rewrite CH## stories and mission inventory: REGENERATE_CHAPTERS_FROM_EPUB=1 npm run ingest:book`
+      );
+    } else {
+      console.warn(
+        `[ingest] REGENERATE_CHAPTERS_FROM_EPUB=1 but no file at ${epubPath}; skipping.`
+      );
+    }
+    writeReviewQueue();
+    return;
+  }
+
   // Keep non-CH wiki stories untouched; refresh generated chapter artifacts each run.
   for (const file of fs.readdirSync(STORIES_DIR)) {
     if (/^CH\d{2}-.+\.md$/.test(file)) {
       fs.unlinkSync(path.join(STORIES_DIR, file));
     }
-  }
-
-  const epubPath = path.join(SOURCE_DIR, "celestial-heritage.epub");
-  if (!fs.existsSync(epubPath)) {
-    throw new Error(`Missing source EPUB: ${epubPath}`);
   }
 
   const zipEntries = extractZipEntries(epubPath)

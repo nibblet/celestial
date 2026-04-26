@@ -151,7 +151,7 @@ Just installed itself.
 
 ### Mission Log VLK-M001-CH11-A
 
-- **Date / Ship Time:** Mission Day 77 / 2050-12-14 21:12 UTC
+- **Date / Ship Time:** Mission Day 77 / 2050-11-25 21:12 UTC
 - **Author:** Dr. Evelyn Tran
 - **Log Type:** Event
 - **Location:** Valkyrie-1 | Resonance Analytics Bay
@@ -164,7 +164,7 @@ Attachments: Caeden Lor Biosync Drift Chart Seed Packet Harmonic Overlay ECI Pre
 
 ### Mission Log VLK-M011-CH11-A1
 
-- **Date / Ship Time:** Mission Day 58 / 2050-11-08 03:41 UTC
+- **Date / Ship Time:** Mission Day 58 / 2050-11-06 03:41 UTC
 - **Author:** Evelyn Tran
 - **Log Type:** Personal
 - **Location:** Valkyrie-1 | Sensorium Secondary Node
@@ -303,7 +303,7 @@ Then, quieter:
 
 ### Mission Log VLK-M001-CH11-B
 
-- **Date / Ship Time:** Mission Day 77 / 2050-12-14 21:49 UTC
+- **Date / Ship Time:** Mission Day 77 / 2050-11-25 21:49 UTC
 - **Author:** Dr. Evelyn Tran
 - **Log Type:** Event
 - **Location:** Valkyrie-1 | Comms Junction 02
@@ -418,7 +418,7 @@ It begins when no one tells you what to do.
 
 ### Mission Log VLK-M001-CH11-C
 
-- **Date / Ship Time:** Mission Day 77 / 2050-12-14 22:28 UTC
+- **Date / Ship Time:** Mission Day 77 / 2050-11-25 22:28 UTC
 - **Author:** Dr. Evelyn Tran
 - **Log Type:** Personal
 - **Location:** Valkyrie-1 | Resonance Spine Corridor

@@ -25,24 +25,22 @@ Canonical anchor: **Mission Day 1 = 2050-09-10 UTC (launch).** All "expected" da
 
 **Recommendation:** fix Mission Day `43 → 53` in the inventory for these two logs. They are ALARA observations of Evelyn at the vault — chronologically belongs after CH13 "The Intercept", not alongside CH01.
 
-### 1b. Suspected UTC-date typos (Day number is correct; date is wrong)
+### 1b. UTC-date normalization (Day retained as canonical)
 
-| Log | Stated | Expected | Delta |
+| Log | Previous | Normalized | Status |
 |---|---|---|---|
-| `VLK-M001-CH05-B` | Day 77 / 2050-12-14 | Day 77 / **2050-11-25** | +19 days |
-| `VLK-M001-CH06-B` | Day 77 / 2050-12-14 | Day 77 / **2050-11-25** | +19 days |
-| `VLK-M001-CH10-A..F` (×6) | Day 77 / 2050-12-14 | Day 77 / **2050-11-25** | +19 days |
-| `VLK-M001-CH11-A..C` (×3) | Day 77 / 2050-12-14 | Day 77 / **2050-11-25** | +19 days |
-| `VLK-M001-CH09-A..B` | Day 86 / 2050-12-01 | Day 86 / **2050-12-04** | −3 days |
-| `VLK-M001-CH12-A..E` (×5) | Day 59 / 2050-11-11 | Day 59 / **2050-11-07** | +4 days |
-| `VLK-M011-CH06-C` | Day 58 / 2050-11-08 | Day 58 / **2050-11-06** | +2 days |
-| `VLK-M011-CH11-A1` | Day 58 / 2050-11-08 | Day 58 / **2050-11-06** | +2 days |
-| `VLK-A900-CH08-X` | Day 113 / 2051-01-14 | Day 113 / **2050-12-31** | +14 days |
-| `VLK-M015-CH10-A` | Day 112 / 2051-01-08 | Day 112 / **2050-12-30** | +9 days |
+| `VLK-M001-CH05-B` | Day 77 / 2050-12-14 | Day 77 / **2050-11-25** | Fixed |
+| `VLK-M001-CH06-B` | Day 77 / 2050-12-14 | Day 77 / **2050-11-25** | Fixed |
+| `VLK-M001-CH10-A..F` (×6) | Day 77 / 2050-12-14 | Day 77 / **2050-11-25** | Fixed |
+| `VLK-M001-CH11-A..C` (×3) | Day 77 / 2050-12-14 | Day 77 / **2050-11-25** | Fixed |
+| `VLK-M001-CH09-A..B` | Day 86 / 2050-12-01 | Day 86 / **2050-12-04** | Fixed |
+| `VLK-M001-CH12-A..E` (×5) | Day 59 / 2050-11-11 | Day 59 / **2050-11-07** | Fixed |
+| `VLK-M011-CH06-C` | Day 58 / 2050-11-08 | Day 58 / **2050-11-06** | Fixed |
+| `VLK-M011-CH11-A1` | Day 58 / 2050-11-08 | Day 58 / **2050-11-06** | Fixed |
+| `VLK-A900-CH08-X` | Day 113 / 2051-01-14 | Day 113 / **2050-12-31** | Fixed |
+| `VLK-M015-CH10-A` | Day 77 / 2050-12-14 | Day 77 / **2050-11-25** | Fixed |
 
-**Interpretation:** most drifts cluster around the **Day 77 = 2050-12-14** anchor (16 logs!). That could mean the author used a different mental anchor (e.g. launch on 2050-09-28 instead of 2050-09-10) for mid-book logs, or it's an editorial slip in a batch of Chapter 10-11 logs that was copied forward.
-
-**Recommendation:** confirm with the author which is canonical — the Mission Day counter or the calendar date. Then fix whichever side is wrong in the inventory and leave a `note` field indicating the printed text differs.
+**Policy applied:** story chronology is treated as generally linear; Mission Day is canonical unless an explicit in-text time jump is obvious. UTC dates in these rows were normalized to the Day-1 anchor.
 
 ---
 
@@ -52,9 +50,9 @@ Three log IDs carry a `CH##` token that disagrees with the `chapterId` field whe
 
 | Log ID | ID says | Inventory says | Likely truth |
 |---|---|---|---|
-| `VLK-M001-CH02-F` | CH02 | CH03 | Content (Evelyn on resonant memory) fits CH03 "Resonant Memory". The **log id is probably the typo**, not the grouping. Propose rename to `VLK-M001-CH03-F` in a future ingestion pass. |
-| `VLK-M001-CH02-G` | CH02 | CH03 | Same as above. |
-| `VLK-M015-CH10-A` | CH10 | CH05 | Day 112 is far past CH05's other logs (Days 42–77). Appearance in CH05 might be **intentional forward-reference**: the author planted a future ALARA log as foreshadowing. The `VLK-M015` prefix (a different mission series) supports that reading. Recommend leaving the grouping and adding an `isForwardReference: true` hint the UI can render. |
+| `VLK-M001-CH03-F` | CH03 | CH03 | Fixed: log ID token now matches CH03 grouping. |
+| `VLK-M001-CH03-G` | CH03 | CH03 | Fixed: log ID token now matches CH03 grouping. |
+| `VLK-M015-CH10-A` | CH10 | CH05 | Keep grouped in CH05. `CH10` appears to be an ID-token typo while chapter placement and Day 77 timing are canon for this entry. |
 
 ---
 
@@ -64,10 +62,10 @@ Likely draft-era continuity issues. Each needs an author decision:
 
 | First name | Surnames in logs | Chapters | Notes |
 |---|---|---|---|
-| **Evelyn** | Tran, Sayre | CH01–CH11 → Tran; CH14, CH16 → Sayre | Sudden switch mid-book. No intermediate "legally changed her name" log that I can see in the metadata. Most likely editorial drift. |
-| **Marco** | Ruiz, Silex, Dren | CH02/04/10 → Ruiz; CH13 → Silex; CH16 → Dren | Three distinct surnames for what reads like the same character (ship-command officer). Needs canon pick. |
-| **Jax** | Reyes, Delcor | CH02 → Reyes; CH08 → Delcor | Two names. Could be distinct characters or the same person mis-named. |
-| **ALARA** | "ALARA", "ALARA + [Vessel Merge Signature]" | CH17-E final log | Intentional — marks the in-story merge at the end of Book I. **Leave.** |
+| **Evelyn** | Tran, Sayre | CH01–CH11 → Tran; CH14, CH16 → Sayre | **Resolved:** canonical name is Evelyn Tran. Sayre variants corrected as editorial mistakes. |
+| **Marco** | Ruiz, Silex, Dren | CH02/04/10 → Ruiz; CH13 → Silex; CH16 → Dren | **Resolved:** canonical name is Marco Ruiz. Silex/Dren variants corrected as editorial mistakes. |
+| **Jax** | Reyes, Delcor | CH02 → Reyes; CH08 → Delcor | **Resolved:** canonical name is Jax Reyes. Delcor variant corrected as editorial mistake. |
+| **ALARA** | "ALARA", "ALARA + [Vessel Merge Signature]" | CH17-E final log | **Intentional:** same identity, used as foreshadowing of ALARA's growth/merge state. Leave as authored. |
 
 ---
 

@@ -113,7 +113,7 @@ And it had started choosing what it would reflect back.
 
 ### Mission Log VLK-M001-CH10-A
 
-- **Date / Ship Time:** Mission Day 77 / 2050-12-14 16:52 UTC
+- **Date / Ship Time:** Mission Day 77 / 2050-11-25 16:52 UTC
 - **Author:** Dr. Evelyn Tran
 - **Log Type:** Event
 - **Location:** Vault 002 Observation Ramp
@@ -242,7 +242,7 @@ That was enough.
 
 ### Mission Log VLK-M001-CH10-B
 
-- **Date / Ship Time:** Mission Day 77 / 2050-12-14 17:24 UTC
+- **Date / Ship Time:** Mission Day 77 / 2050-11-25 17:24 UTC
 - **Author:** Aven Voss
 - **Log Type:** Personal
 - **Location:** Vault 002 Subpath 3-R
@@ -367,7 +367,7 @@ And coherence began with truth.
 
 ### Mission Log VLK-M001-CH10-C
 
-- **Date / Ship Time:** Mission Day 77 / 2050-12-14 18:02 UTC
+- **Date / Ship Time:** Mission Day 77 / 2050-11-25 18:02 UTC
 - **Author:** Dr. Jonah Revas
 - **Log Type:** Personal
 - **Location:** Valkyrie-1 | Sensorium
@@ -514,7 +514,7 @@ It was waiting for a future.
 
 ### Mission Log VLK-M001-CH10-D
 
-- **Date / Ship Time:** Mission Day 77 / 2050-12-14 18:47 UTC
+- **Date / Ship Time:** Mission Day 77 / 2050-11-25 18:47 UTC
 - **Author:** Thane Meric
 - **Log Type:** Personal
 - **Location:** Vault 002 | Harmonic Archive
@@ -641,7 +641,7 @@ And the countdown had begun.
 
 ### Mission Log VLK-M001-CH10-E
 
-- **Date / Ship Time:** Mission Day 77 / 2050-12-14 19:22 UTC
+- **Date / Ship Time:** Mission Day 77 / 2050-11-25 19:22 UTC
 - **Author:** Marco Ruiz
 - **Log Type:** Command
 - **Location:** Valkyrie-1 | Systems Bay Two
@@ -808,7 +808,7 @@ He was still listening.
 
 ### Mission Log VLK-M001-CH10-F
 
-- **Date / Ship Time:** Mission Day 77 / 2050-12-14 20:11 UTC
+- **Date / Ship Time:** Mission Day 77 / 2050-11-25 20:11 UTC
 - **Author:** ALARA
 - **Log Type:** Observational
 - **Location:** Vault 002 | Shipwide

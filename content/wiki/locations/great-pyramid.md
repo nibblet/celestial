@@ -4,7 +4,7 @@
 <!-- canon:dossier slug="great-pyramid" kind="locations" subkind="" parent="giza-plateau" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
-**Aliases:** the Great Pyramid
+**Aliases:** the Great Pyramid, buried chamber beneath the Great Pyramid, Great Pyramid-Vault 001, buried chamber beneath the Great Pyramid-Vault 001
 
 **Parent:** [[giza-plateau]]
 

@@ -1,5 +1,6 @@
 # Blind Zones
 **Slug:** blind-zones
+**Aliases:** Blind Zones, Restricted and Dormant Spaces, sealed chambers, unreadable ports, withheld ship spaces
 
 <!-- canon:dossier slug="blind-zones" kind="locations" subkind="ship-section" parent="valkyrie-1" generated="2026-04-22" mentions="2" -->
 ## Canon Dossier

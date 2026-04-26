@@ -45,7 +45,11 @@ import {
   type AskMessageEvidence,
   type AskReaderMode,
 } from "./ask-evidence";
-import { getRulesContext } from "./prompts";
+import {
+  getCharacterArcContext,
+  getCharacterCanonContext,
+  getRulesContext,
+} from "./prompts";
 
 export interface OrchestrateParams {
   anthropic: Anthropic;
@@ -233,6 +237,8 @@ async function buildPromptArgs(
       chapterId: b.chapterId,
     })),
     rulesContextIncluded: getRulesContext().length > 0,
+    characterCanonContextIncluded: getCharacterCanonContext().length > 0,
+    characterArcContextIncluded: getCharacterArcContext().length > 0,
   };
 }
 

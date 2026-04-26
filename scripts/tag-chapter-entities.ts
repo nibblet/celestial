@@ -95,6 +95,10 @@ interface ChapterTags {
   continuityFlags: string[];
 }
 
+interface DeterministicAdjustments {
+  locationsAdded: string[];
+}
+
 interface TagRecord extends ChapterTags {
   chapterId: string;
   title: string;
@@ -478,6 +482,71 @@ function sanitize(
   return { tags, dropped };
 }
 
+function hasRef(list: TaggedRef[], slug: string): boolean {
+  return list.some((x) => x.slug === slug);
+}
+
+/**
+ * Deterministic post-pass for high-confidence hierarchy/setting links where the
+ * LLM can be overly conservative despite explicit on-page cues.
+ *
+ * Scope intentionally narrow:
+ * - `giza-vault` + explicit "Great Pyramid" mention ⇒ add `great-pyramid`.
+ * - Explicit ship-common-room cues (long table / tea gone cold / crew mess) on
+ *   chapters already anchored aboard Valkyrie-1 ⇒ add `mess-commons`.
+ */
+function applyDeterministicLocationRules(
+  chapter: ChapterInput,
+  tags: ChapterTags,
+  vocab: Record<VocabKind, string[]>,
+): DeterministicAdjustments {
+  const locationsAdded: string[] = [];
+  const locationSet = new Set(vocab.locations);
+  const body = chapter.body;
+
+  if (
+    locationSet.has("great-pyramid") &&
+    hasRef(tags.vaults, "giza-vault") &&
+    !hasRef(tags.locations, "great-pyramid") &&
+    /great pyramid/i.test(body)
+  ) {
+    tags.locations.push({
+      slug: "great-pyramid",
+      justification:
+        "Chapter explicitly references the Great Pyramid while invoking the Giza vault thread.",
+    });
+    locationsAdded.push("great-pyramid");
+  }
+
+  const aboardValkyrie =
+    hasRef(tags.artifacts, "valkyrie-1") ||
+    hasRef(tags.locations, "command-dome") ||
+    hasRef(tags.locations, "living-quarters") ||
+    hasRef(tags.locations, "sensorium");
+  const messCues =
+    /\blong table\b/i.test(body) ||
+    /\btea had gone cold\b/i.test(body) ||
+    /\bcrew gather(?:ed|ing)\b/i.test(body) ||
+    /\bmess commons\b/i.test(body) ||
+    /\bcrew mess\b/i.test(body);
+
+  if (
+    locationSet.has("mess-commons") &&
+    !hasRef(tags.locations, "mess-commons") &&
+    aboardValkyrie &&
+    messCues
+  ) {
+    tags.locations.push({
+      slug: "mess-commons",
+      justification:
+        "Chapter uses aboard-ship communal-space cues (table/crew mess context) consistent with Mess Commons scenes.",
+    });
+    locationsAdded.push("mess-commons");
+  }
+
+  return { locationsAdded };
+}
+
 async function tagChapter(
   client: Anthropic,
   chapter: ChapterInput,
@@ -599,11 +668,17 @@ async function main() {
     }
 
     const { tags, dropped } = sanitize(parsed, vocab);
+    const deterministic = applyDeterministicLocationRules(chapter, tags, vocab);
     if (dropped.length) {
       console.warn(
         `  ⚠  dropped ${dropped.length} unknown slug${dropped.length === 1 ? "" : "s"}: ${dropped.join(", ")}`,
       );
       totals.dropped += dropped.length;
+    }
+    if (deterministic.locationsAdded.length > 0) {
+      console.log(
+        `  ℹ  deterministic locations added: ${deterministic.locationsAdded.join(", ")}`,
+      );
     }
 
     const record: TagRecord = {

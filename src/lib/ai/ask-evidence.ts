@@ -14,7 +14,9 @@ export type AskEvidenceSourceKind =
   | "chapter_scenes"
   | "open_threads"
   | "journey_beats"
-  | "reader_progress_gate";
+  | "reader_progress_gate"
+  | "character_canon"
+  | "character_arc_ledgers";
 
 export type AskEvidenceSource = {
   kind: AskEvidenceSourceKind;
@@ -158,6 +160,19 @@ export function buildAskMessageEvidence(
     sources.push({
       kind: "world_rules",
       label: "World rules (content/wiki/rules)",
+    });
+  }
+  if (args.characterCanonContextIncluded) {
+    sources.push({
+      kind: "character_canon",
+      label: "Character canon (content/wiki/characters)",
+    });
+  }
+  if (args.characterArcContextIncluded) {
+    sources.push({
+      kind: "character_arc_ledgers",
+      label: "Character arc ledgers (derived_inference)",
+      ref: "content/wiki/arcs/characters",
     });
   }
 

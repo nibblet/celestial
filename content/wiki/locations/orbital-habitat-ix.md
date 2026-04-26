@@ -1,5 +1,6 @@
 # Orbital Habitat IX
 **Slug:** orbital-habitat-ix
+**Aliases:** Orbital Habitat IX, Habitat IX, rotational station, logistics anchor station, excavation theater station
 Inventory entry (tiers: B)
 
 ## Geography

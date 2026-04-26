@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "npm run ingest:book && npm run ingest:lore && npx tsx scripts/generate-static-data.ts",
+    "prebuild": "npm run ingest:lore && npx tsx scripts/generate-static-data.ts",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

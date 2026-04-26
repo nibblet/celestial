@@ -1,5 +1,6 @@
 # Specimen Lockers
 **Slug:** specimen-lockers
+**Aliases:** Specimen Storage, specimen-storage, specimen lockers, biospecimen lockers
 
 <!-- canon:dossier slug="specimen-lockers" kind="locations" subkind="ship-section" parent="valkyrie-1" generated="2026-04-22" mentions="3" -->
 ## Canon Dossier

@@ -12,7 +12,7 @@
 ### Mission Log VLK-M001-CH14-A
 
 - **Date / Ship Time:** Mission Day 54 / 2050-11-02 03:17 UTC
-- **Author:** Dr. Evelyn Sayre
+- **Author:** Dr. Evelyn Tran
 - **Log Type:** Personal (Scientific Reflection)
 - **Location:** Valkyrie-1 | Sensorium Lab
 - **Privacy Level:** Encrypted Personal
@@ -38,7 +38,7 @@ Attachments: —
 ### Mission Log VLK-M001-CH14-C
 
 - **Date / Ship Time:** Mission Day 54 / 2050-11-02 05:33 UTC
-- **Author:** Dr. Evelyn Sayre
+- **Author:** Dr. Evelyn Tran
 - **Log Type:** Personal (Interpretive Reflection)
 - **Location:** Valkyrie-1 | Private Quarters
 - **Privacy Level:** Encrypted Personal

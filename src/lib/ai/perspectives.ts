@@ -24,6 +24,8 @@ import {
   getStoryContext,
   getJourneyContextForPrompt,
   getPeopleContext,
+  getCharacterCanonContext,
+  getCharacterArcContext,
   getRulesContext,
   getMissionTimelineContext,
   getMissionLogsForChapter,
@@ -76,6 +78,10 @@ export type PersonaPromptArgs = {
   personaLabels?: string[];
   /** Set when `content/wiki/rules` was loaded into this prompt. */
   rulesContextIncluded?: boolean;
+  /** Set when all fiction character canon is loaded into this prompt. */
+  characterCanonContextIncluded?: boolean;
+  /** Set when derived character arc ledgers are loaded into this prompt. */
+  characterArcContextIncluded?: boolean;
 };
 
 // ── Shared content block (injected into most personas) ──────────────
@@ -96,6 +102,12 @@ function sharedContentBlock(args: PersonaPromptArgs): string {
 
   const people = getPeopleContext();
   if (people) parts.push(people);
+
+  const characterCanon = getCharacterCanonContext();
+  if (characterCanon) parts.push(characterCanon);
+
+  const characterArcs = getCharacterArcContext();
+  if (characterArcs) parts.push(characterArcs);
 
   if (args.storySlug) {
     const ctx = getStoryContext(args.storySlug);

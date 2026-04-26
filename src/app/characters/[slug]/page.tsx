@@ -13,6 +13,19 @@ import { EntityDossier } from "@/components/entities/EntityDossier";
 import { CanonDossierCard } from "@/components/entities/CanonDossierCard";
 import { extractAuthoredBody, renderWikilinks } from "@/lib/wiki/authored-body";
 import { resolveWikiSlug } from "@/lib/wiki/slug-resolver";
+import { getCharacterArcBySlug } from "@/lib/wiki/character-arcs";
+
+function excerpt(markdown: string): string {
+  return markdown
+    .replace(/^[-*]\s+/gm, "")
+    .replace(/\*\*/g, "")
+    .replace(/`/g, "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .find((line) => !line.startsWith(">"))
+    ?.slice(0, 220) ?? "";
+}
 
 export default async function CharacterDetailPage({
   params,
@@ -32,6 +45,7 @@ export default async function CharacterDetailPage({
 
   const { isAuthorSpecialAccess } = await getAuthenticatedProfileContext();
   const progress = await getReaderProgress();
+  const arc = getCharacterArcBySlug(slug);
 
   const refCount =
     person.memoirStoryIds.length + person.interviewStoryIds.length;
@@ -79,6 +93,7 @@ export default async function CharacterDetailPage({
       {person.canonDossier && <CanonDossierCard dossier={person.canonDossier} />}
       {person.lore && <EntityLoreCard lore={person.lore} />}
       {person.dossier && <EntityDossier dossier={person.dossier} />}
+      {arc && <CharacterArcPanel arc={arc} />}
       {(() => {
         const authored = extractAuthoredBody(person.body ?? "");
         if (!authored) return null;
@@ -212,5 +227,36 @@ export default async function CharacterDetailPage({
         </div>
       )}
     </div>
+  );
+}
+
+function CharacterArcPanel({
+  arc,
+}: {
+  arc: NonNullable<ReturnType<typeof getCharacterArcBySlug>>;
+}) {
+  return (
+    <section className="sci-panel mb-6 p-4 md:p-5" aria-labelledby="character-arc-ledger">
+      <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+        <h2
+          id="character-arc-ledger"
+          className="type-meta text-ink"
+        >
+          Arc Ledger
+        </h2>
+        <span className="type-meta rounded-full border border-[var(--color-border)] bg-warm-white px-2 py-0.5 normal-case tracking-normal text-ink-ghost">
+          {arc.reviewStatus || "draft"}
+        </span>
+      </div>
+      <p className="font-[family-name:var(--font-lora)] text-sm leading-relaxed text-ink-muted">
+        {excerpt(arc.startingState)}
+      </p>
+      <Link
+        href={`/arcs/${arc.slug}`}
+        className="type-ui mt-3 inline-flex text-sm font-medium text-burgundy no-underline transition-colors hover:text-clay"
+      >
+        Read full arc ledger &rarr;
+      </Link>
+    </section>
   );
 }

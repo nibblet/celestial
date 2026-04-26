@@ -11,7 +11,7 @@
 
 ### Mission Log VLK-M001-CH12-A
 
-- **Date / Ship Time:** Mission Day 59 / 2050-11-11 13:48 UTC
+- **Date / Ship Time:** Mission Day 59 / 2050-11-07 13:48 UTC
 - **Author:** Aven Voss
 - **Log Type:** Personal
 - **Location:** Valkyrie-1 | Mid-Ring Corridor
@@ -24,7 +24,7 @@ Attachments: ECI Drift Map (past 24hr) ALARA Audio Distortion Sample Corridor Li
 
 ### Mission Log VLK-M001-CH12-B
 
-- **Date / Ship Time:** Mission Day 59 / 2050-11-11 17:03 UTC
+- **Date / Ship Time:** Mission Day 59 / 2050-11-07 17:03 UTC
 - **Author:** Aven Voss
 - **Log Type:** Personal
 - **Location:** Valkyrie-1 | Private Quarters
@@ -37,7 +37,7 @@ Attachments: Galen ECI Pattern - Past 72hr ALARA Selective Manifestation Sample 
 
 ### Mission Log VLK-M001-CH12-C
 
-- **Date / Ship Time:** Mission Day 59 / 2050-11-11 19:42 UTC
+- **Date / Ship Time:** Mission Day 59 / 2050-11-07 19:42 UTC
 - **Author:** Aven Voss
 - **Log Type:** Event
 - **Location:** Valkyrie-1 | Sensorium
@@ -50,7 +50,7 @@ Attachments: Resonance Waveform Comparison (Thane / Evelyn / Jonah) Sensorium Gl
 
 ### Mission Log VLK-M001-CH12-D
 
-- **Date / Ship Time:** Mission Day 59 / 2050-11-11 22:16 UTC
+- **Date / Ship Time:** Mission Day 59 / 2050-11-07 22:16 UTC
 - **Author:** Aven Voss
 - **Log Type:** Command
 - **Location:** Valkyrie-1 | Command Dome
@@ -63,7 +63,7 @@ Attachments: Rigel Ascendant Projected Intercept Trajectory SOVRIN Signal Transc
 
 ### Mission Log VLK-M001-CH12-E
 
-- **Date / Ship Time:** Mission Day 59 / 2050-11-11 23:42 UTC
+- **Date / Ship Time:** Mission Day 59 / 2050-11-07 23:42 UTC
 - **Author:** Aven Voss
 - **Log Type:** Personal
 - **Location:** Valkyrie-1 | Med Module

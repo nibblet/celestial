@@ -8,6 +8,7 @@ Canonical index for the Celestial companion wiki.
 
 ## Entity Collections
 - Characters: `content/wiki/characters/`
+- Character arcs: `content/wiki/arcs/characters/`
 - Artifacts: `content/wiki/artifacts/`
 - Locations: `content/wiki/locations/`
 - Factions: `content/wiki/factions/`

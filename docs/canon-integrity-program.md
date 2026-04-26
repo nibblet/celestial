@@ -24,6 +24,11 @@ These contracts are owned by **both** tracks; changes here should be explicit.
 
 Single source of truth for ordering and conflict resolution lives in **`src/lib/wiki/corpus.ts`**. Prompt assembly, verifier, and any future tooling must consume the same precedence: **chapter > wiki > derived**.
 
+Derived character arc ledgers under `content/wiki/arcs/characters/` are
+`derived_inference` records. They may guide synthesis, reviewer questions, and
+bounded speculation, but they must cite chapter or mission-log evidence and must
+yield to chapter text or reviewed wiki canon when sources conflict.
+
 ### 2.2 Evidence vocabulary
 
 A “source” attached to an assistant message must map to identifiable corpus rows: e.g. story/chapter id, wiki slug/path, rule doc slug. Slugs stay **stable**; renaming requires a deliberate migration step.
@@ -210,6 +215,7 @@ Until then: **warn-only** or **soft-repair** so editors are not blocked by incom
 | Continuity | `src/lib/wiki/continuity-diff.ts` |
 | Ingestion review | `scripts/review-ingestion.ts` |
 | Rules corpus | `content/wiki/rules/` |
+| Character arc ledgers | `content/wiki/arcs/characters/`, `docs/continuity/character-arc-review.md` |
 | External plan snapshot | Cursor: `ask-canon-evidence-roadmap` (same phases as Ask column above) |
 
 ---

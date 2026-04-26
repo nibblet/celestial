@@ -4,6 +4,8 @@
 <!-- canon:dossier slug="andes-glacial-lake" kind="locations" subkind="" parent="earth" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier
 
+**Aliases:** Andes glacial lake, glacial lake in the Andes, Covenant Stone site, Vault 005 site
+
 **Parent:** [[earth]]
 
 A glacial lake in the Andes on Earth where Vault 005 (Covenant Stone) is located.

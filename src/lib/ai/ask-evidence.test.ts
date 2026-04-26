@@ -13,12 +13,14 @@ test("parseMarkdownInternalLinks collects in-app links and strips hashes", () =>
 });
 
 test("buildAskMessageEvidence includes context flags and route", () => {
-  const args: PersonaPromptArgs = {
+  const args = {
     ageMode: "adult",
     storySlug: "ch01",
     wikiSummaries: "x",
     storyCatalog: "y",
-  };
+    characterCanonContextIncluded: true,
+    characterArcContextIncluded: true,
+  } as PersonaPromptArgs;
   const route: PersonaRoute = {
     personas: ["finder"],
     depth: "simple",
@@ -31,6 +33,10 @@ test("buildAskMessageEvidence includes context flags and route", () => {
     });
   assert.ok(ev.contextSources.map((s) => s.kind).includes("wiki_summaries"));
   assert.ok(ev.contextSources.map((s) => s.kind).includes("chapter_scenes"));
+  assert.ok(ev.contextSources.map((s) => s.kind).includes("character_canon"));
+  assert.ok(
+    ev.contextSources.map((s) => s.kind).includes("character_arc_ledgers"),
+  );
   assert.deepEqual(ev.linksInAnswer, [{ href: "/principles/x", text: "t" }]);
   assert.deepEqual(ev.route.personas, ["finder"]);
 });

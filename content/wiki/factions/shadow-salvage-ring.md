@@ -1,24 +1,25 @@
 # Shadow Salvage Ring
 **Slug:** shadow-salvage-ring
+**Aliases:** Shadow Salvage Ring, black-market salvage, unlicensed salvage network, illicit anomaly harvesting
 Inventory entry (tiers: C)
 
 ## Purpose
 Unlicensed network attempting to harvest high-value anomaly fragments for black-market buyers.
 
 ## Members
-- Unknown brokers (CH08)
+- Unknown brokers (per series bible / mission context; not always named in chapter full text)
 
 ## History
-Emerges in mission logs once excavation telemetry leaks beyond controlled channels.
+Treated in bible and mission material as a background risk when excavation telemetry or samples leak beyond controlled channels.
 
 ## Conflicts
 - Undermines lawful research custody and endangers containment protocol.
 
 ## Appearances
-- First referenced in intercepted logistics chatter (CH08).
+- Bible / mission-context entity: signals **telemetry leaks, illicit interest in excavation finds, or custody pressure**. The **proper name does not occur verbatim** in Book I chapter full text ingested here; tagging will stay sparse until prose or mission-log sources explicitly name this network.
 
 ## Additional appearances
-- Attempts a corridor breach near the trench perimeter (CH09).
+- _(none verified by name in Book I chapter body; expand when manuscript or logs add it.)_
 
 ## Related
 - [[faction:shadow-salvage-ring]] infiltrates [[location:south-trench]]

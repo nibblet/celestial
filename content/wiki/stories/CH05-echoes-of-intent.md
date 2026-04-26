@@ -195,7 +195,7 @@ They were being decoded.
 
 ### Mission Log VLK-M001-CH05-B
 
-- **Date / Ship Time:** Mission Day 77 / 2050-12-14 17:24 UTC
+- **Date / Ship Time:** Mission Day 77 / 2050-11-25 17:24 UTC
 - **Author:** Dr. Evelyn Tran
 - **Log Type:** Personal
 - **Location:** Vault 002 Observation Ramp
@@ -513,7 +513,7 @@ The first conversation had begun.
 
 ### Mission Log VLK-M015-CH10-A
 
-- **Date / Ship Time:** Mission Day 112 / 2051-01-08 03:14 UTC
+- **Date / Ship Time:** Mission Day 77 / 2050-11-25 03:14 UTC
 - **Author:** ALARA
 - **Log Type:** Observational (ALARA)
 - **Location:** Valkyrie-1 | Sensorium Lab Delta

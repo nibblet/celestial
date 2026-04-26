@@ -1,5 +1,6 @@
 # Triad Chamber
 **Slug:** triad-chamber
+**Aliases:** Triad Chamber, Triad Chamber Glyph Encoding, Anonymous Teaching chamber, glyph encodings chamber
 
 <!-- canon:dossier slug="triad-chamber" kind="locations" subkind="chamber" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier

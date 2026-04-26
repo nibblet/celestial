@@ -11,7 +11,7 @@
 
 ### Mission Log VLK-M001-CH09-A
 
-- **Date / Ship Time:** Mission Day 86 / 2050-12-01 13:14 UTC
+- **Date / Ship Time:** Mission Day 86 / 2050-12-04 13:14 UTC
 - **Author:** Dr. Evelyn Tran (Co-signed: ALARA)
 - **Log Type:** Event / Command Hybrid
 - **Location:** Vault Interface Annex | Deck 3
@@ -24,7 +24,7 @@ Attachments: Harmonic Drift Graph (pre/post event) Glyph Reorientation Sequence 
 
 ### Mission Log VLK-M001-CH09-B
 
-- **Date / Ship Time:** Mission Day 86 / 2050-12-01 15:29 UTC
+- **Date / Ship Time:** Mission Day 86 / 2050-12-04 15:29 UTC
 - **Author:** Jonah Revas
 - **Log Type:** Personal
 - **Location:** Sensorium | Deck 2

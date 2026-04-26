@@ -207,7 +207,7 @@ For the first time, Evelyn wasn’t just searching for proof.
 
 She was standing inside it.
 
-### Mission Log VLK-M001-CH02-F
+### Mission Log VLK-M001-CH03-F
 
 - **Date / Ship Time:** Mission Day 39 / 2050-10-18 22:47 UTC
 - **Author:** Dr. Evelyn Tran
@@ -220,7 +220,7 @@ Resonant reaction followed final pulse sweep. The array didn't fail. It emptied.
 
 Attachments: Echo Response Trace Log - Sensorium Interface Pulse Sweep Diagnostics - Null Event
 
-### Mission Log VLK-M001-CH02-G
+### Mission Log VLK-M001-CH03-G
 
 - **Date / Ship Time:** Mission Day 39 / 2050-10-18 23:41 UTC
 - **Author:** Dr. Evelyn Tran
@@ -433,8 +433,8 @@ Attachments: Resonance Pulse Trace: Vault Response Frame Alignment Index Snapsho
 
 - [[VLK-M001-CH03-A1]] Reflection on Vault 002 activation sequence. Initial harmonic contact traced to Meric; formal glyph reorientation occurred later via Tran's probe test.
 - [[VLK-M001-CH03-A]] Initial descent into activated vault. Symbolic architecture observed. Unknown sensory interference.
-- [[VLK-M001-CH02-F]] Echo-response observed after harmonic sweep. Instruments entered null state. Response felt intentional.
-- [[VLK-M001-CH02-G]] Resonance mapping anomaly persisted; suspected intentional data transformation. Emotional response noted.
+- [[VLK-M001-CH03-F]] Echo-response observed after harmonic sweep. Instruments entered null state. Response felt intentional.
+- [[VLK-M001-CH03-G]] Resonance mapping anomaly persisted; suspected intentional data transformation. Emotional response noted.
 - [[VLK-M001-CH03-C]] Observed growing emotional undercurrents in crew as symbolic tension deepens. Internal shift noted.
 - [[VLK-M001-CH03-D]] Partial alignment detected in crew member Meric. Threshold met. Vault responsive. Entry pending.
 

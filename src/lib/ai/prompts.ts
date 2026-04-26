@@ -6,9 +6,11 @@ import type { ReaderProgress } from "@/lib/progress/reader-progress";
 import { getJourneyBySlug } from "@/lib/wiki/journeys";
 import {
   getAllCanonicalPrinciples,
+  getAllCharacters,
   getAllStories,
   getStoryById,
 } from "@/lib/wiki/parser";
+import { getAllCharacterArcs } from "@/lib/wiki/character-arcs";
 import { getChapterTagsPromptBlock } from "@/lib/wiki/chapter-tags";
 
 const WIKI_DIR = path.join(process.cwd(), "content/wiki");
@@ -18,6 +20,8 @@ let cachedVoiceGuide: string | null = null;
 let cachedStoryLinkCatalog: string | null = null;
 let cachedDecisionFrameworks: string | null = null;
 let cachedPeopleContext: string | null = null;
+let cachedCharacterCanonContext: string | null = null;
+let cachedCharacterArcContext: string | null = null;
 let cachedPrinciplesContext: string | null = null;
 let cachedRulesContext: string | null = null;
 let cachedMissionTimelineContext: string | null = null;
@@ -31,6 +35,9 @@ let loggedSystemPromptApproxTokens = false;
 // `vault-network`, which are critical for preventing Ask from inventing
 // off-canon tech or vault mechanics. 60k leaves headroom for more rules.
 const RULES_CONTEXT_MAX_CHARS = 60_000;
+const CHARACTER_CONTEXT_MAX_CHARS = 42_000;
+const CHARACTER_FIELD_MAX_CHARS = 700;
+const ARC_FIELD_MAX_CHARS = 900;
 
 /** Inventory line lists tiers like "(tiers: A, B, D)" — Tier A bios are richest. */
 function peoplePageHasTierA(markdown: string): boolean {
@@ -86,6 +93,111 @@ export function getPeopleContext(): string {
       : "";
 
   return cachedPeopleContext;
+}
+
+function compactText(value: string | null | undefined, maxChars: number): string {
+  const text = (value ?? "").replace(/\s+/g, " ").trim();
+  if (text.length <= maxChars) return text;
+  return `${text.slice(0, maxChars - 1).trimEnd()}…`;
+}
+
+function pushIfPresent(lines: string[], label: string, value: string | null | undefined): void {
+  const text = compactText(value, CHARACTER_FIELD_MAX_CHARS);
+  if (text) lines.push(`  - ${label}: ${text}`);
+}
+
+/**
+ * Compact canon-facing fiction character context for Ask.
+ *
+ * This intentionally uses reviewed/structured wiki fields instead of the
+ * legacy `ai-draft` snippets, because many fiction-character ai-draft blocks
+ * are placeholder excerpts rather than character summaries.
+ */
+export function getCharacterCanonContext(): string {
+  if (cachedCharacterCanonContext !== null) return cachedCharacterCanonContext;
+
+  const entries = getAllCharacters().map((character) => {
+    const lines = [`### ${character.name} (\`/characters/${character.slug}\`)`];
+    const aliases = character.canonDossier?.aliases
+      .filter((alias) => alias !== character.name)
+      .slice(0, 5)
+      .join(", ");
+    if (aliases) lines.push(`  - Aliases: ${aliases}`);
+    pushIfPresent(lines, "Canon", character.canonDossier?.primaryProse);
+    pushIfPresent(lines, "Role", character.dossier?.role);
+    pushIfPresent(lines, "Profile", character.dossier?.profile);
+    pushIfPresent(lines, "Character arc", character.dossier?.arc);
+    if (character.memoirStoryIds.length > 0) {
+      lines.push(`  - Chapter refs: ${character.memoirStoryIds.join(", ")}`);
+    }
+    if (character.canonDossier?.related.length) {
+      lines.push(
+        `  - Related: ${character.canonDossier.related.slice(0, 8).join(", ")}`,
+      );
+    }
+    return lines.join("\n");
+  });
+
+  const body = entries.join("\n\n");
+  cachedCharacterCanonContext =
+    body.length > 0
+      ? `## Character canon (all fiction characters)\nUse this as wiki_canon character grounding. Link characters as \`/characters/slug\`. If this conflicts with chapter text, chapter text wins.\n\n${body.slice(0, CHARACTER_CONTEXT_MAX_CHARS)}${
+          body.length > CHARACTER_CONTEXT_MAX_CHARS
+            ? "\n\n_(Additional character canon omitted to fit the context budget.)_"
+            : ""
+        }`
+      : "";
+
+  return cachedCharacterCanonContext;
+}
+
+function compactArcSection(value: string): string {
+  return compactText(
+    value
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0)
+      .join(" "),
+    ARC_FIELD_MAX_CHARS,
+  );
+}
+
+/**
+ * Compact derived character arc ledgers for Ask.
+ *
+ * Arc ledgers are derived_inference: useful for motivation and change
+ * questions, but subordinate to chapter text and wiki_canon.
+ */
+export function getCharacterArcContext(): string {
+  if (cachedCharacterArcContext !== null) return cachedCharacterArcContext;
+
+  const entries = getAllCharacterArcs().map((arc) => {
+    const lines = [
+      `### ${arc.character} (\`/arcs/${arc.slug}\`)`,
+      `  - Scope: ${arc.scope || "unspecified"}; canon rank: ${arc.canonRank || "derived_inference"}; review: ${arc.reviewStatus || "unreviewed"}`,
+    ];
+    const startingState = compactArcSection(arc.startingState);
+    if (startingState) lines.push(`  - Starting State: ${startingState}`);
+    const unresolved = compactArcSection(arc.unresolvedTensions);
+    if (unresolved) lines.push(`  - Unresolved Tensions: ${unresolved}`);
+    const future = compactArcSection(arc.futureQuestions);
+    if (future) lines.push(`  - Future Questions: ${future}`);
+    const ask = compactArcSection(arc.askGuidance);
+    if (ask) lines.push(`  - ASK Guidance: ${ask}`);
+    return lines.join("\n");
+  });
+
+  const body = entries.join("\n\n");
+  cachedCharacterArcContext =
+    body.length > 0
+      ? `## Character arc ledgers (derived_inference)\nUse these for character-change, motivation, emotional continuity, and future-question guardrails. Do not treat derived_inference as higher authority than chapter_text or wiki_canon.\n\n${body.slice(0, CHARACTER_CONTEXT_MAX_CHARS)}${
+          body.length > CHARACTER_CONTEXT_MAX_CHARS
+            ? "\n\n_(Additional character arcs omitted to fit the context budget.)_"
+            : ""
+        }`
+      : "";
+
+  return cachedCharacterArcContext;
 }
 
 function getPrinciplesContext(): string {

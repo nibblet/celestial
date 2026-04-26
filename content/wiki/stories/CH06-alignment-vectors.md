@@ -179,7 +179,7 @@ He was becoming part of its memory.
 
 ### Mission Log VLK-M001-CH06-B
 
-- **Date / Ship Time:** Mission Day 77 / 2050-12-14 17:24 UTC
+- **Date / Ship Time:** Mission Day 77 / 2050-11-25 17:24 UTC
 - **Author:** Dr. Lena Osei
 - **Log Type:** Personal
 - **Location:** Valkyrie-1 | Research Bay
@@ -192,7 +192,7 @@ Attachments: Arrival Report: Amar - No Escort (Dock Protocol Record) Correlation
 
 ### Mission Log VLK-M011-CH06-C
 
-- **Date / Ship Time:** Mission Day 58 / 2050-11-08 03:41 UTC
+- **Date / Ship Time:** Mission Day 58 / 2050-11-06 03:41 UTC
 - **Author:** Amar Cael
 - **Log Type:** Personal
 - **Location:** Valkyrie-1 | Docking Interface - Secure Uplink Node

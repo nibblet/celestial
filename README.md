@@ -24,8 +24,8 @@ Fork migration from the memoir reference app. This repo is the **fiction compani
 
 - `npm run dev` — Next.js dev server.
 - `npm test` — Node test runner (wiki/parser and prompt tests).
-- `npm run ingest:book` — Runs `brain_lab` entity extraction + wiki compile, then EPUB chapter/mission ingest.
-- `npm run build` — Runs `prebuild` first (`ingest:book` + static data regeneration), then Next build.
+- `npm run ingest:book` — Runs `brain_lab` entity extraction + wiki compile and refreshes the review queue. EPUB chapter/mission regeneration is **opt-in**: `REGENERATE_CHAPTERS_FROM_EPUB=1 npm run ingest:book` (deletes existing `CH##-*.md` story files first).
+- `npm run build` — Runs `prebuild` first (`ingest:lore` + static data regeneration), then Next build.
 - `npm run compile:wiki` — Wiki compiler (expects `content/wiki` when you add markdown again).
 - `npx tsx scripts/generate-static-data.ts` — Regenerate `src/lib/wiki/static-data.ts` after wiki markdown exists.
 

@@ -85,6 +85,18 @@ test("shared block includes world rules from content/wiki/rules", () => {
   assert.match(prompt, /## World rules \(canonical\)/);
 });
 
+test("shared block includes fiction character canon and derived arc ledgers", () => {
+  const prompt = getPersona("finder").buildSystemPrompt(BASE_ARGS);
+
+  assert.match(prompt, /## Character canon \(all fiction characters\)/);
+  assert.ok(prompt.includes("Thane Meric (`/characters/thane-meric`)"));
+  assert.ok(prompt.includes("ALARA (`/characters/alara`)"));
+
+  assert.match(prompt, /## Character arc ledgers \(derived_inference\)/);
+  assert.ok(prompt.includes("Thane Meric (`/arcs/thane-meric`)"));
+  assert.ok(prompt.includes("ASK Guidance:"));
+});
+
 test("shared block renders open narrative threads when provided", () => {
   const prompt = getPersona("archivist").buildSystemPrompt({
     ...BASE_ARGS,

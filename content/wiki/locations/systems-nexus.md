@@ -1,5 +1,6 @@
 # Systems Nexus
 **Slug:** systems-nexus
+**Aliases:** glyph-lit ring corridor, ring corridor beneath the bridge, maintenance strands corridor, ALARA core corridor
 
 <!-- canon:dossier slug="systems-nexus" kind="locations" subkind="" parent="valkyrie-1" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier

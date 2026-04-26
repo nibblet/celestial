@@ -1,5 +1,6 @@
 # United Nations
 **Slug:** united-nations
+**Aliases:** United Nations, UN, Earth political landscape, multinational institutions (2050)
 
 <!-- canon:dossier slug="united-nations" kind="factions" subkind="political" parent="" generated="2026-04-22" mentions="1" -->
 ## Canon Dossier

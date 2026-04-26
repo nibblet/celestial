@@ -1,9 +1,10 @@
 # Subsurface Vault
 **Slug:** subsurface-vault
+**Aliases:** subsurface architecture, subsurface geometry, subsurface scans, Subsurface Thermal Sweep, chamber below the trench, vault light pulsing beneath the trench, pressure-sealed chamber below the trench, Zone Theta subsurface
 Inventory entry (tiers: C)
 
 ## Geography
-Pressure-sealed chamber below the trench, reachable through a harmonic access path.
+Pressure-sealed chamber below the south trench, reachable through a sealed access path after alignment clearance.
 
 ## History
 Uncovered after alignment of excavation scans with mission-log resonance markers.
@@ -12,7 +13,7 @@ Uncovered after alignment of excavation scans with mission-log resonance markers
 - Restricted access team (CH06)
 
 ## Appearances
-- First entered with the harmonic key under emergency authorization (CH06).
+- First entered under emergency authorization during subsurface vault work (CH06).
 
 ## Additional appearances
 - Temporarily quarantined after memory bleed incidents (CH08).
