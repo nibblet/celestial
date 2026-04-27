@@ -19,6 +19,7 @@ import {
   buildCelestialNarratorPrompt,
   buildLorekeeperPrompt,
   buildArchivistPrompt,
+  buildAskAnswererPrompt,
   buildFinderPrompt,
   buildSynthesizerPrompt,
   buildEditorPrompt,
@@ -37,6 +38,7 @@ export type PersonaKey =
   | "lorekeeper"
   | "archivist"
   | "finder"
+  | "ask_answerer"
   | "synthesizer"
   | "editor";
 
@@ -84,6 +86,14 @@ export const PERSONAS: Record<PersonaKey, PersonaDefinition> = {
     temperature: 0.3,
     maxTokens: 512,
     buildSystemPrompt: buildFinderPrompt,
+  },
+  ask_answerer: {
+    key: "ask_answerer",
+    label: "Ask Answerer",
+    model: DEFAULT_MODEL,
+    temperature: 0.5,
+    maxTokens: 1024,
+    buildSystemPrompt: buildAskAnswererPrompt,
   },
   synthesizer: {
     key: "synthesizer",

@@ -17,6 +17,10 @@ import type { AgeMode } from "@/types";
 import { book } from "@/config/book";
 import type { ReaderProgress } from "@/lib/progress/reader-progress";
 import {
+  renderAskContextPack,
+  type AskContextPack,
+} from "./ask-context";
+import {
   getStoryLinkCatalog,
   getWikiSummaries,
   getVoiceGuide,
@@ -82,6 +86,8 @@ export type PersonaPromptArgs = {
   characterCanonContextIncluded?: boolean;
   /** Set when derived character arc ledgers are loaded into this prompt. */
   characterArcContextIncluded?: boolean;
+  /** Wiki-first retrieval pack used by the normal Ask answer path. */
+  askContextPack?: AskContextPack;
 };
 
 // ── Shared content block (injected into most personas) ──────────────
@@ -269,6 +275,36 @@ Answer factual or list queries directly and briefly. Dates, counts, which storie
 ${AGE_MODE_INSTRUCTIONS[args.ageMode]}
 
 ${sharedContentBlock(args)}`;
+}
+
+// ── Ask Answerer (wiki-first primary path) ───────────────────────────
+
+export function buildAskAnswererPrompt(args: PersonaPromptArgs): string {
+  const voice = getVoiceGuide();
+  const contextPack = args.askContextPack
+    ? renderAskContextPack(args.askContextPack)
+    : "## Ask Context Pack\nNo context pack was provided.";
+
+  return `You are the primary Ask answerer for "${book.title}". You answer from a wiki-first context pack, not from broad memory.
+
+## Your Job
+Give one thoughtful, grounded answer using only the context pack below plus stable world rules in the prompt. Prioritize a complete final answer over showing process.
+
+## Answer Policy
+- Lead with the direct answer.
+- Cite specific sources with the markdown links preserved from the context pack.
+- Separate canon from derived interpretation. Use phrases like "the canon shows" for chapter_text/wiki_canon and "a derived interpretation is" for derived_inference.
+- For world-bounded future situations, offer possibilities constrained by canon and label them as possibilities, not facts.
+- If the context pack is thin, say what is missing instead of inventing.
+- Do not mention agents, retrieval, or the context pack to the reader.
+
+## Age Mode
+${AGE_MODE_INSTRUCTIONS[args.ageMode]}
+
+## Voice Guide
+${voice.slice(0, 1500)}
+
+${contextPack}`;
 }
 
 // ── Synthesizer (merges N perspectives) ─────────────────────────────

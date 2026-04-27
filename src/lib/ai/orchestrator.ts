@@ -3,17 +3,18 @@
  * both driven by the persona registry (src/lib/ai/personas.ts):
  *
  *   Single path (route.personas.length === 1)
- *     One persona call (default: Finder), streamed straight to the client.
+ *     One persona call (default: Ask Answerer over a wiki-first context pack),
+ *     streamed straight to the client.
  *
  *   Multi path (route.personas.length > 1)
  *     Every sub-persona fires in parallel (non-streaming), their outputs
  *     are concatenated into a synthesis user-message, and the Synthesizer
  *     persona streams the final merged answer.
  *
- * Routing is owned by src/lib/ai/router.ts. The ENABLE_DEEP_ASK env flag is
- * an ops kill-switch: when it is not "true" every route is demoted to the
- * single Finder call, preserving today's shipped behavior in prod until
- * explicitly opted in.
+ * Routing starts in src/lib/ai/router.ts, then resolveAskRoute() maps normal
+ * Ask traffic onto the wiki-first single-call path. Legacy multi-persona
+ * synthesis is available only when both ENABLE_DEEP_ASK and
+ * ENABLE_MULTI_PERSONA_ASK are true.
  *
  * Every Anthropic call — sub-persona and synthesizer — is recorded via
  * logAiCall() for end-to-end token/cost/latency visibility.
@@ -31,10 +32,15 @@ import {
 } from "./personas";
 import type { AgeMode } from "@/types";
 import {
-  getCanonicalStoryMarkdown,
   getCanonicalStories,
   getCanonicalWikiSummaries,
 } from "@/lib/wiki/corpus";
+import { classifyAskIntent } from "./ask-intent";
+import { createAskContextPack, type AskContextItem } from "./ask-context";
+import {
+  buildDefaultAskRetrievalSources,
+  retrieveAskContextItems,
+} from "@/lib/wiki/ask-retrieval";
 import type { ReaderProgress } from "@/lib/progress/reader-progress";
 import { isStoryUnlocked } from "@/lib/progress/reader-progress";
 import { getScenesForChapter } from "@/lib/wiki/scenes-db";
@@ -66,8 +72,8 @@ export interface OrchestrateParams {
   journeySlug?: string;
   readerProgress?: ReaderProgress;
   /**
-   * Reader preference: Deep uses normal routing (Finder vs multi-persona).
-   * Fast forces a single Finder pass for lower latency.
+   * Reader preference: Deep uses a richer wiki-first pack. Fast uses a smaller
+   * pack for lower latency.
    */
   askMode?: AskReaderMode;
 }
@@ -87,15 +93,14 @@ export interface OrchestrateResult {
   buildEvidence: (fullAssistantText: string) => AskMessageEvidence;
 }
 
-/**
- * Main entry point. Returns a streamable result regardless of path.
- */
-export async function orchestrateAsk(
-  params: OrchestrateParams,
-): Promise<OrchestrateResult> {
-  const classifiedRoute = routeAsk(params.message);
-  const askModeRequested: AskReaderMode = params.askMode ?? "deep";
-
+export function resolveAskRoute(input: {
+  classifiedRoute: PersonaRoute;
+  askModeRequested: AskReaderMode;
+  deepEnabled: boolean;
+  multiPersonaEnabled: boolean;
+}): PersonaRoute {
+  const { classifiedRoute, askModeRequested, deepEnabled, multiPersonaEnabled } =
+    input;
   const routeAfterAskMode: PersonaRoute =
     askModeRequested === "fast"
       ? {
@@ -105,18 +110,53 @@ export async function orchestrateAsk(
         }
       : classifiedRoute;
 
-  const deepEnabled = process.env.ENABLE_DEEP_ASK === "true";
+  if (askModeRequested === "fast") {
+    return {
+      personas: ["ask_answerer"],
+      depth: routeAfterAskMode.depth,
+      reason: `reader fast mode; wiki-first compact context; classifier would have: ${classifiedRoute.reason}`,
+    };
+  }
 
-  // Kill-switch: when deep synthesis is disabled in prod, force every route
-  // back onto the single Finder call.
-  const route: PersonaRoute =
-    !deepEnabled && routeAfterAskMode.personas.length > 1
-      ? {
-          personas: ["finder"],
-          depth: routeAfterAskMode.depth,
-          reason: `deep synthesis disabled (ENABLE_DEEP_ASK != true); prior: ${routeAfterAskMode.reason}`,
-        }
-      : routeAfterAskMode;
+  if (
+    routeAfterAskMode.personas.length > 1 &&
+    deepEnabled &&
+    multiPersonaEnabled
+  ) {
+    return routeAfterAskMode;
+  }
+
+  return {
+    personas: ["ask_answerer"],
+    depth: routeAfterAskMode.depth,
+    reason:
+      routeAfterAskMode.personas.length > 1
+        ? `wiki-first single-call path; legacy multi-persona disabled unless ENABLE_MULTI_PERSONA_ASK=true; prior: ${routeAfterAskMode.reason}`
+        : `wiki-first single-call path; prior: ${routeAfterAskMode.reason}`,
+  };
+}
+
+/**
+ * Main entry point. Returns a streamable result regardless of path.
+ */
+export async function orchestrateAsk(
+  params: OrchestrateParams,
+): Promise<OrchestrateResult> {
+  const classifiedRoute = routeAsk(params.message);
+  const askModeRequested: AskReaderMode = params.askMode ?? "deep";
+
+  const deepEnabled = process.env.ENABLE_DEEP_ASK === "true";
+  const multiPersonaEnabled = process.env.ENABLE_MULTI_PERSONA_ASK === "true";
+
+  // Wiki-first Ask is the normal path: one streamed answer call over a compact
+  // context pack. Legacy multi-persona synthesis remains behind an explicit
+  // fallback gate for comparative testing.
+  const route = resolveAskRoute({
+    classifiedRoute,
+    askModeRequested,
+    deepEnabled,
+    multiPersonaEnabled,
+  });
 
   const promptArgs = await buildPromptArgs(params);
 
@@ -126,10 +166,11 @@ export async function orchestrateAsk(
       : singlePath(params, route, route.personas[0] ?? "finder", promptArgs);
 
   const askModeApplied: AskReaderMode =
-    route.personas.length > 1 ? "deep" : "fast";
+    route.personas.length > 1 ? "deep" : askModeRequested;
   const askModeNote = buildAskModeNote(
     askModeRequested,
     deepEnabled,
+    multiPersonaEnabled,
     classifiedRoute,
     route,
   );
@@ -148,11 +189,20 @@ export async function orchestrateAsk(
 function buildAskModeNote(
   requested: AskReaderMode,
   deepEnabled: boolean,
+  multiPersonaEnabled: boolean,
   classifiedRoute: PersonaRoute,
   finalRoute: PersonaRoute,
 ): string | undefined {
   if (requested === "fast") {
-    return "Fast mode: single Finder pass (no multi-persona synthesis).";
+    return "Fast mode: compact wiki-first context and one streamed answer call.";
+  }
+  if (classifiedRoute.personas.length > 1 && finalRoute.personas.length === 1) {
+    if (!deepEnabled) {
+      return "Deep Ask kill-switch is disabled (ENABLE_DEEP_ASK); using wiki-first single-call path.";
+    }
+    if (!multiPersonaEnabled) {
+      return "Wiki-first single-call path; legacy multi-persona synthesis requires ENABLE_MULTI_PERSONA_ASK.";
+    }
   }
   if (!deepEnabled && classifiedRoute.personas.length > 1) {
     return "Multi-persona synthesis is disabled for this deployment (ENABLE_DEEP_ASK).";
@@ -162,7 +212,7 @@ function buildAskModeNote(
     finalRoute.personas.length === 1 &&
     classifiedRoute.depth === "simple"
   ) {
-    return "Classified as a short factual lookup — single Finder pass.";
+    return "Classified as a short factual lookup — wiki-first single-call path.";
   }
   return undefined;
 }
@@ -179,26 +229,18 @@ async function buildPromptArgs(
   // chapter". Otherwise personas could see spoilery future mysteries.
   const threadCutoffChapter = readerProgress?.currentChapter ?? null;
 
-  const [
-    wikiSummaries,
-    stories,
-    storyContextRaw,
-    chapterScenes,
-    openThreads,
-    journeyBeats,
-  ] = await Promise.all([
-    getCanonicalWikiSummaries(),
-    getCanonicalStories(),
-    storySlug ? getCanonicalStoryMarkdown(storySlug) : Promise.resolve(""),
-    storySlug ? getScenesForChapter(storySlug) : Promise.resolve([]),
-    threadCutoffChapter
-      ? listUnresolvedThroughChapter(supabase, threadCutoffChapter)
-      : Promise.resolve([]),
-    journeySlug
-      ? listBeatsByJourney(supabase, journeySlug)
-      : Promise.resolve([]),
-  ]);
-  void storyContextRaw; // storyContext is assembled inside each persona builder
+  const [wikiSummaries, stories, chapterScenes, openThreads, journeyBeats] =
+    await Promise.all([
+      getCanonicalWikiSummaries(),
+      getCanonicalStories(),
+      storySlug ? getScenesForChapter(storySlug) : Promise.resolve([]),
+      threadCutoffChapter
+        ? listUnresolvedThroughChapter(supabase, threadCutoffChapter)
+        : Promise.resolve([]),
+      journeySlug
+        ? listBeatsByJourney(supabase, journeySlug)
+        : Promise.resolve([]),
+    ]);
 
   const visibleStories = readerProgress
     ? stories.filter((story) => isStoryUnlocked(story.storyId, readerProgress))
@@ -207,6 +249,77 @@ async function buildPromptArgs(
   const storyCatalog = visibleStories
     .map((story) => `- ${story.storyId} — ${story.title}`)
     .join("\n");
+  const intent = classifyAskIntent(params.message);
+  const retrievedItems = retrieveAskContextItems({
+    message: params.message,
+    intent,
+    storySlug,
+    readerProgress,
+    sources: buildDefaultAskRetrievalSources({
+      stories: visibleStories.map((story) => ({
+        storyId: story.storyId,
+        title: story.title,
+        href: `/stories/${story.storyId}`,
+        summary: story.summary,
+        text: [
+          story.summary,
+          story.themes.join(" "),
+          story.principles.join(" "),
+          story.quotes.join(" "),
+          story.fullText,
+        ].join("\n"),
+      })),
+    }),
+    limit: params.askMode === "fast" ? 6 : 12,
+  });
+  const scopedItems: AskContextItem[] = [
+    ...chapterScenes
+      .slice(0, params.askMode === "fast" ? 3 : 8)
+      .map((scene) => ({
+        kind: "scene" as const,
+        title: scene.title,
+        href: storySlug
+          ? `/stories/${storySlug}#${scene.slug}`
+          : `/stories/${scene.slug}`,
+        canonRank: "chapter_text" as const,
+        excerpt: [scene.goal, scene.conflict, scene.outcome]
+          .filter(Boolean)
+          .join(" "),
+        score: storySlug ? 7 : 3,
+        storyId: storySlug,
+        slug: scene.slug,
+      })),
+    ...openThreads.slice(0, params.askMode === "fast" ? 2 : 5).map((thread) => ({
+      kind: "open_thread" as const,
+      title: thread.title,
+      href: `/stories/${thread.openedInChapterId}`,
+      canonRank: "derived_inference" as const,
+      excerpt: thread.question,
+      score: intent.kind === "future_speculation" ? 8 : 4,
+      storyId: thread.openedInChapterId,
+    })),
+    ...journeyBeats.slice(0, params.askMode === "fast" ? 2 : 6).map((beat) => ({
+      kind: "journey_beat" as const,
+      title: beat.title,
+      href: beat.chapterId ? `/stories/${beat.chapterId}` : "/ask",
+      canonRank: "derived_inference" as const,
+      excerpt: beat.whyItMatters,
+      score: 5,
+      storyId: beat.chapterId ?? undefined,
+    })),
+  ];
+  const askContextPack = createAskContextPack({
+    message: params.message,
+    intent,
+    items: [...retrievedItems, ...scopedItems],
+    mode: params.askMode ?? "deep",
+    maxItems: params.askMode === "fast" ? 6 : 12,
+    maxChars: params.askMode === "fast" ? 4_000 : 9_000,
+    gaps:
+      retrievedItems.length === 0
+        ? ["No high-confidence wiki match was found for this question."]
+        : [],
+  });
 
   return {
     ageMode,
@@ -239,10 +352,24 @@ async function buildPromptArgs(
     rulesContextIncluded: getRulesContext().length > 0,
     characterCanonContextIncluded: getCharacterCanonContext().length > 0,
     characterArcContextIncluded: getCharacterArcContext().length > 0,
+    askContextPack,
   };
 }
 
 // ── Single path (one persona, streamed) ─────────────────────────────
+
+function askContextMeta(promptArgs: PersonaPromptArgs): Record<string, unknown> {
+  const pack = promptArgs.askContextPack;
+  if (!pack) return {};
+  return {
+    ask_intent: pack.intent.kind,
+    retrieval_confidence: pack.confidence,
+    context_item_count: pack.items.length,
+    context_pack_chars: pack.budget.actualChars,
+    context_pack_mode: pack.mode,
+    context_gaps: pack.gaps.length,
+  };
+}
 
 async function* singlePath(
   params: OrchestrateParams,
@@ -286,6 +413,8 @@ async function* singlePath(
         path: "single",
         route_depth: route.depth,
         route_reason: route.reason,
+        multi_persona_fallback: false,
+        ...askContextMeta(promptArgs),
       },
     });
   } catch (err) {
@@ -302,6 +431,8 @@ async function* singlePath(
         path: "single",
         route_depth: route.depth,
         route_reason: route.reason,
+        multi_persona_fallback: false,
+        ...askContextMeta(promptArgs),
       },
     });
     throw err;
@@ -338,6 +469,8 @@ async function* multiPath(
           path: "multi",
           route_depth: route.depth,
           route_reason: route.reason,
+          multi_persona_fallback: true,
+          ...askContextMeta(promptArgs),
         },
       }),
     ),
@@ -398,6 +531,8 @@ async function* multiPath(
         route_depth: route.depth,
         route_reason: route.reason,
         sub_personas: route.personas,
+        multi_persona_fallback: true,
+        ...askContextMeta(promptArgs),
       },
     });
   } catch (err) {
@@ -415,6 +550,8 @@ async function* multiPath(
         route_depth: route.depth,
         route_reason: route.reason,
         sub_personas: route.personas,
+        multi_persona_fallback: true,
+        ...askContextMeta(promptArgs),
       },
     });
     throw err;

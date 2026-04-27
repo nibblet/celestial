@@ -1,5 +1,6 @@
 import type { PersonaPromptArgs } from "./perspectives";
 import type { PersonaRoute } from "./router";
+import type { AskContextPack } from "./ask-context";
 
 /** Bumped when the JSON shape changes in a breaking way for clients. */
 export const ASK_EVIDENCE_SCHEMA_VERSION = 1;
@@ -16,7 +17,8 @@ export type AskEvidenceSourceKind =
   | "journey_beats"
   | "reader_progress_gate"
   | "character_canon"
-  | "character_arc_ledgers";
+  | "character_arc_ledgers"
+  | "ask_context_pack";
 
 export type AskEvidenceSource = {
   kind: AskEvidenceSourceKind;
@@ -66,6 +68,19 @@ export type AskMessageEvidence = {
     personas: string[];
   };
   contextSources: AskEvidenceSource[];
+  retrieval?: {
+    intent: AskContextPack["intent"]["kind"];
+    confidence: number;
+    itemCount: number;
+    gaps: string[];
+    items: Array<{
+      kind: string;
+      title: string;
+      href: string;
+      canonRank: string;
+      score: number;
+    }>;
+  };
   linksInAnswer: Array<{ href: string; text: string }>;
   verification?: AskVerificationResult;
   /** Model output was replaced by a safe fallback (strict verifier). */
@@ -175,6 +190,27 @@ export function buildAskMessageEvidence(
       ref: "content/wiki/arcs/characters",
     });
   }
+  if (args.askContextPack) {
+    sources.push({
+      kind: "ask_context_pack",
+      label: `Wiki-first context pack (${args.askContextPack.items.length} items)`,
+    });
+  }
+  const retrieval = args.askContextPack
+    ? {
+        intent: args.askContextPack.intent.kind,
+        confidence: args.askContextPack.confidence,
+        itemCount: args.askContextPack.items.length,
+        gaps: [...args.askContextPack.gaps],
+        items: args.askContextPack.items.map((item) => ({
+          kind: item.kind,
+          title: item.title,
+          href: item.href,
+          canonRank: item.canonRank,
+          score: item.score,
+        })),
+      }
+    : undefined;
 
   return {
     schemaVersion: ASK_EVIDENCE_SCHEMA_VERSION,
@@ -186,6 +222,7 @@ export function buildAskMessageEvidence(
       personas: [...route.personas],
     },
     contextSources: sources,
+    retrieval,
     linksInAnswer: parseMarkdownInternalLinks(fullText),
     askModeRequested: opts.askModeRequested,
     askModeApplied: opts.askModeApplied,
