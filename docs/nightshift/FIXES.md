@@ -1,7 +1,7 @@
 # FIXES — Celestial Interactive Book Companion
 
 > Bug and issue tracker. Updated each nightshift run.
-> Numbering continues from Run 14 (last new entry is FIX-040).
+> Numbering continues from Run 15 (last new entry is FIX-042).
 
 ## Statuses
 - `found` — Issue identified, no plan yet
@@ -11,6 +11,24 @@
 ---
 
 ## Open Issues
+
+### [FIX-042] Character Arc AI Context Injects Spoilery Sections Without Reader Progress Filter
+- **Status:** planned
+- **Severity:** P1 — chapter-gating gap in AI context. `getCharacterArcContext()` in `prompts.ts` injects `unresolvedTensions` and `futureQuestions` sections for all 9 characters into every Ask system prompt without reader progress filtering. These sections contain spoilery arc-endpoint hints (e.g., "Can a merged ALARA still refuse" = CH17 merge; "once CAEDEN's occupation becomes visible" = CH16+ event). The Reader Progress Gate is a prompt-level instruction only.
+- **Found:** 2026-04-27 (Run 15)
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-042-arc-context-spoiler-sections.md`
+- **Summary:** Remove `unresolvedTensions` and `futureQuestions` from the arc context block built in `getCharacterArcContext()` (`prompts.ts` lines ~181–184). Retain `startingState` and `askGuidance`, which are designed to be safe. The two dropped sections are still shown on the author-only `/arcs/[slug]` page (after FIX-041). Two-line deletion; no new logic required.
+
+---
+
+### [FIX-041] `/arcs` and `/arcs/[slug]` Pages Expose Full Arc Spoilers to All Readers
+- **Status:** planned
+- **Severity:** P0 — spoiler leak. Any authenticated reader can access `/arcs/alara` and read verbatim CH17 events ("Translation completes; ALARA is no longer singular"). The arc detail page renders `arc.markdown` unfiltered via `StoryMarkdown`. Both `/arcs/page.tsx` and `/arcs/[slug]/page.tsx` were added in commit `724d66b` with zero auth checks. `/characters/[slug]/page.tsx` links all readers to the arc detail page via `CharacterArcPanel`.
+- **Found:** 2026-04-27 (Run 15)
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-041-arcs-page-author-gating.md`
+- **Summary:** Add `hasAuthorSpecialAccess()` gate to both arc pages (redirect non-authors to `/`). Remove the `CharacterArcPanel` link for non-author readers in `characters/[slug]/page.tsx`. Pattern: same as `/beyond/page.tsx` (import `getAuthenticatedProfileContext`, check `isAuthorSpecialAccess`, redirect if false). Three-file change.
+
+---
 
 ### [FIX-040] Dead `storyContextRaw` DB Fetch in Ask Orchestrator — Wasted Latency
 - **Status:** planned

@@ -3,7 +3,7 @@
 > Ideas backlog with maturity tracking. Two categories: enhance existing features, and new features.
 > **Context note:** This backlog was reset on 2026-04-22 (Run 9) after the Celestial Phase 1 migration.
 > All Keith Cobb memoir-specific ideas from Runs 1–8 have been moved to the Parked section.
-> Last updated: 2026-04-26 (Run 14)
+> Last updated: 2026-04-27 (Run 15)
 
 ## Maturity Levels
 
@@ -17,6 +17,19 @@
 ---
 
 ## Category 1: Enhance / Mature / Expand Existing Features
+
+### [IDEA-038] Per-Chapter Character State Reveal on `/characters/[slug]`
+- **Status:** seed
+- **Category:** enhance
+- **Seeded:** 2026-04-27
+- **Last Updated:** 2026-04-27
+- **Priority:** P2
+- **Plan:** *(not yet written)*
+- **Summary:** After FIX-041 gates arc pages to authors only, readers lose visibility into character development beyond the starting state excerpt. A better UX: surface the character's "Current State By Chapter Boundary" entry for the reader's progress on the character detail page — "After CH05: ALARA is no longer only a compliant system" — so readers see only the state earned by their reading. Each arc file has a `## Current State By Chapter Boundary` table with per-boundary reader-safe state descriptions.
+- **Night Notes:**
+  - 2026-04-27 (Run 15): Seeded. Depends on FIX-041 (arc gating). The `character-arcs.ts` parser currently extracts `startingState`, `unresolvedTensions`, `futureQuestions`, and `askGuidance` via `extractSectionBlock` — a new `currentStateByChapter` field needs to be extracted and parsed into a `{ boundary: string; readerSafeState: string }[]` array. Rendering target: `CharacterArcPanel` in `characters/[slug]/page.tsx` — replace the starting state excerpt with the highest chapter boundary ≤ `currentChapterNumber`. This gives readers a spoiler-safe, progress-gated character state summary. Estimated 1.5 hours.
+
+---
 
 ### [IDEA-036] Wiki Entity Completeness Audit — `/admin/wiki-audit` Page
 - **Status:** seed
@@ -32,16 +45,17 @@
 ---
 
 ### [IDEA-034] Chapter Arc Progress Indicator on /stories
-- **Status:** exploring
+- **Status:** ready
 - **Category:** enhance
 - **Seeded:** 2026-04-25
-- **Last Updated:** 2026-04-26
+- **Last Updated:** 2026-04-27
 - **Priority:** P2
-- **Plan:** *(not yet written)*
-- **Summary:** Add a visual "N of 17 chapters read" progress bar or badge at the top of the `/stories` chapter library page. The data is already available via `getReaderProgress()` — `currentChapterNumber` gives chapters read. A slim progress bar (sci-fi styling: segmented, neon accent) above the chapter grid would give readers a clear sense of their arc position without modifying any gating logic. The re-reader variant would show "17/17" with a "Full access — re-reader mode" label.
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-034-chapter-arc-progress-bar.md`
+- **Summary:** Add a visual "N of 17 chapters read" progress bar above the chapter grid on `/stories`. All data is already in `StoriesPageClient` props. Dev plan written: Phase 1 is a pure JSX addition (~20 lines), no new API, no DB. Estimated 0.5 hours.
 - **Night Notes:**
-  - 2026-04-25 (Run 13): Seeded. `src/app/stories/page.tsx` uses `StoriesPageClient`. Progress data available from `useReaderProgress()` hook or server-side from `getReaderProgress()`. Display target: above the chapter grid in `StoriesPageClient`. Guest-cookie path: cookie-based progress still gives a valid chapter number.
-  - 2026-04-26 (Run 14): Advanced to `exploring`. Confirmed data flow: `StoriesPageClient` already receives `currentChapterNumber: number` and `showAllContent: boolean` as props (lines 77–83 of `StoriesPageClient.tsx`). Total chapter count: `stories.filter(s => /^CH\d+/i.test(s.storyId)).length` (17). Implementation target: in `StoriesPageClient` JSX, above the chapter grid, add a `<div>` containing a progress bar element. Filled width = `(Math.min(currentChapterNumber, totalChapters) / totalChapters) * 100%`. Re-reader path: `showAllContent` → show "Full archive — re-reader mode" label. Guest path: `currentChapterNumber = 0` → progress bar shows 0/17. All three paths handled cleanly. No DB, no new API. Estimated 0.5 hours.
+  - 2026-04-25 (Run 13): Seeded.
+  - 2026-04-26 (Run 14): Advanced to `exploring`. Confirmed all three reader paths handled cleanly via existing props.
+  - 2026-04-27 (Run 15): Advanced to `ready`. Dev plan written. Implementation is a single JSX block above the chapter grid in `StoriesPageClient.tsx`.
 
 ---
 
@@ -74,17 +88,18 @@
 ---
 
 ### [IDEA-028] Continuity Diff in Beyond Workspace
-- **Status:** planned
+- **Status:** parked
 - **Category:** enhance
 - **Seeded:** 2026-04-22
-- **Last Updated:** 2026-04-24
+- **Last Updated:** 2026-04-27
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-028-continuity-diff-beyond-panel.md`
-- **Summary:** A read-only "Continuity Health" panel in the Beyond author workspace that diffs the canon snapshot against live wiki state and shows blocking contradictions (alias_moved, relation_flipped, entity_vanished, chapter_theme_changed). Pure Server Component reading from existing files — no new infra, no DB changes. Estimated 1.5 hours.
+- **Summary:** A read-only "Continuity Health" panel in the Beyond author workspace that diffs the canon snapshot against live wiki state and shows blocking contradictions. Pure Server Component, no new infra. Dev plan written (1.5 hours).
 - **Night Notes:**
-  - 2026-04-22 (Run 10): Seeded. `src/lib/wiki/continuity-diff.ts` is fully built and tested. `content/raw/.continuity/last-snapshot.json` exists after running `review:ingestion`. The diff is a pure in-memory operation — no additional infra needed for a read-only display.
-  - 2026-04-23 (Run 11): Advanced to `exploring`. The new Run 11 commit adds comprehensive audit scripts (`audit-canon-namespaces.ts`, `audit-policies-from-migrations.mjs`) showing a pattern of surface-level auditing being added. Beyond workspace now has a session-wrap panel (`session-wrap.ts`) — the continuity diff panel would naturally sit next to it as a "before-I-write" health check. Approach: Server Component reading `content/raw/.continuity/last-snapshot.json` → call `diffCanonSnapshots(prev, current)` → render `ContradictionCard` list grouped by severity. No DB, no new infra.
-  - 2026-04-24 (Run 12): Advanced to `planned`. Dev plan written (DEVPLAN-IDEA-028). Estimated 1.5 hours. Prerequisite: check whether `buildCanonSnapshot` is exported from `continuity-diff.ts` before Phase 2; if not, adjust to use `canon_entities.json` comparison.
+  - 2026-04-22 (Run 10): Seeded.
+  - 2026-04-23 (Run 11): Advanced to `exploring`.
+  - 2026-04-24 (Run 12): Advanced to `planned`. Dev plan written.
+  - 2026-04-27 (Run 15): Stale 3 days — likely low priority or too complex. Demoting to parked. Dev plan at DEVPLAN-IDEA-028 remains valid — un-park when Paul is ready to add to Beyond workspace.
 
 ---
 
@@ -106,21 +121,35 @@
 
 
 ### [IDEA-023] Explore Hub — Fiction Entity Graph
-- **Status:** planned
+- **Status:** parked
 - **Category:** new
 - **Seeded:** 2026-04-19
-- **Last Updated:** 2026-04-22
+- **Last Updated:** 2026-04-27
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-023-explore-hub-celestial.md`
-- **Summary:** A dedicated `/explore` page with three tabs: Story Arc Map, Entity Map, and Connections. Visualization infrastructure already built. Pure UI assembly + chapter-gating task.
+- **Summary:** A dedicated `/explore` page with three tabs: Story Arc Map, Entity Map, and Connections. Dev plan written. Estimated 2.5 hours.
 - **Night Notes:**
   - 2026-04-19: Seeded.
-  - 2026-04-22 (Run 9): Advanced to `planned`. Dev plan written. Estimated 2.5 hours.
-  - 2026-04-22 (Run 10): No change. Still planned, awaiting Paul execution.
+  - 2026-04-22 (Run 9): Advanced to `planned`. Dev plan written.
+  - 2026-04-22 (Run 10): No change.
+  - 2026-04-27 (Run 15): Stale 5 days — likely low priority or too complex. Demoting to parked. Un-park when higher-priority fixes (P0/P1 gating) are cleared.
 
 ---
 
 ## Category 2: New Features or Integrations
+
+### [IDEA-039] "Ask About This Character" Quick-Action on Character Detail Pages
+- **Status:** seed
+- **Category:** new
+- **Seeded:** 2026-04-27
+- **Last Updated:** 2026-04-27
+- **Priority:** P2
+- **Plan:** *(not yet written)*
+- **Summary:** An "Ask about [Character]" button on `/characters/[slug]` that opens Ask pre-populated with the character name and scoped to the character's arc ledger filtered by reader progress. Currently Ask injects ALL 9 arcs into every prompt; a character-focused entry point could route to Ask with `?message=Tell+me+about+ALARA&character=alara` and a future API path that injects only the relevant arc + character wiki, reducing prompt size and improving answer focus. Spoiler safety: only arc sections up to the reader's chapter boundary are injected (integrates with IDEA-038 arc state gating).
+- **Night Notes:**
+  - 2026-04-27 (Run 15): Seeded. Depends on FIX-041 (arc page gating) and FIX-042 (arc context pruning). The `?highlight=` param pattern (from memoir's "Ask from Passage" feature) shows how Ask can be pre-seeded from other pages. Implementation path: (1) add a query-param reader to `ask/page.tsx` that pre-fills the message input; (2) optionally pass `characterSlug` param to Ask API for narrowed arc context. Step 1 alone (pre-fill) is useful and requires no API change. Estimated 1.5 hours for full implementation with arc scoping.
+
+---
 
 ### [IDEA-037] Chapter Recall Mode — Post-Read Comprehension Prompts
 - **Status:** seed
@@ -163,30 +192,31 @@
 ---
 
 ### [IDEA-029] Reader Arc Progress — Gated BeatTimeline
-- **Status:** ready
+- **Status:** parked
 - **Category:** new
 - **Seeded:** 2026-04-22
-- **Last Updated:** 2026-04-22
+- **Last Updated:** 2026-04-27
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-029-reader-arc-progress.md`
-- **Summary:** After FIX-032 (BeatTimeline chapter gating), enhance the journey intro page so readers see how many beats they've revealed vs. total, a "N more unlock as you read on" tease, and a subtle checkmark on beats from chapters already read. Builds directly on FIX-032 — requires no new infrastructure.
+- **Summary:** After FIX-032 (BeatTimeline chapter gating), enhance journey intro page beats with progress indicators. Dev plan written. 1.25 hours after FIX-032 ships.
 - **Night Notes:**
-  - 2026-04-22 (Run 10): Seeded and immediately advanced to `ready`. FIX-032 is the prerequisite. Estimated 1.25 hours after FIX-032. Dev plan written.
+  - 2026-04-22 (Run 10): Seeded and advanced to `ready`. FIX-032 is the prerequisite.
+  - 2026-04-27 (Run 15): Stale 5 days — likely low priority or too complex. Demoting to parked. FIX-032 (the prerequisite) is still unexecuted. Un-park after FIX-032 ships.
 
 ---
 
 ### [IDEA-026] Open Threads Reader Panel — Narrative Mysteries Page
-- **Status:** planned
+- **Status:** parked
 - **Category:** new
 - **Seeded:** 2026-04-22
-- **Last Updated:** 2026-04-23
+- **Last Updated:** 2026-04-27
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-026-open-threads-mysteries-page.md`
-- **Summary:** A reader-facing `/mysteries` page surfacing unresolved threads from `cel_open_threads`, gated by chapter — only threads opened in unlocked chapters shown. The `listUnresolvedThroughChapter()` function in `threads/repo.ts` already implements the right query. Especially engaging for re-readers who see which threads got resolved.
+- **Summary:** A reader-facing `/mysteries` page surfacing unresolved threads, gated by chapter. Dev plan written. Estimated 1.2 hours. Blocking: FIX-030 (keith role fix).
 - **Night Notes:**
   - 2026-04-22 (Run 9): Seeded.
-  - 2026-04-22 (Run 10): Advanced to `exploring`.
-  - 2026-04-23 (Run 11): Advanced to `planned`. Dev plan written. Estimated 1.2 hours. Blocking: FIX-030 (author must be able to seed threads via admin API).
+  - 2026-04-23 (Run 11): Advanced to `planned`. Dev plan written.
+  - 2026-04-27 (Run 15): Stale 4 days — likely low priority or too complex. Demoting to parked. Un-park after FIX-030 ships.
 
 ---
 

@@ -4,6 +4,60 @@
 
 ---
 
+## Run: 2026-04-27 (Run 15)
+
+### Summary
+- Scanned: 1 code commit since Run 14 (`724d66b` — "updated arcs, working on vercel deploy", 62 files, 3640 insertions). Major additions: character arcs system (9 arc ledger files + `character-arcs.ts` parser + `/arcs` routes + AI context injection), character detail arc panel, `ask-answer-playbooks.md`, `publishing-and-launch-plan.md`.
+- Issues: 2 new P0/P1 (FIX-041 P0: arcs pages ungated; FIX-042 P1: arc AI context leaks spoilers), 0 resolved. All prior open issues unchanged.
+- Ideas: 2 new seeds (IDEA-038 enhance: per-chapter character state reveal; IDEA-039 new: character-scoped Ask), 1 advanced (IDEA-034 exploring→ready + dev plan written), 4 parked (IDEA-028, IDEA-023, IDEA-026, IDEA-029 — stale 3-5 days).
+- Plans written: FIXPLAN-FIX-041, FIXPLAN-FIX-042, DEVPLAN-IDEA-034.
+
+### Build & Lint & Test Results
+- `npm install --prefer-offline`: clean
+- `npx next build`: **PASSES** — ~98 routes (+2 new arcs routes). 1 expected Turbopack NFT warning.
+- `npm run lint`: **PASSES** — 0 errors, 0 warnings
+- `npm test`: **175 PASS / 3 FAIL** (178 total — up from 173; +5 new character-arcs tests all passing)
+  - Test 114: `every location has Superset:` → FIX-037 still open (andes-glacial-lake had 2 lines added in `724d66b` but the Superset field was NOT added)
+  - Test 115: `all parables carry Status` → FIX-034 still open
+  - Test 118: `location Superset: matches canon parent` → FIX-037 still open
+
+### Key Findings
+
+1. **FIX-041 (P0 — NEW): `/arcs` and `/arcs/[slug]` are completely ungated.** Commit `724d66b` added 9 character arc ledger files in `content/wiki/arcs/characters/`, a `character-arcs.ts` parser, and two new pages — `/arcs/page.tsx` and `/arcs/[slug]/page.tsx`. Both pages have zero auth checks. The arc detail page renders `arc.markdown` unfiltered via `StoryMarkdown`, including the "Chapter Arc Entries" table (verbatim CH01-CH17 events), "Major Choices And Consequences", and "Current State By Chapter Boundary" — all of which spoil the entire Book I arc for a CH01 reader. Additionally, `/characters/[slug]/page.tsx` renders `CharacterArcPanel` (showing Starting State excerpt + link to full arc) for ALL authenticated readers, pointing them to the ungated page. Fix: gate both arc pages with `hasAuthorSpecialAccess()` (same pattern as `/beyond/page.tsx`). Remove `CharacterArcPanel` link for non-authors.
+
+2. **FIX-042 (P1 — NEW): Character arc AI context leaks arc endpoints.** `getCharacterArcContext()` in `prompts.ts` (lines 171–200) injects four sections per character into every Ask prompt via `sharedContentBlock()`. The `unresolvedTensions` and `futureQuestions` sections contain spoilery framing — "Can a **merged** ALARA still refuse" (= CH17 merge), "once CAEDEN's occupation becomes visible" (= CH16+ event). The Reader Progress Gate is a prompt-level instruction, not a code-level gate. Fix: remove `unresolvedTensions` and `futureQuestions` from the AI context (two-line deletion in `getCharacterArcContext`); retain `startingState` and `askGuidance` which are safe.
+
+3. **FIX-040 (Low-Medium): Dead `storyContextRaw` fetch still present.** `orchestrator.ts` lines 185/201 still include `storyContextRaw` in the `Promise.all` and `void storyContextRaw;`. The `8 lines changed` in orchestrator in `724d66b` added `getCharacterArcContext` import and the `characterArcContextIncluded` evidence flag — did not fix FIX-040.
+
+4. **Character arcs system is well-structured but needs gating.** The `character-arcs.ts` parser is clean, the arc files use a consistent format with good `## ASK Guidance` sections, the `ask-answer-playbooks.md` doc is a solid addition for future AI quality work. The `character-arcs.test.ts` (4 tests, all passing) validates the parser. The architecture is sound; it just needs the two gating fixes (FIX-041 + FIX-042) before it's safe to ship.
+
+5. **`andes-glacial-lake.md` still missing Superset field after `724d66b`.** The commit touched the file (+2 lines) but the 2 added lines appear to be minor content edits, NOT the `**Superset:** [[earth]]` field required by tests 114 and 118. FIX-037 remains open.
+
+6. **`chapter_tags.json` regenerated — still all `reviewed: false`.** The `724d66b` commit regenerated all 17 chapter tag entries (+1571/-955 lines). Review status reset is expected behavior since `scripts/tag-chapter-entities.ts` always writes `reviewed: false`. IDEA-032 (quality gate) and IDEA-035 (review dashboard) remain relevant.
+
+7. **4 ideas parked by 3-day stale rule.** IDEA-028 (Continuity Diff, planned 3 days), IDEA-023 (Explore Hub, planned 5 days), IDEA-026 (Open Threads page, planned 4 days), IDEA-029 (Reader Arc Progress, ready 5 days). All have dev plans that remain valid. FIX-032 must ship before IDEA-029 can be un-parked; FIX-030 must ship before IDEA-026.
+
+8. **New docs added.** `docs/celestial/publishing-and-launch-plan.md` (237 lines — launch timeline), `docs/celestial/ask-answer-playbooks.md` (93 lines — question-type matrix), `docs/continuity/character-arc-review.md` (107 lines — arc review rubric). These are documentation artifacts, not nightshift outputs; no action needed.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/FIXPLAN-FIX-041-arcs-page-author-gating.md` — **NEW P0**: Gate `/arcs` + `/arcs/[slug]` with `hasAuthorSpecialAccess()`, remove arc link from character page for readers (15 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-036-ask-story-slug-spoiler-gate.md` — **P0**: storySlug validation in Ask API (10 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-032-beat-timeline-chapter-gating.md` — **P0**: BeatTimeline gating on journey page (15 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-042-arc-context-spoiler-sections.md` — **NEW P1**: Remove unresolvedTensions + futureQuestions from arc AI context (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-038-orchestrator-journey-beats-gating.md` — **P1**: filter journey beats in orchestrator (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-040-dead-story-context-raw-fetch.md` — **Low-Medium**: remove dead storyContextRaw DB fetch (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-037-andes-glacial-lake-superset.md` — restores tests 114+118 (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-034-parables-status-field.md` — restores test 115 (5 min)
+- `docs/nightshift/plans/DEVPLAN-IDEA-034-chapter-arc-progress-bar.md` — **NEW ready**: progress bar on /stories (30 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-039-journey-context-prompt-story-gating.md` — P2: gate journey story summaries in AI prompt (20 min)
+
+### Recommendations
+- **If you have 30 min:** FIX-041 (15 min P0) + FIX-042 (5 min P1) + FIX-037 + FIX-034 (5 min each). Seals the two new arc gating issues and clears all 3 test failures.
+- **If you have 1 hour:** The 30-min batch above + FIX-036 (10 min P0) + FIX-032 (15 min P0) + FIX-038 (5 min P1). After this: all P0/P1 spoiler gaps sealed.
+- **If you have 2 hours:** The 1-hour batch above + FIX-040 (5 min) + IDEA-034 (30 min) + IDEA-032 Phase 1+2 (45 min). After this: all gating fixed, dead DB call removed, chapter progress bar live, chapter tag review CLI ready for Paul.
+
+---
+
 ## Run: 2026-04-26 (Run 14)
 
 ### Summary
