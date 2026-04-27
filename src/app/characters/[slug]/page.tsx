@@ -14,6 +14,8 @@ import { CanonDossierCard } from "@/components/entities/CanonDossierCard";
 import { extractAuthoredBody, renderWikilinks } from "@/lib/wiki/authored-body";
 import { resolveWikiSlug } from "@/lib/wiki/slug-resolver";
 import { getCharacterArcBySlug } from "@/lib/wiki/character-arcs";
+import { listEntityVisuals } from "@/lib/visuals/list-entity-assets";
+import { EntityVisualsGallery } from "@/components/visuals/EntityVisualsGallery";
 
 function excerpt(markdown: string): string {
   return markdown
@@ -46,6 +48,7 @@ export default async function CharacterDetailPage({
   const { isAuthorSpecialAccess } = await getAuthenticatedProfileContext();
   const progress = await getReaderProgress();
   const arc = getCharacterArcBySlug(slug);
+  const visuals = await listEntityVisuals(slug);
 
   const refCount =
     person.memoirStoryIds.length + person.interviewStoryIds.length;
@@ -89,6 +92,12 @@ export default async function CharacterDetailPage({
           ))}
         </div>
       )}
+
+      <EntityVisualsGallery
+        visuals={visuals}
+        entityName={dbPerson?.display_name || person.name}
+        canEdit={isAuthorSpecialAccess}
+      />
 
       {person.canonDossier && <CanonDossierCard dossier={person.canonDossier} />}
       {person.lore && <EntityLoreCard lore={person.lore} />}

@@ -99,6 +99,15 @@ export default async function AdminCorrectionsPage() {
         </span>
       </div>
 
+      <nav className="mb-8 flex flex-wrap gap-3 text-sm">
+        <Link
+          href="/profile/admin/visuals"
+          className="rounded-md border border-[var(--color-border)] bg-warm-white px-3 py-1.5 text-ink hover:border-ocean hover:text-ocean"
+        >
+          Visual Prompt Studio →
+        </Link>
+      </nav>
+
       {/* ── Open ── */}
       {open.length === 0 ? (
         <div className="mb-10 rounded-xl border border-[var(--color-border)] bg-warm-white p-6 text-center">

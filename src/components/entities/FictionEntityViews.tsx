@@ -10,6 +10,9 @@ import { prettifySlug } from "@/lib/wiki/canon-dossier";
 import { resolveWikiSlug } from "@/lib/wiki/slug-resolver";
 import { extractAuthoredBody, renderWikilinks } from "@/lib/wiki/authored-body";
 import { StoryMarkdown } from "@/components/story/StoryMarkdown";
+import { listEntityVisuals } from "@/lib/visuals/list-entity-assets";
+import { EntityVisualsGallery } from "@/components/visuals/EntityVisualsGallery";
+import { getAuthenticatedProfileContext } from "@/lib/auth/profile-context";
 
 function AuthoredBody({
   raw,
@@ -213,7 +216,7 @@ export function FictionEntityIndexPage({
   );
 }
 
-export function FictionEntityDetailPage({
+export async function FictionEntityDetailPage({
   entity,
   heading,
   basePath,
@@ -225,6 +228,8 @@ export function FictionEntityDetailPage({
   const supersetResolved = entity.lore?.superset
     ? resolveWikiSlug(entity.lore.superset.slug)
     : null;
+  const visuals = await listEntityVisuals(entity.slug);
+  const { isAuthorSpecialAccess } = await getAuthenticatedProfileContext();
 
   return (
     <div className="mx-auto max-w-content px-[var(--page-padding-x)] py-6 md:py-10">
@@ -243,6 +248,11 @@ export function FictionEntityDetailPage({
           </Link>
         </p>
       )}
+      <EntityVisualsGallery
+        visuals={visuals}
+        entityName={entity.name}
+        canEdit={isAuthorSpecialAccess}
+      />
       {entity.canonDossier && <CanonDossierCard dossier={entity.canonDossier} />}
       <AuthoredBody raw={entity.body} preserveAiDossier />
       {entity.lore && <EntityLoreCard lore={entity.lore} />}
