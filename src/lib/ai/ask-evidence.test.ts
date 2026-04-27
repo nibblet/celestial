@@ -40,3 +40,52 @@ test("buildAskMessageEvidence includes context flags and route", () => {
   assert.deepEqual(ev.linksInAnswer, [{ href: "/principles/x", text: "t" }]);
   assert.deepEqual(ev.route.personas, ["finder"]);
 });
+
+test("buildAskMessageEvidence exposes context-pack retrieval details", () => {
+  const args = {
+    ageMode: "adult",
+    askContextPack: {
+      schemaVersion: 1,
+      message: "How does resonance work?",
+      mode: "deep",
+      intent: {
+        kind: "world_rule",
+        confidence: 0.72,
+        reason: "world mechanic",
+      },
+      confidence: 0.91,
+      budget: { maxItems: 10, maxChars: 9000, actualChars: 300 },
+      gaps: ["One mechanism is still unresolved."],
+      derivedInsights: [],
+      items: [
+        {
+          kind: "rule",
+          title: "Resonance Field",
+          href: "/rules/resonance-field",
+          canonRank: "wiki_canon",
+          excerpt: "The field responds to coherent intent.",
+          score: 13,
+          slug: "resonance-field",
+        },
+      ],
+    },
+  } as PersonaPromptArgs;
+  const route: PersonaRoute = {
+    personas: ["ask_answerer"],
+    depth: "deep",
+    reason: "wiki-first",
+  };
+
+  const ev = buildAskMessageEvidence(args, route, "[r](/rules/resonance-field)", {
+    deepAskOperational: true,
+    askModeRequested: "deep",
+    askModeApplied: "deep",
+  });
+
+  assert.equal(ev.retrieval?.intent, "world_rule");
+  assert.equal(ev.retrieval?.confidence, 0.91);
+  assert.equal(ev.retrieval?.items[0]?.title, "Resonance Field");
+  assert.equal(ev.retrieval?.items[0]?.canonRank, "wiki_canon");
+  assert.deepEqual(ev.retrieval?.gaps, ["One mechanism is still unresolved."]);
+  assert.ok(ev.contextSources.map((s) => s.kind).includes("ask_context_pack"));
+});

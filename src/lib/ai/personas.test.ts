@@ -19,6 +19,7 @@ const ACTIVE_KEYS: PersonaKey[] = [
   "lorekeeper",
   "archivist",
   "finder",
+  "ask_answerer",
   "synthesizer",
 ];
 
@@ -55,6 +56,42 @@ test("finder prompt keeps the instructions short-and-factual and forbids editori
   const prompt = getPersona("finder").buildSystemPrompt(BASE_ARGS);
   assert.match(prompt, /1.4 sentences|bulleted list/i);
   assert.match(prompt, /Do NOT editorialize/i);
+});
+
+test("ask answerer prompt consumes the wiki-first context pack", () => {
+  const prompt = getPersona("ask_answerer").buildSystemPrompt({
+    ...BASE_ARGS,
+    askContextPack: {
+      schemaVersion: 1,
+      message: "What might happen next?",
+      mode: "deep",
+      intent: {
+        kind: "future_speculation",
+        confidence: 0.8,
+        reason: "future",
+      },
+      confidence: 0.9,
+      budget: { maxItems: 10, maxChars: 9000, actualChars: 200 },
+      gaps: ["The corpus has not resolved the Vault's full intent."],
+      derivedInsights: ["The Vault consistently rewards coherent consent."],
+      items: [
+        {
+          kind: "rule",
+          title: "Resonance Field",
+          href: "/rules/resonance-field",
+          canonRank: "wiki_canon",
+          excerpt: "The field responds to coherent intent.",
+          score: 12,
+          slug: "resonance-field",
+        },
+      ],
+    },
+  });
+
+  assert.match(prompt, /Ask Context Pack/);
+  assert.match(prompt, /world-bounded future/i);
+  assert.match(prompt, /derived interpretation/i);
+  assert.ok(prompt.includes("[Resonance Field](/rules/resonance-field)"));
 });
 
 test("archivist prompt asks for cross-story pattern, not bullet principles", () => {
@@ -222,5 +259,5 @@ test("PERSONAS is exhaustive over PersonaKey union", () => {
   // If a new key is added to the union without a registry entry, this will
   // drop below the expected count.
   const keys = Object.keys(PERSONAS) as PersonaKey[];
-  assert.equal(keys.length, 6, "registry has 5 active personas + 1 editor placeholder");
+  assert.equal(keys.length, 7, "registry has 6 active personas + 1 editor placeholder");
 });
