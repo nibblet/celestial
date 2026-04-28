@@ -1,0 +1,75 @@
+{
+  "view_type": "orthographic_set",
+  "view_set": "top_side_front",
+  "shared_rules": {
+    "projection": "orthographic",
+    "symmetry": "soft_bilateral",
+    "surface_language": "smooth_continuous_bio_crystalline",
+    "protrusions": "minimal",
+    "edges": "rounded_tapered_no_sharp_spikes",
+    "visible_thrusters": false,
+    "visible_panel_lines": false,
+    "emission": "subdermal_violet_resonance_veins"
+  },
+  "top_view": {
+    "camera": "directly_above",
+    "silhouette": "elongated_leaf_or_stingray",
+    "nose": "soft_rounded_forward_taper",
+    "widest_point": "slightly_forward_of_center",
+    "rear": "smooth_narrowing_tail_with_no_engine_ports",
+    "side_fins": "broad_integrated_curves_blended_into_hull",
+    "dorsal_features": {
+      "central_ridge": "subtle_raised_organic_spine",
+      "command_dome": "faint_translucent_oval_forward_upper_center",
+      "blind_zones": "smooth_opaque_irregular_regions_near_mid_rear"
+    },
+    "resonance_pattern": {
+      "layout": "branching_constellation_lines_following_hull_flow",
+      "density": "medium_high_near_center_low_at_edges",
+      "color": "violet_with_soft_gold_filament_accents"
+    }
+  },
+  "side_view": {
+    "camera": "direct_left_profile",
+    "silhouette": "low_sleek_biological_blade",
+    "height_profile": "thin_front_and_rear_fuller_center",
+    "upper_surface": "gentle_arch_continuous_curve",
+    "lower_surface": "shallow_belly_curve_with_subtle_ventral_swells",
+    "nose": "rounded_downturned_soft_point",
+    "tail": "long_smooth_taper_no_thruster_opening",
+    "ventral_arrays": {
+      "visibility": "subtle_underbody_wave_forms",
+      "shape": "soft_ribbed_organic_recesses",
+      "function_visual": "passive_harmonic_sensors"
+    },
+    "resonance_pattern": {
+      "layout": "thin_luminous_threads_running_lengthwise",
+      "intensity": "low_idle_glow",
+      "concentration": "along_belly_and_midline"
+    }
+  },
+  "front_view": {
+    "camera": "direct_front",
+    "silhouette": "wide_low_manta_shape",
+    "center_mass": "rounded_keel_like_core",
+    "wings": "smooth_downward_sweeping_integrated_lobes",
+    "height": "low_profile_with_soft_central_rise",
+    "openings": "none_visible",
+    "command_dome_hint": "subtle_upper_center_glasslike_glow",
+    "ventral_features": {
+      "shape": "mirrored_soft_recesses_under_wings",
+      "appearance": "sealed_organic_shadowed_forms"
+    },
+    "resonance_pattern": {
+      "layout": "symmetrical_violet_threads_from_center_outward",
+      "effect": "quiet_biological_energy_not_weaponized"
+    }
+  },
+  "avoid": [
+    "hard_mechanical_greeble",
+    "knife_like_fins",
+    "visible_engines",
+    "industrial_panel_seams",
+    "fighter_jet_silhouette"
+  ]
+}

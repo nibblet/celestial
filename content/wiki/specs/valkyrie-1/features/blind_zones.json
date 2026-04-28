@@ -1,0 +1,46 @@
+{
+  "feature": "blind_zones",
+  "classification": "sealed_unknown_structural_regions",
+  "visibility": {
+    "mode": "direct_but_unreadable",
+    "clarity": "high_surface_visibility_zero_information"
+  },
+  "distribution": {
+    "pattern": "irregular_non_repeating",
+    "placement": "mid_body_and_rear_bias",
+    "scale_variation": "small_to_large_patches"
+  },
+  "surface_characteristics": {
+    "texture": "ultra_smooth_flattened",
+    "reflectivity": "duller_than_surrounding_hull",
+    "color_shift": "slightly_desaturated_or_deepened_tone"
+  },
+  "boundary_definition": {
+    "edges": "soft_feathered_transitions",
+    "geometry": "organic_non_geometric_shapes",
+    "seam_visibility": "none"
+  },
+  "functional_read": {
+    "interpretation": [
+      "non_accessible_internal_zones",
+      "shielded_systems",
+      "intentional_information_suppression"
+    ],
+    "behavior": "no_response_to_external_stimuli"
+  },
+  "interaction_with_other_systems": {
+    "resonance_veins": "avoid_or_route_around",
+    "lighting": "absorb_more_emit_less",
+    "scanning": "low_signal_return"
+  },
+  "must_not": [
+    "suggest_doors_or_hatches",
+    "include_panel_lines",
+    "have_symmetrical_patterning"
+  ],
+  "avoid": [
+    "doors_or_hatches",
+    "panel_lines",
+    "symmetrical_patterning"
+  ]
+}

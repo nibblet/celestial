@@ -1,0 +1,75 @@
+{
+  "entity": "resonant-pad",
+  "classification": "coherence_trigger_and_jump_initiation_interface",
+  "location": {
+    "placement": "center_of_command_dome",
+    "integration": "flush_with_floor_surface",
+    "elevation": "slightly_raised_or_defined_by_light_only"
+  },
+  "form_language": {
+    "shape": "circular_or_soft_oval",
+    "boundary": "defined_by_light_not_physical_edge",
+    "surface": "smooth_seamless_continuation_of_floor"
+  },
+  "materials": {
+    "base": "bio_crystalline_conductive_layer",
+    "finish": "semi_translucent",
+    "depth": "appears_deeper_than_physical_thickness"
+  },
+  "activation_conditions": {
+    "requirements": [
+      "authorized_individual_presence",
+      "crew_emotional_alignment",
+      "symbolic_readiness_state"
+    ],
+    "failure_mode": "no_response_or_diminished_glow"
+  },
+  "visual_behavior": {
+    "idle_state": {
+      "appearance": "barely_visible_subtle_tonal_shift",
+      "emission": "very_low"
+    },
+    "engaged_state": {
+      "pattern": "radial_and_spiral_light_forms",
+      "color": "intensified_violet_with_gold_accents",
+      "motion": "slow_rotational_or_breathing_expansion"
+    },
+    "full_activation": {
+      "pattern": "complex_symbolic_geometry",
+      "brightness": "high_but_soft_not_harsh",
+      "effect": "light_extends_slightly_beyond_surface_plane"
+    }
+  },
+  "interaction_model": {
+    "input_type": "presence_and_state_based",
+    "no_physical_controls": true,
+    "feedback": [
+      "light_pattern_changes",
+      "subtle_vibration_or_resonance",
+      "localized_spatial_distortion"
+    ]
+  },
+  "functional_role": {
+    "primary": "initiate_harmonic_translation",
+    "secondary": "validate_coherence_conditions",
+    "tertiary": "focus_resonance_through_operator"
+  },
+  "perceptual_effects": {
+    "spatial": "slight_depth_warping_when_active",
+    "acoustic": "low_frequency_harmonic_tone",
+    "emotional": "amplifies_internal_state_of_user"
+  },
+  "must_not": [
+    "look_like_a_platform_or_machine",
+    "have_buttons_or_markings",
+    "be_visibly_mechanical"
+  ],
+  "avoid": [
+    "platform_or_machine_appearance",
+    "buttons_or_markings_or_lettering",
+    "visibly_mechanical_components",
+    "panel_seams_or_inlays",
+    "raised_pedestal_form",
+    "sci_fi_console_aesthetic"
+  ]
+}

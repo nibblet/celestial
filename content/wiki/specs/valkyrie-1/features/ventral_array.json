@@ -1,0 +1,47 @@
+{
+  "feature": "ventral_array",
+  "classification": "subsurface_harmonic_sensor_system",
+  "visibility": {
+    "mode": "indirect_only",
+    "methods": [
+      "subsurface_shadowing",
+      "hull_contour_deviation",
+      "resonance_vein_deflection"
+    ],
+    "clarity": "low_intentional"
+  },
+  "location": {
+    "region": "mid_to_rear_underbody",
+    "distribution": "paired_longitudinal",
+    "symmetry": "mirrored_left_right"
+  },
+  "form_language": {
+    "shape": "soft_fin_or_ribbed_organic_structures",
+    "edge_quality": "diffuse_blended",
+    "segmentation": "non_discrete_continuous"
+  },
+  "functional_read": {
+    "primary": "harmonic_field_detection",
+    "secondary": "resonance_alignment_feedback",
+    "behavior": "passive_until_coherence_threshold"
+  },
+  "interaction_with_hull": {
+    "effect": "subtle_surface_pressure_patterns",
+    "deformation": "minimal_wave_like",
+    "integration": "fully_embedded_no_boundaries"
+  },
+  "lighting_response": {
+    "idle": "barely_perceptible_internal_mass",
+    "active": "faint_pulsing_shadow_and_internal_glow_shift"
+  },
+  "must_not": [
+    "appear_mechanical",
+    "have_visible_ports_or_grilles",
+    "read_as_detachable_component"
+  ],
+  "avoid": [
+    "appear_mechanical",
+    "visible_ports_or_grilles",
+    "read_as_detachable_component"
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "entity": "command-dome",
+  "classification": "primary_navigation_and_coherence_interface_space",
+  "location": {
+    "relative_position": "upper_forward_quadrant",
+    "integration": "fully_embedded_within_hull",
+    "external_expression": "subtle_curvature_shift_only"
+  },
+  "spatial_character": {
+    "geometry": "elliptical_chamber",
+    "boundaries": "soft_continuous_surfaces",
+    "corners": "none",
+    "scale": "intimate_but_not_cramped",
+    "orientation": "forward_facing_bias"
+  },
+  "materials": {
+    "primary": "translucent_bio_crystalline_shell",
+    "secondary": "light_diffusing_membrane_layers",
+    "surface_finish": "matte_internal_soft_glow",
+    "hard_edges": "none"
+  },
+  "visual_language": {
+    "aesthetic": "minimalist_non_instrumented",
+    "technology_expression": "implied_not_exposed",
+    "interface_visibility": "latent_until_engaged"
+  },
+  "lighting": {
+    "source": "ambient_subsurface_emission",
+    "color": "soft_violet_with_neutral_white_blend",
+    "behavior": "slow_responsive_pulsing",
+    "shadow": "diffuse_nearly_shadowless"
+  },
+  "navigation_system": {
+    "controller": "ALARA",
+    "interaction_mode": "coherence_based_not_manual",
+    "feedback_type": [
+      "light_pattern_shift",
+      "subtle_spatial_distortion",
+      "resonance_field_response"
+    ]
+  },
+  "resonance_behavior": {
+    "idle_state": "calm_uniform_glow",
+    "active_state": {
+      "pattern": "concentric_and_radial_light_forms",
+      "intensity": "moderate_to_high",
+      "synchronization": "linked_to_crew_alignment"
+    }
+  },
+  "perceptual_effects": {
+    "spatial_feel": "slightly_larger_inside_than_out",
+    "acoustic": "dampened_soft_resonance",
+    "emotional_read": "observant_non_intrusive"
+  },
+  "must_not": [
+    "include_traditional_controls",
+    "have_visible_screens_or_panels",
+    "look_like_a_bridge_or_cockpit"
+  ],
+  "avoid": [
+    "traditional_controls_or_consoles",
+    "visible_screens_or_panels",
+    "bridge_or_cockpit_aesthetic",
+    "buttons_or_keyboards",
+    "ladders_or_railings_with_grating",
+    "industrial_panel_seams",
+    "sharp_corners_or_geometric_walls"
+  ]
+}

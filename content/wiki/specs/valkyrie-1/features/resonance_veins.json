@@ -1,0 +1,57 @@
+{
+  "feature": "resonance_veins",
+  "classification": "subdermal_energy_and_information_network",
+  "visibility": {
+    "mode": "emissive_subsurface",
+    "clarity": "medium_variable",
+    "depth": "beneath_hull_surface"
+  },
+  "distribution": {
+    "pattern": "branching_non_linear_network",
+    "density": {
+      "high": "central_mass_and_structural_junctions",
+      "low": "outer_edges_and_wingtips"
+    },
+    "flow_direction": "suggestive_not_uniform"
+  },
+  "form_language": {
+    "line_quality": "tapered_organic_threads",
+    "intersection_style": "node_like_convergences",
+    "variation": "thickness_and_intensity_fluctuation"
+  },
+  "color_behavior": {
+    "base": "violet_amethyst",
+    "secondary": "soft_gold_filament",
+    "idle_state": "dim_slow_pulse",
+    "active_state": {
+      "intensity": "high",
+      "pattern": "dynamic_symbolic_reconfiguration",
+      "effect": "constellation_like_or_glyphic_forms"
+    }
+  },
+  "functional_read": {
+    "primary": "energy_distribution",
+    "secondary": "coherence_mapping",
+    "tertiary": "interface_with_harmonic_drive"
+  },
+  "interaction_with_structure": {
+    "with_ventral_array": "curve_and_converge_near_hidden_forms",
+    "with_blind_zones": "divert_and_avoid",
+    "with_command_dome": "increase_density_and_complexity"
+  },
+  "temporal_behavior": {
+    "baseline": "slow_breathing_pulse",
+    "triggered": "rapid_repatterning",
+    "synchronization": "linked_to_crew_emotional_state"
+  },
+  "must_not": [
+    "look_like_circuit_board_traces",
+    "form_perfect_symmetry",
+    "be_evenly_spaced"
+  ],
+  "avoid": [
+    "circuit_board_traces",
+    "perfect_symmetry",
+    "evenly_spaced_lines"
+  ]
+}

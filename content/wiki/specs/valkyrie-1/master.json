@@ -1,0 +1,62 @@
+{
+  "entity": "valkyrie-1",
+  "style_reference": "organic_stingray_leaf_hybrid",
+  "silhouette": {
+    "primary_shape": "stingray_leaf_hybrid",
+    "profile": "swept_forward",
+    "symmetry": "soft_bilateral",
+    "edge_definition": "smooth_continuous",
+    "protrusions": "minimal",
+    "surface_flow": "laminar_curved",
+    "thickness_profile": {
+      "front": "tapered",
+      "mid": "fullest_mass",
+      "rear": "gradual_fade_no_hard_cutoff"
+    }
+  },
+  "hull": {
+    "material_base": "crystalline_alloy",
+    "material_secondary": "bio_synthetic_filaments",
+    "finish": "semi_gloss_organic_sheen",
+    "texture": "subsurface_soft_variation",
+    "paneling": "none_visible",
+    "seams": "none",
+    "elasticity_visual": "skin_like_tension_over_frame"
+  },
+  "color_palette": {
+    "hull": ["pearl_silver", "muted_lilac", "soft_taupe"],
+    "emission": ["violet", "amethyst", "warm_gold"],
+    "accents": "minimal"
+  },
+  "propulsion": {
+    "visible_system": "none",
+    "implication": "motion_without_exhaust",
+    "space_distortion": {
+      "enabled": true,
+      "effect": "subtle_lensing_around_hull_edges"
+    }
+  },
+  "mood": {
+    "tone": "quietly_intelligent",
+    "impression": "withheld_power",
+    "emotional_read": "observant_not_aggressive"
+  },
+  "render_style": {
+    "detail_level": "high",
+    "realism": "cinematic_physical",
+    "avoid": [
+      "hard_edges",
+      "visible_panel_lines",
+      "mechanical_greeble",
+      "overly_symmetrical_repetition",
+      "plastic_surface_look",
+      "hexagonal_hull_plating",
+      "visible_thrusters",
+      "rivets_or_bolts",
+      "industrial_panel_seams",
+      "fighter_jet_silhouette",
+      "knife_like_fins",
+      "star_destroyer_shapes"
+    ]
+  }
+}

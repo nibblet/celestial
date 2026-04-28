@@ -79,6 +79,7 @@ Recovered beneath layered Martian dust during the south trench excavation. Initi
 
 ## Exterior Form
 - **Hull** — crystalline alloy fused with bio-synthetic filaments; seamless, no visible rivets or ports. Etched with veins of resonance-laced material that glow in response to internal alignment, nearby vaults, or shifts in emotional coherence aboard the ship. During harmonic translation events the glow reorganizes into patterns suggestive of ancient symbols or constellations.
+- **Form language** — organic and flowing, never crystalline-spiky. Surfaces read as smooth biological plates rather than mechanical panels. The crystalline alloy is interior substrate; what is visible is the bio-synthetic skin. No protruding spikes, no sharp dorsal points, no faceted greebling. Curvature dominates: every edge softens into the next. Reads closer to a marine creature in flight than to architecture.
 - **Silhouette** — swept-forward profile, evoking a stingray or leaf blade in flight.
 - **Side fins and ventral arrays** — appear inert but may act as sensory harmonics receivers.
 - **No visible propulsion** — movement occurs through resonance-triggered spatial translation via the [[harmonic-drive]].
@@ -110,6 +111,46 @@ Currently supports 12 humans, but internal volume and layout suggest capacity fo
 - Some systems reject analytical or coercive behavior.
 - The technical interface is **non-instructional** — it must be interpreted through action, presence, or alignment.
 - The ship remains partially inaccessible and adaptive; it continues to change as resonance with the crew deepens.
+
+## Harmonic States
+The hull's resonance veins do not glow with a fixed color. Their palette and pattern are state-dependent, driven by the ship's narrative and emotional condition. Each state is a distinct visual mode and should be honored in any render.
+
+| State | Trigger | Vein color | Pattern behavior |
+|---|---|---|---|
+| **Dormant** | grounded, unawakened, low resonance (CH01 buried) | faint cyan, mostly extinguished | thin tracery only, most of hull dark |
+| **Wake / recognition** | first reactivation, "remembering illumination" (CH01–CH02 sunlight response) | cyan + warm gold mixed | scattered points blooming along major channels |
+| **Active / cruising** | nominal flight, crew aboard, no special event | bright cyan-teal | full circulatory network lit, steady pulse |
+| **Alignment / scanned** | post-resonance handshake with a vault (CH03–CH04) | violet-purple | patterns reorganize into geometric symbols, glyph-like |
+| **Harmonic-jump** | mid-Drive translation (CH08, CH17) | silver-white iridescent | hull appears partly translucent, fibrous, dematerializing |
+| **Glyphic / mythic** | observation deck POV during constellation alignment | full spectrum, constellation-mapped | patterns map onto ancient symbols and starfields |
+
+Transitions are organic, never abrupt. A render that depicts the ship MUST commit to one state; mixed-state renders are non-canon.
+
+## Visual Bible
+The Valkyrie visual bible is a coordinated set of canonical shots, generated and approved as a tree so identity and palette propagate via continuity. The infographic format (annotated views with callouts) is the master deliverable shape; the form language above is the subject canon.
+
+**Tier 1 — Hero / scale**
+- `exterior_buried` — half-emerged from Martian rock, dawn light, **dormant** state
+- `exterior_excavated` — fully exposed at dig site, human silhouette for scale, **wake** state
+- `silhouette_schematic` — swept-forward orthographic with annotations (top/side/front views)
+
+**Tier 2 — Concentric rings (named decks/spaces)**
+- `command_dome` — half-dome chamber, five glyph-reactive terminals, [[resonant-pad]] central, **alignment** state
+- `observation_deck` — "The Eye," full celestial dome, **glyphic** state
+- `living_quarters` — rounded cornerless rooms reshaping to occupant
+- `sensorium` — voice-reactive glyph walls
+- `mess_commons` — warm-toned asymmetrical, glyph patterns flickering with mood
+- `translation_bay` — vault-glyph decryption chamber, dim until purposeful
+- `vault_interface_annex` — resonance-reactive testing chamber
+- `systems_nexus` — glyph-lit ring corridor, ALARA's strands pulsing
+
+**Tier 3 — Detail / props**
+- `hull_vein_detail` — close-up of resonance-laced wall material in **active** state
+- `command_chair_alone` — bioluminescent command chair detail
+- `the_key_artifact` — handheld resonance device (cross-references [[the-key]] when canonized)
+- `harmonic_drive_core` — abstract glow signature of the drive in **harmonic-jump** state
+
+Each shot inherits identity continuity from its parent (Tier 1 anchors Tier 2; Tier 2 anchors Tier 3). State assignments above are canonical and must be honored.
 
 ## Guiding Principle
 Valkyrie-1 was not built to serve. It was built to respond. Every surface, chamber, and contour reflects that principle — meaning is mirrored back, not given. Its purpose is not only propulsion, but transformation.

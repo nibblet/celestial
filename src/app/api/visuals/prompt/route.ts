@@ -52,6 +52,8 @@ export async function POST(request: Request) {
     stylePreset?: StylePresetKey;
     aspect?: VisualAspect;
     intent?: VisualIntent;
+    view?: string;
+    state?: string;
   };
   try {
     body = await request.json();
@@ -95,6 +97,8 @@ export async function POST(request: Request) {
       stylePreset,
       aspect,
       intent,
+      view: body.view?.trim() || undefined,
+      state: body.state?.trim() || undefined,
       userId: auth.userId,
     });
     return Response.json({

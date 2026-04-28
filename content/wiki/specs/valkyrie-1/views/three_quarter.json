@@ -1,0 +1,59 @@
+{
+  "view_type": "3/4_perspective",
+  "camera": {
+    "angle": "front_left_three_quarter",
+    "elevation_degrees": 12,
+    "fov": 65,
+    "lens_type": "anamorphic",
+    "distance": "medium_hero",
+    "framing": "ship_centered_with_forward_bias",
+    "focus": "deep"
+  },
+  "surface_features": {
+    "blind_zones": {
+      "presence": true,
+      "location": "irregular_patches_along_mid_and_rear_sections",
+      "appearance": "smooth_sealed_opaque",
+      "readability": "none"
+    },
+    "ventral_arrays": {
+      "visibility": "partially_hidden_in_3_4_view",
+      "shape": "soft_fin_like_undulations",
+      "function_visual": "passive_sensor_structures"
+    },
+    "dorsal_region": {
+      "form": "slightly_raised_flowing_ridge",
+      "integration": "blended_no_hard_edges"
+    }
+  },
+  "command_dome_external_hint": {
+    "visibility": "subtle_internal_hint",
+    "location": "upper_forward_quadrant",
+    "external_expression": "translucent_curvature_shift",
+    "interior_glow": "faint_radial_pattern"
+  },
+  "lighting": {
+    "primary_source": {
+      "type": "stellar",
+      "temperature": "cool_white",
+      "direction": "rear_right"
+    },
+    "secondary_source": {
+      "type": "planetary_bounce",
+      "temperature": "neutral_blue",
+      "direction": "below_left"
+    },
+    "practical_emission": "resonance_veins",
+    "shadow_quality": "soft_gradual_falloff",
+    "specular_behavior": "controlled_no_harsh_hotspots"
+  },
+  "environment": {
+    "setting": "deep_space_orbit",
+    "background_elements": [
+      "partial_planet_horizon",
+      "sparse_starfield",
+      "light_nebula_haze"
+    ],
+    "scale_reference": "planet_curvature_subtle"
+  }
+}

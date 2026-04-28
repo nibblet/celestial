@@ -42,6 +42,8 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
   const [stylePreset, setStylePreset] = useState(presets[0]?.key ?? "cinematic_canon");
   const [aspect, setAspect] = useState<(typeof ASPECTS)[number]>("16:9");
   const [intent, setIntent] = useState<(typeof INTENTS)[number]>("establishing_shot");
+  const [view, setView] = useState("");
+  const [state, setState] = useState("");
   const [seed, setSeed] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -74,6 +76,8 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
           stylePreset,
           aspect,
           intent,
+          view: view.trim() || undefined,
+          state: state.trim() || undefined,
         }),
       });
       const json = await res.json();
@@ -308,6 +312,22 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
                 </option>
               ))}
             </select>
+          </Field>
+          <Field label="View (optional, matches content/wiki/specs/<id>/views/<view>.json)">
+            <input
+              value={view}
+              onChange={(e) => setView(e.target.value)}
+              placeholder="e.g. three_quarter, orthogonal, top, side, front, ventral"
+              className={inputCls}
+            />
+          </Field>
+          <Field label="State (optional, matches content/wiki/specs/<id>/states/<state>.json)">
+            <input
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+              placeholder="e.g. dormant, active, alignment, harmonic_jump"
+              className={inputCls}
+            />
           </Field>
           <Field label="Seed (optional, locks identity across re-rolls)" full>
             <input

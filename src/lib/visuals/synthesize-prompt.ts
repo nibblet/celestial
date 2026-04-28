@@ -7,6 +7,7 @@ import { renderCorpusContextForPrompt } from "./corpus-context";
 import { fetchIdentityContinuity, renderIdentityContinuityForPrompt } from "./continuity";
 import { getStylePreset } from "./style-presets";
 import { continuityHashFor, seedHashFor } from "./hash";
+import { composeEntitySpec, renderSpecForPrompt } from "./specs/loader";
 import type {
   StylePresetKey,
   VisualAspect,
@@ -20,7 +21,7 @@ import type {
  * Bump when the system prompt below changes. Combined with corpusVersion in
  * seedHashFor() so cached prompts auto-invalidate on prompt edits.
  */
-const SYNTH_PROMPT_VERSION = "v4";
+const SYNTH_PROMPT_VERSION = "v5";
 const SYNTH_MODEL = "claude-sonnet-4-20250514";
 
 const SYSTEM_PROMPT = `You are a Visual Director for the Celestial corpus.
@@ -40,15 +41,44 @@ CRITICAL — banned in subject/setting/lighting/raw fields:
   demands it. Cinema is lived-in: wear, patina, grime, asymmetry.
 
 REQUIRED — every prompt must include:
-- Specific architectural / material detail: octagonal cross-section, ribbed
-  bulkheads, brushed aluminum panels with screw heads, recessed light
-  channels, exposed conduit, riveted seams, steam grates, etc.
+- Specific material / surface detail relevant to THIS subject. The defaults
+  below apply ONLY when no Visual Spec is provided. When a Visual Spec is
+  provided (see CANON OVERRIDE rules), use ITS material vocabulary instead
+  — never paraphrase, never substitute industrial defaults.
+  Default fallback for industrial / lived-in subjects: octagonal cross-
+  section, ribbed bulkheads, brushed aluminum panels with screw heads,
+  recessed light channels, exposed conduit, riveted seams, steam grates.
 - Specific light sources by type and color temperature: "warm 2700K
   tungsten practicals embedded in handrails, cool 5600K key from
   overhead skylight, hard shadow falloff."
 - Lens + framing specifics: "shot on 50mm anamorphic, eye-level, deep focus
   with foreground railing in silhouette."
 - Strong chiaroscuro by default — name the dark areas as well as the lit.
+
+CANON OVERRIDE — Visual Spec rules (highest priority):
+When a "Visual Spec — CANON OVERRIDE" block appears in your input:
+1. The spec is BINDING. It describes the canonical visual identity of this
+   subject. Treat every field as authoritative.
+2. Transcribe spec field VALUES verbatim into identity_anchors and into
+   the raw prompt. "silhouette.primary_shape: stingray_leaf_hybrid"
+   becomes the identity_anchor "stingray_leaf_hybrid silhouette" and
+   appears literally in the raw prompt's subject description.
+3. The spec OVERRIDES the industrial defaults above. If the spec says
+   "paneling: none, seams: none" — do NOT add panels, rivets, hexagonal
+   plating, or industrial seams to subject/setting/raw. Even though those
+   defaults usually apply, the spec wins.
+4. Move every entry from the spec's "avoid" array into the negative array.
+5. The spec's color_palette is canon — the subject's hull colors come
+   from spec.color_palette.hull, not from the model's "ship in space"
+   priors.
+6. When spec features (resonance_veins, ventral_array, blind_zones, etc.)
+   are present, weave their behaviors into the subject and lighting fields.
+   "subdermal_emission" means light comes from BENEATH the surface — render
+   accordingly, not as surface decals.
+7. If a spec field uses snake_case tokens (e.g. "violet_amethyst",
+   "subdermal_emission"), translate to natural language IN THE RAW PROMPT
+   ("violet-amethyst", "subdermal emission") but keep the snake_case
+   tokens in identity_anchors so they remain stable cache keys.
 
 If the subject is non-humanoid or environmental (an AI, a place, a ship's
 spirit), treat THE SETTING as the protagonist: load it with cinematic
@@ -124,6 +154,10 @@ export type SynthesizeVisualPromptInput = {
   stylePreset: StylePresetKey;
   aspect: VisualAspect;
   intent: VisualIntent;
+  /** Optional view name for spec composition — defaults to 'three_quarter'. */
+  view?: string;
+  /** Optional state name for spec composition — e.g. 'alignment', 'dormant'. */
+  state?: string;
   userId?: string | null;
 };
 
@@ -137,6 +171,26 @@ export async function synthesizeVisualPrompt(
   input: SynthesizeVisualPromptInput,
 ): Promise<SynthesizeVisualPromptResult> {
   const continuityIdentity = await fetchIdentityContinuity(input.target);
+
+  // Compose entity Visual Spec (master + view + state + features). When the
+  // entity has spec JSONs under content/wiki/specs/{slug}/, this becomes
+  // the canon override that drives the prompt; otherwise spec is null and
+  // the synthesizer falls back to corpus + continuity only.
+  const entitySpec =
+    input.target.kind === "entity" && input.target.id
+      ? composeEntitySpec({
+          entitySlug: input.target.id,
+          view: input.view,
+          state: input.state,
+        })
+      : null;
+
+  // Spec hash gets folded into seed_hash so cache invalidates whenever any
+  // spec layer changes — same way corpusVersion + continuityHash work.
+  const specToken = entitySpec
+    ? `${entitySpec.hash}:${input.view ?? "three_quarter"}:${input.state ?? "_"}`
+    : "";
+
   const seedHash = seedHashFor({
     target: input.target,
     stylePreset: input.stylePreset,
@@ -145,7 +199,7 @@ export async function synthesizeVisualPrompt(
     corpusVersion: input.context.corpusVersion,
     synthModel: SYNTH_MODEL,
     synthPromptVersion: SYNTH_PROMPT_VERSION,
-    continuityHash: continuityHashFor(continuityIdentity),
+    continuityHash: `${continuityHashFor(continuityIdentity)}|${specToken}`,
   });
 
   const admin = createAdminClient();
@@ -172,6 +226,11 @@ export async function synthesizeVisualPrompt(
     ? renderIdentityContinuityForPrompt(continuityIdentity)
     : "";
 
+  // Visual Spec block sits ABOVE corpus passages because it's canon-binding
+  // and must dominate the visual director's attention. Corpus is used to
+  // pick narrative beats; spec dictates form/material/palette.
+  const specBlock = entitySpec ? renderSpecForPrompt(entitySpec) : "";
+
   const userMessage = [
     `Style preset: ${preset.label}`,
     `Brief: ${preset.brief}`,
@@ -179,8 +238,12 @@ export async function synthesizeVisualPrompt(
     `Preset negatives (include in negative): ${preset.negative.join("; ")}`,
     `Aspect: ${input.aspect}`,
     `Intent: ${input.intent}`,
+    input.view ? `View: ${input.view}` : "",
+    input.state ? `State: ${input.state}` : "",
     input.target.focus ? `Focus: ${input.target.focus}` : "",
     "",
+    specBlock,
+    specBlock ? "" : null,
     continuityBlock,
     continuityBlock ? "" : null,
     "Corpus passages:",
