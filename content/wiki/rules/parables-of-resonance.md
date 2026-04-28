@@ -24,7 +24,8 @@ _(auto-generated; review and expand.)_
 ## Lore metadata
 
 **Content type:** rule
-**Subkind:** concept
+**Subkind:** parable
+**Status:** active
 **Source type:** canon_inventory
 **Canon status:** canonical
 **Visibility policy:** always_visible

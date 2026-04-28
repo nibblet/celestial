@@ -25,6 +25,7 @@ _(auto-generated; review and expand.)_
 ## Lore metadata
 
 **Content type:** location
+**Superset:** [[earth]]
 **Parent slug:** earth
 **Source type:** canon_inventory
 **Canon status:** canonical

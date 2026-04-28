@@ -6,6 +6,7 @@
 ## Statuses
 - `found` — Issue identified, no plan yet
 - `planned` — Fix plan written (see plan file path)
+- `parked` — Not currently targeted (kept for historical context)
 - `resolved` — Fix confirmed in codebase (check git log)
 
 ---
@@ -13,110 +14,122 @@
 ## Open Issues
 
 ### [FIX-044] Migration 035 RLS Policies Check `role = 'keith'` on Visual Tables
-- **Status:** planned
+- **Status:** resolved
 - **Severity:** Medium — author accounts cannot insert or update rows in `cel_visual_prompts` or `cel_visual_assets` at the DB layer, even after FIX-043 fixes the application-layer check. Four INSERT/UPDATE policies in migration 035 check `p.role = 'keith' or p.role = 'admin'`; author role is `'author'`.
 - **Found:** 2026-04-28 (Run 16)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-044-visual-migration-035-keith-rls.md`
-- **Summary:** Create `supabase/migrations/039_visual_rls_keith_to_author.sql` to drop the four stale policies and recreate them with `'author'` instead of `'keith'`. Append-only; no edits to existing migrations. Next migration after 039: **040**.
+- **Resolved:** 2026-04-28 (Run 16)
+- **Summary:** Implemented `supabase/migrations/039_visual_rls_keith_to_author.sql` to drop the four stale policies and recreate them with `'author'` instead of `'keith'`. Verified in repo with lint/build/tests green.
 
 ---
 
 ### [FIX-043] `requireKeith()` in Visuals API Routes Blocks Author Accounts
-- **Status:** planned
+- **Status:** resolved
 - **Severity:** Medium-High — the entire visuals feature (prompt synthesis, asset generation, approval, reference upload, delete) is inaccessible to `role = 'author'` accounts. All 5 mutation API routes and the admin console page define an inline `requireKeith()` function checking `["admin", "keith"].includes(profile.role)`. Author role is `'author'`.
 - **Found:** 2026-04-28 (Run 16)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-043-visuals-routes-keith-role.md`
-- **Summary:** In each of the 5 visuals mutation routes (`prompt`, `generate`, `approve`, `asset/[id]`, `reference`) and `profile/admin/visuals/page.tsx`, change `["admin", "keith"]` → `["admin", "author"]` in the role check. Six-file change; no new logic. Optional follow-up: extract to shared `requireAuthor()` helper (IDEA-040).
+- **Resolved:** 2026-04-28 (Run 16)
+- **Summary:** Updated all 5 visuals mutation routes (`prompt`, `generate`, `approve`, `asset/[id]`, `reference`) plus `profile/admin/visuals/page.tsx` from `["admin", "keith"]` to `["admin", "author"]`. Verified in repo with lint/build/tests green.
 
 ---
 
 ### [FIX-042] Character Arc AI Context Injects Spoilery Sections Without Reader Progress Filter
-- **Status:** planned
+- **Status:** parked
 - **Severity:** P1 — chapter-gating gap in AI context. `getCharacterArcContext()` in `prompts.ts` injects `unresolvedTensions` and `futureQuestions` sections for all 9 characters into every Ask system prompt without reader progress filtering. These sections contain spoilery arc-endpoint hints (e.g., "Can a merged ALARA still refuse" = CH17 merge; "once CAEDEN's occupation becomes visible" = CH16+ event). The Reader Progress Gate is a prompt-level instruction only.
 - **Found:** 2026-04-27 (Run 15)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-042-arc-context-spoiler-sections.md`
 - **Summary:** Remove `unresolvedTensions` and `futureQuestions` from the arc context block built in `getCharacterArcContext()` (`prompts.ts` lines ~181–184). Retain `startingState` and `askGuidance`, which are designed to be safe. The two dropped sections are still shown on the author-only `/arcs/[slug]` page (after FIX-041). Two-line deletion; no new logic required.
+- **Parking note:** Parked after product-direction change to companion-first default visibility (reader-progress gating no longer primary UX path).
 
 ---
 
 ### [FIX-041] `/arcs` and `/arcs/[slug]` Pages Expose Full Arc Spoilers to All Readers
-- **Status:** planned
+- **Status:** parked
 - **Severity:** P0 — spoiler leak. Any authenticated reader can access `/arcs/alara` and read verbatim CH17 events ("Translation completes; ALARA is no longer singular"). The arc detail page renders `arc.markdown` unfiltered via `StoryMarkdown`. Both `/arcs/page.tsx` and `/arcs/[slug]/page.tsx` were added in commit `724d66b` with zero auth checks. `/characters/[slug]/page.tsx` links all readers to the arc detail page via `CharacterArcPanel`.
 - **Found:** 2026-04-27 (Run 15)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-041-arcs-page-author-gating.md`
 - **Summary:** Add `hasAuthorSpecialAccess()` gate to both arc pages (redirect non-authors to `/`). Remove the `CharacterArcPanel` link for non-author readers in `characters/[slug]/page.tsx`. Pattern: same as `/beyond/page.tsx` (import `getAuthenticatedProfileContext`, check `isAuthorSpecialAccess`, redirect if false). Three-file change.
+- **Parking note:** Parked after product-direction change to companion-first default visibility (reader-progress gating no longer primary UX path).
 
 ---
 
 ### [FIX-039] `getJourneyContextForPrompt` Injects Locked Chapter Summaries into AI Prompt
-- **Status:** planned
+- **Status:** resolved
 - **Severity:** P2 — secondary chapter-gating gap. When a reader passes `journeySlug` to the Ask API, `getJourneyContextForPrompt()` iterates ALL story IDs in the journey and injects each story's `title` and `summary` (opening paragraph of the chapter) into every AI persona system prompt, regardless of reader progress. A CH01 reader asking with `journeySlug: "directive-14"` has CH08–CH14 opening paragraphs in the AI context.
 - **Found:** 2026-04-25 (Run 13)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-039-journey-context-prompt-story-gating.md`
-- **Summary:** Add `readerProgress?: ReaderProgress | null` parameter to `getJourneyContextForPrompt` in `prompts.ts`. Filter story iteration to `isStoryUnlocked(id, readerProgress)`. Update the call site in `perspectives.ts` `sharedContentBlock` to pass `args.readerProgress`. Re-reader and no-`readerProgress` paths unaffected (optional param defaults to `undefined`).
+- **Resolved:** 2026-04-28 (Run 16)
+- **Summary:** Implemented `readerProgress?: ReaderProgress | null` in `getJourneyContextForPrompt` (`prompts.ts`), added `isStoryUnlocked(...)` filtering during journey story iteration, and passed `args.readerProgress` at the `perspectives.ts` call site. Optional/no-progress paths remain backward compatible.
 
 ---
 
 ### [FIX-038] Journey Beats in Ask Orchestrator Not Filtered by Reader Progress
-- **Status:** planned
+- **Status:** parked
 - **Severity:** P1 — chapter-gating gap in the Ask AI context layer. When a reader sends `journeySlug` to the `/api/ask` endpoint, the orchestrator fetches ALL published beats via `listBeatsByJourney()` and injects them into every AI persona system prompt without filtering by reader progress. Beat `whyItMatters` text contains verbatim story events from named chapters. FIX-032 covers the journey page BeatTimeline rendering; this fix covers the orchestrator/AI path specifically noted as "FIX-032 in Ask path too" in STATUS.md but absent from FIXPLAN-FIX-032.
 - **Found:** 2026-04-25 (Run 13)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-038-orchestrator-journey-beats-gating.md`
 - **Summary:** In `src/lib/ai/orchestrator.ts` `buildPromptArgs()`, filter `journeyBeats` by `isStoryUnlocked(b.chapterId, readerProgress)` before mapping them into `PersonaPromptArgs.beats`. `readerProgress` is already in scope; `isStoryUnlocked` is already imported. One filter chain addition.
+- **Parking note:** Parked after product-direction change to companion-first default visibility (reader-progress gating no longer primary UX path).
 
 ---
 
 ### [FIX-036] `storySlug` Not Validated Against Reader Progress in Ask API — P0 Spoiler Leak
-- **Status:** planned
+- **Status:** parked
 - **Severity:** P0 — spoiler leak. Any authenticated reader can pass a locked chapter's slug in the Ask API POST body and receive that chapter's story body (first 3 000 chars), mission log entries (up to 600 chars each), and scene data injected into the AI system prompt. The AI's "Reader Progress Gate" instruction is a prompt-level hint, not a code gate.
 - **Found:** 2026-04-24 (Run 12)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-036-ask-story-slug-spoiler-gate.md`
 - **Summary:** In `src/app/api/ask/route.ts`, `storySlug` is destructured from the request body and passed to `orchestrateAsk` without checking `isStoryUnlocked(storySlug, readerProgress)`. Fix: add one validation statement after `getReaderProgress()` and use `validatedStorySlug` in the orchestrate call. Re-reader (`show_all_content=true`) and unlocked-chapter paths are unaffected.
+- **Parking note:** Parked after product-direction change to companion-first default visibility (reader-progress gating no longer primary UX path).
 
 ---
 
 ### [FIX-037] `andes-glacial-lake.md` Missing `**Superset:**` in Lore Metadata — Test Failures
-- **Status:** planned
+- **Status:** resolved
 - **Severity:** Low — tests 113 and 117 fail; no runtime impact.
 - **Found:** 2026-04-24 (Run 12)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-037-andes-glacial-lake-superset.md`
-- **Summary:** New location file `content/wiki/locations/andes-glacial-lake.md` (seeded by `seed-canon-entities.ts` in commit `145a753`) has `parent="earth"` in its canon dossier but is missing `**Superset:** [[earth]]` in the Lore metadata section. The canon-hubs and canon-integrity tests require these to match. No `<!-- generated:ingest -->` marker — safe to edit directly. One-line content fix.
+- **Resolved:** 2026-04-28 (Run 16)
+- **Summary:** Added `**Superset:** [[earth]]` to `content/wiki/locations/andes-glacial-lake.md`. Also fixed related location metadata gaps found during verification (`asteroid-belt`, `europa`, `ganymede`) so canon-hubs checks pass.
 
 ---
 
 ### [FIX-035] Vault Detail Pages Leak Story IDs Without Chapter Gating
-- **Status:** planned
+- **Status:** parked
 - **Severity:** P1 — chapter-gating gap. Vault entities extract `memoirStoryIds` from `## Appearances` sections via the `(CH0X)` pattern. `/vaults/[slug]/page.tsx` uses `FictionEntityDetailPage` without passing `readerProgress`, so all story links render to all readers unfiltered.
 - **Found:** 2026-04-23 (Run 11)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-035-vault-detail-story-gating.md`
 - **Summary:** Same root cause as FIX-031 (factions/locations/artifacts). `vault-002` has CH06 in Appearances and CH11 in Additional appearances; these render as story links regardless of reader progress. Fix: fetch `getReaderProgress()` in `/vaults/[slug]/page.tsx` and pass as `readerProgress` prop to `FictionEntityDetailPage`. Coordinate with FIX-031 since both touch `FictionEntityViews.tsx`.
+- **Parking note:** Parked after product-direction change to companion-first default visibility (reader-progress gating no longer primary UX path).
 
 ---
 
 ### [FIX-034] `parables-of-resonance.md` Missing `**Status:**` in Lore Metadata — Test Failure
-- **Status:** planned
+- **Status:** resolved
 - **Severity:** Low — test 114 fails (was test 110 in Run 11, renumbered by new tests); no runtime impact. Content inconsistency: canon dossier says `subkind="parable"` but Lore metadata says `**Subkind:** concept` and lacks `**Status:**`.
 - **Found:** 2026-04-23 (Run 11)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-034-parables-status-field.md`
-- **Summary:** `content/wiki/rules/parables-of-resonance.md` Lore metadata section: change `**Subkind:** concept` → `**Subkind:** parable` and add `**Status:** active`. No `<!-- generated:ingest -->` marker — safe to edit directly.
+- **Resolved:** 2026-04-28 (Run 16)
+- **Summary:** Updated `content/wiki/rules/parables-of-resonance.md` Lore metadata to `**Subkind:** parable` and added `**Status:** active`. Also corrected the same metadata mismatch in `content/wiki/rules/vault-parables.md` found during verification so all parable-status checks pass.
 
 ---
 
 ### [FIX-032] BeatTimeline Leaks Locked Chapter Content on Journey Pages
-- **Status:** planned
+- **Status:** parked
 - **Severity:** P0 — chapter content leak via BeatTimeline. Beat summaries/titles contain verbatim story content and character developments from specific locked chapters. A reader at CH01 can see CH11 story content on the journey intro page.
 - **Found:** 2026-04-22 (Run 10)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-032-beat-timeline-chapter-gating.md`
 - **Summary:** `src/app/journeys/[slug]/page.tsx` fetches ALL published beats via `listBeatsByJourney()` and passes them unfiltered to `BeatTimeline`. The directive-14 journey has beats for CH08–CH14 with summaries that contain actual story events. Fix: fetch `getReaderProgress()` in the journey page and filter beats to `isStoryUnlocked(beat.chapterId, progress)` before passing to BeatTimeline.
+- **Parking note:** Parked after product-direction change to companion-first default visibility (reader-progress gating no longer primary UX path).
 
 ---
 
 ### [FIX-031] Fiction Entity Detail Pages Leak Future Chapter IDs
-- **Status:** planned
+- **Status:** parked
 - **Severity:** P1 — chapter-gating gap. Faction/location/artifact detail pages show story IDs from locked chapters without gating. Characters are correctly gated; other entity types are not.
 - **Found:** 2026-04-22 (Run 10)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-031-fiction-entity-story-gating.md`
 - **Summary:** `FictionEntityDetailPage` in `FictionEntityViews.tsx` renders `memoirStoryIds` and `interviewStoryIds` without `isStoryUnlocked()` filtering. Used by `/factions/[slug]`, `/locations/[slug]`, and `/artifacts/[slug]`. Fix: add `readerProgress` prop to `FictionEntityDetailPage` and filter story IDs before rendering; update the three page files to fetch and pass progress.
+- **Parking note:** Parked after product-direction change to companion-first default visibility (reader-progress gating no longer primary UX path).
 
 ---
 

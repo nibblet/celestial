@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { chapterNumberFromStoryId } from "@/lib/wiki/story-ids";
+import { storiesData } from "@/lib/wiki/static-data";
 
 export const READER_CHAPTER_COOKIE = "celestial_ch";
 
@@ -24,6 +25,16 @@ function maxChapterFromStoryIds(storyIds: string[]): number {
   return max;
 }
 
+function getChapterStoryIds(): string[] {
+  return storiesData
+    .filter((story) => /^CH\d+/i.test(story.storyId))
+    .map((story) => story.storyId);
+}
+
+export function getCompanionDefaultChapterNumber(): number {
+  return maxChapterFromStoryIds(getChapterStoryIds());
+}
+
 export function isStoryUnlocked(
   storyId: string,
   progress: ReaderProgress
@@ -43,12 +54,16 @@ export async function getReaderProgress(): Promise<ReaderProgress> {
   const cookieStore = await cookies();
   const cookieChapter = cookieStore.get(READER_CHAPTER_COOKIE)?.value || "CH00";
   const cookieChapterNum = chapterNumberFromStoryId(cookieChapter) ?? 0;
+  // Product direction shift: Celestial is now a companion-first app.
+  // Default progression should expose the full published story set.
+  const defaultChapterNum = getCompanionDefaultChapterNumber();
+  const defaultReadStoryIds = getChapterStoryIds();
 
   if (!user) {
     return {
-      readStoryIds: [],
-      currentChapter: chapterIdForNumber(cookieChapterNum),
-      currentChapterNumber: cookieChapterNum,
+      readStoryIds: defaultReadStoryIds,
+      currentChapter: chapterIdForNumber(Math.max(cookieChapterNum, defaultChapterNum)),
+      currentChapterNumber: Math.max(cookieChapterNum, defaultChapterNum),
       showAllContent: false,
     };
   }
@@ -62,9 +77,11 @@ export async function getReaderProgress(): Promise<ReaderProgress> {
       .maybeSingle(),
   ]);
 
-  const readStoryIds = (reads ?? []).map((row) => row.story_id);
+  const readStoryIdsFromDb = (reads ?? []).map((row) => row.story_id);
+  const readStoryIds =
+    readStoryIdsFromDb.length > 0 ? readStoryIdsFromDb : defaultReadStoryIds;
   const maxFromReads = maxChapterFromStoryIds(readStoryIds);
-  const currentChapterNumber = Math.max(maxFromReads, cookieChapterNum);
+  const currentChapterNumber = Math.max(maxFromReads, cookieChapterNum, defaultChapterNum);
   return {
     readStoryIds,
     currentChapter: chapterIdForNumber(currentChapterNumber),

@@ -1,6 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { isStoryUnlocked, type ReaderProgress } from "@/lib/progress/reader-progress";
+import {
+  getCompanionDefaultChapterNumber,
+  isStoryUnlocked,
+  type ReaderProgress,
+} from "@/lib/progress/reader-progress";
 
 const baseProgress: ReaderProgress = {
   readStoryIds: ["CH01", "CH02", "CH03"],
@@ -21,4 +25,13 @@ test("isStoryUnlocked blocks future chapters unless showAllContent is true", () 
     isStoryUnlocked("CH06", { ...baseProgress, showAllContent: true }),
     true
   );
+});
+
+test("companion defaults to latest published chapter unlocked", () => {
+  const defaultChapterNumber = getCompanionDefaultChapterNumber();
+  assert.ok(defaultChapterNumber > 0);
+  assert.equal(isStoryUnlocked("CH01", {
+    ...baseProgress,
+    currentChapterNumber: defaultChapterNumber,
+  }), true);
 });

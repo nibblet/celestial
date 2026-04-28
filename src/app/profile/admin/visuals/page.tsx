@@ -22,7 +22,7 @@ export default async function AdminVisualsPage() {
     .eq("id", user.id)
     .single();
 
-  if (!profile || !["admin", "keith"].includes(profile.role)) {
+  if (!profile || !["admin", "author"].includes(profile.role)) {
     redirect("/profile");
   }
 

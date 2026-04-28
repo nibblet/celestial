@@ -22,6 +22,7 @@ _(auto-generated; review and expand.)_
 ## Lore metadata
 
 **Content type:** location
+**Superset:** [[location:solar-system]]
 **Source type:** canon_inventory
 **Canon status:** canonical
 **Visibility policy:** always_visible

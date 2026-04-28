@@ -3,6 +3,7 @@ import * as path from "path";
 import type { AgeMode } from "@/types";
 import { book } from "@/config/book";
 import type { ReaderProgress } from "@/lib/progress/reader-progress";
+import { isStoryUnlocked } from "@/lib/progress/reader-progress";
 import { getJourneyBySlug } from "@/lib/wiki/journeys";
 import {
   getAllCanonicalPrinciples,
@@ -522,7 +523,10 @@ export function getStoryContext(storyId: string): string {
   return fs.readFileSync(path.join(dir, file), "utf-8");
 }
 
-export function getJourneyContextForPrompt(journeySlug: string): string {
+export function getJourneyContextForPrompt(
+  journeySlug: string,
+  readerProgress?: ReaderProgress | null,
+): string {
   const journey = getJourneyBySlug(journeySlug);
   if (!journey) return "";
   const lines = [
@@ -532,6 +536,7 @@ export function getJourneyContextForPrompt(journeySlug: string): string {
     "Stories in this journey (in order):",
   ];
   for (const id of journey.storyIds) {
+    if (readerProgress && !isStoryUnlocked(id, readerProgress)) continue;
     const s = getStoryById(id);
     if (s) lines.push(`- ${s.title} (${id}): ${s.summary}`);
     else lines.push(`- ${id}`);

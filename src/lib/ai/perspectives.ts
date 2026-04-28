@@ -138,7 +138,7 @@ function sharedContentBlock(args: PersonaPromptArgs): string {
     );
   }
   if (args.journeySlug) {
-    const ctx = getJourneyContextForPrompt(args.journeySlug);
+    const ctx = getJourneyContextForPrompt(args.journeySlug, args.readerProgress);
     if (ctx) parts.push(`## Journey Context\n${ctx}`);
   }
   if (args.readerProgress) {
