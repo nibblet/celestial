@@ -3,7 +3,7 @@
 > Ideas backlog with maturity tracking. Two categories: enhance existing features, and new features.
 > **Context note:** This backlog was reset on 2026-04-22 (Run 9) after the Celestial Phase 1 migration.
 > All Keith Cobb memoir-specific ideas from Runs 1–8 have been moved to the Parked section.
-> Last updated: 2026-04-27 (Run 15)
+> Last updated: 2026-04-28 (Run 16)
 
 ## Maturity Levels
 
@@ -18,16 +18,30 @@
 
 ## Category 1: Enhance / Mature / Expand Existing Features
 
-### [IDEA-038] Per-Chapter Character State Reveal on `/characters/[slug]`
+### [IDEA-041] Shared `requireAuthor()` Server Auth Helper
 - **Status:** seed
 - **Category:** enhance
-- **Seeded:** 2026-04-27
-- **Last Updated:** 2026-04-27
+- **Seeded:** 2026-04-28
+- **Last Updated:** 2026-04-28
 - **Priority:** P2
 - **Plan:** *(not yet written)*
-- **Summary:** After FIX-041 gates arc pages to authors only, readers lose visibility into character development beyond the starting state excerpt. A better UX: surface the character's "Current State By Chapter Boundary" entry for the reader's progress on the character detail page — "After CH05: ALARA is no longer only a compliant system" — so readers see only the state earned by their reading. Each arc file has a `## Current State By Chapter Boundary` table with per-boundary reader-safe state descriptions.
+- **Summary:** Extract the repeated inline `requireKeith()` / author-role check into a single shared helper at `src/lib/auth/require-author.ts`. Five visuals routes + two existing admin routes all paste the same ~15 lines of Supabase auth boilerplate. A shared helper prevents the FIX-043 recurrence pattern (new route forgets to update role string) and makes the Celestial author role a single source of truth.
+- **Night Notes:**
+  - 2026-04-28 (Run 16): Seeded in response to FIX-043 (five visuals routes using stale `'keith'` role) and FIX-027/FIX-030 (two earlier admin routes with same bug). A shared `requireAuthor()` helper would return `{ userId }` on success or `{ error, status }` on auth failure — identical interface to the current inline pattern, making the swap mechanical. Estimated 30 min: create helper, replace in 7 files.
+
+---
+
+### [IDEA-038] Per-Chapter Character State Reveal on `/characters/[slug]`
+- **Status:** exploring
+- **Category:** enhance
+- **Seeded:** 2026-04-27
+- **Last Updated:** 2026-04-28
+- **Priority:** P2
+- **Plan:** *(not yet written)*
+- **Summary:** After FIX-041 gates arc pages to authors only, readers lose visibility into character development beyond the starting state excerpt. A better UX: surface the character's "Current State By Chapter Boundary" entry for the reader's progress on the character detail page — "After CH05: ALARA is no longer only a compliant system" — so readers see only the state earned by their reading. Each arc file has a `## Current State By Chapter Boundary` markdown table with per-boundary reader-safe state descriptions.
 - **Night Notes:**
   - 2026-04-27 (Run 15): Seeded. Depends on FIX-041 (arc gating). The `character-arcs.ts` parser currently extracts `startingState`, `unresolvedTensions`, `futureQuestions`, and `askGuidance` via `extractSectionBlock` — a new `currentStateByChapter` field needs to be extracted and parsed into a `{ boundary: string; readerSafeState: string }[]` array. Rendering target: `CharacterArcPanel` in `characters/[slug]/page.tsx` — replace the starting state excerpt with the highest chapter boundary ≤ `currentChapterNumber`. This gives readers a spoiler-safe, progress-gated character state summary. Estimated 1.5 hours.
+  - 2026-04-28 (Run 16): Advanced to `exploring`. Confirmed implementation path: (1) Arc files (`content/wiki/arcs/characters/*.md`) each have a `## Current State By Chapter Boundary` section with a markdown table in `| After CHxx | Reader-Safe State |` format. All 9 arc files share this structure. (2) `character-arcs.ts:50` calls `extractSectionBlock(content, "Starting State")` — same function can extract "Current State By Chapter Boundary" as a raw string. (3) Parse the table with regex: `/^\|\s*(After CH(\d+))\s*\|\s*(.*?)\s*\|$/gm` → `{ chapterNumber: number; state: string }[]`. (4) In `CharacterArcPanel` (line 242 of characters/[slug]/page.tsx), the `arc.startingState` excerpt is rendered — replace with the highest `chapterNumber ≤ readerProgress.currentChapterNumber` entry, or fall back to `startingState` for CH00. (5) `readerProgress` is already available on the page (used for story ref filtering on lines 139, 181). No new API or DB needed. Spoiler safety: the boundary table rows are explicitly labelled "Reader-Safe State" — designed for this exact use. Estimated 1.5 hours.
 
 ---
 
@@ -74,16 +88,17 @@
 ---
 
 ### [IDEA-030] Ask Evidence Inline Citation Chips
-- **Status:** exploring
+- **Status:** planned
 - **Category:** enhance
 - **Seeded:** 2026-04-23
-- **Last Updated:** 2026-04-25
+- **Last Updated:** 2026-04-28
 - **Priority:** P2
-- **Plan:** *(not yet written)*
-- **Summary:** The `ask-evidence.ts` evidence schema extracts `linksInAnswer` (markdown links from the AI response) and `contextSources` (what layers were injected). Currently these only appear in the collapsible evidence debug panel. Surfacing 1–3 inline citation chips in the assistant message bubble itself (e.g. "See: [Vault 002], [The Vessel and the Thread]") would make Ask responses feel grounded and trustworthy for everyday readers without requiring them to expand the panel.
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-030-ask-evidence-citation-chips.md`
+- **Summary:** The `ask-evidence.ts` evidence schema extracts `linksInAnswer` (markdown links from the AI response). Currently these only appear in the collapsible evidence debug panel. Surfacing 1–3 inline citation chip pills directly below the assistant message bubble makes answers feel grounded for everyday readers without requiring panel expansion. Dev plan written.
 - **Night Notes:**
-  - 2026-04-23 (Run 11): Seeded. `AskMessageEvidence.linksInAnswer` already extracted. `evidence.linksInAnswer.slice(0, 3)` would be the source — show as small pill links below the assistant message bubble.
-  - 2026-04-25 (Run 13): Advanced to `exploring`. Confirmed the data flow: `verifyAskAnswer()` returns an `AskMessageEvidence` object with `linksInAnswer: AskEvidenceLink[]`. Each link has `{ text: string; href: string; resolvedKind: string | null }`. The evidence is streamed back to the client as a final SSE event (`data: {...evidence...}`). In `ask/page.tsx`, the `evidence` state is set in the message object. The citation chips would live in `AssistantMessageBubble` (or similar component) — rendered only when `evidence.linksInAnswer.length > 0`. Spoiler safety: `linksInAnswer` is extracted from the AI's own text, which is already gated by the `visibleStories` catalog. No additional gating needed. Estimated 1 hour.
+  - 2026-04-23 (Run 11): Seeded. `AskMessageEvidence.linksInAnswer` already extracted.
+  - 2026-04-25 (Run 13): Advanced to `exploring`. Confirmed data flow: evidence arrives as final SSE event; `msg.evidence.linksInAnswer` available on each completed assistant message object in ask/page.tsx.
+  - 2026-04-28 (Run 16): Advanced to `planned`. Dev plan written. Confirmed exact insertion point in `messages.map` (lines ~705–730 of ask/page.tsx) between the prose div and `AskSourcesDisclosure`. Phase 1 is ~20 lines of JSX; Phase 2 removes the duplicate "Links in this answer" block from inside the disclosure panel. Estimated 0.75 hours.
 
 ---
 
@@ -138,6 +153,19 @@
 
 ## Category 2: New Features or Integrations
 
+### [IDEA-040] "Ask About This Chapter" Quick-Action on Story Detail Pages
+- **Status:** seed
+- **Category:** new
+- **Seeded:** 2026-04-28
+- **Last Updated:** 2026-04-28
+- **Priority:** P2
+- **Plan:** *(not yet written)*
+- **Summary:** Add an "Ask about this chapter" button on `/stories/[storyId]` that opens Ask pre-populated with the chapter slug — the most natural reader entry point for Ask (right after finishing a chapter). Readers currently must navigate away to `/ask` and manually type. The `storySlug` would be pre-set, giving Ask full chapter scene context. Complements IDEA-039 (character-scoped Ask).
+- **Night Notes:**
+  - 2026-04-28 (Run 16): Seeded. Implementation path: add a Link at the bottom of the chapter detail page pointing to `/ask?storySlug=CH07-narrative-tide` (or similar). Ask page already reads `storySlug` from query params via the `highlight` pattern. Check if `storySlug` query param is read; if not, a 1-line addition to the Ask page param reader wires it. The button itself is ~5 lines on the story detail page. Very low complexity — potentially combinable into a single 30-min session with IDEA-032 or IDEA-034.
+
+---
+
 ### [IDEA-039] "Ask About This Character" Quick-Action on Character Detail Pages
 - **Status:** seed
 - **Category:** new
@@ -161,19 +189,6 @@
 - **Summary:** After a reader marks a chapter as read, optionally offer 3 short in-world comprehension prompts ("What was Amar-Cael's goal in this chapter?", "Name one decision that surprised you") generated on-demand by the Ask AI. Responses are ephemeral — the value is in the reader's reflection process, not storing their answers. The chapter body + mission logs are already fed to the AI via the Ask pipeline; this feature just surfaces a new entry point. Gated naturally: the chapter must already be unlocked to trigger it.
 - **Night Notes:**
   - 2026-04-26 (Run 14): Seeded. Trigger point: after `markStoryRead()` succeeds in `StoriesPageClient.tsx`, show a small "Want a quick recall check?" CTA that opens a modal. Modal fetches 3 prompts from a new `/api/stories/[storyId]/recall-prompts` endpoint (author-controlled, AI-generated, cached once per chapter hash). Spoiler safety: prompts generated from only the unlocked chapter's content. Estimated 3 hours (new API route + modal UI + caching). Depends on FIX-036 and IDEA-032 being shipped first.
-
----
-
-### [IDEA-035] Author Chapter Review Dashboard — `/admin/chapter-review`
-- **Status:** seed
-- **Category:** new
-- **Seeded:** 2026-04-25
-- **Last Updated:** 2026-04-25
-- **Priority:** P2
-- **Plan:** *(not yet written)*
-- **Summary:** A browser-based review page at `/admin/chapter-review` (author-gated) that renders each chapter's AI-generated summary and entity tags, with an "Approve" button that sets `reviewed: true` in `chapter_tags.json` via a server action. Companion to IDEA-032 (quality gate) — provides a more ergonomic review UX than the CLI script planned in DEVPLAN-IDEA-032. Works by reading `chapter_tags.json` at request time, rendering each unreviewed entry as a card with the full summary and tag lists, and calling a server action to write the `reviewed` flag back to the JSON file.
-- **Night Notes:**
-  - 2026-04-25 (Run 13): Seeded. Depends on IDEA-032 Phase 1 shipping (the gate must be in place for this to have purpose). Key concern: `chapter_tags.json` is a generated file — if `scripts/tag-chapter-entities.ts` is re-run, `reviewed` flags would be reset. The review dashboard should include a warning about this. Implementation: Server Component reads the JSON, Client Component handles the approve interaction via `use server` action writing the file. Author-gated via `hasAuthorSpecialAccess()`.
 
 ---
 
@@ -224,6 +239,17 @@
 ## Parked
 
 *(Ideas demoted after 3+ days without action, or superseded by Celestial migration.)*
+
+### [IDEA-035] Author Chapter Review Dashboard — `/admin/chapter-review`
+- **Status:** parked
+- **Category:** new
+- **Seeded:** 2026-04-25
+- **Last Updated:** 2026-04-28
+- **Priority:** P2
+- **Summary:** Browser-based `/admin/chapter-review` page for approving chapter tags. Depends on IDEA-032 Phase 1. Stale 3 days — demoting to parked.
+- **Night Notes:**
+  - 2026-04-25 (Run 13): Seeded. Depends on IDEA-032 Phase 1 shipping.
+  - 2026-04-28 (Run 16): Stale 3 days — likely low priority or too complex. Demoting to parked. Un-park after IDEA-032 Phase 1 ships.
 
 ### [IDEA-031] Vault Discovery Map
 - **Status:** parked

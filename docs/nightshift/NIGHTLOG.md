@@ -4,6 +4,66 @@
 
 ---
 
+## Run: 2026-04-28 (Run 16)
+
+### Summary
+- Scanned: 3 code commits since Run 15 — `3ffc33c` (wiki-first Ask retrieval, 1165 insertions), `ce762b7` (merge), `af27957` (corpus-grounded visuals pipeline, 3118 insertions, 30 files, migrations 035–038).
+- Issues: 2 new (FIX-043 Medium-High: requireKeith in visuals routes blocks authors; FIX-044 Medium: migration 035 RLS uses keith role), 1 resolved (FIX-040: dead storyContextRaw fetch gone from orchestrator rewrite). All prior P0/P1 issues unchanged.
+- Ideas: 2 new seeds (IDEA-040 new: "Ask About This Chapter" CTA on story pages; IDEA-041 enhance: shared requireAuthor() helper), 2 advanced (IDEA-030 exploring→planned + dev plan; IDEA-038 seed→exploring), 1 parked (IDEA-035 stale 3 days).
+- Plans written: FIXPLAN-FIX-043, FIXPLAN-FIX-044, DEVPLAN-IDEA-030.
+
+### Build & Lint & Test Results
+- `npm install`: clean
+- `npx next build`: **PASSES** — ~106 routes (+7 new: admin visuals page + 6 visuals API routes). 1 expected Turbopack NFT warning.
+- `npm run lint`: **PASSES** — 0 errors, **4 warnings** (new: `<img>` tags in `VisualsAdminConsole.tsx:226,374` and `EntityVisualsGallery.tsx:64,118`)
+- `npm test`: **188 PASS / 3 FAIL** (191 total — up from 178; +13 new wiki-first retrieval tests all passing)
+  - Test 127: `every location has Superset:` → FIX-037 still open
+  - Test 128: `all parables carry Status` → FIX-034 still open
+  - Test 131: `location Superset: matches canon parent` → FIX-037 still open
+
+### Key Findings
+
+1. **FIX-043 (Medium-High — NEW): Entire visuals system broken for author accounts.** Commit `af27957` introduced 5 visuals mutation API routes and 1 admin console page, all defining an inline `requireKeith()` function that checks `["admin", "keith"].includes(profile.role)`. Celestial's author role is `'author'`, not `'keith'`. Author accounts receive 403 from: `/api/visuals/prompt`, `/api/visuals/generate`, `/api/visuals/approve`, `/api/visuals/asset/[id]`, `/api/visuals/reference`, and `/profile/admin/visuals`. Same pattern as FIX-027 (ai-activity route) and FIX-030 (threads route). Six-file string-swap fix. Plan: FIXPLAN-FIX-043.
+
+2. **FIX-044 (Medium — NEW): Migration 035 RLS uses `role = 'keith'` in 4 policies.** `035_visual_prompts_assets.sql` policies "Keith admin can insert/update visual prompts/assets" all check `p.role = 'keith' or p.role = 'admin'`. Even after FIX-043 fixes the app layer, author accounts would be blocked at the DB layer. Fix: new migration **039** (035–038 consumed by the visuals commit). Plan: FIXPLAN-FIX-044.
+
+3. **FIX-040 RESOLVED: Dead `storyContextRaw` DB fetch is gone.** Commit `3ffc33c` rewrote `orchestrator.ts buildPromptArgs()` around the wiki-first context pack (`createAskContextPack` + `retrieveAskContextItems`). The dead `getCanonicalStoryMarkdown(storySlug)` call is absent from the new code. No more wasted Supabase round-trip on every Ask with a storySlug.
+
+4. **Wiki-first Ask retrieval (Run 16): Correct reader-progress gating confirmed.** `ask-retrieval.ts` receives `readerProgress` and applies `storyIsVisible()` per item. The orchestrator pre-filters `visibleStories` before building retrieval sources. The new architecture is safer than the old one for spoiler gating (retrieval-layer filter, not just prompt-layer instruction). +13 new tests all pass.
+
+5. **FIX-038 still open in new orchestrator.** The `journeyBeats` mapping in `buildPromptArgs()` (new orchestrator, line ~300) still does `.slice(0, N).map(...)` without a preceding `filter(b => isStoryUnlocked(b.chapterId, readerProgress))`. The beats path survived the rewrite unchanged. FIX-038 plan remains valid; add filter before the slice.
+
+6. **FIX-042 still open.** `prompts.ts` `getCharacterArcContext()` lines 181-184 still include `unresolvedTensions` and `futureQuestions`. These were not touched by the wiki-first retrieval rewrite. FIX-042 two-line deletion plan remains valid.
+
+7. **FIX-041 still open.** Both `/arcs/page.tsx` and `/arcs/[slug]/page.tsx` have zero auth checks — confirmed by reading the source. FIX-041 plan remains valid.
+
+8. **`content/voice.md` and `content/decision-frameworks.md` remain stubs.** Neither commit touched these files. Ask quality depends on them. IDEA-024 (parked) flagged this — un-park explicitly when Paul is ready for voice authoring.
+
+9. **Visuals corpus context does NOT apply reader-progress gating** — but this is acceptable since `buildVisualCorpusContext()` is only called from author-gated API routes. The visual director gets full corpus access by design (authorial perspective). No reader-facing spoiler risk.
+
+10. **`EntityVisualsGallery` on entity pages is reader-facing but spoiler-safe.** Shows only approved/reference assets. Images are decorative visual content, not narrative text. `listEntityVisuals` uses `createAdminClient()` and filters to `approved=true OR provider=manual_upload`. No chapter gating needed — entity names/descriptions already visible to all readers.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/FIXPLAN-FIX-043-visuals-routes-keith-role.md` — **NEW Medium-High**: fix requireKeith() → author in 6 files (10 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-044-visual-migration-035-keith-rls.md` — **NEW Medium**: create migration 039 for visual table RLS (10 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-041-arcs-page-author-gating.md` — **P0**: gate arc pages (15 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-036-ask-story-slug-spoiler-gate.md` — **P0**: storySlug validation in Ask API (10 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-032-beat-timeline-chapter-gating.md` — **P0**: BeatTimeline gating on journey page (15 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-042-arc-context-spoiler-sections.md` — **P1**: Remove unresolvedTensions + futureQuestions from arc AI context (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-038-orchestrator-journey-beats-gating.md` — **P1**: filter journey beats in orchestrator (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-037-andes-glacial-lake-superset.md` — restores tests 127+131 (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-034-parables-status-field.md` — restores test 128 (5 min)
+- `docs/nightshift/plans/DEVPLAN-IDEA-030-ask-evidence-citation-chips.md` — **NEW planned**: citation chips below Ask bubbles (45 min)
+- `docs/nightshift/plans/DEVPLAN-IDEA-034-chapter-arc-progress-bar.md` — **ready**: progress bar on /stories (30 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-039-journey-context-prompt-story-gating.md` — P2: gate journey story summaries in AI prompt (20 min)
+
+### Recommendations
+- **If you have 20 min:** FIX-043 + FIX-044 (20 min combined). Unblocks the entire visuals system for author accounts — this is currently completely broken.
+- **If you have 1 hour:** The 20-min batch above + FIX-041 (15 min P0) + FIX-036 (10 min P0) + FIX-042 (5 min P1) + FIX-037 + FIX-034 (5 min each). After this: visuals unblocked, 2 P0 spoiler gaps sealed, arc AI context cleaned, all 3 tests passing.
+- **If you have 2 hours:** The 1-hour batch above + FIX-032 (15 min P0) + FIX-038 (5 min P1) + IDEA-030 (45 min). After this: all P0/P1 spoiler gaps sealed + Ask evidence chips live.
+
+---
+
 ## Run: 2026-04-27 (Run 15)
 
 ### Summary

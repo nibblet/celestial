@@ -1,7 +1,7 @@
 # FIXES — Celestial Interactive Book Companion
 
 > Bug and issue tracker. Updated each nightshift run.
-> Numbering continues from Run 15 (last new entry is FIX-042).
+> Numbering continues from Run 16 (last new entry is FIX-044).
 
 ## Statuses
 - `found` — Issue identified, no plan yet
@@ -11,6 +11,24 @@
 ---
 
 ## Open Issues
+
+### [FIX-044] Migration 035 RLS Policies Check `role = 'keith'` on Visual Tables
+- **Status:** planned
+- **Severity:** Medium — author accounts cannot insert or update rows in `cel_visual_prompts` or `cel_visual_assets` at the DB layer, even after FIX-043 fixes the application-layer check. Four INSERT/UPDATE policies in migration 035 check `p.role = 'keith' or p.role = 'admin'`; author role is `'author'`.
+- **Found:** 2026-04-28 (Run 16)
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-044-visual-migration-035-keith-rls.md`
+- **Summary:** Create `supabase/migrations/039_visual_rls_keith_to_author.sql` to drop the four stale policies and recreate them with `'author'` instead of `'keith'`. Append-only; no edits to existing migrations. Next migration after 039: **040**.
+
+---
+
+### [FIX-043] `requireKeith()` in Visuals API Routes Blocks Author Accounts
+- **Status:** planned
+- **Severity:** Medium-High — the entire visuals feature (prompt synthesis, asset generation, approval, reference upload, delete) is inaccessible to `role = 'author'` accounts. All 5 mutation API routes and the admin console page define an inline `requireKeith()` function checking `["admin", "keith"].includes(profile.role)`. Author role is `'author'`.
+- **Found:** 2026-04-28 (Run 16)
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-043-visuals-routes-keith-role.md`
+- **Summary:** In each of the 5 visuals mutation routes (`prompt`, `generate`, `approve`, `asset/[id]`, `reference`) and `profile/admin/visuals/page.tsx`, change `["admin", "keith"]` → `["admin", "author"]` in the role check. Six-file change; no new logic. Optional follow-up: extract to shared `requireAuthor()` helper (IDEA-040).
+
+---
 
 ### [FIX-042] Character Arc AI Context Injects Spoilery Sections Without Reader Progress Filter
 - **Status:** planned
@@ -27,15 +45,6 @@
 - **Found:** 2026-04-27 (Run 15)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-041-arcs-page-author-gating.md`
 - **Summary:** Add `hasAuthorSpecialAccess()` gate to both arc pages (redirect non-authors to `/`). Remove the `CharacterArcPanel` link for non-author readers in `characters/[slug]/page.tsx`. Pattern: same as `/beyond/page.tsx` (import `getAuthenticatedProfileContext`, check `isAuthorSpecialAccess`, redirect if false). Three-file change.
-
----
-
-### [FIX-040] Dead `storyContextRaw` DB Fetch in Ask Orchestrator — Wasted Latency
-- **Status:** planned
-- **Severity:** Low-Medium — unnecessary Supabase DB call on every Ask request with a `storySlug`; result immediately discarded. Secondary risk: AI prompts use filesystem content instead of DB-canonical version (could diverge if story edited via Beyond).
-- **Found:** 2026-04-26 (Run 14)
-- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-040-dead-story-context-raw-fetch.md`
-- **Summary:** `src/lib/ai/orchestrator.ts buildPromptArgs()` calls `getCanonicalStoryMarkdown(storySlug)` in the `Promise.all` at line 188 and assigns to `storyContextRaw`, then immediately discards with `void storyContextRaw` (line 197). The actual story context used in AI prompts comes from `getStoryContext()` in `perspectives.ts` (filesystem read). Fix: remove the 3 dead lines from the orchestrator. Optional follow-up: wire `storyContextRaw` through properly so prompts always use the DB-canonical version.
 
 ---
 
@@ -197,6 +206,9 @@
 ---
 
 ## Recently Resolved
+
+### [FIX-040] Dead `storyContextRaw` DB Fetch in Ask Orchestrator
+- **Status:** resolved / **Resolved:** 2026-04-28 (Run 16) — commit `3ffc33c` rewrote `orchestrator.ts buildPromptArgs()` with the wiki-first context pack approach. The dead `getCanonicalStoryMarkdown(storySlug)` call is gone.
 
 ### [FIX-033] Vault Alias Resolution Returns Wrong Kind — Test Failure
 - **Status:** resolved
