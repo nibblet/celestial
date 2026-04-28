@@ -1,0 +1,28 @@
+{
+  "state": "harmonic_jump",
+  "display_name": "Harmonic Jump State",
+  "description": "Mid-Drive translation. The hull becomes partially translucent and fibrous as the ship phases through resonance. The vein network blooms in silver-white iridescence with intensified spatial lensing.",
+  "visual_profile": {
+    "hull_color_primary": "translucent_silver_white",
+    "hull_shadow_tone": "iridescent_void",
+    "surface_finish": "fibrous_luminous",
+    "translucency": 0.6
+  },
+  "vein_network": {
+    "intensity": 1.0,
+    "color_palette": ["silver_white_iridescent"],
+    "pattern_mode": "fully_bloomed",
+    "pulse_behavior": "continuous_wave",
+    "visibility": "fully_externalized"
+  },
+  "lighting_behavior": {
+    "emissive_output": "extreme",
+    "edge_glow": "overbright",
+    "ambient_response": "light_bending"
+  },
+  "spatial_effects": {
+    "distortion": 0.9,
+    "lensing": "intense_field_warp",
+    "phase_state": "partial_desynchronization"
+  }
+}

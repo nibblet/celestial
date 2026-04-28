@@ -1,0 +1,25 @@
+{
+  "entity": "specimen-lockers",
+  "parent_entity": "valkyrie-1",
+  "aliases": ["Specimen Storage"],
+  "classification": "human_retrofit_storage_chamber",
+  "ring": "mid_level_systems",
+  "purpose": "rarely-used storage adapted for physical samples; a human retrofit within alien architecture",
+  "spatial_character": {
+    "geometry": "shallow_alcoves_carved_into_curved_wall",
+    "human_retrofit": "cabinet_inserts_visibly_human_built_inside_alien_organic_recesses",
+    "atmosphere": "rarely_disturbed_quiet_dust_settled"
+  },
+  "lighting": {
+    "default_state": "minimal_dim_amber_pearl",
+    "active_state": "soft_warm_glow_when_alcove_is_opened",
+    "color_temperature_emphasis": "warm_amber_practicals_low_overall_intensity"
+  },
+  "avoid": [
+    "morgue_aesthetic",
+    "stainless_steel_drawers",
+    "labelled_specimen_jars",
+    "laboratory_freezer",
+    "industrial_storage_racks"
+  ]
+}

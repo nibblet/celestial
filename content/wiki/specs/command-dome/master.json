@@ -1,5 +1,6 @@
 {
   "entity": "command-dome",
+  "parent_entity": "valkyrie-1",
   "classification": "primary_navigation_and_coherence_interface_space",
   "location": {
     "relative_position": "upper_forward_quadrant",

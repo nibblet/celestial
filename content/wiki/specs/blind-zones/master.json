@@ -1,0 +1,30 @@
+{
+  "entity": "blind-zones",
+  "parent_entity": "valkyrie-1",
+  "aliases": ["Restricted and Dormant Spaces"],
+  "classification": "sealed_unauthorized_threshold",
+  "purpose": "sealed chambers, invisible halls, or unopened structures restricted by ALARA",
+  "spatial_character": {
+    "geometry": "doors_and_thresholds_visible_on_maps_but_unopenable",
+    "behavior": "sometimes_the_door_is_gone_when_you_come_back",
+    "psychological_read": "ship_testing_crew_or_soul_filter_for_unearned_passage",
+    "alara_knowledge": "knows_why_but_will_not_say"
+  },
+  "lighting": {
+    "default_state": "desaturated_charcoal_with_isolated_violet_glyphs",
+    "color_temperature_emphasis": "cold_charcoal_violet_withheld_dim_nonresponsive",
+    "atmosphere": "haunted_but_not_horror_quietly_excluded"
+  },
+  "vein_continuity": {
+    "behavior": "broken_or_diverted_around_blind_zone_areas",
+    "glyphs": "present_but_untranslatable_meaning_does_not_resolve"
+  },
+  "avoid": [
+    "obvious_locked_door_aesthetic",
+    "warning_signage",
+    "hazard_stripes",
+    "industrial_security_door",
+    "keypad_or_lock_mechanism",
+    "any_visible_authorization_interface"
+  ]
+}

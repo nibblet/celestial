@@ -1,0 +1,25 @@
+{
+  "entity": "translation-bay",
+  "parent_entity": "valkyrie-1",
+  "classification": "vault_glyph_decryption_chamber",
+  "ring": "mid_level_systems",
+  "purpose": "decoding vault glyphs and emotional imprint data; shared workspace of Lena and Evelyn",
+  "spatial_character": {
+    "geometry": "elliptical_chamber_with_inward_facing_glyph_walls",
+    "behavior": "dim_until_purposeful_presence",
+    "lighting_response": "light_returns_only_when_intent_is_present",
+    "interface_visibility": "glyph_patterns_emerge_from_walls_in_response_to_interpretation_attempts"
+  },
+  "lighting": {
+    "default_state": "dim_violet_minimal",
+    "active_state": "violet_glyph_runs_brighten_along_wall_channels",
+    "color_temperature_emphasis": "cool_violet_with_warm_gold_glyph_traces"
+  },
+  "avoid": [
+    "industrial_console_aesthetic",
+    "mechanical_keyboards_or_screens",
+    "glowing_holographic_UI",
+    "panel_seams_in_walls",
+    "rectangular_terminals"
+  ]
+}

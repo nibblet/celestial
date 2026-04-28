@@ -12,67 +12,35 @@ import type {
 
 const SPECS_ROOT = path.join(process.cwd(), "content/wiki/specs");
 const DEFAULT_VIEW = "three_quarter";
+const MAX_INHERITANCE_DEPTH = 6;
+
+type RawLayer = { name: string; path: string; data: SpecLayer };
 
 /**
- * Load and compose all spec layers for an entity. Returns null when no
- * specs exist for the entity, so the synthesizer can fall back to its
- * legacy corpus-only behavior with no regression.
+ * Load and compose all spec layers for an entity, including inherited
+ * layers from any parent_entity declared in the entity's master.json.
+ *
+ * Inheritance order (each layer overrides earlier ones for shared top-
+ * level keys; `avoid` arrays compound):
+ *
+ *   parent.master      → parent.features → parent.state[name]      →
+ *   child.master       → child.features  → child.view[name]        →
+ *   child.state[name]
+ *
+ * Parent's view is intentionally NOT inherited — views are per-entity
+ * camera/composition choices and don't transfer up the hierarchy.
+ * Parent's state IS inherited because narrative harmonic states (Valkyrie's
+ * dormant / active / alignment / etc.) apply to interior shots within the
+ * same entity tree.
+ *
+ * Returns null when no specs exist for the entity.
  */
 export function composeEntitySpec(
   request: SpecCompositionRequest,
 ): ComposedSpec | null {
-  const dir = path.join(SPECS_ROOT, request.entitySlug);
-  if (!fs.existsSync(dir)) return null;
-
-  const layers: { name: string; path: string; data: SpecLayer }[] = [];
-
-  // 1. master.json
-  const masterPath = path.join(dir, "master.json");
-  if (fs.existsSync(masterPath)) {
-    layers.push({ name: "master", path: masterPath, data: readJson(masterPath) });
-  }
-
-  // 2. views/{view}.json
-  const viewName = request.view ?? DEFAULT_VIEW;
-  const viewPath = path.join(dir, "views", `${viewName}.json`);
-  if (fs.existsSync(viewPath)) {
-    layers.push({
-      name: `view:${viewName}`,
-      path: viewPath,
-      data: readJson(viewPath),
-    });
-  }
-
-  // 3. states/{state}.json
-  if (request.state) {
-    const statePath = path.join(dir, "states", `${request.state}.json`);
-    if (fs.existsSync(statePath)) {
-      layers.push({
-        name: `state:${request.state}`,
-        path: statePath,
-        data: readJson(statePath),
-      });
-    }
-  }
-
-  // 4. features/*.json — inject every feature for the entity. Filtering by
-  // keyword can be added later if token usage becomes a concern.
-  const featuresDir = path.join(dir, "features");
-  if (fs.existsSync(featuresDir)) {
-    const featureFiles = fs
-      .readdirSync(featuresDir)
-      .filter((f) => f.endsWith(".json"))
-      .sort();
-    for (const file of featureFiles) {
-      const featurePath = path.join(featuresDir, file);
-      layers.push({
-        name: `feature:${path.basename(file, ".json")}`,
-        path: featurePath,
-        data: readJson(featurePath),
-      });
-    }
-  }
-
+  const visited = new Set<string>();
+  const layers: RawLayer[] = [];
+  collectLayers(request, layers, visited, 0);
   if (layers.length === 0) return null;
 
   // Merge: later layers override earlier ones at the top level.
@@ -85,8 +53,6 @@ export function composeEntitySpec(
         avoid.push(...(value as string[]));
         continue;
       }
-      // Nested `render_style.avoid` is a common authoring pattern in the
-      // user-supplied JSONs; surface those into the avoid bucket too.
       if (
         key === "render_style" &&
         value &&
@@ -95,7 +61,6 @@ export function composeEntitySpec(
       ) {
         avoid.push(...((value as SpecLayer).avoid as string[]));
       }
-      // Same pattern for shared_rules.avoid (orthogonal-views shape).
       if (
         key === "shared_rules" &&
         value &&
@@ -104,11 +69,12 @@ export function composeEntitySpec(
       ) {
         avoid.push(...((value as SpecLayer).avoid as string[]));
       }
+      // parent_entity is metadata; don't inject into merged spec.
+      if (key === "parent_entity") continue;
       merged[key] = value;
     }
   }
 
-  // Dedupe + preserve order on avoid.
   const seen = new Set<string>();
   const dedupedAvoid: string[] = [];
   for (const a of avoid) {
@@ -125,6 +91,115 @@ export function composeEntitySpec(
     avoid: dedupedAvoid,
     hash: hashSpec(layers.map((l) => l.data), dedupedAvoid),
   };
+}
+
+/**
+ * Walk the parent chain (depth-limited, cycle-protected) and append each
+ * entity's layers in inheritance order. Parent layers come first; the
+ * leaf request's layers come last so it has the highest precedence.
+ */
+function collectLayers(
+  request: SpecCompositionRequest,
+  out: RawLayer[],
+  visited: Set<string>,
+  depth: number,
+): void {
+  if (depth > MAX_INHERITANCE_DEPTH) {
+    console.warn(
+      `[visuals/specs] inheritance depth exceeded for ${request.entitySlug}`,
+    );
+    return;
+  }
+  if (visited.has(request.entitySlug)) {
+    console.warn(
+      `[visuals/specs] cycle detected including ${request.entitySlug}`,
+    );
+    return;
+  }
+  visited.add(request.entitySlug);
+
+  const dir = path.join(SPECS_ROOT, request.entitySlug);
+  if (!fs.existsSync(dir)) return;
+
+  const masterPath = path.join(dir, "master.json");
+  let master: SpecLayer | null = null;
+  if (fs.existsSync(masterPath)) {
+    master = readJson(masterPath);
+  }
+
+  // 0. Recursively pull parent layers FIRST so child can override.
+  if (master && typeof master.parent_entity === "string" && master.parent_entity) {
+    collectLayers(
+      {
+        entitySlug: master.parent_entity,
+        // Parent's view is NOT inherited. Parent's state IS inherited.
+        view: undefined,
+        state: request.state,
+      },
+      out,
+      visited,
+      depth + 1,
+    );
+  }
+
+  // 1. master
+  if (master) {
+    out.push({
+      name: depth === 0 ? "master" : `${request.entitySlug}:master`,
+      path: masterPath,
+      data: master,
+    });
+  }
+
+  // 2. features/*.json
+  const featuresDir = path.join(dir, "features");
+  if (fs.existsSync(featuresDir)) {
+    const featureFiles = fs
+      .readdirSync(featuresDir)
+      .filter((f) => f.endsWith(".json"))
+      .sort();
+    for (const file of featureFiles) {
+      const featurePath = path.join(featuresDir, file);
+      out.push({
+        name:
+          depth === 0
+            ? `feature:${path.basename(file, ".json")}`
+            : `${request.entitySlug}:feature:${path.basename(file, ".json")}`,
+        path: featurePath,
+        data: readJson(featurePath),
+      });
+    }
+  }
+
+  // 3. views/{view}.json — only for the leaf entity (depth === 0).
+  if (depth === 0) {
+    const viewName = request.view ?? DEFAULT_VIEW;
+    const viewPath = path.join(dir, "views", `${viewName}.json`);
+    if (fs.existsSync(viewPath)) {
+      out.push({
+        name: `view:${viewName}`,
+        path: viewPath,
+        data: readJson(viewPath),
+      });
+    }
+  }
+
+  // 4. states/{state}.json — composed LAST per scope. Parent's state
+  // composes before child's full chain, so a child's state file (if it
+  // exists with the same name) overrides the parent's state.
+  if (request.state) {
+    const statePath = path.join(dir, "states", `${request.state}.json`);
+    if (fs.existsSync(statePath)) {
+      out.push({
+        name:
+          depth === 0
+            ? `state:${request.state}`
+            : `${request.entitySlug}:state:${request.state}`,
+        path: statePath,
+        data: readJson(statePath),
+      });
+    }
+  }
 }
 
 function readJson(filePath: string): SpecLayer {
@@ -160,7 +235,7 @@ export function renderSpecForPrompt(spec: ComposedSpec): string {
     "",
   ];
   for (const [key, value] of Object.entries(spec.merged)) {
-    if (key === "avoid") continue; // emitted separately at the bottom
+    if (key === "avoid") continue;
     lines.push(`## ${key}`);
     lines.push(...renderValue(value, "  "));
     lines.push("");

@@ -1,0 +1,25 @@
+{
+  "entity": "living-quarters",
+  "parent_entity": "valkyrie-1",
+  "classification": "crew_resonance_responsive_rooms",
+  "ring": "inner_ring",
+  "purpose": "uniform private quarters that subtly reshape based on occupant resonance",
+  "spatial_character": {
+    "geometry": "rounded_cornerless_low_lit",
+    "behavior": "rooms_subtly_reshape_over_time_based_on_occupant_emotional_signature",
+    "privacy": "absolute_unauthorized_entry_blocked_even_in_emergencies",
+    "first_signs_of_attunement": "curve_softening_wall_warm_to_touch"
+  },
+  "lighting": {
+    "default_state": "low_warm_pearl_with_personal_temperature_variation",
+    "color_temperature_emphasis": "warm_pearl_gold_with_individualized_undertone",
+    "atmosphere": "intimate_attuned_personally_resonant"
+  },
+  "avoid": [
+    "bunk_bed_arrangement",
+    "rectangular_room_shape",
+    "visible_storage_compartments",
+    "spacecraft_crew_quarters_aesthetic",
+    "metal_walls"
+  ]
+}

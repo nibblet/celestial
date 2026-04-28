@@ -1,5 +1,6 @@
 {
   "entity": "valkyrie-1",
+  "world": "alien_organic",
   "style_reference": "organic_stingray_leaf_hybrid",
   "silhouette": {
     "primary_shape": "stingray_leaf_hybrid",

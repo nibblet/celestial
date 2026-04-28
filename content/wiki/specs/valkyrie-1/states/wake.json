@@ -1,0 +1,27 @@
+{
+  "state": "wake",
+  "display_name": "Wake State",
+  "description": "First reactivation, scattered points of pale cyan and warm gold bloom outward along major vein channels, as if remembering illumination. Individual nodes pulse irregularly while most of the hull remains dormant.",
+  "visual_profile": {
+    "hull_color_primary": "pearl_silver_muted",
+    "hull_shadow_tone": "soft_charcoal",
+    "surface_finish": "semi_gloss",
+    "translucency": 0.08
+  },
+  "vein_network": {
+    "intensity": 0.35,
+    "color_palette": ["pale_cyan", "warm_gold"],
+    "pattern_mode": "partial_activation",
+    "pulse_behavior": "irregular_node_pulsing",
+    "visibility": "localized_channels"
+  },
+  "lighting_behavior": {
+    "emissive_output": "low",
+    "edge_glow": "minimal",
+    "ambient_response": "selective_reflective"
+  },
+  "spatial_effects": {
+    "distortion": 0.05,
+    "lensing": "subtle"
+  }
+}

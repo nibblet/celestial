@@ -1,0 +1,26 @@
+{
+  "entity": "observation-deck",
+  "parent_entity": "valkyrie-1",
+  "aliases": ["The Eye"],
+  "classification": "celestial_observation_dome",
+  "ring": "inner_ring",
+  "purpose": "vast forward dome with full celestial exposure, designed for quiet reflection",
+  "spatial_character": {
+    "geometry": "full_celestial_dome_with_no_visible_floor_horizon_break",
+    "scale": "vast_open_silent",
+    "behavior": "emotional_echoes_from_crew_create_brief_color_pulses_or_starlight_shifts",
+    "alara_presence": "silent_unless_alignment_breaks"
+  },
+  "lighting": {
+    "default_state": "near_dark_with_unmediated_starfield_dominance",
+    "color_temperature_emphasis": "starlight_only_with_occasional_violet_emotional_pulse",
+    "atmosphere": "cathedral_quiet_observatory_silence"
+  },
+  "avoid": [
+    "viewport_window_frames",
+    "telescope_or_instrument_clusters",
+    "navigation_consoles",
+    "seating_in_rows",
+    "industrial_observation_deck_railings"
+  ]
+}

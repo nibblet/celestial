@@ -1,0 +1,24 @@
+{
+  "entity": "med-module",
+  "parent_entity": "valkyrie-1",
+  "classification": "human_retrofit_medical_chamber",
+  "purpose": "medical bay aboard Valkyrie-1; functional human retrofit within the ship's organic architecture",
+  "spatial_character": {
+    "geometry": "small_chamber_with_central_low_recessed_treatment_couch",
+    "human_retrofit": "monitoring_equipment_visibly_human_built_mounted_into_curved_wall_recesses",
+    "behavior": "ship_provides_ambient_resonance_support_during_treatment_through_wall_glow"
+  },
+  "lighting": {
+    "default_state": "soft_pearl_white_with_warm_undertone",
+    "active_state": "wall_glow_intensifies_during_treatment_in_response_to_patient_resonance",
+    "color_temperature_emphasis": "neutral_white_practicals_with_warm_pearl_wall_glow"
+  },
+  "avoid": [
+    "operating_theater_aesthetic",
+    "fluorescent_overhead_lights",
+    "stainless_steel_surfaces",
+    "rolling_carts_with_medical_supplies",
+    "hospital_bed_with_metal_railings",
+    "monitor_screens_with_vital_signs"
+  ]
+}

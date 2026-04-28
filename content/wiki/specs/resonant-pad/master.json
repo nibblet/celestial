@@ -1,5 +1,6 @@
 {
   "entity": "resonant-pad",
+  "parent_entity": "command-dome",
   "classification": "coherence_trigger_and_jump_initiation_interface",
   "location": {
     "placement": "center_of_command_dome",

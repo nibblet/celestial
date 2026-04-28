@@ -1,0 +1,23 @@
+{
+  "entity": "witness-circle",
+  "parent_entity": "valkyrie-1",
+  "classification": "parable_reception_chamber",
+  "purpose": "site where the crew gathers to witness fragmented parables, e.g. 'The Inheritance' (CH09)",
+  "spatial_character": {
+    "geometry": "circular_chamber_with_concentric_floor_recesses_for_seated_crew",
+    "behavior": "central_air_above_circle_can_carry_parable_voice_or_vault_echo_imagery",
+    "atmosphere": "ritual_quiet_ancestral_listening_posture"
+  },
+  "lighting": {
+    "default_state": "low_warm_amber_at_perimeter_dark_at_center",
+    "active_state": "central_circle_brightens_with_violet_or_gold_glyph_forms_during_parable_reception",
+    "color_temperature_emphasis": "warm_amber_with_violet_event_pulses"
+  },
+  "avoid": [
+    "auditorium_seating",
+    "stage_or_podium",
+    "religious_iconography",
+    "candles_or_obvious_ritual_props",
+    "industrial_meeting_room_aesthetic"
+  ]
+}

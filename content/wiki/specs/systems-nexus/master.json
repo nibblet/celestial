@@ -1,0 +1,25 @@
+{
+  "entity": "systems-nexus",
+  "parent_entity": "valkyrie-1",
+  "classification": "alara_maintenance_strand_corridor",
+  "ring": "central_core",
+  "purpose": "glyph-lit ring corridor beneath the bridge where ALARA's maintenance strands pulse and flicker",
+  "spatial_character": {
+    "geometry": "circular_ring_corridor_beneath_command_dome",
+    "rarely_entered": true,
+    "behavior": "alara_maintenance_strands_pulse_and_flicker_along_ceiling_and_walls",
+    "alara_presence": "decentralized_visibly_active_through_strand_network"
+  },
+  "lighting": {
+    "default_state": "dense_violet_strand_pulse_along_ceiling_and_walls",
+    "color_temperature_emphasis": "cool_silver_violet_with_node_brightening_during_alara_activity",
+    "atmosphere": "intimate_with_living_intelligence_uncomfortable_for_extended_human_presence"
+  },
+  "avoid": [
+    "server_room_aesthetic",
+    "exposed_cable_bundles",
+    "rack_mounted_equipment",
+    "mechanical_relays",
+    "industrial_ductwork"
+  ]
+}

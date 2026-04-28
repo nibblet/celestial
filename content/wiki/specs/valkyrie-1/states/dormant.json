@@ -1,0 +1,27 @@
+{
+  "state": "dormant",
+  "display_name": "Dormant State",
+  "description": "Buried and unawakened, most of the resonance vein network is dark; only the thinnest tracery of pale cyan threads remains visible beneath the hull's skin, a slow heartbeat barely perceptible against the dimmed pearl surface.",
+  "visual_profile": {
+    "hull_color_primary": "pearl_silver_dimmed",
+    "hull_shadow_tone": "cool_charcoal",
+    "surface_finish": "matte_low_reflectivity",
+    "translucency": 0.05
+  },
+  "vein_network": {
+    "intensity": 0.1,
+    "color_palette": ["faint_cyan"],
+    "pattern_mode": "minimal_tracery",
+    "pulse_behavior": "slow_irregular",
+    "visibility": "subdermal_barely_visible"
+  },
+  "lighting_behavior": {
+    "emissive_output": "very_low",
+    "edge_glow": false,
+    "ambient_response": "absorbent"
+  },
+  "spatial_effects": {
+    "distortion": 0.0,
+    "lensing": false
+  }
+}

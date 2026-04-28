@@ -1,0 +1,27 @@
+{
+  "state": "active",
+  "display_name": "Active / Cruising State",
+  "description": "Nominal flight with crew aboard. The full subdermal vein network is lit in steady cyan-teal, with a slow, even pulse across structural junctions.",
+  "visual_profile": {
+    "hull_color_primary": "pearl_silver_clean",
+    "hull_shadow_tone": "cool_silver",
+    "surface_finish": "high_gloss",
+    "translucency": 0.12
+  },
+  "vein_network": {
+    "intensity": 0.75,
+    "color_palette": ["cyan", "teal"],
+    "pattern_mode": "full_network",
+    "pulse_behavior": "steady_uniform",
+    "visibility": "fully_defined"
+  },
+  "lighting_behavior": {
+    "emissive_output": "moderate",
+    "edge_glow": "consistent",
+    "ambient_response": "balanced_reflective"
+  },
+  "spatial_effects": {
+    "distortion": 0.1,
+    "lensing": "soft_field"
+  }
+}

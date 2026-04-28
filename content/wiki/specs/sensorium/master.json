@@ -1,0 +1,26 @@
+{
+  "entity": "sensorium",
+  "parent_entity": "valkyrie-1",
+  "classification": "voice_and_presence_reactive_resonance_chamber",
+  "ring": "inner_ring",
+  "purpose": "collaborative analysis of vault resonance through dynamic glyph mapping; primary site of Thane's resonance interactions",
+  "spatial_character": {
+    "geometry": "open_curved_chamber_with_no_central_console",
+    "interaction_mode": "voice_presence_intention_only",
+    "no_physical_controls": true,
+    "behavior": "glyphs_flicker_across_walls_in_response_to_speech_and_presence",
+    "alara_presence": "responsive_and_curious_in_this_space"
+  },
+  "lighting": {
+    "default_state": "soft_cyan_teal_resonance_lines",
+    "active_state": "dynamic_glyph_mapping_animates_across_walls",
+    "color_temperature_emphasis": "cool_cyan_teal_dominant_with_violet_during_emotional_resonance"
+  },
+  "avoid": [
+    "physical_keyboards_or_buttons",
+    "holographic_floating_displays",
+    "central_terminal_or_console",
+    "screens_or_monitors",
+    "industrial_observation_room_aesthetic"
+  ]
+}

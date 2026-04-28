@@ -1,0 +1,25 @@
+{
+  "entity": "vault-interface-annex",
+  "parent_entity": "valkyrie-1",
+  "aliases": ["Vault Annex"],
+  "classification": "resonance_reactive_fragment_chamber",
+  "ring": "mid_level_systems",
+  "purpose": "examination of portable vault fragments — often unreliable, sometimes dangerous",
+  "spatial_character": {
+    "geometry": "elliptical_chamber_with_central_low_examination_recess",
+    "behavior": "walls_resonance_reactive_to_proximity_of_vault_fragments",
+    "danger_signal": "reactive_pulse_intensifies_during_unstable_fragment_interaction"
+  },
+  "lighting": {
+    "default_state": "cool_violet_low_intensity",
+    "active_state": "patterned_resonance_field_blooms_outward_from_examination_recess",
+    "color_temperature_emphasis": "violet_amethyst_with_sharp_white_pulse_during_instability"
+  },
+  "avoid": [
+    "laboratory_workbench_aesthetic",
+    "instrument_stands_or_microscopes",
+    "stainless_steel_surfaces",
+    "containment_glass_vitrines",
+    "industrial_safety_signage"
+  ]
+}

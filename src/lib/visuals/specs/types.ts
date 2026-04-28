@@ -10,9 +10,12 @@
  *
  * Layered composition (later layers override / extend earlier):
  *   1. master.json                           — entity-wide rules
- *   2. views/{viewName}.json                 — per-view (three_quarter, top, side, front, orthogonal, ventral)
- *   3. states/{stateName}.json               — per-state (dormant, active, alignment, harmonic_jump, glyphic, wake)
- *   4. features/*.json                       — feature scopes that always inject for the entity
+ *   2. features/*.json                       — feature scopes that always inject for the entity
+ *   3. views/{viewName}.json                 — per-view (three_quarter, top, side, front, orthogonal, ventral)
+ *   4. states/{stateName}.json               — per-state palette/intensity overrides
+ *
+ * Order matters: states are the most specific and compose LAST so a state's
+ * vein_network.color_palette cleanly overrides any feature default.
  *
  * `avoid` arrays at any layer are appended to the merged result; they are
  * never replaced. This keeps preset-derived negatives compounded with

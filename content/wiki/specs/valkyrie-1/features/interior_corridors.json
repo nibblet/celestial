@@ -1,0 +1,128 @@
+{
+  "feature_spec": "valkyrie_interior_shared_language",
+  "display_name": "Valkyrie-1 Interior Corridor Design Language",
+  "purpose": "Define the shared architectural and visual language for all interior corridor systems aboard Valkyrie-1.",
+  "core_principle": "The ship does not feel constructed; it feels grown, remembered, and selectively awakened.",
+  "architecture": {
+    "geometry": {
+      "primary_forms": [
+        "flowing organic walls",
+        "continuous curved ceilings",
+        "soft elliptical openings",
+        "nested ring-like passageways",
+        "wide transitional ramps"
+      ],
+      "forbidden_forms": [
+        "right angles",
+        "sharp corners",
+        "flat industrial panels",
+        "visible bolts",
+        "rectangular doors",
+        "standard stairs",
+        "mechanical elevators"
+      ],
+      "movement_logic": "Linear movement is handled by broad ramps and gently sloped corridors rather than stairs or lifts."
+    },
+    "walls": {
+      "material": "pearl-charcoal bio-crystalline composite",
+      "surface_quality": "smooth, seamless, slightly fibrous beneath the skin",
+      "behavior": "Walls subtly react to presence, emotional activity, and proximity to restricted or significant spaces.",
+      "visual_language": "Layered, ribbed, pre-Egyptian inspired curves with no visible construction seams."
+    },
+    "lighting": {
+      "type": "ambient subdermal illumination",
+      "intensity": "low to moderate",
+      "pattern": "deliberate vein runways, not random decorative sparkle",
+      "behavior": {
+        "default": "dim cyan-white tracery",
+        "crew_presence": "soft brightening ahead of movement",
+        "emotional_activity": "slow pulse through nearby wall channels",
+        "restricted_space": "light recedes or cools toward violet shadow",
+        "command_core_proximity": "subtle silver-violet lift",
+        "living_quarters_proximity": "warmer pearl-gold undertone",
+        "sensorium_proximity": "cool cyan-teal resonance lines",
+        "blind_zone_proximity": "desaturated charcoal with isolated violet glyphs"
+      }
+    },
+    "subdermal_vein_runways": {
+      "description": "Thin luminous channels embedded beneath the wall surface, following intentional routes like circulatory pathways.",
+      "colors": [
+        "faint cyan",
+        "cyan-teal",
+        "soft gold",
+        "violet-amethyst"
+      ],
+      "rules": [
+        "Veins should follow structural paths, thresholds, ramps, and chamber approaches.",
+        "Veins should not appear as random glitter, party lighting, or fun-house decoration.",
+        "Major routes may branch, but always with purpose and hierarchy.",
+        "High-importance spaces receive thicker, more symmetrical vein paths."
+      ]
+    },
+    "doors_and_thresholds": {
+      "door_type": "biometric resonance doors",
+      "shape": "vertical oval or petal-like apertures",
+      "operation": "Doors dilate, soften, or reveal themselves when authorized rather than sliding mechanically.",
+      "authorization_modes": [
+        "biometric recognition",
+        "emotional coherence",
+        "ALARA permission",
+        "crew role",
+        "proximity to active ship state"
+      ],
+      "restricted_behavior": "Unauthorized doors remain visually present but unreadable."
+    },
+    "ramps_and_flooring": {
+      "movement_system": "wide ramps and flowing floor channels",
+      "floor_texture": "smooth pearl-charcoal with subtle grip ridges grown into the surface",
+      "guidance": "Thin embedded light paths guide crew without signage overload.",
+      "accessibility": "All primary routes are traversable without stairs."
+    },
+    "space_proximity_language": {
+      "central_core": {
+        "temperature": "cool silver-violet",
+        "lighting_behavior": "focused, symmetrical, reverent",
+        "visual_cues": "concentric wall rings and upward-flowing vein paths"
+      },
+      "inner_ring": {
+        "temperature": "warm pearl-gold mixed with soft cyan",
+        "lighting_behavior": "calm, inhabitable, responsive",
+        "visual_cues": "gentler curves, wider alcoves, softened thresholds"
+      },
+      "mid_level_systems": {
+        "temperature": "cool cyan-teal with restrained violet",
+        "lighting_behavior": "functional and directional",
+        "visual_cues": "more deliberate wall channels and denser structural ribbing"
+      },
+      "blind_zones": {
+        "temperature": "cold charcoal-violet",
+        "lighting_behavior": "withheld, dim, nonresponsive",
+        "visual_cues": "sealed apertures, broken vein continuity, glyphs that do not translate"
+      }
+    },
+    "mood": {
+      "keywords": [
+        "ancient",
+        "organic",
+        "quiet",
+        "expectant",
+        "responsive",
+        "haunted but not horror",
+        "sacred without being religious",
+        "advanced without being mechanical"
+      ],
+      "psychological_effect": "The corridors should feel like they are waiting for more crew, more memory, or more meaning to arrive."
+    }
+  },
+  "avoid": [
+    "neon nightclub lighting",
+    "random glowing scribbles",
+    "hard sci-fi industrial hallway",
+    "exposed pipes",
+    "exposed cables",
+    "square bulkheads",
+    "sharp angular paneling",
+    "sterile hospital lighting",
+    "carnival or fun-house atmosphere"
+  ]
+}

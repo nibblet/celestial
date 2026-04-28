@@ -1,0 +1,27 @@
+{
+  "state": "alignment",
+  "display_name": "Alignment State",
+  "description": "Post-resonance handshake with a vault. Veins shift to violet-amethyst with gold filament accents, reorganizing into geometric glyph-like configurations across the hull.",
+  "visual_profile": {
+    "hull_color_primary": "pearl_silver_unchanged",
+    "hull_shadow_tone": "neutral_silver",
+    "surface_finish": "polished",
+    "translucency": 0.15
+  },
+  "vein_network": {
+    "intensity": 0.85,
+    "color_palette": ["violet", "amethyst", "soft_gold"],
+    "pattern_mode": "geometric_glyph",
+    "pulse_behavior": "synchronized_patterned",
+    "visibility": "surface_and_subdermal"
+  },
+  "lighting_behavior": {
+    "emissive_output": "high",
+    "edge_glow": "accentuated",
+    "ambient_response": "reactive"
+  },
+  "spatial_effects": {
+    "distortion": 0.2,
+    "lensing": "pattern_locked"
+  }
+}

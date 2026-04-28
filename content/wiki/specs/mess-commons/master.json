@@ -1,0 +1,25 @@
+{
+  "entity": "mess-commons",
+  "parent_entity": "valkyrie-1",
+  "classification": "human_retrofit_communal_space",
+  "ring": "inner_ring",
+  "purpose": "warm-toned asymmetrical gathering space, a human comfort zone wrapped in symbolic geometry",
+  "spatial_character": {
+    "geometry": "asymmetrical_curved_chamber_with_low_seating_arrangements",
+    "human_retrofit": "subtle_human_built_furniture_inside_alien_organic_shell",
+    "behavior": "glyph_patterns_on_walls_flicker_during_heated_conversation_dim_during_laughter",
+    "alara_presence": "does_not_observe_unless_asked"
+  },
+  "lighting": {
+    "default_state": "warm_pearl_gold_undertone",
+    "color_temperature_emphasis": "warm_amber_2700K_practicals_against_cool_violet_wall_glow",
+    "atmosphere": "convivial_intimate_lived_in"
+  },
+  "avoid": [
+    "cafeteria_aesthetic",
+    "rectangular_tables_with_metal_legs",
+    "fluorescent_overhead_lighting",
+    "stainless_steel_kitchen_equipment",
+    "vending_machines"
+  ]
+}
