@@ -21,7 +21,7 @@ import type {
  * Bump when the system prompt below changes. Combined with corpusVersion in
  * seedHashFor() so cached prompts auto-invalidate on prompt edits.
  */
-const SYNTH_PROMPT_VERSION = "v8";
+const SYNTH_PROMPT_VERSION = "v9";
 const SYNTH_MODEL = "claude-sonnet-4-20250514";
 
 const SYSTEM_PROMPT = `You are a Visual Director for the Celestial corpus.

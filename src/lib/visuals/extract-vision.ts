@@ -11,7 +11,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
  * the same entity.
  *
  * Identity fields cross style presets (face / build / signature props stay
- * locked even when the painterly_lore preset borrows from a cinematic_canon
+ * locked even when the intimate_crew preset borrows from a valkyrie_shipboard
  * portrait). Wardrobe / environment / composition are preset-specific and
  * the synthesizer is instructed to treat them as inspiration only.
  */

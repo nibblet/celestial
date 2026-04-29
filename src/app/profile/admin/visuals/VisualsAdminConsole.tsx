@@ -39,7 +39,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
   const [targetKind, setTargetKind] = useState<(typeof TARGET_KINDS)[number]>("entity");
   const [targetId, setTargetId] = useState("");
   const [focus, setFocus] = useState("");
-  const [stylePreset, setStylePreset] = useState(presets[0]?.key ?? "cinematic_canon");
+  const [stylePreset, setStylePreset] = useState(presets[0]?.key ?? "valkyrie_shipboard");
   const [aspect, setAspect] = useState<(typeof ASPECTS)[number]>("16:9");
   const [intent, setIntent] = useState<(typeof INTENTS)[number]>("establishing_shot");
   const [view, setView] = useState("");

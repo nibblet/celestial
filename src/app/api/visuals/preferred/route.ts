@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 const VALID_TARGET_KINDS: VisualTargetKind[] = ["entity", "story", "scene", "freeform"];
 
 /**
- * GET /api/visuals/preferred?targetKind=entity&targetId=galen-voss&stylePreset=cinematic_canon&assetKind=image
+ * GET /api/visuals/preferred?targetKind=entity&targetId=galen-voss&stylePreset=valkyrie_shipboard&assetKind=image
  *
  * Returns the approved asset for a (target × style) combo, falling back to
  * the most recent asset if nothing is approved yet. Public read — assets

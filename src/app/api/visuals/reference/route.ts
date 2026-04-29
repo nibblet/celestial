@@ -28,7 +28,7 @@ async function requireKeith() {
     .select("role")
     .eq("id", user.id)
     .single();
-  if (!profile || !["admin", "author"].includes(profile.role)) {
+  if (!profile || !["admin", "author", "keith"].includes(profile.role)) {
     return { error: "Forbidden" as const, status: 403 } as const;
   }
   return { userId: user.id } as const;

@@ -28,10 +28,14 @@ export type VisualIntent =
 export type VisualAspect = "16:9" | "9:16" | "1:1" | "4:5" | "3:2";
 
 export type StylePresetKey =
-  | "cinematic_canon"
-  | "painterly_lore"
-  | "noir_intimate"
-  | "mythic_wide";
+  | "valkyrie_shipboard"
+  | "vault_threshold"
+  | "mars_excavation"
+  | "earth_institutional"
+  | "giza_archaeological"
+  | "noncorporeal_presence"
+  | "intimate_crew"
+  | "mythic_scale";
 
 export type VisualPrompt = {
   subject: string;
