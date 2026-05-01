@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-04-28 (Nightshift Run 16)
+> Last updated: 2026-05-01 (Nightshift Run 17)
 
 ## App Summary
 
@@ -39,15 +39,11 @@
 
 ### Database (Supabase)
 
-- **38 migrations** (last: `038_beyond_media_video_mime.sql`). Next new migration: **039**.
-- **⚠️ FIX-026**: Migrations 025–028 still have RLS write policies checking `role = 'keith'`. Fix requires new migration **039** (was 035 — now taken by visuals).
-- **⚠️ FIX-044 (NEW Run 16)**: Migration 035 RLS policies on `cel_visual_prompts` and `cel_visual_assets` check `role = 'keith'` in 4 INSERT/UPDATE policies. Fix requires new migration **039**.
-- Migrations added in commit `af27957` (Run 16):
-  - `035_visual_prompts_assets.sql` — `cel_visual_prompts` + `cel_visual_assets` tables, RLS (⚠️ FIX-044: keith role in 4 policies)
-  - `036_cel_profiles_self_read.sql` — profiles self-read policy
-  - `037_visual_assets_vision.sql` — vision fingerprint column on visual assets
-  - `038_beyond_media_video_mime.sql` — video mime type support for beyond-media bucket
-- See Run 11 STATUS.md for full migration list (001–034)
+- **39 migrations** (last: `039_visual_rls_keith_to_author.sql`). Next new migration: **040**.
+- **⚠️ FIX-026**: Migrations 025–028 still have RLS write policies checking `role = 'keith'`. Fix requires new migration **040**.
+- Migrations added in commit `0e60b8c` (Run 17):
+  - `039_visual_rls_keith_to_author.sql` — drops 4 "Keith admin" policies on `cel_visual_prompts`/`cel_visual_assets` (migration 035), recreates them with `'author' or 'admin'`. NOTE: the app-layer route guards were updated to `["admin", "author", "keith"]` (commit `58b2527`) for backward compat with existing `role='keith'` accounts; the DB layer only allows `author` or `admin`.
+- See Run 16 STATUS.md for migrations 035–038 (added in commit `af27957`)
 
 ### Routing
 
@@ -93,15 +89,14 @@
 - Onboarding gate in `proxy.ts` redirects non-onboarded users to `/welcome`
 - Re-reader mode: `cel_profiles.show_all_content = true` reveals full corpus
 
-### Chapter Gating
+### Chapter Gating — Companion-First (NEW Run 17)
 
-- `cel_story_reads` + `celestial_ch` guest cookie → `getReaderProgress()` → `ReaderProgress`
-- `isStoryUnlocked(storyId, progress)` returns true if `chapterNumber ≤ currentChapterNumber` or `showAllContent = true`
-- **Correctly applied:** story detail page, story library card (silhouette), mission logs, character detail page story refs
-- **⚠️ NOT applied (FIX-031):** faction/location/artifact detail pages — story appearance IDs shown unfiltered
-- **⚠️ NOT applied (FIX-035):** vault detail pages — same gap as FIX-031
-- **⚠️ NOT applied (FIX-032 P0):** BeatTimeline on journey pages — beat content from locked chapters visible
-- **⚠️ NOT applied (FIX-036 P0):** Ask API `storySlug` — caller can inject locked chapter content into AI context
+- **⚠️ PRODUCT DIRECTION SHIFT (commit `0e60b8c`):** `getReaderProgress()` in `reader-progress.ts` now defaults ALL users (unauthenticated + authenticated with 0 DB reads) to `currentChapterNumber = max(CH17)` and `readStoryIds = all CH01–CH17`. Authenticated users with existing reads use `max(theirProgress, CH17)` for `currentChapterNumber`. In effect: `isStoryUnlocked()` returns `true` for every story for every user under normal conditions.
+- `cel_story_reads` + `celestial_ch` guest cookie → `getReaderProgress()` → `ReaderProgress` (still functional; `readStoryIds` still tracks which chapters a user has explicitly read for the "Read" badge UI)
+- `isStoryUnlocked(storyId, progress)` still defined; returns true when `chapterNumber ≤ currentChapterNumber` or `showAllContent = true`. With companion-first defaults, this is always true for CH01–CH17.
+- **`showAllContent`:** `cel_profiles.show_all_content` toggle still functions. Since all content is unlocked by default, this flag is now effectively redundant for chapter gating, but it may still drive other UX signals.
+- **Dead code:** `stories/[storyId]/page.tsx:42–60` — `if (!unlocked)` block cannot execute under companion-first defaults (⚠️ FIX-046).
+- **Previously open gating issues** (FIX-031, FIX-032, FIX-035, FIX-036, FIX-038, FIX-041, FIX-042): All parked after companion-first shift. The code infrastructure remains in place; gating is simply inert because `currentChapterNumber` is always max.
 
 ### AI / Ask Companion
 
@@ -110,15 +105,15 @@
 - **Wiki-first single-call path (Run 16 — NEW)**: `ask_answerer` persona is now the default route for all Ask traffic. Legacy multi-persona synthesis requires both `ENABLE_DEEP_ASK=true` AND `ENABLE_MULTI_PERSONA_ASK=true`. New modules: `ask-intent.ts` (intent classifier), `ask-context.ts` (context pack builder), `ask-retrieval.ts` (wiki-first lexical retriever with reader progress gating). The retriever passes `readerProgress` through correctly and pre-filters `visibleStories` before building retrieval sources.
 - Personas: celestial_narrator, lorekeeper, archivist, finder, synthesizer, editor[placeholder], **ask_answerer (NEW Run 16)**
 - Kill-switches: `ENABLE_DEEP_ASK=true` (multi-persona), `ENABLE_MULTI_PERSONA_ASK=true` (legacy synthesis path)
-- Spoiler protection:
-  1. `visibleStories` filtered by `isStoryUnlocked()` before building story catalog ✓
+- Spoiler protection (note: companion-first means all content is unlocked for all users; gating infrastructure remains in code):
+  1. `visibleStories` filtered by `isStoryUnlocked()` before building story catalog ✓ (always returns all stories under companion-first)
   2. Wiki-first retrieval (`ask-retrieval.ts`): `readerProgress` passed; `storyIsVisible()` applied per item ✓
   3. "Reader Progress Gate" block injected into every persona system prompt ✓
   4. Open threads: `listUnresolvedThroughChapter()` gates threads to current chapter ✓
-  5. Journey beats in orchestrator: **NOT gated (⚠️ FIX-038 P1)** — `listBeatsByJourney()` in `buildPromptArgs` returns all beats; sliced without progress filter
-  6. Journey story summaries: **NOT gated (⚠️ FIX-039 P2)** — `getJourneyContextForPrompt` injects all journey `storyIds` summaries; fix in FIXPLAN-FIX-039
-  7. **`storySlug` NOT validated against reader progress (⚠️ FIX-036 P0)** — story body + mission logs for any chapter injectable
-  8. **Character arc context: NOT progress-filtered (⚠️ FIX-042 P1)** — `getCharacterArcContext()` still injects Unresolved Tensions + Future Questions for all 9 arcs. These fields survive the Run 16 orchestrator rewrite unchanged.
+  5. Journey beats in orchestrator: gating code absent (FIX-038 parked) — moot under companion-first
+  6. Journey story summaries: `getJourneyContextForPrompt` now accepts `readerProgress` (FIX-039 resolved, commit `0e60b8c`) — gate code in place but inert under companion-first
+  7. `storySlug` validation: FIX-036 parked — moot under companion-first
+  8. Character arc context: FIX-042 parked — arc spoiler sections remain in prompts; moot under companion-first
 - Character arc AI context: `getCharacterArcContext()` in `prompts.ts` (lines 171–200) → injected by `sharedContentBlock()` in `perspectives.ts`. Injects Starting State, Unresolved Tensions, Future Questions, and ASK Guidance per character. **⚠️ FIX-042 P1**: Unresolved Tensions + Future Questions leak arc endpoints without progress filter.
 - Dead `storyContextRaw` DB fetch: **RESOLVED (FIX-040)** — removed in commit `3ffc33c`. New orchestrator uses wiki-first context pack instead of filesystem + DB round-trip.
 - Ask verifier: post-processes responses; checks story links against `isStoryUnlocked`, wiki links against filesystem, off-chapter entity links against chapter tags. Controlled by `ASK_VERIFIER_STRICTNESS` env (`off|warn|fail`, default `warn`). **At default `warn`, verifier NEVER blocks responses** — only `fail` strictness blocks.
@@ -129,39 +124,41 @@
 - AI ledger: all Anthropic calls recorded in `cel_ai_interactions`
 - **Gap:** `content/voice.md` and `content/decision-frameworks.md` are stub placeholders
 
-### Visuals Pipeline (NEW — Run 16)
+### Visuals Pipeline (Run 16 + updated Run 17)
 
 - **Corpus-grounded visual prompt synthesis**: `src/lib/visuals/` — 11 modules
   - `corpus-context.ts` — builds wiki-first context from entity/story/scene (reuses Ask retriever)
-  - `synthesize-prompt.ts` — calls `visual_director` persona (Sonnet) to produce structured `VisualPrompt`
+  - `synthesize-prompt.ts` — calls `visual_director` persona (Sonnet) to produce structured `VisualPrompt`; `SYNTH_PROMPT_VERSION = "v9"` (bumped in commit `58b2527`)
   - `hash.ts` + `corpus-version.ts` — deterministic seed hash for prompt caching
   - `generate-asset.ts` — orchestrates Imagen 4 / Runway Gen-4 generation + storage
   - `extract-vision.ts` — vision fingerprint extracted from reference uploads
   - `continuity.ts` — cross-style identity continuity via approved-asset anchors
-  - `style-presets.ts` — 4 presets: `cinematic_canon`, `painterly_lore`, `noir_intimate`, `mythic_wide`
+  - `style-presets.ts` — **8 Celestial-specific presets (NEW Run 17, commit `58b2527`):** `valkyrie_shipboard`, `vault_threshold`, `mars_excavation`, `earth_institutional`, `giza_archaeological`, `noncorporeal_presence`, `intimate_crew`, `mythic_scale`. Replaced 4 generic presets (`cinematic_canon`, `painterly_lore`, `noir_intimate`, `mythic_wide`). Anchors quote/paraphrase Celestial canon.
   - `providers/`: `imagen.ts`, `runway.ts`, `index.ts`, `types.ts`
   - `list-entity-assets.ts` — fetches approved + reference assets for entity pages (uses admin client, bypasses RLS)
-- **API routes**: 6 new at `/api/visuals/` — all mutation routes use `requireKeith()` (**⚠️ FIX-043**)
-- **Admin console**: `src/app/profile/admin/visuals/VisualsAdminConsole.tsx` (459 lines) + page
-- **Gallery component**: `src/components/visuals/EntityVisualsGallery.tsx` — rendered on character, artifact, location, faction, vault detail pages via `FictionEntityDetailPage`
-- **New tables**: `cel_visual_prompts`, `cel_visual_assets` (migration 035); `vision_fingerprint` column added (migration 037)
-- **Spoiler note**: Visual images on entity pages are decorative and don't expose narrative text. Gallery shows approved/reference assets only; `listEntityVisuals` filters to `approved=true OR provider=manual_upload`. No chapter gating on gallery (entity description already visible; images add no new narrative spoiler). Author-only generation/management is currently broken for `role='author'` accounts (FIX-043, FIX-044).
-- **Lint**: 4 new warnings (`<img>` tags in `VisualsAdminConsole.tsx` lines 226/374 and `EntityVisualsGallery.tsx` lines 64/118) — these are warnings, not errors.
+- **API routes**: 6 at `/api/visuals/` — mutation routes accept `["admin", "author", "keith"]` (keith kept for backward compat; DB-layer RLS only allows `author` or `admin` — see migration 039)
+- **Admin console**: `src/app/profile/admin/visuals/VisualsAdminConsole.tsx` + page — now accessible to `role='author'` and `role='admin'` accounts
+- **Gallery component**: `src/components/visuals/EntityVisualsGallery.tsx` — rendered on character, artifact, location, faction, vault detail pages
+- **New tables**: `cel_visual_prompts`, `cel_visual_assets` (migration 035); `vision_fingerprint` column (migration 037); RLS fixed to `author/admin` (migration 039)
+- **Visuals integration plan**: `docs/celestial/visuals-integration-plan.md` (348 lines, added commit `58b2527`) — phased plan for reader-facing visuals in Ask. **⚠️ FIX-045**: plan's anchor seeding table uses obsolete preset names; update before executing.
+- **Spoiler note**: Visual images on entity pages are decorative and don't expose narrative text. Gallery shows approved/reference assets only. No chapter gating on gallery needed (companion-first: all content accessible to all users).
+- **Lint**: 4 warnings (`<img>` tags in `VisualsAdminConsole.tsx` lines 230/394 and `EntityVisualsGallery.tsx` lines 64/118).
 
 ### Content Pipeline (brain_lab/ + scripts/)
 
 - Python pipeline for EPUB ingest + entity extraction
 - `brain_lab/out/review-queue.md`: **8 character files** still marked `reviewed: false` (down from 9 — one entry resolved in commit `724d66b`)
+- **Run 17 additions (commits `0e60b8c`, `58b2527`):**
+  - `docs/celestial/visuals-integration-plan.md` — 348-line phased plan for reader-facing visuals integration (**⚠️ FIX-045**: stale preset names in anchor table)
 - **Run 15 additions:**
   - `content/wiki/arcs/characters/` — 9 arc ledger files + template (manually authored, not generated; no `<!-- generated:ingest -->` marker)
   - `docs/celestial/ask-answer-playbooks.md` — question-type → context-source matrix for Ask quality
-  - `docs/celestial/publishing-and-launch-plan.md` — launch timeline/checklist (new)
+  - `docs/celestial/publishing-and-launch-plan.md` — launch timeline/checklist
   - `docs/continuity/character-arc-review.md` — arc review rubric
-- **Run 12 scripts** (unchanged): `ingest-bible-rules.ts`, `tag-chapter-entities.ts` (updated in Run 15 commit), `enrich-artifact-dossier.ts`
-- `scripts/tag-chapter-entities.ts` updated (+75 lines in Run 15) — `chapter_tags.json` regenerated; all 17 chapters still `reviewed: false`
+- **Run 12 scripts** (unchanged): `ingest-bible-rules.ts`, `tag-chapter-entities.ts`, `enrich-artifact-dossier.ts`
+- `brain_lab/out/review-queue.md` generated 2026-04-26T20:05:34Z — shows **9 character files** marked `reviewed: false` (amar-cael, aven-voss, evelyn-tran, galen-voss, jax-reyes, jonah-revas, lena-osei, marco-ruiz, thane-meric). STATUS Run 16 claimed "8" after commit `724d66b` resolved one; Run 17 count is 9 in the on-disk file — needs a pipeline re-run to get accurate count.
 - Existing audit scripts: `scripts/audit-canon-namespaces.ts`, `scripts/audit-policies-from-migrations.mjs`, `scripts/patch-location-supersets.ts`, `scripts/retier-characters.ts`
 - Canon inventory: `content/raw/canon_entities.json` + `content/raw/canon_inventory.json` + `content/raw/lore_inventory.json`
-- `content/raw/mission_logs_inventory.json` — updated in Run 15 commit (+72 lines)
 
 ### Color Scheme (Run 12)
 
@@ -180,49 +177,37 @@
 
 ## Build / Test Status
 
-- **Build:** PASSES — clean, ~106 routes (+1 admin visuals page, +6 visuals API routes). 1 expected Turbopack NFT warning on `prompts.ts` filesystem reads.
-- **Lint:** PASSES — 0 errors, **4 warnings** (`<img>` tags in visuals components — `VisualsAdminConsole.tsx` lines 226/374, `EntityVisualsGallery.tsx` lines 64/118). New since Run 15.
-- **Tests:** **191 total / 188 PASS / 3 FAIL** (Run 16: +13 new tests from wiki-first retrieval implementation — `ask-context.test.ts`, `ask-evidence.test.ts`, `ask-intent.test.ts`, `orchestrator-routing.test.ts`, `ask-retrieval.test.ts`; all 13 pass). Same 3 failures as Run 15:
-  - Test 127 (`every location has Superset: or is on root allow-list`) → FIX-037 (andes-glacial-lake)
-  - Test 128 (`all parables carry Status in Lore metadata`) → FIX-034
-  - Test 131 (`wiki: location Superset: line matches canon parent when canon has one`) → FIX-037
+- **Build:** PASSES — clean, ~106 routes. 1 expected Turbopack NFT warning on `prompts.ts` filesystem reads.
+- **Lint:** PASSES — 0 errors, **4 warnings** (`<img>` tags in visuals components — `VisualsAdminConsole.tsx` lines 230/394, `EntityVisualsGallery.tsx` lines 64/118).
+- **Tests:** **192 total / 192 PASS / 0 FAIL** (Run 17: +1 new test for companion-first defaults in `reader-progress.test.ts`; 3 previously failing tests now pass after FIX-037 + FIX-034 content fixes in commit `0e60b8c`). All green.
 
 ## Known Issues (See FIXES.md)
 
-- **FIX-044 (Medium — NEW Run 16):** Migration 035 RLS policies on `cel_visual_prompts` + `cel_visual_assets` check `role = 'keith'` — author accounts blocked at DB layer. Fix: new migration **039**.
-- **FIX-043 (Medium-High — NEW Run 16):** All 5 visuals mutation API routes + admin console page use `requireKeith()` with `["admin", "keith"]` — author accounts get 403 from entire visuals system.
-- **FIX-041 (P0 — Run 15):** `/arcs` and `/arcs/[slug]` pages expose full arc spoilers to any authenticated reader — zero auth gate.
-- **FIX-036 (P0):** `storySlug` not validated in Ask API — locked chapter body + mission logs injectable
-- **FIX-032 (P0):** BeatTimeline on journey pages shows locked chapter content
-- **FIX-042 (P1 — Run 15):** `getCharacterArcContext()` still injects Unresolved Tensions + Future Questions into ALL Ask prompts (unresolvedTensions + futureQuestions in prompts.ts lines ~181–184)
-- **FIX-038 (P1):** Journey beats in orchestrator not filtered by reader progress — `journeyBeats` sliced without progress filter in new orchestrator (line ~300 in orchestrator.ts)
-- **FIX-039 (P2):** `getJourneyContextForPrompt` injects all journey story summaries without reader progress gate
-- **FIX-037 (Low — test failure):** `andes-glacial-lake.md` missing `**Superset:**` → tests 127 + 131 fail
-- **FIX-034 (Low — test failure):** `parables-of-resonance.md` missing `**Status:**` → test 128 fails
-- **FIX-035 (P1):** Vault detail pages show story IDs from locked chapters
-- **FIX-031 (P1):** Fiction entity detail pages (factions/locations/artifacts) show future chapter IDs
-- **FIX-030 (Medium):** `/api/admin/threads` checks `'keith'` role
-- FIX-027 (Medium): `/api/admin/ai-activity` checks `'keith'` role
-- FIX-026 (Medium): RLS policies in migrations 025–028 check `role = 'keith'` — fix requires migration **039**
-- FIX-028 (Low): Legacy "Keith" UI copy in 45+ locations across 20+ src/ files
-- FIX-029 (Low-Medium): Age mode system exposed in UI (adult fiction only)
-- FIX-013, FIX-014, FIX-016, FIX-017: Tell pipeline defensive coding
+- **FIX-046 (Low — NEW Run 17):** Stale "unlock as you progress" UI copy in 3 places after companion-first shift. `HomePageClient.tsx:16`, `StoriesPageClient.tsx:217`, dead code block in `stories/[storyId]/page.tsx:42–60`.
+- **FIX-045 (Low — NEW Run 17):** `docs/celestial/visuals-integration-plan.md` uses obsolete preset names in anchor seeding table. Docs fix only; update before executing the plan.
+- **FIX-041 (parked):** `/arcs` and `/arcs/[slug]` pages have zero auth gate. Parked after companion-first shift.
+- **FIX-036 (parked):** `storySlug` not validated in Ask API. Parked after companion-first shift.
+- **FIX-032 (parked):** BeatTimeline on journey pages. Parked after companion-first shift.
+- **FIX-042 (parked):** Arc context in Ask prompts has spoilery sections. Parked after companion-first shift.
+- **FIX-038 (parked):** Journey beats in orchestrator not progress-filtered. Parked after companion-first shift.
+- **FIX-035 (parked):** Vault detail pages show story IDs. Parked after companion-first shift.
+- **FIX-031 (parked):** Fiction entity pages show future chapter IDs. Parked after companion-first shift.
+- **FIX-030 (Medium — planned):** `/api/admin/threads` checks `'keith'` role
+- **FIX-027 (Medium — planned):** `/api/admin/ai-activity` checks `'keith'` role
+- **FIX-026 (Medium — planned):** RLS policies in migrations 025–028 check `role = 'keith'` — fix requires migration **040**
+- **FIX-028 (Low):** Legacy "Keith" UI copy in 20+ src/ files (includes `AskAboutStory.tsx` "Write to Keith" widget on story pages)
+- **FIX-029 (Low-Medium):** Age mode system exposed in UI (adult fiction only)
+- **FIX-013, FIX-014, FIX-016, FIX-017:** Tell pipeline defensive coding
 
 ## Next Actions (Priority Order)
 
-1. **FIX-043 + FIX-044 (20 min combined):** Fix `requireKeith()` → `["admin", "author"]` in 5 visuals routes + admin page (10 min); create migration 039 for RLS fix (10 min). Entire visuals system broken for authors.
-2. **FIX-041 (P0, 15 min):** Gate `/arcs` and `/arcs/[slug]` with `hasAuthorSpecialAccess()`. Remove arc panel link from character page for non-authors. Three-file change.
-3. **FIX-036 (P0, 10 min):** Add `isStoryUnlocked` gate to `storySlug` in `/api/ask/route.ts`.
-4. **FIX-032 (P0, 15 min):** Filter beats by reader progress in `journeys/[slug]/page.tsx`.
-5. **FIX-042 (P1, 5 min):** Remove `unresolvedTensions` + `futureQuestions` from `getCharacterArcContext()` in `prompts.ts`. Two-line deletion.
-6. **FIX-038 (P1, 5 min):** Add progress filter to `journeyBeats` in `orchestrator.ts buildPromptArgs` — one filter chain before the slice.
-7. **FIX-037 (5 min):** Add `**Superset:** [[earth]]` to `andes-glacial-lake.md` — restores tests 127 + 131.
-8. **FIX-034 (5 min):** Fix `parables-of-resonance.md` Lore metadata — restores test 128.
-9. **FIX-039 (P2, 20 min):** Add `readerProgress` param to `getJourneyContextForPrompt`; update call site.
-10. **IDEA-034 (30 min):** Chapter progress bar on `/stories` — dev plan written and ready.
-11. **IDEA-030 (45 min):** Ask evidence citation chips — dev plan written. Phase 1 is a 20-line JSX insertion.
-12. **IDEA-032 (45 min):** Chapter tag quality gate + review CLI — Phase 1 is 1-line fix in `StoryDetailsDisclosure`.
-13. **FIX-031 + FIX-035 (40 min combined):** Gate story IDs on fiction entity + vault detail pages.
-14. **FIX-026 + FIX-027 + FIX-030 (30 min combined):** Three stale `'keith'` role fixes.
-15. **FIX-028 (30 min + author copy decisions):** Legacy Keith UI sweep.
-16. **FIX-029 (1 hr):** Remove AgeModeSwitcher from Nav/Header.
+1. **IDEA-040 (15 min):** "Ask About This Chapter" CTA on story pages — dev plan written and ready. ~8 lines JSX in `stories/[storyId]/page.tsx`. The single highest-ROI ask-forward improvement.
+2. **FIX-045 (10 min):** Update `docs/celestial/visuals-integration-plan.md` preset names before executing Phase 0 of the visuals plan. Docs-only fix.
+3. **FIX-046 (20 min):** Update stale "unlock as you progress" copy in 3 files; remove dead `!unlocked` code block. Paul confirms copy for HomePageClient + StoriesPageClient.
+4. **FIX-026 + FIX-027 + FIX-030 (30 min combined):** Three stale `'keith'` role fixes. FIX-026 migration number is now **040** (update the plan file note before executing).
+5. **FIX-028 (30 min + author copy decisions):** Legacy "Keith" UI sweep, including `AskAboutStory.tsx` "Write to Keith" widget.
+6. **FIX-029 (1 hr):** Remove AgeModeSwitcher from Nav/Header.
+7. **IDEA-042 (seed → plan):** Suggested follow-up chips after Ask answers — write dev plan when ready to advance.
+8. **IDEA-043 (seed → plan):** On-demand scene visualization via Ask — write dev plan when ready.
+9. **IDEA-044 (seed → plan):** Entity network explorer at `/explore` — write dev plan when ready.
+10. **FIX-013, FIX-014, FIX-016, FIX-017:** Tell pipeline defensive coding — low priority.

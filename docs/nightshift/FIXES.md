@@ -1,7 +1,7 @@
 # FIXES — Celestial Interactive Book Companion
 
 > Bug and issue tracker. Updated each nightshift run.
-> Numbering continues from Run 16 (last new entry is FIX-044).
+> Numbering continues from Run 17 (last new entry is FIX-046).
 
 ## Statuses
 - `found` — Issue identified, no plan yet
@@ -12,6 +12,24 @@
 ---
 
 ## Open Issues
+
+### [FIX-046] Stale "Unlock As You Progress" UI Copy After Companion-First Shift
+- **Status:** found
+- **Severity:** Low — cosmetic + dead code. User-visible home page copy directly contradicts the companion-first product direction; dead code path in story detail page adds confusion for future devs.
+- **Found:** 2026-05-01 (Run 17)
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-046-companion-first-stale-copy.md`
+- **Summary:** Three places reference the old "read to unlock" gating model that no longer applies after the companion-first shift (commit `0e60b8c`): (1) `HomePageClient.tsx:16` — "Begin at Chapter 1 and unlock the companion as you progress."; (2) `StoriesPageClient.tsx:217` — "read to unlock."; (3) `stories/[storyId]/page.tsx:42–60` — dead `if (!unlocked)` block with locked-chapter copy that can never execute. Fix requires Paul to confirm preferred copy for (1) and (2); (3) can be safely removed.
+
+---
+
+### [FIX-045] `visuals-integration-plan.md` Uses Obsolete Style Preset Names
+- **Status:** found
+- **Severity:** Low — docs only. Planning table references `cinematic_canon`, `painterly_lore`, `noir_intimate`, `mythic_wide` which were removed from `StylePresetKey` in commit `58b2527`. Any code written from this plan will fail TypeScript type checks.
+- **Found:** 2026-05-01 (Run 17)
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-045-visuals-plan-stale-presets.md`
+- **Summary:** `docs/celestial/visuals-integration-plan.md` anchor seeding table (~30 rows) uses 4 old preset names replaced by 8 new Celestial-specific keys: `valkyrie_shipboard`, `vault_threshold`, `mars_excavation`, `earth_institutional`, `giza_archaeological`, `noncorporeal_presence`, `intimate_crew`, `mythic_scale`. Docs-only fix: find/replace old names with appropriate new equivalents per the mapping in the fix plan.
+
+---
 
 ### [FIX-044] Migration 035 RLS Policies Check `role = 'keith'` on Visual Tables
 - **Status:** resolved
@@ -58,8 +76,8 @@
 - **Severity:** P2 — secondary chapter-gating gap. When a reader passes `journeySlug` to the Ask API, `getJourneyContextForPrompt()` iterates ALL story IDs in the journey and injects each story's `title` and `summary` (opening paragraph of the chapter) into every AI persona system prompt, regardless of reader progress. A CH01 reader asking with `journeySlug: "directive-14"` has CH08–CH14 opening paragraphs in the AI context.
 - **Found:** 2026-04-25 (Run 13)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-039-journey-context-prompt-story-gating.md`
-- **Resolved:** 2026-04-28 (Run 16)
-- **Summary:** Implemented `readerProgress?: ReaderProgress | null` in `getJourneyContextForPrompt` (`prompts.ts`), added `isStoryUnlocked(...)` filtering during journey story iteration, and passed `args.readerProgress` at the `perspectives.ts` call site. Optional/no-progress paths remain backward compatible.
+- **Resolved:** 2026-04-28 — commit `0e60b8c` added `readerProgress?: ReaderProgress | null` param to `getJourneyContextForPrompt` in `prompts.ts`, added `isStoryUnlocked(...)` guard per iteration, and updated the `perspectives.ts` call site. **Note:** With companion-first defaults (same commit), all content is always unlocked for all users, so this filter is effectively a no-op in production; it remains correct code that preserves future flexibility.
+- **Summary:** Implemented `readerProgress?: ReaderProgress | null` in `getJourneyContextForPrompt` (`prompts.ts`), added `isStoryUnlocked(...)` filtering during journey story iteration, and passed `args.readerProgress` at the `perspectives.ts` call site.
 
 ---
 
@@ -85,10 +103,10 @@
 
 ### [FIX-037] `andes-glacial-lake.md` Missing `**Superset:**` in Lore Metadata — Test Failures
 - **Status:** resolved
-- **Severity:** Low — tests 113 and 117 fail; no runtime impact.
+- **Severity:** Low — tests 127 and 131 fail; no runtime impact.
 - **Found:** 2026-04-24 (Run 12)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-037-andes-glacial-lake-superset.md`
-- **Resolved:** 2026-04-28 (Run 16)
+- **Resolved:** 2026-04-28 — commit `0e60b8c` added `**Superset:** [[earth]]` to `andes-glacial-lake.md` and also added Superset fields to `asteroid-belt.md`, `europa.md`, `ganymede.md`. Run 17 confirms: all 192 tests pass.
 - **Summary:** Added `**Superset:** [[earth]]` to `content/wiki/locations/andes-glacial-lake.md`. Also fixed related location metadata gaps found during verification (`asteroid-belt`, `europa`, `ganymede`) so canon-hubs checks pass.
 
 ---
@@ -105,11 +123,11 @@
 
 ### [FIX-034] `parables-of-resonance.md` Missing `**Status:**` in Lore Metadata — Test Failure
 - **Status:** resolved
-- **Severity:** Low — test 114 fails (was test 110 in Run 11, renumbered by new tests); no runtime impact. Content inconsistency: canon dossier says `subkind="parable"` but Lore metadata says `**Subkind:** concept` and lacks `**Status:**`.
+- **Severity:** Low — test 128 fails; no runtime impact. Content inconsistency: canon dossier says `subkind="parable"` but Lore metadata says `**Subkind:** concept` and lacks `**Status:**`.
 - **Found:** 2026-04-23 (Run 11)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-034-parables-status-field.md`
-- **Resolved:** 2026-04-28 (Run 16)
-- **Summary:** Updated `content/wiki/rules/parables-of-resonance.md` Lore metadata to `**Subkind:** parable` and added `**Status:** active`. Also corrected the same metadata mismatch in `content/wiki/rules/vault-parables.md` found during verification so all parable-status checks pass.
+- **Resolved:** 2026-04-28 — commit `0e60b8c` updated `parables-of-resonance.md` Lore metadata to `**Subkind:** parable` + added `**Status:** active`. Also fixed `vault-parables.md` with same correction. Run 17 confirms: all 192 tests pass.
+- **Summary:** Updated `content/wiki/rules/parables-of-resonance.md` Lore metadata to `**Subkind:** parable` and added `**Status:** active`. Also corrected the same metadata mismatch in `content/wiki/rules/vault-parables.md`.
 
 ---
 
@@ -172,7 +190,7 @@
 - **Severity:** Medium — author accounts cannot write to `cel_open_threads`, `cel_chapter_scenes`, or `cel_beats`
 - **Found:** 2026-04-22 (Run 9)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-026-stale-keith-role-rls.md`
-- **Summary:** Migrations 025–028 check `p.role = 'keith'` in RLS policies. Fix: new migration **035** (migrations 030–034 used by other features). Plan file still describes approach correctly — update migration number to 035 when executing.
+- **Summary:** Migrations 025–028 check `p.role = 'keith'` in RLS policies. Fix: new migration **040** (migrations 035–039 now consumed by visuals + visual RLS fix). Plan file still describes approach correctly — update migration number to **040** when executing.
 
 ---
 

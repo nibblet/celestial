@@ -4,6 +4,55 @@
 
 ---
 
+## Run: 2026-05-01 (Run 17)
+
+### Summary
+- Scanned: 2 code commits since Run 16 — `0e60b8c` ("fixes", 18 files, 137 insertions — FIX-043/044/039/037/034 + **companion-first product direction shift**), `58b2527` ("fixing admin", 13 files, 550 insertions — visuals integration plan + 8 Celestial-specific style presets + SYNTH_PROMPT_VERSION v9 + keith added back to route guards for backward compat).
+- Issues: 2 new (FIX-045 Low: visuals-integration-plan.md uses obsolete preset names; FIX-046 Low: stale "unlock as you progress" UI copy + dead code after companion-first shift). 5 resolved this run (FIX-043, FIX-044, FIX-039, FIX-037, FIX-034). 0 spoiler-leak P0 — all P0/P1 gating issues remain parked (companion-first makes them moot).
+- Ideas (by theme): ask-forward 1 seed (IDEA-042) / 1 promoted to ready (IDEA-040); genmedia 1 seed (IDEA-043) / 0 promoted; post-read-world 1 seed (IDEA-044) / 0 promoted; parked 10 (IDEA-041, IDEA-038, IDEA-036, IDEA-034, IDEA-033, IDEA-032, IDEA-030, IDEA-039, IDEA-037; + IDEA-023 and others already parked). **First run using three-theme BACKLOG structure** — all existing ideas re-tagged or moved to Parked.
+- Plans written: FIXPLAN-FIX-045, FIXPLAN-FIX-046, DEVPLAN-IDEA-040.
+
+### Build & Lint & Test Results
+- `npm install`: clean
+- `npx next build`: **PASSES** — ~106 routes. 1 expected Turbopack NFT warning.
+- `npm run lint`: **PASSES** — 0 errors, **4 warnings** (`<img>` tags in `VisualsAdminConsole.tsx:230,394` and `EntityVisualsGallery.tsx:64,118`). Same as Run 16.
+- `npm test`: **192 PASS / 0 FAIL** (192 total — up from 191; +1 new test for companion-first defaults in `reader-progress.test.ts`; 3 previously-failing tests now pass: FIX-037 Superset + FIX-034 parable Status). **First clean test run since at least Run 12.**
+
+### Key Findings
+
+1. **COMPANION-FIRST PRODUCT DIRECTION SHIFT.** Commit `0e60b8c` fundamentally changed `reader-progress.ts`: `getReaderProgress()` now defaults ALL users (unauthenticated and authenticated with no DB reads) to `currentChapterNumber = max chapter (17)` and `readStoryIds = all CH01–CH17`. Authenticated users with any DB reads still use their actual progress for `readStoryIds`, but `currentChapterNumber` is always `max(theirProgress, 17) = 17`. Effect: `isStoryUnlocked()` returns `true` for every story for every user. The progressive-unlock UX is no longer the default. This explains why all P0/P1 chapter-gating issues (FIX-036, FIX-032, FIX-038, FIX-041, FIX-042, FIX-031, FIX-035) were parked — they're structurally moot.
+
+2. **FIX-043, FIX-044, FIX-039, FIX-037, FIX-034 all RESOLVED.** Commit `0e60b8c` fixed all five: visuals routes now accept `["admin", "author"]` (commit `0e60b8c`), then `["admin", "author", "keith"]` (commit `58b2527` backward compat). Migration 039 fixed DB-layer RLS for visual tables to `author/admin`. `getJourneyContextForPrompt` now accepts `readerProgress`. Location and parable metadata gaps patched. All 3 test failures gone.
+
+3. **NEW: 8 Celestial-specific style presets** replace 4 generic ones. Commit `58b2527` rewrote `style-presets.ts` with Celestial-canon-grounded presets: `valkyrie_shipboard`, `vault_threshold`, `mars_excavation`, `earth_institutional`, `giza_archaeological`, `noncorporeal_presence`, `intimate_crew`, `mythic_scale`. Anchors quote and paraphrase canon (resonance color semantics, glyph language, curve geometry). `SYNTH_PROMPT_VERSION` bumped to `v9` to bust the prompt cache. Build verifies all 8 new `StylePresetKey` values compile.
+
+4. **FIX-045 (Low — NEW): `visuals-integration-plan.md` uses 4 obsolete preset names.** `docs/celestial/visuals-integration-plan.md` (348 lines, added in `58b2527`) has a ~30-row anchor seeding table that references `cinematic_canon`, `painterly_lore`, `noir_intimate`, `mythic_wide` — all deleted from `StylePresetKey` in the same commit. If Paul follows the plan and copies preset names into code, TypeScript will reject them. Quick docs find/replace fix before executing Phase 0.
+
+5. **FIX-046 (Low — NEW): Stale "unlock as you progress" copy in 3 UI locations after companion-first shift.** `HomePageClient.tsx:16` ("Begin at Chapter 1 and unlock the companion as you progress"), `StoriesPageClient.tsx:217` ("read to unlock"), and `stories/[storyId]/page.tsx:42–60` (dead `if (!unlocked)` block) all reference a gating model that no longer applies. The dead code block can never execute since `isStoryUnlocked` always returns `true` under companion-first.
+
+6. **`AskAboutStory.tsx` is a legacy "Write to Keith" author Q&A widget, NOT the AI Ask companion.** On the story detail page, the `#ask` TOC section renders `AskAboutStory` — which submits notes to the author at `/api/stories/{storyId}/questions`, not the AI. Copy says "Keith will see it" and "Send to Keith" — FIX-028 scope. IDEA-040 (now ready) adds a distinct "Ask the companion" CTA pointing to the actual AI `/ask` page.
+
+7. **All tests green for first time since Run 12.** 192/192 pass. Prior 3 failures (andes-glacial-lake Superset, parables Status, Superset canon parent match) all fixed.
+
+8. **Migration 039 DB vs app-layer role inconsistency (intentional).** Migration 039 RLS uses `'author' or 'admin'` only. App-layer routes use `["admin", "author", "keith"]` (keith re-added in commit `58b2527` for backward compat). This means `role='keith'` accounts can pass the app gate but are rejected at the DB layer for visual INSERT/UPDATE. Paul's solution is likely to migrate his account to `role='author'` when ready. FIX-026 (migrations 025-028) remains open — those still let `keith` write to other tables while blocking `author`.
+
+9. **`brain_lab/out/review-queue.md` shows 9 entries (stale, not regenerated).** File was generated 2026-04-26; commit `724d66b` (Run 15) reportedly resolved one entry. Actual count needs a pipeline re-run to confirm. Treating as ~8-9 character files still `reviewed: false`.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-040-ask-about-this-chapter.md` — **NEW ready (ask-forward)**: Ask companion CTA on story pages, 0.25 hours — simplest, highest-ROI feature tonight
+- `docs/nightshift/plans/FIXPLAN-FIX-045-visuals-plan-stale-presets.md` — **NEW Low**: update preset names in visuals-integration-plan.md before running Phase 0 (10 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-046-companion-first-stale-copy.md` — **NEW Low**: update stale "unlock" copy + remove dead code (20 min + Paul copy decisions)
+- `docs/nightshift/plans/FIXPLAN-FIX-030-threads-route-keith-role.md` — Medium: one-line role fix in threads admin route (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-027-ai-activity-route-keith-role.md` — Medium: one-line role fix in ai-activity route (5 min)
+- `docs/nightshift/plans/FIXPLAN-FIX-026-stale-keith-role-rls.md` — Medium: migration 040 for RLS (note: update migration number in plan to **040** before executing)
+
+### Recommendations
+- **If you have 15 min:** IDEA-040 (8 lines JSX, 0.25 hours). Adds the Ask companion CTA to every chapter page — the single most impactful product improvement available right now.
+- **If you have 30 min:** IDEA-040 (15 min) + FIX-045 (10 min) + FIX-046 single-file portion (5 min). Three things shipped: companion CTA live, visuals plan ready to execute, home page copy updated.
+- **If you have 1 hour:** The 30-min batch above + FIX-027 + FIX-030 (10 min combined — two one-liners) + start FIX-026 migration 040. After this: all three stale keith admin routes fixed, tests green, compiler clean.
+
+---
+
 ## Run: 2026-04-28 (Run 16)
 
 ### Summary

@@ -1,9 +1,8 @@
 # BACKLOG — Celestial Interactive Book Companion
 
-> Ideas backlog with maturity tracking. Two categories: enhance existing features, and new features.
-> **Context note:** This backlog was reset on 2026-04-22 (Run 9) after the Celestial Phase 1 migration.
-> All Keith Cobb memoir-specific ideas from Runs 1–8 have been moved to the Parked section.
-> Last updated: 2026-04-28 (Run 16)
+> Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
+> **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
+> Last updated: 2026-05-01 (Run 17)
 
 ## Maturity Levels
 
@@ -11,279 +10,248 @@
 - `exploring` — Validated against codebase, feasibility assessed
 - `planned` — User stories, technical approach defined
 - `ready` — Dev plan written, waiting for Paul to execute
-- `parked` — Stale 3+ days or deprioritized / superseded by migration
+- `parked` — Stale 3+ days or deprioritized / out of theme focus
 - `shipped` — Implemented and in production
 
 ---
 
-## Category 1: Enhance / Mature / Expand Existing Features
+## ask-forward
+
+### [IDEA-040] "Ask About This Chapter" Quick-Action on Story Detail Pages
+- **Status:** ready
+- **Theme:** ask-forward
+- **Seeded:** 2026-04-28
+- **Last Updated:** 2026-05-01
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-040-ask-about-this-chapter.md`
+- **Summary:** A single "Ask the companion about this chapter →" link-button at the top of every story detail page, pointing to `/ask?story={storyId}`. The Ask page already reads the `?story=` param. This is the most natural reader entry point for the companion. Estimated 0.25 hours.
+- **Night Notes:**
+  - 2026-04-28 (Run 16): Seeded. Noted that `?story=` param already supported in ask/page.tsx. Implementation is ~8 lines of JSX.
+  - 2026-05-01 (Run 17): Advanced to `ready`. Dev plan written. Confirmed: ask/page.tsx reads `?story=` at line 242. `AskAboutStory.tsx` (the `#ask` anchor section) is a legacy author Q&A widget — the new CTA is distinct from it and sits higher on the page. No Ask-page changes needed.
+
+---
+
+### [IDEA-042] Suggested Follow-Up Chips After Each Ask Answer
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-01
+- **Last Updated:** 2026-05-01
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** After each AI Ask response, render 2–3 contextual suggested follow-up questions as clickable chips directly below the answer bubble. Clicking a chip immediately submits the question. Makes the companion conversational and encourages depth without requiring the reader to think of next questions.
+- **Night Notes:**
+  - 2026-05-01 (Run 17): Seeded. Two generation strategies: (A) extract from `evidence.linksInAnswer` + infer questions from entity links; (B) prompt the Ask LLM to emit a structured `suggestions` field after the main response as a final SSE event — same pattern as `evidence`. Strategy B is cleaner and reuses the SSE event schema already in place. Display target: a flex row of `<button>` chips between the prose div and `AskSourcesDisclosure` in the messages map (ask/page.tsx ~lines 705–730). Complements IDEA-030 (evidence chips) which was parked but shares the same insertion point.
+
+---
+
+## genmedia
+
+### [IDEA-043] On-Demand Scene Visualization via Ask ("Show Me")
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-01
+- **Last Updated:** 2026-05-01
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** When a reader asks "Show me what [X] looks like" or "Illustrate this scene" in the Ask companion, the API detects visual intent (via `ask-intent.ts` classification), triggers the existing visuals pipeline, and streams back an inline image result in the Ask thread as a special message type.
+- **Night Notes:**
+  - 2026-05-01 (Run 17): Seeded. The visuals pipeline (`corpus-context.ts` → `synthesize-prompt.ts` → `generate-asset.ts`) is fully built and author-accessible. This idea extends it to reader-triggered on-demand generation. Key concerns to address in the dev plan:
+    1. **Model/provider:** Imagen 4 (image). Runway Gen-4 for cinematic clips (later phase).
+    2. **Cost budget:** ~$0.04–$0.08/image (Imagen 4). Rate-limit: 3 images/reader/hour via existing in-memory sliding window + extend to persist in Supabase for cross-session enforcement. Unauthenticated users: no generation (require sign-in).
+    3. **Caching:** Generated images keyed on `seedHashFor(target, style, corpusVersion)` — same as admin path. Shared cache (not user-scoped) since canon visuals are not personalized.
+    4. **Spoiler gating of prompt inputs:** With companion-first defaults, all users see all content, so no chapter-level spoiler concern. The visual prompt synthesizer already uses the full corpus context for canon grounding — no additional gating needed.
+    5. **Canon grounding:** `corpus-context.ts` selects the most-relevant wiki entity spec from `content/wiki/specs/` + canon dossier blocks + foundational lore. Preset selection: auto-select based on entity type (character → `intimate_crew`, location → `valkyrie_shipboard` or `vault_threshold`, etc.).
+
+---
+
+## post-read-world
+
+### [IDEA-044] Entity Network Explorer at `/explore`
+- **Status:** seed
+- **Theme:** post-read-world
+- **Seeded:** 2026-05-01
+- **Last Updated:** 2026-05-01
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** An interactive force-directed graph at `/explore` showing how characters, factions, ships, locations, and vaults are connected via chapter co-appearances and wiki cross-links. Nodes are entity cards; clicking navigates to the entity detail page. All data is in `static-data.ts` + `chapter_tags.json` — no new APIs needed.
+- **Night Notes:**
+  - 2026-05-01 (Run 17): Seeded. With companion-first, all entities are always visible to all users — no gating needed. Implementation would use React Flow (already in the ecosystem? check package.json) or d3-force (add as dependency). Node size = chapter appearance count (from `chapter_tags.json` entity mention frequency). Edges from: (1) co-occurrence in same chapter tag list; (2) explicit `[[entity-slug]]` cross-links parsed from wiki markdown. Key plan requirements:
+    1. **Hidden for locked readers / graceful degradation:** Not applicable — companion-first means all users see all entities. However, the page should work for unauthenticated guests.
+    2. **Integration with `show_all_content`:** N/A with companion-first; all content visible regardless.
+    3. **Partial-completion edge cases:** N/A with companion-first.
+
+---
+
+## Parked
+
+*(Ideas parked by the 3-day stale rule, out of theme focus, or superseded.)*
 
 ### [IDEA-041] Shared `requireAuthor()` Server Auth Helper
-- **Status:** seed
-- **Category:** enhance
+- **Status:** parked
 - **Seeded:** 2026-04-28
-- **Last Updated:** 2026-04-28
-- **Priority:** P2
-- **Plan:** *(not yet written)*
-- **Summary:** Extract the repeated inline `requireKeith()` / author-role check into a single shared helper at `src/lib/auth/require-author.ts`. Five visuals routes + two existing admin routes all paste the same ~15 lines of Supabase auth boilerplate. A shared helper prevents the FIX-043 recurrence pattern (new route forgets to update role string) and makes the Celestial author role a single source of truth.
+- **Last Updated:** 2026-05-01
+- **Summary:** Extract the repeated inline `requireKeith()` / author-role check into a single shared helper. Out of current theme focus. Parked pending future scope.
 - **Night Notes:**
-  - 2026-04-28 (Run 16): Seeded in response to FIX-043 (five visuals routes using stale `'keith'` role) and FIX-027/FIX-030 (two earlier admin routes with same bug). A shared `requireAuthor()` helper would return `{ userId }` on success or `{ error, status }` on auth failure — identical interface to the current inline pattern, making the swap mechanical. Estimated 30 min: create helper, replace in 7 files.
+  - 2026-04-28 (Run 16): Seeded.
+  - 2026-05-01 (Run 17): Out of current theme focus (ask-forward / genmedia / post-read-world). Parked pending future scope.
 
 ---
 
 ### [IDEA-038] Per-Chapter Character State Reveal on `/characters/[slug]`
-- **Status:** exploring
-- **Category:** enhance
+- **Status:** parked
 - **Seeded:** 2026-04-27
-- **Last Updated:** 2026-04-28
-- **Priority:** P2
-- **Plan:** *(not yet written)*
-- **Summary:** After FIX-041 gates arc pages to authors only, readers lose visibility into character development beyond the starting state excerpt. A better UX: surface the character's "Current State By Chapter Boundary" entry for the reader's progress on the character detail page — "After CH05: ALARA is no longer only a compliant system" — so readers see only the state earned by their reading. Each arc file has a `## Current State By Chapter Boundary` markdown table with per-boundary reader-safe state descriptions.
+- **Last Updated:** 2026-05-01
+- **Summary:** Surface the "Current State By Chapter Boundary" entry from arc files on the character detail page, showing the reader's progress-appropriate state. Fits post-read-world tangentially but stale 3 days.
 - **Night Notes:**
-  - 2026-04-27 (Run 15): Seeded. Depends on FIX-041 (arc gating). The `character-arcs.ts` parser currently extracts `startingState`, `unresolvedTensions`, `futureQuestions`, and `askGuidance` via `extractSectionBlock` — a new `currentStateByChapter` field needs to be extracted and parsed into a `{ boundary: string; readerSafeState: string }[]` array. Rendering target: `CharacterArcPanel` in `characters/[slug]/page.tsx` — replace the starting state excerpt with the highest chapter boundary ≤ `currentChapterNumber`. This gives readers a spoiler-safe, progress-gated character state summary. Estimated 1.5 hours.
-  - 2026-04-28 (Run 16): Advanced to `exploring`. Confirmed implementation path: (1) Arc files (`content/wiki/arcs/characters/*.md`) each have a `## Current State By Chapter Boundary` section with a markdown table in `| After CHxx | Reader-Safe State |` format. All 9 arc files share this structure. (2) `character-arcs.ts:50` calls `extractSectionBlock(content, "Starting State")` — same function can extract "Current State By Chapter Boundary" as a raw string. (3) Parse the table with regex: `/^\|\s*(After CH(\d+))\s*\|\s*(.*?)\s*\|$/gm` → `{ chapterNumber: number; state: string }[]`. (4) In `CharacterArcPanel` (line 242 of characters/[slug]/page.tsx), the `arc.startingState` excerpt is rendered — replace with the highest `chapterNumber ≤ readerProgress.currentChapterNumber` entry, or fall back to `startingState` for CH00. (5) `readerProgress` is already available on the page (used for story ref filtering on lines 139, 181). No new API or DB needed. Spoiler safety: the boundary table rows are explicitly labelled "Reader-Safe State" — designed for this exact use. Estimated 1.5 hours.
+  - 2026-04-27 (Run 15): Seeded.
+  - 2026-04-28 (Run 16): Advanced to `exploring`. Arc file structure confirmed.
+  - 2026-05-01 (Run 17): Stale 3 days — likely low priority or too complex. Demoting to parked. With companion-first, all arc content is visible to all users (author-only gating on arc pages still applies). Un-park when Paul decides whether arc pages should be opened to readers.
 
 ---
 
 ### [IDEA-036] Wiki Entity Completeness Audit — `/admin/wiki-audit` Page
-- **Status:** seed
-- **Category:** enhance
+- **Status:** parked
 - **Seeded:** 2026-04-26
-- **Last Updated:** 2026-04-26
-- **Priority:** P2
-- **Plan:** *(not yet written)*
-- **Summary:** An author-accessible `/admin/wiki-audit` page that surfaces wiki entity completeness failures in the browser: entities missing `**Status:**`, `**Superset:**`, `**Subkind:**`, or other required lore fields. The test suite (`canon-integrity.test.ts`) already validates these rules and identifies exact file paths + field names. Surfacing the same checks live (server-side scan on page load) removes the friction of running tests to find content gaps.
+- **Last Updated:** 2026-05-01
+- **Summary:** Author-accessible browser page surfacing wiki entity completeness failures. Out of current theme focus.
 - **Night Notes:**
-  - 2026-04-26 (Run 14): Seeded. `npm test` has 3 persistent failures (FIX-034, FIX-037) from exactly these checks — test output already identifies the offending files. A live browser view would let Paul fix these between Nightshift runs without needing a terminal. Gate with `hasAuthorSpecialAccess()`. No new infra — pure read/scan of content/ directory at request time.
+  - 2026-04-26 (Run 14): Seeded.
+  - 2026-05-01 (Run 17): Out of current theme focus. Parked pending future scope. Note: FIX-037 and FIX-034 are now resolved — the immediate driver for this idea is gone.
 
 ---
 
 ### [IDEA-034] Chapter Arc Progress Indicator on /stories
-- **Status:** ready
-- **Category:** enhance
+- **Status:** parked
 - **Seeded:** 2026-04-25
-- **Last Updated:** 2026-04-27
-- **Priority:** P2
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-034-chapter-arc-progress-bar.md`
-- **Summary:** Add a visual "N of 17 chapters read" progress bar above the chapter grid on `/stories`. All data is already in `StoriesPageClient` props. Dev plan written: Phase 1 is a pure JSX addition (~20 lines), no new API, no DB. Estimated 0.5 hours.
+- **Last Updated:** 2026-05-01
+- **Summary:** Visual "N of 17 chapters read" progress bar above the chapter grid. Dev plan exists. Out of current theme focus.
 - **Night Notes:**
   - 2026-04-25 (Run 13): Seeded.
-  - 2026-04-26 (Run 14): Advanced to `exploring`. Confirmed all three reader paths handled cleanly via existing props.
-  - 2026-04-27 (Run 15): Advanced to `ready`. Dev plan written. Implementation is a single JSX block above the chapter grid in `StoriesPageClient.tsx`.
+  - 2026-04-27 (Run 15): Advanced to `ready`. Dev plan written.
+  - 2026-05-01 (Run 17): Out of current theme focus. Parked pending future scope. Dev plan at `docs/nightshift/plans/DEVPLAN-IDEA-034-chapter-arc-progress-bar.md` remains valid.
+
+---
+
+### [IDEA-033] Mission Timeline Enhancement — In-Universe Dates on /stories/timeline
+- **Status:** parked
+- **Seeded:** 2026-04-24
+- **Last Updated:** 2026-05-01
+- **Summary:** Add a "Valkyrie Mission" section to TimelineView showing CH01–CH17 Mission Day + UTC date ranges. Could re-tag to post-read-world.
+- **Night Notes:**
+  - 2026-04-24 (Run 12): Seeded.
+  - 2026-04-26 (Run 14): Advanced to `exploring`.
+  - 2026-05-01 (Run 17): Stale 5 days. Demoting to parked. This fits post-read-world but has not been advanced. Un-park when entity explorer (IDEA-044) is shipped — the timeline is a natural companion view.
 
 ---
 
 ### [IDEA-032] Chapter Tag Quality Gate in StoryDetailsDisclosure
-- **Status:** planned
-- **Category:** enhance
+- **Status:** parked
 - **Seeded:** 2026-04-24
-- **Last Updated:** 2026-04-25
-- **Priority:** P2
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-032-chapter-tag-quality-gate.md`
-- **Summary:** Gate `chapterTags.summary` display in `StoryDetailsDisclosure` behind `chapterTags.reviewed === true`. All 17 chapters currently have `reviewed: false`. Also add `scripts/review-chapter-tags.ts` — an interactive CLI for Paul to approve/skip/edit each AI summary. Themes tags are not gated (they're structural, not narrative prose). Dev plan written.
+- **Last Updated:** 2026-05-01
+- **Summary:** Gate chapter tag summaries behind `reviewed === true`. All 17 chapters have `reviewed: false`. Out of current theme focus.
 - **Night Notes:**
-  - 2026-04-24 (Run 12): Seeded. `StoryDetailsDisclosure.tsx` line ~87 renders `{chapterTags && chapterTags.summary && <p>…</p>}`. Should be `{chapterTags && chapterTags.reviewed && chapterTags.summary && …}`.
-  - 2026-04-25 (Run 13): Advanced to `planned`. Confirmed all 17 chapter_tags entries have `reviewed: false` (0 reviewed). Gate would hide all summaries until Paul runs the review script. Dev plan written: Phase 1 is a 1-line fix, Phase 2 adds the review CLI. Estimated 0.75 hours.
+  - 2026-04-24 (Run 12): Seeded.
+  - 2026-04-25 (Run 13): Advanced to `planned`. Dev plan at `docs/nightshift/plans/DEVPLAN-IDEA-032-chapter-tag-quality-gate.md`.
+  - 2026-05-01 (Run 17): Out of current theme focus. Parked pending future scope. Phase 1 (1-line fix) remains trivial; un-park when Paul wants to run the review CLI.
 
 ---
 
 ### [IDEA-030] Ask Evidence Inline Citation Chips
-- **Status:** planned
-- **Category:** enhance
+- **Status:** parked
 - **Seeded:** 2026-04-23
-- **Last Updated:** 2026-04-28
-- **Priority:** P2
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-030-ask-evidence-citation-chips.md`
-- **Summary:** The `ask-evidence.ts` evidence schema extracts `linksInAnswer` (markdown links from the AI response). Currently these only appear in the collapsible evidence debug panel. Surfacing 1–3 inline citation chip pills directly below the assistant message bubble makes answers feel grounded for everyday readers without requiring panel expansion. Dev plan written.
+- **Last Updated:** 2026-05-01
+- **Summary:** Surface `linksInAnswer` evidence as inline chip pills below the assistant message bubble. Dev plan written. Fits ask-forward theme.
 - **Night Notes:**
-  - 2026-04-23 (Run 11): Seeded. `AskMessageEvidence.linksInAnswer` already extracted.
-  - 2026-04-25 (Run 13): Advanced to `exploring`. Confirmed data flow: evidence arrives as final SSE event; `msg.evidence.linksInAnswer` available on each completed assistant message object in ask/page.tsx.
-  - 2026-04-28 (Run 16): Advanced to `planned`. Dev plan written. Confirmed exact insertion point in `messages.map` (lines ~705–730 of ask/page.tsx) between the prose div and `AskSourcesDisclosure`. Phase 1 is ~20 lines of JSX; Phase 2 removes the duplicate "Links in this answer" block from inside the disclosure panel. Estimated 0.75 hours.
+  - 2026-04-23 (Run 11): Seeded.
+  - 2026-04-28 (Run 16): Advanced to `planned`. Dev plan written at `docs/nightshift/plans/DEVPLAN-IDEA-030-ask-evidence-citation-chips.md`.
+  - 2026-05-01 (Run 17): Stale 3 days — likely low priority or too complex. Demoting to parked. Fits ask-forward; un-park when IDEA-040 (Ask CTA) ships. IDEA-042 (follow-up chips) supersedes the insertion-point work.
+
+---
+
+### [IDEA-039] "Ask About This Character" Quick-Action on Character Detail Pages
+- **Status:** parked
+- **Seeded:** 2026-04-27
+- **Last Updated:** 2026-05-01
+- **Summary:** Button on character pages opening Ask pre-populated with the character name. Fits ask-forward.
+- **Night Notes:**
+  - 2026-04-27 (Run 15): Seeded.
+  - 2026-05-01 (Run 17): Stale 4 days. Demoting to parked. Very similar to IDEA-040 (now ready); un-park after IDEA-040 ships as a natural follow-on.
+
+---
+
+### [IDEA-037] Chapter Recall Mode — Post-Read Comprehension Prompts
+- **Status:** parked
+- **Seeded:** 2026-04-26
+- **Last Updated:** 2026-05-01
+- **Summary:** After marking a chapter read, optionally offer 3 short in-world comprehension prompts. Fits ask-forward.
+- **Night Notes:**
+  - 2026-04-26 (Run 14): Seeded.
+  - 2026-05-01 (Run 17): Stale 5 days. Demoting to parked.
 
 ---
 
 ### [IDEA-028] Continuity Diff in Beyond Workspace
 - **Status:** parked
-- **Category:** enhance
 - **Seeded:** 2026-04-22
 - **Last Updated:** 2026-04-27
-- **Priority:** P2
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-028-continuity-diff-beyond-panel.md`
-- **Summary:** A read-only "Continuity Health" panel in the Beyond author workspace that diffs the canon snapshot against live wiki state and shows blocking contradictions. Pure Server Component, no new infra. Dev plan written (1.5 hours).
+- **Summary:** Read-only "Continuity Health" panel in Beyond. Dev plan written.
 - **Night Notes:**
-  - 2026-04-22 (Run 10): Seeded.
-  - 2026-04-23 (Run 11): Advanced to `exploring`.
-  - 2026-04-24 (Run 12): Advanced to `planned`. Dev plan written.
-  - 2026-04-27 (Run 15): Stale 3 days — likely low priority or too complex. Demoting to parked. Dev plan at DEVPLAN-IDEA-028 remains valid — un-park when Paul is ready to add to Beyond workspace.
+  - 2026-04-27 (Run 15): Stale 3 days — demoted to parked.
+  - 2026-05-01 (Run 17): No change. Out of current theme focus. Dev plan at `docs/nightshift/plans/DEVPLAN-IDEA-028-continuity-diff-beyond-panel.md` remains valid.
 
 ---
 
 ### [IDEA-025] Wire Celestial Rules into Ask Companion
 - **Status:** shipped
-- **Category:** enhance
 - **Seeded:** 2026-04-22
-- **Last Updated:** 2026-04-23
-- **Priority:** P2
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-025-rules-in-ask.md`
-- **Summary:** SHIPPED in Run 11. `getRulesContext()` implemented in `prompts.ts` (lines 147–196), injected into `sharedContentBlock()` in `perspectives.ts` (lines 27, 75, 89–90). All 25 rules (up from 16 in Run 11) now injected into every Ask system prompt with a 60 000-character budget cap (raised from 18k in Run 12 to accommodate 9 new Series Bible rules).
-- **Night Notes:**
-  - 2026-04-22 (Run 9): Seeded.
-  - 2026-04-22 (Run 10): Advanced to `ready`. Dev plan written.
-  - 2026-04-23 (Run 11): **SHIPPED**
-  - 2026-04-24 (Run 12): Budget cap raised from 18k → 60k chars in commit `145a753` to accommodate 9 new Series Bible rules (total 25). `RULES_CONTEXT_MAX_CHARS = 60_000` in `prompts.ts`.
+- **Summary:** SHIPPED in Run 11. `getRulesContext()` implemented, 25 rules injected into every Ask prompt with 60k-char budget cap.
 
 ---
-
 
 ### [IDEA-023] Explore Hub — Fiction Entity Graph
 - **Status:** parked
-- **Category:** new
 - **Seeded:** 2026-04-19
 - **Last Updated:** 2026-04-27
-- **Priority:** P2
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-023-explore-hub-celestial.md`
-- **Summary:** A dedicated `/explore` page with three tabs: Story Arc Map, Entity Map, and Connections. Dev plan written. Estimated 2.5 hours.
+- **Summary:** Dedicated `/explore` page with Story Arc Map, Entity Map, Connections tabs. Dev plan written. Stale 5 days (as of Run 15).
 - **Night Notes:**
-  - 2026-04-19: Seeded.
-  - 2026-04-22 (Run 9): Advanced to `planned`. Dev plan written.
-  - 2026-04-22 (Run 10): No change.
-  - 2026-04-27 (Run 15): Stale 5 days — likely low priority or too complex. Demoting to parked. Un-park when higher-priority fixes (P0/P1 gating) are cleared.
-
----
-
-## Category 2: New Features or Integrations
-
-### [IDEA-040] "Ask About This Chapter" Quick-Action on Story Detail Pages
-- **Status:** seed
-- **Category:** new
-- **Seeded:** 2026-04-28
-- **Last Updated:** 2026-04-28
-- **Priority:** P2
-- **Plan:** *(not yet written)*
-- **Summary:** Add an "Ask about this chapter" button on `/stories/[storyId]` that opens Ask pre-populated with the chapter slug — the most natural reader entry point for Ask (right after finishing a chapter). Readers currently must navigate away to `/ask` and manually type. The `storySlug` would be pre-set, giving Ask full chapter scene context. Complements IDEA-039 (character-scoped Ask).
-- **Night Notes:**
-  - 2026-04-28 (Run 16): Seeded. Implementation path: add a Link at the bottom of the chapter detail page pointing to `/ask?storySlug=CH07-narrative-tide` (or similar). Ask page already reads `storySlug` from query params via the `highlight` pattern. Check if `storySlug` query param is read; if not, a 1-line addition to the Ask page param reader wires it. The button itself is ~5 lines on the story detail page. Very low complexity — potentially combinable into a single 30-min session with IDEA-032 or IDEA-034.
-
----
-
-### [IDEA-039] "Ask About This Character" Quick-Action on Character Detail Pages
-- **Status:** seed
-- **Category:** new
-- **Seeded:** 2026-04-27
-- **Last Updated:** 2026-04-27
-- **Priority:** P2
-- **Plan:** *(not yet written)*
-- **Summary:** An "Ask about [Character]" button on `/characters/[slug]` that opens Ask pre-populated with the character name and scoped to the character's arc ledger filtered by reader progress. Currently Ask injects ALL 9 arcs into every prompt; a character-focused entry point could route to Ask with `?message=Tell+me+about+ALARA&character=alara` and a future API path that injects only the relevant arc + character wiki, reducing prompt size and improving answer focus. Spoiler safety: only arc sections up to the reader's chapter boundary are injected (integrates with IDEA-038 arc state gating).
-- **Night Notes:**
-  - 2026-04-27 (Run 15): Seeded. Depends on FIX-041 (arc page gating) and FIX-042 (arc context pruning). The `?highlight=` param pattern (from memoir's "Ask from Passage" feature) shows how Ask can be pre-seeded from other pages. Implementation path: (1) add a query-param reader to `ask/page.tsx` that pre-fills the message input; (2) optionally pass `characterSlug` param to Ask API for narrowed arc context. Step 1 alone (pre-fill) is useful and requires no API change. Estimated 1.5 hours for full implementation with arc scoping.
-
----
-
-### [IDEA-037] Chapter Recall Mode — Post-Read Comprehension Prompts
-- **Status:** seed
-- **Category:** new
-- **Seeded:** 2026-04-26
-- **Last Updated:** 2026-04-26
-- **Priority:** P3
-- **Plan:** *(not yet written)*
-- **Summary:** After a reader marks a chapter as read, optionally offer 3 short in-world comprehension prompts ("What was Amar-Cael's goal in this chapter?", "Name one decision that surprised you") generated on-demand by the Ask AI. Responses are ephemeral — the value is in the reader's reflection process, not storing their answers. The chapter body + mission logs are already fed to the AI via the Ask pipeline; this feature just surfaces a new entry point. Gated naturally: the chapter must already be unlocked to trigger it.
-- **Night Notes:**
-  - 2026-04-26 (Run 14): Seeded. Trigger point: after `markStoryRead()` succeeds in `StoriesPageClient.tsx`, show a small "Want a quick recall check?" CTA that opens a modal. Modal fetches 3 prompts from a new `/api/stories/[storyId]/recall-prompts` endpoint (author-controlled, AI-generated, cached once per chapter hash). Spoiler safety: prompts generated from only the unlocked chapter's content. Estimated 3 hours (new API route + modal UI + caching). Depends on FIX-036 and IDEA-032 being shipped first.
-
----
-
-### [IDEA-033] Mission Timeline Enhancement — In-Universe Dates on /stories/timeline
-- **Status:** exploring
-- **Category:** new
-- **Seeded:** 2026-04-24
-- **Last Updated:** 2026-04-26
-- **Priority:** P2
-- **Plan:** *(not yet written)*
-- **Summary:** The new `getMissionTimelineContext()` function (commit `145a753`) produces a compact Mission Day + UTC date range per chapter from `content/raw/mission_logs_inventory.json`. `/stories/timeline` already exists but shows only publication ordering. Surfacing in-universe dates alongside chapters ("CH01 — Mission Days 1–42, Oct 2050") would ground the reading experience in the sci-fi setting and give readers a temporal anchor. The new `content/wiki/timeline/prologue.md` adds pre-Valkyrie world events (12000 BCE → 2050 CE) that could appear above CH01 as a "Before Valkyrie" section. All data is already on disk; this is a UI enhancement to the timeline view.
-- **Night Notes:**
-  - 2026-04-24 (Run 12): Seeded. `getMissionTimelineContext()` in `prompts.ts` (lines 218–308) already parses mission logs into a per-chapter date table. `content/wiki/timeline/prologue.md` has pre-Valkyrie entries formatted as `- **YEAR** — Event`. `src/components/timeline/TimelineView.tsx` is the render target.
-  - 2026-04-26 (Run 14): Advanced to `exploring`. Confirmed architecture: `TimelineView.tsx` (199 lines) is a Server Component that calls `getTimeline()` (career-timeline.md — legacy memoir) and `getPrologueTimeline()` (prologue.md — pre-Valkyrie). Neither reads `mission_logs_inventory.json` or applies chapter gating. Enhancement plan: (1) add a third data source — chapter timeline entries derived from `getMissionLogInventory()` (already gated by `isStoryUnlocked` at the missions page level); (2) render a new "Valkyrie Mission" section in `TimelineView` showing "CH01 — Mission Days X–Y, Month YYYY" rows, gated by reader progress. Spoiler concern: **chapter-gated** — only unlocked chapters' mission rows shown. `TimelineView` needs to become an async Server Component to call `getReaderProgress()`. Estimated 1.5 hours.
+  - 2026-04-27 (Run 15): Demoted to parked.
+  - 2026-05-01 (Run 17): IDEA-044 (Entity Network Explorer) is a newer, more focused version of this concept in the post-read-world theme. Consider un-parking if IDEA-044 scope expands.
 
 ---
 
 ### [IDEA-029] Reader Arc Progress — Gated BeatTimeline
 - **Status:** parked
-- **Category:** new
 - **Seeded:** 2026-04-22
 - **Last Updated:** 2026-04-27
-- **Priority:** P2
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-029-reader-arc-progress.md`
-- **Summary:** After FIX-032 (BeatTimeline chapter gating), enhance journey intro page beats with progress indicators. Dev plan written. 1.25 hours after FIX-032 ships.
+- **Summary:** Progress indicators on journey beats after FIX-032 ships. Dev plan written.
 - **Night Notes:**
-  - 2026-04-22 (Run 10): Seeded and advanced to `ready`. FIX-032 is the prerequisite.
-  - 2026-04-27 (Run 15): Stale 5 days — likely low priority or too complex. Demoting to parked. FIX-032 (the prerequisite) is still unexecuted. Un-park after FIX-032 ships.
+  - 2026-04-27 (Run 15): Demoted to parked. FIX-032 prerequisite remains unexecuted (parked after companion-first shift).
 
 ---
 
 ### [IDEA-026] Open Threads Reader Panel — Narrative Mysteries Page
 - **Status:** parked
-- **Category:** new
 - **Seeded:** 2026-04-22
 - **Last Updated:** 2026-04-27
-- **Priority:** P2
-- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-026-open-threads-mysteries-page.md`
-- **Summary:** A reader-facing `/mysteries` page surfacing unresolved threads, gated by chapter. Dev plan written. Estimated 1.2 hours. Blocking: FIX-030 (keith role fix).
+- **Summary:** Reader-facing `/mysteries` page for unresolved threads gated by chapter. Dev plan written.
 - **Night Notes:**
-  - 2026-04-22 (Run 9): Seeded.
-  - 2026-04-23 (Run 11): Advanced to `planned`. Dev plan written.
-  - 2026-04-27 (Run 15): Stale 4 days — likely low priority or too complex. Demoting to parked. Un-park after FIX-030 ships.
+  - 2026-04-27 (Run 15): Demoted to parked. Prerequisite FIX-030 (keith role in threads route) still open (planned, not executed).
 
 ---
 
-
-## Parked
-
-*(Ideas demoted after 3+ days without action, or superseded by Celestial migration.)*
-
-### [IDEA-035] Author Chapter Review Dashboard — `/admin/chapter-review`
-- **Status:** parked
-- **Category:** new
-- **Seeded:** 2026-04-25
-- **Last Updated:** 2026-04-28
-- **Priority:** P2
-- **Summary:** Browser-based `/admin/chapter-review` page for approving chapter tags. Depends on IDEA-032 Phase 1. Stale 3 days — demoting to parked.
-- **Night Notes:**
-  - 2026-04-25 (Run 13): Seeded. Depends on IDEA-032 Phase 1 shipping.
-  - 2026-04-28 (Run 16): Stale 3 days — likely low priority or too complex. Demoting to parked. Un-park after IDEA-032 Phase 1 ships.
-
-### [IDEA-031] Vault Discovery Map
-- **Status:** parked
-- **Category:** new
-- **Seeded:** 2026-04-23
-- **Last Updated:** 2026-04-26
-- **Priority:** P2
-- **Summary:** The 10 vault entities each have chapter appearance data via `memoirStoryIds`. A "discovery" layer for the `/vaults` index would show vaults as: undiscovered (silhouette), known (basic info), or fully mapped (complete detail) based on chapter progress.
-- **Night Notes:**
-  - 2026-04-23 (Run 11): Seeded. FIX-035 (vault story gating) is the prerequisite.
-  - 2026-04-26 (Run 14): Stale 3 days — likely low priority or too complex. Demoting to parked. FIX-035 (the prerequisite) is still unexecuted. Un-park after FIX-035 ships.
-
 ### [IDEA-027] Chapter Completion Milestone — "You've Finished the Story"
 - **Status:** parked
-- **Category:** new
 - **Seeded:** 2026-04-22
 - **Last Updated:** 2026-04-25
-- **Priority:** P3
-- **Summary:** Fullscreen overlay when reader marks CH17 as read for the first time; prompt to enable re-reader mode.
-- **Night Notes:**
-  - 2026-04-22 (Run 9): Seeded.
-  - 2026-04-22 (Run 10): Still seed.
-  - 2026-04-25 (Run 13): Stale 3 days — likely low priority or too complex. Demoting to parked.
+- **Summary:** Fullscreen overlay when reader marks CH17 complete for first time. Demoted to parked 2026-04-25.
+
+---
 
 ### [IDEA-024] Fill in Voice Guide Placeholder
 - **Status:** parked
-- **Category:** enhance
 - **Seeded:** 2026-04-22
 - **Last Updated:** 2026-04-25
-- **Priority:** P1
-- **Summary:** `content/voice.md` is a stub template. Filling it with Celestial narrative voice guidance is the highest-impact improvement to Ask quality — pure author content work, no code.
-- **Night Notes:**
-  - 2026-04-22 (Run 9): Seeded. Confirmed `content/voice.md` is a stub.
-  - 2026-04-25 (Run 13): Stale 3 days — likely low priority or too complex. Demoting to parked. Note: this is actually P1 author content work, not a code task. Un-park explicitly when Paul is ready to draft voice guidance.
+- **Summary:** `content/voice.md` is a stub. Author content work; P1 impact on Ask quality. Out of theme scope. Un-park explicitly when Paul is ready to draft voice guidance.
 
 ---
 
@@ -311,5 +279,5 @@ All of the following were designed for the Keith Cobb memoir shell and are no lo
 - **IDEA-018** Ask from Passage — SHIPPED; `?highlight=` param on Ask page
 - **IDEA-019** People Biographical Context in Ask — SHIPPED; getPeopleContext() in prompts.ts
 - **IDEA-020** Profile as Reflection Gallery — SHIPPED; cel_profile_reflections
-- **IDEA-021** Reading Milestone Celebration (39 memoir stories) — Parked 2026-04-22. Memoir-specific. Celestial equivalent: IDEA-027 (CH17).
-- **IDEA-022** Principles Context in Ask — Parked 2026-04-22. Memoir's 12 canonical principles do not map to Celestial. Celestial equivalent: IDEA-025 (Rules in Ask).
+- **IDEA-021** Reading Milestone Celebration (39 memoir stories) — Parked 2026-04-22. Memoir-specific.
+- **IDEA-022** Principles Context in Ask — Parked 2026-04-22. Celestial equivalent: IDEA-025 (Rules in Ask — shipped).
