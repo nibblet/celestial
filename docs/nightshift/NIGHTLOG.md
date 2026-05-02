@@ -4,6 +4,65 @@
 
 ---
 
+## Run: 2026-05-02 (Run 18)
+
+### Summary
+- Scanned: 0 new code commits since Run 17 nightshift (`ac74916`). **Catch-up**: Run 17 missed scanning commits `03d7d20` (visual spec architecture) and `74aeae5` (world-branched vocabulary + parent_entity inheritance) — both between Run 16 and Run 17. Scanned and documented tonight.
+- Issues: 2 new found (FIX-047 Low: stale `claude-sonnet-4-20250514` in 8 files; FIX-048 Low: ~15MB binary test renders in `public/images/`). 0 resolved. 0 spoiler-leak P0.
+- Ideas (by theme): ask-forward 1 seed (IDEA-045) / 1 promoted to planned (IDEA-042 dev plan written); genmedia 1 seed (IDEA-046) / 0 promoted; post-read-world 1 seed (IDEA-047) / 0 promoted; parked 0.
+- Plans written: DEVPLAN-IDEA-042, FIXPLAN-FIX-047, FIXPLAN-FIX-048.
+
+### Build & Lint & Test Results
+- `npm install`: required in fresh sandbox clone (dependencies not pre-installed)
+- `node_modules/.bin/next build`: **PASSES** — same ~106 routes as Run 17. (`npx next build` pulls wrong version in sandbox — use local binary.)
+- `npm run lint`: **PASSES** — 0 errors, **4 warnings** (same 4 `<img>` tag warnings, unchanged).
+- `npm test`: **192 PASS / 0 FAIL** (unchanged from Run 17).
+
+### Key Findings
+
+1. **Run 17 missed two commits between Run 16 and Run 17.** Commits `03d7d20` ("Add visual spec architecture") and `74aeae5` ("Add world-branched vocabulary, parent_entity inheritance, Valkyrie state + interior specs") were committed April 28 after Run 16 nightshift but not scanned by Run 17. Tonight's run documents what they introduced and updates STATUS.md.
+
+2. **New visual spec system** (commits `03d7d20` + `74aeae5`). `content/wiki/specs/` now has 17 entity directories, 14 with `master.json`, 25 total JSON files. Key additions:
+   - `src/lib/visuals/specs/loader.ts` — `composeEntitySpec()` with parent_entity inheritance (cycle-protected, 6-level depth limit). Render order: parent.master → parent.features → parent.state → child.master → child.features → child.view → child.state.
+   - `src/lib/visuals/specs/types.ts` — `SpecLayer`, `ComposedSpec`, `SpecCompositionRequest`.
+   - `synthesize-prompt.ts` — 3-world canonical vocabulary in SYSTEM_PROMPT: WORLD A (alien_organic: Valkyrie-1), WORLD B (earth_2050: Mars/military/Earth), WORLD C (ancient_vault: Giza/pre-human).
+   - `view` and `state` params added to `/api/visuals/prompt` route and `VisualsAdminConsole.tsx`.
+   - 5 harmonic states for Valkyrie-1 (`dormant`, `wake`, `active`, `alignment`, `harmonic_jump`).
+   - 11 Valkyrie-1 interior locations with `parent_entity: "valkyrie-1"` stub specs.
+   - SYNTH_PROMPT_VERSION = `v9` (already bumped in `58b2527` to cover new vocabulary).
+
+3. **FIX-047 (Low — NEW): 8 API model references use stale `claude-sonnet-4-20250514`.** Every hard-coded model ID in `personas.ts`, `synthesize-prompt.ts`, `extract-vision.ts`, `session-wrap.ts`, `profile-reflection.ts`, and 3 API routes uses the old model ID. Current latest: `claude-sonnet-4-6`. Fix: 8-file find/replace + ledger pricing entry + bump SYNTH_PROMPT_VERSION to v10. Plan: FIXPLAN-FIX-047.
+
+4. **FIX-048 (Low — NEW): ~15MB of binary test renders committed to `public/images/`.** Commits `03d7d20` + `74aeae5` added 14 image files including 5 Valkyrie harmonic state renders (~2MB each) and 8 spec development renders. No `.gitignore` pattern prevents more additions. Note: the 5 state renders may be intentionally public-facing (IDEA-047 dependency). Plan: FIXPLAN-FIX-048.
+
+5. **All builds/tests/lint clean.** No regressions from the spec system additions. The spec loader compiles cleanly; used only from server-side routes.
+
+6. **Review queue unchanged.** `brain_lab/out/review-queue.md` still shows 9 character files with `reviewed: false`. File last generated 2026-04-26T20:05:34Z — needs a pipeline re-run.
+
+7. **FIX-045 and FIX-046 remain unexecuted.** No new code commits since Run 17 — plans are ready but unimplemented.
+
+8. **IDEA-042 (Follow-Up Chips) promoted to `planned`.** Dev plan `DEVPLAN-IDEA-042-follow-up-chips.md` written. New `src/lib/ai/ask-suggestions.ts` module using `claude-haiku-4-5-20251001`; suggestions included in `done: true` SSE event; rendered as chip buttons in ask/page.tsx between markdown div and AskSourcesDisclosure.
+
+9. **Note on git state.** Previous nightshift commits (Run 15–17) were made locally but NOT pushed to `origin/main` (`origin/main` is at `724d66b`, "updated arcs"). Tonight's push will be to origin/main with the docs/nightshift/ delta only. Paul: to push the full local history including Runs 15–17 code commits, run `git push origin <local-commit-hash>:main` from the development machine.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-040-ask-about-this-chapter.md` — **ready (ask-forward)**: Ask companion CTA on story pages, 15 min. Still highest-ROI feature not yet shipped.
+- `docs/nightshift/plans/DEVPLAN-IDEA-042-follow-up-chips.md` — **NEW planned (ask-forward)**: Follow-up chip suggestions after Ask answers, 2 hours.
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — **NEW Low**: 8-file model ID update to `claude-sonnet-4-6`, 15 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-048-committed-images-public.md` — **NEW Low**: `.gitignore` for `public/images/`, 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-045-visuals-plan-stale-presets.md` — Low: update preset names in visuals-integration-plan.md, 10 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-046-companion-first-stale-copy.md` — Low: stale copy + dead code, 20 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-030-threads-route-keith-role.md` — Medium: one-line role fix, 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-027-ai-activity-route-keith-role.md` — Medium: one-line role fix, 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-026-stale-keith-role-rls.md` — Medium: migration 040 for RLS (update migration number in plan before executing).
+
+### Recommendations
+- **If you have 15 min:** IDEA-040 (`stories/[storyId]/page.tsx` ~8 lines JSX). Ship the Ask companion CTA — it's been ready for 2 nightshift runs.
+- **If you have 30 min:** IDEA-040 (15 min) + FIX-047 (15 min). Ask CTA live + all APIs upgraded to Sonnet 4.6.
+- **If you have 2 hours:** The 30-min batch + IDEA-042 (2 hrs). After this: Ask has a CTA, Sonnet is upgraded, and follow-up chips are working.
+
+---
+
 ## Run: 2026-05-01 (Run 17)
 
 ### Summary

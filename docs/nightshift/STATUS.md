@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-05-01 (Nightshift Run 17)
+> Last updated: 2026-05-02 (Nightshift Run 18)
 
 ## App Summary
 
@@ -124,18 +124,29 @@
 - AI ledger: all Anthropic calls recorded in `cel_ai_interactions`
 - **Gap:** `content/voice.md` and `content/decision-frameworks.md` are stub placeholders
 
-### Visuals Pipeline (Run 16 + updated Run 17)
+### Visuals Pipeline (Run 16 + updated Run 17 + Run 18 catch-up)
 
-- **Corpus-grounded visual prompt synthesis**: `src/lib/visuals/` — 11 modules
+- **Corpus-grounded visual prompt synthesis**: `src/lib/visuals/` — 13 modules
   - `corpus-context.ts` — builds wiki-first context from entity/story/scene (reuses Ask retriever)
-  - `synthesize-prompt.ts` — calls `visual_director` persona (Sonnet) to produce structured `VisualPrompt`; `SYNTH_PROMPT_VERSION = "v9"` (bumped in commit `58b2527`)
+  - `synthesize-prompt.ts` — calls `visual_director` persona (Sonnet) to produce structured `VisualPrompt`; `SYNTH_PROMPT_VERSION = "v9"` (bumped in commit `58b2527`). System prompt includes **3-world canonical vocabulary** (NEW commit `74aeae5`, missed by Run 17):
+    - **WORLD A — alien_organic**: bio-crystalline, petal apertures, subdermal vein emission — for Valkyrie-1, alien artifacts
+    - **WORLD B — earth_2050**: brushed aluminum, riveted seams, practicals — for Mars, Earth offices, military, Rigel
+    - **WORLD C — ancient_vault**: carved stone, glyph reliefs, candle-warm interior — for Vault 002, Giza, pre-human structures
   - `hash.ts` + `corpus-version.ts` — deterministic seed hash for prompt caching
   - `generate-asset.ts` — orchestrates Imagen 4 / Runway Gen-4 generation + storage
   - `extract-vision.ts` — vision fingerprint extracted from reference uploads
   - `continuity.ts` — cross-style identity continuity via approved-asset anchors
   - `style-presets.ts` — **8 Celestial-specific presets (NEW Run 17, commit `58b2527`):** `valkyrie_shipboard`, `vault_threshold`, `mars_excavation`, `earth_institutional`, `giza_archaeological`, `noncorporeal_presence`, `intimate_crew`, `mythic_scale`. Replaced 4 generic presets (`cinematic_canon`, `painterly_lore`, `noir_intimate`, `mythic_wide`). Anchors quote/paraphrase Celestial canon.
+  - **`specs/loader.ts`** (NEW commit `03d7d20`, missed by Run 17): `composeEntitySpec()` — loads and merges layered JSON spec files from `content/wiki/specs/{slug}/`. Commit `74aeae5` added **parent_entity inheritance** with cycle detection and 6-level depth limit. Render order: parent.master → parent.features → parent.state → child.master → child.features → child.view → child.state. `renderSpecForPrompt()` emits a `# Visual Spec — CANON OVERRIDE` block.
+  - **`specs/types.ts`** (NEW commit `03d7d20`): `SpecLayer`, `ComposedSpec`, `SpecCompositionRequest`.
   - `providers/`: `imagen.ts`, `runway.ts`, `index.ts`, `types.ts`
   - `list-entity-assets.ts` — fetches approved + reference assets for entity pages (uses admin client, bypasses RLS)
+- **Visual spec content** (`content/wiki/specs/`): **17 entity directories**, 14 with `master.json`, 25 total JSON files (NEW commits `03d7d20` + `74aeae5`, missed by Run 17). Seeded entities: `valkyrie-1` (full: master + 3 features + 5 states + 2 views), `command-dome`, `resonant-pad`, 11 Valkyrie interior locations (each with `parent_entity: "valkyrie-1"`). Interior locations inherit Valkyrie WORLD A vocabulary via `parent_entity` chain.
+  - **5 harmonic states for Valkyrie-1**: `dormant`, `wake`, `active`, `alignment`, `harmonic_jump` — each with a `states/{name}.json` that overrides vein color and intensity.
+  - **11 interior locations** each have a stub `master.json` with `parent_entity: "valkyrie-1"`.
+- **`view` and `state` params** added to `/api/visuals/prompt` POST body and `VisualsAdminConsole.tsx` (commit `03d7d20`). Allows specifying which spec view/state to use for generation.
+- **Committed test renders** in `public/images/` (~15MB, ⚠️ **FIX-048**): 14 image files from spec development (5 harmonic state renders, 8 exterior/interior renders, 1 portrait). No functional breakage but repo bloat.
+- **All model IDs stale** (⚠️ **FIX-047**): `synthesize-prompt.ts`, `extract-vision.ts`, and 6 other files still use `claude-sonnet-4-20250514` — should be `claude-sonnet-4-6`.
 - **API routes**: 6 at `/api/visuals/` — mutation routes accept `["admin", "author", "keith"]` (keith kept for backward compat; DB-layer RLS only allows `author` or `admin` — see migration 039)
 - **Admin console**: `src/app/profile/admin/visuals/VisualsAdminConsole.tsx` + page — now accessible to `role='author'` and `role='admin'` accounts
 - **Gallery component**: `src/components/visuals/EntityVisualsGallery.tsx` — rendered on character, artifact, location, faction, vault detail pages
@@ -177,14 +188,16 @@
 
 ## Build / Test Status
 
-- **Build:** PASSES — clean, ~106 routes. 1 expected Turbopack NFT warning on `prompts.ts` filesystem reads.
-- **Lint:** PASSES — 0 errors, **4 warnings** (`<img>` tags in visuals components — `VisualsAdminConsole.tsx` lines 230/394, `EntityVisualsGallery.tsx` lines 64/118).
-- **Tests:** **192 total / 192 PASS / 0 FAIL** (Run 17: +1 new test for companion-first defaults in `reader-progress.test.ts`; 3 previously failing tests now pass after FIX-037 + FIX-034 content fixes in commit `0e60b8c`). All green.
+- **Build:** PASSES — clean, ~106 routes. 1 expected Turbopack NFT warning on `prompts.ts` filesystem reads. (Run 18: requires `npm install` before `node_modules/.bin/next build` in a fresh clone; `npx next build` pulls wrong version in sandbox.)
+- **Lint:** PASSES — 0 errors, **4 warnings** (`<img>` tags in visuals components — `VisualsAdminConsole.tsx` lines 230/394, `EntityVisualsGallery.tsx` lines 64/118). Unchanged since Run 17.
+- **Tests:** **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17). All green.
 
 ## Known Issues (See FIXES.md)
 
-- **FIX-046 (Low — NEW Run 17):** Stale "unlock as you progress" UI copy in 3 places after companion-first shift. `HomePageClient.tsx:16`, `StoriesPageClient.tsx:217`, dead code block in `stories/[storyId]/page.tsx:42–60`.
-- **FIX-045 (Low — NEW Run 17):** `docs/celestial/visuals-integration-plan.md` uses obsolete preset names in anchor seeding table. Docs fix only; update before executing the plan.
+- **FIX-048 (Low — NEW Run 18):** ~15MB of binary test renders in `public/images/`. Repo bloat; add `.gitignore` pattern to prevent future additions.
+- **FIX-047 (Low — NEW Run 18):** 8 files use stale `claude-sonnet-4-20250514` model ID. Update to `claude-sonnet-4-6`; bump SYNTH_PROMPT_VERSION to v10.
+- **FIX-046 (Low — found Run 17, unexecuted):** Stale "unlock as you progress" UI copy in 3 places. `HomePageClient.tsx:16`, `StoriesPageClient.tsx:217`, dead code in `stories/[storyId]/page.tsx:42–60`.
+- **FIX-045 (Low — found Run 17, unexecuted):** `docs/celestial/visuals-integration-plan.md` uses obsolete preset names. Docs fix only; update before executing the plan.
 - **FIX-041 (parked):** `/arcs` and `/arcs/[slug]` pages have zero auth gate. Parked after companion-first shift.
 - **FIX-036 (parked):** `storySlug` not validated in Ask API. Parked after companion-first shift.
 - **FIX-032 (parked):** BeatTimeline on journey pages. Parked after companion-first shift.
@@ -201,13 +214,14 @@
 
 ## Next Actions (Priority Order)
 
-1. **IDEA-040 (15 min):** "Ask About This Chapter" CTA on story pages — dev plan written and ready. ~8 lines JSX in `stories/[storyId]/page.tsx`. The single highest-ROI ask-forward improvement.
-2. **FIX-045 (10 min):** Update `docs/celestial/visuals-integration-plan.md` preset names before executing Phase 0 of the visuals plan. Docs-only fix.
-3. **FIX-046 (20 min):** Update stale "unlock as you progress" copy in 3 files; remove dead `!unlocked` code block. Paul confirms copy for HomePageClient + StoriesPageClient.
-4. **FIX-026 + FIX-027 + FIX-030 (30 min combined):** Three stale `'keith'` role fixes. FIX-026 migration number is now **040** (update the plan file note before executing).
-5. **FIX-028 (30 min + author copy decisions):** Legacy "Keith" UI sweep, including `AskAboutStory.tsx` "Write to Keith" widget.
-6. **FIX-029 (1 hr):** Remove AgeModeSwitcher from Nav/Header.
-7. **IDEA-042 (seed → plan):** Suggested follow-up chips after Ask answers — write dev plan when ready to advance.
-8. **IDEA-043 (seed → plan):** On-demand scene visualization via Ask — write dev plan when ready.
-9. **IDEA-044 (seed → plan):** Entity network explorer at `/explore` — write dev plan when ready.
-10. **FIX-013, FIX-014, FIX-016, FIX-017:** Tell pipeline defensive coding — low priority.
+1. **IDEA-040 (15 min):** "Ask About This Chapter" CTA on story pages — dev plan `DEVPLAN-IDEA-040-ask-about-this-chapter.md` ready. ~8 lines JSX in `stories/[storyId]/page.tsx`. Highest-ROI ask-forward improvement.
+2. **IDEA-042 (2 hr):** Suggested follow-up chips after Ask answers — dev plan `DEVPLAN-IDEA-042-follow-up-chips.md` now ready. New `ask-suggestions.ts` module + 3 small client changes.
+3. **FIX-045 (10 min):** Update `docs/celestial/visuals-integration-plan.md` preset names before executing Phase 0 of the visuals plan. Docs-only fix.
+4. **FIX-046 (20 min):** Update stale "unlock as you progress" copy in 3 files; remove dead `!unlocked` code block. Paul confirms copy for HomePageClient + StoriesPageClient.
+5. **FIX-047 (15 min):** Update all 8 model IDs to `claude-sonnet-4-6`; bump SYNTH_PROMPT_VERSION to v10. Plan: `FIXPLAN-FIX-047-stale-model-id.md`.
+6. **FIX-026 + FIX-027 + FIX-030 (30 min combined):** Three stale `'keith'` role fixes. FIX-026 migration number is **040** (update plan file before executing).
+7. **FIX-048 (5 min):** Add `.gitignore` pattern for `public/images/` to prevent future binary bloat.
+8. **FIX-028 (30 min + author copy decisions):** Legacy "Keith" UI sweep, including `AskAboutStory.tsx` "Write to Keith" widget.
+9. **FIX-029 (1 hr):** Remove AgeModeSwitcher from Nav/Header.
+10. **IDEA-043, IDEA-044 (seed → plan):** Scene visualization and entity network — advance to `planned` once IDEA-040 + IDEA-042 ship.
+11. **FIX-013, FIX-014, FIX-016, FIX-017:** Tell pipeline defensive coding — low priority.

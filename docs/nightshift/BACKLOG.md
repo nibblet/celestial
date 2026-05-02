@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-01 (Run 17)
+> Last updated: 2026-05-02 (Run 18)
 
 ## Maturity Levels
 
@@ -32,15 +32,29 @@
 ---
 
 ### [IDEA-042] Suggested Follow-Up Chips After Each Ask Answer
-- **Status:** seed
+- **Status:** planned
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-01
-- **Last Updated:** 2026-05-01
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
+- **Last Updated:** 2026-05-02
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-042-follow-up-chips.md`
 - **Summary:** After each AI Ask response, render 2–3 contextual suggested follow-up questions as clickable chips directly below the answer bubble. Clicking a chip immediately submits the question. Makes the companion conversational and encourages depth without requiring the reader to think of next questions.
 - **Night Notes:**
-  - 2026-05-01 (Run 17): Seeded. Two generation strategies: (A) extract from `evidence.linksInAnswer` + infer questions from entity links; (B) prompt the Ask LLM to emit a structured `suggestions` field after the main response as a final SSE event — same pattern as `evidence`. Strategy B is cleaner and reuses the SSE event schema already in place. Display target: a flex row of `<button>` chips between the prose div and `AskSourcesDisclosure` in the messages map (ask/page.tsx ~lines 705–730). Complements IDEA-030 (evidence chips) which was parked but shares the same insertion point.
+  - 2026-05-01 (Run 17): Seeded. Two generation strategies: (A) extract from evidence.linksInAnswer; (B) second Haiku call after the main response stream. Strategy B chosen for quality.
+  - 2026-05-02 (Run 18): Advanced to `planned`. Dev plan written. Strategy: secondary non-streaming `claude-haiku-4-5-20251001` call after main stream, suggestions returned in the `done: true` SSE event alongside `evidence`. Client adds `suggestions?: string[]` to Message type; renders as chip buttons between markdown div and AskSourcesDisclosure (ask/page.tsx ~line 712). New module: `src/lib/ai/ask-suggestions.ts`. Estimated 2 hours.
+
+---
+
+### [IDEA-045] Ask Ambient Context Whispers During Reading
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-02
+- **Last Updated:** 2026-05-02
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** While a reader scrolls through a chapter page, a subtle ambient indicator appears alongside paragraphs for which the Ask companion has relevant context. Clicking/tapping opens Ask pre-seeded with that paragraph's text — proactive surfacing rather than waiting for the reader to invoke the companion.
+- **Night Notes:**
+  - 2026-05-02 (Run 18): Seeded. Extends IDEA-040 (chapter CTA) to per-paragraph granularity. The `?highlight=` param in Ask (IDEA-018, shipped) already handles passage pre-seeding. This idea is about proactive context discovery: marking paragraphs with entity mentions (from `chapter_tags.json`) as "Ask-able". Consider a hover/focus affordance on paragraphs that name entities in that chapter's tag list.
 
 ---
 
@@ -64,6 +78,19 @@
 
 ---
 
+### [IDEA-046] Harmonic State Visualizer — Reader-Triggered Valkyrie-1 State Renders
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-02
+- **Last Updated:** 2026-05-02
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** When a reader asks "What does the Valkyrie look like during alignment?" or "Show me the ship in harmonic jump", the Ask API detects visual intent, calls `synthesizeVisualPrompt` with the relevant `state` param, and returns an inline image in the Ask thread. The visual spec system already has all 5 states defined.
+- **Night Notes:**
+  - 2026-05-02 (Run 18): Seeded. Spec files at `content/wiki/specs/valkyrie-1/states/` and reference renders in `public/images/*-state.png` already exist. The author pipeline uses `state` param in the prompt route. This bridges that to reader-triggered Ask intent. Dev plan must address: (1) Model: Imagen 4. (2) Cost: ~$0.04–0.08/image; 3 imgs/reader/hour rate limit. (3) Caching: shared per-state — high hit rate expected since all readers see same canon. (4) Spoiler gating: all content visible under companion-first; all harmonic state images safe for all users. (5) Canon grounding: spec chain from valkyrie-1 states JSON provides complete visual description.
+
+---
+
 ## post-read-world
 
 ### [IDEA-044] Entity Network Explorer at `/explore`
@@ -79,6 +106,19 @@
     1. **Hidden for locked readers / graceful degradation:** Not applicable — companion-first means all users see all entities. However, the page should work for unauthenticated guests.
     2. **Integration with `show_all_content`:** N/A with companion-first; all content visible regardless.
     3. **Partial-completion edge cases:** N/A with companion-first.
+
+---
+
+### [IDEA-047] Harmonic State Gallery — Valkyrie-1 States for Re-Readers
+- **Status:** seed
+- **Theme:** post-read-world
+- **Seeded:** 2026-05-02
+- **Last Updated:** 2026-05-02
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** A dedicated section on the Valkyrie-1 entity page (or a new `/artifacts/valkyrie-1/states` page) showcasing the ship in each of its 5 canonical harmonic states with visual renders and in-world descriptions. Reference renders exist in `public/images/`; spec JSONs define each state's canon behavior.
+- **Night Notes:**
+  - 2026-05-02 (Run 18): Seeded. The 5 state images (`active-state.png`, etc.) are already committed. Implementation is mainly a display page reusing the existing image + spec data. Post-read-world plan requirements: (1) With companion-first, all users can see this — no gating needed. (2) `show_all_content` N/A under companion-first. (3) Partial-completion edge cases N/A. Note: FIX-048 (committed images) and this idea are linked — if state images move to Supabase, gallery needs to fetch from `cel_visual_assets`. Design for Supabase-first from the start.
 
 ---
 

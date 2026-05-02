@@ -1,7 +1,7 @@
 # FIXES — Celestial Interactive Book Companion
 
 > Bug and issue tracker. Updated each nightshift run.
-> Numbering continues from Run 17 (last new entry is FIX-046).
+> Numbering continues from Run 18 (last new entry is FIX-048).
 
 ## Statuses
 - `found` — Issue identified, no plan yet
@@ -12,6 +12,24 @@
 ---
 
 ## Open Issues
+
+### [FIX-048] ~15MB of Binary Test Renders Committed to `public/images/`
+- **Status:** found
+- **Severity:** Low — repo bloat; no functional breakage. Images served as public assets from Next.js static dir.
+- **Found:** 2026-05-02 (Run 18) — commits `03d7d20` + `74aeae5` (between Run 16/17; missed by Run 17 scan).
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-048-committed-images-public.md`
+- **Summary:** 14 image files (~15MB) under `public/images/` from visual spec development: 5 Valkyrie-1 harmonic state renders, 8 exterior/interior spec renders, 1 portrait reference. No `.gitignore` pattern prevents future additions. Fix: add `public/images/*.png` / `*.jpg` to `.gitignore`; optionally move canonical state renders to Supabase storage (see IDEA-047).
+
+---
+
+### [FIX-047] All 8 API Model References Use Stale `claude-sonnet-4-20250514`
+- **Status:** found
+- **Severity:** Low — API currently accepts the old model ID; `claude-sonnet-4-6` is the current latest.
+- **Found:** 2026-05-02 (Run 18)
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md`
+- **Summary:** `personas.ts`, `synthesize-prompt.ts`, `extract-vision.ts`, `session-wrap.ts`, `profile-reflection.ts`, and 3 API routes all hard-code `claude-sonnet-4-20250514`. Fix: find/replace in 8 files, add `claude-sonnet-4-6` entry to `MODEL_COST` in `ledger.ts`, bump `SYNTH_PROMPT_VERSION` to v10 to invalidate cached visual prompts.
+
+---
 
 ### [FIX-046] Stale "Unlock As You Progress" UI Copy After Companion-First Shift
 - **Status:** found
