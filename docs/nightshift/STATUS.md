@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-05-02 (Nightshift Run 18)
+> Last updated: 2026-05-03 (Nightshift Run 19)
 
 ## App Summary
 
@@ -50,7 +50,7 @@
 **Reader-facing:**
 - `/` — Home (nav cards, `AgeModeSwitcher` — ⚠️ FIX-029)
 - `/stories` — Chapter library (17 CH chapters + legacy; silhouette lock for unread chapters)
-- `/stories/[storyId]` — Chapter detail (gated; scene TOC; chapter tags summary + themes shown ⚠️ IDEA-032 quality gate pending)
+- `/stories/[storyId]` — Chapter detail (gated; scene TOC; chapter tags summary + themes shown ⚠️ IDEA-032 quality gate pending; "Chat about this story (AI)" bottom CTA → `/ask?story={id}` ✓ **SHIPPED (IDEA-040)**)
 - `/stories/timeline` — Timeline view (Run 12: `TimelineView.tsx` updated for color scheme)
 - `/timeline` — **Redirect** → `/stories/timeline` (permanent)
 - `/characters` — Character directory
@@ -214,14 +214,14 @@
 
 ## Next Actions (Priority Order)
 
-1. **IDEA-040 (15 min):** "Ask About This Chapter" CTA on story pages — dev plan `DEVPLAN-IDEA-040-ask-about-this-chapter.md` ready. ~8 lines JSX in `stories/[storyId]/page.tsx`. Highest-ROI ask-forward improvement.
-2. **IDEA-042 (2 hr):** Suggested follow-up chips after Ask answers — dev plan `DEVPLAN-IDEA-042-follow-up-chips.md` now ready. New `ask-suggestions.ts` module + 3 small client changes.
-3. **FIX-045 (10 min):** Update `docs/celestial/visuals-integration-plan.md` preset names before executing Phase 0 of the visuals plan. Docs-only fix.
-4. **FIX-046 (20 min):** Update stale "unlock as you progress" copy in 3 files; remove dead `!unlocked` code block. Paul confirms copy for HomePageClient + StoriesPageClient.
-5. **FIX-047 (15 min):** Update all 8 model IDs to `claude-sonnet-4-6`; bump SYNTH_PROMPT_VERSION to v10. Plan: `FIXPLAN-FIX-047-stale-model-id.md`.
-6. **FIX-026 + FIX-027 + FIX-030 (30 min combined):** Three stale `'keith'` role fixes. FIX-026 migration number is **040** (update plan file before executing).
-7. **FIX-048 (5 min):** Add `.gitignore` pattern for `public/images/` to prevent future binary bloat.
-8. **FIX-028 (30 min + author copy decisions):** Legacy "Keith" UI sweep, including `AskAboutStory.tsx` "Write to Keith" widget.
-9. **FIX-029 (1 hr):** Remove AgeModeSwitcher from Nav/Header.
-10. **IDEA-043, IDEA-044 (seed → plan):** Scene visualization and entity network — advance to `planned` once IDEA-040 + IDEA-042 ship.
+1. **IDEA-048 (15 min):** Add Ask CTA near top of story page (after summary, before scene navigation) — 8 lines JSX in `stories/[storyId]/page.tsx`. IDEA-040 dev plan has the exact code snippet; just needs placement at line ~166 rather than bottom. Highest-ROI ask-forward improvement still outstanding.
+2. **IDEA-042 (2 hr):** Suggested follow-up chips after Ask answers — dev plan `DEVPLAN-IDEA-042-follow-up-chips.md` ready. New `ask-suggestions.ts` module + 3 small client changes.
+3. **IDEA-043 (5 hr):** On-demand scene visualization via Ask — dev plan `DEVPLAN-IDEA-043-on-demand-scene-visualization.md` written tonight. Extends visuals pipeline to reader-triggered image generation.
+4. **FIX-045 (10 min):** Update `docs/celestial/visuals-integration-plan.md` preset names before executing Phase 0 of the visuals plan. Docs-only fix.
+5. **FIX-046 (20 min):** Update stale "unlock as you progress" copy in 3 files; remove dead `!unlocked` code block. Paul confirms copy for HomePageClient + StoriesPageClient.
+6. **FIX-047 (15 min):** Update all 8 model IDs to `claude-sonnet-4-6`; bump SYNTH_PROMPT_VERSION to v10. Plan: `FIXPLAN-FIX-047-stale-model-id.md`.
+7. **FIX-026 + FIX-027 + FIX-030 (30 min combined):** Three stale `'keith'` role fixes. FIX-026 migration number is **040** — but note IDEA-043 Phase 5 also targets migration 040. Coordinate: ship whichever goes first as 040, the other as 041.
+8. **FIX-048 (5 min):** Add `.gitignore` pattern for `public/images/` to prevent future binary bloat.
+9. **FIX-028 (30 min + author copy decisions):** Legacy "Keith" UI sweep, including `AskAboutStory.tsx` "Write to Keith" widget.
+10. **FIX-029 (1 hr):** Remove AgeModeSwitcher from Nav/Header.
 11. **FIX-013, FIX-014, FIX-016, FIX-017:** Tell pipeline defensive coding — low priority.

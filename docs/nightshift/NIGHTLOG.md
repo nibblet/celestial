@@ -4,6 +4,56 @@
 
 ---
 
+## Run: 2026-05-03 (Run 19)
+
+### Summary
+- Scanned: 0 new code commits since Run 18 nightshift (`0d7969b`). All codebase state identical to Run 18.
+- Issues: 0 new, 0 resolved. No new bugs found. All open issues unchanged.
+- Ideas (by theme): ask-forward 1 seed (IDEA-048 — Ask CTA top-of-page variant) / 1 marked shipped (IDEA-040 discovered already implemented); genmedia 1 seed (IDEA-049 — Chapter Hero Images) / 1 promoted to `planned` (IDEA-043 — dev plan written); post-read-world 1 seed (IDEA-050 — Chapter Recap on Demand) / 0 promoted; parked 0.
+- Plans written: DEVPLAN-IDEA-043-on-demand-scene-visualization.md (genmedia, 5 hr estimate).
+
+### Build & Lint & Test Results
+- `npm install`: clean
+- `node_modules/.bin/next build`: **PASSES** — same ~106 routes as Run 18. (Continue using local binary, not `npx next build`.)
+- `npm run lint`: **PASSES** — 0 errors, **4 warnings** (same 4 `<img>` tag warnings, unchanged).
+- `npm test`: **192 PASS / 0 FAIL** (unchanged from Run 18).
+
+### Key Findings
+
+1. **IDEA-040 was already shipped — prior nightshift runs missed it.** Full read of `stories/[storyId]/page.tsx` (lines 314–330) reveals a bottom-of-page CTA block with `href={/ask?story=${storyId}}` and label "Chat about this story (AI)". Prior runs (17, 18) read only lines 1–130 and believed the link was absent. Core functionality of IDEA-040 is live. The dev plan's original goal of a *top-of-page* placement (after summary, visible on first scroll without reaching page bottom) remains undone — seeded as IDEA-048.
+
+2. **IDEA-042 (follow-up chips) confirmed unimplemented.** `src/lib/ai/ask-suggestions.ts` does not exist. `Message` interface in `ask/page.tsx` has no `suggestions` field. `ask/page.tsx` has no chip rendering. Plan from Run 18 is accurate and ready to execute.
+
+3. **IDEA-043 promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-043-on-demand-scene-visualization.md`. Phases: (1) add `visual_request` to `ask-intent.ts`; (2) new `ask-visual-handler.ts` module (entity extraction + auto-preset selection + cache check + Imagen 4 call); (3) parallel image generation in Ask API route; (4) image card rendering in `ask/page.tsx`; (5) optional `source` column migration. Migration 040 conflict noted with FIX-026 — coordinate sequencing.
+
+4. **Three new ideas seeded.** IDEA-048 (ask-forward: top-of-page Ask CTA, 15-min copy from IDEA-040 plan), IDEA-049 (genmedia: batch-authored chapter hero images), IDEA-050 (post-read-world: Ask-generated chapter recap on demand).
+
+5. **No new bugs.** No code changes, no regressions. All prior open issues (FIX-026 through FIX-048) remain exactly as in Run 18. All parked issues remain parked.
+
+6. **3-day stale check.** No ideas crossed the 3-day threshold tonight. Earliest active ideas (IDEA-043, 044) were seeded 2026-05-01 — Day 2, not stale. All currently-active ideas remain active.
+
+7. **`ask-intent.ts` confirmed: no `visual_request` type exists yet.** Current intent kinds: `factual`, `thematic`, `character_arc`, `world_rule`, `future_speculation`, `unknown_gap`. Adding `visual_request` is Phase 1 of IDEA-043.
+
+8. **Migration 040 naming conflict.** Both FIX-026 (stale keith RLS) and IDEA-043 Phase 5 (visual assets source field) target migration 040. The FIX-026 plan file must be executed as 040 and IDEA-043 Phase 5 as 041, or vice versa — first one merged wins the number. IDEA-043 Phase 5 is optional; FIX-026 is a bug fix. Recommendation: FIX-026 takes 040, IDEA-043 Phase 5 becomes 041.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-043-on-demand-scene-visualization.md` — **NEW planned (genmedia)**: Reader-triggered image generation in Ask, ~5 hours. Extends the already-built author visuals pipeline to reader-facing use.
+- `docs/nightshift/plans/DEVPLAN-IDEA-042-follow-up-chips.md` — planned (ask-forward): follow-up chips after Ask answers, 2 hours.
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — Low: 8-file model ID update to `claude-sonnet-4-6`, 15 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-048-committed-images-public.md` — Low: `.gitignore` for `public/images/`, 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-045-visuals-plan-stale-presets.md` — Low: update preset names in visuals-integration-plan.md, 10 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-046-companion-first-stale-copy.md` — Low: stale copy + dead code, 20 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-030-threads-route-keith-role.md` — Medium: one-line role fix, 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-027-ai-activity-route-keith-role.md` — Medium: one-line role fix, 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-026-stale-keith-role-rls.md` — Medium: migration 040 (takes priority over IDEA-043 Phase 5 for the 040 slot).
+
+### Recommendations
+- **If you have 15 min:** IDEA-048 — add the Ask companion CTA near the top of story pages. The exact JSX is already in `DEVPLAN-IDEA-040-ask-about-this-chapter.md` Phase 1 code block. One insertion at line ~166 of `stories/[storyId]/page.tsx`.
+- **If you have 30 min:** IDEA-048 (15 min) + FIX-047 (15 min). Ask CTA at top + all APIs upgraded to Sonnet 4.6.
+- **If you have 2 hours:** The 30-min batch + IDEA-042 (2 hrs). After this: Ask has a top-of-page CTA, Sonnet is upgraded, and follow-up chips are working — three high-visibility companion improvements live.
+
+---
+
 ## Run: 2026-05-02 (Run 18)
 
 ### Summary
