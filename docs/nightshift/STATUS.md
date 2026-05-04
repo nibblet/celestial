@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-05-03 (Nightshift Run 19)
+> Last updated: 2026-05-04 (Nightshift Run 20)
 
 ## App Summary
 
@@ -194,10 +194,10 @@
 
 ## Known Issues (See FIXES.md)
 
-- **FIX-048 (Low — NEW Run 18):** ~15MB of binary test renders in `public/images/`. Repo bloat; add `.gitignore` pattern to prevent future additions.
-- **FIX-047 (Low — NEW Run 18):** 8 files use stale `claude-sonnet-4-20250514` model ID. Update to `claude-sonnet-4-6`; bump SYNTH_PROMPT_VERSION to v10.
-- **FIX-046 (Low — found Run 17, unexecuted):** Stale "unlock as you progress" UI copy in 3 places. `HomePageClient.tsx:16`, `StoriesPageClient.tsx:217`, dead code in `stories/[storyId]/page.tsx:42–60`.
-- **FIX-045 (Low — found Run 17, unexecuted):** `docs/celestial/visuals-integration-plan.md` uses obsolete preset names. Docs fix only; update before executing the plan.
+- **FIX-048 (Low — planned Run 18):** ~15MB of binary test renders in `public/images/`. Repo bloat; add `.gitignore` pattern to prevent future additions. Plan: `FIXPLAN-FIX-048-committed-images-public.md`.
+- **FIX-047 (Low — planned Run 18):** 9 source files use stale `claude-sonnet-4-20250514` model ID (Run 20 confirmed: `personas.ts`, `synthesize-prompt.ts`, `extract-vision.ts`, `session-wrap.ts`, `profile-reflection.ts`, `ledger.ts`, + 3 API routes). Update to `claude-sonnet-4-6`; bump SYNTH_PROMPT_VERSION to v10. Plan: `FIXPLAN-FIX-047-stale-model-id.md`.
+- **FIX-046 (Low — planned Run 17, unexecuted):** Stale "unlock as you progress" UI copy in 3 places. `HomePageClient.tsx:16`, `StoriesPageClient.tsx:217`, dead code in `stories/[storyId]/page.tsx:42–60`. Plan: `FIXPLAN-FIX-046-companion-first-stale-copy.md`.
+- **FIX-045 (Low — planned Run 17, unexecuted):** `docs/celestial/visuals-integration-plan.md` uses obsolete preset names. Docs fix only; update before executing the plan. Plan: `FIXPLAN-FIX-045-visuals-plan-stale-presets.md`.
 - **FIX-041 (parked):** `/arcs` and `/arcs/[slug]` pages have zero auth gate. Parked after companion-first shift.
 - **FIX-036 (parked):** `storySlug` not validated in Ask API. Parked after companion-first shift.
 - **FIX-032 (parked):** BeatTimeline on journey pages. Parked after companion-first shift.
@@ -214,7 +214,7 @@
 
 ## Next Actions (Priority Order)
 
-1. **IDEA-048 (15 min):** Add Ask CTA near top of story page (after summary, before scene navigation) — 8 lines JSX in `stories/[storyId]/page.tsx`. IDEA-040 dev plan has the exact code snippet; just needs placement at line ~166 rather than bottom. Highest-ROI ask-forward improvement still outstanding.
+1. **IDEA-048 (15 min):** Add Ask CTA near top of story page (after summary, before scene navigation) — 6 lines JSX in `stories/[storyId]/page.tsx` between lines 166–168. Dev plan `DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` now written and **ready**. Highest-ROI ask-forward improvement still outstanding.
 2. **IDEA-042 (2 hr):** Suggested follow-up chips after Ask answers — dev plan `DEVPLAN-IDEA-042-follow-up-chips.md` ready. New `ask-suggestions.ts` module + 3 small client changes.
 3. **IDEA-043 (5 hr):** On-demand scene visualization via Ask — dev plan `DEVPLAN-IDEA-043-on-demand-scene-visualization.md` written tonight. Extends visuals pipeline to reader-triggered image generation.
 4. **FIX-045 (10 min):** Update `docs/celestial/visuals-integration-plan.md` preset names before executing Phase 0 of the visuals plan. Docs-only fix.

@@ -1,7 +1,7 @@
 # FIXES — Celestial Interactive Book Companion
 
 > Bug and issue tracker. Updated each nightshift run.
-> Numbering continues from Run 18 (last new entry is FIX-048).
+> Numbering continues from Run 20 (last new entry is FIX-048).
 
 ## Statuses
 - `found` — Issue identified, no plan yet
@@ -14,7 +14,7 @@
 ## Open Issues
 
 ### [FIX-048] ~15MB of Binary Test Renders Committed to `public/images/`
-- **Status:** found
+- **Status:** planned
 - **Severity:** Low — repo bloat; no functional breakage. Images served as public assets from Next.js static dir.
 - **Found:** 2026-05-02 (Run 18) — commits `03d7d20` + `74aeae5` (between Run 16/17; missed by Run 17 scan).
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-048-committed-images-public.md`
@@ -22,17 +22,17 @@
 
 ---
 
-### [FIX-047] All 8 API Model References Use Stale `claude-sonnet-4-20250514`
-- **Status:** found
+### [FIX-047] All 9 Source Files Use Stale `claude-sonnet-4-20250514` Model ID
+- **Status:** planned
 - **Severity:** Low — API currently accepts the old model ID; `claude-sonnet-4-6` is the current latest.
 - **Found:** 2026-05-02 (Run 18)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md`
-- **Summary:** `personas.ts`, `synthesize-prompt.ts`, `extract-vision.ts`, `session-wrap.ts`, `profile-reflection.ts`, and 3 API routes all hard-code `claude-sonnet-4-20250514`. Fix: find/replace in 8 files, add `claude-sonnet-4-6` entry to `MODEL_COST` in `ledger.ts`, bump `SYNTH_PROMPT_VERSION` to v10 to invalidate cached visual prompts.
+- **Summary:** `personas.ts`, `synthesize-prompt.ts`, `extract-vision.ts`, `session-wrap.ts`, `profile-reflection.ts`, `ledger.ts` (pricing table), and 3 API routes (`beyond/polish`, `tell`, `tell/draft`) all hard-code `claude-sonnet-4-20250514` — 9 files total (Run 20 confirmed via grep). Fix: find/replace in 8 source files, add `claude-sonnet-4-6` entry to `MODEL_COST` in `ledger.ts`, bump `SYNTH_PROMPT_VERSION` to v10 to invalidate cached visual prompts.
 
 ---
 
 ### [FIX-046] Stale "Unlock As You Progress" UI Copy After Companion-First Shift
-- **Status:** found
+- **Status:** planned
 - **Severity:** Low — cosmetic + dead code. User-visible home page copy directly contradicts the companion-first product direction; dead code path in story detail page adds confusion for future devs.
 - **Found:** 2026-05-01 (Run 17)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-046-companion-first-stale-copy.md`
@@ -41,7 +41,7 @@
 ---
 
 ### [FIX-045] `visuals-integration-plan.md` Uses Obsolete Style Preset Names
-- **Status:** found
+- **Status:** planned
 - **Severity:** Low — docs only. Planning table references `cinematic_canon`, `painterly_lore`, `noir_intimate`, `mythic_wide` which were removed from `StylePresetKey` in commit `58b2527`. Any code written from this plan will fail TypeScript type checks.
 - **Found:** 2026-05-01 (Run 17)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-045-visuals-plan-stale-presets.md`

@@ -4,6 +4,55 @@
 
 ---
 
+## Run: 2026-05-04 (Run 20)
+
+### Summary
+- Scanned: 0 new code commits since Run 19 nightshift (`92d4cec`). Codebase state identical to Run 19.
+- Issues: 0 new. 4 existing statuses corrected (`found` → `planned` for FIX-045/046/047/048 — plan files existed but FIXES.md listed them as `found`). FIX-047 file count corrected to 9 (not 8; `ledger.ts` pricing table included). 0 spoiler-leak P0.
+- Ideas (by theme): ask-forward 1 seed (IDEA-051 — scene-level Ask affordance) / 1 promoted to `ready` (IDEA-048 — dev plan written); genmedia 1 seed (IDEA-052 — canonical character portraits); post-read-world 1 seed (IDEA-053 — Valkyrie-1 interactive interior map); parked 1 (IDEA-044 — entity network explorer, 3-day stale rule).
+- Plans written: `DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` (ask-forward, 15-min estimate).
+
+### Build & Lint & Test Results
+- `npm install`: required in fresh sandbox clone
+- `node_modules/.bin/next build`: **PASSES** — same ~106 routes as Run 19. (Use local binary, not `npx next build`.)
+- `npm run lint`: **PASSES** — 0 errors, **4 warnings** (same 4 `<img>` tag warnings — `VisualsAdminConsole.tsx` lines 230/394, `EntityVisualsGallery.tsx` lines 64/118). Unchanged.
+- `npm test`: **192 PASS / 0 FAIL** (unchanged from Run 19).
+
+### Key Findings
+
+1. **No new code commits.** Codebase identical to Run 19. All prior open issues remain in their last-known state. All parked issues remain parked.
+
+2. **IDEA-048 promoted to `ready`.** Dev plan `DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` written. Confirmed exact insertion point in `stories/[storyId]/page.tsx`: after line 166 (closing `</p>` of `story.summary`), before line 168 (`<StorySceneJump>`). Existing bottom CTA at line 317 stays untouched. `Link` already imported; no new imports. ~6 lines of JSX. 15-minute task.
+
+3. **FIXES.md statuses corrected (4 fixes).** FIX-045, FIX-046, FIX-047, FIX-048 were all listed as `found` despite having plan files in `docs/nightshift/plans/`. Corrected to `planned`. Also updated FIX-047 description: grep confirmed 9 files total (not 8 as previously stated) — `personas.ts`, `synthesize-prompt.ts`, `extract-vision.ts`, `session-wrap.ts`, `profile-reflection.ts`, `ledger.ts`, `api/beyond/polish/route.ts`, `api/tell/route.ts`, `api/tell/draft/route.ts`.
+
+4. **IDEA-044 parked (3-day stale rule).** Entity Network Explorer seeded 2026-05-01, status `seed`, no plan written, 3 days old. Moved to Parked section per rule.
+
+5. **Three new ideas seeded.** IDEA-051 (ask-forward: scene-level "Ask about this scene" affordance — `?highlight=` integration at each scene section heading), IDEA-052 (genmedia: canonical character portraits for 9 main characters via author batch run), IDEA-053 (post-read-world: Valkyrie-1 interactive interior map using the 11 existing interior location specs).
+
+6. **Review queue unchanged.** `brain_lab/out/review-queue.md` generated 2026-04-26T20:05:34Z — still lists 9 character files with `reviewed: false`. Pipeline re-run required to get accurate count.
+
+7. **No new spoiler leaks or P0 issues.** Companion-first remains in effect; all gating infrastructure in code but inert.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — **NEW ready (ask-forward)**: Ask companion CTA after chapter summary, insertion at `stories/[storyId]/page.tsx` line 166–168. 15 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-043-on-demand-scene-visualization.md` — planned (genmedia): reader-triggered image generation in Ask, ~5 hours.
+- `docs/nightshift/plans/DEVPLAN-IDEA-042-follow-up-chips.md` — planned (ask-forward): follow-up chips after Ask answers, 2 hours.
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — planned Low: 9-file model ID update to `claude-sonnet-4-6`, 15 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-048-committed-images-public.md` — planned Low: `.gitignore` for `public/images/`, 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-045-visuals-plan-stale-presets.md` — planned Low: update preset names in visuals-integration-plan.md, 10 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-046-companion-first-stale-copy.md` — planned Low: stale copy + dead code, 20 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-030-threads-route-keith-role.md` — planned Medium: one-line role fix, 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-027-ai-activity-route-keith-role.md` — planned Medium: one-line role fix, 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-026-stale-keith-role-rls.md` — planned Medium: migration 040 for RLS (takes priority over IDEA-043 Phase 5).
+
+### Recommendations
+- **If you have 15 min:** IDEA-048 — add the Ask companion CTA near the top of story pages. Insert 6 lines of JSX at line 166–168 of `stories/[storyId]/page.tsx`. Dev plan written and ready.
+- **If you have 30 min:** IDEA-048 (15 min) + FIX-047 (15 min). Ask CTA live + all 9 model references upgraded to `claude-sonnet-4-6`.
+- **If you have 2 hours:** The 30-min batch + IDEA-042 (2 hrs). After this: Ask has a top-of-page CTA, Sonnet is upgraded, and follow-up chips are live — three high-visibility companion improvements.
+
+---
+
 ## Run: 2026-05-03 (Run 19)
 
 ### Summary
