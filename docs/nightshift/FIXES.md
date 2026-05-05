@@ -1,7 +1,7 @@
 # FIXES — Celestial Interactive Book Companion
 
 > Bug and issue tracker. Updated each nightshift run.
-> Numbering continues from Run 20 (last new entry is FIX-048).
+> Numbering continues from Run 21 (last new entry is FIX-050).
 
 ## Statuses
 - `found` — Issue identified, no plan yet
@@ -12,6 +12,24 @@
 ---
 
 ## Open Issues
+
+### [FIX-050] `ask-intent.ts` FUTURE_PATTERNS Contains Overly Broad `/\bnext\b/` — Factual Questions Misclassified
+- **Status:** planned
+- **Severity:** Low — affects intent metadata and confidence scoring; does not change answer content materially.
+- **Found:** 2026-05-05 (Run 21)
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md`
+- **Summary:** `src/lib/ai/ask-intent.ts` line 35 includes `/\bnext\b/i` in `FUTURE_PATTERNS`. Any question containing the word "next" — including factual queries like "Who is next in command?" — is classified as `future_speculation` with confidence 0.78. The specific `/\bwhat happens next\b/i` pattern (line 32) already covers the primary use case. Fix: remove the generic `/\bnext\b/i` entry (1-line deletion) and add a regression test.
+
+---
+
+### [FIX-049] `requireKeith()` Misleading Function Name in 5 Visuals API Routes
+- **Status:** planned
+- **Severity:** Low — code clarity; no functional breakage.
+- **Found:** 2026-05-05 (Run 21)
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md`
+- **Summary:** FIX-043 (resolved Run 16) updated the role check to `["admin", "author", "keith"]` in 5 visuals API routes but left the function named `requireKeith()`. The name implies only admin/keith access, missing that `author` accounts are authorized. Fix: rename to `requireAuthor()` in all 5 files (`prompt`, `generate`, `approve`, `asset/[id]`, `reference`). Keep the role array unchanged for backward compatibility.
+
+---
 
 ### [FIX-048] ~15MB of Binary Test Renders Committed to `public/images/`
 - **Status:** planned

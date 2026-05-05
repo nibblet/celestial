@@ -4,6 +4,54 @@
 
 ---
 
+## Run: 2026-05-05 (Run 21)
+
+### Summary
+- Scanned: 0 new code commits since Run 20 nightshift (`6852700`). Codebase state unchanged.
+- Issues: 2 new (FIX-049 — `requireKeith()` misleading name in 5 visuals routes; FIX-050 — overly broad `/\bnext\b/` in ask-intent FUTURE_PATTERNS). 0 resolved. 0 spoiler-leak P0. Total open planned: FIX-026, 027, 028, 029, 030, 045, 046, 047, 048, 049, 050.
+- Ideas (by theme): ask-forward 1 seed (IDEA-054 — Ask TTS narrator voice) / 0 promoted; genmedia 1 seed (IDEA-055 — faction emblems & heraldry) / 1 promoted to `planned` (IDEA-052 — canonical character portraits); post-read-world 1 seed (IDEA-056 — Celestial star chart) / 0 promoted; parked 3 (IDEA-045, IDEA-046, IDEA-047 — 3-day stale rule).
+- Plans written: `FIXPLAN-FIX-049-requirekeith-function-name.md`, `FIXPLAN-FIX-050-ask-intent-next-pattern.md`, `DEVPLAN-IDEA-052-canonical-character-portraits.md`.
+
+### Build & Lint & Test Results
+- No code commits since Run 20. Build, lint, and test status unchanged: **PASSES** / 0 errors, 4 img warnings / 192 PASS.
+- No build run performed this session (no code changes to validate; sandbox npm install overhead skipped given codebase identity with Run 20).
+
+### Key Findings
+
+1. **No new code commits.** Codebase is identical to Run 20. All prior open issues and parked issues remain in last-known state.
+
+2. **FIX-049 found and planned.** Five visuals API routes (`prompt`, `generate`, `approve`, `asset/[id]`, `reference`) define an inline auth guard named `requireKeith()` that now checks `["admin", "author", "keith"]`. The function name was left stale after FIX-043 (resolved Run 16) updated the role check. Misleading to future developers. Fix: rename to `requireAuthor()` in all 5 files (logic unchanged). 10-minute task.
+
+3. **FIX-050 found and planned.** `ask-intent.ts` line 35 has `/\bnext\b/i` in `FUTURE_PATTERNS`. This matches ANY question containing "next" — including clearly factual queries like "Who is next in command?" — and classifies them as `future_speculation` with confidence 0.78. The specific `/\bwhat happens next\b/i` pattern (line 32) already covers the primary use case; the generic pattern is redundant and over-broad. Fix: 1-line deletion + 1 regression test. Impact on answer quality is low (AI judgment overrides framing) but context pack metadata is misleading.
+
+4. **IDEA-052 promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-052-canonical-character-portraits.md`. This is a zero-code-change task: Paul seeds 9 character spec JSON files (`content/wiki/specs/{slug}/master.json`) then runs batch portrait generation via the existing admin console. Estimated 3 hours total author time. All pipeline infrastructure is already live. Priority P2. Style presets: `intimate_crew` for 8 crew characters, `noncorporeal_presence` for ALARA.
+
+5. **Three ideas seeded.** IDEA-054 (ask-forward: Ask TTS narrator voice — "Listen" button on responses, lazy TTS via `/api/ask/tts`), IDEA-055 (genmedia: faction emblems & heraldry — author-batch canonical badges via visuals pipeline), IDEA-056 (post-read-world: Celestial star chart — spatial universe map with clickable locations).
+
+6. **Three ideas parked (3-day stale rule).** IDEA-045 (Ask ambient context whispers — seeded 2026-05-02, 3 days), IDEA-046 (harmonic state visualizer — seeded 2026-05-02, 3 days; superseded by IDEA-043), IDEA-047 (harmonic state gallery — seeded 2026-05-02, 3 days; un-park after FIX-048 ships).
+
+7. **IDEA-048 and IDEA-042 confirmed unimplemented.** Quick code scan: `stories/[storyId]/page.tsx` line 168 is still `<StorySceneJump>` (no Ask CTA inserted between summary and scene nav). `src/lib/ai/ask-suggestions.ts` does not exist. Both plans remain valid and ready to execute.
+
+8. **voice.md and decision-frameworks.md still stubs.** No change. Ask quality is limited by the absence of a real voice guide. This affects IDEA-054 (TTS voice selection) — the narrator voice cannot be chosen until `content/voice.md` is drafted.
+
+9. **Review queue:** `brain_lab/out/review-queue.md` shows 1 entry with `reviewed: false` (grep count). Down from 9 in prior runs — pipeline appears to have been partially run, or the count method differs. Note: `brain_lab/out/review-queue.md` timestamp is still 2026-04-26; a fresh pipeline run would give an accurate count.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — Ask CTA after chapter summary (ask-forward). 15 minutes.
+- `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md` — **NEW**: Remove overly broad `/\bnext\b/` from ask-intent. 5 minutes.
+- `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md` — **NEW**: Rename `requireKeith()` to `requireAuthor()` in 5 visuals routes. 10 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-052-canonical-character-portraits.md` — **NEW planned (genmedia)**: Author batch generates 9 canonical character portraits. 3 hours author time, 0 code changes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-042-follow-up-chips.md` — Follow-up chips in Ask (ask-forward). 2 hours.
+- `docs/nightshift/plans/DEVPLAN-IDEA-043-on-demand-scene-visualization.md` — On-demand scene visualization (genmedia). 5 hours.
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — 9-file model ID update to `claude-sonnet-4-6`. 15 minutes.
+
+### Recommendations
+- **If you have 15 min:** FIX-050 (5 min — delete 1 line in ask-intent.ts + add 1 test) + FIX-049 (10 min — rename requireKeith in 5 files). Both tiny, clean the "keith" naming debt further.
+- **If you have 30 min:** The 15-min batch above + IDEA-048 (15 min — insert Ask CTA JSX after story summary). Three quick wins: 2 code quality fixes + 1 visible ask-forward improvement.
+- **If you have 2 hours:** The 30-min batch + IDEA-042 (2 hr). After this run: Ask has a top-of-page CTA, follow-up chips are live, and the codebase has cleaner auth naming. Three of the highest-ROI tasks outstanding.
+
+---
+
 ## Run: 2026-05-04 (Run 20)
 
 ### Summary
