@@ -1,7 +1,7 @@
 # FIXES — Celestial Interactive Book Companion
 
 > Bug and issue tracker. Updated each nightshift run.
-> Numbering continues from Run 21 (last new entry is FIX-050).
+> Numbering continues from Run 22 (last new entry is FIX-051).
 
 ## Statuses
 - `found` — Issue identified, no plan yet
@@ -12,6 +12,15 @@
 ---
 
 ## Open Issues
+
+### [FIX-051] `dangerouslySetInnerHTML` Without HTML Sanitization in Author-Only Admin Surfaces
+- **Status:** planned
+- **Severity:** Low — admin/author-only surfaces (`Beyond` workspace, admin drafts page). TipTap enforces its schema for normal editing, but the `@tiptap/extension-image` extension does not block `javascript:` URIs in `src` attributes, and raw HTML from the DB is injected unsanitized.
+- **Found:** 2026-05-06 (Run 22)
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-051-dangerouslysetinnerhtml-admin.md`
+- **Summary:** Two files render HTML from the DB using `dangerouslySetInnerHTML` without calling a sanitizer: `src/components/beyond/BeyondDraftEditor.tsx:420` and `src/app/admin/drafts/page.tsx:185`. The `isHTML()` helper only checks if the string starts with `<`. If a `javascript:` URL is inserted via TipTap's Image extension, it would execute on render. Fix: install `isomorphic-dompurify`, create `src/lib/sanitize-html.ts`, and wrap both render sites. Also add `src` scheme validation to the Image extension in `TipTapEditor.tsx` as defense-in-depth.
+
+---
 
 ### [FIX-050] `ask-intent.ts` FUTURE_PATTERNS Contains Overly Broad `/\bnext\b/` — Factual Questions Misclassified
 - **Status:** planned
@@ -197,18 +206,20 @@
 ---
 
 ### [FIX-028] Legacy "Keith" UI Copy — Phase 1 Cleanup Incomplete
-- **Status:** found
+- **Status:** planned
 - **Severity:** Low — cosmetic/brand. No functional impact.
 - **Found:** 2026-04-22 (Run 9)
-- **Summary:** Scope unchanged from Run 11. 14+ Keith/Cobb references remain in `src/`. Key surfaces: `session-wrap.ts` system prompt, `AskAboutStory.tsx`, `StoryContributionWorkspace.tsx`, `welcome/page.tsx`, `OnboardingStepper.tsx`, `journeys/page.tsx`, `themes/page.tsx`, `profile/highlights/page.tsx`, `profile/questions/page.tsx`, `admin/threads/route.ts` (comment), `admin/ai-activity/route.ts` (comment). Fix requires Paul to define preferred copy for each surface.
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-028-keith-ui-copy-sweep.md`
+- **Summary:** 14+ Keith/Cobb references remain in `src/`. Key surfaces: `session-wrap.ts` system prompt, `AskAboutStory.tsx`, `StoryContributionWorkspace.tsx`, `welcome/page.tsx`, `OnboardingStepper.tsx`, `journeys/page.tsx`, `themes/page.tsx`, `profile/highlights/page.tsx`, `profile/questions/page.tsx`, `admin/threads/route.ts` (comment), `admin/ai-activity/route.ts` (comment). 2 comment-only changes are auto-replaceable; the rest require Paul to decide preferred copy for each surface. `requireKeith()` function renames are tracked separately under FIX-049.
 
 ---
 
 ### [FIX-029] Age Mode System UI Exposed in Adult-Only Celestial App
-- **Status:** found
-- **Severity:** Low-Medium — `AgeModeSwitcher` visible in Nav (`Nav.tsx:178`) and Header (`Header.tsx:26`). Journey components render `young_reader` copy branches. Adult fiction only per spec.
+- **Status:** planned
+- **Severity:** Low-Medium — `AgeModeSwitcher` visible in Nav (`Nav.tsx:178`), Header (`Header.tsx:26`), and Home (`HomePageClient.tsx:52`). Journey components render `young_reader` copy branches. Ask page has `young_reader`/`teen` suggestion arrays. System prompts inject "ages 3-10" instructions when ageMode is `young_reader`. Adult fiction only per spec.
 - **Found:** 2026-04-22 (Run 9)
-- **Summary:** Age mode infrastructure carried from memoir shell. Fix: remove `AgeModeSwitcher` from Nav and Header; hardcode `ageMode = "adult"` in journey components.
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-029-remove-age-mode-system.md`
+- **Summary:** Age mode infrastructure carried from memoir shell. Full removal is a 3-phase effort: (1) UI removal — remove `AgeModeSwitcher` from Nav/Header/Home, hardcode `adult` in journey + Ask suggestion components (safe to execute immediately, 9 files); (2) DB migration — drop `age_mode` column from `cel_profiles`/`cel_conversations`/`cel_chapter_questions` (CHECK constraint in migrations 001/002/006); (3) Code cleanup — remove `AGE_MODE_INSTRUCTIONS` from `prompts.ts`, remove `ageMode` from API signatures. Phase 1 is safe to execute independently. Run 22 audit confirmed 20+ source files use age mode.
 
 ---
 

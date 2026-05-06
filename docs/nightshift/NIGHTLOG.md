@@ -4,6 +4,54 @@
 
 ---
 
+## Run: 2026-05-06 (Run 22)
+
+### Summary
+- Scanned: 0 new code commits since Run 21 nightshift (`b67dcef`). Codebase state unchanged.
+- Issues: 1 new (FIX-051 — `dangerouslySetInnerHTML` without sanitization in 2 author-only admin surfaces). 0 resolved. 0 spoiler-leak P0. Total open planned: FIX-026, 027, 028, 029, 030, 045, 046, 047, 048, 049, 050, 051. Plans written for FIX-028 and FIX-029 (previously `found`, now `planned`).
+- Ideas (by theme): ask-forward 1 seed (IDEA-057 — context-aware welcome message) / 1 promoted to `planned` (IDEA-051 — scene-level Ask affordance, dev plan written); genmedia 1 seed (IDEA-058 — 4-panel location mood boards) / 0 promoted; post-read-world 1 seed (IDEA-059 — character arc comparison view) / 0 promoted; parked 2 (IDEA-049 — chapter TOC hover preview, IDEA-050 — chapter recap on demand — 3-day stale rule).
+- Plans written: `DEVPLAN-IDEA-051-scene-level-ask-affordance.md`, `FIXPLAN-FIX-028-keith-ui-copy-sweep.md`, `FIXPLAN-FIX-029-remove-age-mode-system.md`, `FIXPLAN-FIX-051-dangerouslysetinnerhtml-admin.md`.
+
+### Build & Lint & Test Results
+- No code commits since Run 21. Build, lint, and test status unchanged: **PASSES** / 0 errors, 4 img warnings / 192 PASS.
+- No build run performed this session (no code changes to validate; codebase identical to Run 21).
+
+### Key Findings
+
+1. **No new code commits.** Codebase is identical to Run 21. All prior open issues and parked issues remain in last-known state.
+
+2. **FIX-051 found and planned.** Two author-only surfaces render HTML from the database via `dangerouslySetInnerHTML` without prior sanitization: `BeyondDraftEditor.tsx:420` and `admin/drafts/page.tsx:185`. Both sites use an `isHTML()` helper (`return /^\s*</.test(s)`) that only detects HTML by presence of a leading `<`. The `@tiptap/extension-image` v3.22.3 in `TipTapEditor.tsx` does not restrict `javascript:` or `data:` URIs in the `src` attribute — an image node with `javascript:alert(1)` as src would survive DB round-trip and execute on render. Severity: Low (author-only surfaces; TipTap schema provides partial defense during editing). Fix: install `isomorphic-dompurify`, create `src/lib/sanitize-html.ts`, wrap both call sites, add `parseHTML` src scheme validation to the Image extension. Plan: `FIXPLAN-FIX-051-dangerouslysetinnerhtml-admin.md`.
+
+3. **FIX-028 and FIX-029 promoted from `found` to `planned`.** Both issues have had plans written this run. FIX-028 (legacy "Keith" UI copy sweep): grep audit identified 14+ files with UI-visible references — 3 are comment-only (auto-replaceable), 13 require Paul for copy decisions. FIX-029 (age mode system removal): scope is larger than prior STATUS entries indicated — `age_mode` column has CHECK constraints in migrations 001/002/006, referenced in 20+ source files, and `prompts.ts` lines 548-560 inject young_reader prompt instructions. Full 3-phase removal plan written.
+
+4. **IDEA-051 promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-051-scene-level-ask-affordance.md`. Scene-level "Ask →" hover affordance on `### Scene` headings. The existing custom `h3` renderer in `StoryMarkdown.tsx` (lines 76–85) already computes `slug = slugifyHeading(text)` — adding the Ask link requires only: (1) add `storyId?: string` prop to `StoryMarkdown`, (2) inject `<a href="/ask?story={storyId}&highlight={slug}">Ask →</a>` inside the h3, and (3) pass `storyId` from `StoryBodyWithHighlighting` (which already has it as a prop). Estimated 30 minutes. Tailwind `group`/`group-hover` pattern; uses existing `text-ink-ghost`/`text-ocean` color tokens and `?highlight=` param (shipped IDEA-018).
+
+5. **Three new ideas seeded.** IDEA-057 (ask-forward: context-aware welcome message — companion greets reader based on current chapter and time-since-last-visit using the existing `readerProgress` and session data), IDEA-058 (genmedia: 4-panel location mood boards — author-batch 2×2 composite renders for major story locations using the visual spec system), IDEA-059 (post-read-world: character arc comparison view — `/characters/compare` side-by-side arc milestones using existing character wiki data).
+
+6. **Two ideas parked (3-day stale rule).** IDEA-049 (chapter TOC hover preview — seeded 2026-05-03, 3 days) and IDEA-050 (chapter recap on demand — seeded 2026-05-03, 3 days). Both had no plan written and no advancement since seeding.
+
+7. **IDEA-048 and IDEA-042 still unimplemented.** `stories/[storyId]/page.tsx` line 168 is still `<StorySceneJump>` with no Ask CTA above it. Dev plans ready; these remain the highest-priority ask-forward quick wins.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-051-scene-level-ask-affordance.md` — **NEW**: Scene-level "Ask →" hover affordance (ask-forward). 30 minutes.
+- `docs/nightshift/plans/FIXPLAN-FIX-051-dangerouslysetinnerhtml-admin.md` — **NEW**: HTML sanitization for admin dangerouslySetInnerHTML. 1 hour.
+- `docs/nightshift/plans/FIXPLAN-FIX-028-keith-ui-copy-sweep.md` — **NEW**: Legacy "Keith" UI copy sweep (14+ files, needs Paul for copy). 30 min dev + copy decisions.
+- `docs/nightshift/plans/FIXPLAN-FIX-029-remove-age-mode-system.md` — **NEW**: 3-phase age mode removal. Phase 1 (UI-safe, 9 files): 1 hour.
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — Ask CTA after chapter summary (ask-forward). 15 minutes.
+- `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md` — Remove overly broad `/\bnext\b/` from ask-intent. 5 minutes.
+- `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md` — Rename `requireKeith()` to `requireAuthor()` in 5 visuals routes. 10 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-052-canonical-character-portraits.md` — Canonical character portraits (genmedia). 3 hours author time, 0 code.
+- `docs/nightshift/plans/DEVPLAN-IDEA-042-follow-up-chips.md` — Follow-up chips in Ask (ask-forward). 2 hours.
+- `docs/nightshift/plans/DEVPLAN-IDEA-043-on-demand-scene-visualization.md` — On-demand scene visualization (genmedia). 5 hours.
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — 9-file model ID update to `claude-sonnet-4-6`. 15 minutes.
+
+### Recommendations
+- **If you have 30 min:** IDEA-048 (15 min — Ask CTA after story summary) + IDEA-051 (30 min — scene-level Ask affordance). Two ask-forward improvements in one sitting; both plans are ready, both are pure JSX additions with no new imports needed.
+- **If you have 1 hour:** The 30-min batch above + FIX-050 (5 min) + FIX-049 (10 min) + FIX-051 start (HTML sanitization setup: npm install + create sanitize-html.ts + wrap first call site).
+- **If you have 2 hours:** All of the above + FIX-029 Phase 1 (1 hr — remove AgeModeSwitcher from Nav/Header/Home, flatten age mode branches in journey components). Phase 1 is UI-safe with no DB changes; leaves Phases 2–3 for a later session.
+
+---
+
 ## Run: 2026-05-05 (Run 21)
 
 ### Summary

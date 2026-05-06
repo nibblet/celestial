@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-05-05 (Nightshift Run 21)
+> Last updated: 2026-05-06 (Nightshift Run 22)
 
 ## App Summary
 
@@ -194,6 +194,7 @@
 
 ## Known Issues (See FIXES.md)
 
+- **FIX-051 (Low — planned Run 22):** `dangerouslySetInnerHTML` without HTML sanitization in two author-only admin surfaces (`BeyondDraftEditor.tsx:420`, `admin/drafts/page.tsx:185`). TipTap Image extension does not restrict `javascript:` or `data:` URIs. Fix: install `isomorphic-dompurify`, create `src/lib/sanitize-html.ts`, wrap both call sites, add Image src scheme validation in `TipTapEditor.tsx`. Plan: `FIXPLAN-FIX-051-dangerouslysetinnerhtml-admin.md`.
 - **FIX-050 (Low — planned Run 21):** `/\bnext\b/i` in `FUTURE_PATTERNS` in `ask-intent.ts` (line 35) overly broad — misclassifies factual "next" questions as `future_speculation`. Fix: 1-line deletion + 1 regression test. Plan: `FIXPLAN-FIX-050-ask-intent-next-pattern.md`.
 - **FIX-049 (Low — planned Run 21):** `requireKeith()` function in 5 visuals API routes is misleadingly named — the function body checks `["admin", "author", "keith"]`. Rename to `requireAuthor()`. Plan: `FIXPLAN-FIX-049-requirekeith-function-name.md`.
 - **FIX-048 (Low — planned Run 18):** ~15MB of binary test renders in `public/images/`. Repo bloat; add `.gitignore` pattern to prevent future additions. Plan: `FIXPLAN-FIX-048-committed-images-public.md`.
@@ -210,23 +211,25 @@
 - **FIX-030 (Medium — planned):** `/api/admin/threads` checks `'keith'` role
 - **FIX-027 (Medium — planned):** `/api/admin/ai-activity` checks `'keith'` role
 - **FIX-026 (Medium — planned):** RLS policies in migrations 025–028 check `role = 'keith'` — fix requires migration **040**
-- **FIX-028 (Low):** Legacy "Keith" UI copy in 20+ src/ files (includes `AskAboutStory.tsx` "Write to Keith" widget on story pages)
-- **FIX-029 (Low-Medium):** Age mode system exposed in UI (adult fiction only)
+- **FIX-028 (Low — planned Run 22):** Legacy "Keith" UI copy in 20+ src/ files (includes `AskAboutStory.tsx` "Write to Keith" widget on story pages). Plan: `FIXPLAN-FIX-028-keith-ui-copy-sweep.md`.
+- **FIX-029 (Low-Medium — planned Run 22):** Age mode system exposed in UI (adult fiction only). 3-phase removal: Phase 1 (9 files, UI-safe), Phase 2 (DB migration 040), Phase 3 (prompts/API). Plan: `FIXPLAN-FIX-029-remove-age-mode-system.md`.
 - **FIX-013, FIX-014, FIX-016, FIX-017:** Tell pipeline defensive coding
 
 ## Next Actions (Priority Order)
 
 1. **IDEA-048 (15 min):** Add Ask CTA near top of story page (after summary, before scene navigation) — 6 lines JSX in `stories/[storyId]/page.tsx` between lines 166–168. Dev plan `DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` ready.
-2. **FIX-050 (5 min):** Remove `/\bnext\b/i` from FUTURE_PATTERNS in `ask-intent.ts` line 35 + add 1 regression test. Plan: `FIXPLAN-FIX-050-ask-intent-next-pattern.md`.
-3. **FIX-049 (10 min):** Rename `requireKeith()` to `requireAuthor()` in 5 visuals API routes (naming-only, no logic changes). Plan: `FIXPLAN-FIX-049-requirekeith-function-name.md`.
-4. **IDEA-052 (3 hr author time, 0 code):** Author seeds 9 character spec JSONs, runs batch portrait generation, approves via admin console. Plan: `DEVPLAN-IDEA-052-canonical-character-portraits.md`.
-5. **IDEA-042 (2 hr):** Suggested follow-up chips after Ask answers — dev plan `DEVPLAN-IDEA-042-follow-up-chips.md` ready.
-6. **IDEA-043 (5 hr):** On-demand scene visualization via Ask — dev plan `DEVPLAN-IDEA-043-on-demand-scene-visualization.md`. Extends visuals pipeline to reader-triggered image generation.
-7. **FIX-047 (15 min):** Update all 9 model IDs to `claude-sonnet-4-6`; bump SYNTH_PROMPT_VERSION to v10. Plan: `FIXPLAN-FIX-047-stale-model-id.md`.
-8. **FIX-045 (10 min):** Update `docs/celestial/visuals-integration-plan.md` preset names before executing Phase 0 of the visuals plan. Docs-only fix.
-9. **FIX-046 (20 min):** Update stale "unlock as you progress" copy in 3 files; remove dead `!unlocked` code block.
-10. **FIX-026 + FIX-027 + FIX-030 (30 min combined):** Three stale `'keith'` role fixes. FIX-026 migration **040** conflicts with IDEA-043 Phase 5 (041) — FIX-026 goes first.
-11. **FIX-048 (5 min):** Add `.gitignore` pattern for `public/images/`.
-12. **FIX-028 (30 min + copy decisions):** Legacy "Keith" UI sweep including `AskAboutStory.tsx`.
-13. **FIX-029 (1 hr):** Remove AgeModeSwitcher from Nav/Header/Home.
-14. **FIX-013, FIX-014, FIX-016, FIX-017:** Tell pipeline defensive coding — low priority.
+2. **IDEA-051 (30 min):** Scene-level "Ask →" hover affordance on `### Scene` headings. 2-file change: extend `StoryMarkdown` props, modify h3 renderer, pass `storyId` from `StoryBodyWithHighlighting`. Dev plan `DEVPLAN-IDEA-051-scene-level-ask-affordance.md` ready.
+3. **FIX-051 (1 hr):** HTML sanitization for `dangerouslySetInnerHTML` in admin surfaces. Install `isomorphic-dompurify`, wrap 2 call sites, add TipTap Image src validation. Plan: `FIXPLAN-FIX-051-dangerouslysetinnerhtml-admin.md`.
+4. **FIX-050 (5 min):** Remove `/\bnext\b/i` from FUTURE_PATTERNS in `ask-intent.ts` line 35 + add 1 regression test. Plan: `FIXPLAN-FIX-050-ask-intent-next-pattern.md`.
+5. **FIX-049 (10 min):** Rename `requireKeith()` to `requireAuthor()` in 5 visuals API routes (naming-only, no logic changes). Plan: `FIXPLAN-FIX-049-requirekeith-function-name.md`.
+6. **IDEA-052 (3 hr author time, 0 code):** Author seeds 9 character spec JSONs, runs batch portrait generation, approves via admin console. Plan: `DEVPLAN-IDEA-052-canonical-character-portraits.md`.
+7. **IDEA-042 (2 hr):** Suggested follow-up chips after Ask answers — dev plan `DEVPLAN-IDEA-042-follow-up-chips.md` ready.
+8. **IDEA-043 (5 hr):** On-demand scene visualization via Ask — dev plan `DEVPLAN-IDEA-043-on-demand-scene-visualization.md`. Extends visuals pipeline to reader-triggered image generation.
+9. **FIX-047 (15 min):** Update all 9 model IDs to `claude-sonnet-4-6`; bump SYNTH_PROMPT_VERSION to v10. Plan: `FIXPLAN-FIX-047-stale-model-id.md`.
+10. **FIX-045 (10 min):** Update `docs/celestial/visuals-integration-plan.md` preset names before executing Phase 0 of the visuals plan. Docs-only fix.
+11. **FIX-046 (20 min):** Update stale "unlock as you progress" copy in 3 files; remove dead `!unlocked` code block.
+12. **FIX-026 + FIX-027 + FIX-030 (30 min combined):** Three stale `'keith'` role fixes. FIX-026 migration **040** conflicts with IDEA-043 Phase 5 (041) — FIX-026 goes first.
+13. **FIX-048 (5 min):** Add `.gitignore` pattern for `public/images/`.
+14. **FIX-028 (30 min + copy decisions):** Legacy "Keith" UI sweep including `AskAboutStory.tsx`. Plan: `FIXPLAN-FIX-028-keith-ui-copy-sweep.md`.
+15. **FIX-029 Phase 1 (1 hr):** Remove AgeModeSwitcher from Nav/Header/Home; flatten age mode branches in 9 files. Plan: `FIXPLAN-FIX-029-remove-age-mode-system.md`.
+16. **FIX-013, FIX-014, FIX-016, FIX-017:** Tell pipeline defensive coding — low priority.
