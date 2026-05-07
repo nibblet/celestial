@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-06 (Run 22)
+> Last updated: 2026-05-07 (Run 23)
 
 ## Maturity Levels
 
@@ -90,15 +90,29 @@
 ---
 
 ### [IDEA-057] Context-Aware Welcome Message on Ask Page
-- **Status:** seed
+- **Status:** planned
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-06
-- **Last Updated:** 2026-05-06
+- **Last Updated:** 2026-05-07
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-057-context-aware-ask-welcome.md`
+- **Summary:** When a reader navigates to the Ask page from a story page (via `?story={storyId}`), the companion's empty state shows a chapter-specific greeting and 3 tailored question chips derived from that chapter's lead character, primary location, and key concept from `chapter_tags.json`. Falls back to generic suggestions when no `?story=` param is present.
+- **Night Notes:**
+  - 2026-05-06 (Run 22): Seeded. The `?story=` param is already handled by `ask/page.tsx`. The initial assistant message is currently empty.
+  - 2026-05-07 (Run 23): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-057-context-aware-ask-welcome.md`. Implementation confirmed: extend `src/app/api/stories/[storyId]/meta/route.ts` (currently returns only `{ title }`) to also return `chapterWelcome: { greeting, suggestions }` computed from `getChapterTags(storyId)`. The Ask page client (`ask/page.tsx`) already fetches this endpoint — add a new `chapterWelcome` state variable alongside `contextStoryTitle`, then branch the empty-state render. Two-file change. `chapter-tags.ts` uses Node `fs` (server-only), so server route is the right injection point; no bundle bloat on the client. Estimated 45 minutes. No new API endpoint needed.
+
+---
+
+### [IDEA-060] Ask Conversation History Browser
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-07
+- **Last Updated:** 2026-05-07
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
-- **Summary:** When a reader navigates to the Ask page from a story page (via `?story={storyId}`), the companion's opening message reflects the chapter they were just reading ("You've been exploring CH05, Echoes of Intent — what would you like to dig into?") rather than a generic empty state. Makes Ask entry feel purposeful and story-grounded, not like dropping into a blank chat.
+- **Summary:** A reader-facing panel or page (`/ask/history`) showing past Ask conversations grouped by chapter and searchable by keyword. Readers can resume any prior thread, jump to the chapter that seeded it, or see all questions asked about a specific character or location across sessions.
 - **Night Notes:**
-  - 2026-05-06 (Run 22): Seeded. The `?story=` param is already handled by `ask/page.tsx` (loaded as `initialStoryId`). The initial assistant message is currently empty — adding a contextual welcome requires reading `initialStoryId → story.title` from `staticData` and rendering a synthetic pre-seeded "assistant" opening message before the user types. No new API call needed: `staticData` is imported statically. Implementation: when `initialStoryId` is set and the conversation has no history, render a pre-populated assistant bubble in the message list (client-only `useState`, no DB write). The message text: "You're reading **{story.title}**. What would you like to explore?" with a few example question chips seeded from `chapter_tags.json` key entities for that chapter.
+  - 2026-05-07 (Run 23): Seeded. `cel_conversations` + `cel_ai_interactions` already persist conversation history in Supabase. The data is there; the gap is a reader-facing browser UI. Implementation approach: a new `/ask/history` route (server component) that fetches `cel_conversations` rows for the authenticated user, groups by `story_id`, renders as a timeline list. Each row links to `/ask?conversation={id}` to resume (the Ask page already handles conversation resumption via `loadConversation` in `useEffect`). Search could be client-side (filter rows by keyword against stored `messages` JSON). Complexity is medium (new route, a Supabase query, a list UI) but no new data model. Post-read-world adjacent but filed here as ask-forward: it surfaces the Ask companion's persistence, making it feel like a real ongoing relationship with the archive. No spoiler concern: users only see their own conversations. Auth required (unauthenticated users have no history).
 
 ---
 
@@ -147,6 +161,19 @@
 - **Summary:** For key story locations (Giza Plateau, Command Dome, Resonant Pad, Zone Theta), pre-generate a 4-panel mood board showing the location across different lighting states, story moments, or perspectives. Stored in `cel_visual_assets` and displayed on location detail pages via `EntityVisualsGallery` as a curated "Scenes from [Location]" gallery.
 - **Night Notes:**
   - 2026-05-06 (Run 22): Seeded. The visuals pipeline already supports location targets — `corpus-context.ts` builds context from location wiki markdown. A 4-panel mood board requires 4 separate Imagen 4 calls per location with varied prompt seeds (different view params or state variations). Author runs via admin console, approves, and the gallery picks them up automatically. Dev plan must address: (1) Model: Imagen 4. (2) Cost: 4 images × ~$0.06 × 6 priority locations = ~$1.44; trivial. (3) Caching: shared per (target, style, variant) key. (4) Spoiler gating: location imagery is setting-level, not narrative — no chapter spoiler concern; all content visible under companion-first. (5) Canon grounding: location wiki markdown + parent entity spec chain (e.g., `command-dome` inherits from `valkyrie-1` via `parent_entity`). A `panel_index` (0-3) variant could be added to the `view` param to generate varied angles systematically.
+
+---
+
+### [IDEA-061] Chapter Completion Atmospheric Video Loop
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-07
+- **Last Updated:** 2026-05-07
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** When a reader marks a chapter complete (via `/api/stories/[storyId]/read`), a short 3–5 second atmospheric looping video clip plays as a completion cinematic. The clip depicts the chapter's dominant setting or closing mood, generated via Runway Gen-4 and pre-approved by the author — zero generation latency for the reader.
+- **Night Notes:**
+  - 2026-05-07 (Run 23): Seeded. The completion trigger already exists: `POST /api/stories/[storyId]/read` marks a chapter read and the client receives a 200 OK. Adding a video response requires: (1) Pre-generate 17 chapter completion clips offline via the author visuals pipeline (a new `target_type='chapter_completion'` in `corpus-context.ts`, a new batch script, approved via admin console); (2) Store clips in `cel_visual_assets` with `source='chapter_completion'`; (3) The `/api/visuals/preferred` GET endpoint (already exists, no auth) returns the approved asset for a `(target × style)` pair — add a `chapter_completion` target type; (4) After the reader marks a chapter read, client fetches the preferred clip and plays a looping `<video>` element in a fullscreen modal overlay (dismissable). Dev plan must address: (1) Model: Runway Gen-4 (~$0.015/s × 4s = ~$0.06/clip × 17 chapters = ~$1.02 total — trivial). (2) Cost: author-side batch only; readers trigger zero generation. (3) Caching: pre-generated, shared, stored in `cel_visual_assets`. (4) Spoiler gating of inputs: clip prompt uses only location/setting info from the chapter's dominant location spec; no narrative events in the prompt. (5) Canon grounding: chapter's primary location from `chapter_tags.json` → `corpus-context.ts` → location wiki markdown + spec JSON.
 
 ---
 
@@ -207,15 +234,29 @@
 ---
 
 ### [IDEA-053] Valkyrie-1 Interactive Interior Map
-- **Status:** seed
+- **Status:** parked
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-04
-- **Last Updated:** 2026-05-04
+- **Last Updated:** 2026-05-07
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** A dedicated `/artifacts/valkyrie-1/map` page (or a "Ship Map" tab on the Valkyrie-1 artifact page) showing an interactive SVG cross-section of the ship. The 11 interior locations (each with `parent_entity: "valkyrie-1"` in `content/wiki/specs/`) are placed as clickable regions. Clicking a region opens a side-panel with the location's wiki entry and approved visual assets. A natural post-read companion for readers who want to visualize where story events happened.
 - **Night Notes:**
-  - 2026-05-04 (Run 20): Seeded. The 11 interior location stub specs already exist (`content/wiki/specs/` — command-dome, resonant-pad, plus 9 others with parent_entity chain). All have wiki markdown entries in `content/wiki/locations/` (the Valkyrie-1 interior locations). The SVG map itself does not exist — it would need to be authored (by Paul / a designer) as an SVG with named regions matching location slugs. Alternative: a text-based "deck list" layout rather than SVG if SVG authoring is a blocker. Post-read-world requirements: (1) Hidden/degraded for locked readers: N/A under companion-first — all content visible. (2) Integration with `show_all_content`: N/A. (3) Partial-completion edge cases: N/A. Note: this is a post-read discovery feature; for first-time readers it also works as spatial orientation while reading. The 5 harmonic state renders in `public/images/` provide atmosphere but aren't interior maps. IDEA-047 (Harmonic State Gallery) is a complementary idea — they could share a "Valkyrie-1 Explorer" page with Map and States tabs.
+  - 2026-05-04 (Run 20): Seeded. The 11 interior location stub specs already exist (`content/wiki/specs/` — command-dome, resonant-pad, plus 9 others with parent_entity chain). All have wiki markdown entries in `content/wiki/locations/`. SVG map does not exist — needs designer authoring. IDEA-047 (Harmonic State Gallery) could combine with this into a "Valkyrie-1 Explorer" page.
+  - 2026-05-07 (Run 23): Stale 3 days — likely low priority or too complex. Demoting to parked. SVG authoring is a design-time blocker. Un-park when Paul is ready to commit to SVG layout authoring or decides to use the simpler text-based "deck list" fallback instead.
+
+---
+
+### [IDEA-062] Re-Reader Chapter Insight Panel — Hindsight Annotations
+- **Status:** seed
+- **Theme:** post-read-world
+- **Seeded:** 2026-05-07
+- **Last Updated:** 2026-05-07
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** For readers with `show_all_content=true`, each chapter page gains a collapsible "Hindsight" panel at the bottom showing 2–3 insights about how that chapter's events connect to later revelations — drawn from the existing character arc ledgers in `content/wiki/arcs/characters/`. Re-readers see the foreshadowing they missed on first read.
+- **Night Notes:**
+  - 2026-05-07 (Run 23): Seeded. No new content needed: arc ledgers already have per-chapter milestone notes for 9 characters (e.g., "CH03: First refusal of override — seeds the CH15-17 arc"). The insight panel is a curated display that joins chapter ID against each arc ledger's milestone entries and surfaces the relevant items. Implementation: (1) A server utility reads arc markdown files and extracts per-chapter milestone notes (similar to how `getCharacterArcContext()` in `prompts.ts` reads arc content); (2) `stories/[storyId]/page.tsx` calls this utility server-side and passes `chapterInsights[]` to a new `<HindsightPanel>` client component; (3) `HindsightPanel` renders as a collapsed accordion at the bottom of the chapter, visible only when `showAllContent === true` (passed from the existing `readerProgress` fetch). No new DB tables, no new markdown files. Post-read-world requirements: (1) Hidden for locked/first-time readers: gated by `showAllContent === true`. (2) Integration with `show_all_content`: direct dependency — the panel only renders when this flag is set. (3) Partial-completion edge cases: under companion-first, all content is visible to all users regardless; this feature's gate is purely the `show_all_content` profile flag, so it applies only to readers the author has explicitly granted re-reader status.
 
 ---
 
