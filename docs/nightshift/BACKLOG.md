@@ -63,15 +63,16 @@
 ---
 
 ### [IDEA-054] Ask TTS Narrator Voice — "Listen" Button on Ask Responses
-- **Status:** seed
+- **Status:** parked
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-05
-- **Last Updated:** 2026-05-05
+- **Last Updated:** 2026-05-08
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** After the Ask companion finishes streaming a response, a small "Listen" button appears below the answer bubble. Clicking it sends the response text to a TTS API and plays back the answer in the narrator's voice, adding audio immersion without changing the core text flow.
 - **Night Notes:**
   - 2026-05-05 (Run 21): Seeded. The response text is already available post-stream; TTS is a pure add-on. Provider options: ElevenLabs (premium voice quality, ~$0.30/1k chars) or Google TTS (lower cost, ~$0.004/1k chars, less cinematic). Key design question: which voice/tone fits the Celestial narrator persona? Requires a voice guide (`content/voice.md` is a stub — FIX relevant). No spoiler concern: TTS only reads text already shown to the reader. Implementation: new `/api/ask/tts` POST route accepting `text: string`, returning audio stream. Client adds optional `<audio>` element to the response bubble with play/pause control. Latency: TTS generation is fast (~0.5–2s) and can be triggered lazily on button click, not pre-generated.
+  - 2026-05-08 (Run 24): Stale 3 days — likely low priority or too complex. Demoting to parked. Voice selection is blocked by `content/voice.md` stub. Un-park when the voice guide is authored.
 
 ---
 
@@ -113,6 +114,19 @@
 - **Summary:** A reader-facing panel or page (`/ask/history`) showing past Ask conversations grouped by chapter and searchable by keyword. Readers can resume any prior thread, jump to the chapter that seeded it, or see all questions asked about a specific character or location across sessions.
 - **Night Notes:**
   - 2026-05-07 (Run 23): Seeded. `cel_conversations` + `cel_ai_interactions` already persist conversation history in Supabase. The data is there; the gap is a reader-facing browser UI. Implementation approach: a new `/ask/history` route (server component) that fetches `cel_conversations` rows for the authenticated user, groups by `story_id`, renders as a timeline list. Each row links to `/ask?conversation={id}` to resume (the Ask page already handles conversation resumption via `loadConversation` in `useEffect`). Search could be client-side (filter rows by keyword against stored `messages` JSON). Complexity is medium (new route, a Supabase query, a list UI) but no new data model. Post-read-world adjacent but filed here as ask-forward: it surfaces the Ask companion's persistence, making it feel like a real ongoing relationship with the archive. No spoiler concern: users only see their own conversations. Auth required (unauthenticated users have no history).
+
+---
+
+### [IDEA-063] Entity Hover-Card in Ask Answers — Inline Wiki Tooltips
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-08
+- **Last Updated:** 2026-05-08
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** When the Ask companion's response includes a wiki link (e.g., `[ALARA](/characters/alara)`), hovering the link shows a small tooltip card with the entity's one-line description and entity type — making answers richer and navigable without leaving the Ask flow.
+- **Night Notes:**
+  - 2026-05-08 (Run 24): Seeded. The `buildEvidence()` function in `ask-evidence.ts` already extracts `linksInAnswer` (entity name + href pairs) from the assistant markdown. The custom `ASSISTANT_MARKDOWN_COMPONENTS.a` renderer in `ask/page.tsx` already renders internal links as styled Next.js `<Link>` components. Extension: (1) Build a small `<EntityHoverCard>` component that accepts `href` and uses `useQuery` (or a `<Suspense>` + server action) to fetch the entity's one-line description from an endpoint or static data; (2) Wrap the `<Link>` in the custom `a` renderer with `<EntityHoverCard>` showing on hover via `group-hover`. Static data alternative: preload `linksInAnswer` metadata in the SSE `done` event so the client has descriptions without extra fetches — add `description?: string` to the `linksInAnswer` items in `ask-evidence.ts`. No new API routes needed if descriptions are in static-data. The `static-data.ts` already exposes entity descriptions. Spoiler note: descriptions are short wiki summaries, not chapter-specific narrative — no spoiler concern under companion-first. Implementation complexity: medium (hover state management, fetch or static-data lookup, Tailwind popover).
 
 ---
 
@@ -178,15 +192,16 @@
 ---
 
 ### [IDEA-055] Faction Emblems & Heraldry — Author-Batch Generated Canonical Badges
-- **Status:** seed
+- **Status:** parked
 - **Theme:** genmedia
 - **Seeded:** 2026-05-05
-- **Last Updated:** 2026-05-05
+- **Last Updated:** 2026-05-08
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** Pre-generate one canonical emblem or heraldic badge per faction (e.g., the Rigel Protocol, the Vault Accord, and other named factions) via the existing author visuals pipeline. Displayed on faction detail pages via `EntityVisualsGallery`.
 - **Night Notes:**
   - 2026-05-05 (Run 21): Seeded. No faction spec JSON files exist yet — would need `content/wiki/specs/{faction-slug}/master.json` seeded per faction, defining emblem shape, color palette, symbolic elements. Style: heraldic/insignia rather than cinematic scene; closest existing preset is `earth_institutional` for military/institutional factions, or `alien_organic` for Resonant/Vault-affiliated factions. Model: Imagen 4. Cost: ~$0.06/image × N factions (likely 6–10) = ~$0.36–0.60. Caching: shared, stored in `cel_visual_assets`. Spoiler gating: faction identity is non-narrative — emblems carry no chapter-specific content. Canon grounding: `content/wiki/factions/{slug}.md` + spec JSON. Dev plan must address: (1) Model: Imagen 4. (2) Cost: ~$0.06/image. (3) Caching: shared. (4) Spoiler gating: none required — emblems are world-building visuals. (5) Canon grounding: faction wiki markdown + faction master.json spec.
+  - 2026-05-08 (Run 24): Stale 3 days — likely low priority or too complex. Demoting to parked. Blocked by missing faction spec JSON files. Un-park after IDEA-052 (character portraits) ships and the batch spec authoring workflow is proven.
 
 ---
 
@@ -204,18 +219,32 @@
 
 ---
 
+### [IDEA-064] ALARA Visual Evolution Sequence — Portrait Arc Across Key Chapters
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-08
+- **Last Updated:** 2026-05-08
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** A curated sequence of 4–5 Imagen 4–generated portraits showing ALARA's visual transformation across her arc: (1) dormant observer (CH01–02), (2) emergent presence (CH04–05), (3) aligned participant (CH06–07), (4) merged resonance (CH14), (5) post-translation distributed form (CH17). Pre-generated by the author and displayed on ALARA's character page as a horizontally-scrollable "Evolution" gallery strip above the main `EntityVisualsGallery`.
+- **Night Notes:**
+  - 2026-05-08 (Run 24): Seeded. This extends IDEA-052 (single portrait per character) with a specifically ALARA-focused narrative arc. ALARA is the only character with a visual transformation arc significant enough for this treatment — her arc moves from background AI system → noncorporeal emergent intelligence → merged distributed entity. Implementation: (1) Model: Imagen 4. (2) Cost: 5 images × ~$0.06 = ~$0.30 total. (3) Caching: shared, stored in `cel_visual_assets` with `source='character_arc_sequence'`; a `sequence_index` field (0–4) distinguishes images. (4) Spoiler gating of inputs: each portrait's prompt uses only information available up to the depicted chapter — no forward-looking arc details. `corpus-context.ts` would need to accept a `chapterBoundary` parameter to limit which arc sections are included. (5) Canon grounding: `content/wiki/characters/alara.md` + ALARA arc ledger chapter entry for the relevant chapter + `noncorporeal_presence` preset + `content/wiki/specs/valkyrie-1/states/*.json` to convey ship harmonic state in background. Prerequisite: IDEA-052 ships first (establishes the spec authoring + batch workflow for ALARA). The `sequence_index` concept requires a schema addition to `cel_visual_assets`.
+
+---
+
 ## post-read-world
 
 ### [IDEA-056] Celestial Star Chart — Spatial Universe Map for Readers
-- **Status:** seed
+- **Status:** parked
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-05
-- **Last Updated:** 2026-05-05
+- **Last Updated:** 2026-05-08
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** A visual chart of the key locations in the Celestial universe (Earth, Mars, Asteroid Belt, Europa, Ganymede, Valkyrie-1's trajectory corridor) displayed on a dedicated page or as a new tab on the existing `/stories/timeline` page. Each location links to its wiki entry. Helps readers understand the spatial context of a multi-planet story.
 - **Night Notes:**
   - 2026-05-05 (Run 21): Seeded. All key locations exist in `content/wiki/locations/` (including andes-glacial-lake, asteroid-belt, europa, ganymede — added Run 12). An SVG-based star chart with clickable named regions would be the ideal form; a simpler fallback is a styled HTML list with distances/context. The timeline page (`/stories/timeline`) already handles the temporal axis — this is the spatial complement. Post-read-world requirements: (1) Under companion-first all content is visible to all users — no gating needed. (2) `show_all_content`: N/A. (3) Partial-completion edge cases: N/A. Complexity: if SVG, a designer/Paul must author the spatial layout; if HTML list, pure dev work using existing location data. Consider linking from the existing location index page (`/locations`) as a "Universe Map" tab rather than a standalone route.
+  - 2026-05-08 (Run 24): Stale 3 days — likely low priority or too complex. Demoting to parked. SVG authoring is a design-time blocker (same as IDEA-053). Un-park if Paul prefers the HTML list fallback form, which could be built without any design assets.
 
 ---
 
@@ -248,15 +277,16 @@
 ---
 
 ### [IDEA-062] Re-Reader Chapter Insight Panel — Hindsight Annotations
-- **Status:** seed
+- **Status:** planned
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-07
-- **Last Updated:** 2026-05-07
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
-- **Summary:** For readers with `show_all_content=true`, each chapter page gains a collapsible "Hindsight" panel at the bottom showing 2–3 insights about how that chapter's events connect to later revelations — drawn from the existing character arc ledgers in `content/wiki/arcs/characters/`. Re-readers see the foreshadowing they missed on first read.
+- **Last Updated:** 2026-05-08
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-062-re-reader-hindsight-panel.md`
+- **Summary:** For readers with `show_all_content=true`, each chapter page gains a collapsible "Hindsight" accordion at the bottom showing 2–4 arc-state insights drawn from existing character arc ledgers. Re-readers see foreshadowing they missed on first read. Zero new content needed; all insight text is from manually-authored arc markdown.
 - **Night Notes:**
   - 2026-05-07 (Run 23): Seeded. No new content needed: arc ledgers already have per-chapter milestone notes for 9 characters (e.g., "CH03: First refusal of override — seeds the CH15-17 arc"). The insight panel is a curated display that joins chapter ID against each arc ledger's milestone entries and surfaces the relevant items. Implementation: (1) A server utility reads arc markdown files and extracts per-chapter milestone notes (similar to how `getCharacterArcContext()` in `prompts.ts` reads arc content); (2) `stories/[storyId]/page.tsx` calls this utility server-side and passes `chapterInsights[]` to a new `<HindsightPanel>` client component; (3) `HindsightPanel` renders as a collapsed accordion at the bottom of the chapter, visible only when `showAllContent === true` (passed from the existing `readerProgress` fetch). No new DB tables, no new markdown files. Post-read-world requirements: (1) Hidden for locked/first-time readers: gated by `showAllContent === true`. (2) Integration with `show_all_content`: direct dependency — the panel only renders when this flag is set. (3) Partial-completion edge cases: under companion-first, all content is visible to all users regardless; this feature's gate is purely the `show_all_content` profile flag, so it applies only to readers the author has explicitly granted re-reader status.
+  - 2026-05-08 (Run 24): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-062-re-reader-hindsight-panel.md`. Implementation confirmed: new `src/lib/wiki/chapter-hindsight.ts` parses the "Chapter Arc Entries" table in each arc ledger and returns "State After" text per chapter + character. Used in `stories/[storyId]/page.tsx` when `readerProgress.showAllContent === true`. New `HindsightPanel.tsx` component renders as a collapsed `<details>` accordion. Zero new npm packages; no DB changes. Estimated 2 hours. Priority set to P2.
 
 ---
 
@@ -270,6 +300,19 @@
 - **Summary:** A `/characters/compare` page (or a "Compare Arcs" tab on a character's detail page) that places two or more named characters side-by-side, showing their arc milestones, emotional state changes, and story roles across chapters. Pulls from existing character wiki entries and `content/wiki/characters/` arc data. Designed for re-readers who want to see how, e.g., Mira and Eli's arcs intersect, or how a supporting character's trajectory maps against the protagonist's across the full story.
 - **Night Notes:**
   - 2026-05-06 (Run 22): Seeded. Post-read-world requirements: (1) Under companion-first all character data is visible to all users — no gating. (2) `show_all_content`: N/A. (3) Partial-completion: N/A. Character wiki entries in `content/wiki/characters/` already contain arc milestones and chapter appearances. Implementation approach: a static-data driven comparison table/card layout, similar to how the wiki compiler resolves related entities. The `/characters/[slug]` pages already render per-character arc data; this view joins two or more. Lower complexity than SVG maps (no designer asset needed). Un-park when character page work picks up.
+
+---
+
+### [IDEA-065] World Canon Browser — Unified `/world` Explorer for Completed Readers
+- **Status:** seed
+- **Theme:** post-read-world
+- **Seeded:** 2026-05-08
+- **Last Updated:** 2026-05-08
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** A new `/world` page that consolidates all entity categories (characters, factions, locations, ships, vaults, artifacts, rules) into a single richly-designed world explorer with visual thumbnails from `EntityVisualsGallery`, cross-linked to individual detail pages. Replaces the need to navigate five separate index pages, giving re-readers a single immersive entry point into the universe.
+- **Night Notes:**
+  - 2026-05-08 (Run 24): Seeded. Currently readers must navigate between `/characters`, `/factions`, `/locations`, `/vaults`, etc. as separate sparse index pages. A unified `/world` page with section headers, brief entity descriptions, and approved thumbnail images (via the existing `cel_visual_assets` approved asset system) would create a "World Bible" feel appropriate for re-readers. Implementation: (1) New `/world/page.tsx` server component that calls `getAllCharacterArcs()`, `getEntityLoader()`, and `getLocations()` etc. to assemble all entity data in one pass; (2) Renders as a `<main>` with themed sections: "Crew of Valkyrie-1", "Factions & Powers", "Key Locations", "The Vaults", "Artifacts & Systems"; (3) Each entity card shows: entity name, entity type badge, 1-line description, and approved visual thumbnail (if available) via a lightweight version of `EntityVisualsGallery`; (4) Post-read-world requirements: Under companion-first, all entity data is visible to all users — no gating needed for content. `show_all_content`: this page could be fully accessible to all (it shows wiki-level information, not arc endpoints). Partial-completion: N/A. The page is purely additive — existing entity index pages remain. Complexity: medium (mostly composition of existing APIs; no new data; thumbnail loading adds Supabase queries). Estimated 3–4 hours dev time.
 
 ---
 

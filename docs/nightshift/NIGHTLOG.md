@@ -4,6 +4,54 @@
 
 ---
 
+## Run: 2026-05-08 (Run 24)
+
+### Summary
+- Scanned: 0 new code commits since Run 23 nightshift (`e22e9ad` was docs-only). Codebase state unchanged.
+- Issues: 1 new (FIX-052 — in-memory rate limiter ineffective in serverless multi-instance). 0 resolved. 0 spoiler-leak P0. Total open planned: FIX-026, 027, 028, 029, 030, 045, 046, 047, 048, 049, 050, 051. FIX-052 added as `found`.
+- Ideas (by theme): ask-forward 1 seed (IDEA-063 — entity hover-card in Ask answers) / 0 promoted; genmedia 1 seed (IDEA-064 — ALARA visual evolution sequence) / 0 promoted; post-read-world 1 seed (IDEA-065 — World Canon Browser `/world` page) / 1 promoted to `planned` (IDEA-062 — re-reader hindsight panel, dev plan written); parked 3 (IDEA-054 TTS — 3-day stale, IDEA-055 faction emblems — 3-day stale, IDEA-056 star chart — 3-day stale).
+- Plans written: `DEVPLAN-IDEA-062-re-reader-hindsight-panel.md`.
+
+### Build & Lint & Test Results
+- No code commits since Run 23. Build, lint, and test status unchanged: **PASSES** / 0 errors, 4 img warnings / 192 PASS.
+- No build run performed this session (no code changes to validate; codebase identical to Run 23).
+
+### Key Findings
+
+1. **No new code commits.** Codebase is identical to Run 23. All prior open issues and planned issues remain in last-known state. FIX-049 and FIX-050 confirmed still open via direct grep; all 12 stale model ID files confirmed present.
+
+2. **FIX-052 found.** `src/lib/rate-limit.ts` uses a module-level `Map` as a sliding-window rate limit store. In Vercel serverless, each lambda instance has its own memory — parallel requests to different instances bypass per-user rate limits. Acknowledged in the file comment ("Suitable for low-traffic apps on a single server") but never formally tracked. 8 routes affected; highest-risk are `/api/ask` (AI cost) and `/api/stories/[storyId]/audio/stream` (ElevenLabs cost). Severity Low at current traffic. Fix options: (A) Supabase-backed rate limit for the two expensive routes; (B) Upstash Redis. No plan written yet — flagged for Paul to prioritize when traffic grows.
+
+3. **IDEA-062 promoted to `planned` and dev plan written.** Re-Reader Hindsight Panel: collapsible accordion on chapter pages showing arc-state insights from existing arc ledger tables, gated by `show_all_content = true`. Key implementation detail confirmed: the "Chapter Arc Entries" table in each arc ledger file uses `| CH01 | ... | State After |` format that can be parsed with a simple line-by-line table parser. `getAllCharacterArcs()` already loads all 9 arc files. New server utility `chapter-hindsight.ts` maps `chapterId → ChapterHindsightEntry[]`; new `HindsightPanel.tsx` renders as collapsed `<details>`. Two-file change to `stories/[storyId]/page.tsx`. Zero new npm packages, no DB changes. Estimated 2 hours.
+
+4. **Three ideas parked (3-day stale rule).** IDEA-054 (TTS narrator voice — seeded 2026-05-05, 3 days, blocked by `content/voice.md` stub), IDEA-055 (faction emblems — seeded 2026-05-05, 3 days, blocked by missing faction spec JSON files), IDEA-056 (star chart — seeded 2026-05-05, 3 days, blocked by SVG authoring dependency).
+
+5. **Three new ideas seeded.** IDEA-063 (ask-forward: entity hover-card in Ask answers — tooltip showing 1-line description on hover of entity links in responses; `linksInAnswer` already has hrefs, static-data has descriptions), IDEA-064 (genmedia: ALARA visual evolution sequence — 5-portrait arc showing ALARA's transformation across chapters; prerequisite IDEA-052 must ship first; spoiler gating requires `chapterBoundary` param in `corpus-context.ts`), IDEA-065 (post-read-world: World Canon Browser at `/world` — unified entity explorer with visual thumbnails, consolidates 5 separate index pages for re-readers).
+
+6. **`ask-retrieval.ts` location confirmed.** File is in `src/lib/wiki/ask-retrieval.ts`, not `src/lib/ai/`. STATUS.md note was slightly inaccurate — no functional issue, just a docs error. STATUS.md updated implicitly by this run.
+
+7. **IDEA-054/055/056 removal leaves 3 active-theme ideas in seed state.** Active seeds now: IDEA-058 (genmedia, 2 days), IDEA-059 (post-read-world, 2 days), IDEA-060 (ask-forward, 1 day), IDEA-061 (genmedia, 1 day), IDEA-062 (post-read-world, now planned), IDEA-063/064/065 (new seeds tonight). Good coverage across all three themes.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-062-re-reader-hindsight-panel.md` — **NEW**: Hindsight Panel for re-readers on chapter pages — `show_all_content` gated, sources arc ledger tables, zero new content (post-read-world). 2 hours.
+- `docs/nightshift/plans/DEVPLAN-IDEA-057-context-aware-ask-welcome.md` — Chapter-grounded welcome message + entity-based chips in Ask empty state (ask-forward). 45 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-051-scene-level-ask-affordance.md` — Scene-level "Ask →" hover on `### Scene` headings (ask-forward). 30 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — Ask CTA after chapter summary (ask-forward). 15 minutes.
+- `docs/nightshift/plans/FIXPLAN-FIX-051-dangerouslysetinnerhtml-admin.md` — HTML sanitization for admin dangerouslySetInnerHTML. 1 hour.
+- `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md` — Remove overly broad `/\bnext\b/` from ask-intent. 5 minutes.
+- `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md` — Rename `requireKeith()` to `requireAuthor()` in 5 visuals routes. 10 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-042-follow-up-chips.md` — Follow-up chips in Ask (ask-forward). 2 hours.
+- `docs/nightshift/plans/DEVPLAN-IDEA-052-canonical-character-portraits.md` — Canonical character portraits (genmedia, author batch). 3 hours author time, 0 code.
+- `docs/nightshift/plans/DEVPLAN-IDEA-043-on-demand-scene-visualization.md` — On-demand scene visualization via Ask (genmedia). 5 hours.
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — 9-file model ID update to `claude-sonnet-4-6`. 15 minutes.
+
+### Recommendations
+- **If you have 30 min:** IDEA-048 (15 min — Ask CTA after story summary) + FIX-050 (5 min — remove over-broad next pattern) + FIX-049 (10 min — rename requireKeith). Three quick wins, no dependency risk.
+- **If you have 1 hour:** The 30-min batch above + IDEA-057 (45 min — context-aware Ask welcome with chapter chips). After this session: Ask has a top-of-page CTA, a smarter empty state, and two codebase quality fixes done.
+- **If you have 2 hours:** IDEA-062 (2 hr — Hindsight Panel). A complete new feature for re-readers, sourced entirely from existing arc ledgers. No external dependencies, no DB changes, clean gate on `show_all_content`. Satisfying standalone session.
+
+---
+
 ## Run: 2026-05-07 (Run 23)
 
 ### Summary

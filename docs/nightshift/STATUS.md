@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-05-07 (Nightshift Run 23)
+> Last updated: 2026-05-08 (Nightshift Run 24)
 
 ## App Summary
 
@@ -194,6 +194,7 @@
 
 ## Known Issues (See FIXES.md)
 
+- **FIX-052 (Low — found Run 24):** In-memory rate limiter in `src/lib/rate-limit.ts` not effective across serverless lambda instances. 8 routes affected; highest cost risk is `/api/ask` and `/api/stories/[storyId]/audio/stream`. Fix: replace with Supabase-backed rate limit for those two routes. No plan yet.
 - **FIX-051 (Low — planned Run 22):** `dangerouslySetInnerHTML` without HTML sanitization in two author-only admin surfaces (`BeyondDraftEditor.tsx:420`, `admin/drafts/page.tsx:185`). TipTap Image extension does not restrict `javascript:` or `data:` URIs. Fix: install `isomorphic-dompurify`, create `src/lib/sanitize-html.ts`, wrap both call sites, add Image src scheme validation in `TipTapEditor.tsx`. Plan: `FIXPLAN-FIX-051-dangerouslysetinnerhtml-admin.md`.
 - **FIX-050 (Low — planned Run 21):** `/\bnext\b/i` in `FUTURE_PATTERNS` in `ask-intent.ts` (line 35) overly broad — misclassifies factual "next" questions as `future_speculation`. Fix: 1-line deletion + 1 regression test. Plan: `FIXPLAN-FIX-050-ask-intent-next-pattern.md`.
 - **FIX-049 (Low — planned Run 21):** `requireKeith()` function in 5 visuals API routes is misleadingly named — the function body checks `["admin", "author", "keith"]`. Rename to `requireAuthor()`. Plan: `FIXPLAN-FIX-049-requirekeith-function-name.md`.
@@ -219,7 +220,8 @@
 
 1. **IDEA-048 (15 min):** Add Ask CTA near top of story page (after summary, before scene navigation) — 6 lines JSX in `stories/[storyId]/page.tsx` between lines 166–168. Dev plan `DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` ready.
 2. **IDEA-057 (45 min):** Context-aware welcome message on Ask page — extend `meta` API to return chapter-specific suggestions, add `chapterWelcome` state to Ask page, conditional empty-state render. Dev plan `DEVPLAN-IDEA-057-context-aware-ask-welcome.md` ready. *(NEW Run 23)*
-3. **IDEA-051 (30 min):** Scene-level "Ask →" hover affordance on `### Scene` headings. 2-file change: extend `StoryMarkdown` props, modify h3 renderer, pass `storyId` from `StoryBodyWithHighlighting`. Dev plan `DEVPLAN-IDEA-051-scene-level-ask-affordance.md` ready.
+3. **IDEA-062 (2 hr):** Re-Reader Hindsight Panel — new `chapter-hindsight.ts` server utility + `HindsightPanel.tsx` component. Gated by `show_all_content`. Zero new content or DB changes. Dev plan `DEVPLAN-IDEA-062-re-reader-hindsight-panel.md` ready. *(NEW Run 24)*
+4. **IDEA-051 (30 min):** Scene-level "Ask →" hover affordance on `### Scene` headings. 2-file change: extend `StoryMarkdown` props, modify h3 renderer, pass `storyId` from `StoryBodyWithHighlighting`. Dev plan `DEVPLAN-IDEA-051-scene-level-ask-affordance.md` ready.
 4. **FIX-051 (1 hr):** HTML sanitization for `dangerouslySetInnerHTML` in admin surfaces. Install `isomorphic-dompurify`, wrap 2 call sites, add TipTap Image src validation. Plan: `FIXPLAN-FIX-051-dangerouslysetinnerhtml-admin.md`.
 5. **FIX-050 (5 min):** Remove `/\bnext\b/i` from FUTURE_PATTERNS in `ask-intent.ts` line 35 + add 1 regression test. Plan: `FIXPLAN-FIX-050-ask-intent-next-pattern.md`.
 6. **FIX-049 (10 min):** Rename `requireKeith()` to `requireAuthor()` in 5 visuals API routes (naming-only, no logic changes). Plan: `FIXPLAN-FIX-049-requirekeith-function-name.md`.
