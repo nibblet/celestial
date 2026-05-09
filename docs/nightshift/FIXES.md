@@ -1,7 +1,7 @@
 # FIXES — Celestial Interactive Book Companion
 
 > Bug and issue tracker. Updated each nightshift run.
-> Numbering continues from Run 24 (last new entry is FIX-052).
+> Numbering continues from Run 25 (last new entry is FIX-052).
 
 ## Statuses
 - `found` — Issue identified, no plan yet
@@ -14,11 +14,11 @@
 ## Open Issues
 
 ### [FIX-052] In-Memory Rate Limiter Ineffective in Serverless Multi-Instance Deployments
-- **Status:** found
+- **Status:** planned
 - **Severity:** Low — the app is low-traffic and `src/lib/rate-limit.ts` already documents this limitation with "Suitable for low-traffic apps on a single server." However, the rate limiter is relied upon in 8 production routes including `/api/ask` (AI cost protection) and `/api/stories/[storyId]/audio/stream` (ElevenLabs cost protection). In Vercel's serverless runtime, each lambda instance has its own in-process `Map`; a user can bypass per-user rate limits by hitting different function instances in parallel.
 - **Found:** 2026-05-08 (Run 24)
-- **Plan:** *(not yet written)*
-- **Summary:** `src/lib/rate-limit.ts` uses a module-level `Map<string, RateLimitEntry>` as a sliding-window rate limit store. Used in 8 routes: `/api/ask` (20 req/min per user — AI cost), `/api/stories/[storyId]/audio/stream` (5 req/15min per user — ElevenLabs cost), `highlights` (30/min), `corrections` (20/min), `favorite` (60/min), `questions` (10/hr), `beyond/polish` (10/min), `tell` (20/min). In serverless, parallel requests hitting different cold instances share no memory — rate limits are per-instance, not per-user globally. Fix options: (A) Replace with a Supabase-backed rate limit using `cel_rate_limits` table + upsert + `created_at > now() - interval` query (DB round-trip per request, ~5ms overhead); (B) Use Redis via Upstash (external dependency, ~$0/mo free tier); (C) Accept the current behavior as-is for a low-traffic app. Recommend option (A) for `/api/ask` and audio stream only — the two highest-cost routes. Other routes can keep the in-memory limiter.
+- **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-052-serverless-rate-limit.md`
+- **Summary:** `src/lib/rate-limit.ts` uses a module-level `Map<string, RateLimitEntry>` as a sliding-window rate limit store. Used in 8 routes: `/api/ask` (20 req/min per user — AI cost), `/api/stories/[storyId]/audio/stream` (5 req/15min per user — ElevenLabs cost), `highlights` (30/min), `corrections` (20/min), `favorite` (60/min), `questions` (10/hr), `beyond/polish` (10/min), `tell` (20/min). Fix: new `cel_rate_limits` table (migration 041, after FIX-026's 040) + `upsert_rate_limit` PG function + `src/lib/rate-limit-db.ts` helper. Apply DB-backed limiter to the two highest-cost routes only; keep in-memory limiter as secondary local guard for all other routes. Fail-open: if DB is unreachable, request is allowed.
 
 ---
 

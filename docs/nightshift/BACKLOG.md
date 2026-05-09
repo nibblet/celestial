@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-07 (Run 23)
+> Last updated: 2026-05-09 (Run 25)
 
 ## Maturity Levels
 
@@ -118,15 +118,29 @@
 ---
 
 ### [IDEA-063] Entity Hover-Card in Ask Answers — Inline Wiki Tooltips
-- **Status:** seed
+- **Status:** planned
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-08
-- **Last Updated:** 2026-05-08
+- **Last Updated:** 2026-05-09
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-063-entity-hover-card.md`
+- **Summary:** When the Ask companion's response includes a wiki link (e.g., `[ALARA](/characters/alara)`), hovering the link shows a small tooltip card with the entity type badge and name — making answers richer and navigable without leaving the Ask flow.
+- **Night Notes:**
+  - 2026-05-08 (Run 24): Seeded. The custom `ASSISTANT_MARKDOWN_COMPONENTS.a` renderer in `ask/page.tsx` already renders internal links as styled Next.js `<Link>` components. Entity type can be derived purely from the href path segment (e.g., `/characters/X` → "Character") — no fetch needed, no API change, no new DB.
+  - 2026-05-09 (Run 25): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-063-entity-hover-card.md`. Implementation: new `src/components/ask/EntityHoverCard.tsx` component (derives entity type from href path segment, renders Tailwind `group-hover/hc` tooltip above link). Update `ASSISTANT_MARKDOWN_COMPONENTS.a` in `ask/page.tsx` (lines 30–38) to use it. 2-file change: new component + `ask/page.tsx`. Zero fetches, zero new API routes, zero DB changes, zero npm packages. Estimated 30 minutes.
+
+---
+
+### [IDEA-066] Cross-Session Ask Resume — "Continue Where You Left Off"
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-09
+- **Last Updated:** 2026-05-09
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
-- **Summary:** When the Ask companion's response includes a wiki link (e.g., `[ALARA](/characters/alara)`), hovering the link shows a small tooltip card with the entity's one-line description and entity type — making answers richer and navigable without leaving the Ask flow.
+- **Summary:** When an authenticated reader opens `/ask?story={storyId}`, if they have a prior conversation for that story in `cel_conversations`, the Ask empty state shows the 3 most recent exchanges with a "Continue where you left off" prompt and a "Start fresh" option. Makes the companion feel persistent and relational.
 - **Night Notes:**
-  - 2026-05-08 (Run 24): Seeded. The `buildEvidence()` function in `ask-evidence.ts` already extracts `linksInAnswer` (entity name + href pairs) from the assistant markdown. The custom `ASSISTANT_MARKDOWN_COMPONENTS.a` renderer in `ask/page.tsx` already renders internal links as styled Next.js `<Link>` components. Extension: (1) Build a small `<EntityHoverCard>` component that accepts `href` and uses `useQuery` (or a `<Suspense>` + server action) to fetch the entity's one-line description from an endpoint or static data; (2) Wrap the `<Link>` in the custom `a` renderer with `<EntityHoverCard>` showing on hover via `group-hover`. Static data alternative: preload `linksInAnswer` metadata in the SSE `done` event so the client has descriptions without extra fetches — add `description?: string` to the `linksInAnswer` items in `ask-evidence.ts`. No new API routes needed if descriptions are in static-data. The `static-data.ts` already exposes entity descriptions. Spoiler note: descriptions are short wiki summaries, not chapter-specific narrative — no spoiler concern under companion-first. Implementation complexity: medium (hover state management, fetch or static-data lookup, Tailwind popover).
+  - 2026-05-09 (Run 25): Seeded. The data is already there: `cel_conversations` stores `story_id`, `profile_id`, `messages` JSON, and `created_at`. The Ask page already handles conversation resumption via `loadConversation(id)` in a `useEffect`. The gap is surfacing the prior session proactively rather than requiring a reader to navigate to `/ask/history`. Implementation: in `ask/page.tsx` `useEffect` (after `contextStoryId` is resolved), query `cel_conversations` for `{ story_id: storySlug, profile_id: user.id, ORDER BY created_at DESC, LIMIT 1 }`. Extract the last user message as a preview string. New empty-state variant: "Last time you asked: [preview]" with "Continue" → `loadConversation(id)` and "Start fresh" → null the prior session ref. No new API route or DB table. Authenticated users only (guests have no history). This connects to IDEA-060 (full conversation history browser) as a lighter-weight, high-value first step.
 
 ---
 
@@ -166,15 +180,16 @@
 ---
 
 ### [IDEA-058] Location Mood Board — 4-Panel Pre-Generated Canonical Gallery
-- **Status:** seed
+- **Status:** parked
 - **Theme:** genmedia
 - **Seeded:** 2026-05-06
-- **Last Updated:** 2026-05-06
+- **Last Updated:** 2026-05-09
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** For key story locations (Giza Plateau, Command Dome, Resonant Pad, Zone Theta), pre-generate a 4-panel mood board showing the location across different lighting states, story moments, or perspectives. Stored in `cel_visual_assets` and displayed on location detail pages via `EntityVisualsGallery` as a curated "Scenes from [Location]" gallery.
 - **Night Notes:**
   - 2026-05-06 (Run 22): Seeded. The visuals pipeline already supports location targets — `corpus-context.ts` builds context from location wiki markdown. A 4-panel mood board requires 4 separate Imagen 4 calls per location with varied prompt seeds (different view params or state variations). Author runs via admin console, approves, and the gallery picks them up automatically. Dev plan must address: (1) Model: Imagen 4. (2) Cost: 4 images × ~$0.06 × 6 priority locations = ~$1.44; trivial. (3) Caching: shared per (target, style, variant) key. (4) Spoiler gating: location imagery is setting-level, not narrative — no chapter spoiler concern; all content visible under companion-first. (5) Canon grounding: location wiki markdown + parent entity spec chain (e.g., `command-dome` inherits from `valkyrie-1` via `parent_entity`). A `panel_index` (0-3) variant could be added to the `view` param to generate varied angles systematically.
+  - 2026-05-09 (Run 25): Stale 3 days — likely low priority or too complex. Demoting to parked. Blocked by lack of `view` variant system on admin console; un-park after IDEA-052 (character portraits) ships and batch pipeline has proven support for systematic variation.
 
 ---
 
@@ -202,6 +217,19 @@
 - **Night Notes:**
   - 2026-05-05 (Run 21): Seeded. No faction spec JSON files exist yet — would need `content/wiki/specs/{faction-slug}/master.json` seeded per faction, defining emblem shape, color palette, symbolic elements. Style: heraldic/insignia rather than cinematic scene; closest existing preset is `earth_institutional` for military/institutional factions, or `alien_organic` for Resonant/Vault-affiliated factions. Model: Imagen 4. Cost: ~$0.06/image × N factions (likely 6–10) = ~$0.36–0.60. Caching: shared, stored in `cel_visual_assets`. Spoiler gating: faction identity is non-narrative — emblems carry no chapter-specific content. Canon grounding: `content/wiki/factions/{slug}.md` + spec JSON. Dev plan must address: (1) Model: Imagen 4. (2) Cost: ~$0.06/image. (3) Caching: shared. (4) Spoiler gating: none required — emblems are world-building visuals. (5) Canon grounding: faction wiki markdown + faction master.json spec.
   - 2026-05-08 (Run 24): Stale 3 days — likely low priority or too complex. Demoting to parked. Blocked by missing faction spec JSON files. Un-park after IDEA-052 (character portraits) ships and the batch spec authoring workflow is proven.
+
+---
+
+### [IDEA-067] Ask Auto-Illustration Toggle — Opt-In Inline Image After Each Answer
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-09
+- **Last Updated:** 2026-05-09
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** An optional "✦ Illustrate" toggle on the Ask page. When enabled, each completed Ask response attempts to generate a small inline image (300×200px) below the text bubble, derived from the first entity wiki link in `linksInAnswer`. Triggered lazily after stream completion; reader opts in explicitly.
+- **Night Notes:**
+  - 2026-05-09 (Run 25): Seeded. This is an ambient version of IDEA-043 (on-demand visualization). Rather than requiring the reader to explicitly ask "show me," the toggle enables auto-generation after every response containing at least one entity wiki link. Key decisions: (1) Model/provider: Imagen 4 (~$0.04–0.08/image). (2) Cost budget: only when opt-in toggle is ON; rate limit 3 images per 15-minute window per user — shared with IDEA-043 limit, backed by DB (FIX-052 approach). Toggle state stored in `localStorage` ("ask_illustrate_enabled"). (3) Caching: shared per `seedHashFor(entitySlug, autoStyle, corpusVersion)` — same as admin path; check `cel_visual_assets` for approved asset before generating. (4) Spoiler gating of prompt inputs: entity slug from `linksInAnswer[0].href` is the only prompt input; no narrative text involved; all entity specs are available to all users under companion-first. (5) Canon grounding: `corpus-context.ts` builds context from entity wiki markdown + spec JSON files in `content/wiki/specs/`. Style auto-selected based on entity type (character → `intimate_crew`, location → `valkyrie_shipboard`, vault → `vault_threshold`, etc.). Implementation: new `/api/ask/illustrate` POST route accepting `{ entityHref: string }`; calls `synthesizeVisualPrompt` then `generateAsset`; returns `{ imageUrl }`. Client fires this call after the `done` SSE event if toggle is on and `linksInAnswer.length > 0`.
 
 ---
 
@@ -291,15 +319,29 @@
 ---
 
 ### [IDEA-059] Character Arc Comparison View — Side-by-Side Reader/Author Progress
-- **Status:** seed
+- **Status:** parked
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-06
-- **Last Updated:** 2026-05-06
+- **Last Updated:** 2026-05-09
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** A `/characters/compare` page (or a "Compare Arcs" tab on a character's detail page) that places two or more named characters side-by-side, showing their arc milestones, emotional state changes, and story roles across chapters. Pulls from existing character wiki entries and `content/wiki/characters/` arc data. Designed for re-readers who want to see how, e.g., Mira and Eli's arcs intersect, or how a supporting character's trajectory maps against the protagonist's across the full story.
 - **Night Notes:**
   - 2026-05-06 (Run 22): Seeded. Post-read-world requirements: (1) Under companion-first all character data is visible to all users — no gating. (2) `show_all_content`: N/A. (3) Partial-completion: N/A. Character wiki entries in `content/wiki/characters/` already contain arc milestones and chapter appearances. Implementation approach: a static-data driven comparison table/card layout, similar to how the wiki compiler resolves related entities. The `/characters/[slug]` pages already render per-character arc data; this view joins two or more. Lower complexity than SVG maps (no designer asset needed). Un-park when character page work picks up.
+  - 2026-05-09 (Run 25): Stale 3 days — likely low priority or too complex. Demoting to parked. No clear UX specification for the comparison layout (table vs. timeline vs. cards). Un-park when Paul has a specific visual design in mind for this view.
+
+---
+
+### [IDEA-068] Re-Reader Deep Archive Mode — Full-Canon Ask Companion for Completed Readers
+- **Status:** seed
+- **Theme:** post-read-world
+- **Seeded:** 2026-05-09
+- **Last Updated:** 2026-05-09
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** Completed readers with `show_all_content=true` can toggle "Deep Archive" mode on the Ask page, lifting the companion's spoiler-guard clause and allowing fully unfiltered answers about any chapter, character arc endpoint, or lore detail.
+- **Night Notes:**
+  - 2026-05-09 (Run 25): Seeded. Currently the Ask companion injects a "Reader Progress Gate" block into every persona system prompt, instructing it to avoid content from unread chapters. Under companion-first defaults all content is unlocked for all users, making this gate largely ceremonial — but a subset of readers (those explicitly granted `show_all_content` by the author) may want the companion to engage with full narrative arc knowledge without hedging. "Deep Archive" mode: (1) A UI toggle on `ask/page.tsx`, visible only when the user's profile has `show_all_content = true` (fetched on mount). (2) Toggle state: React state + included in the `/api/ask` POST body as `deepArchiveMode: boolean`. (3) Server-side validation: in `src/app/api/ask/route.ts`, if `deepArchiveMode = true`, confirm `readerProgress.showAllContent === true`; otherwise ignore the flag. (4) In `orchestrateAsk()` / persona system-prompt builders, when `deepArchiveMode = true`, omit the "Reader Progress Gate" block. Implementation: add `deepArchiveMode?` to `OrchestrateAskArgs`, thread through to `buildSystemPrompt()` (or wherever the gate block is injected), add the UI toggle + profile check in `ask/page.tsx`. No new DB table. Post-read-world requirements: (1) Hidden from first-time readers and guests — toggle only renders when `showAllContent === true`. (2) `show_all_content` integration: direct dependency — server validates the flag. (3) Partial-completion edge cases: server-side check prevents unauthorized use regardless of UI state.
 
 ---
 
