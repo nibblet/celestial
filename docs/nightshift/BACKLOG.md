@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-09 (Run 25)
+> Last updated: 2026-05-11 (Run 26)
 
 ## Maturity Levels
 
@@ -105,15 +105,16 @@
 ---
 
 ### [IDEA-060] Ask Conversation History Browser
-- **Status:** seed
+- **Status:** parked
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-07
-- **Last Updated:** 2026-05-07
+- **Last Updated:** 2026-05-11
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** A reader-facing panel or page (`/ask/history`) showing past Ask conversations grouped by chapter and searchable by keyword. Readers can resume any prior thread, jump to the chapter that seeded it, or see all questions asked about a specific character or location across sessions.
 - **Night Notes:**
   - 2026-05-07 (Run 23): Seeded. `cel_conversations` + `cel_ai_interactions` already persist conversation history in Supabase. The data is there; the gap is a reader-facing browser UI. Implementation approach: a new `/ask/history` route (server component) that fetches `cel_conversations` rows for the authenticated user, groups by `story_id`, renders as a timeline list. Each row links to `/ask?conversation={id}` to resume (the Ask page already handles conversation resumption via `loadConversation` in `useEffect`). Search could be client-side (filter rows by keyword against stored `messages` JSON). Complexity is medium (new route, a Supabase query, a list UI) but no new data model. Post-read-world adjacent but filed here as ask-forward: it surfaces the Ask companion's persistence, making it feel like a real ongoing relationship with the archive. No spoiler concern: users only see their own conversations. Auth required (unauthenticated users have no history).
+  - 2026-05-11 (Run 26): Stale 4 days — likely low priority or too complex. Demoting to parked. The lighter-weight "Continue where you left off" (IDEA-066) covers the key resumption use case with zero new routes. Un-park if Paul wants a full browsable history page.
 
 ---
 
@@ -132,15 +133,29 @@
 ---
 
 ### [IDEA-066] Cross-Session Ask Resume — "Continue Where You Left Off"
-- **Status:** seed
+- **Status:** planned
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-09
-- **Last Updated:** 2026-05-09
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
-- **Summary:** When an authenticated reader opens `/ask?story={storyId}`, if they have a prior conversation for that story in `cel_conversations`, the Ask empty state shows the 3 most recent exchanges with a "Continue where you left off" prompt and a "Start fresh" option. Makes the companion feel persistent and relational.
+- **Last Updated:** 2026-05-11
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-066-cross-session-ask-resume.md`
+- **Summary:** When an authenticated reader opens `/ask?story={storyId}` and their browser has a record of a prior Ask conversation for that story (stored in `localStorage`), the empty state shows a "Continue where you left off" card with the first question as a preview — with "Continue" and "Start fresh" options. Makes the companion feel persistent without requiring a DB migration.
 - **Night Notes:**
   - 2026-05-09 (Run 25): Seeded. The data is already there: `cel_conversations` stores `story_id`, `profile_id`, `messages` JSON, and `created_at`. The Ask page already handles conversation resumption via `loadConversation(id)` in a `useEffect`. The gap is surfacing the prior session proactively rather than requiring a reader to navigate to `/ask/history`. Implementation: in `ask/page.tsx` `useEffect` (after `contextStoryId` is resolved), query `cel_conversations` for `{ story_id: storySlug, profile_id: user.id, ORDER BY created_at DESC, LIMIT 1 }`. Extract the last user message as a preview string. New empty-state variant: "Last time you asked: [preview]" with "Continue" → `loadConversation(id)` and "Start fresh" → null the prior session ref. No new API route or DB table. Authenticated users only (guests have no history). This connects to IDEA-060 (full conversation history browser) as a lighter-weight, high-value first step.
+  - 2026-05-11 (Run 26): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-066-cross-session-ask-resume.md`. Key design correction from seed notes: `cel_conversations` does NOT have a `story_id` column (conversations are created with `user_id`, `age_mode`, `title` only — no story FK). Therefore the implementation uses `localStorage` (key: `celestial_conv_{storySlug}`) rather than a Supabase query. This avoids a DB migration entirely. The existing `GET /api/conversations/{id}` endpoint loads the full message history for "Continue". Net code change: 1 state variable + 2 useEffects + 1 callback + ~25 JSX lines, all in `ask/page.tsx`. Estimated 1.5 hours. Priority raised to P2.
+
+---
+
+### [IDEA-069] Ask from Wiki Page — Entity-Level Ask CTA on All Entity Detail Pages
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-11
+- **Last Updated:** 2026-05-11
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** Every wiki entity detail page (characters, factions, locations, artifacts, vaults, rules) gets a compact "Ask about [Entity Name] →" link in the page header. Clicking opens `/ask?entity={slug}&entityType={type}`, which the Ask page detects to display entity-specific suggestion chips — extending IDEA-040's chapter-level CTA pattern down to the entity level.
+- **Night Notes:**
+  - 2026-05-11 (Run 26): Seeded. IDEA-040 shipped a chapter-level Ask CTA on story pages. The natural follow-on is entity pages (characters, factions, locations, etc.) — readers browsing ALARA's wiki page should be one tap away from asking "What role does ALARA play in Chapter 3?" or "How does ALARA differ from other AI systems in the story?". Implementation: (1) Entity detail page templates already render a `<h1>` header and description — add a small `<Link href="/ask?entity={slug}&entityType={type}">Ask about [Name] →</Link>` button in the header JSX (5 pages × ~5 lines each = ~25 lines total); (2) In `ask/page.tsx`, detect `?entity=` and `?entityType=` search params and add them to the empty-state variant alongside `?story=` context. The entity type could drive pre-seeded suggestion chips derived from static entity data (e.g., for a character: "What is [Name]'s role in the crew?", "How does [Name]'s arc develop?", "What is [Name]'s relationship with ALARA?"). No new API route or DB changes needed. The `ask/page.tsx` already handles `?story=` — adding `?entity=` is a parallel pattern. Complexity: low-medium. Estimated 2 hours.
 
 ---
 
@@ -194,15 +209,16 @@
 ---
 
 ### [IDEA-061] Chapter Completion Atmospheric Video Loop
-- **Status:** seed
+- **Status:** parked
 - **Theme:** genmedia
 - **Seeded:** 2026-05-07
-- **Last Updated:** 2026-05-07
+- **Last Updated:** 2026-05-11
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** When a reader marks a chapter complete (via `/api/stories/[storyId]/read`), a short 3–5 second atmospheric looping video clip plays as a completion cinematic. The clip depicts the chapter's dominant setting or closing mood, generated via Runway Gen-4 and pre-approved by the author — zero generation latency for the reader.
 - **Night Notes:**
   - 2026-05-07 (Run 23): Seeded. The completion trigger already exists: `POST /api/stories/[storyId]/read` marks a chapter read and the client receives a 200 OK. Adding a video response requires: (1) Pre-generate 17 chapter completion clips offline via the author visuals pipeline (a new `target_type='chapter_completion'` in `corpus-context.ts`, a new batch script, approved via admin console); (2) Store clips in `cel_visual_assets` with `source='chapter_completion'`; (3) The `/api/visuals/preferred` GET endpoint (already exists, no auth) returns the approved asset for a `(target × style)` pair — add a `chapter_completion` target type; (4) After the reader marks a chapter read, client fetches the preferred clip and plays a looping `<video>` element in a fullscreen modal overlay (dismissable). Dev plan must address: (1) Model: Runway Gen-4 (~$0.015/s × 4s = ~$0.06/clip × 17 chapters = ~$1.02 total — trivial). (2) Cost: author-side batch only; readers trigger zero generation. (3) Caching: pre-generated, shared, stored in `cel_visual_assets`. (4) Spoiler gating of inputs: clip prompt uses only location/setting info from the chapter's dominant location spec; no narrative events in the prompt. (5) Canon grounding: chapter's primary location from `chapter_tags.json` → `corpus-context.ts` → location wiki markdown + spec JSON.
+  - 2026-05-11 (Run 26): Stale 4 days — likely low priority or too complex. Demoting to parked. Blocked by lack of Runway Gen-4 integration in current pipeline; un-park after IDEA-043 (on-demand scene visualization) ships and establishes the video generation path.
 
 ---
 
@@ -227,7 +243,7 @@
 - **Last Updated:** 2026-05-09
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
-- **Summary:** An optional "✦ Illustrate" toggle on the Ask page. When enabled, each completed Ask response attempts to generate a small inline image (300×200px) below the text bubble, derived from the first entity wiki link in `linksInAnswer`. Triggered lazily after stream completion; reader opts in explicitly.
+- **Summary:** An optional "❆ Illustrate" toggle on the Ask page. When enabled, each completed Ask response attempts to generate a small inline image (300×200px) below the text bubble, derived from the first entity wiki link in `linksInAnswer`. Triggered lazily after stream completion; reader opts in explicitly.
 - **Night Notes:**
   - 2026-05-09 (Run 25): Seeded. This is an ambient version of IDEA-043 (on-demand visualization). Rather than requiring the reader to explicitly ask "show me," the toggle enables auto-generation after every response containing at least one entity wiki link. Key decisions: (1) Model/provider: Imagen 4 (~$0.04–0.08/image). (2) Cost budget: only when opt-in toggle is ON; rate limit 3 images per 15-minute window per user — shared with IDEA-043 limit, backed by DB (FIX-052 approach). Toggle state stored in `localStorage` ("ask_illustrate_enabled"). (3) Caching: shared per `seedHashFor(entitySlug, autoStyle, corpusVersion)` — same as admin path; check `cel_visual_assets` for approved asset before generating. (4) Spoiler gating of prompt inputs: entity slug from `linksInAnswer[0].href` is the only prompt input; no narrative text involved; all entity specs are available to all users under companion-first. (5) Canon grounding: `corpus-context.ts` builds context from entity wiki markdown + spec JSON files in `content/wiki/specs/`. Style auto-selected based on entity type (character → `intimate_crew`, location → `valkyrie_shipboard`, vault → `vault_threshold`, etc.). Implementation: new `/api/ask/illustrate` POST route accepting `{ entityHref: string }`; calls `synthesizeVisualPrompt` then `generateAsset`; returns `{ imageUrl }`. Client fires this call after the `done` SSE event if toggle is on and `linksInAnswer.length > 0`.
 
@@ -247,16 +263,30 @@
 
 ---
 
-### [IDEA-064] ALARA Visual Evolution Sequence — Portrait Arc Across Key Chapters
+### [IDEA-070] Approval-Gated Visual Thumbnails Inline in Ask Answers
 - **Status:** seed
 - **Theme:** genmedia
+- **Seeded:** 2026-05-11
+- **Last Updated:** 2026-05-11
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** When the Ask companion's response references a wiki entity via a link in `linksInAnswer`, and that entity has at least one approved visual asset in `cel_visual_assets`, a small circular thumbnail (48×48px) appears inline next to the entity link. Zero generation latency — uses only pre-approved author assets. No AI calls, no cost per render.
+- **Night Notes:**
+  - 2026-05-11 (Run 26): Seeded. The `/api/ask` route already returns `linksInAnswer` in the `done` SSE event with entity slugs and hrefs. The `EntityVisualsGallery` component already fetches approved assets for entity pages. To render thumbnails inline in Ask answers: extend the `done` SSE event payload to include `approvedThumbnailUrl?: string` per `linksInAnswer` entry (API-side: one Supabase query per distinct entity slug after stream completes — fetch the approved asset URL from `cel_visual_assets` where `approved=true AND target={slug}`); client renders a `<img className="inline-block h-10 w-10 rounded-full mr-1" src={thumbnailUrl} />` next to the entity link inside the `ASSISTANT_MARKDOWN_COMPONENTS.a` renderer. Dev plan must address: (1) Model/provider: N/A — uses pre-generated assets only. (2) Cost per generation: $0 — assets are pre-approved. (3) Caching: assets are already in Supabase Storage with public URLs; no additional caching layer needed. (4) Spoiler gating of prompt inputs: N/A — no AI generation triggered by this feature; entity visuals are decorative world-building, not narrative text. (5) Canon grounding: thumbnails come from `cel_visual_assets` with `approved=true`, which are exclusively author-curated canonical renders. Fallback: if no approved asset exists for an entity, the link renders exactly as today (no thumbnail). Estimated 2 hours. Prerequisite: IDEA-052 (character portraits) must ship first to populate approved assets; otherwise only existing approved assets appear (currently sparse). Low risk of over-fetching: the query runs only once per Ask response completion, and only for entities in `linksInAnswer` (typically 0–5 per answer).
+
+---
+
+### [IDEA-064] ALARA Visual Evolution Sequence — Portrait Arc Across Key Chapters
+- **Status:** parked
+- **Theme:** genmedia
 - **Seeded:** 2026-05-08
-- **Last Updated:** 2026-05-08
+- **Last Updated:** 2026-05-11
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** A curated sequence of 4–5 Imagen 4–generated portraits showing ALARA's visual transformation across her arc: (1) dormant observer (CH01–02), (2) emergent presence (CH04–05), (3) aligned participant (CH06–07), (4) merged resonance (CH14), (5) post-translation distributed form (CH17). Pre-generated by the author and displayed on ALARA's character page as a horizontally-scrollable "Evolution" gallery strip above the main `EntityVisualsGallery`.
 - **Night Notes:**
   - 2026-05-08 (Run 24): Seeded. This extends IDEA-052 (single portrait per character) with a specifically ALARA-focused narrative arc. ALARA is the only character with a visual transformation arc significant enough for this treatment — her arc moves from background AI system → noncorporeal emergent intelligence → merged distributed entity. Implementation: (1) Model: Imagen 4. (2) Cost: 5 images × ~$0.06 = ~$0.30 total. (3) Caching: shared, stored in `cel_visual_assets` with `source='character_arc_sequence'`; a `sequence_index` field (0–4) distinguishes images. (4) Spoiler gating of inputs: each portrait's prompt uses only information available up to the depicted chapter — no forward-looking arc details. `corpus-context.ts` would need to accept a `chapterBoundary` parameter to limit which arc sections are included. (5) Canon grounding: `content/wiki/characters/alara.md` + ALARA arc ledger chapter entry for the relevant chapter + `noncorporeal_presence` preset + `content/wiki/specs/valkyrie-1/states/*.json` to convey ship harmonic state in background. Prerequisite: IDEA-052 ships first (establishes the spec authoring + batch workflow for ALARA). The `sequence_index` concept requires a schema addition to `cel_visual_assets`.
+  - 2026-05-11 (Run 26): Stale 3 days — likely low priority or too complex. Demoting to parked. Blocked by IDEA-052 prerequisite (canonical portraits not yet generated). Un-park after IDEA-052 ships and the `sequence_index` schema extension is designed.
 
 ---
 
@@ -332,6 +362,19 @@
 
 ---
 
+### [IDEA-071] Chapter-to-Chapter Arc Bridge for Re-Readers — "What Changed Between CH_X and CH_Y"
+- **Status:** seed
+- **Theme:** post-read-world
+- **Seeded:** 2026-05-11
+- **Last Updated:** 2026-05-11
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** For re-readers with `show_all_content=true`, a new panel or dedicated `/arcs/bridge?from=ch03&to=ch15` page that compares two selected chapters and surfaces which characters changed state, which factions shifted, and which key events connect the two chapters — pulled entirely from arc ledger milestone tables and `chapter_tags.json`. No AI generation needed.
+- **Night Notes:**
+  - 2026-05-11 (Run 26): Seeded. The arc ledger files (`content/wiki/arcs/characters/*.md`) contain "Chapter Arc Entries" tables with a `| State After |` column per chapter for each of the 9 main characters. `chapter_tags.json` has key entities and events per chapter. The "bridge" concept: given `fromChapter` and `toChapter`, compute a diff of each character's "State After" between those two chapters (9 diffs), surface them as a clean narrative summary — "Since CH03: ALARA has moved from passive observer → autonomous actor; ALARA's refusal arc began in CH07". Implementation: (1) New server utility `src/lib/wiki/chapter-bridge.ts` — accepts `from` and `to` chapter IDs, reads all 9 arc ledger files via `getAllCharacterArcs()` (already exists), extracts the "State After" entries for the two chapters, returns `CharacterBridge[]` with `{ slug, name, fromState, toState }`; (2) New `/arcs/bridge/page.tsx` or a modal/panel on the `/arcs` route — two chapter selectors (dropdowns), a "Compare" button, renders the diff; (3) Post-read-world requirements: (a) Hidden for first-time readers and guests — page requires `show_all_content === true` via `hasAuthorSpecialAccess()` or `show_all_content` profile check; (b) `show_all_content` integration: direct — server check; (c) Partial-completion edge cases: server validates the flag, guests redirect to home. Zero new content, zero DB changes, zero npm packages. Estimated 2–3 hours.
+
+---
+
 ### [IDEA-068] Re-Reader Deep Archive Mode — Full-Canon Ask Companion for Completed Readers
 - **Status:** seed
 - **Theme:** post-read-world
@@ -346,15 +389,16 @@
 ---
 
 ### [IDEA-065] World Canon Browser — Unified `/world` Explorer for Completed Readers
-- **Status:** seed
+- **Status:** parked
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-08
-- **Last Updated:** 2026-05-08
+- **Last Updated:** 2026-05-11
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** A new `/world` page that consolidates all entity categories (characters, factions, locations, ships, vaults, artifacts, rules) into a single richly-designed world explorer with visual thumbnails from `EntityVisualsGallery`, cross-linked to individual detail pages. Replaces the need to navigate five separate index pages, giving re-readers a single immersive entry point into the universe.
 - **Night Notes:**
   - 2026-05-08 (Run 24): Seeded. Currently readers must navigate between `/characters`, `/factions`, `/locations`, `/vaults`, etc. as separate sparse index pages. A unified `/world` page with section headers, brief entity descriptions, and approved thumbnail images (via the existing `cel_visual_assets` approved asset system) would create a "World Bible" feel appropriate for re-readers. Implementation: (1) New `/world/page.tsx` server component that calls `getAllCharacterArcs()`, `getEntityLoader()`, and `getLocations()` etc. to assemble all entity data in one pass; (2) Renders as a `<main>` with themed sections: "Crew of Valkyrie-1", "Factions & Powers", "Key Locations", "The Vaults", "Artifacts & Systems"; (3) Each entity card shows: entity name, entity type badge, 1-line description, and approved visual thumbnail (if available) via a lightweight version of `EntityVisualsGallery`; (4) Post-read-world requirements: Under companion-first, all entity data is visible to all users — no gating needed for content. `show_all_content`: this page could be fully accessible to all (it shows wiki-level information, not arc endpoints). Partial-completion: N/A. The page is purely additive — existing entity index pages remain. Complexity: medium (mostly composition of existing APIs; no new data; thumbnail loading adds Supabase queries). Estimated 3–4 hours dev time.
+  - 2026-05-11 (Run 26): Stale 3 days — likely low priority or too complex. Demoting to parked. Too broad in scope and visual thumbnails are sparse until IDEA-052 (character portraits) ships. Un-park when more approved assets exist and Paul wants a consolidated world explorer surface.
 
 ---
 
