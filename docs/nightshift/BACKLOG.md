@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-11 (Run 26)
+> Last updated: 2026-05-12 (Run 27)
 
 ## Maturity Levels
 
@@ -147,15 +147,29 @@
 ---
 
 ### [IDEA-069] Ask from Wiki Page — Entity-Level Ask CTA on All Entity Detail Pages
-- **Status:** seed
+- **Status:** planned
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-11
-- **Last Updated:** 2026-05-11
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
-- **Summary:** Every wiki entity detail page (characters, factions, locations, artifacts, vaults, rules) gets a compact "Ask about [Entity Name] →" link in the page header. Clicking opens `/ask?entity={slug}&entityType={type}`, which the Ask page detects to display entity-specific suggestion chips — extending IDEA-040's chapter-level CTA pattern down to the entity level.
+- **Last Updated:** 2026-05-12
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-069-entity-level-ask-cta.md`
+- **Summary:** Every wiki entity detail page (characters, factions, locations, artifacts, vaults, rules) gets a compact "Ask about [Entity Name] →" link in the page header. Clicking opens `/ask?entity={slug}&entityType={type}&entityName={Name}`, which the Ask page detects to display entity-specific suggestion chips and a back-breadcrumb — extending IDEA-040's chapter-level CTA pattern down to the entity level.
 - **Night Notes:**
   - 2026-05-11 (Run 26): Seeded. IDEA-040 shipped a chapter-level Ask CTA on story pages. The natural follow-on is entity pages (characters, factions, locations, etc.) — readers browsing ALARA's wiki page should be one tap away from asking "What role does ALARA play in Chapter 3?" or "How does ALARA differ from other AI systems in the story?". Implementation: (1) Entity detail page templates already render a `<h1>` header and description — add a small `<Link href="/ask?entity={slug}&entityType={type}">Ask about [Name] →</Link>` button in the header JSX (5 pages × ~5 lines each = ~25 lines total); (2) In `ask/page.tsx`, detect `?entity=` and `?entityType=` search params and add them to the empty-state variant alongside `?story=` context. The entity type could drive pre-seeded suggestion chips derived from static entity data (e.g., for a character: "What is [Name]'s role in the crew?", "How does [Name]'s arc develop?", "What is [Name]'s relationship with ALARA?"). No new API route or DB changes needed. The `ask/page.tsx` already handles `?story=` — adding `?entity=` is a parallel pattern. Complexity: low-medium. Estimated 2 hours.
+  - 2026-05-12 (Run 27): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-069-entity-level-ask-cta.md`. Implementation confirmed via codebase read: single change to `FictionEntityDetailPage` in `FictionEntityViews.tsx` covers factions/locations/artifacts/vaults; separate change to `characters/[slug]/page.tsx` for characters; `RuleDetailPage` in `FictionEntityViews.tsx` for rules. In `ask/page.tsx`: add 3 new params (`entitySlug`, `entityType`, `entityName`), add entity breadcrumb parallel to story breadcrumb (~line 649), add `ENTITY_SUGGESTIONS` map for type-specific chips. `entityName` passed in URL to avoid any server fetch. 3-file change (2 entity templates + ask page). Zero API routes, zero DB, zero new npm packages. Estimated 2 hours. Priority set to P2.
+
+---
+
+### [IDEA-072] Chapter Quick-Facts Panel in Ask — Contextual Key-Facts Card
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-12
+- **Last Updated:** 2026-05-12
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** When a reader opens the Ask page from a story (`?story={storyId}`), a collapsible "Key Facts" card appears in the sidebar or above the chat thread showing the chapter's mission date, primary location, and 3 key entities — pulled from `chapter_tags.json` and the existing `/api/stories/[storyId]/meta` response. Always-open by default; reader can collapse. Zero new API routes.
+- **Night Notes:**
+  - 2026-05-12 (Run 27): Seeded. IDEA-057 (context-aware welcome chips, now `planned`) extends the `/meta` endpoint to return `chapterWelcome.greeting` and `chapterWelcome.suggestions`. This idea is complementary: a persistent sidebar card (not just an empty-state chip row) that stays visible even after the reader starts chatting. Content: mission day (available from `getMissionTimelineContext()` data already built in `ask-context.ts`), primary location and 3 key entities from `chapter_tags.json`. Renders as a compact `<aside>` panel next to or above the thread. Stateless — derived entirely from URL params + existing meta endpoint. Implementation: extend `/meta` route response to include `{ missionDay, primaryLocation, keyEntities[] }`; in `ask/page.tsx`, render the card in a right-sidebar layout (desktop) or above the thread (mobile) when `storySlug` is set. No new DB, no new endpoints. Estimated 1.5 hours. Depends on IDEA-057 being shipped first (meta route already extended).
 
 ---
 
@@ -237,15 +251,16 @@
 ---
 
 ### [IDEA-067] Ask Auto-Illustration Toggle — Opt-In Inline Image After Each Answer
-- **Status:** seed
+- **Status:** parked
 - **Theme:** genmedia
 - **Seeded:** 2026-05-09
-- **Last Updated:** 2026-05-09
+- **Last Updated:** 2026-05-12
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** An optional "❆ Illustrate" toggle on the Ask page. When enabled, each completed Ask response attempts to generate a small inline image (300×200px) below the text bubble, derived from the first entity wiki link in `linksInAnswer`. Triggered lazily after stream completion; reader opts in explicitly.
 - **Night Notes:**
   - 2026-05-09 (Run 25): Seeded. This is an ambient version of IDEA-043 (on-demand visualization). Rather than requiring the reader to explicitly ask "show me," the toggle enables auto-generation after every response containing at least one entity wiki link. Key decisions: (1) Model/provider: Imagen 4 (~$0.04–0.08/image). (2) Cost budget: only when opt-in toggle is ON; rate limit 3 images per 15-minute window per user — shared with IDEA-043 limit, backed by DB (FIX-052 approach). Toggle state stored in `localStorage` ("ask_illustrate_enabled"). (3) Caching: shared per `seedHashFor(entitySlug, autoStyle, corpusVersion)` — same as admin path; check `cel_visual_assets` for approved asset before generating. (4) Spoiler gating of prompt inputs: entity slug from `linksInAnswer[0].href` is the only prompt input; no narrative text involved; all entity specs are available to all users under companion-first. (5) Canon grounding: `corpus-context.ts` builds context from entity wiki markdown + spec JSON files in `content/wiki/specs/`. Style auto-selected based on entity type (character → `intimate_crew`, location → `valkyrie_shipboard`, vault → `vault_threshold`, etc.). Implementation: new `/api/ask/illustrate` POST route accepting `{ entityHref: string }`; calls `synthesizeVisualPrompt` then `generateAsset`; returns `{ imageUrl }`. Client fires this call after the `done` SSE event if toggle is on and `linksInAnswer.length > 0`.
+  - 2026-05-12 (Run 27): Stale 3 days — likely low priority or too complex. Demoting to parked. Superseded by IDEA-043 (on-demand visualization) which covers the explicit "show me" path first; the opt-in ambient path is lower priority until IDEA-043 ships. Un-park after IDEA-043 ships.
 
 ---
 
@@ -260,6 +275,19 @@
 - **Night Notes:**
   - 2026-05-04 (Run 20): Seeded. The visuals pipeline already supports character target types — `corpus-context.ts` can build context from character wiki + arc dossier. Style preset: `intimate_crew` for crew members, `noncorporeal_presence` for ALARA. Cost: 9 images × ~$0.06 = ~$0.54 total; negligible. Canon grounding: character wiki markdown + `content/wiki/arcs/characters/{slug}.md` "Starting State" + any existing reference uploads. The 9 characters all have arc ledger files already. Main gap: no character-specific `content/wiki/specs/{slug}/master.json` entries exist yet — would need to seed one per character before generation, or rely on text-only canon dossier extraction (less visually consistent). Recommended: add stub `master.json` for at least ALARA before running batch. Dev plan must address: (1) Model: Imagen 4. (2) Cost: ~$0.54/batch. (3) Caching: shared, stored in `cel_visual_assets` with `approved=true`. (4) Spoiler gating of inputs: character wiki + starting-state arc text only — no future-chapters arc content. (5) Canon grounding: `content/wiki/characters/{slug}.md` + starting-state section of arc ledger + any existing approved assets as style anchors.
   - 2026-05-05 (Run 21): Promoted to `planned`. Dev plan written: `DEVPLAN-IDEA-052-canonical-character-portraits.md`. Phases: (1) Author seeds 9 character spec JSON files; (2) batch generate and approve via admin console; (3) verify `EntityVisualsGallery` on character pages. Estimated 3 hours author time, zero code changes. Priority raised to P2.
+
+---
+
+### [IDEA-073] Story Scene Cinematic Stills — Batch Keyframe Gallery per Chapter
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-12
+- **Last Updated:** 2026-05-12
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** Author pre-generates a set of 3 "cinematic still" images per chapter (opening atmosphere, midpoint tension, closing/resolution) via the existing visuals pipeline. Stills stored in `cel_visual_assets` with `source='chapter_still'` and a `sequence_index` (0–2). Displayed as a filmstrip-style gallery strip on each chapter detail page, above the scene navigation. Zero reader latency — author-batch only.
+- **Night Notes:**
+  - 2026-05-12 (Run 27): Seeded. Distinct from IDEA-049 (single "chapter hero" splash image, now parked) — this produces 3 stills per chapter that together narrate the chapter's emotional arc visually. Implementation: (1) Model/provider: Imagen 4 (~$0.06/still × 3 stills × 17 chapters = ~$3.06 total for full coverage — trivial). (2) Cost budget: author-batch only; no reader-triggered generation. (3) Caching: stills stored as approved assets in `cel_visual_assets` with `source='chapter_still'` and `sequence_index` field; shared/canonical per chapter. (4) Spoiler gating of prompt inputs: each still's prompt uses only the chapter's primary location spec from `content/wiki/specs/` and the dominant entity from `chapter_tags.json` — no narrative text, no character arc details. Style: location-appropriate preset (e.g., `valkyrie_shipboard` for shipboard chapters, `giza_archaeological` for vault chapters). (5) Canon grounding: chapter's location wiki markdown + location spec JSON + `chapter_tags.json` key entities. Schema note: a `sequence_index` int column would be needed on `cel_visual_assets` (new migration), or stills could be distinguished by the `target` field using a convention like `ch01-opening`, `ch01-midpoint`, `ch01-closing`. Prerequisite: IDEA-052 (canonical character portraits) should ship first to prove out the batch workflow; `sequence_index` schema design should align with IDEA-064 (ALARA evolution sequence, parked).
 
 ---
 
@@ -375,16 +403,30 @@
 
 ---
 
-### [IDEA-068] Re-Reader Deep Archive Mode — Full-Canon Ask Companion for Completed Readers
+### [IDEA-074] Crew Cross-Reference Card — Character Connections at Book's End
 - **Status:** seed
 - **Theme:** post-read-world
+- **Seeded:** 2026-05-12
+- **Last Updated:** 2026-05-12
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** For completed readers (`show_all_content=true`), a collapsible "Crew Connections at CH17" card at the bottom of each character detail page lists which other main characters had direct narrative interactions with this character, along with each connection's final relationship state drawn from arc ledger data. Zero new content; sourced entirely from existing arc ledger "Chapter Arc Entries" tables and `chapter_tags.json` co-appearances.
+- **Night Notes:**
+  - 2026-05-12 (Run 27): Seeded. Each of the 9 arc ledger files in `content/wiki/arcs/characters/` contains a "Chapter Arc Entries" table with a `State After` column per chapter. Co-appearance data in `chapter_tags.json` per chapter shows which entity slugs share chapter presence. Implementation: (1) New server utility `src/lib/wiki/crew-cross-ref.ts` — accepts a character slug, reads all 9 arc ledger files via `getAllCharacterArcs()` (already exists), cross-references `chapter_tags.json` co-appearances to build a list of `{ slug, name, chaptersTogether: CH[], finalRelationshipHint }` entries; (2) On `characters/[slug]/page.tsx`, call this utility when `readerProgress.showAllContent === true`, pass results to a new `<CrewCrossRefCard>` component rendering as a collapsed `<details>` accordion; (3) Post-read-world requirements: (a) Hidden for first-time readers and guests — gated by `show_all_content === true` at server level; (b) `show_all_content` integration: direct server-side check before calling the utility; (c) Partial-completion edge cases: server validates flag, no card rendered without it. Zero new DB changes, zero new content files, zero new npm packages. Estimated 2 hours. `finalRelationshipHint` can be the `State After` at CH17 from the SUBJECT's arc ledger that mentions the other character — or a simple "shared N chapters" count as a fallback if no explicit mention is found.
+
+---
+
+### [IDEA-068] Re-Reader Deep Archive Mode — Full-Canon Ask Companion for Completed Readers
+- **Status:** parked
+- **Theme:** post-read-world
 - **Seeded:** 2026-05-09
-- **Last Updated:** 2026-05-09
+- **Last Updated:** 2026-05-12
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** Completed readers with `show_all_content=true` can toggle "Deep Archive" mode on the Ask page, lifting the companion's spoiler-guard clause and allowing fully unfiltered answers about any chapter, character arc endpoint, or lore detail.
 - **Night Notes:**
   - 2026-05-09 (Run 25): Seeded. Currently the Ask companion injects a "Reader Progress Gate" block into every persona system prompt, instructing it to avoid content from unread chapters. Under companion-first defaults all content is unlocked for all users, making this gate largely ceremonial — but a subset of readers (those explicitly granted `show_all_content` by the author) may want the companion to engage with full narrative arc knowledge without hedging. "Deep Archive" mode: (1) A UI toggle on `ask/page.tsx`, visible only when the user's profile has `show_all_content = true` (fetched on mount). (2) Toggle state: React state + included in the `/api/ask` POST body as `deepArchiveMode: boolean`. (3) Server-side validation: in `src/app/api/ask/route.ts`, if `deepArchiveMode = true`, confirm `readerProgress.showAllContent === true`; otherwise ignore the flag. (4) In `orchestrateAsk()` / persona system-prompt builders, when `deepArchiveMode = true`, omit the "Reader Progress Gate" block. Implementation: add `deepArchiveMode?` to `OrchestrateAskArgs`, thread through to `buildSystemPrompt()` (or wherever the gate block is injected), add the UI toggle + profile check in `ask/page.tsx`. No new DB table. Post-read-world requirements: (1) Hidden from first-time readers and guests — toggle only renders when `showAllContent === true`. (2) `show_all_content` integration: direct dependency — server validates the flag. (3) Partial-completion edge cases: server-side check prevents unauthorized use regardless of UI state.
+  - 2026-05-12 (Run 27): Stale 3 days — likely low priority or too complex. Demoting to parked. Under companion-first, the progress gate is already ceremonial for all users; this feature only meaningfully differentiates for `show_all_content` readers, a small audience. Un-park when there is explicit author demand for the toggle, or when companion-first is revisited.
 
 ---
 
