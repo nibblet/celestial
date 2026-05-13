@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-05-12 (Nightshift Run 27)
+> Last updated: 2026-05-13 (Nightshift Run 28)
 
 ## App Summary
 
@@ -188,9 +188,9 @@
 
 ## Build / Test Status
 
-- **Build:** PASSES — clean, ~106 routes. 1 expected Turbopack NFT warning on `prompts.ts` filesystem reads. (Run 18: requires `npm install` before `node_modules/.bin/next build` in a fresh clone; `npx next build` pulls wrong version in sandbox.)
+- **Build:** PASSES — clean, ~106 routes. 1 Turbopack warning on `next.config.ts`. (Requires `npm install` before `node_modules/.bin/next build` in a fresh clone.) Verified Run 28.
 - **Lint:** PASSES — 0 errors, **4 warnings** (`<img>` tags in visuals components — `VisualsAdminConsole.tsx` lines 230/394, `EntityVisualsGallery.tsx` lines 64/118). Unchanged since Run 17.
-- **Tests:** **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17). All green.
+- **Tests:** **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17). All green. Verified Run 28.
 
 ## Known Issues (See FIXES.md)
 
@@ -219,6 +219,7 @@
 ## Next Actions (Priority Order)
 
 1. **IDEA-048 (15 min):** Add Ask CTA near top of story page (after summary, before scene navigation) — 6 lines JSX in `stories/[storyId]/page.tsx` between lines 166–168. Dev plan `DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` ready.
+1a. **IDEA-072 (1.5 hr):** Chapter quick-facts panel on Ask page — collapsible card showing mission day range, primary location, and top 3 characters when `?story=` is set. Extends `/meta` endpoint (same change as IDEA-057). Dev plan `DEVPLAN-IDEA-072-chapter-quick-facts-panel.md` ready. *(NEW Run 28)*
 2. **IDEA-069 (2 hr):** Ask CTA on all entity detail pages — `FictionEntityDetailPage` + `characters/[slug]/page.tsx` + `RuleDetailPage` CTAs + entity breadcrumb + type-specific chips in `ask/page.tsx`. Dev plan `DEVPLAN-IDEA-069-entity-level-ask-cta.md` ready. *(NEW Run 27)*
 3. **IDEA-057 (45 min):** Context-aware welcome message on Ask page — extend `meta` API to return chapter-specific suggestions, add `chapterWelcome` state to Ask page, conditional empty-state render. Dev plan `DEVPLAN-IDEA-057-context-aware-ask-welcome.md` ready.
 4. **IDEA-063 (30 min):** Entity hover-card tooltips on wiki links in Ask answers — new `EntityHoverCard` component, 2-file change. No fetch, no API, no DB. Dev plan `DEVPLAN-IDEA-063-entity-hover-card.md` ready. *(NEW Run 25)*

@@ -1,7 +1,7 @@
 # FIXES — Celestial Interactive Book Companion
 
 > Bug and issue tracker. Updated each nightshift run.
-> Numbering continues from Run 25 (last new entry is FIX-052).
+> Numbering continues from Run 28 (last new entry is FIX-052 — no new fixes in Run 28).
 
 ## Statuses
 - `found` — Issue identified, no plan yet
@@ -155,7 +155,7 @@
 
 ---
 
-### [FIX-037] `andes-glacial-lake.md` Missing `**Superset:**` in Lore Metadata — Test Failures
+### [FIX-037] `andes-glacial-lake.md` Missing `**Status:**` in Lore Metadata — Test Failures
 - **Status:** resolved
 - **Severity:** Low — tests 127 and 131 fail; no runtime impact.
 - **Found:** 2026-04-24 (Run 12)
