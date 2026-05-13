@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-12 (Run 27)
+> Last updated: 2026-05-13 (Run 28)
 
 ## Maturity Levels
 
@@ -161,15 +161,29 @@
 ---
 
 ### [IDEA-072] Chapter Quick-Facts Panel in Ask — Contextual Key-Facts Card
-- **Status:** seed
+- **Status:** planned
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-12
-- **Last Updated:** 2026-05-12
+- **Last Updated:** 2026-05-13
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-072-chapter-quick-facts-panel.md`
+- **Summary:** When a reader opens the Ask page from a story (`?story={storyId}`), a collapsible "Key Facts" card appears above the chat thread showing the chapter's mission date range, primary location (linked to wiki), and top 3 characters — pulled from `chapter_tags.json` + `mission_logs_inventory.json` via an extended `/meta` endpoint. Stays visible during the conversation. Zero new API routes or DB changes. 3-file change.
+- **Night Notes:**
+  - 2026-05-12 (Run 27): Seeded. Identified as complementary to IDEA-057: IDEA-057 changes the empty state; this adds a persistent reference panel that stays visible once the reader starts chatting. Estimated 1.5 hours.
+  - 2026-05-13 (Run 28): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-072-chapter-quick-facts-panel.md`. Key implementation insight: mission day data comes from `content/raw/mission_logs_inventory.json` (same source as `getMissionTimelineContext()` in `prompts.ts`) — parsing it in the meta route is straightforward. `getChapterTags(storyId)` provides locations + characters arrays with a `presence` field to rank leads first. The IDEA-057 dependency is soft: both ideas extend the same meta route, but they can ship in either order with independent JSON fields. Component: `ChapterQuickFactsPanel.tsx` as a `<details>` accordion. 3-file change, zero npm packages, zero DB changes. Priority set to P2.
+
+---
+
+### [IDEA-075] Ask Pinned Q&A — Star and Save Individual Ask Exchanges
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-13
+- **Last Updated:** 2026-05-13
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
-- **Summary:** When a reader opens the Ask page from a story (`?story={storyId}`), a collapsible "Key Facts" card appears in the sidebar or above the chat thread showing the chapter's mission date, primary location, and 3 key entities — pulled from `chapter_tags.json` and the existing `/api/stories/[storyId]/meta` response. Always-open by default; reader can collapse. Zero new API routes.
+- **Summary:** Readers can star/pin individual assistant message bubbles in an Ask conversation. Pinned exchanges (the paired user question + assistant answer) appear as a "Things I learned" collection on `/profile/questions`. Makes the companion feel like a personal research tool, not just a chat window.
 - **Night Notes:**
-  - 2026-05-12 (Run 27): Seeded. IDEA-057 (context-aware welcome chips, now `planned`) extends the `/meta` endpoint to return `chapterWelcome.greeting` and `chapterWelcome.suggestions`. This idea is complementary: a persistent sidebar card (not just an empty-state chip row) that stays visible even after the reader starts chatting. Content: mission day (available from `getMissionTimelineContext()` data already built in `ask-context.ts`), primary location and 3 key entities from `chapter_tags.json`. Renders as a compact `<aside>` panel next to or above the thread. Stateless — derived entirely from URL params + existing meta endpoint. Implementation: extend `/meta` route response to include `{ missionDay, primaryLocation, keyEntities[] }`; in `ask/page.tsx`, render the card in a right-sidebar layout (desktop) or above the thread (mobile) when `storySlug` is set. No new DB, no new endpoints. Estimated 1.5 hours. Depends on IDEA-057 being shipped first (meta route already extended).
+  - 2026-05-13 (Run 28): Seeded. `cel_messages` already stores all conversation turns. Implementation: (1) New `pinned` boolean column on `cel_messages` (requires migration 042 — migrations 040 and 041 are reserved for FIX-026 and FIX-052 respectively); (2) Star icon button on each assistant message bubble in `ask/page.tsx` — POST to `/api/ask/pin` toggling `pinned` flag; (3) `/profile/questions/page.tsx` extended to also show pinned Ask pairs grouped by chapter (existing page shows question-type interactions; pinned pairs are a new section). Zero new DB tables. Requires migration for the column. Auth required (no guest path). Estimated 2.5 hours including migration.
 
 ---
 
@@ -259,7 +273,7 @@
 - **Plan:** *(not yet written)*
 - **Summary:** An optional "❆ Illustrate" toggle on the Ask page. When enabled, each completed Ask response attempts to generate a small inline image (300×200px) below the text bubble, derived from the first entity wiki link in `linksInAnswer`. Triggered lazily after stream completion; reader opts in explicitly.
 - **Night Notes:**
-  - 2026-05-09 (Run 25): Seeded. This is an ambient version of IDEA-043 (on-demand visualization). Rather than requiring the reader to explicitly ask "show me," the toggle enables auto-generation after every response containing at least one entity wiki link. Key decisions: (1) Model/provider: Imagen 4 (~$0.04–0.08/image). (2) Cost budget: only when opt-in toggle is ON; rate limit 3 images per 15-minute window per user — shared with IDEA-043 limit, backed by DB (FIX-052 approach). Toggle state stored in `localStorage` ("ask_illustrate_enabled"). (3) Caching: shared per `seedHashFor(entitySlug, autoStyle, corpusVersion)` — same as admin path; check `cel_visual_assets` for approved asset before generating. (4) Spoiler gating of prompt inputs: entity slug from `linksInAnswer[0].href` is the only prompt input; no narrative text involved; all entity specs are available to all users under companion-first. (5) Canon grounding: `corpus-context.ts` builds context from entity wiki markdown + spec JSON files in `content/wiki/specs/`. Style auto-selected based on entity type (character → `intimate_crew`, location → `valkyrie_shipboard`, vault → `vault_threshold`, etc.). Implementation: new `/api/ask/illustrate` POST route accepting `{ entityHref: string }`; calls `synthesizeVisualPrompt` then `generateAsset`; returns `{ imageUrl }`. Client fires this call after the `done` SSE event if toggle is on and `linksInAnswer.length > 0`.
+  - 2026-05-09 (Run 25): Seeded. This is an ambient version of IDEA-043 (on-demand visualization). Rather than requiring the reader to explicitly ask "show me," the toggle enables auto-generation after every response containing at least one entity wiki link. Key decisions: (1) Model/provider: Imagen 4 (~$0.04–$0.08/image). (2) Cost budget: only when opt-in toggle is ON; rate limit 3 images per 15-minute window per user — shared with IDEA-043 limit, backed by DB (FIX-052 approach). Toggle state stored in `localStorage` ("ask_illustrate_enabled"). (3) Caching: shared per `seedHashFor(entitySlug, autoStyle, corpusVersion)` — same as admin path; check `cel_visual_assets` for approved asset before generating. (4) Spoiler gating of prompt inputs: entity slug from `linksInAnswer[0].href` is the only prompt input; no narrative text involved; all entity specs are available to all users under companion-first. (5) Canon grounding: `corpus-context.ts` builds context from entity wiki markdown + spec JSON files in `content/wiki/specs/`. Style auto-selected based on entity type (character → `intimate_crew`, location → `valkyrie_shipboard`, vault → `vault_threshold`, etc.). Implementation: new `/api/ask/illustrate` POST route accepting `{ entityHref: string }`; calls `synthesizeVisualPrompt` then `generateAsset`; returns `{ imageUrl }`. Client fires this call after the `done` SSE event if toggle is on and `linksInAnswer.length > 0`.
   - 2026-05-12 (Run 27): Stale 3 days — likely low priority or too complex. Demoting to parked. Superseded by IDEA-043 (on-demand visualization) which covers the explicit "show me" path first; the opt-in ambient path is lower priority until IDEA-043 ships. Un-park after IDEA-043 ships.
 
 ---
@@ -315,6 +329,19 @@
 - **Night Notes:**
   - 2026-05-08 (Run 24): Seeded. This extends IDEA-052 (single portrait per character) with a specifically ALARA-focused narrative arc. ALARA is the only character with a visual transformation arc significant enough for this treatment — her arc moves from background AI system → noncorporeal emergent intelligence → merged distributed entity. Implementation: (1) Model: Imagen 4. (2) Cost: 5 images × ~$0.06 = ~$0.30 total. (3) Caching: shared, stored in `cel_visual_assets` with `source='character_arc_sequence'`; a `sequence_index` field (0–4) distinguishes images. (4) Spoiler gating of inputs: each portrait's prompt uses only information available up to the depicted chapter — no forward-looking arc details. `corpus-context.ts` would need to accept a `chapterBoundary` parameter to limit which arc sections are included. (5) Canon grounding: `content/wiki/characters/alara.md` + ALARA arc ledger chapter entry for the relevant chapter + `noncorporeal_presence` preset + `content/wiki/specs/valkyrie-1/states/*.json` to convey ship harmonic state in background. Prerequisite: IDEA-052 ships first (establishes the spec authoring + batch workflow for ALARA). The `sequence_index` concept requires a schema addition to `cel_visual_assets`.
   - 2026-05-11 (Run 26): Stale 3 days — likely low priority or too complex. Demoting to parked. Blocked by IDEA-052 prerequisite (canonical portraits not yet generated). Un-park after IDEA-052 ships and the `sequence_index` schema extension is designed.
+
+---
+
+### [IDEA-076] World Visual Glossary — 3 Canonical Texture/Mood Cards (One Per Visual World)
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-13
+- **Last Updated:** 2026-05-13
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** Pre-generate three abstract "visual vocabulary" mood-board images — one per canonical visual world (WORLD A alien_organic, WORLD B earth_2050, WORLD C ancient_vault) — using Imagen 4. Displayed on a `/about/visuals` page or as a "Visual Canon" panel in `/rules`. These cards ground the reader's visual expectations and serve as style references for all future AI-generated visuals.
+- **Night Notes:**
+  - 2026-05-13 (Run 28): Seeded. The 3-world vocabulary is already defined in `synthesize-prompt.ts` WORLD A/B/C spec blocks. Each mood-board prompt is an abstract texture/atmosphere composition using the world's canonical descriptors — no characters, no narrative events, no spoiler risk. (1) Model/provider: Imagen 4 (~$0.06/image × 3 = ~$0.18 total — trivial). (2) Cost budget: author-side batch only; zero reader-triggered generation. (3) Caching: shared canonical assets stored in `cel_visual_assets` with `source='visual_glossary'` and `target` = `world-a-alien-organic` / `world-b-earth-2050` / `world-c-ancient-vault`; never regenerated unless author explicitly refreshes. (4) Spoiler gating of prompt inputs: pure style/texture prompts drawn from `synthesize-prompt.ts` WORLD blocks — no chapter content, no character names, no story events. Safe for all readers. (5) Canon grounding: the three WORLD vocabulary blocks in `synthesize-prompt.ts` (lines ~35–65) are the sole grounding source — no additional spec files needed. These blocks describe texture, light, and material vocabulary only. Implementation: author generates via admin console using three custom prompts; approved assets surface on a new `/about/visuals` static page or embedded in the existing `/rules` index as a "Visual Canon" section. New page requires 1 server component (~40 lines) + 1 Supabase query for the 3 glossary assets.
 
 ---
 
@@ -444,6 +471,19 @@
 
 ---
 
+### [IDEA-077] Re-Reader Highlight Fingerprint — Reading Intensity Mosaic on Profile
+- **Status:** seed
+- **Theme:** post-read-world
+- **Seeded:** 2026-05-13
+- **Last Updated:** 2026-05-13
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** For `show_all_content` readers, the `/profile/highlights` page gains a 17-chapter grid "fingerprint" above the highlights list — each chapter tile colored by the reader's highlight density (more highlights = deeper color). A personalized visual record showing which chapters resonated most. Zero new DB, zero new content; uses existing `cel_story_highlights` table.
+- **Night Notes:**
+  - 2026-05-13 (Run 28): Seeded. `cel_story_highlights` already stores `user_id`, `story_id`, `passage_text`, and `created_at`. Implementation: (1) In `/profile/highlights/page.tsx`, if `readerProgress.showAllContent === true`, issue one Supabase query to count highlights per story: `SELECT story_id, count(*) FROM cel_story_highlights WHERE user_id = $user GROUP BY story_id`; (2) Build a `Map<string, number>` of story_id → count; (3) Render a 17-tile grid (CH01–CH17) where each tile's background opacity is proportional to `count / maxCount` (clamped 10%–100%), with a legend note "Chapters you highlighted most"; (4) Tiles link to the chapter page for easy navigation. Post-read-world requirements: (a) Hidden for first-time and guest readers — only renders when `show_all_content === true` at server level; (b) Integration with `show_all_content`: direct server-side check before issuing the count query; (c) Partial-completion edge cases: flag validated server-side; if false, section is simply not rendered. Zero new DB tables, zero new content files, zero npm packages. Estimated 1.5 hours.
+
+---
+
 ---
 
 ## Parked
@@ -469,7 +509,7 @@
 - **Last Updated:** 2026-05-05
 - **Summary:** When a reader asks "What does the Valkyrie look like during alignment?" the Ask API detects visual intent, calls `synthesizeVisualPrompt` with the relevant `state` param, and returns an inline image. The visual spec system already has all 5 states defined.
 - **Night Notes:**
-  - 2026-05-02 (Run 18): Seeded. Spec files at `content/wiki/specs/valkyrie-1/states/` already exist. Bridges author pipeline to reader-triggered Ask intent. Model: Imagen 4. Cost: ~$0.04–0.08/image; 3 imgs/reader/hour. Caching: shared per-state. Spoiler gating: N/A under companion-first. Canon grounding: valkyrie-1 states JSON.
+  - 2026-05-02 (Run 18): Seeded. Spec files at `content/wiki/specs/valkyrie-1/states/` already exist. Bridges author pipeline to reader-triggered Ask intent. Model: Imagen 4. Cost: ~$0.04–$0.08/image; 3 imgs/reader/hour. Caching: shared per-state. Spoiler gating: N/A under companion-first. Canon grounding: valkyrie-1 states JSON.
   - 2026-05-05 (Run 21): Stale 3 days — likely low priority or too complex. Demoting to parked. Superseded by IDEA-043 (on-demand scene visualization), which covers the visual intent detection path more generally. Un-park as a specialization of IDEA-043 once IDEA-043 ships.
 
 ---
