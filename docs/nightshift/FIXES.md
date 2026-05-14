@@ -1,7 +1,7 @@
 # FIXES — Celestial Interactive Book Companion
 
 > Bug and issue tracker. Updated each nightshift run.
-> Numbering continues from Run 28 (last new entry is FIX-052 — no new fixes in Run 28).
+> Numbering continues from Run 29 (last new entry is FIX-052 — no new fixes in Run 29).
 
 ## Statuses
 - `found` — Issue identified, no plan yet
@@ -58,12 +58,12 @@
 
 ---
 
-### [FIX-047] All 9 Source Files Use Stale `claude-sonnet-4-20250514` Model ID
+### [FIX-047] All 12 Files Use Stale `claude-sonnet-4-20250514` Model ID
 - **Status:** planned
 - **Severity:** Low — API currently accepts the old model ID; `claude-sonnet-4-6` is the current latest.
 - **Found:** 2026-05-02 (Run 18)
 - **Plan:** `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md`
-- **Summary:** `personas.ts`, `synthesize-prompt.ts`, `extract-vision.ts`, `session-wrap.ts`, `profile-reflection.ts`, `ledger.ts` (pricing table), and 3 API routes (`beyond/polish`, `tell`, `tell/draft`) all hard-code `claude-sonnet-4-20250514` — 9 files total (Run 20 confirmed via grep). Fix: find/replace in 8 source files, add `claude-sonnet-4-6` entry to `MODEL_COST` in `ledger.ts`, bump `SYNTH_PROMPT_VERSION` to v10 to invalidate cached visual prompts.
+- **Summary:** 12 files hard-code `claude-sonnet-4-20250514` (Run 29 grep confirmed): `personas.ts`, `synthesize-prompt.ts`, `extract-vision.ts`, `session-wrap.ts`, `profile-reflection.ts`, `ledger.ts` (pricing table), 3 API routes (`beyond/polish`, `tell`, `tell/draft`), and 3 test files (`ledger.test.ts`, `reflections.test.ts`, `profile-reflection.test.ts`). Note: `entity-dossier.test.ts` contains `claude-sonnet-4-5` in fixture HTML only — NOT in scope. Fix: find/replace in 9 source files, update 3 test files, add `claude-sonnet-4-6` entry to `MODEL_COST` in `ledger.ts`, bump `SYNTH_PROMPT_VERSION` to v10. **Correction:** FIXES.md previously said "9 files" — STATUS.md is authoritative at "12 files." Plan file header needs updating to "12" when executing.
 
 ---
 
