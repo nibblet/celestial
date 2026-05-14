@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-13 (Run 28)
+> Last updated: 2026-05-14 (Run 29)
 
 ## Maturity Levels
 
@@ -48,16 +48,17 @@
 ---
 
 ### [IDEA-042] Suggested Follow-Up Chips After Each Ask Answer
-- **Status:** planned
+- **Status:** ready
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-01
-- **Last Updated:** 2026-05-02
+- **Last Updated:** 2026-05-14
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-042-follow-up-chips.md`
 - **Summary:** After each AI Ask response, render 2–3 contextual suggested follow-up questions as clickable chips directly below the answer bubble. Clicking a chip immediately submits the question. Makes the companion conversational and encourages depth without requiring the reader to think of next questions.
 - **Night Notes:**
   - 2026-05-01 (Run 17): Seeded. Two generation strategies: (A) extract from evidence.linksInAnswer; (B) second Haiku call after the main response stream. Strategy B chosen for quality.
-  - 2026-05-02 (Run 18): Advanced to `planned`. Dev plan written. Strategy: secondary non-streaming `claude-haiku-4-5-20251001` call after main stream, suggestions returned in the `done: true` SSE event alongside `evidence`. Client adds `suggestions?: string[]` to Message type; renders as chip buttons between markdown div and AskSourcesDisclosure (ask/page.tsx ~line 712). New module: `src/lib/ai/ask-suggestions.ts`. Estimated 2 hours.
+  - 2026-05-02 (Run 18): Advanced to `planned`. Dev plan written. Strategy: secondary non-streaming `claude-haiku-4-5-20251001` call after main stream.
+  - 2026-05-14 (Run 29): Promoted to `ready`. Dev plan confirmed present: `DEVPLAN-IDEA-042-follow-up-chips.md`., suggestions returned in the `done: true` SSE event alongside `evidence`. Client adds `suggestions?: string[]` to Message type; renders as chip buttons between markdown div and AskSourcesDisclosure (ask/page.tsx ~line 712). New module: `src/lib/ai/ask-suggestions.ts`. Estimated 2 hours.
   - 2026-05-03 (Run 19): Status unchanged. `ask-suggestions.ts` does not exist yet. Plan ready, not executed.
 
 ---
@@ -77,30 +78,32 @@
 ---
 
 ### [IDEA-051] Scene-Level "Ask About This Scene" Quick-Action
-- **Status:** planned
+- **Status:** ready
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-04
-- **Last Updated:** 2026-05-06
+- **Last Updated:** 2026-05-14
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-051-scene-level-ask-affordance.md`
 - **Summary:** Each `### Scene` heading in the chapter body gets a small inline "Ask →" link (visible on hover) navigating to `/ask?story={storyId}&highlight={scene-slug}`. Readers invoke the companion directly from the scene they just finished. Implementation uses `StoryMarkdown`'s existing custom `h3` renderer — add `storyId?` prop, inject the link inside the heading element. Two-file change, ~15 lines.
 - **Night Notes:**
   - 2026-05-04 (Run 20): Seeded. Extends IDEA-048 (chapter-level CTA) to per-scene granularity. The `?highlight=` param is already supported by `ask/page.tsx` (shipped IDEA-018). `sceneSections` is already fetched in `stories/[storyId]/page.tsx` and passed to `StorySceneJump`. The scene heading text (which maps to the anchor id) could be passed as `?highlight=` to pre-seed Ask context. The per-scene link could render as a `[Ask]` text button next to each `<h2>` heading in `StoryMarkdown` or inside `StoryBodyWithHighlighting`. Main challenge: scene headings live inside markdown prose, so injection needs either a remark plugin or a wrapper rendering pattern — assess feasibility against `StoryMarkdown` and `remark` plugin system before advancing.
   - 2026-05-06 (Run 22): **Promoted to `planned`.** Feasibility confirmed — `StoryMarkdown.tsx` custom `h3` renderer (lines 76-85) already computes `slug = slugifyHeading(text)`. Adding optional `storyId?` prop and inserting a hover-visible `<a href="/ask?story=…&highlight=…">Ask →</a>` is clean: no remark plugin needed, `StoryBodyWithHighlighting` already has `storyId` as prop (line 7). Dev plan written. Estimated 30 minutes.
+  - 2026-05-14 (Run 29): Promoted to `ready`. Dev plan confirmed present: `DEVPLAN-IDEA-051-scene-level-ask-affordance.md`.
 
 ---
 
 ### [IDEA-057] Context-Aware Welcome Message on Ask Page
-- **Status:** planned
+- **Status:** ready
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-06
-- **Last Updated:** 2026-05-07
+- **Last Updated:** 2026-05-14
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-057-context-aware-ask-welcome.md`
 - **Summary:** When a reader navigates to the Ask page from a story page (via `?story={storyId}`), the companion's empty state shows a chapter-specific greeting and 3 tailored question chips derived from that chapter's lead character, primary location, and key concept from `chapter_tags.json`. Falls back to generic suggestions when no `?story=` param is present.
 - **Night Notes:**
   - 2026-05-06 (Run 22): Seeded. The `?story=` param is already handled by `ask/page.tsx`. The initial assistant message is currently empty.
-  - 2026-05-07 (Run 23): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-057-context-aware-ask-welcome.md`. Implementation confirmed: extend `src/app/api/stories/[storyId]/meta/route.ts` (currently returns only `{ title }`) to also return `chapterWelcome: { greeting, suggestions }` computed from `getChapterTags(storyId)`. The Ask page client (`ask/page.tsx`) already fetches this endpoint — add a new `chapterWelcome` state variable alongside `contextStoryTitle`, then branch the empty-state render. Two-file change. `chapter-tags.ts` uses Node `fs` (server-only), so server route is the right injection point; no bundle bloat on the client. Estimated 45 minutes. No new API endpoint needed.
+  - 2026-05-07 (Run 23): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-057-context-aware-ask-welcome.md`. Implementation confirmed: extend `src/app/api/stories/[storyId]/meta/route.ts`.
+  - 2026-05-14 (Run 29): Promoted to `ready`. Dev plan confirmed present. (currently returns only `{ title }`) to also return `chapterWelcome: { greeting, suggestions }` computed from `getChapterTags(storyId)`. The Ask page client (`ask/page.tsx`) already fetches this endpoint — add a new `chapterWelcome` state variable alongside `contextStoryTitle`, then branch the empty-state render. Two-file change. `chapter-tags.ts` uses Node `fs` (server-only), so server route is the right injection point; no bundle bloat on the client. Estimated 45 minutes. No new API endpoint needed.
 
 ---
 
@@ -119,58 +122,62 @@
 ---
 
 ### [IDEA-063] Entity Hover-Card in Ask Answers — Inline Wiki Tooltips
-- **Status:** planned
+- **Status:** ready
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-08
-- **Last Updated:** 2026-05-09
+- **Last Updated:** 2026-05-14
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-063-entity-hover-card.md`
 - **Summary:** When the Ask companion's response includes a wiki link (e.g., `[ALARA](/characters/alara)`), hovering the link shows a small tooltip card with the entity type badge and name — making answers richer and navigable without leaving the Ask flow.
 - **Night Notes:**
   - 2026-05-08 (Run 24): Seeded. The custom `ASSISTANT_MARKDOWN_COMPONENTS.a` renderer in `ask/page.tsx` already renders internal links as styled Next.js `<Link>` components. Entity type can be derived purely from the href path segment (e.g., `/characters/X` → "Character") — no fetch needed, no API change, no new DB.
   - 2026-05-09 (Run 25): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-063-entity-hover-card.md`. Implementation: new `src/components/ask/EntityHoverCard.tsx` component (derives entity type from href path segment, renders Tailwind `group-hover/hc` tooltip above link). Update `ASSISTANT_MARKDOWN_COMPONENTS.a` in `ask/page.tsx` (lines 30–38) to use it. 2-file change: new component + `ask/page.tsx`. Zero fetches, zero new API routes, zero DB changes, zero npm packages. Estimated 30 minutes.
+  - 2026-05-14 (Run 29): Promoted to `ready`. Dev plan confirmed present.
 
 ---
 
 ### [IDEA-066] Cross-Session Ask Resume — "Continue Where You Left Off"
-- **Status:** planned
+- **Status:** ready
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-09
-- **Last Updated:** 2026-05-11
+- **Last Updated:** 2026-05-14
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-066-cross-session-ask-resume.md`
 - **Summary:** When an authenticated reader opens `/ask?story={storyId}` and their browser has a record of a prior Ask conversation for that story (stored in `localStorage`), the empty state shows a "Continue where you left off" card with the first question as a preview — with "Continue" and "Start fresh" options. Makes the companion feel persistent without requiring a DB migration.
 - **Night Notes:**
   - 2026-05-09 (Run 25): Seeded. The data is already there: `cel_conversations` stores `story_id`, `profile_id`, `messages` JSON, and `created_at`. The Ask page already handles conversation resumption via `loadConversation(id)` in a `useEffect`. The gap is surfacing the prior session proactively rather than requiring a reader to navigate to `/ask/history`. Implementation: in `ask/page.tsx` `useEffect` (after `contextStoryId` is resolved), query `cel_conversations` for `{ story_id: storySlug, profile_id: user.id, ORDER BY created_at DESC, LIMIT 1 }`. Extract the last user message as a preview string. New empty-state variant: "Last time you asked: [preview]" with "Continue" → `loadConversation(id)` and "Start fresh" → null the prior session ref. No new API route or DB table. Authenticated users only (guests have no history). This connects to IDEA-060 (full conversation history browser) as a lighter-weight, high-value first step.
-  - 2026-05-11 (Run 26): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-066-cross-session-ask-resume.md`. Key design correction from seed notes: `cel_conversations` does NOT have a `story_id` column (conversations are created with `user_id`, `age_mode`, `title` only — no story FK). Therefore the implementation uses `localStorage` (key: `celestial_conv_{storySlug}`) rather than a Supabase query. This avoids a DB migration entirely. The existing `GET /api/conversations/{id}` endpoint loads the full message history for "Continue". Net code change: 1 state variable + 2 useEffects + 1 callback + ~25 JSX lines, all in `ask/page.tsx`. Estimated 1.5 hours. Priority raised to P2.
+  - 2026-05-11 (Run 26): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-066-cross-session-ask-resume.md`. Key design correction from seed notes: `cel_conversations` does NOT have a `story_id` column.
+  - 2026-05-14 (Run 29): Promoted to `ready`. Dev plan confirmed present. (conversations are created with `user_id`, `age_mode`, `title` only — no story FK). Therefore the implementation uses `localStorage` (key: `celestial_conv_{storySlug}`) rather than a Supabase query. This avoids a DB migration entirely. The existing `GET /api/conversations/{id}` endpoint loads the full message history for "Continue". Net code change: 1 state variable + 2 useEffects + 1 callback + ~25 JSX lines, all in `ask/page.tsx`. Estimated 1.5 hours. Priority raised to P2.
 
 ---
 
 ### [IDEA-069] Ask from Wiki Page — Entity-Level Ask CTA on All Entity Detail Pages
-- **Status:** planned
+- **Status:** ready
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-11
-- **Last Updated:** 2026-05-12
+- **Last Updated:** 2026-05-14
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-069-entity-level-ask-cta.md`
 - **Summary:** Every wiki entity detail page (characters, factions, locations, artifacts, vaults, rules) gets a compact "Ask about [Entity Name] →" link in the page header. Clicking opens `/ask?entity={slug}&entityType={type}&entityName={Name}`, which the Ask page detects to display entity-specific suggestion chips and a back-breadcrumb — extending IDEA-040's chapter-level CTA pattern down to the entity level.
 - **Night Notes:**
   - 2026-05-11 (Run 26): Seeded. IDEA-040 shipped a chapter-level Ask CTA on story pages. The natural follow-on is entity pages (characters, factions, locations, etc.) — readers browsing ALARA's wiki page should be one tap away from asking "What role does ALARA play in Chapter 3?" or "How does ALARA differ from other AI systems in the story?". Implementation: (1) Entity detail page templates already render a `<h1>` header and description — add a small `<Link href="/ask?entity={slug}&entityType={type}">Ask about [Name] →</Link>` button in the header JSX (5 pages × ~5 lines each = ~25 lines total); (2) In `ask/page.tsx`, detect `?entity=` and `?entityType=` search params and add them to the empty-state variant alongside `?story=` context. The entity type could drive pre-seeded suggestion chips derived from static entity data (e.g., for a character: "What is [Name]'s role in the crew?", "How does [Name]'s arc develop?", "What is [Name]'s relationship with ALARA?"). No new API route or DB changes needed. The `ask/page.tsx` already handles `?story=` — adding `?entity=` is a parallel pattern. Complexity: low-medium. Estimated 2 hours.
   - 2026-05-12 (Run 27): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-069-entity-level-ask-cta.md`. Implementation confirmed via codebase read: single change to `FictionEntityDetailPage` in `FictionEntityViews.tsx` covers factions/locations/artifacts/vaults; separate change to `characters/[slug]/page.tsx` for characters; `RuleDetailPage` in `FictionEntityViews.tsx` for rules. In `ask/page.tsx`: add 3 new params (`entitySlug`, `entityType`, `entityName`), add entity breadcrumb parallel to story breadcrumb (~line 649), add `ENTITY_SUGGESTIONS` map for type-specific chips. `entityName` passed in URL to avoid any server fetch. 3-file change (2 entity templates + ask page). Zero API routes, zero DB, zero new npm packages. Estimated 2 hours. Priority set to P2.
+  - 2026-05-14 (Run 29): Promoted to `ready`. Dev plan confirmed present.
 
 ---
 
 ### [IDEA-072] Chapter Quick-Facts Panel in Ask — Contextual Key-Facts Card
-- **Status:** planned
+- **Status:** ready
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-12
-- **Last Updated:** 2026-05-13
+- **Last Updated:** 2026-05-14
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-072-chapter-quick-facts-panel.md`
 - **Summary:** When a reader opens the Ask page from a story (`?story={storyId}`), a collapsible "Key Facts" card appears above the chat thread showing the chapter's mission date range, primary location (linked to wiki), and top 3 characters — pulled from `chapter_tags.json` + `mission_logs_inventory.json` via an extended `/meta` endpoint. Stays visible during the conversation. Zero new API routes or DB changes. 3-file change.
 - **Night Notes:**
   - 2026-05-12 (Run 27): Seeded. Identified as complementary to IDEA-057: IDEA-057 changes the empty state; this adds a persistent reference panel that stays visible once the reader starts chatting. Estimated 1.5 hours.
-  - 2026-05-13 (Run 28): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-072-chapter-quick-facts-panel.md`. Key implementation insight: mission day data comes from `content/raw/mission_logs_inventory.json` (same source as `getMissionTimelineContext()` in `prompts.ts`) — parsing it in the meta route is straightforward. `getChapterTags(storyId)` provides locations + characters arrays with a `presence` field to rank leads first. The IDEA-057 dependency is soft: both ideas extend the same meta route, but they can ship in either order with independent JSON fields. Component: `ChapterQuickFactsPanel.tsx` as a `<details>` accordion. 3-file change, zero npm packages, zero DB changes. Priority set to P2.
+  - 2026-05-13 (Run 28): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-072-chapter-quick-facts-panel.md`. Key implementation insight: mission day data comes from `content/raw/mission_logs_inventory.json`.
+  - 2026-05-14 (Run 29): Promoted to `ready`. Dev plan confirmed present.
 
 ---
 
@@ -187,13 +194,26 @@
 
 ---
 
+### [IDEA-078] Ask Response Confidence Ring — Grounding Signal on Answer Bubbles
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-14
+- **Last Updated:** 2026-05-14
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** A subtle visual indicator on each Ask response bubble showing how well-grounded the answer was in the wiki — derived from `linksInAnswer.length` in the `done` SSE event. Full ring = multiple evidence links; dashed ring = sparse evidence; no ring = ungrounded. Helps readers calibrate trust in answers without exposing raw retrieval metadata.
+- **Night Notes:**
+  - 2026-05-14 (Run 29): Seeded. The `done` SSE event already returns `linksInAnswer: { href, text }[]` on the client. `linksInAnswer.length` is a simple proxy for grounding quality (0 = no wiki evidence cited; 3+ = well-grounded). Implementation: in `ask/page.tsx`, after streaming completes, compute a `confidence` level (`low | medium | high`) from `linksInAnswer.length` thresholds (e.g., 0 = low, 1-2 = medium, 3+ = high). Add a thin left-border or ring on the response bubble `<div>` using Tailwind classes driven by this level: `border-l-2` with color `text-ink-ghost` (low), `text-ocean` (medium), `text-teal-400` (high). No new API changes. No new fetch. No DB. Pure client-side visual using data already returned. ~15 lines of JSX change in `ask/page.tsx`. Caveat: `linksInAnswer` reflects cited links, not total evidence retrieved — a well-grounded answer with no inline links will show low. Track this as a known approximation.
+
+---
+
 ## genmedia
 
 ### [IDEA-043] On-Demand Scene Visualization via Ask ("Show Me")
-- **Status:** planned
+- **Status:** ready
 - **Theme:** genmedia
 - **Seeded:** 2026-05-01
-- **Last Updated:** 2026-05-03
+- **Last Updated:** 2026-05-14
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-043-on-demand-scene-visualization.md`
 - **Summary:** When a reader asks "Show me what [X] looks like" or "Illustrate this scene" in the Ask companion, the API detects visual intent (via `ask-intent.ts` classification), triggers the existing visuals pipeline, and streams back an inline image result in the Ask thread as a special message type.
@@ -205,6 +225,7 @@
     4. **Spoiler gating of prompt inputs:** With companion-first defaults, all users see all content, so no chapter-level spoiler concern. The visual prompt synthesizer already uses the full corpus context for canon grounding — no additional gating needed.
     5. **Canon grounding:** `corpus-context.ts` selects the most-relevant wiki entity spec from `content/wiki/specs/` + canon dossier blocks + foundational lore. Preset selection: auto-select based on entity type (character → `intimate_crew`, location → `valkyrie_shipboard` or `vault_threshold`, etc.).
   - 2026-05-03 (Run 19): Dev plan written.
+  - 2026-05-14 (Run 29): Promoted to `ready`. Dev plan confirmed present: `DEVPLAN-IDEA-043-on-demand-scene-visualization.md`.
 
 ---
 
@@ -279,16 +300,17 @@
 ---
 
 ### [IDEA-052] Canonical Character Portraits — Author-Batch Generated for 9 Main Characters
-- **Status:** planned
+- **Status:** ready
 - **Theme:** genmedia
 - **Seeded:** 2026-05-04
-- **Last Updated:** 2026-05-05
+- **Last Updated:** 2026-05-14
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-052-canonical-character-portraits.md`
 - **Summary:** Pre-generate one canonical portrait per main character (ALARA, Aven Voss, Evelyn Tran, Galen Voss, Jax Reyes, Jonah Revas, Lena Osei, Marco Ruiz, Thane Meric) using the existing author visuals pipeline. Portraits are curated and approved via the admin console, then surfaced on each character detail page via `EntityVisualsGallery`.
 - **Night Notes:**
   - 2026-05-04 (Run 20): Seeded. The visuals pipeline already supports character target types — `corpus-context.ts` can build context from character wiki + arc dossier. Style preset: `intimate_crew` for crew members, `noncorporeal_presence` for ALARA. Cost: 9 images × ~$0.06 = ~$0.54 total; negligible. Canon grounding: character wiki markdown + `content/wiki/arcs/characters/{slug}.md` "Starting State" + any existing reference uploads. The 9 characters all have arc ledger files already. Main gap: no character-specific `content/wiki/specs/{slug}/master.json` entries exist yet — would need to seed one per character before generation, or rely on text-only canon dossier extraction (less visually consistent). Recommended: add stub `master.json` for at least ALARA before running batch. Dev plan must address: (1) Model: Imagen 4. (2) Cost: ~$0.54/batch. (3) Caching: shared, stored in `cel_visual_assets` with `approved=true`. (4) Spoiler gating of inputs: character wiki + starting-state arc text only — no future-chapters arc content. (5) Canon grounding: `content/wiki/characters/{slug}.md` + starting-state section of arc ledger + any existing approved assets as style anchors.
   - 2026-05-05 (Run 21): Promoted to `planned`. Dev plan written: `DEVPLAN-IDEA-052-canonical-character-portraits.md`. Phases: (1) Author seeds 9 character spec JSON files; (2) batch generate and approve via admin console; (3) verify `EntityVisualsGallery` on character pages. Estimated 3 hours author time, zero code changes. Priority raised to P2.
+  - 2026-05-14 (Run 29): Promoted to `ready`. Dev plan confirmed present.
 
 ---
 
@@ -306,15 +328,16 @@
 ---
 
 ### [IDEA-070] Approval-Gated Visual Thumbnails Inline in Ask Answers
-- **Status:** seed
+- **Status:** parked
 - **Theme:** genmedia
 - **Seeded:** 2026-05-11
-- **Last Updated:** 2026-05-11
+- **Last Updated:** 2026-05-14
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** When the Ask companion's response references a wiki entity via a link in `linksInAnswer`, and that entity has at least one approved visual asset in `cel_visual_assets`, a small circular thumbnail (48×48px) appears inline next to the entity link. Zero generation latency — uses only pre-approved author assets. No AI calls, no cost per render.
 - **Night Notes:**
-  - 2026-05-11 (Run 26): Seeded. The `/api/ask` route already returns `linksInAnswer` in the `done` SSE event with entity slugs and hrefs. The `EntityVisualsGallery` component already fetches approved assets for entity pages. To render thumbnails inline in Ask answers: extend the `done` SSE event payload to include `approvedThumbnailUrl?: string` per `linksInAnswer` entry (API-side: one Supabase query per distinct entity slug after stream completes — fetch the approved asset URL from `cel_visual_assets` where `approved=true AND target={slug}`); client renders a `<img className="inline-block h-10 w-10 rounded-full mr-1" src={thumbnailUrl} />` next to the entity link inside the `ASSISTANT_MARKDOWN_COMPONENTS.a` renderer. Dev plan must address: (1) Model/provider: N/A — uses pre-generated assets only. (2) Cost per generation: $0 — assets are pre-approved. (3) Caching: assets are already in Supabase Storage with public URLs; no additional caching layer needed. (4) Spoiler gating of prompt inputs: N/A — no AI generation triggered by this feature; entity visuals are decorative world-building, not narrative text. (5) Canon grounding: thumbnails come from `cel_visual_assets` with `approved=true`, which are exclusively author-curated canonical renders. Fallback: if no approved asset exists for an entity, the link renders exactly as today (no thumbnail). Estimated 2 hours. Prerequisite: IDEA-052 (character portraits) must ship first to populate approved assets; otherwise only existing approved assets appear (currently sparse). Low risk of over-fetching: the query runs only once per Ask response completion, and only for entities in `linksInAnswer` (typically 0–5 per answer).
+  - 2026-05-11 (Run 26): Seeded. The `/api/ask` route already returns `linksInAnswer` in the `done` SSE event with entity slugs and hrefs.
+  - 2026-05-14 (Run 29): Stale 3 days — likely low priority or too complex. Demoting to parked. Prerequisite: IDEA-052 (character portraits) must ship first to populate approved assets. Un-park after IDEA-052 ships. The `EntityVisualsGallery` component already fetches approved assets for entity pages. To render thumbnails inline in Ask answers: extend the `done` SSE event payload to include `approvedThumbnailUrl?: string` per `linksInAnswer` entry (API-side: one Supabase query per distinct entity slug after stream completes — fetch the approved asset URL from `cel_visual_assets` where `approved=true AND target={slug}`); client renders a `<img className="inline-block h-10 w-10 rounded-full mr-1" src={thumbnailUrl} />` next to the entity link inside the `ASSISTANT_MARKDOWN_COMPONENTS.a` renderer. Dev plan must address: (1) Model/provider: N/A — uses pre-generated assets only. (2) Cost per generation: $0 — assets are pre-approved. (3) Caching: assets are already in Supabase Storage with public URLs; no additional caching layer needed. (4) Spoiler gating of prompt inputs: N/A — no AI generation triggered by this feature; entity visuals are decorative world-building, not narrative text. (5) Canon grounding: thumbnails come from `cel_visual_assets` with `approved=true`, which are exclusively author-curated canonical renders. Fallback: if no approved asset exists for an entity, the link renders exactly as today (no thumbnail). Estimated 2 hours. Prerequisite: IDEA-052 (character portraits) must ship first to populate approved assets; otherwise only existing approved assets appear (currently sparse). Low risk of over-fetching: the query runs only once per Ask response completion, and only for entities in `linksInAnswer` (typically 0–5 per answer).
 
 ---
 
@@ -342,6 +365,19 @@
 - **Summary:** Pre-generate three abstract "visual vocabulary" mood-board images — one per canonical visual world (WORLD A alien_organic, WORLD B earth_2050, WORLD C ancient_vault) — using Imagen 4. Displayed on a `/about/visuals` page or as a "Visual Canon" panel in `/rules`. These cards ground the reader's visual expectations and serve as style references for all future AI-generated visuals.
 - **Night Notes:**
   - 2026-05-13 (Run 28): Seeded. The 3-world vocabulary is already defined in `synthesize-prompt.ts` WORLD A/B/C spec blocks. Each mood-board prompt is an abstract texture/atmosphere composition using the world's canonical descriptors — no characters, no narrative events, no spoiler risk. (1) Model/provider: Imagen 4 (~$0.06/image × 3 = ~$0.18 total — trivial). (2) Cost budget: author-side batch only; zero reader-triggered generation. (3) Caching: shared canonical assets stored in `cel_visual_assets` with `source='visual_glossary'` and `target` = `world-a-alien-organic` / `world-b-earth-2050` / `world-c-ancient-vault`; never regenerated unless author explicitly refreshes. (4) Spoiler gating of prompt inputs: pure style/texture prompts drawn from `synthesize-prompt.ts` WORLD blocks — no chapter content, no character names, no story events. Safe for all readers. (5) Canon grounding: the three WORLD vocabulary blocks in `synthesize-prompt.ts` (lines ~35–65) are the sole grounding source — no additional spec files needed. These blocks describe texture, light, and material vocabulary only. Implementation: author generates via admin console using three custom prompts; approved assets surface on a new `/about/visuals` static page or embedded in the existing `/rules` index as a "Visual Canon" section. New page requires 1 server component (~40 lines) + 1 Supabase query for the 3 glossary assets.
+
+---
+
+### [IDEA-079] Mission Briefing Classified Document Art — Per-Chapter Diegetic Visual
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-14
+- **Last Updated:** 2026-05-14
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** Author pre-generates a stylized "classified mission document" image per chapter — a diegetic artifact that exists within the story world, showing mission designation, coordinates, and brief (in-world MARU/Rigel Protocol format). Generated via Imagen 4 with `earth_institutional` preset. Displayed on chapter detail pages as a visual prop above the scene TOC.
+- **Night Notes:**
+  - 2026-05-14 (Run 29): Seeded. These are diegetic documents that feel like artifacts from the story world — distinct from cinematic scene illustrations (IDEA-073) or hero images (IDEA-049, parked). They exist as props a character might hand another character. (1) Model/provider: Imagen 4 (`earth_institutional` or `earth_2050` preset — matches Rigel Protocol / Earth military aesthetics). (2) Cost budget: ~$0.06/image × 17 chapters = ~$1.02 total; trivial; author-batch only. (3) Caching: stored in `cel_visual_assets` with `source='chapter_briefing'` and `target` = chapter slug; one canonical asset per chapter. (4) Spoiler gating of prompt inputs: prompt uses only the chapter number, mission designation, and dominant location from `chapter_tags.json` — zero narrative content, zero character events. No spoiler risk. (5) Canon grounding: Rigel Protocol document format from `content/wiki/factions/rigel-protocol.md` (if exists) + `earth_institutional` preset — the visual identity of Earth-bureaucracy documents in the story. Implementation: author generates via admin console with a template prompt specifying document format; approved assets surface on chapter detail pages via a small stamp-like callout near the chapter title. Prerequisite: at least one faction spec JSON (`content/wiki/specs/rigel-protocol/master.json`) would strengthen visual consistency.
 
 ---
 
@@ -390,16 +426,17 @@
 ---
 
 ### [IDEA-062] Re-Reader Chapter Insight Panel — Hindsight Annotations
-- **Status:** planned
+- **Status:** ready
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-07
-- **Last Updated:** 2026-05-08
+- **Last Updated:** 2026-05-14
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-062-re-reader-hindsight-panel.md`
 - **Summary:** For readers with `show_all_content=true`, each chapter page gains a collapsible "Hindsight" accordion at the bottom showing 2–4 arc-state insights drawn from existing character arc ledgers. Re-readers see foreshadowing they missed on first read. Zero new content needed; all insight text is from manually-authored arc markdown.
 - **Night Notes:**
   - 2026-05-07 (Run 23): Seeded. No new content needed: arc ledgers already have per-chapter milestone notes for 9 characters (e.g., "CH03: First refusal of override — seeds the CH15-17 arc"). The insight panel is a curated display that joins chapter ID against each arc ledger's milestone entries and surfaces the relevant items. Implementation: (1) A server utility reads arc markdown files and extracts per-chapter milestone notes (similar to how `getCharacterArcContext()` in `prompts.ts` reads arc content); (2) `stories/[storyId]/page.tsx` calls this utility server-side and passes `chapterInsights[]` to a new `<HindsightPanel>` client component; (3) `HindsightPanel` renders as a collapsed accordion at the bottom of the chapter, visible only when `showAllContent === true` (passed from the existing `readerProgress` fetch). No new DB tables, no new markdown files. Post-read-world requirements: (1) Hidden for locked/first-time readers: gated by `showAllContent === true`. (2) Integration with `show_all_content`: direct dependency — the panel only renders when this flag is set. (3) Partial-completion edge cases: under companion-first, all content is visible to all users regardless; this feature's gate is purely the `show_all_content` profile flag, so it applies only to readers the author has explicitly granted re-reader status.
   - 2026-05-08 (Run 24): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-062-re-reader-hindsight-panel.md`. Implementation confirmed: new `src/lib/wiki/chapter-hindsight.ts` parses the "Chapter Arc Entries" table in each arc ledger and returns "State After" text per chapter + character. Used in `stories/[storyId]/page.tsx` when `readerProgress.showAllContent === true`. New `HindsightPanel.tsx` component renders as a collapsed `<details>` accordion. Zero new npm packages; no DB changes. Estimated 2 hours. Priority set to P2.
+  - 2026-05-14 (Run 29): Promoted to `ready`. Dev plan confirmed present.
 
 ---
 
@@ -418,15 +455,16 @@
 ---
 
 ### [IDEA-071] Chapter-to-Chapter Arc Bridge for Re-Readers — "What Changed Between CH_X and CH_Y"
-- **Status:** seed
+- **Status:** parked
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-11
-- **Last Updated:** 2026-05-11
+- **Last Updated:** 2026-05-14
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** For re-readers with `show_all_content=true`, a new panel or dedicated `/arcs/bridge?from=ch03&to=ch15` page that compares two selected chapters and surfaces which characters changed state, which factions shifted, and which key events connect the two chapters — pulled entirely from arc ledger milestone tables and `chapter_tags.json`. No AI generation needed.
 - **Night Notes:**
-  - 2026-05-11 (Run 26): Seeded. The arc ledger files (`content/wiki/arcs/characters/*.md`) contain "Chapter Arc Entries" tables with a `| State After |` column per chapter for each of the 9 main characters. `chapter_tags.json` has key entities and events per chapter. The "bridge" concept: given `fromChapter` and `toChapter`, compute a diff of each character's "State After" between those two chapters (9 diffs), surface them as a clean narrative summary — "Since CH03: ALARA has moved from passive observer → autonomous actor; ALARA's refusal arc began in CH07". Implementation: (1) New server utility `src/lib/wiki/chapter-bridge.ts` — accepts `from` and `to` chapter IDs, reads all 9 arc ledger files via `getAllCharacterArcs()` (already exists), extracts the "State After" entries for the two chapters, returns `CharacterBridge[]` with `{ slug, name, fromState, toState }`; (2) New `/arcs/bridge/page.tsx` or a modal/panel on the `/arcs` route — two chapter selectors (dropdowns), a "Compare" button, renders the diff; (3) Post-read-world requirements: (a) Hidden for first-time readers and guests — page requires `show_all_content === true` via `hasAuthorSpecialAccess()` or `show_all_content` profile check; (b) `show_all_content` integration: direct — server check; (c) Partial-completion edge cases: server validates the flag, guests redirect to home. Zero new content, zero DB changes, zero npm packages. Estimated 2–3 hours.
+  - 2026-05-11 (Run 26): Seeded. The arc ledger files (`content/wiki/arcs/characters/*.md`) contain "Chapter Arc Entries" tables with a `| State After |` column per chapter for each of the 9 main characters.
+  - 2026-05-14 (Run 29): Stale 3 days — likely low priority or too complex. Demoting to parked. Complexity of the UX (chapter selectors, multi-character diff display) and the `/arcs` route being currently ungated make this a larger project. Un-park after IDEA-062 (hindsight panel) ships and the arc parsing utilities are proven. `chapter_tags.json` has key entities and events per chapter. The "bridge" concept: given `fromChapter` and `toChapter`, compute a diff of each character's "State After" between those two chapters (9 diffs), surface them as a clean narrative summary — "Since CH03: ALARA has moved from passive observer → autonomous actor; ALARA's refusal arc began in CH07". Implementation: (1) New server utility `src/lib/wiki/chapter-bridge.ts` — accepts `from` and `to` chapter IDs, reads all 9 arc ledger files via `getAllCharacterArcs()` (already exists), extracts the "State After" entries for the two chapters, returns `CharacterBridge[]` with `{ slug, name, fromState, toState }`; (2) New `/arcs/bridge/page.tsx` or a modal/panel on the `/arcs` route — two chapter selectors (dropdowns), a "Compare" button, renders the diff; (3) Post-read-world requirements: (a) Hidden for first-time readers and guests — page requires `show_all_content === true` via `hasAuthorSpecialAccess()` or `show_all_content` profile check; (b) `show_all_content` integration: direct — server check; (c) Partial-completion edge cases: server validates the flag, guests redirect to home. Zero new content, zero DB changes, zero npm packages. Estimated 2–3 hours.
 
 ---
 
@@ -472,17 +510,29 @@
 ---
 
 ### [IDEA-077] Re-Reader Highlight Fingerprint — Reading Intensity Mosaic on Profile
-- **Status:** seed
+- **Status:** planned
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-13
-- **Last Updated:** 2026-05-13
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
+- **Last Updated:** 2026-05-14
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-077-highlight-fingerprint.md`
 - **Summary:** For `show_all_content` readers, the `/profile/highlights` page gains a 17-chapter grid "fingerprint" above the highlights list — each chapter tile colored by the reader's highlight density (more highlights = deeper color). A personalized visual record showing which chapters resonated most. Zero new DB, zero new content; uses existing `cel_story_highlights` table.
 - **Night Notes:**
   - 2026-05-13 (Run 28): Seeded. `cel_story_highlights` already stores `user_id`, `story_id`, `passage_text`, and `created_at`. Implementation: (1) In `/profile/highlights/page.tsx`, if `readerProgress.showAllContent === true`, issue one Supabase query to count highlights per story: `SELECT story_id, count(*) FROM cel_story_highlights WHERE user_id = $user GROUP BY story_id`; (2) Build a `Map<string, number>` of story_id → count; (3) Render a 17-tile grid (CH01–CH17) where each tile's background opacity is proportional to `count / maxCount` (clamped 10%–100%), with a legend note "Chapters you highlighted most"; (4) Tiles link to the chapter page for easy navigation. Post-read-world requirements: (a) Hidden for first-time and guest readers — only renders when `show_all_content === true` at server level; (b) Integration with `show_all_content`: direct server-side check before issuing the count query; (c) Partial-completion edge cases: flag validated server-side; if false, section is simply not rendered. Zero new DB tables, zero new content files, zero npm packages. Estimated 1.5 hours.
+  - 2026-05-14 (Run 29): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-077-highlight-fingerprint.md`. Key addition vs seed: zero-highlight edge case handled (all tiles at 8% min opacity); color token note added (verify `--color-ocean-rgb` availability in `globals.css` before executing). Priority set to P2.
 
 ---
+
+### [IDEA-080] Personalized Reread Guide — `/profile/reread` Chapter Retrospective
+- **Status:** seed
+- **Theme:** post-read-world
+- **Seeded:** 2026-05-14
+- **Last Updated:** 2026-05-14
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** For `show_all_content` readers, a new `/profile/reread` page showing a per-chapter retrospective: (1) the reader's saved highlights for that chapter, (2) their Ask questions about that chapter, and (3) the arc milestone "State After" from arc ledger data — all in one scrollable view. Zero new content; assembled entirely from existing data in `cel_story_highlights`, `cel_chapter_questions`, and arc markdown files.
+- **Night Notes:**
+  - 2026-05-14 (Run 29): Seeded. Three data sources, all already available: (a) `cel_story_highlights` grouped by `story_id`; (b) `cel_chapter_questions` grouped by `story_id` (the existing `/profile/questions` page already fetches this); (c) per-chapter "State After" from the 9 arc ledger files via `getAllCharacterArcs()` (same function used in the planned IDEA-062 hindsight panel). Implementation: (1) New `/profile/reread/page.tsx` server component gated by `show_all_content === true`; (2) Fetch all 3 data sources server-side for the authenticated user; (3) For each CH01–CH17 chapter, render a collapsible accordion card containing: chapter title + link, highlights section (if any), questions section (if any), and arc state section (if any); (4) Cards with zero activity shown at lower opacity (greyed out), so active chapters visually stand out. Post-read-world requirements: (a) Hidden for non-`show_all_content` readers — server redirect to `/profile` if flag is false; (b) Integration with `show_all_content`: direct server-side check; (c) Partial-completion: flag validated server-side — no edge case. One new route, no new DB tables, no new content files. Prerequisite: IDEA-062 (hindsight panel) establishes the arc parsing utility `chapter-hindsight.ts` which this page can reuse. Estimated 3 hours.
 
 ---
 
