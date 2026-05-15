@@ -1,7 +1,7 @@
 # FIXES — Celestial Interactive Book Companion
 
 > Bug and issue tracker. Updated each nightshift run.
-> Numbering continues from Run 29 (last new entry is FIX-052 — no new fixes in Run 29).
+> Numbering continues from Run 30 (last new entry is FIX-052 — no new fixes in Run 29 or Run 30).
 
 ## Statuses
 - `found` — Issue identified, no plan yet

@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-14 (Run 29)
+> Last updated: 2026-05-15 (Run 30)
 
 ## Maturity Levels
 
@@ -182,15 +182,16 @@
 ---
 
 ### [IDEA-075] Ask Pinned Q&A — Star and Save Individual Ask Exchanges
-- **Status:** seed
+- **Status:** planned
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-13
-- **Last Updated:** 2026-05-13
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
+- **Last Updated:** 2026-05-15
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-075-ask-pinned-qa.md`
 - **Summary:** Readers can star/pin individual assistant message bubbles in an Ask conversation. Pinned exchanges (the paired user question + assistant answer) appear as a "Things I learned" collection on `/profile/questions`. Makes the companion feel like a personal research tool, not just a chat window.
 - **Night Notes:**
   - 2026-05-13 (Run 28): Seeded. `cel_messages` already stores all conversation turns. Implementation: (1) New `pinned` boolean column on `cel_messages` (requires migration 042 — migrations 040 and 041 are reserved for FIX-026 and FIX-052 respectively); (2) Star icon button on each assistant message bubble in `ask/page.tsx` — POST to `/api/ask/pin` toggling `pinned` flag; (3) `/profile/questions/page.tsx` extended to also show pinned Ask pairs grouped by chapter (existing page shows question-type interactions; pinned pairs are a new section). Zero new DB tables. Requires migration for the column. Auth required (no guest path). Estimated 2.5 hours including migration.
+  - 2026-05-15 (Run 30): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-075-ask-pinned-qa.md`. Key design addition vs seed: adds `pin_question_snapshot TEXT` column alongside `pinned` to store a snapshot of the paired user question at pin time — makes the profile page query a single fetch with no N+1. The `/api/ask/pin` POST route looks up the preceding user message in the same conversation server-side when `pinned=true` and stores it. Profile page: new "Pinned Exchanges" section above existing question list, only rendered when at least one pin exists. Link opens conversation at `/ask?conversation={id}`. Priority raised to P2. Estimated 2.5 hours.
 
 ---
 
@@ -204,6 +205,19 @@
 - **Summary:** A subtle visual indicator on each Ask response bubble showing how well-grounded the answer was in the wiki — derived from `linksInAnswer.length` in the `done` SSE event. Full ring = multiple evidence links; dashed ring = sparse evidence; no ring = ungrounded. Helps readers calibrate trust in answers without exposing raw retrieval metadata.
 - **Night Notes:**
   - 2026-05-14 (Run 29): Seeded. The `done` SSE event already returns `linksInAnswer: { href, text }[]` on the client. `linksInAnswer.length` is a simple proxy for grounding quality (0 = no wiki evidence cited; 3+ = well-grounded). Implementation: in `ask/page.tsx`, after streaming completes, compute a `confidence` level (`low | medium | high`) from `linksInAnswer.length` thresholds (e.g., 0 = low, 1-2 = medium, 3+ = high). Add a thin left-border or ring on the response bubble `<div>` using Tailwind classes driven by this level: `border-l-2` with color `text-ink-ghost` (low), `text-ocean` (medium), `text-teal-400` (high). No new API changes. No new fetch. No DB. Pure client-side visual using data already returned. ~15 lines of JSX change in `ask/page.tsx`. Caveat: `linksInAnswer` reflects cited links, not total evidence retrieved — a well-grounded answer with no inline links will show low. Track this as a known approximation.
+
+---
+
+### [IDEA-081] Chapter Ask Badge on Story Grid — "You Explored This" Signal
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-15
+- **Last Updated:** 2026-05-15
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** When a reader has asked 3 or more Ask questions about a specific chapter (tracked via `cel_chapter_questions`), a small "Explored" badge or pill appears on that chapter's card in the `/stories` grid. A subtle signal that the reader engaged deeply with the chapter through the companion, without cluttering the grid for chapters with little Ask activity.
+- **Night Notes:**
+  - 2026-05-15 (Run 30): Seeded. `cel_chapter_questions` already stores `story_id`, `user_id`, and each question. Implementation: (1) In `StoriesPageClient.tsx` (or the server component loading story cards), issue one grouped count query: `SELECT story_id, count(*) as q_count FROM cel_chapter_questions WHERE user_id = $user GROUP BY story_id HAVING count(*) >= 3`; (2) Pass a `Set<string>` of "explored" story IDs as a prop to story card components; (3) Render a small badge (e.g., `🔭 Explored` or a text pill) on matching cards. No new DB, no new routes. Auth-gated (guests have no `cel_chapter_questions` rows). Works for all readers under companion-first. The threshold of 3 is a UX judgment call — could be 2 or 5. Estimated 1 hour.
 
 ---
 
@@ -315,15 +329,16 @@
 ---
 
 ### [IDEA-073] Story Scene Cinematic Stills — Batch Keyframe Gallery per Chapter
-- **Status:** seed
+- **Status:** parked
 - **Theme:** genmedia
 - **Seeded:** 2026-05-12
-- **Last Updated:** 2026-05-12
+- **Last Updated:** 2026-05-15
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** Author pre-generates a set of 3 "cinematic still" images per chapter (opening atmosphere, midpoint tension, closing/resolution) via the existing visuals pipeline. Stills stored in `cel_visual_assets` with `source='chapter_still'` and a `sequence_index` (0–2). Displayed as a filmstrip-style gallery strip on each chapter detail page, above the scene navigation. Zero reader latency — author-batch only.
 - **Night Notes:**
   - 2026-05-12 (Run 27): Seeded. Distinct from IDEA-049 (single "chapter hero" splash image, now parked) — this produces 3 stills per chapter that together narrate the chapter's emotional arc visually. Implementation: (1) Model/provider: Imagen 4 (~$0.06/still × 3 stills × 17 chapters = ~$3.06 total for full coverage — trivial). (2) Cost budget: author-batch only; no reader-triggered generation. (3) Caching: stills stored as approved assets in `cel_visual_assets` with `source='chapter_still'` and `sequence_index` field; shared/canonical per chapter. (4) Spoiler gating of prompt inputs: each still's prompt uses only the chapter's primary location spec from `content/wiki/specs/` and the dominant entity from `chapter_tags.json` — no narrative text, no character arc details. Style: location-appropriate preset (e.g., `valkyrie_shipboard` for shipboard chapters, `giza_archaeological` for vault chapters). (5) Canon grounding: chapter's location wiki markdown + location spec JSON + `chapter_tags.json` key entities. Schema note: a `sequence_index` int column would be needed on `cel_visual_assets` (new migration), or stills could be distinguished by the `target` field using a convention like `ch01-opening`, `ch01-midpoint`, `ch01-closing`. Prerequisite: IDEA-052 (canonical character portraits) should ship first to prove out the batch workflow; `sequence_index` schema design should align with IDEA-064 (ALARA evolution sequence, parked).
+  - 2026-05-15 (Run 30): Stale 3 days — likely low priority or too complex. Demoting to parked. Blocked by `sequence_index` schema decision and IDEA-052 (character portraits) prerequisite. Un-park after IDEA-052 ships and the batch workflow is proven.
 
 ---
 
@@ -378,6 +393,19 @@
 - **Summary:** Author pre-generates a stylized "classified mission document" image per chapter — a diegetic artifact that exists within the story world, showing mission designation, coordinates, and brief (in-world MARU/Rigel Protocol format). Generated via Imagen 4 with `earth_institutional` preset. Displayed on chapter detail pages as a visual prop above the scene TOC.
 - **Night Notes:**
   - 2026-05-14 (Run 29): Seeded. These are diegetic documents that feel like artifacts from the story world — distinct from cinematic scene illustrations (IDEA-073) or hero images (IDEA-049, parked). They exist as props a character might hand another character. (1) Model/provider: Imagen 4 (`earth_institutional` or `earth_2050` preset — matches Rigel Protocol / Earth military aesthetics). (2) Cost budget: ~$0.06/image × 17 chapters = ~$1.02 total; trivial; author-batch only. (3) Caching: stored in `cel_visual_assets` with `source='chapter_briefing'` and `target` = chapter slug; one canonical asset per chapter. (4) Spoiler gating of prompt inputs: prompt uses only the chapter number, mission designation, and dominant location from `chapter_tags.json` — zero narrative content, zero character events. No spoiler risk. (5) Canon grounding: Rigel Protocol document format from `content/wiki/factions/rigel-protocol.md` (if exists) + `earth_institutional` preset — the visual identity of Earth-bureaucracy documents in the story. Implementation: author generates via admin console with a template prompt specifying document format; approved assets surface on chapter detail pages via a small stamp-like callout near the chapter title. Prerequisite: at least one faction spec JSON (`content/wiki/specs/rigel-protocol/master.json`) would strengthen visual consistency.
+
+---
+
+### [IDEA-082] Personalized Completion Cover Art — Reader-Unique Print After Finishing the Book
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-15
+- **Last Updated:** 2026-05-15
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** After a reader finishes the book (`show_all_content=true`), the Ask companion offers a one-time "Generate your Celestial cover art" from the `/ask` or `/profile` page. The image prompt seeds from the reader's most-highlighted chapter (from `cel_story_highlights` count) and their most-asked-about character (from `cel_chapter_questions` count) to produce a uniquely personalized art print. Cost: ~$0.06/reader. Cached per-user (not shared). Only available to `show_all_content` readers.
+- **Night Notes:**
+  - 2026-05-15 (Run 30): Seeded. Unlike all other genmedia ideas (which are author-batch canonical assets), this is the first truly per-reader personalized visual. (1) Model/provider: Imagen 4 (`intimate_crew` or `mythic_scale` preset depending on the dominant character/setting). (2) Cost budget: ~$0.06 once per reader — user-scoped not shared. Rate limit: 1 generation per profile, enforced by checking `cel_visual_assets` for an existing `source='reader_cover'` asset for the user_id. (3) Caching: per-profile — stored in `cel_visual_assets` with `source='reader_cover'`, `target = profile_id`. If asset exists, skip generation and return it. (4) Spoiler gating of prompt inputs: only available to `show_all_content=true` readers, so full corpus access is authorized. The prompt uses only entity names and preset vocabulary — no verbatim narrative prose. (5) Canon grounding: the most-highlighted chapter's primary location from `chapter_tags.json` + the most-asked-about character's spec JSON (if available) or wiki markdown. Style: chosen from `[intimate_crew, mythic_scale, valkyrie_shipboard]` based on entity type. Implementation: new `/api/visuals/reader-cover` POST route (auth required, checks `show_all_content`); new CTA button on `/profile` or `/ask` when `show_all_content=true`. Estimated 3 hours including the per-user asset lookup logic and profile page CTA.
 
 ---
 
@@ -469,15 +497,16 @@
 ---
 
 ### [IDEA-074] Crew Cross-Reference Card — Character Connections at Book's End
-- **Status:** seed
+- **Status:** parked
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-12
-- **Last Updated:** 2026-05-12
+- **Last Updated:** 2026-05-15
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** For completed readers (`show_all_content=true`), a collapsible "Crew Connections at CH17" card at the bottom of each character detail page lists which other main characters had direct narrative interactions with this character, along with each connection's final relationship state drawn from arc ledger data. Zero new content; sourced entirely from existing arc ledger "Chapter Arc Entries" tables and `chapter_tags.json` co-appearances.
 - **Night Notes:**
   - 2026-05-12 (Run 27): Seeded. Each of the 9 arc ledger files in `content/wiki/arcs/characters/` contains a "Chapter Arc Entries" table with a `State After` column per chapter. Co-appearance data in `chapter_tags.json` per chapter shows which entity slugs share chapter presence. Implementation: (1) New server utility `src/lib/wiki/crew-cross-ref.ts` — accepts a character slug, reads all 9 arc ledger files via `getAllCharacterArcs()` (already exists), cross-references `chapter_tags.json` co-appearances to build a list of `{ slug, name, chaptersTogether: CH[], finalRelationshipHint }` entries; (2) On `characters/[slug]/page.tsx`, call this utility when `readerProgress.showAllContent === true`, pass results to a new `<CrewCrossRefCard>` component rendering as a collapsed `<details>` accordion; (3) Post-read-world requirements: (a) Hidden for first-time readers and guests — gated by `show_all_content === true` at server level; (b) `show_all_content` integration: direct server-side check before calling the utility; (c) Partial-completion edge cases: server validates flag, no card rendered without it. Zero new DB changes, zero new content files, zero new npm packages. Estimated 2 hours. `finalRelationshipHint` can be the `State After` at CH17 from the SUBJECT's arc ledger that mentions the other character — or a simple "shared N chapters" count as a fallback if no explicit mention is found.
+  - 2026-05-15 (Run 30): Stale 3 days — likely low priority or too complex. Demoting to parked. The `finalRelationshipHint` extraction logic (finding cross-character mentions in arc ledger free text) is fragile without structured data. Un-park after IDEA-062 (hindsight panel) ships and the arc parsing utilities are proven; revisit with a simpler co-appearance count fallback.
 
 ---
 
@@ -510,16 +539,17 @@
 ---
 
 ### [IDEA-077] Re-Reader Highlight Fingerprint — Reading Intensity Mosaic on Profile
-- **Status:** planned
+- **Status:** ready
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-13
-- **Last Updated:** 2026-05-14
+- **Last Updated:** 2026-05-15
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-077-highlight-fingerprint.md`
 - **Summary:** For `show_all_content` readers, the `/profile/highlights` page gains a 17-chapter grid "fingerprint" above the highlights list — each chapter tile colored by the reader's highlight density (more highlights = deeper color). A personalized visual record showing which chapters resonated most. Zero new DB, zero new content; uses existing `cel_story_highlights` table.
 - **Night Notes:**
   - 2026-05-13 (Run 28): Seeded. `cel_story_highlights` already stores `user_id`, `story_id`, `passage_text`, and `created_at`. Implementation: (1) In `/profile/highlights/page.tsx`, if `readerProgress.showAllContent === true`, issue one Supabase query to count highlights per story: `SELECT story_id, count(*) FROM cel_story_highlights WHERE user_id = $user GROUP BY story_id`; (2) Build a `Map<string, number>` of story_id → count; (3) Render a 17-tile grid (CH01–CH17) where each tile's background opacity is proportional to `count / maxCount` (clamped 10%–100%), with a legend note "Chapters you highlighted most"; (4) Tiles link to the chapter page for easy navigation. Post-read-world requirements: (a) Hidden for first-time and guest readers — only renders when `show_all_content === true` at server level; (b) Integration with `show_all_content`: direct server-side check before issuing the count query; (c) Partial-completion edge cases: flag validated server-side; if false, section is simply not rendered. Zero new DB tables, zero new content files, zero npm packages. Estimated 1.5 hours.
   - 2026-05-14 (Run 29): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-077-highlight-fingerprint.md`. Key addition vs seed: zero-highlight edge case handled (all tiles at 8% min opacity); color token note added (verify `--color-ocean-rgb` availability in `globals.css` before executing). Priority set to P2.
+  - 2026-05-15 (Run 30): **Promoted to `ready`.** Dev plan confirmed present and complete: `DEVPLAN-IDEA-077-highlight-fingerprint.md`.
 
 ---
 
@@ -533,6 +563,19 @@
 - **Summary:** For `show_all_content` readers, a new `/profile/reread` page showing a per-chapter retrospective: (1) the reader's saved highlights for that chapter, (2) their Ask questions about that chapter, and (3) the arc milestone "State After" from arc ledger data — all in one scrollable view. Zero new content; assembled entirely from existing data in `cel_story_highlights`, `cel_chapter_questions`, and arc markdown files.
 - **Night Notes:**
   - 2026-05-14 (Run 29): Seeded. Three data sources, all already available: (a) `cel_story_highlights` grouped by `story_id`; (b) `cel_chapter_questions` grouped by `story_id` (the existing `/profile/questions` page already fetches this); (c) per-chapter "State After" from the 9 arc ledger files via `getAllCharacterArcs()` (same function used in the planned IDEA-062 hindsight panel). Implementation: (1) New `/profile/reread/page.tsx` server component gated by `show_all_content === true`; (2) Fetch all 3 data sources server-side for the authenticated user; (3) For each CH01–CH17 chapter, render a collapsible accordion card containing: chapter title + link, highlights section (if any), questions section (if any), and arc state section (if any); (4) Cards with zero activity shown at lower opacity (greyed out), so active chapters visually stand out. Post-read-world requirements: (a) Hidden for non-`show_all_content` readers — server redirect to `/profile` if flag is false; (b) Integration with `show_all_content`: direct server-side check; (c) Partial-completion: flag validated server-side — no edge case. One new route, no new DB tables, no new content files. Prerequisite: IDEA-062 (hindsight panel) establishes the arc parsing utility `chapter-hindsight.ts` which this page can reuse. Estimated 3 hours.
+
+---
+
+### [IDEA-083] World Lore Quiz — AI-Generated Multiple-Choice Quiz for Completed Readers
+- **Status:** seed
+- **Theme:** post-read-world
+- **Seeded:** 2026-05-15
+- **Last Updated:** 2026-05-15
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** For `show_all_content` readers, a `/world/quiz` page serving an AI-generated multiple-choice quiz grounded in `chapter_tags.json` and wiki facts. Questions like "Which chapter did the Vault Accord first activate?" or "Which harmonic state did Valkyrie-1 enter during the alignment sequence?" Test readers on actual lore with no spoiler risk since they've finished the book. Zero new content needed; all ground truth lives in the wiki.
+- **Night Notes:**
+  - 2026-05-15 (Run 30): Seeded. This is the only quiz/gamification idea in the backlog, and it has a clear post-read-world boundary (gated by `show_all_content=true`). Implementation: (1) Post-read-world requirements: (a) Hidden from first-time and guest readers — `/world/quiz` requires `show_all_content === true` at server level; (b) Integration with `show_all_content`: direct server-side check, redirect to `/profile` if false; (c) Partial-completion edge cases: same server-side flag check. (2) Quiz generation: a new `/api/quiz/generate` POST route calls Claude Haiku (cost: ~$0.001 per 10-question set) with a prompt seeded from a random subset of `chapter_tags.json` entity entries + wiki rule facts. The AI generates 5 multiple-choice questions with 4 options each, returning structured JSON `{ question, options: string[], correctIndex }`. (3) Client renders the quiz as a step-by-step card flow (current question, options, "Submit" → reveal answer + next). Score shown at end. No scores persisted in DB (stateless). (4) Canon grounding: question prompts fed to Haiku include only wiki markdown excerpts (facts, not narrative prose) + entity metadata from `chapter_tags.json`. No character arc ledger content — keeps questions factual, not narrative-spoiler-y. Estimated 3 hours including API route, quiz render component, and `show_all_content` gate.
 
 ---
 

@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-05-14 (Nightshift Run 29)
+> Last updated: 2026-05-15 (Nightshift Run 30)
 
 ## App Summary
 
@@ -188,9 +188,9 @@
 
 ## Build / Test Status
 
-- **Build:** PASSES — clean, ~106 routes. 1 Turbopack warning on `next.config.ts`. (Requires `npm install` before `node_modules/.bin/next build` in a fresh clone.) Verified Run 29.
+- **Build:** PASSES — clean, ~106 routes. 1 Turbopack warning on `next.config.ts`. (Requires `npm install` before `node_modules/.bin/next build` in a fresh clone.) Verified Run 29. No new code commits since Run 29 — status unchanged Run 30.
 - **Lint:** PASSES — 0 errors, **4 warnings** (`<img>` tags in visuals components — `VisualsAdminConsole.tsx` lines 230/394, `EntityVisualsGallery.tsx` lines 64/118). Unchanged since Run 17.
-- **Tests:** **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17). All green. Verified Run 29.
+- **Tests:** **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17). All green. Verified Run 29. No new code commits since Run 29 — status unchanged Run 30.
 
 ## Known Issues (See FIXES.md)
 
@@ -225,7 +225,7 @@
 5. **IDEA-063 (30 min):** Entity hover-card tooltips on wiki links in Ask answers — new `EntityHoverCard` component, 2-file change. No fetch, no API, no DB. Dev plan `DEVPLAN-IDEA-063-entity-hover-card.md` ready.
 6. **IDEA-066 (1.5 hr):** "Continue where you left off" in Ask empty state — localStorage-backed prior session card for story-specific sessions. 1 state var + 2 useEffects + 1 callback + ~25 JSX lines in `ask/page.tsx` only. Dev plan `DEVPLAN-IDEA-066-cross-session-ask-resume.md` ready.
 7. **IDEA-062 (2 hr):** Re-Reader Hindsight Panel — new `chapter-hindsight.ts` server utility + `HindsightPanel.tsx` component. Gated by `show_all_content`. Zero new content or DB changes. Dev plan `DEVPLAN-IDEA-062-re-reader-hindsight-panel.md` ready.
-8. **IDEA-077 (1.5 hr):** Re-Reader Highlight Fingerprint — 17-tile chapter intensity mosaic on `/profile/highlights`, gated by `show_all_content`. Uses existing `cel_story_highlights` count query. Dev plan `DEVPLAN-IDEA-077-highlight-fingerprint.md`. *(NEW Run 29)*
+8. **IDEA-077 (1.5 hr):** Re-Reader Highlight Fingerprint — 17-tile chapter intensity mosaic on `/profile/highlights`, gated by `show_all_content`. Uses existing `cel_story_highlights` count query. Dev plan `DEVPLAN-IDEA-077-highlight-fingerprint.md` ready. *(Promoted to `ready` Run 30)*
 9. **IDEA-051 (30 min):** Scene-level "Ask →" hover affordance on `### Scene` headings. 2-file change: extend `StoryMarkdown` props, modify h3 renderer, pass `storyId` from `StoryBodyWithHighlighting`. Dev plan `DEVPLAN-IDEA-051-scene-level-ask-affordance.md` ready.
 10. **FIX-051 (1 hr):** HTML sanitization for `dangerouslySetInnerHTML` in admin surfaces. Install `isomorphic-dompurify`, wrap 2 call sites, add TipTap Image src validation. Plan: `FIXPLAN-FIX-051-dangerouslysetinnerhtml-admin.md`.
 11. **FIX-050 (5 min):** Remove `/\bnext\b/i` from FUTURE_PATTERNS in `ask-intent.ts` line 35 + add 1 regression test. Plan: `FIXPLAN-FIX-050-ask-intent-next-pattern.md`.
