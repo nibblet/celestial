@@ -4,6 +4,53 @@
 
 ---
 
+## Run: 2026-05-16 (Run 31)
+
+### Summary
+- Scanned: 0 new code commits since Run 30 (last commit `fc1dc55` — nightshift docs only). Codebase state unchanged.
+- Issues: 0 new, 0 resolved, 0 spoiler-leak P0. All open planned issues unchanged: FIX-026, 027, 028, 029, 030, 045, 046, 047, 048, 049, 050, 051, 052. FIX-047 (stale model IDs) re-confirmed at 12 files; FIX-049 (requireKeith) re-confirmed at 5 routes; FIX-050 (overly broad `/\bnext\b/i`) re-confirmed at `ask-intent.ts` line 35.
+- Ideas (by theme): ask-forward 1 seed (IDEA-084 — Ask Home Hero Widget) / 1 promoted to `planned` (IDEA-078 — Confidence Ring, dev plan written); genmedia 1 seed (IDEA-085 — Ask Ink Print) / 1 parked (IDEA-076 — World Visual Glossary, 3-day stale); post-read-world 1 seed (IDEA-086 — Reading Journey Timeline).
+- Plans written: `DEVPLAN-IDEA-078-ask-confidence-ring.md`
+
+### Build & Lint & Test Results
+- No code commits since Run 30. Build, lint, and test status unchanged: **PASSES** / 0 errors, 4 img warnings / 192 PASS.
+- No build run performed (no code changes to validate; codebase identical to Run 30).
+
+### Key Findings
+
+1. **No new code commits.** Codebase is identical to Run 30. All prior open issues remain in documented states. FIX-047 (12 stale model ID files — confirmed via grep), FIX-049 (requireKeith in 5 visuals routes — confirmed via grep), FIX-050 (overly broad next pattern at `ask-intent.ts:35` — confirmed via grep) all still open.
+
+2. **Review queue count: 1 entry with `reviewed: false`.** `brain_lab/out/review-queue.md` file timestamp still 2026-04-26 — pipeline not re-run. Count consistent with Runs 23–30; accurate count requires a fresh `brain_lab` pipeline run.
+
+3. **IDEA-078 promoted to `planned` and dev plan written.** Ask Response Confidence Ring — adds a subtle left-border accent to assistant message bubbles in the Ask companion derived from `linksInAnswer.length` already in client state. Ocean accent (≥3 links), muted clay accent (1–2 links), no accent (0 links). Single file change: `src/app/ask/page.tsx` lines 698–703 (bubble `<div>` className). Zero API changes, zero DB, zero new imports. Estimated 20 minutes. Plan: `DEVPLAN-IDEA-078-ask-confidence-ring.md`. Caveat noted in plan: `--color-ocean` CSS var availability should be verified in `globals.css` before executing.
+
+4. **IDEA-076 parked (3-day stale rule).** World Visual Glossary seeded 2026-05-13 (3 days ago). Idea is sound but requires `cel_visual_assets` to be populated first (IDEA-052 character portraits must ship). Moved to Parked with note.
+
+5. **Three new ideas seeded.** IDEA-084 (ask-forward: Ask Home Hero Widget — a text input in the home page hero that routes to `/ask?q={encodedQ}`, making Ask the primary home page action; extends `ask/page.tsx` to read `?q=` param and auto-submit; ~45 min), IDEA-085 (genmedia: Ask Ink Print — author curates a favorite Ask exchange from the AI ledger and generates a poster-style typographic Imagen 4 image; displayed on an `/about/ink-print` or featured-exchange page; zero reader cost; dual-use as Ask onboarding showcase), IDEA-086 (post-read-world: Reading Journey Timeline — personal `/profile/journey` page for `show_all_content` readers showing the date each chapter was first read + highlights count + Ask question count per chapter; three existing Supabase queries; ~2 hours).
+
+6. **Open priority queue is deep.** 10 ideas are at `ready` status with written dev plans — the queue is saturated. No new items need to be promoted this run beyond IDEA-078. Key quick-wins still at the top: IDEA-048 (15 min — Ask CTA after story summary), IDEA-078 (20 min — Confidence Ring), FIX-050 (5 min — remove overly broad next pattern), FIX-049 (10 min — rename requireKeith).
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-078-ask-confidence-ring.md` — **NEW**: Ask Response Confidence Ring — left-border grounding signal on answer bubbles; 1-file JSX change, 20 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-075-ask-pinned-qa.md` — Ask Pinned Q&A — star-and-save exchanges to `/profile/questions`, migration 042 required (ask-forward). 2.5 hours.
+- `docs/nightshift/plans/DEVPLAN-IDEA-077-highlight-fingerprint.md` — Highlight Fingerprint mosaic on `/profile/highlights`, gated by `show_all_content` (post-read-world). 1.5 hours.
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — Ask CTA after chapter summary (ask-forward). 15 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-057-context-aware-ask-welcome.md` — Context-aware Ask welcome + chapter chips (ask-forward). 45 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-051-scene-level-ask-affordance.md` — Scene-level "Ask →" hover affordance (ask-forward). 30 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-063-entity-hover-card.md` — Entity hover-card in Ask answers (ask-forward). 30 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-062-re-reader-hindsight-panel.md` — Re-Reader Hindsight Panel (post-read-world). 2 hours.
+- `docs/nightshift/plans/DEVPLAN-IDEA-042-follow-up-chips.md` — Suggested follow-up chips after Ask answers (ask-forward). 2 hours.
+- `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md` — Remove `/\bnext\b/i` from FUTURE_PATTERNS (5 min).
+- `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md` — Rename `requireKeith()` to `requireAuthor()` in 5 visuals routes (10 min).
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — Update 12 files from stale `claude-sonnet-4-20250514` to `claude-sonnet-4-6` (15 min).
+
+### Recommendations
+- **If you have 30 min:** IDEA-048 (15 min — Ask CTA after story summary) + FIX-050 (5 min — remove over-broad next pattern) + FIX-049 (10 min — rename requireKeith). Three quick wins, zero dependency risk.
+- **If you have 1 hour:** The 30-min cluster above + IDEA-078 (20 min — Confidence Ring, 1-file JSX change) + IDEA-063 (30 min — entity hover-card in Ask answers). Five ask-forward improvements, all pure client-side or small component additions.
+- **If you have 2.5 hours:** IDEA-075 (2.5 hr — Ask Pinned Q&A). Full new feature: migration + API route + star button + profile section. Dependencies: migration 040 (FIX-026) and 041 (FIX-052) should run first, but IDEA-075 can be developed in isolation and the migration applied in order.
+
+---
+
 ## Run: 2026-05-15 (Run 30)
 
 ### Summary

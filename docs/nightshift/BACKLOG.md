@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-15 (Run 30)
+> Last updated: 2026-05-16 (Run 31)
 
 ## Maturity Levels
 
@@ -196,15 +196,16 @@
 ---
 
 ### [IDEA-078] Ask Response Confidence Ring — Grounding Signal on Answer Bubbles
-- **Status:** seed
+- **Status:** planned
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-14
-- **Last Updated:** 2026-05-14
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
-- **Summary:** A subtle visual indicator on each Ask response bubble showing how well-grounded the answer was in the wiki — derived from `linksInAnswer.length` in the `done` SSE event. Full ring = multiple evidence links; dashed ring = sparse evidence; no ring = ungrounded. Helps readers calibrate trust in answers without exposing raw retrieval metadata.
+- **Last Updated:** 2026-05-16
+- **Priority:** P3
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-078-ask-confidence-ring.md`
+- **Summary:** A subtle left-border accent on each Ask assistant message bubble derived from `linksInAnswer.length` in the `done` SSE event — ocean border (3+ wiki links cited), muted clay border (1–2 links), no accent (zero links). Helps readers calibrate trust in answers without exposing raw retrieval metadata. Pure client-side, ~8 lines of JSX, no API or DB changes.
 - **Night Notes:**
   - 2026-05-14 (Run 29): Seeded. The `done` SSE event already returns `linksInAnswer: { href, text }[]` on the client. `linksInAnswer.length` is a simple proxy for grounding quality (0 = no wiki evidence cited; 3+ = well-grounded). Implementation: in `ask/page.tsx`, after streaming completes, compute a `confidence` level (`low | medium | high`) from `linksInAnswer.length` thresholds (e.g., 0 = low, 1-2 = medium, 3+ = high). Add a thin left-border or ring on the response bubble `<div>` using Tailwind classes driven by this level: `border-l-2` with color `text-ink-ghost` (low), `text-ocean` (medium), `text-teal-400` (high). No new API changes. No new fetch. No DB. Pure client-side visual using data already returned. ~15 lines of JSX change in `ask/page.tsx`. Caveat: `linksInAnswer` reflects cited links, not total evidence retrieved — a well-grounded answer with no inline links will show low. Track this as a known approximation.
+  - 2026-05-16 (Run 31): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-078-ask-confidence-ring.md`. Key implementation detail confirmed: `msg.evidence.linksInAnswer` is already in client React state. The bubble `<div>` at `ask/page.tsx:698–703` uses `border border-[var(--color-border)]` for assistant messages — adding a `border-l-[3px]` accent with `border-l-[var(--color-ocean)]` (≥3 links) or `border-l-[var(--color-clay)]/50` (1–2 links) is the minimal change. Verify `--color-ocean` CSS var is in `globals.css` before executing. Estimated 20 minutes. 1-file change: `ask/page.tsx`. Priority set to P3 (polish, no functional gap).
 
 ---
 
@@ -218,6 +219,19 @@
 - **Summary:** When a reader has asked 3 or more Ask questions about a specific chapter (tracked via `cel_chapter_questions`), a small "Explored" badge or pill appears on that chapter's card in the `/stories` grid. A subtle signal that the reader engaged deeply with the chapter through the companion, without cluttering the grid for chapters with little Ask activity.
 - **Night Notes:**
   - 2026-05-15 (Run 30): Seeded. `cel_chapter_questions` already stores `story_id`, `user_id`, and each question. Implementation: (1) In `StoriesPageClient.tsx` (or the server component loading story cards), issue one grouped count query: `SELECT story_id, count(*) as q_count FROM cel_chapter_questions WHERE user_id = $user GROUP BY story_id HAVING count(*) >= 3`; (2) Pass a `Set<string>` of "explored" story IDs as a prop to story card components; (3) Render a small badge (e.g., `🔭 Explored` or a text pill) on matching cards. No new DB, no new routes. Auth-gated (guests have no `cel_chapter_questions` rows). Works for all readers under companion-first. The threshold of 3 is a UX judgment call — could be 2 or 5. Estimated 1 hour.
+
+---
+
+### [IDEA-084] Ask Home Hero Widget — No-Story-Context Entry Point on Home Page
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-16
+- **Last Updated:** 2026-05-16
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** A prominent Ask entry widget on the home shell (`/`) — a single text input with a "Ask the Archive →" call-to-action — placed in the hero section above the chapter grid. Unlike all current Ask CTAs (which require a story context), this one opens `/ask` with no pre-set `?story=` param, letting readers ask anything about the universe from the moment they land. Makes Ask the primary action on the home page, not just a feature on story pages.
+- **Night Notes:**
+  - 2026-05-16 (Run 31): Seeded. The home page (`src/components/home/HomePageClient.tsx`) is a `'use client'` component with a hero section, nav cards, and chapter grid. Adding a pre-typed text box that reads `onSubmit` and routes to `/ask?q={encodeURIComponent(text)}` would work if the Ask page reads the `?q=` param and pre-populates it. The Ask page already handles `?story=` and `?entity=` params — adding `?q=` as a "pre-seeded first question" is a parallel pattern. Implementation: (1) Extend `ask/page.tsx` to read a `?q=` search param and on mount, if `messages.length === 0 && q`, auto-submit it as the first user message; (2) Add a small text input form to `HomePageClient.tsx` hero section with placeholder "Ask anything about the universe…" and `onSubmit` routing to `/ask?q={encodedQ}`. No new API routes, no DB changes. Auth-agnostic (works for guests too — they see the generic Ask response). Estimated 45 minutes.
 
 ---
 
@@ -370,19 +384,6 @@
 
 ---
 
-### [IDEA-076] World Visual Glossary — 3 Canonical Texture/Mood Cards (One Per Visual World)
-- **Status:** seed
-- **Theme:** genmedia
-- **Seeded:** 2026-05-13
-- **Last Updated:** 2026-05-13
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
-- **Summary:** Pre-generate three abstract "visual vocabulary" mood-board images — one per canonical visual world (WORLD A alien_organic, WORLD B earth_2050, WORLD C ancient_vault) — using Imagen 4. Displayed on a `/about/visuals` page or as a "Visual Canon" panel in `/rules`. These cards ground the reader's visual expectations and serve as style references for all future AI-generated visuals.
-- **Night Notes:**
-  - 2026-05-13 (Run 28): Seeded. The 3-world vocabulary is already defined in `synthesize-prompt.ts` WORLD A/B/C spec blocks. Each mood-board prompt is an abstract texture/atmosphere composition using the world's canonical descriptors — no characters, no narrative events, no spoiler risk. (1) Model/provider: Imagen 4 (~$0.06/image × 3 = ~$0.18 total — trivial). (2) Cost budget: author-side batch only; zero reader-triggered generation. (3) Caching: shared canonical assets stored in `cel_visual_assets` with `source='visual_glossary'` and `target` = `world-a-alien-organic` / `world-b-earth-2050` / `world-c-ancient-vault`; never regenerated unless author explicitly refreshes. (4) Spoiler gating of prompt inputs: pure style/texture prompts drawn from `synthesize-prompt.ts` WORLD blocks — no chapter content, no character names, no story events. Safe for all readers. (5) Canon grounding: the three WORLD vocabulary blocks in `synthesize-prompt.ts` (lines ~35–65) are the sole grounding source — no additional spec files needed. These blocks describe texture, light, and material vocabulary only. Implementation: author generates via admin console using three custom prompts; approved assets surface on a new `/about/visuals` static page or embedded in the existing `/rules` index as a "Visual Canon" section. New page requires 1 server component (~40 lines) + 1 Supabase query for the 3 glossary assets.
-
----
-
 ### [IDEA-079] Mission Briefing Classified Document Art — Per-Chapter Diegetic Visual
 - **Status:** seed
 - **Theme:** genmedia
@@ -406,6 +407,19 @@
 - **Summary:** After a reader finishes the book (`show_all_content=true`), the Ask companion offers a one-time "Generate your Celestial cover art" from the `/ask` or `/profile` page. The image prompt seeds from the reader's most-highlighted chapter (from `cel_story_highlights` count) and their most-asked-about character (from `cel_chapter_questions` count) to produce a uniquely personalized art print. Cost: ~$0.06/reader. Cached per-user (not shared). Only available to `show_all_content` readers.
 - **Night Notes:**
   - 2026-05-15 (Run 30): Seeded. Unlike all other genmedia ideas (which are author-batch canonical assets), this is the first truly per-reader personalized visual. (1) Model/provider: Imagen 4 (`intimate_crew` or `mythic_scale` preset depending on the dominant character/setting). (2) Cost budget: ~$0.06 once per reader — user-scoped not shared. Rate limit: 1 generation per profile, enforced by checking `cel_visual_assets` for an existing `source='reader_cover'` asset for the user_id. (3) Caching: per-profile — stored in `cel_visual_assets` with `source='reader_cover'`, `target = profile_id`. If asset exists, skip generation and return it. (4) Spoiler gating of prompt inputs: only available to `show_all_content=true` readers, so full corpus access is authorized. The prompt uses only entity names and preset vocabulary — no verbatim narrative prose. (5) Canon grounding: the most-highlighted chapter's primary location from `chapter_tags.json` + the most-asked-about character's spec JSON (if available) or wiki markdown. Style: chosen from `[intimate_crew, mythic_scale, valkyrie_shipboard]` based on entity type. Implementation: new `/api/visuals/reader-cover` POST route (auth required, checks `show_all_content`); new CTA button on `/profile` or `/ask` when `show_all_content=true`. Estimated 3 hours including the per-user asset lookup logic and profile page CTA.
+
+---
+
+### [IDEA-085] Ask Ink Print — Author-Generated Typographic Art Card from Best Ask Exchange
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-16
+- **Last Updated:** 2026-05-16
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** The author selects one exceptional Ask Q&A exchange (question + answer) from the admin ledger and generates a typographic "ink print" image using Imagen 4 — the question as a bold headline and the answer's key phrase as body copy, overlaid on canonical world imagery. Displayed on a `/about/ink-print` or `/ask/featured` page as a curated "Best of the Archive" artifact. Zero reader-triggered cost; purely author-curated.
+- **Night Notes:**
+  - 2026-05-16 (Run 31): Seeded. The AI ledger (`cel_ai_interactions`) stores all Ask exchanges. The author could periodically select a favorite exchange via the admin interface and generate a poster-style typographic visual using Imagen 4 with the `earth_institutional` or `intimate_crew` preset. The image prompt would include: a background scene (from the chapter's location spec), a typographic treatment of the Q, and a visual focal point matching the answer's central entity. This is a curation and publishing workflow, not a reader-triggered generation. (1) Model/provider: Imagen 4 with typographic overlay (text-in-image support). (2) Cost: ~$0.06/image; author-batch only, no reader generation cost. (3) Caching: stored in `cel_visual_assets` with `source='ink_print'`; one or a small rotating gallery. (4) Spoiler gating of prompt inputs: author selects the exchange manually — they choose exchanges safe for all readers to see (world-building answers, not narrative endpoints). No automated spoiler risk. (5) Canon grounding: entity spec from the answer's primary `linksInAnswer` entity slug + preset per entity type. A "Featured exchange" could also be surfaced on the Ask empty state as an example of what the companion does — serving a dual role as showcase and Ask onboarding.
 
 ---
 
@@ -579,9 +593,36 @@
 
 ---
 
+### [IDEA-086] Reading Journey Timeline — Personal Chapter-by-Chapter Memoir on `/profile/journey`
+- **Status:** seed
+- **Theme:** post-read-world
+- **Seeded:** 2026-05-16
+- **Last Updated:** 2026-05-16
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** For `show_all_content` readers, a new `/profile/journey` page that renders the reader's personal reading history as a vertical timeline — one card per chapter showing the date they first read it (`cel_story_reads.created_at`), their highlight count for that chapter, and their Ask question count. A personal "reading memoir" that makes the companion experience feel like a real journey they lived.
+- **Night Notes:**
+  - 2026-05-16 (Run 31): Seeded. All three data sources already exist: (a) `cel_story_reads` — `created_at` per chapter read event per user; (b) `cel_story_highlights` — count per chapter per user; (c) `cel_chapter_questions` — count per chapter per user. Implementation: (1) New `/profile/journey/page.tsx` server component gated by `show_all_content === true` (redirect to `/profile` if false); (2) Three server-side Supabase queries: reads with timestamps, highlight counts grouped by story_id, question counts grouped by story_id; (3) Render a vertical timeline (ordered CH01–CH17) with a `<time>` element showing the read date, a bar or number for highlights, and a bar or number for questions asked. Chapters not yet read (no `cel_story_reads` row) still appear as empty timeline entries in muted style. (4) Post-read-world requirements: (a) Hidden from first-time and guest readers — gated by `show_all_content === true`; (b) Integration with `show_all_content`: direct server-side check; (c) Partial-completion: the `show_all_content` flag is the gate — under companion-first, `show_all_content` is the author-set signal for re-reader status. Zero new DB tables, zero content files. Synergistic with IDEA-077 (Highlight Fingerprint mosaic on `/profile/highlights`) and IDEA-080 (Personalized Reread Guide on `/profile/reread`). Estimated 2 hours.
+
+---
+
 ## Parked
 
 *(Ideas parked by the 3-day stale rule, out of theme focus, or superseded.)*
+
+### [IDEA-076] World Visual Glossary — 3 Canonical Texture/Mood Cards (One Per Visual World)
+- **Status:** parked
+- **Theme:** genmedia
+- **Seeded:** 2026-05-13
+- **Last Updated:** 2026-05-16
+- **Priority:** unranked
+- **Plan:** *(not written)*
+- **Summary:** Pre-generate three abstract "visual vocabulary" mood-board images — one per canonical visual world (WORLD A alien_organic, WORLD B earth_2050, WORLD C ancient_vault) — using Imagen 4. Displayed on a `/about/visuals` page or "Visual Canon" panel in `/rules`.
+- **Night Notes:**
+  - 2026-05-13 (Run 28): Seeded.
+  - 2026-05-16 (Run 31): Stale 3 days — likely low priority or too complex. Demoting to parked. The idea is sound but a new `/about/visuals` route is extra scope and `cel_visual_assets` has few approved assets yet (IDEA-052 must ship first to populate the gallery meaningfully). Un-park after IDEA-052 (character portraits) ships.
+
+---
 
 ### [IDEA-047] Harmonic State Gallery — Valkyrie-1 States for Re-Readers
 - **Status:** parked

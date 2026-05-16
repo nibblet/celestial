@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-05-15 (Nightshift Run 30)
+> Last updated: 2026-05-16 (Nightshift Run 31)
 
 ## App Summary
 
@@ -188,9 +188,9 @@
 
 ## Build / Test Status
 
-- **Build:** PASSES — clean, ~106 routes. 1 Turbopack warning on `next.config.ts`. (Requires `npm install` before `node_modules/.bin/next build` in a fresh clone.) Verified Run 29. No new code commits since Run 29 — status unchanged Run 30.
+- **Build:** PASSES — clean, ~106 routes. 1 Turbopack warning on `next.config.ts`. (Requires `npm install` before `node_modules/.bin/next build` in a fresh clone.) Verified Run 29. No new code commits since Run 29 — status unchanged Runs 30 and 31.
 - **Lint:** PASSES — 0 errors, **4 warnings** (`<img>` tags in visuals components — `VisualsAdminConsole.tsx` lines 230/394, `EntityVisualsGallery.tsx` lines 64/118). Unchanged since Run 17.
-- **Tests:** **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17). All green. Verified Run 29. No new code commits since Run 29 — status unchanged Run 30.
+- **Tests:** **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17). All green. Verified Run 29. No new code commits since Run 29 — status unchanged Runs 30 and 31.
 
 ## Known Issues (See FIXES.md)
 
@@ -231,7 +231,8 @@
 11. **FIX-050 (5 min):** Remove `/\bnext\b/i` from FUTURE_PATTERNS in `ask-intent.ts` line 35 + add 1 regression test. Plan: `FIXPLAN-FIX-050-ask-intent-next-pattern.md`.
 12. **FIX-049 (10 min):** Rename `requireKeith()` to `requireAuthor()` in 5 visuals API routes (naming-only, no logic changes). Plan: `FIXPLAN-FIX-049-requirekeith-function-name.md`.
 13. **IDEA-052 (3 hr author time, 0 code):** Author seeds 9 character spec JSONs, runs batch portrait generation, approves via admin console. Plan: `DEVPLAN-IDEA-052-canonical-character-portraits.md`.
-14. **IDEA-042 (2 hr):** Suggested follow-up chips after Ask answers — dev plan `DEVPLAN-IDEA-042-follow-up-chips.md` ready.
+14. **IDEA-078 (20 min):** Ask Response Confidence Ring — left-border accent on assistant bubbles from `linksInAnswer.length`. 1-file JSX change in `ask/page.tsx`. Dev plan `DEVPLAN-IDEA-078-ask-confidence-ring.md` planned.
+15. **IDEA-042 (2 hr):** Suggested follow-up chips after Ask answers — dev plan `DEVPLAN-IDEA-042-follow-up-chips.md` ready.
 15. **IDEA-043 (5 hr):** On-demand scene visualization via Ask — dev plan `DEVPLAN-IDEA-043-on-demand-scene-visualization.md`. Extends visuals pipeline to reader-triggered image generation.
 16. **FIX-052 (45 min):** Supabase-backed rate limit for `/api/ask` and audio stream. New migration 041 + `rate-limit-db.ts` module. Plan: `FIXPLAN-FIX-052-serverless-rate-limit.md`.
 17. **FIX-047 (15 min):** Update all 12 files (9 source + 3 test) with stale `claude-sonnet-4-20250514` to `claude-sonnet-4-6`; bump SYNTH_PROMPT_VERSION to v10. Plan: `FIXPLAN-FIX-047-stale-model-id.md`.
