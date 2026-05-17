@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-05-16 (Nightshift Run 31)
+> Last updated: 2026-05-17 (Nightshift Run 32)
 
 ## App Summary
 
@@ -188,9 +188,9 @@
 
 ## Build / Test Status
 
-- **Build:** PASSES — clean, ~106 routes. 1 Turbopack warning on `next.config.ts`. (Requires `npm install` before `node_modules/.bin/next build` in a fresh clone.) Verified Run 29. No new code commits since Run 29 — status unchanged Runs 30 and 31.
+- **Build:** PASSES — clean, ~106 routes. 1 Turbopack warning on `next.config.ts`. (Requires `npm install` before `node_modules/.bin/next build` in a fresh clone.) Verified Run 29. No new code commits since Run 29 — status unchanged Runs 30, 31, and 32.
 - **Lint:** PASSES — 0 errors, **4 warnings** (`<img>` tags in visuals components — `VisualsAdminConsole.tsx` lines 230/394, `EntityVisualsGallery.tsx` lines 64/118). Unchanged since Run 17.
-- **Tests:** **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17). All green. Verified Run 29. No new code commits since Run 29 — status unchanged Runs 30 and 31.
+- **Tests:** **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17). All green. Verified Run 29. No new code commits since Run 29 — status unchanged Runs 30, 31, and 32.
 
 ## Known Issues (See FIXES.md)
 

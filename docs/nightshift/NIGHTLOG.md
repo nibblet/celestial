@@ -4,6 +4,54 @@
 
 ---
 
+## Run: 2026-05-17 (Run 32)
+
+### Summary
+- Scanned: 0 new code commits since Run 31 (last commit `e707805` — nightshift docs only). Codebase state unchanged.
+- Issues: 0 new, 0 resolved, 0 spoiler-leak P0. All open planned issues unchanged: FIX-026, 027, 028, 029, 030, 045, 046, 047, 048, 049, 050, 051, 052. FIX-047 (12 stale model ID files) re-confirmed via grep; FIX-049 (requireKeith in 5 routes) re-confirmed; FIX-050 (`/\bnext\b/i` at `ask-intent.ts:35`) re-confirmed.
+- Ideas (by theme): ask-forward 1 seed (IDEA-087 — Ask Source Deep-Dive Panel) / 1 promoted to `planned` (IDEA-084 — Ask Home Hero Widget, dev plan written); genmedia 1 seed (IDEA-088 — Approved Entity Thumbnail Inline) / 2 parked stale (IDEA-079 — Mission Briefing Art); post-read-world 1 seed (IDEA-089 — Completion Ceremony Page) / 1 parked stale (IDEA-080 — Personalized Reread Guide).
+- Plans written: `DEVPLAN-IDEA-084-ask-home-hero-widget.md`
+
+### Build & Lint & Test Results
+- No code commits since Run 31. Build, lint, and test status unchanged: **PASSES** / 0 errors, 4 img warnings / 192 PASS.
+- No build run performed (no code changes to validate; codebase identical to Run 31).
+
+### Key Findings
+
+1. **No new code commits.** Codebase is identical to Run 31. All prior open issues remain in documented states. FIX-047 (12 stale model ID files — confirmed via grep returning 12 source files: `personas.ts`, `synthesize-prompt.ts`, `extract-vision.ts`, `session-wrap.ts`, `profile-reflection.ts`, `ledger.ts`, `tell/route.ts`, `beyond/polish/route.ts`, `tell/draft/route.ts`, plus 3 test files), FIX-049 (requireKeith in 5 visuals routes — confirmed via grep), FIX-050 (overly broad `/\bnext\b/i` at `ask-intent.ts:35` — confirmed via grep) all still open.
+
+2. **Review queue: 1 entry with `reviewed: false`.** `brain_lab/out/review-queue.md` is 15 lines total, 1 entry with `reviewed: false`. File timestamp unchanged from Run 31 — pipeline not re-run.
+
+3. **IDEA-084 promoted to `planned` and dev plan written.** Ask Home Hero Widget — adds a text input form to `HomeHero.tsx` (frosted-glass input + "Ask →" button, ~35 lines) and a new `?q=` auto-submit effect in `ask/page.tsx` (~8 lines). Reader types a question on the home page, navigates to `/ask?q=...`, and the question auto-submits on mount. 2-file change. The `?q=` auto-submit pattern mirrors the existing `?passage=` pattern (lines 553–575 in `ask/page.tsx`). Estimated 45 minutes. Plan: `DEVPLAN-IDEA-084-ask-home-hero-widget.md`.
+
+4. **Two ideas parked (3-day stale rule).** IDEA-079 (genmedia: Mission Briefing Classified Document Art — seeded 2026-05-14, 3 days old; blocked by missing faction spec JSON) and IDEA-080 (post-read-world: Personalized Reread Guide — seeded 2026-05-14, 3 days old; superseded in part by IDEA-086 Reading Journey Timeline). Both demoted to parked.
+
+5. **Three new ideas seeded.** IDEA-087 (ask-forward: Ask Source Deep-Dive Panel — expandable entity detail accordion on each `AskSourcesDisclosure` source link, showing type badge + description + wiki link; ~2 hours; synergistic with IDEA-063 EntityHoverCard), IDEA-088 (genmedia: Approved Entity Thumbnail Inline — small circular portrait thumbnails next to wiki entity links in Ask answers, using only pre-approved `cel_visual_assets`; zero generation cost for readers; ~2 hours after IDEA-052 ships; supersedes parked IDEA-070), IDEA-089 (post-read-world: Completion Ceremony Page — celebration `/completion` page for `show_all_content` readers showing reading stats, highlight fingerprint, and post-read-world feature discovery; ~2 hours baseline; plug-in for IDEA-077 mosaic after that ships).
+
+6. **Priority queue status.** 11 ideas are `ready` or `planned` with written dev plans. IDEA-084 (45 min — Ask Home Hero Widget) is the new quickest win. IDEA-048 (15 min — Ask CTA near top of story page) remains fastest overall.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-084-ask-home-hero-widget.md` — **NEW**: Ask Home Hero Widget — text input in home page hero, routes to `/ask?q=...` with auto-submit; 2-file change, 45 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-078-ask-confidence-ring.md` — Ask Response Confidence Ring — left-border grounding signal on answer bubbles; 1-file JSX change, 20 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — Ask CTA after chapter summary (ask-forward). 15 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-057-context-aware-ask-welcome.md` — Context-aware Ask welcome + chapter chips (ask-forward). 45 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-051-scene-level-ask-affordance.md` — Scene-level "Ask →" hover affordance (ask-forward). 30 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-063-entity-hover-card.md` — Entity hover-card in Ask answers (ask-forward). 30 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-075-ask-pinned-qa.md` — Ask Pinned Q&A — star-and-save exchanges, migration 042 required (ask-forward). 2.5 hours.
+- `docs/nightshift/plans/DEVPLAN-IDEA-077-highlight-fingerprint.md` — Highlight Fingerprint mosaic on `/profile/highlights`, gated by `show_all_content` (post-read-world). 1.5 hours.
+- `docs/nightshift/plans/DEVPLAN-IDEA-062-re-reader-hindsight-panel.md` — Re-Reader Hindsight Panel (post-read-world). 2 hours.
+- `docs/nightshift/plans/DEVPLAN-IDEA-042-follow-up-chips.md` — Suggested follow-up chips after Ask answers (ask-forward). 2 hours.
+- `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md` — Remove `/\bnext\b/i` from FUTURE_PATTERNS (5 min).
+- `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md` — Rename `requireKeith()` to `requireAuthor()` in 5 visuals routes (10 min).
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — Update 12 files from stale `claude-sonnet-4-20250514` to `claude-sonnet-4-6` (15 min).
+
+### Recommendations
+- **If you have 30 min:** IDEA-048 (15 min — Ask CTA after story summary) + FIX-050 (5 min — remove over-broad next pattern) + FIX-049 (10 min — rename requireKeith). Three quick wins, zero dependency risk.
+- **If you have 1 hour:** The 30-min cluster above + IDEA-084 (45 min — Ask Home Hero Widget) — makes Ask the primary entry action from the home page in two clean files.
+- **If you have 2+ hours:** IDEA-062 (2 hr — Re-Reader Hindsight Panel) + IDEA-077 (1.5 hr — Highlight Fingerprint). Two complementary post-read-world features that each stand alone but share the `show_all_content` gate pattern.
+
+---
+
 ## Run: 2026-05-16 (Run 31)
 
 ### Summary
