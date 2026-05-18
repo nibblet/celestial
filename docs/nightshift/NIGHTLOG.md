@@ -4,6 +4,59 @@
 
 ---
 
+## Run: 2026-05-18 (Run 33)
+
+### Summary
+- Scanned: 0 new code commits since Run 32 (last commit `4009e8d` — nightshift docs only). Codebase state unchanged.
+- Issues: 0 new, 0 resolved, 0 spoiler-leak P0. All open planned issues unchanged: FIX-026, 027, 028, 029, 030, 045, 046, 047, 048, 049, 050, 051, 052. FIX-047 (12 stale model ID files) re-confirmed via grep returning 29 occurrences across 12 files; FIX-049 (requireKeith in 5 routes) re-confirmed; FIX-050 (`/\bnext\b/i` at `ask-intent.ts:35`) re-confirmed.
+- Ideas (by theme): ask-forward 1 seed (IDEA-090 — Ask Command Palette) / IDEA-084 promoted to `ready` / IDEA-075 promoted to `ready` / IDEA-081 parked (stale 3 days); genmedia 1 seed (IDEA-091 — Faction Propaganda Poster) / IDEA-082 parked (stale 3 days); post-read-world 1 seed (IDEA-092 — Faction Alignment Reveal) / IDEA-083 promoted to `planned` (dev plan written). Total parked this run: 2.
+- Plans written: `DEVPLAN-IDEA-083-world-lore-quiz.md`
+
+### Build & Lint & Test Results
+- No code commits since Run 32. Build, lint, and test status unchanged: **PASSES** / 0 errors, 4 img warnings / 192 PASS.
+- No build run performed (no code changes to validate; codebase identical to Run 32).
+
+### Key Findings
+
+1. **No new code commits.** Codebase is identical to Run 32. All prior open issues remain in documented states. FIX-047 (12 stale model ID files — re-confirmed via grep: 29 occurrences in `personas.ts`, `synthesize-prompt.ts`, `extract-vision.ts`, `session-wrap.ts`, `profile-reflection.ts`, `ledger.ts`, 3 API routes, 3 test files), FIX-049 (requireKeith in 5 visuals routes — confirmed via grep: 10 occurrences in 5 files), FIX-050 (overly broad `/\bnext\b/i` at `ask-intent.ts:35` — confirmed via grep) all still open.
+
+2. **Review queue: 1 entry with `reviewed: false`.** `brain_lab/out/review-queue.md` is 15 lines total, 1 entry with `reviewed: false`. File timestamp unchanged — pipeline not re-run.
+
+3. **IDEA-083 promoted to `planned` and dev plan written.** World Lore Quiz — a `/world/quiz` page gated by `show_all_content=true` that serves AI-generated multiple-choice lore questions via Claude Haiku 4.5. Questions sourced from `chapter_tags.json` entity lists + wiki rules markdown (no arc endpoints, no narrative prose). Three new files: `quiz/page.tsx` (server gate), `api/quiz/generate/route.ts` (POST endpoint, rate-limited via existing `rate-limit.ts`), `lib/ai/quiz-generator.ts` (Haiku call + JSON parse). New client component `WorldLoreQuiz.tsx` with idle → loading → active (step-by-step) → complete state machine. Zero new DB tables; scores stateless. Estimated 2.5 hours. Plan: `DEVPLAN-IDEA-083-world-lore-quiz.md`.
+
+4. **IDEA-084 promoted to `ready`.** Ask Home Hero Widget — dev plan from Run 32 confirmed complete. 2-file change: `HomeHero.tsx` (~35 lines form input + router.push) + `ask/page.tsx` (~8 lines `?q=` auto-submit effect). 45 minutes. Fastest home-page Ask entry point in the queue.
+
+5. **IDEA-075 promoted to `ready`.** Ask Pinned Q&A — dev plan from Run 30 confirmed complete. Adds `pinned` + `pin_question_snapshot` columns to `cel_messages` (migration 042), star button UI, POST `/api/ask/pin` route, and "Pinned Exchanges" section on `/profile/questions`. 2.5 hours.
+
+6. **Two ideas parked (3-day stale rule).** IDEA-081 (ask-forward: Chapter Ask Badge on Story Grid — seeded 2026-05-15, 3 days old; no clear path to execution without first shipping IDEA-048 and IDEA-057) and IDEA-082 (genmedia: Personalized Completion Cover Art — seeded 2026-05-15, 3 days old; blocked by IDEA-052 prerequisite). Both demoted to parked with notes.
+
+7. **Three new ideas seeded.** IDEA-090 (ask-forward: Ask Command Palette — global `Cmd+K`/`Ctrl+K` shortcut opening a floating search/Ask modal from any page; extends the `?q=` pattern introduced by IDEA-084; ~1.5 hours), IDEA-091 (genmedia: Faction Propaganda Poster — Ask-triggered diegetic in-world faction artifact image via Imagen 4; specialization of IDEA-043 targeting faction entity visual intent; prerequisite: IDEA-043 ships first), IDEA-092 (post-read-world: Faction Alignment Reveal — collapsible "Where the crew stood" accordion on faction pages for `show_all_content` readers; lexical scan of CH17 arc ledger entries against faction slug; ~2 hours; prerequisite: IDEA-062 arc parsing utilities).
+
+8. **Priority queue now has 13 ready/planned ideas.** IDEA-084 (45 min), IDEA-048 (15 min), IDEA-063 (30 min) remain the fastest three. All 11 from Run 32 plus IDEA-075 now `ready` and IDEA-083 `planned`.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-083-world-lore-quiz.md` — **NEW**: World Lore Quiz — `/world/quiz`, AI-generated Haiku questions from wiki + chapter_tags, gated by `show_all_content`; 2.5 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-084-ask-home-hero-widget.md` — Ask Home Hero Widget — text input in hero routes to `/ask?q=...`; 2-file change, 45 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-075-ask-pinned-qa.md` — Ask Pinned Q&A — star-and-save exchanges to `/profile/questions`; migration 042 required; 2.5 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-078-ask-confidence-ring.md` — Ask Response Confidence Ring — left-border grounding signal on answer bubbles; 1-file JSX change, 20 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — Ask CTA after chapter summary (ask-forward). 15 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-057-context-aware-ask-welcome.md` — Context-aware Ask welcome + chapter chips (ask-forward). 45 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-051-scene-level-ask-affordance.md` — Scene-level "Ask →" hover affordance (ask-forward). 30 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-063-entity-hover-card.md` — Entity hover-card in Ask answers (ask-forward). 30 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-077-highlight-fingerprint.md` — Highlight Fingerprint mosaic on `/profile/highlights`, gated by `show_all_content` (post-read-world). 1.5 hours.
+- `docs/nightshift/plans/DEVPLAN-IDEA-062-re-reader-hindsight-panel.md` — Re-Reader Hindsight Panel (post-read-world). 2 hours.
+- `docs/nightshift/plans/DEVPLAN-IDEA-042-follow-up-chips.md` — Suggested follow-up chips after Ask answers (ask-forward). 2 hours.
+- `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md` — Remove `/\bnext\b/i` from FUTURE_PATTERNS (5 min).
+- `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md` — Rename `requireKeith()` to `requireAuthor()` in 5 visuals routes (10 min).
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — Update 12 files from stale `claude-sonnet-4-20250514` to `claude-sonnet-4-6` (15 min).
+
+### Recommendations
+- **If you have 30 min:** IDEA-048 (15 min — Ask CTA after story summary) + FIX-050 (5 min — remove over-broad next pattern) + FIX-049 (10 min — rename requireKeith). Three quick wins, zero dependency risk.
+- **If you have 1 hour:** The 30-min cluster above + IDEA-084 (45 min — Ask Home Hero Widget). Makes Ask the primary entry action from the home page.
+- **If you have 2.5 hours:** IDEA-083 (World Lore Quiz) — new plan from tonight. Fully self-contained; only touches new files. A satisfying post-read-world feature that exercises the Haiku + wiki data pipeline cleanly.
+
+---
+
 ## Run: 2026-05-17 (Run 32)
 
 ### Summary

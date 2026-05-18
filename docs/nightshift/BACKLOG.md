@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-17 (Run 32)
+> Last updated: 2026-05-18 (Run 33)
 
 ## Maturity Levels
 
@@ -182,16 +182,17 @@
 ---
 
 ### [IDEA-075] Ask Pinned Q&A — Star and Save Individual Ask Exchanges
-- **Status:** planned
+- **Status:** ready
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-13
-- **Last Updated:** 2026-05-15
+- **Last Updated:** 2026-05-18
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-075-ask-pinned-qa.md`
 - **Summary:** Readers can star/pin individual assistant message bubbles in an Ask conversation. Pinned exchanges (the paired user question + assistant answer) appear as a "Things I learned" collection on `/profile/questions`. Makes the companion feel like a personal research tool, not just a chat window.
 - **Night Notes:**
   - 2026-05-13 (Run 28): Seeded. `cel_messages` already stores all conversation turns. Implementation: (1) New `pinned` boolean column on `cel_messages` (requires migration 042 — migrations 040 and 041 are reserved for FIX-026 and FIX-052 respectively); (2) Star icon button on each assistant message bubble in `ask/page.tsx` — POST to `/api/ask/pin` toggling `pinned` flag; (3) `/profile/questions/page.tsx` extended to also show pinned Ask pairs grouped by chapter (existing page shows question-type interactions; pinned pairs are a new section). Zero new DB tables. Requires migration for the column. Auth required (no guest path). Estimated 2.5 hours including migration.
   - 2026-05-15 (Run 30): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-075-ask-pinned-qa.md`. Key design addition vs seed: adds `pin_question_snapshot TEXT` column alongside `pinned` to store a snapshot of the paired user question at pin time — makes the profile page query a single fetch with no N+1. The `/api/ask/pin` POST route looks up the preceding user message in the same conversation server-side when `pinned=true` and stores it. Profile page: new "Pinned Exchanges" section above existing question list, only rendered when at least one pin exists. Link opens conversation at `/ask?conversation={id}`. Priority raised to P2. Estimated 2.5 hours.
+  - 2026-05-18 (Run 33): **Promoted to `ready`.** Dev plan confirmed complete and present: `DEVPLAN-IDEA-075-ask-pinned-qa.md`. No new blockers. Ready for Paul to execute.
 
 ---
 
@@ -210,29 +211,31 @@
 ---
 
 ### [IDEA-081] Chapter Ask Badge on Story Grid — "You Explored This" Signal
-- **Status:** seed
+- **Status:** parked
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-15
-- **Last Updated:** 2026-05-15
+- **Last Updated:** 2026-05-18
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** When a reader has asked 3 or more Ask questions about a specific chapter (tracked via `cel_chapter_questions`), a small "Explored" badge or pill appears on that chapter's card in the `/stories` grid. A subtle signal that the reader engaged deeply with the chapter through the companion, without cluttering the grid for chapters with little Ask activity.
 - **Night Notes:**
   - 2026-05-15 (Run 30): Seeded. `cel_chapter_questions` already stores `story_id`, `user_id`, and each question. Implementation: (1) In `StoriesPageClient.tsx` (or the server component loading story cards), issue one grouped count query: `SELECT story_id, count(*) as q_count FROM cel_chapter_questions WHERE user_id = $user GROUP BY story_id HAVING count(*) >= 3`; (2) Pass a `Set<string>` of "explored" story IDs as a prop to story card components; (3) Render a small badge (e.g., `🔭 Explored` or a text pill) on matching cards. No new DB, no new routes. Auth-gated (guests have no `cel_chapter_questions` rows). Works for all readers under companion-first. The threshold of 3 is a UX judgment call — could be 2 or 5. Estimated 1 hour.
+  - 2026-05-18 (Run 33): Stale 3 days — likely low priority or too complex. Demoting to parked. Un-park when the stories grid is being revisited for ask-forward polish (after IDEA-048, IDEA-057 ship).
 
 ---
 
 ### [IDEA-084] Ask Home Hero Widget — No-Story-Context Entry Point on Home Page
-- **Status:** planned
+- **Status:** ready
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-16
-- **Last Updated:** 2026-05-17
+- **Last Updated:** 2026-05-18
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-084-ask-home-hero-widget.md`
 - **Summary:** A prominent Ask entry widget on the home shell (`/`) — a single text input with a "Ask the Archive →" call-to-action — placed in the hero section above the chapter grid. Unlike all current Ask CTAs (which require a story context), this one opens `/ask` with no pre-set `?story=` param, letting readers ask anything about the universe from the moment they land. Makes Ask the primary action on the home page, not just a feature on story pages.
 - **Night Notes:**
   - 2026-05-16 (Run 31): Seeded. The home page (`src/components/home/HomePageClient.tsx`) is a `'use client'` component with a hero section, nav cards, and chapter grid. Adding a pre-typed text box that reads `onSubmit` and routes to `/ask?q={encodeURIComponent(text)}` would work if the Ask page reads the `?q=` param and pre-populates it. The Ask page already handles `?story=` and `?entity=` params — adding `?q=` as a "pre-seeded first question" is a parallel pattern. Implementation: (1) Extend `ask/page.tsx` to read a `?q=` search param and on mount, if `messages.length === 0 && q`, auto-submit it as the first user message; (2) Add a small text input form to `HomePageClient.tsx` hero section with placeholder "Ask anything about the universe…" and `onSubmit` routing to `/ask?q={encodedQ}`. No new API routes, no DB changes. Auth-agnostic (works for guests too — they see the generic Ask response). Estimated 45 minutes.
   - 2026-05-17 (Run 32): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-084-ask-home-hero-widget.md`. Implementation confirmed via codebase read: `HomeHero.tsx` is a `'use client'` component with parallax state; adding `useRouter` + `useState(query)` + submit handler + form JSX is clean and self-contained. The widget goes inside the existing `.relative.z-10` content div, after the tagline `<p>`. In `ask/page.tsx`, a new `?q=` param read + `quickQFiredRef` + auto-submit effect parallel to the existing `?passage=` auto-submit pattern (lines 553–575) handles the auto-send. 2-file change: `HomeHero.tsx` (~35 lines) + `ask/page.tsx` (~8 lines). Estimated 45 minutes. Priority P2.
+  - 2026-05-18 (Run 33): **Promoted to `ready`.** Dev plan confirmed complete and present. Ready to execute — fastest home-page Ask integration in the queue.
 
 ---
 
@@ -249,6 +252,19 @@
 
 ---
 
+### [IDEA-090] Ask Command Palette — Global Keyboard-Shortcut Companion Invocation
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-18
+- **Last Updated:** 2026-05-18
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** A global `Cmd+K`/`Ctrl+K` keyboard shortcut (from any page in the app) opens a floating command palette modal — a frosted-glass panel with a text input pre-focused. Submitting routes to `/ask?q={encodedQ}`, making Ask feel like a first-class keyboard-native shell command rather than a page you navigate to. The palette also surfaces 3 recent questions from `localStorage` and a typeahead entity search against static entity names.
+- **Night Notes:**
+  - 2026-05-18 (Run 33): Seeded. The home page hero widget (IDEA-084) solves the problem for homepage entry; the command palette solves it universally — from a chapter detail page, a character wiki page, or mid-scroll anywhere. Implementation: (1) New `src/components/ask/AskCommandPalette.tsx` — `'use client'` component that listens for `keydown` with `(ctrlKey || metaKey) && key === 'k'` via a `useEffect` on `document`; (2) Renders as a full-screen semi-transparent backdrop + centered frosted-glass modal with a text `<input>` (autofocused on open) and recent questions list loaded from `localStorage` key `celestial_recent_questions`; (3) On submit → `router.push('/ask?q={encodedQ}')` + dismiss; on Escape → dismiss; (4) Mount in `src/app/layout.tsx` so it's available everywhere; (5) `ask/page.tsx` reads `?q=` param and auto-submits (same change as IDEA-084 — the two features share this one `ask/page.tsx` edit). After a successful Ask response, append the question text to `localStorage` recent list (max 5 entries). No new API routes, no DB changes, zero npm packages (uses Tailwind). Estimated 1.5 hours. Works for guests (routes to Ask page, which handles unauthenticated users gracefully).
+
+---
+
 ## genmedia
 
 ### [IDEA-088] Approved Entity Thumbnail Inline in Ask Answers — Zero-Gen Visual Bridge
@@ -261,6 +277,19 @@
 - **Summary:** When an Ask response references a wiki entity via a link in `linksInAnswer`, and that entity has an approved visual asset in `cel_visual_assets` (e.g., a character portrait from IDEA-052), a small circular thumbnail (40×40px) appears inline next to the entity link inside the answer bubble. Zero generation cost; purely displays pre-approved author assets. Requires IDEA-052 (canonical character portraits) to ship first to populate the asset table meaningfully.
 - **Night Notes:**
   - 2026-05-17 (Run 32): Seeded. A simpler, more targeted variant of the previously parked IDEA-070 (which added thumbnails to AskSourcesDisclosure). This version embeds the thumbnail directly adjacent to the entity wiki link inside the rendered markdown — inside `ASSISTANT_MARKDOWN_COMPONENTS.a` in `ask/page.tsx` (lines 30–38). After the `done` SSE event, the client has `linksInAnswer` with entity slugs. A secondary Supabase client-side fetch for approved asset URLs (one batched query after stream completes) adds the thumbnail URL to each link entry. (1) Model/provider: N/A — no generation. (2) Cost per generation: $0 — assets are pre-approved. (3) Caching: approved assets are in Supabase Storage with public URLs; client caches response in component state for the session. (4) Spoiler gating of prompt inputs: N/A — no AI generation; entity visuals are decorative world-building, not narrative text. (5) Canon grounding: thumbnails come exclusively from `cel_visual_assets` with `approved=true` — author-curated canonical renders only. Prerequisite: IDEA-052 (character portraits) must ship first. Fallback: if no approved asset exists, the link renders exactly as today. Estimated 2 hours after IDEA-052 ships. Related: supersedes IDEA-070 (parked).
+
+---
+
+### [IDEA-091] Faction Propaganda Poster — In-World Diegetic Artifact via Ask
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-18
+- **Last Updated:** 2026-05-18
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** When a reader asks "Show me the Rigel Protocol" or "What does the Vault Accord look like?" in the Ask companion, the system detects faction visual intent and generates a diegetic "propaganda poster" or recruitment artifact from that faction's perspective via Imagen 4 — not a scene render, but an in-world object that feels like it was produced by the faction itself. Government-style visual for Earth factions (`earth_institutional` preset); organic/geometric for Resonant-aligned factions (`alien_organic` preset).
+- **Night Notes:**
+  - 2026-05-18 (Run 33): Seeded. This is a specialization of IDEA-043 (on-demand scene visualization) that targets faction entities specifically. The key differentiator is the diegetic artifact framing — the prompt explicitly requests an in-world document/poster aesthetic rather than a cinematic scene. Implementation extends IDEA-043's `ask-intent.ts` visual intent detection with a `faction_artifact` sub-type (detected when a faction entity slug is in the message). (1) Model/provider: Imagen 4 (~$0.04–$0.08/image). (2) Cost budget: ~$0.06/generation; 3 images/reader/hour (shared with IDEA-043 rate limit via `cel_rate_limits` once FIX-052 ships). (3) Caching: per (faction-slug, style, corpusVersion) hash — shared cache, not user-scoped. (4) Spoiler gating of prompt inputs: faction identity is non-narrative; no story events in prompts. All content visible under companion-first; no chapter gate needed. (5) Canon grounding: `content/wiki/factions/{slug}.md` + any `content/wiki/specs/{faction-slug}/master.json` (if seeded); preset auto-selected from faction's world-affiliation (WORLD B for Earth factions, WORLD A for Resonant/alien factions, WORLD C for Vault-aligned factions). Prerequisite: IDEA-043 (on-demand visualization) ships first to establish the visual intent → generation pipeline in Ask. Estimated 1 hour on top of IDEA-043.
 
 ---
 
@@ -426,15 +455,16 @@
 ---
 
 ### [IDEA-082] Personalized Completion Cover Art — Reader-Unique Print After Finishing the Book
-- **Status:** seed
+- **Status:** parked
 - **Theme:** genmedia
 - **Seeded:** 2026-05-15
-- **Last Updated:** 2026-05-15
+- **Last Updated:** 2026-05-18
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** After a reader finishes the book (`show_all_content=true`), the Ask companion offers a one-time "Generate your Celestial cover art" from the `/ask` or `/profile` page. The image prompt seeds from the reader's most-highlighted chapter (from `cel_story_highlights` count) and their most-asked-about character (from `cel_chapter_questions` count) to produce a uniquely personalized art print. Cost: ~$0.06/reader. Cached per-user (not shared). Only available to `show_all_content` readers.
 - **Night Notes:**
   - 2026-05-15 (Run 30): Seeded. Unlike all other genmedia ideas (which are author-batch canonical assets), this is the first truly per-reader personalized visual. (1) Model/provider: Imagen 4 (`intimate_crew` or `mythic_scale` preset depending on the dominant character/setting). (2) Cost budget: ~$0.06 once per reader — user-scoped not shared. Rate limit: 1 generation per profile, enforced by checking `cel_visual_assets` for an existing `source='reader_cover'` asset for the user_id. (3) Caching: per-profile — stored in `cel_visual_assets` with `source='reader_cover'`, `target = profile_id`. If asset exists, skip generation and return it. (4) Spoiler gating of prompt inputs: only available to `show_all_content=true` readers, so full corpus access is authorized. The prompt uses only entity names and preset vocabulary — no verbatim narrative prose. (5) Canon grounding: the most-highlighted chapter's primary location from `chapter_tags.json` + the most-asked-about character's spec JSON (if available) or wiki markdown. Style: chosen from `[intimate_crew, mythic_scale, valkyrie_shipboard]` based on entity type. Implementation: new `/api/visuals/reader-cover` POST route (auth required, checks `show_all_content`); new CTA button on `/profile` or `/ask` when `show_all_content=true`. Estimated 3 hours including the per-user asset lookup logic and profile page CTA.
+  - 2026-05-18 (Run 33): Stale 3 days — likely low priority or too complex. Demoting to parked. Blocked by IDEA-052 (character portraits) prerequisite — per-reader personalization requires approved assets to already exist. Un-park after IDEA-052 ships and the completion ceremony page (IDEA-089) establishes the `show_all_content` CTA surface.
 
 ---
 
@@ -463,6 +493,19 @@
 - **Summary:** A dedicated `/completion` page (or redirect from profile when all 17 chapters are read) that celebrates a reader's journey through the book. Shows personalized reading stats (chapters read, Ask questions asked, highlights saved), the highlight fingerprint mosaic (from IDEA-077), and a "Continue Exploring" section surfacing key post-read-world features (quiz, reading journey timeline, entity explorer). Acts as a rite-of-passage transition from "first-time reader" to "archive explorer."
 - **Night Notes:**
   - 2026-05-17 (Run 32): Seeded. The completion trigger could be: (a) explicit `show_all_content = true` flag, or (b) reader marking all 17 chapters read (`cel_story_reads` has 17 rows for the user). Data sources for the summary stats: `cel_story_reads` (count + date of last read), `cel_story_highlights` (total count), `cel_chapter_questions` (total count). All three are existing Supabase tables. Implementation: (1) New `/completion/page.tsx` server component — gated by `show_all_content === true` (redirect to `/profile` if false); (2) Three aggregated Supabase queries: `count(*)` from each of the three tables for the user; (3) Render a celebration header ("You've read the universe"), a stats summary row (chapters, highlights, questions), the highlight fingerprint mosaic (import `HighlightFingerprintMosaic` component from IDEA-077 when that ships), and a "What's next in the Archive?" grid of post-read-world feature links (quiz, journey timeline, entity graph). Post-read-world requirements: (a) Hidden for first-time and guest readers — `show_all_content` gate at server level; (b) Integration with `show_all_content`: direct server-side check; (c) Partial-completion edge cases: flag validated server-side. Dependency note: the page is buildable today with just the stat counts; the fingerprint mosaic is plug-in after IDEA-077 ships. Estimated 2 hours baseline (without mosaic) + 30 min after IDEA-077 to integrate mosaic component.
+
+---
+
+### [IDEA-092] Faction Alignment Reveal — Who Sided With Whom at Book's End
+- **Status:** seed
+- **Theme:** post-read-world
+- **Seeded:** 2026-05-18
+- **Last Updated:** 2026-05-18
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** For `show_all_content=true` readers, each faction detail page gains a collapsible "Where the crew stood" accordion at CH17, listing which of the 9 main characters ended the story aligned with, opposed to, or neutral toward that faction — drawn entirely from arc ledger "State After" entries at CH17 and faction cross-references in character wiki markdown. Turns static faction pages into living political landscapes post-completion.
+- **Night Notes:**
+  - 2026-05-18 (Run 33): Seeded. Arc ledger files (`content/wiki/arcs/characters/*.md`) contain per-chapter "State After" entries that often reference specific faction relationships (e.g., "defied Rigel Protocol directive", "aligned with Vault Accord goals"). Cross-referencing all 9 arc ledgers at CH17 against a faction's slug yields the alignment picture. Implementation: (1) New server utility `src/lib/wiki/faction-alignment.ts` — accepts `factionSlug: string`, reads all 9 arc ledgers via `getAllCharacterArcs()` (existing), scans the CH17 "State After" entry for each character for mentions of the faction slug (case-insensitive), returns `{ aligned: CharacterRef[], opposed: CharacterRef[], neutral: CharacterRef[] }`. The mention detection can be lexical (faction slug / name match in text) — not a semantic inference, so it's fast and deterministic. (2) On `/factions/[slug]/page.tsx`, call this utility when `readerProgress.showAllContent === true`, pass results to a new `<FactionAlignmentReveal>` component rendered as a `<details>` accordion. (3) Post-read-world requirements: (a) Hidden from first-time readers and guests — `show_all_content` gate at server level; (b) Integration with `show_all_content`: direct server-side check; (c) Partial-completion: same server-side flag check. Zero new DB, zero new content, zero npm packages. The lexical match may have false positives if faction names appear in other contexts — acceptable for a v1; can be refined once arc parsing utilities (IDEA-062) are shipped and battle-tested. Estimated 2 hours. Prerequisite: IDEA-062 (hindsight panel) establishes the arc parsing infrastructure this reuses.
 
 ---
 
@@ -623,15 +666,16 @@
 ---
 
 ### [IDEA-083] World Lore Quiz — AI-Generated Multiple-Choice Quiz for Completed Readers
-- **Status:** seed
+- **Status:** planned
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-15
-- **Last Updated:** 2026-05-15
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
+- **Last Updated:** 2026-05-18
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-083-world-lore-quiz.md`
 - **Summary:** For `show_all_content` readers, a `/world/quiz` page serving an AI-generated multiple-choice quiz grounded in `chapter_tags.json` and wiki facts. Questions like "Which chapter did the Vault Accord first activate?" or "Which harmonic state did Valkyrie-1 enter during the alignment sequence?" Test readers on actual lore with no spoiler risk since they've finished the book. Zero new content needed; all ground truth lives in the wiki.
 - **Night Notes:**
   - 2026-05-15 (Run 30): Seeded. This is the only quiz/gamification idea in the backlog, and it has a clear post-read-world boundary (gated by `show_all_content=true`). Implementation: (1) Post-read-world requirements: (a) Hidden from first-time and guest readers — `/world/quiz` requires `show_all_content === true` at server level; (b) Integration with `show_all_content`: direct server-side check, redirect to `/profile` if false; (c) Partial-completion edge cases: same server-side flag check. (2) Quiz generation: a new `/api/quiz/generate` POST route calls Claude Haiku (cost: ~$0.001 per 10-question set) with a prompt seeded from a random subset of `chapter_tags.json` entity entries + wiki rule facts. The AI generates 5 multiple-choice questions with 4 options each, returning structured JSON `{ question, options: string[], correctIndex }`. (3) Client renders the quiz as a step-by-step card flow (current question, options, "Submit" → reveal answer + next). Score shown at end. No scores persisted in DB (stateless). (4) Canon grounding: question prompts fed to Haiku include only wiki markdown excerpts (facts, not narrative prose) + entity metadata from `chapter_tags.json`. No character arc ledger content — keeps questions factual, not narrative-spoiler-y. Estimated 3 hours including API route, quiz render component, and `show_all_content` gate.
+  - 2026-05-18 (Run 33): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-083-world-lore-quiz.md`. Key refinements vs seed notes: (1) `QuizQuestion` type refined to include `explanation: string` (shown after answer reveal); (2) Phase structure: 5 phases — gate/scaffold, quiz generator module, API route, quiz UI component, navigation entry points; (3) Claude Haiku 4.5 (`claude-haiku-4-5-20251001`) model — cost ~$0.001 per 5-question set; (4) Rate limit reuses existing `src/lib/rate-limit.ts` (5 quizzes/hour); (5) No new DB tables — scores are stateless. Priority set to P2. Estimated 2.5 hours.
 
 ---
 
