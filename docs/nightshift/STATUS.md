@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-05-19 (Nightshift Run 34)
+> Last updated: 2026-05-20 (Nightshift Run 35)
 
 ## App Summary
 
@@ -188,9 +188,9 @@
 
 ## Build / Test Status
 
-- **Build:** PASSES — clean, ~106 routes. 1 Turbopack warning on `next.config.ts`. (Requires `npm install` before `node_modules/.bin/next build` in a fresh clone.) Verified Run 29. No new code commits since Run 29 — status unchanged Runs 30–34.
-- **Lint:** PASSES — 0 errors, **4 warnings** (`<img>` tags in visuals components — `VisualsAdminConsole.tsx` lines 230/394, `EntityVisualsGallery.tsx` lines 64/118). Unchanged since Run 17.
-- **Tests:** **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17). All green. Verified Run 29. No new code commits since Run 29 — status unchanged Runs 30–34.
+- **Build:** PASSES — clean, ~106 routes. 1 Turbopack warning on `next.config.ts`. (Requires `npm install` before `node_modules/.bin/next build` in a fresh clone.) Verified Run 35 (`npx next build` in fresh sandbox). No new code commits since Run 29 — codebase unchanged.
+- **Lint:** PASSES — 0 errors, **4 warnings** (`<img>` tags in visuals components — `VisualsAdminConsole.tsx` lines 230/394, `EntityVisualsGallery.tsx` lines 64/118). Verified Run 35. Unchanged since Run 17.
+- **Tests:** **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17). All green. Verified Run 35. No new code commits since Run 29 — codebase unchanged.
 
 ## Known Issues (See FIXES.md)
 
@@ -219,31 +219,32 @@
 ## Next Actions (Priority Order)
 
 1. **IDEA-048 (15 min):** Add Ask CTA near top of story page (after summary, before scene navigation) — 6 lines JSX in `stories/[storyId]/page.tsx` between lines 166–168. Dev plan `DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` ready.
-2. **IDEA-084 (45 min):** Ask Home Hero Widget — text input in home page hero routes to `/ask?q=...` with auto-submit; 2-file change (`HomeHero.tsx` + `ask/page.tsx`). Dev plan `DEVPLAN-IDEA-084-ask-home-hero-widget.md` ready. *(Promoted to `ready` Run 33)*
+2. **IDEA-084 (45 min):** Ask Home Hero Widget — text input in home page hero routes to `/ask?q=...` with auto-submit; 2-file change (`HomeHero.tsx` + `ask/page.tsx`). Dev plan `DEVPLAN-IDEA-084-ask-home-hero-widget.md` ready.
 3. **IDEA-072 (1.5 hr):** Chapter quick-facts panel on Ask page — collapsible card showing mission day range, primary location, and top 3 characters when `?story=` is set. Dev plan `DEVPLAN-IDEA-072-chapter-quick-facts-panel.md` ready.
-4. **IDEA-069 (2 hr):** Ask CTA on all entity detail pages — `FictionEntityDetailPage` + `characters/[slug]/page.tsx` + `RuleDetailPage` CTAs + entity breadcrumb + type-specific chips in `ask/page.tsx`. Dev plan `DEVPLAN-IDEA-069-entity-level-ask-cta.md` ready.
-5. **IDEA-057 (45 min):** Context-aware welcome message on Ask page — extend `meta` API to return chapter-specific suggestions, add `chapterWelcome` state to Ask page, conditional empty-state render. Dev plan `DEVPLAN-IDEA-057-context-aware-ask-welcome.md` ready.
-6. **IDEA-063 (30 min):** Entity hover-card tooltips on wiki links in Ask answers — new `EntityHoverCard` component, 2-file change. No fetch, no API, no DB. Dev plan `DEVPLAN-IDEA-063-entity-hover-card.md` ready.
-7. **IDEA-066 (1.5 hr):** "Continue where you left off" in Ask empty state — localStorage-backed prior session card for story-specific sessions. Dev plan `DEVPLAN-IDEA-066-cross-session-ask-resume.md` ready.
-8. **IDEA-075 (2.5 hr):** Ask Pinned Q&A — star/save individual Ask exchanges to `/profile/questions`; migration 042 required. Dev plan `DEVPLAN-IDEA-075-ask-pinned-qa.md` ready. *(Promoted to `ready` Run 33)*
-9. **IDEA-062 (2 hr):** Re-Reader Hindsight Panel — new `chapter-hindsight.ts` server utility + `HindsightPanel.tsx` component. Gated by `show_all_content`. Dev plan `DEVPLAN-IDEA-062-re-reader-hindsight-panel.md` ready.
-10. **IDEA-077 (1.5 hr):** Re-Reader Highlight Fingerprint — 17-tile chapter intensity mosaic on `/profile/highlights`, gated by `show_all_content`. Dev plan `DEVPLAN-IDEA-077-highlight-fingerprint.md` ready.
-11. **IDEA-083 (2.5 hr):** World Lore Quiz — AI-generated multiple-choice quiz for `show_all_content` readers, grounded in `chapter_tags.json` + wiki rules. Dev plan `DEVPLAN-IDEA-083-world-lore-quiz.md` planned. *(Plan written Run 33)*
-12. **IDEA-051 (30 min):** Scene-level "Ask →" hover affordance on `### Scene` headings. 2-file change. Dev plan `DEVPLAN-IDEA-051-scene-level-ask-affordance.md` ready.
-13. **IDEA-087 (2 hr):** Ask Source Deep-Dive Panel — expandable entity type badge + description on each citation link in `AskSourcesDisclosure`. New `/api/entity-meta` GET endpoint + `ask/page.tsx` state. Dev plan `DEVPLAN-IDEA-087-ask-source-deep-dive.md` planned *(Run 34)*.
-14. **FIX-051 (1 hr):** HTML sanitization for `dangerouslySetInnerHTML` in admin surfaces. Install `isomorphic-dompurify`, wrap 2 call sites, add TipTap Image src validation. Plan: `FIXPLAN-FIX-051-dangerouslysetinnerhtml-admin.md`.
-15. **FIX-050 (5 min):** Remove `/\bnext\b/i` from FUTURE_PATTERNS in `ask-intent.ts` line 35 + add 1 regression test. Plan: `FIXPLAN-FIX-050-ask-intent-next-pattern.md`.
-16. **FIX-049 (10 min):** Rename `requireKeith()` to `requireAuthor()` in 5 visuals API routes (naming-only, no logic changes). Plan: `FIXPLAN-FIX-049-requirekeith-function-name.md`.
+4. **IDEA-069 (2 hr):** Ask CTA on all entity detail pages. Dev plan `DEVPLAN-IDEA-069-entity-level-ask-cta.md` ready.
+5. **IDEA-057 (45 min):** Context-aware welcome message on Ask page. Dev plan `DEVPLAN-IDEA-057-context-aware-ask-welcome.md` ready.
+6. **IDEA-063 (30 min):** Entity hover-card tooltips on wiki links in Ask answers. Dev plan `DEVPLAN-IDEA-063-entity-hover-card.md` ready.
+7. **IDEA-066 (1.5 hr):** "Continue where you left off" in Ask empty state. Dev plan `DEVPLAN-IDEA-066-cross-session-ask-resume.md` ready.
+8. **IDEA-075 (2.5 hr):** Ask Pinned Q&A — star/save individual Ask exchanges; migration 042 required. Dev plan `DEVPLAN-IDEA-075-ask-pinned-qa.md` ready.
+9. **IDEA-087 (2 hr):** Ask Source Deep-Dive Panel — expandable entity accordion on citation links. Dev plan `DEVPLAN-IDEA-087-ask-source-deep-dive.md` ready *(promoted Run 35)*.
+10. **IDEA-093 (1.5 hr):** Character Voice Mode — 9-chip character selector on Ask page; answers in first-person crew voice grounded in arc "Starting State". 4-file change. Dev plan `DEVPLAN-IDEA-093-character-voice-mode.md` planned *(NEW Run 35)*.
+11. **IDEA-078 (20 min):** Ask Response Confidence Ring — left-border accent on assistant bubbles. Dev plan `DEVPLAN-IDEA-078-ask-confidence-ring.md` ready *(promoted Run 35)*.
+12. **IDEA-042 (2 hr):** Suggested follow-up chips after Ask answers. Dev plan `DEVPLAN-IDEA-042-follow-up-chips.md` ready.
+13. **IDEA-051 (30 min):** Scene-level "Ask →" hover affordance. Dev plan `DEVPLAN-IDEA-051-scene-level-ask-affordance.md` ready.
+14. **IDEA-062 (2 hr):** Re-Reader Hindsight Panel. Dev plan `DEVPLAN-IDEA-062-re-reader-hindsight-panel.md` ready.
+15. **IDEA-077 (1.5 hr):** Re-Reader Highlight Fingerprint. Dev plan `DEVPLAN-IDEA-077-highlight-fingerprint.md` ready.
+16. **IDEA-083 (2.5 hr):** World Lore Quiz for `show_all_content` readers. Dev plan `DEVPLAN-IDEA-083-world-lore-quiz.md` ready *(promoted Run 35)*.
 17. **IDEA-052 (3 hr author time, 0 code):** Author seeds 9 character spec JSONs, runs batch portrait generation, approves via admin console. Plan: `DEVPLAN-IDEA-052-canonical-character-portraits.md`.
-18. **IDEA-078 (20 min):** Ask Response Confidence Ring — left-border accent on assistant bubbles from `linksInAnswer.length`. Dev plan `DEVPLAN-IDEA-078-ask-confidence-ring.md` planned.
-19. **IDEA-042 (2 hr):** Suggested follow-up chips after Ask answers — dev plan `DEVPLAN-IDEA-042-follow-up-chips.md` ready.
-20. **IDEA-043 (5 hr):** On-demand scene visualization via Ask — dev plan `DEVPLAN-IDEA-043-on-demand-scene-visualization.md`. Extends visuals pipeline to reader-triggered image generation.
-21. **FIX-052 (45 min):** Supabase-backed rate limit for `/api/ask` and audio stream. New migration 041 + `rate-limit-db.ts` module. Plan: `FIXPLAN-FIX-052-serverless-rate-limit.md`.
-22. **FIX-047 (15 min):** Update all 12 files (9 source + 3 test) with stale `claude-sonnet-4-20250514` to `claude-sonnet-4-6`; bump SYNTH_PROMPT_VERSION to v10. Plan: `FIXPLAN-FIX-047-stale-model-id.md`.
-23. **FIX-045 (10 min):** Update `docs/celestial/visuals-integration-plan.md` preset names before executing Phase 0 of the visuals plan. Docs-only fix.
-24. **FIX-046 (20 min):** Update stale "unlock as you progress" copy in 3 files; remove dead `!unlocked` code block.
-25. **FIX-026 + FIX-027 + FIX-030 (30 min combined):** Three stale `'keith'` role fixes. FIX-026 migration **040** conflicts with IDEA-043 Phase 5 (041) — FIX-026 goes first.
-26. **FIX-048 (5 min):** Add `.gitignore` pattern for `public/images/`.
-27. **FIX-028 (30 min + copy decisions):** Legacy "Keith" UI sweep including `AskAboutStory.tsx`. Plan: `FIXPLAN-FIX-028-keith-ui-copy-sweep.md`.
-28. **FIX-029 Phase 1 (1 hr):** Remove AgeModeSwitcher from Nav/Header/Home; flatten age mode branches in 9 files. Plan: `FIXPLAN-FIX-029-remove-age-mode-system.md`.
-29. **FIX-013, FIX-014, FIX-016, FIX-017:** Tell pipeline defensive coding — low priority.
+18. **IDEA-043 (5 hr):** On-demand scene visualization via Ask. Dev plan `DEVPLAN-IDEA-043-on-demand-scene-visualization.md` ready.
+19. **FIX-051 (1 hr):** HTML sanitization for `dangerouslySetInnerHTML` in admin surfaces. Plan: `FIXPLAN-FIX-051-dangerouslysetinnerhtml-admin.md`.
+20. **FIX-050 (5 min):** Remove `/\bnext\b/i` from FUTURE_PATTERNS in `ask-intent.ts`. Plan: `FIXPLAN-FIX-050-ask-intent-next-pattern.md`.
+21. **FIX-049 (10 min):** Rename `requireKeith()` to `requireAuthor()` in 5 visuals API routes. Plan: `FIXPLAN-FIX-049-requirekeith-function-name.md`.
+22. **FIX-052 (45 min):** Supabase-backed rate limit for `/api/ask` and audio stream. Plan: `FIXPLAN-FIX-052-serverless-rate-limit.md`.
+23. **FIX-047 (15 min):** Update 12 files with stale `claude-sonnet-4-20250514` to `claude-sonnet-4-6`; bump SYNTH_PROMPT_VERSION to v10. Plan: `FIXPLAN-FIX-047-stale-model-id.md`.
+24. **FIX-045 (10 min):** Update `docs/celestial/visuals-integration-plan.md` preset names. Docs-only fix.
+25. **FIX-046 (20 min):** Update stale "unlock as you progress" copy in 3 files; remove dead `!unlocked` code block.
+26. **FIX-026 + FIX-027 + FIX-030 (30 min combined):** Three stale `'keith'` role fixes. FIX-026 migration **040** conflicts with IDEA-043 Phase 5 (041) — FIX-026 goes first.
+27. **FIX-048 (5 min):** Add `.gitignore` pattern for `public/images/`.
+28. **FIX-028 (30 min + copy decisions):** Legacy "Keith" UI sweep. Plan: `FIXPLAN-FIX-028-keith-ui-copy-sweep.md`.
+29. **FIX-029 Phase 1 (1 hr):** Remove AgeModeSwitcher from Nav/Header/Home. Plan: `FIXPLAN-FIX-029-remove-age-mode-system.md`.
+30. **FIX-013, FIX-014, FIX-016, FIX-017:** Tell pipeline defensive coding — low priority.

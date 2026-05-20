@@ -4,6 +4,56 @@
 
 ---
 
+## Run: 2026-05-20 (Run 35)
+
+### Summary
+- Scanned: 0 new code commits since Run 34 (last commit `0ec489e` — nightshift docs only). Codebase state unchanged.
+- Issues: 0 new, 0 resolved, 0 spoiler-leak P0. All open planned issues unchanged: FIX-026, 027, 028, 029, 030, 045, 046, 047, 048, 049, 050, 051, 052. FIX-047 (12 stale model ID files) re-confirmed present; FIX-049 (requireKeith in 5 routes) re-confirmed present via grep.
+- Ideas (by theme): ask-forward 1 seed (IDEA-096 — Ask Live Context Band) / IDEA-093 promoted to `planned` (dev plan written) / IDEA-078 promoted to `ready` / IDEA-087 promoted to `ready`; genmedia 1 seed (IDEA-097 — Resonant Pad Harmonic Pulse) / IDEA-088 parked (stale 3 days); post-read-world 1 seed (IDEA-098 — Crew Final Status Board) / IDEA-083 promoted to `ready` / IDEA-089 parked (stale 3 days). Total promoted to ready: 3. Promoted to planned: 1. Parked: 2.
+- Plans written: `DEVPLAN-IDEA-093-character-voice-mode.md`
+
+### Build & Lint & Test Results
+- Build: **PASSES** — `npx next build` executed in fresh sandbox (after `npm install`). Clean build, ~106 routes.
+- Lint: **PASSES** — 0 errors, **4 warnings** (same `<img>` tag warnings as Run 17+; `VisualsAdminConsole.tsx` lines 230/394, `EntityVisualsGallery.tsx` lines 64/118). Unchanged.
+- Tests: **192 total / 192 PASS / 0 FAIL**. All green. Unchanged.
+
+### Key Findings
+
+1. **No new code commits.** Codebase identical to Run 34. All open issues remain in documented states. FIX-047 (12 stale model ID files — grep confirmed in `personas.ts` and `ledger.ts`), FIX-049 (requireKeith in 5 visuals routes — grep confirmed in `approve/route.ts`, `prompt/route.ts`, `generate/route.ts`), FIX-050 (`/\bnext\b/i` at `ask-intent.ts:35`) all still open.
+
+2. **IDEA-093 promoted to `planned` — Character Voice Mode dev plan written.** A 9-chip character selector row in the Ask page footer lets readers ask questions as a named crew member (ALARA, Aven Voss, etc.) in first person. Implementation confirmed via codebase read: `getCharacterArcBySlug()` at `character-arcs.ts:75` provides the "Starting State" grounding text; `buildAskAnswererPrompt()` at `perspectives.ts:282` is the correct injection point for the voice block. Server validates `voiceCharacter` slug against an allowlist of 9 known character slugs — no arbitrary string injection. Draws only from arc "Starting State" section (~800 chars), not arc endpoints. 4-file change: `perspectives.ts` (new `buildVoiceCharacterBlock()` helper + `PersonaPromptArgs.voiceCharacter?` field), `orchestrator.ts` (add to `OrchestrateParams` + pass through), `api/ask/route.ts` (destructure + validate), `ask/page.tsx` (`CREW_CHIPS` constant + state + chip row UI + POST body). Zero new DB, zero new content, zero npm packages. Estimated 1.5 hours. Priority P2. Plan: `DEVPLAN-IDEA-093-character-voice-mode.md`.
+
+3. **Three ideas promoted to `ready`.** IDEA-078 (Ask Response Confidence Ring — dev plan written Run 31, confirmed present; 20 min, 1-file change), IDEA-083 (World Lore Quiz — dev plan written Run 33, confirmed present; 2.5 hr, 3 new files + `show_all_content` gate), IDEA-087 (Ask Source Deep-Dive Panel — dev plan written Run 34, confirmed present; 2 hr, 2-file change). All three have complete, confirmed dev plans with no new blockers.
+
+4. **Two ideas parked (3-day stale rule).** IDEA-088 (genmedia: Approved Entity Thumbnail Inline in Ask — seeded 2026-05-17, 3 days old; blocked by IDEA-052 character portraits prerequisite; overlaps with IDEA-087 which is now ready) and IDEA-089 (post-read-world: Completion Ceremony Page — seeded 2026-05-17, 3 days old; IDEA-095 Arc Endpoint Quotes Gallery covers the post-read entry point with less scope). Both demoted to parked with notes.
+
+5. **Three new ideas seeded.** IDEA-096 (ask-forward: Ask Live Context Band — a compact dismissable-pill strip just above the Ask input showing active context: story name, voice character, entity context; ~30 min, pure JSX, zero API/DB; synergistic with IDEA-093 character chips), IDEA-097 (genmedia: Resonant Pad Harmonic Pulse — abstract WORLD A alien_organic energy visualization via Imagen 4 pre-generated for `/locations/resonant-pad` wiki page; `resonant-pad` spec JSON already exists; ~20 min author time, zero code changes), IDEA-098 (post-read-world: Crew Final Status Board — 3×3 compact card grid on `/characters` index showing each crew member's CH17 state in 6 words, gated by `show_all_content`; reuses `getAllCharacterArcs()` + CH17 State After extraction shared with IDEA-095; ~1 hour).
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-093-character-voice-mode.md` — **NEW**: Character Voice Mode — 9-chip crew selector on Ask page, first-person answers grounded in arc Starting State; 4-file change, 1.5 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-087-ask-source-deep-dive.md` — Ask Source Deep-Dive Panel — expandable entity accordion on citation links; 2-file change, 2 hr (ask-forward). *(Promoted to `ready` this run)*
+- `docs/nightshift/plans/DEVPLAN-IDEA-083-world-lore-quiz.md` — World Lore Quiz — `/world/quiz`, AI-generated Haiku questions, gated by `show_all_content`; 2.5 hr (post-read-world). *(Promoted to `ready` this run)*
+- `docs/nightshift/plans/DEVPLAN-IDEA-078-ask-confidence-ring.md` — Ask Response Confidence Ring — left-border grounding signal; 1-file change, 20 min (ask-forward). *(Promoted to `ready` this run)*
+- `docs/nightshift/plans/DEVPLAN-IDEA-084-ask-home-hero-widget.md` — Ask Home Hero Widget — text input in hero routes to `/ask?q=...`; 2-file change, 45 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-075-ask-pinned-qa.md` — Ask Pinned Q&A — star-and-save exchanges to `/profile/questions`; migration 042 required; 2.5 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — Ask CTA after chapter summary (ask-forward). 15 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-057-context-aware-ask-welcome.md` — Context-aware Ask welcome + chapter chips (ask-forward). 45 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-051-scene-level-ask-affordance.md` — Scene-level "Ask →" hover affordance (ask-forward). 30 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-063-entity-hover-card.md` — Entity hover-card in Ask answers (ask-forward). 30 minutes.
+- `docs/nightshift/plans/DEVPLAN-IDEA-062-re-reader-hindsight-panel.md` — Re-Reader Hindsight Panel (post-read-world). 2 hours.
+- `docs/nightshift/plans/DEVPLAN-IDEA-077-highlight-fingerprint.md` — Highlight Fingerprint mosaic on `/profile/highlights`, gated by `show_all_content` (post-read-world). 1.5 hours.
+- `docs/nightshift/plans/DEVPLAN-IDEA-042-follow-up-chips.md` — Suggested follow-up chips after Ask answers (ask-forward). 2 hours.
+- `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md` — Remove `/\bnext\b/i` from FUTURE_PATTERNS (5 min).
+- `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md` — Rename `requireKeith()` to `requireAuthor()` in 5 visuals routes (10 min).
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — Update 12 files from stale `claude-sonnet-4-20250514` to `claude-sonnet-4-6` (15 min).
+
+### Recommendations
+- **If you have 30 min:** IDEA-048 (15 min — Ask CTA after story summary) + FIX-050 (5 min — remove over-broad next pattern) + FIX-049 (10 min — rename requireKeith). Three quick wins, zero dependency risk.
+- **If you have 1.5 hours:** IDEA-093 (Character Voice Mode) — tonight's new plan. 4-file change, all plumbing already in place. Makes the companion feel like a direct conversation with the crew — the most distinctive ask-forward feature in the queue. Readers can ask "ALARA, what do you see in the resonant pad?" and get an in-character first-person answer.
+- **If you have 2 hours:** IDEA-087 (Ask Source Deep-Dive Panel) — builds on two shipped primitives (`AskSourcesDisclosure` + `resolveWikiSlug`); makes every cited entity in an Ask answer instantly expandable inline; zero new DB or npm dependencies.
+
+---
+
 ## Run: 2026-05-19 (Run 34)
 
 ### Summary

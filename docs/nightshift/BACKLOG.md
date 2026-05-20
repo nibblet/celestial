@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-19 (Run 34)
+> Last updated: 2026-05-20 (Run 35)
 
 ## Maturity Levels
 
@@ -197,16 +197,17 @@
 ---
 
 ### [IDEA-078] Ask Response Confidence Ring — Grounding Signal on Answer Bubbles
-- **Status:** planned
+- **Status:** ready
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-14
-- **Last Updated:** 2026-05-16
+- **Last Updated:** 2026-05-20
 - **Priority:** P3
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-078-ask-confidence-ring.md`
 - **Summary:** A subtle left-border accent on each Ask assistant message bubble derived from `linksInAnswer.length` in the `done` SSE event — ocean border (3+ wiki links cited), muted clay border (1–2 links), no accent (zero links). Helps readers calibrate trust in answers without exposing raw retrieval metadata. Pure client-side, ~8 lines of JSX, no API or DB changes.
 - **Night Notes:**
   - 2026-05-14 (Run 29): Seeded. The `done` SSE event already returns `linksInAnswer: { href, text }[]` on the client. `linksInAnswer.length` is a simple proxy for grounding quality (0 = no wiki evidence cited; 3+ = well-grounded). Implementation: in `ask/page.tsx`, after streaming completes, compute a `confidence` level (`low | medium | high`) from `linksInAnswer.length` thresholds (e.g., 0 = low, 1-2 = medium, 3+ = high). Add a thin left-border or ring on the response bubble `<div>` using Tailwind classes driven by this level: `border-l-2` with color `text-ink-ghost` (low), `text-ocean` (medium), `text-teal-400` (high). No new API changes. No new fetch. No DB. Pure client-side visual using data already returned. ~15 lines of JSX change in `ask/page.tsx`. Caveat: `linksInAnswer` reflects cited links, not total evidence retrieved — a well-grounded answer with no inline links will show low. Track this as a known approximation.
   - 2026-05-16 (Run 31): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-078-ask-confidence-ring.md`. Key implementation detail confirmed: `msg.evidence.linksInAnswer` is already in client React state. The bubble `<div>` at `ask/page.tsx:698–703` uses `border border-[var(--color-border)]` for assistant messages — adding a `border-l-[3px]` accent with `border-l-[var(--color-ocean)]` (≥3 links) or `border-l-[var(--color-clay)]/50` (1–2 links) is the minimal change. Verify `--color-ocean` CSS var is in `globals.css` before executing. Estimated 20 minutes. 1-file change: `ask/page.tsx`. Priority set to P3 (polish, no functional gap).
+  - 2026-05-20 (Run 35): **Promoted to `ready`.** Dev plan confirmed present: `DEVPLAN-IDEA-078-ask-confidence-ring.md`. No new blockers.
 
 ---
 
@@ -240,16 +241,17 @@
 ---
 
 ### [IDEA-087] Ask Source Deep-Dive Panel — Expanded Entity Card on Citation Links
-- **Status:** planned
+- **Status:** ready
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-17
-- **Last Updated:** 2026-05-19
+- **Last Updated:** 2026-05-20
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-087-ask-source-deep-dive.md`
 - **Summary:** When an Ask companion response includes wiki entity links (surfaced in `AskSourcesDisclosure`), each source link gets an expandable "See full entry" mini-panel that shows the entity's type badge, one-line description, and a direct "Open wiki page →" link — all without leaving the Ask flow. Deepens the Ask-to-wiki navigation loop and surfaces the retrieval grounding more legibly.
 - **Night Notes:**
   - 2026-05-17 (Run 32): Seeded. The existing `AskSourcesDisclosure` component in `ask/page.tsx` renders `linksInAnswer` as a compact disclosure section. Each link already has `href` and `text`. Entity type can be derived from the href path segment (e.g., `/characters/alara` → "Character", `/factions/rigel-protocol` → "Faction") — same derivation used in the planned `EntityHoverCard` (IDEA-063). A short description could be fetched from `static-data.ts` entity index (already loaded server-side for wiki pages) or read from the entity slug mapping. Implementation: (1) In `AskSourcesDisclosure`, each link row gets an optional `<details>` accordion below it; (2) The accordion body renders entity type badge + wiki description pulled from a client-safe entity map; (3) The map could be passed as a prop from `ask/page.tsx` (a small subset of `static-data.ts` loaded at request time) or fetched lazily via a `/api/entity-meta/{slug}` micro-endpoint. The lazy fetch path avoids bundle bloat. No new DB, no AI calls, no generation cost. Estimated 2 hours. Synergistic with IDEA-063 (EntityHoverCard) — the two features share entity-type-from-href logic.
   - 2026-05-19 (Run 34): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-087-ask-source-deep-dive.md`. Implementation confirmed via codebase read. Two files: (1) New `src/app/api/entity-meta/route.ts` — GET endpoint accepting `?slug=X`; calls `resolveWikiSlug()` from `slug-resolver.ts` (already server-safe, uses `fs`); reads first non-heading paragraph of the entity markdown as `excerpt`; returns `{ found, name, kind, href, excerpt }`; no auth required (entity data is public). (2) `src/app/ask/page.tsx`: add `expandedSlug` + `metaCache` state to `AskSourcesDisclosure`; add `▸`/`▾` toggle per link row; lazy-fetch `/api/entity-meta?slug={slug}` on expand; render type badge + excerpt + "Open wiki page →" when loaded. Entity type badge derived client-side from href path segment — no API call for the badge. No new npm packages; no DB; no AI calls; no content changes. Estimated 2 hours. Priority P2.
+  - 2026-05-20 (Run 35): **Promoted to `ready`.** Dev plan confirmed present: `DEVPLAN-IDEA-087-ask-source-deep-dive.md`. No new blockers.
 
 ---
 
@@ -267,30 +269,45 @@
 ---
 
 ### [IDEA-093] Character Voice Mode — Ask the Crew in First Person
-- **Status:** seed
+- **Status:** planned
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-19
-- **Last Updated:** 2026-05-19
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
+- **Last Updated:** 2026-05-20
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-093-character-voice-mode.md`
 - **Summary:** A character selector badge on the Ask page lets the reader choose one of the 9 main crew members. Subsequent questions are answered as if spoken in that character's first-person voice, grounded in their arc ledger "Starting State" + character wiki entry. Transforms the archive companion into a direct conversation with the fictional crew.
 - **Night Notes:**
   - 2026-05-19 (Run 34): Seeded. The ask_answerer persona already has access to character arc context via `getCharacterArcContext()` injected in `sharedContentBlock()`. A voice-mode toggle would (1) add a horizontal character chip row beneath the Ask input in `ask/page.tsx` — clicking a chip sets `voiceCharacter: string | null` state; (2) include `voiceCharacter` in the `/api/ask` POST body; (3) in `orchestrateAsk()`, if `voiceCharacter` is set, append a system-prompt block: "Respond as {CHARACTER_NAME} in first-person. Ground your answers only in this character's documented experiences up to their established arc state. Do not invent events or speak about other characters' inner states." + inject that character's Starting State + wiki profile text. The selector chip row has a "None (Archive)" default option, preserving existing behavior. Implementation: 2 state additions to `ask/page.tsx` + 1 param in the API route + ~20 lines in `perspectives.ts` or `prompts.ts`. No new DB, no new content files. Content grounding: `content/wiki/arcs/characters/{slug}.md` "Starting State" entry (safe — no arc-endpoint spoilers). Estimated 1.5 hours. Works for all users under companion-first. Latency unchanged (no additional AI calls; one system-prompt modification). No spoiler concern: character voice mode draws only from publicly accessible wiki + starting-state arc data.
+  - 2026-05-20 (Run 35): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-093-character-voice-mode.md`. Implementation confirmed via codebase read: `getCharacterArcBySlug(slug)` already exists in `character-arcs.ts:75`; `PersonaPromptArgs` type is in `perspectives.ts:71`; `buildAskAnswererPrompt()` at `perspectives.ts:282` is the correct injection point. 4-file change: `perspectives.ts` (add field + helper fn + modify prompt builder), `orchestrator.ts` (add to `OrchestrateParams` + pass through), `api/ask/route.ts` (destructure + validate against allowlist), `ask/page.tsx` (CREW_CHIPS constant + state + chip row UI + POST body). Server validates slug against hardcoded allowlist — no arbitrary string injection. Draws only from "Starting State" arc section (~800 chars). Priority P2. Estimated 1.5 hours.
+
+---
+
+### [IDEA-096] Ask Live Context Band — Visual Grounding Indicator Above the Input
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-20
+- **Last Updated:** 2026-05-20
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** A compact strip rendered between the thread and the input bar showing the active context for the next message — story name (if `?story=` set), voice character (if IDEA-093 active), and any entity context (if `?entity=` set) — as dismissable pill badges. Gives readers visual feedback on what's grounding the companion before they type. Zero API calls; pure client-side React state display.
+- **Night Notes:**
+  - 2026-05-20 (Run 35): Seeded. Currently the Ask page has a breadcrumb-style story title shown near the top of the thread, but readers have no inline reminder near the input of what context is active. This is especially relevant with IDEA-093 (Character Voice Mode) shipping — a reader may forget they have "ALARA" selected mid-session. Implementation: (1) Render a `<div>` between the thread scroll area and the form (just above the chip row from IDEA-093); (2) Shows dismissable `×` pills: one for story ("📖 Chapter N: Title"), one for voice character ("🎙 Responding as ALARA"), one for entity context ("🔍 ALARA"). Each × clears its respective state. (3) If no context is active (all null/undefined), the strip renders nothing (zero height); no layout shift when context is absent. (4) All state (storySlug, voiceCharacter, entitySlug) is already in `ask/page.tsx` React state — this is a pure display layer, ~20 lines JSX. Zero new API routes, zero DB, zero npm packages. Synergistic with IDEA-093 (character chips), IDEA-084 (home widget auto-submit), IDEA-069 (entity-level CTA). Estimated 30 minutes.
 
 ---
 
 ## genmedia
 
 ### [IDEA-088] Approved Entity Thumbnail Inline in Ask Answers — Zero-Gen Visual Bridge
-- **Status:** seed
+- **Status:** parked
 - **Theme:** genmedia
 - **Seeded:** 2026-05-17
-- **Last Updated:** 2026-05-17
+- **Last Updated:** 2026-05-20
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** When an Ask response references a wiki entity via a link in `linksInAnswer`, and that entity has an approved visual asset in `cel_visual_assets` (e.g., a character portrait from IDEA-052), a small circular thumbnail (40×40px) appears inline next to the entity link inside the answer bubble. Zero generation cost; purely displays pre-approved author assets. Requires IDEA-052 (canonical character portraits) to ship first to populate the asset table meaningfully.
 - **Night Notes:**
   - 2026-05-17 (Run 32): Seeded. A simpler, more targeted variant of the previously parked IDEA-070 (which added thumbnails to AskSourcesDisclosure). This version embeds the thumbnail directly adjacent to the entity wiki link inside the rendered markdown — inside `ASSISTANT_MARKDOWN_COMPONENTS.a` in `ask/page.tsx` (lines 30–38). After the `done` SSE event, the client has `linksInAnswer` with entity slugs. A secondary Supabase client-side fetch for approved asset URLs (one batched query after stream completes) adds the thumbnail URL to each link entry. (1) Model/provider: N/A — no generation. (2) Cost per generation: $0 — assets are pre-approved. (3) Caching: approved assets are in Supabase Storage with public URLs; client caches response in component state for the session. (4) Spoiler gating of prompt inputs: N/A — no AI generation; entity visuals are decorative world-building, not narrative text. (5) Canon grounding: thumbnails come exclusively from `cel_visual_assets` with `approved=true` — author-curated canonical renders only. Prerequisite: IDEA-052 (character portraits) must ship first. Fallback: if no approved asset exists, the link renders exactly as today. Estimated 2 hours after IDEA-052 ships. Related: supersedes IDEA-070 (parked).
+  - 2026-05-20 (Run 35): Stale 3 days — likely low priority or too complex. Demoting to parked. Blocked by IDEA-052 (character portraits) prerequisite — no approved assets to display yet. Superseded in part by IDEA-070 (parked) and overlaps with IDEA-087 (Ask Source Deep-Dive, now ready). Un-park after IDEA-052 ships to populate assets and the thumbnail display scope is confirmed as distinct from IDEA-087.
 
 ---
 
@@ -317,6 +334,19 @@
 - **Summary:** When a reader asks how the Command Dome is laid out, what the Resonant Pad looks like from above, or how a specific ship section connects to others, the Ask companion detects spatial/structural intent and offers an optional "Diagram →" inline image generated via Imagen 4 with an orthographic blueprint aesthetic — distinct from the cinematic scene renders of IDEA-043.
 - **Night Notes:**
   - 2026-05-19 (Run 34): Seeded. This targets a different visual register than IDEA-043 (scene illustrations) or IDEA-094 (faction posters): schematic/technical rather than cinematic/diegetic. Reader asks "What does the Translation Bay look like?" or "Show me the Valkyrie-1 interior layout" → intent classifier detects `spatial_structure` sub-type → Imagen 4 call with a blueprint-style prompt modifier ("orthographic cutaway cross-section, labeled diagram, technical blueprint lines, no atmosphere"). The 11 interior location specs in `content/wiki/specs/` (with `parent_entity: "valkyrie-1"` inheritance chains) are ideal grounding sources — they have established WORLD A vocabulary. (1) Model/provider: Imagen 4 (`valkyrie_shipboard` preset + `schematic_overlay` style modifier string). (2) Cost budget: ~$0.06/image; 3 images/reader/hour shared with IDEA-043 rate limit. (3) Caching: per (entitySlug, "schematic", corpusVersion) hash — shared, not user-scoped; different cache key from scene renders so both can coexist. (4) Spoiler gating of prompt inputs: location/structural data is non-narrative; ship section specs contain no story events. All spec JSON and location wiki markdown is safe for all users under companion-first. (5) Canon grounding: entity spec chain from `content/wiki/specs/{slug}/` (inheriting from `valkyrie-1/master.json` via `parent_entity`) + location wiki markdown (`content/wiki/locations/{slug}.md`). Prerequisite: IDEA-043 (on-demand visualization) ships first to establish the visual intent → generation pipeline in Ask. Estimated 1.5 hours on top of IDEA-043 (adds `spatial_structure` intent sub-type + schematic prompt modifier + cache key variant).
+
+---
+
+### [IDEA-097] Resonant Pad Harmonic Pulse — Pre-Generated Abstract Visualization for Location Page
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-20
+- **Last Updated:** 2026-05-20
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** A pre-generated Imagen 4 abstract visualization of the Resonant Pad's harmonic emission pattern — an alien-organic energy field render, not a scene illustration — displayed on the `/locations/resonant-pad` wiki page via `EntityVisualsGallery`. Author-batch only (zero reader generation cost). Leverages the existing `resonant-pad` spec JSON and the WORLD A `alien_organic` vocabulary.
+- **Night Notes:**
+  - 2026-05-20 (Run 35): Seeded. The `resonant-pad` location has a `content/wiki/specs/resonant-pad/master.json` spec file (added commits `03d7d20` + `74aeae5`, see STATUS.md) with `parent_entity: "valkyrie-1"`. The spec chain gives full WORLD A vocabulary (bio-crystalline, petal apertures, subdermal vein emission). An abstract energy-field visualization — showing harmonic emission lines converging on the pad surface — is achievable with an Imagen 4 prompt tuned to the WORLD A aesthetic without depicting narrative events. (1) Model/provider: Imagen 4 with `valkyrie_shipboard` or `alien_organic` vocabulary (WORLD A). ~$0.06/image. (2) Cost budget: 1–2 images; author-batch only; ~$0.06–$0.12 total. (3) Caching: stored in `cel_visual_assets` with `approved=true`; surfaced on location page via existing `EntityVisualsGallery`. (4) Spoiler gating of prompt inputs: Resonant Pad specs contain no narrative events — the spec describes the physical/spatial object only. No spoiler risk. (5) Canon grounding: `content/wiki/specs/resonant-pad/master.json` + parent chain from `valkyrie-1/master.json` + `content/wiki/locations/resonant-pad.md`. No additional content needed. Prerequisite: author runs via admin console, approves asset. The existing `EntityVisualsGallery` on the location page will surface it automatically. Estimated: 20 minutes of author time, zero code changes.
 
 ---
 
@@ -512,15 +542,16 @@
 ## post-read-world
 
 ### [IDEA-089] Completion Ceremony Page — Transition Surface for Finished Readers
-- **Status:** seed
+- **Status:** parked
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-17
-- **Last Updated:** 2026-05-17
+- **Last Updated:** 2026-05-20
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** A dedicated `/completion` page (or redirect from profile when all 17 chapters are read) that celebrates a reader's journey through the book. Shows personalized reading stats (chapters read, Ask questions asked, highlights saved), the highlight fingerprint mosaic (from IDEA-077), and a "Continue Exploring" section surfacing key post-read-world features (quiz, reading journey timeline, entity explorer). Acts as a rite-of-passage transition from "first-time reader" to "archive explorer."
 - **Night Notes:**
   - 2026-05-17 (Run 32): Seeded. The completion trigger could be: (a) explicit `show_all_content = true` flag, or (b) reader marking all 17 chapters read (`cel_story_reads` has 17 rows for the user). Data sources for the summary stats: `cel_story_reads` (count + date of last read), `cel_story_highlights` (total count), `cel_chapter_questions` (total count). All three are existing Supabase tables. Implementation: (1) New `/completion/page.tsx` server component — gated by `show_all_content === true` (redirect to `/profile` if false); (2) Three aggregated Supabase queries: `count(*)` from each of the three tables for the user; (3) Render a celebration header ("You've read the universe"), a stats summary row (chapters, highlights, questions), the highlight fingerprint mosaic (import `HighlightFingerprintMosaic` component from IDEA-077 when that ships), and a "What's next in the Archive?" grid of post-read-world feature links (quiz, journey timeline, entity graph). Post-read-world requirements: (a) Hidden for first-time and guest readers — `show_all_content` gate at server level; (b) Integration with `show_all_content`: direct server-side check; (c) Partial-completion edge cases: flag validated server-side. Dependency note: the page is buildable today with just the stat counts; the fingerprint mosaic is plug-in after IDEA-077 ships. Estimated 2 hours baseline (without mosaic) + 30 min after IDEA-077 to integrate mosaic component.
+  - 2026-05-20 (Run 35): Stale 3 days — likely low priority or too complex. Demoting to parked. IDEA-095 (Arc Endpoint Quotes Gallery, seeded Run 34) covers the contemplative post-read entry point more directly with less scope. Un-park after IDEA-077 (highlight fingerprint) and IDEA-083 (lore quiz) ship to fill in the "Continue Exploring" grid this page would surface.
 
 ---
 
@@ -547,6 +578,19 @@
 - **Summary:** For `show_all_content=true` readers, a `/world/voices` page surfaces one curated "final-state entry" per main character drawn from their CH17 arc ledger "State After" text — displayed as a typographic quote card gallery. Nine panels, each character's closing arc state rendered as a reflective quote. Pure static data; zero AI calls, zero DB changes. A contemplative anchor page for readers before they explore post-read-world features.
 - **Night Notes:**
   - 2026-05-19 (Run 34): Seeded. All 9 arc ledger files in `content/wiki/arcs/characters/` have a CH17 "State After" entry. Implementation: (1) New server utility `src/lib/wiki/arc-endpoints.ts` — calls `getAllCharacterArcs()` (existing), extracts the `stateAfter` text from the CH17 row for each arc; returns `ArcEndpoint[]`. The arc markdown table parsing reuses the same logic planned in IDEA-062 (`chapter-hindsight.ts`). (2) New `/world/voices/page.tsx` server component — gated by `show_all_content === true` (redirect to `/profile` if false); calls `getArcEndpoints()`, renders a 3×3 (or 2×4+1) grid of quote cards. Each card: character name (title-cased), a short "State After" excerpt (first 100 chars from CH17 entry), and a link to the character's wiki page. Tailwind styling: `italic`, large centered text, muted underline. (3) Post-read-world requirements: (a) Hidden from first-time readers and guests — server-level `show_all_content` check; (b) Integration with `show_all_content`: direct server-side check; (c) Partial-completion: flag validated server-side. Zero new DB, zero new npm packages, zero content files. The CH17 "State After" entries are arc-endpoint spoilers — this page is correctly gated behind `show_all_content`. Estimated 1.5 hours. Synergistic with IDEA-089 (completion ceremony page) — `/world/voices` can be a CTA from the ceremony page.
+
+---
+
+### [IDEA-098] Crew Final Status Board — Character State Grid on Characters Index for Completed Readers
+- **Status:** seed
+- **Theme:** post-read-world
+- **Seeded:** 2026-05-20
+- **Last Updated:** 2026-05-20
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** For `show_all_content=true` readers, the `/characters` index page gains a "Crew Status at Book's End" summary grid above the character list — a 3×3 compact card layout, one card per main character showing their name and a 3–5 word CH17 arc-state summary drawn from their arc ledger. Gives completed readers a living roster view, not just a list of wiki links.
+- **Night Notes:**
+  - 2026-05-20 (Run 35): Seeded. The `/characters` page currently renders all character slugs as link cards. For `show_all_content` readers, a companion "crew status" panel above the character list would surface the arc endpoint in a compact at-a-glance format. Implementation: (1) In `characters/page.tsx` (server component), check `readerProgress.showAllContent`; if true, call `getAllCharacterArcs()` (existing), extract CH17 "State After" text, truncate to ~6 words per character; (2) Render a `<section>` with a heading "Crew — Where They Ended" and a 3×3 CSS grid of small cards (character name + 6-word state excerpt + link to character page); (3) Post-read-world requirements: (a) Hidden from first-time readers and guests — `show_all_content` check at server level; entire `<section>` not rendered without the flag; (b) Integration with `show_all_content`: direct server-side check before calling arc utility; (c) Partial-completion edge cases: `show_all_content` is the sole gate — server validates flag. Zero new DB, zero new content, zero npm packages. The CH17 "State After" text in the arc ledger is the same data sourced by IDEA-095 (Arc Endpoint Quotes Gallery) — these two features share the same data utility `arc-endpoints.ts` from IDEA-062. Estimated 1 hour. Synergistic with IDEA-095 (can cross-link each card to the `/world/voices` quote gallery). Prerequisite: IDEA-062 (hindsight panel) establishes arc parsing utilities; can be built independently with an inline `getAllCharacterArcs()` call.
 
 ---
 
@@ -707,16 +751,17 @@
 ---
 
 ### [IDEA-083] World Lore Quiz — AI-Generated Multiple-Choice Quiz for Completed Readers
-- **Status:** planned
+- **Status:** ready
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-15
-- **Last Updated:** 2026-05-18
+- **Last Updated:** 2026-05-20
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-083-world-lore-quiz.md`
 - **Summary:** For `show_all_content` readers, a `/world/quiz` page serving an AI-generated multiple-choice quiz grounded in `chapter_tags.json` and wiki facts. Questions like "Which chapter did the Vault Accord first activate?" or "Which harmonic state did Valkyrie-1 enter during the alignment sequence?" Test readers on actual lore with no spoiler risk since they've finished the book. Zero new content needed; all ground truth lives in the wiki.
 - **Night Notes:**
   - 2026-05-15 (Run 30): Seeded. This is the only quiz/gamification idea in the backlog, and it has a clear post-read-world boundary (gated by `show_all_content=true`). Implementation: (1) Post-read-world requirements: (a) Hidden from first-time and guest readers — `/world/quiz` requires `show_all_content === true` at server level; (b) Integration with `show_all_content`: direct server-side check, redirect to `/profile` if false; (c) Partial-completion edge cases: same server-side flag check. (2) Quiz generation: a new `/api/quiz/generate` POST route calls Claude Haiku (cost: ~$0.001 per 10-question set) with a prompt seeded from a random subset of `chapter_tags.json` entity entries + wiki rule facts. The AI generates 5 multiple-choice questions with 4 options each, returning structured JSON `{ question, options: string[], correctIndex }`. (3) Client renders the quiz as a step-by-step card flow (current question, options, "Submit" → reveal answer + next). Score shown at end. No scores persisted in DB (stateless). (4) Canon grounding: question prompts fed to Haiku include only wiki markdown excerpts (facts, not narrative prose) + entity metadata from `chapter_tags.json`. No character arc ledger content — keeps questions factual, not narrative-spoiler-y. Estimated 3 hours including API route, quiz render component, and `show_all_content` gate.
   - 2026-05-18 (Run 33): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-083-world-lore-quiz.md`. Key refinements vs seed notes: (1) `QuizQuestion` type refined to include `explanation: string` (shown after answer reveal); (2) Phase structure: 5 phases — gate/scaffold, quiz generator module, API route, quiz UI component, navigation entry points; (3) Claude Haiku 4.5 (`claude-haiku-4-5-20251001`) model — cost ~$0.001 per 5-question set; (4) Rate limit reuses existing `src/lib/rate-limit.ts` (5 quizzes/hour); (5) No new DB tables — scores are stateless. Priority set to P2. Estimated 2.5 hours.
+  - 2026-05-20 (Run 35): **Promoted to `ready`.** Dev plan confirmed present: `DEVPLAN-IDEA-083-world-lore-quiz.md`. No new blockers.
 
 ---
 
