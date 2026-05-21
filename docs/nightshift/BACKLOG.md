@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-20 (Run 35)
+> Last updated: 2026-05-21 (Run 36)
 
 ## Maturity Levels
 
@@ -256,29 +256,31 @@
 ---
 
 ### [IDEA-090] Ask Command Palette — Global Keyboard-Shortcut Companion Invocation
-- **Status:** seed
+- **Status:** parked
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-18
-- **Last Updated:** 2026-05-18
+- **Last Updated:** 2026-05-21
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** A global `Cmd+K`/`Ctrl+K` keyboard shortcut (from any page in the app) opens a floating command palette modal — a frosted-glass panel with a text input pre-focused. Submitting routes to `/ask?q={encodedQ}`, making Ask feel like a first-class keyboard-native shell command rather than a page you navigate to. The palette also surfaces 3 recent questions from `localStorage` and a typeahead entity search against static entity names.
 - **Night Notes:**
-  - 2026-05-18 (Run 33): Seeded. The home page hero widget (IDEA-084) solves the problem for homepage entry; the command palette solves it universally — from a chapter detail page, a character wiki page, or mid-scroll anywhere. Implementation: (1) New `src/components/ask/AskCommandPalette.tsx` — `'use client'` component that listens for `keydown` with `(ctrlKey || metaKey) && key === 'k'` via a `useEffect` on `document`; (2) Renders as a full-screen semi-transparent backdrop + centered frosted-glass modal with a text `<input>` (autofocused on open) and recent questions list loaded from `localStorage` key `celestial_recent_questions`; (3) On submit → `router.push('/ask?q={encodedQ}')` + dismiss; on Escape → dismiss; (4) Mount in `src/app/layout.tsx` so it's available everywhere; (5) `ask/page.tsx` reads `?q=` param and auto-submits (same change as IDEA-084 — the two features share this one `ask/page.tsx` edit). After a successful Ask response, append the question text to `localStorage` recent list (max 5 entries). No new API routes, no DB changes, zero npm packages (uses Tailwind). Estimated 1.5 hours. Works for guests (routes to Ask page, which handles unauthenticated users gracefully).
+  - 2026-05-18 (Run 33): Seeded.
+  - 2026-05-21 (Run 36): Stale 3 days — likely low priority or too complex. Demoting to parked. The home hero widget (IDEA-084, ready) and Ask CTA on story/entity pages cover the primary entry-point gap. Un-park if Paul wants a universal keyboard-native invocation surface across all pages. The home page hero widget (IDEA-084) solves the problem for homepage entry; the command palette solves it universally — from a chapter detail page, a character wiki page, or mid-scroll anywhere. Implementation: (1) New `src/components/ask/AskCommandPalette.tsx` — `'use client'` component that listens for `keydown` with `(ctrlKey || metaKey) && key === 'k'` via a `useEffect` on `document`; (2) Renders as a full-screen semi-transparent backdrop + centered frosted-glass modal with a text `<input>` (autofocused on open) and recent questions list loaded from `localStorage` key `celestial_recent_questions`; (3) On submit → `router.push('/ask?q={encodedQ}')` + dismiss; on Escape → dismiss; (4) Mount in `src/app/layout.tsx` so it's available everywhere; (5) `ask/page.tsx` reads `?q=` param and auto-submits (same change as IDEA-084 — the two features share this one `ask/page.tsx` edit). After a successful Ask response, append the question text to `localStorage` recent list (max 5 entries). No new API routes, no DB changes, zero npm packages (uses Tailwind). Estimated 1.5 hours. Works for guests (routes to Ask page, which handles unauthenticated users gracefully).
 
 ---
 
 ### [IDEA-093] Character Voice Mode — Ask the Crew in First Person
-- **Status:** planned
+- **Status:** ready
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-19
-- **Last Updated:** 2026-05-20
+- **Last Updated:** 2026-05-21
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-093-character-voice-mode.md`
 - **Summary:** A character selector badge on the Ask page lets the reader choose one of the 9 main crew members. Subsequent questions are answered as if spoken in that character's first-person voice, grounded in their arc ledger "Starting State" + character wiki entry. Transforms the archive companion into a direct conversation with the fictional crew.
 - **Night Notes:**
   - 2026-05-19 (Run 34): Seeded. The ask_answerer persona already has access to character arc context via `getCharacterArcContext()` injected in `sharedContentBlock()`. A voice-mode toggle would (1) add a horizontal character chip row beneath the Ask input in `ask/page.tsx` — clicking a chip sets `voiceCharacter: string | null` state; (2) include `voiceCharacter` in the `/api/ask` POST body; (3) in `orchestrateAsk()`, if `voiceCharacter` is set, append a system-prompt block: "Respond as {CHARACTER_NAME} in first-person. Ground your answers only in this character's documented experiences up to their established arc state. Do not invent events or speak about other characters' inner states." + inject that character's Starting State + wiki profile text. The selector chip row has a "None (Archive)" default option, preserving existing behavior. Implementation: 2 state additions to `ask/page.tsx` + 1 param in the API route + ~20 lines in `perspectives.ts` or `prompts.ts`. No new DB, no new content files. Content grounding: `content/wiki/arcs/characters/{slug}.md` "Starting State" entry (safe — no arc-endpoint spoilers). Estimated 1.5 hours. Works for all users under companion-first. Latency unchanged (no additional AI calls; one system-prompt modification). No spoiler concern: character voice mode draws only from publicly accessible wiki + starting-state arc data.
   - 2026-05-20 (Run 35): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-093-character-voice-mode.md`. Implementation confirmed via codebase read: `getCharacterArcBySlug(slug)` already exists in `character-arcs.ts:75`; `PersonaPromptArgs` type is in `perspectives.ts:71`; `buildAskAnswererPrompt()` at `perspectives.ts:282` is the correct injection point. 4-file change: `perspectives.ts` (add field + helper fn + modify prompt builder), `orchestrator.ts` (add to `OrchestrateParams` + pass through), `api/ask/route.ts` (destructure + validate against allowlist), `ask/page.tsx` (CREW_CHIPS constant + state + chip row UI + POST body). Server validates slug against hardcoded allowlist — no arbitrary string injection. Draws only from "Starting State" arc section (~800 chars). Priority P2. Estimated 1.5 hours.
+  - 2026-05-21 (Run 36): **Promoted to `ready`.** Dev plan confirmed present and complete: `DEVPLAN-IDEA-093-character-voice-mode.md`. No new blockers. All plumbing confirmed in code; 4-file change, 1.5 hr. Next to ship after IDEA-048/IDEA-084 cluster.
 
 ---
 
@@ -292,6 +294,19 @@
 - **Summary:** A compact strip rendered between the thread and the input bar showing the active context for the next message — story name (if `?story=` set), voice character (if IDEA-093 active), and any entity context (if `?entity=` set) — as dismissable pill badges. Gives readers visual feedback on what's grounding the companion before they type. Zero API calls; pure client-side React state display.
 - **Night Notes:**
   - 2026-05-20 (Run 35): Seeded. Currently the Ask page has a breadcrumb-style story title shown near the top of the thread, but readers have no inline reminder near the input of what context is active. This is especially relevant with IDEA-093 (Character Voice Mode) shipping — a reader may forget they have "ALARA" selected mid-session. Implementation: (1) Render a `<div>` between the thread scroll area and the form (just above the chip row from IDEA-093); (2) Shows dismissable `×` pills: one for story ("📖 Chapter N: Title"), one for voice character ("🎙 Responding as ALARA"), one for entity context ("🔍 ALARA"). Each × clears its respective state. (3) If no context is active (all null/undefined), the strip renders nothing (zero height); no layout shift when context is absent. (4) All state (storySlug, voiceCharacter, entitySlug) is already in `ask/page.tsx` React state — this is a pure display layer, ~20 lines JSX. Zero new API routes, zero DB, zero npm packages. Synergistic with IDEA-093 (character chips), IDEA-084 (home widget auto-submit), IDEA-069 (entity-level CTA). Estimated 30 minutes.
+
+---
+
+### [IDEA-099] Floating Chapter Ask Widget — Inline Ask Drawer on Reading Pages
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-21
+- **Last Updated:** 2026-05-21
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** A persistent floating action button on chapter reading pages (`/stories/[storyId]`) that opens a slide-in mini Ask panel on the right edge of the viewport — showing the last 3 conversation exchanges and a text input — so readers can consult the companion without navigating away from the chapter text.
+- **Night Notes:**
+  - 2026-05-21 (Run 36): Seeded. The current Ask CTAs all require navigating to `/ask`, losing the reader's scroll position and reading context. A floating drawer solves this: (1) A small circular FAB (floating action button) at the bottom-right of the chapter page — containing a sparkle or compass icon; (2) Clicking opens a `<aside>` slide-in panel (~320px wide) overlaying the right edge of the viewport, with backdrop overlay; (3) The panel hosts a mini chat thread (last 3 exchanges from the current session, stored in component state) and a single-line input that fires POST `/api/ask` with `storySlug` context; (4) Streaming responses render in the panel thread in real time; (5) An "Open in full Ask →" link at the top navigates to `/ask?story={storyId}&conversation={id}` if they want more. Implementation: a new `AskFloatingDrawer.tsx` client component — uses `useState(open)`, a `useRef` for the thread, and the same streaming pattern as `ask/page.tsx`. Added to `stories/[storyId]/page.tsx` near the page root. Context: `storySlug` passed as a prop. The drawer can start with the same 3 suggested chips from `chapter_tags.json` as IDEA-057 (context-aware welcome). Spoiler: none — the drawer uses the same `/api/ask` endpoint with the same gating; all content accessible under companion-first. Zero new routes, zero new DB tables. Estimated 3 hours (new streaming component from scratch + panel layout). Prerequisite: IDEA-057 (context-aware welcome chips) could share a server fetch. Synergistic with IDEA-093 (character voice mode chips could appear in the drawer too). Key design question: does the drawer persist state across scroll, or reset on each chapter navigation? Answer: persist in React state for the session (page mount).
 
 ---
 
@@ -312,15 +327,16 @@
 ---
 
 ### [IDEA-091] Faction Propaganda Poster — In-World Diegetic Artifact via Ask
-- **Status:** seed
+- **Status:** parked
 - **Theme:** genmedia
 - **Seeded:** 2026-05-18
-- **Last Updated:** 2026-05-18
+- **Last Updated:** 2026-05-21
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** When a reader asks "Show me the Rigel Protocol" or "What does the Vault Accord look like?" in the Ask companion, the system detects faction visual intent and generates a diegetic "propaganda poster" or recruitment artifact from that faction's perspective via Imagen 4 — not a scene render, but an in-world object that feels like it was produced by the faction itself. Government-style visual for Earth factions (`earth_institutional` preset); organic/geometric for Resonant-aligned factions (`alien_organic` preset).
 - **Night Notes:**
-  - 2026-05-18 (Run 33): Seeded. This is a specialization of IDEA-043 (on-demand scene visualization) that targets faction entities specifically. The key differentiator is the diegetic artifact framing — the prompt explicitly requests an in-world document/poster aesthetic rather than a cinematic scene. Implementation extends IDEA-043's `ask-intent.ts` visual intent detection with a `faction_artifact` sub-type (detected when a faction entity slug is in the message). (1) Model/provider: Imagen 4 (~$0.04–$0.08/image). (2) Cost budget: ~$0.06/generation; 3 images/reader/hour (shared with IDEA-043 rate limit via `cel_rate_limits` once FIX-052 ships). (3) Caching: per (faction-slug, style, corpusVersion) hash — shared cache, not user-scoped. (4) Spoiler gating of prompt inputs: faction identity is non-narrative; no story events in prompts. All content visible under companion-first; no chapter gate needed. (5) Canon grounding: `content/wiki/factions/{slug}.md` + any `content/wiki/specs/{faction-slug}/master.json` (if seeded); preset auto-selected from faction's world-affiliation (WORLD B for Earth factions, WORLD A for Resonant/alien factions, WORLD C for Vault-aligned factions). Prerequisite: IDEA-043 (on-demand visualization) ships first to establish the visual intent → generation pipeline in Ask. Estimated 1 hour on top of IDEA-043.
+  - 2026-05-18 (Run 33): Seeded. This is a specialization of IDEA-043 (on-demand scene visualization) that targets faction entities specifically.
+  - 2026-05-21 (Run 36): Stale 3 days — likely low priority or too complex. Demoting to parked. Blocked by IDEA-043 (on-demand visualization) as a prerequisite. Un-park after IDEA-043 ships and the visual intent pipeline is established. The key differentiator is the diegetic artifact framing — the prompt explicitly requests an in-world document/poster aesthetic rather than a cinematic scene. Implementation extends IDEA-043's `ask-intent.ts` visual intent detection with a `faction_artifact` sub-type (detected when a faction entity slug is in the message). (1) Model/provider: Imagen 4 (~$0.04–$0.08/image). (2) Cost budget: ~$0.06/generation; 3 images/reader/hour (shared with IDEA-043 rate limit via `cel_rate_limits` once FIX-052 ships). (3) Caching: per (faction-slug, style, corpusVersion) hash — shared cache, not user-scoped. (4) Spoiler gating of prompt inputs: faction identity is non-narrative; no story events in prompts. All content visible under companion-first; no chapter gate needed. (5) Canon grounding: `content/wiki/factions/{slug}.md` + any `content/wiki/specs/{faction-slug}/master.json` (if seeded); preset auto-selected from faction's world-affiliation (WORLD B for Earth factions, WORLD A for Resonant/alien factions, WORLD C for Vault-aligned factions). Prerequisite: IDEA-043 (on-demand visualization) ships first to establish the visual intent → generation pipeline in Ask. Estimated 1 hour on top of IDEA-043.
 
 ---
 
@@ -347,6 +363,19 @@
 - **Summary:** A pre-generated Imagen 4 abstract visualization of the Resonant Pad's harmonic emission pattern — an alien-organic energy field render, not a scene illustration — displayed on the `/locations/resonant-pad` wiki page via `EntityVisualsGallery`. Author-batch only (zero reader generation cost). Leverages the existing `resonant-pad` spec JSON and the WORLD A `alien_organic` vocabulary.
 - **Night Notes:**
   - 2026-05-20 (Run 35): Seeded. The `resonant-pad` location has a `content/wiki/specs/resonant-pad/master.json` spec file (added commits `03d7d20` + `74aeae5`, see STATUS.md) with `parent_entity: "valkyrie-1"`. The spec chain gives full WORLD A vocabulary (bio-crystalline, petal apertures, subdermal vein emission). An abstract energy-field visualization — showing harmonic emission lines converging on the pad surface — is achievable with an Imagen 4 prompt tuned to the WORLD A aesthetic without depicting narrative events. (1) Model/provider: Imagen 4 with `valkyrie_shipboard` or `alien_organic` vocabulary (WORLD A). ~$0.06/image. (2) Cost budget: 1–2 images; author-batch only; ~$0.06–$0.12 total. (3) Caching: stored in `cel_visual_assets` with `approved=true`; surfaced on location page via existing `EntityVisualsGallery`. (4) Spoiler gating of prompt inputs: Resonant Pad specs contain no narrative events — the spec describes the physical/spatial object only. No spoiler risk. (5) Canon grounding: `content/wiki/specs/resonant-pad/master.json` + parent chain from `valkyrie-1/master.json` + `content/wiki/locations/resonant-pad.md`. No additional content needed. Prerequisite: author runs via admin console, approves asset. The existing `EntityVisualsGallery` on the location page will surface it automatically. Estimated: 20 minutes of author time, zero code changes.
+
+---
+
+### [IDEA-100] Harmonic State Portrait Composite — Character-Within-Ship State Visual via Ask
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-21
+- **Last Updated:** 2026-05-21
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** When a reader asks "What does the ship look like when ALARA is in alignment?" or describes a specific Valkyrie harmonic state combined with ALARA's presence, the Ask companion detects `vessel_state_character_intent` and generates a composite image: the named harmonic state's physical spec overlaid with ALARA's noncorporeal visual signature. A portrait-within-landscape class of image unique to this story world.
+- **Night Notes:**
+  - 2026-05-21 (Run 36): Seeded. All 5 Valkyrie-1 harmonic states have full spec JSON at `content/wiki/specs/valkyrie-1/states/` (dormant/wake/active/alignment/harmonic_jump). ALARA has a spec path that would use the `noncorporeal_presence` preset. A composite image would combine: the named state's physical spec overrides (vein color, intensity, aperture posture) + a noncorporeal overlay (diffuse luminescent presence throughout the space) + the `valkyrie_shipboard` background. The composition creates a "ship as perceived by ALARA" visual register — not a scene render (IDEA-043) and not a portrait (IDEA-052), but a state-mediated point-of-view image. (1) Model/provider: Imagen 4 with `valkyrie_shipboard` preset + `noncorporeal_presence` style blend in prompt. ~$0.06/image. (2) Cost budget: 3 images/reader/hour shared with IDEA-043 rate limit. (3) Caching: per `(stateSlug, "alara-composite", corpusVersion)` hash — shared, not user-scoped; all 5 states can be pre-cached. (4) Spoiler gating of prompt inputs: harmonic state names are world-building vocabulary (not narrative events). ALARA's noncorporeal presence is established in early chapters — no spoiler risk. All specs visible to all users under companion-first. (5) Canon grounding: `content/wiki/specs/valkyrie-1/master.json` (WORLD A base vocab) + `content/wiki/specs/valkyrie-1/states/{state}.json` (overrides) + `content/wiki/characters/alara.md` (noncorporeal description) + Starting State from `content/wiki/arcs/characters/alara.md` (safe section only). Prerequisite: IDEA-043 (on-demand scene visualization) ships first to establish the visual-intent → generation pipeline in Ask. This extends IDEA-043 with a new `vessel_state_character` intent sub-type. Estimated: 1 hour on top of IDEA-043.
 
 ---
 
@@ -556,28 +585,30 @@
 ---
 
 ### [IDEA-092] Faction Alignment Reveal — Who Sided With Whom at Book's End
-- **Status:** seed
+- **Status:** parked
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-18
-- **Last Updated:** 2026-05-18
+- **Last Updated:** 2026-05-21
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** For `show_all_content=true` readers, each faction detail page gains a collapsible "Where the crew stood" accordion at CH17, listing which of the 9 main characters ended the story aligned with, opposed to, or neutral toward that faction — drawn entirely from arc ledger "State After" entries at CH17 and faction cross-references in character wiki markdown. Turns static faction pages into living political landscapes post-completion.
 - **Night Notes:**
-  - 2026-05-18 (Run 33): Seeded. Arc ledger files (`content/wiki/arcs/characters/*.md`) contain per-chapter "State After" entries that often reference specific faction relationships (e.g., "defied Rigel Protocol directive", "aligned with Vault Accord goals"). Cross-referencing all 9 arc ledgers at CH17 against a faction's slug yields the alignment picture. Implementation: (1) New server utility `src/lib/wiki/faction-alignment.ts` — accepts `factionSlug: string`, reads all 9 arc ledgers via `getAllCharacterArcs()` (existing), scans the CH17 "State After" entry for each character for mentions of the faction slug (case-insensitive), returns `{ aligned: CharacterRef[], opposed: CharacterRef[], neutral: CharacterRef[] }`. The mention detection can be lexical (faction slug / name match in text) — not a semantic inference, so it's fast and deterministic. (2) On `/factions/[slug]/page.tsx`, call this utility when `readerProgress.showAllContent === true`, pass results to a new `<FactionAlignmentReveal>` component rendered as a `<details>` accordion. (3) Post-read-world requirements: (a) Hidden from first-time readers and guests — `show_all_content` gate at server level; (b) Integration with `show_all_content`: direct server-side check; (c) Partial-completion: same server-side flag check. Zero new DB, zero new content, zero npm packages. The lexical match may have false positives if faction names appear in other contexts — acceptable for a v1; can be refined once arc parsing utilities (IDEA-062) are shipped and battle-tested. Estimated 2 hours. Prerequisite: IDEA-062 (hindsight panel) establishes the arc parsing infrastructure this reuses.
+  - 2026-05-18 (Run 33): Seeded. Arc ledger files (`content/wiki/arcs/characters/*.md`) contain per-chapter "State After" entries that often reference specific faction relationships.
+  - 2026-05-21 (Run 36): Stale 3 days — likely low priority or too complex. Demoting to parked. Lexical faction-mention detection in arc free text is fragile; IDEA-095 (Arc Endpoint Quotes Gallery, now planned) establishes the CH17 table parsing infrastructure this would share. Un-park after IDEA-062 (hindsight panel) and IDEA-095 ship. (e.g., "defied Rigel Protocol directive", "aligned with Vault Accord goals"). Cross-referencing all 9 arc ledgers at CH17 against a faction's slug yields the alignment picture. Implementation: (1) New server utility `src/lib/wiki/faction-alignment.ts` — accepts `factionSlug: string`, reads all 9 arc ledgers via `getAllCharacterArcs()` (existing), scans the CH17 "State After" entry for each character for mentions of the faction slug (case-insensitive), returns `{ aligned: CharacterRef[], opposed: CharacterRef[], neutral: CharacterRef[] }`. The mention detection can be lexical (faction slug / name match in text) — not a semantic inference, so it's fast and deterministic. (2) On `/factions/[slug]/page.tsx`, call this utility when `readerProgress.showAllContent === true`, pass results to a new `<FactionAlignmentReveal>` component rendered as a `<details>` accordion. (3) Post-read-world requirements: (a) Hidden from first-time readers and guests — `show_all_content` gate at server level; (b) Integration with `show_all_content`: direct server-side check; (c) Partial-completion: same server-side flag check. Zero new DB, zero new content, zero npm packages. The lexical match may have false positives if faction names appear in other contexts — acceptable for a v1; can be refined once arc parsing utilities (IDEA-062) are shipped and battle-tested. Estimated 2 hours. Prerequisite: IDEA-062 (hindsight panel) establishes the arc parsing infrastructure this reuses.
 
 ---
 
 ### [IDEA-095] Arc Endpoint Quotes Gallery — Closing Words of the Crew at CH17
-- **Status:** seed
+- **Status:** planned
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-19
-- **Last Updated:** 2026-05-19
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
+- **Last Updated:** 2026-05-21
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md`
 - **Summary:** For `show_all_content=true` readers, a `/world/voices` page surfaces one curated "final-state entry" per main character drawn from their CH17 arc ledger "State After" text — displayed as a typographic quote card gallery. Nine panels, each character's closing arc state rendered as a reflective quote. Pure static data; zero AI calls, zero DB changes. A contemplative anchor page for readers before they explore post-read-world features.
 - **Night Notes:**
-  - 2026-05-19 (Run 34): Seeded. All 9 arc ledger files in `content/wiki/arcs/characters/` have a CH17 "State After" entry. Implementation: (1) New server utility `src/lib/wiki/arc-endpoints.ts` — calls `getAllCharacterArcs()` (existing), extracts the `stateAfter` text from the CH17 row for each arc; returns `ArcEndpoint[]`. The arc markdown table parsing reuses the same logic planned in IDEA-062 (`chapter-hindsight.ts`). (2) New `/world/voices/page.tsx` server component — gated by `show_all_content === true` (redirect to `/profile` if false); calls `getArcEndpoints()`, renders a 3×3 (or 2×4+1) grid of quote cards. Each card: character name (title-cased), a short "State After" excerpt (first 100 chars from CH17 entry), and a link to the character's wiki page. Tailwind styling: `italic`, large centered text, muted underline. (3) Post-read-world requirements: (a) Hidden from first-time readers and guests — server-level `show_all_content` check; (b) Integration with `show_all_content`: direct server-side check; (c) Partial-completion: flag validated server-side. Zero new DB, zero new npm packages, zero content files. The CH17 "State After" entries are arc-endpoint spoilers — this page is correctly gated behind `show_all_content`. Estimated 1.5 hours. Synergistic with IDEA-089 (completion ceremony page) — `/world/voices` can be a CTA from the ceremony page.
+  - 2026-05-19 (Run 34): Seeded. All 9 arc ledger files in `content/wiki/arcs/characters/` have a CH17 "State After" entry.
+  - 2026-05-21 (Run 36): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md`. 2-file implementation: new `src/lib/wiki/arc-endpoints.ts` (parse CH17 "State After" from table rows via regex; filter arcs with no CH17 row gracefully) + new `src/app/world/voices/page.tsx` (server component, `show_all_content` gate, 3×3 quote-card grid with `sci-card-link` styling, links to character wiki pages). Zero new DB, zero new content, zero npm packages. Column index verification: after splitting CH17 table row by `|`, State After is at index 6 (0="", 1=CH17, 2=Scene, 3=Pressure, 4=Choice, 5=Consequence, 6=State After, 7=Evidence). Estimated 1.5 hours. Priority P2. Implementation: (1) New server utility `src/lib/wiki/arc-endpoints.ts` — calls `getAllCharacterArcs()` (existing), extracts the `stateAfter` text from the CH17 row for each arc; returns `ArcEndpoint[]`. The arc markdown table parsing reuses the same logic planned in IDEA-062 (`chapter-hindsight.ts`). (2) New `/world/voices/page.tsx` server component — gated by `show_all_content === true` (redirect to `/profile` if false); calls `getArcEndpoints()`, renders a 3×3 (or 2×4+1) grid of quote cards. Each card: character name (title-cased), a short "State After" excerpt (first 100 chars from CH17 entry), and a link to the character's wiki page. Tailwind styling: `italic`, large centered text, muted underline. (3) Post-read-world requirements: (a) Hidden from first-time readers and guests — server-level `show_all_content` check; (b) Integration with `show_all_content`: direct server-side check; (c) Partial-completion: flag validated server-side. Zero new DB, zero new npm packages, zero content files. The CH17 "State After" entries are arc-endpoint spoilers — this page is correctly gated behind `show_all_content`. Estimated 1.5 hours. Synergistic with IDEA-089 (completion ceremony page) — `/world/voices` can be a CTA from the ceremony page.
 
 ---
 
@@ -591,6 +622,19 @@
 - **Summary:** For `show_all_content=true` readers, the `/characters` index page gains a "Crew Status at Book's End" summary grid above the character list — a 3×3 compact card layout, one card per main character showing their name and a 3–5 word CH17 arc-state summary drawn from their arc ledger. Gives completed readers a living roster view, not just a list of wiki links.
 - **Night Notes:**
   - 2026-05-20 (Run 35): Seeded. The `/characters` page currently renders all character slugs as link cards. For `show_all_content` readers, a companion "crew status" panel above the character list would surface the arc endpoint in a compact at-a-glance format. Implementation: (1) In `characters/page.tsx` (server component), check `readerProgress.showAllContent`; if true, call `getAllCharacterArcs()` (existing), extract CH17 "State After" text, truncate to ~6 words per character; (2) Render a `<section>` with a heading "Crew — Where They Ended" and a 3×3 CSS grid of small cards (character name + 6-word state excerpt + link to character page); (3) Post-read-world requirements: (a) Hidden from first-time readers and guests — `show_all_content` check at server level; entire `<section>` not rendered without the flag; (b) Integration with `show_all_content`: direct server-side check before calling arc utility; (c) Partial-completion edge cases: `show_all_content` is the sole gate — server validates flag. Zero new DB, zero new content, zero npm packages. The CH17 "State After" text in the arc ledger is the same data sourced by IDEA-095 (Arc Endpoint Quotes Gallery) — these two features share the same data utility `arc-endpoints.ts` from IDEA-062. Estimated 1 hour. Synergistic with IDEA-095 (can cross-link each card to the `/world/voices` quote gallery). Prerequisite: IDEA-062 (hindsight panel) establishes arc parsing utilities; can be built independently with an inline `getAllCharacterArcs()` call.
+
+---
+
+### [IDEA-101] Crew Debrief Mode — Post-Completion First-Person Arc Conversation
+- **Status:** seed
+- **Theme:** post-read-world
+- **Seeded:** 2026-05-21
+- **Last Updated:** 2026-05-21
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** For `show_all_content=true` readers, a distinct "Debrief" mode on the Ask page that activates a character voice with full arc-endpoint context — including CH17 "State After" and arc trajectory, not just Starting State. Readers can have an "after the ending" conversation with any crew member, grounded in their complete documented arc. Strictly gated by `show_all_content`.
+- **Night Notes:**
+  - 2026-05-21 (Run 36): Seeded. IDEA-093 (Character Voice Mode, now ready) uses only "Starting State" (~800 chars) to avoid spoiling the arc. Crew Debrief Mode lifts this restriction for completed readers: (1) A second set of character chips appears on the Ask page only when `profile.showAllContent === true` (fetched server-side at page load and injected via a `debrief_eligible` prop); (2) The chips are visually distinct from the standard IDEA-093 crew chips — different color or "Debrief" label prefix; (3) When a debrief character is selected, the API receives `voiceCharacter` + `debriefMode: true`; (4) Server validates: if `debriefMode === true`, confirm `readerProgress.showAllContent === true` before including arc-endpoint content in the system prompt — otherwise strip to Starting State only. The debrief prompt block includes: CH17 "State After" (from `getArcEndpoints()` utility — shared with IDEA-095) + any "Current State by Chapter Boundary" section from the arc ledger. (5) Post-read-world requirements: (a) Chip row for debrief mode renders only when `showAllContent === true` — server prop injection ensures no flash on client; (b) API validates `showAllContent` server-side before unlocking the arc-endpoint context — client UI state alone cannot unlock it; (c) Partial-completion edge cases: server-side flag check is the sole gate. Prerequisite: IDEA-093 (Character Voice Mode) ships first to establish the chip row UI and API plumbing; debrief mode extends it with a server-side guard and additional context. Implementation: 3-file change after IDEA-093 ships — `api/ask/route.ts` (add `debriefMode` + `showAllContent` validation), `perspectives.ts` (add `buildDebriefBlock()` using CH17 state + arc trajectory), `ask/page.tsx` (conditional debrief chip row). Zero new DB tables; no new content. Estimated 1.5 hours on top of IDEA-093. Synergistic with IDEA-095 (shares `getArcEndpoints()` utility for CH17 state text).
 
 ---
 

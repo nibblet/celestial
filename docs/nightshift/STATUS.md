@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-05-20 (Nightshift Run 35)
+> Last updated: 2026-05-21 (Nightshift Run 36)
 
 ## App Summary
 
@@ -188,9 +188,9 @@
 
 ## Build / Test Status
 
-- **Build:** PASSES — clean, ~106 routes. 1 Turbopack warning on `next.config.ts`. (Requires `npm install` before `node_modules/.bin/next build` in a fresh clone.) Verified Run 35 (`npx next build` in fresh sandbox). No new code commits since Run 29 — codebase unchanged.
-- **Lint:** PASSES — 0 errors, **4 warnings** (`<img>` tags in visuals components — `VisualsAdminConsole.tsx` lines 230/394, `EntityVisualsGallery.tsx` lines 64/118). Verified Run 35. Unchanged since Run 17.
-- **Tests:** **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17). All green. Verified Run 35. No new code commits since Run 29 — codebase unchanged.
+- **Build:** PASSES — clean, ~106 routes. 1 Turbopack warning on `next.config.ts`. (Requires `npm install` before `npx next build` in a fresh clone.) Verified Run 36 (`npx next build` in fresh sandbox). No new code commits since Run 29 — codebase unchanged.
+- **Lint:** PASSES — 0 errors, **4 warnings** (`<img>` tags in visuals components — `VisualsAdminConsole.tsx` lines 230/394, `EntityVisualsGallery.tsx` lines 64/118). Verified Run 36. Unchanged since Run 17.
+- **Tests:** **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17). All green. Verified Run 36. No new code commits since Run 29 — codebase unchanged.
 
 ## Known Issues (See FIXES.md)
 
@@ -226,14 +226,15 @@
 6. **IDEA-063 (30 min):** Entity hover-card tooltips on wiki links in Ask answers. Dev plan `DEVPLAN-IDEA-063-entity-hover-card.md` ready.
 7. **IDEA-066 (1.5 hr):** "Continue where you left off" in Ask empty state. Dev plan `DEVPLAN-IDEA-066-cross-session-ask-resume.md` ready.
 8. **IDEA-075 (2.5 hr):** Ask Pinned Q&A — star/save individual Ask exchanges; migration 042 required. Dev plan `DEVPLAN-IDEA-075-ask-pinned-qa.md` ready.
-9. **IDEA-087 (2 hr):** Ask Source Deep-Dive Panel — expandable entity accordion on citation links. Dev plan `DEVPLAN-IDEA-087-ask-source-deep-dive.md` ready *(promoted Run 35)*.
-10. **IDEA-093 (1.5 hr):** Character Voice Mode — 9-chip character selector on Ask page; answers in first-person crew voice grounded in arc "Starting State". 4-file change. Dev plan `DEVPLAN-IDEA-093-character-voice-mode.md` planned *(NEW Run 35)*.
-11. **IDEA-078 (20 min):** Ask Response Confidence Ring — left-border accent on assistant bubbles. Dev plan `DEVPLAN-IDEA-078-ask-confidence-ring.md` ready *(promoted Run 35)*.
+9. **IDEA-087 (2 hr):** Ask Source Deep-Dive Panel — expandable entity accordion on citation links. Dev plan `DEVPLAN-IDEA-087-ask-source-deep-dive.md` ready.
+10. **IDEA-093 (1.5 hr):** Character Voice Mode — 9-chip character selector on Ask page; answers in first-person crew voice grounded in arc "Starting State". 4-file change. Dev plan `DEVPLAN-IDEA-093-character-voice-mode.md` ready *(promoted Run 36)*.
+11. **IDEA-078 (20 min):** Ask Response Confidence Ring — left-border accent on assistant bubbles. Dev plan `DEVPLAN-IDEA-078-ask-confidence-ring.md` ready.
 12. **IDEA-042 (2 hr):** Suggested follow-up chips after Ask answers. Dev plan `DEVPLAN-IDEA-042-follow-up-chips.md` ready.
 13. **IDEA-051 (30 min):** Scene-level "Ask →" hover affordance. Dev plan `DEVPLAN-IDEA-051-scene-level-ask-affordance.md` ready.
 14. **IDEA-062 (2 hr):** Re-Reader Hindsight Panel. Dev plan `DEVPLAN-IDEA-062-re-reader-hindsight-panel.md` ready.
 15. **IDEA-077 (1.5 hr):** Re-Reader Highlight Fingerprint. Dev plan `DEVPLAN-IDEA-077-highlight-fingerprint.md` ready.
-16. **IDEA-083 (2.5 hr):** World Lore Quiz for `show_all_content` readers. Dev plan `DEVPLAN-IDEA-083-world-lore-quiz.md` ready *(promoted Run 35)*.
+16. **IDEA-083 (2.5 hr):** World Lore Quiz for `show_all_content` readers. Dev plan `DEVPLAN-IDEA-083-world-lore-quiz.md` ready.
+17. **IDEA-095 (1.5 hr):** Arc Endpoint Quotes Gallery — `/world/voices` page showing 9 CH17 crew arc states as typographic cards; `show_all_content` gated. Dev plan `DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md` *(NEW Run 36, planned)*.
 17. **IDEA-052 (3 hr author time, 0 code):** Author seeds 9 character spec JSONs, runs batch portrait generation, approves via admin console. Plan: `DEVPLAN-IDEA-052-canonical-character-portraits.md`.
 18. **IDEA-043 (5 hr):** On-demand scene visualization via Ask. Dev plan `DEVPLAN-IDEA-043-on-demand-scene-visualization.md` ready.
 19. **FIX-051 (1 hr):** HTML sanitization for `dangerouslySetInnerHTML` in admin surfaces. Plan: `FIXPLAN-FIX-051-dangerouslysetinnerhtml-admin.md`.

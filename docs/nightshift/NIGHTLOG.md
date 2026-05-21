@@ -4,6 +4,59 @@
 
 ---
 
+## Run: 2026-05-21 (Run 36)
+
+### Summary
+- Scanned: 0 new code commits since Run 35 (last commit `2271bee` — nightshift docs only). Codebase state unchanged.
+- Issues: 0 new, 0 resolved, 0 spoiler-leak P0. All open planned issues unchanged: FIX-026, 027, 028, 029, 030, 045, 046, 047, 048, 049, 050, 051, 052. FIX-047 (12 stale model ID files) re-confirmed present via grep; FIX-049 (requireKeith in 5 routes) re-confirmed.
+- Ideas (by theme): ask-forward 1 seed (IDEA-099 — Floating Chapter Ask Widget) / IDEA-093 promoted to `ready` / IDEA-090 parked (stale 3 days); genmedia 1 seed (IDEA-100 — Harmonic State Portrait Composite) / IDEA-091 parked (stale 3 days); post-read-world 1 seed (IDEA-101 — Crew Debrief Mode) / IDEA-095 promoted to `planned` (dev plan written) / IDEA-092 parked (stale 3 days). Total promoted: 2 (IDEA-093 to ready, IDEA-095 to planned). Parked: 3.
+- Plans written: `DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md`
+
+### Build & Lint & Test Results
+- Build: **PASSES** — `npx next build` executed in fresh sandbox (after `npm install`). Clean build, ~106 routes. Unchanged.
+- Lint: **PASSES** — 0 errors, **4 warnings** (same `<img>` tag warnings as Run 17+). Unchanged.
+- Tests: **192 total / 192 PASS / 0 FAIL**. All green. Unchanged.
+
+### Key Findings
+
+1. **No new code commits.** Codebase is identical to Run 35. All open issues remain in documented states. FIX-047 (12 stale model ID files — grep confirmed: 12 files including `personas.ts`, `ledger.ts`, 3 test files), FIX-049 (requireKeith in 5 visuals routes — grep confirmed: 5 files), FIX-050 (`/\bnext\b/i` at `ask-intent.ts:35` — still present) all open.
+
+2. **IDEA-093 promoted to `ready`.** Dev plan `DEVPLAN-IDEA-093-character-voice-mode.md` (written Run 35) was confirmed complete via full read: 4-phase plan covering `perspectives.ts` (voice block helper + `PersonaPromptArgs.voiceCharacter?`), `orchestrator.ts` (param pass-through), `api/ask/route.ts` (slug validation against hardcoded VALID_VOICE_SLUGS), and `ask/page.tsx` (CREW_CHIPS constant + state + chip row UI). Server-side slug validation prevents arbitrary string injection. Draws only from "Starting State" (~800 chars), not arc endpoints. No blockers. 1.5 hr estimate stands.
+
+3. **IDEA-095 promoted to `planned`, dev plan written.** Arc Endpoint Quotes Gallery — a new `/world/voices` server-component page for `show_all_content=true` readers. Two new files: (1) `src/lib/wiki/arc-endpoints.ts` — parses the CH17 "State After" column from the "Chapter Arc Entries" markdown table in each arc ledger using a targeted regex + `split("|")` approach (column index 6); filters arcs with no CH17 row; returns `ArcEndpoint[]`; (2) `src/app/world/voices/page.tsx` — server component, `getReaderProgress().showAllContent` gate (redirect to `/profile` if false), 3×3 grid of `sci-card-link` quote cards with character name + truncated state text (160-char limit) + `Link` to character wiki page. Zero new DB tables, zero new content files, zero npm packages. Estimated 1.5 hours. Dev plan at `docs/nightshift/plans/DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md`. Synergistic with IDEA-098 (Crew Final Status Board, which shares the `arc-endpoints.ts` utility) and IDEA-101 (Crew Debrief Mode, seeded tonight).
+
+4. **Three ideas parked (3-day stale rule).** IDEA-090 (ask-forward: Ask Command Palette, seeded 05-18 — home hero widget and Ask CTAs cover entry-point gap), IDEA-091 (genmedia: Faction Propaganda Poster, seeded 05-18 — blocked by IDEA-043 prerequisite), IDEA-092 (post-read-world: Faction Alignment Reveal, seeded 05-18 — lexical faction-mention detection is fragile; IDEA-095 establishes the arc parsing infrastructure to build on). All three demoted with notes.
+
+5. **Three new ideas seeded.** IDEA-099 (ask-forward: Floating Chapter Ask Widget — persistent FAB on chapter reading pages opening a slide-in mini Ask drawer without navigation; streams via `/api/ask` with `storySlug` context; ~3 hours, new streaming component), IDEA-100 (genmedia: Harmonic State Portrait Composite — Ask detects `vessel_state_character_intent`; Imagen 4 generates a composite of the named harmonic state spec + ALARA noncorporeal overlay; all 5 state specs exist; prerequisite: IDEA-043; ~1 hr on top; model: Imagen 4, cost $0.06, shared rate limit with IDEA-043, cache per state-slug hash), IDEA-101 (post-read-world: Crew Debrief Mode — a second set of character chips on Ask page for `show_all_content=true` readers; lifts IDEA-093's Starting-State-only restriction to include full CH17 arc state; server validates `showAllContent` before unlocking arc-endpoint context; builds on IDEA-093; shares `getArcEndpoints()` utility with IDEA-095; ~1.5 hr on top of IDEA-093).
+
+6. **Review queue: 1 entry with `reviewed: false`.** `brain_lab/out/review-queue.md` file timestamp still 2026-04-26 — pipeline not re-run. Count consistent with Runs 21–35.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md` — **NEW**: Arc Endpoint Quotes Gallery — `/world/voices` page; 9 CH17 crew arc state quotes; `show_all_content` gated; 2 new files, 1.5 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-093-character-voice-mode.md` — Character Voice Mode — 9-chip crew selector; first-person answers from arc Starting State; 4-file change, 1.5 hr (ask-forward). *(Promoted to ready this run)*
+- `docs/nightshift/plans/DEVPLAN-IDEA-087-ask-source-deep-dive.md` — Ask Source Deep-Dive Panel — expandable entity accordion on citation links; 2-file change, 2 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-083-world-lore-quiz.md` — World Lore Quiz — `/world/quiz`, AI Haiku questions, `show_all_content` gated; 2.5 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-078-ask-confidence-ring.md` — Ask Response Confidence Ring — left-border grounding signal; 1-file change, 20 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-084-ask-home-hero-widget.md` — Ask Home Hero Widget — text input in hero; 2-file change, 45 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-075-ask-pinned-qa.md` — Ask Pinned Q&A — star-and-save exchanges; migration 042 required; 2.5 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — Ask CTA after chapter summary; 15 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-057-context-aware-ask-welcome.md` — Context-aware Ask welcome + chapter chips; 45 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-051-scene-level-ask-affordance.md` — Scene-level "Ask →" hover affordance; 30 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-063-entity-hover-card.md` — Entity hover-card in Ask answers; 30 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-062-re-reader-hindsight-panel.md` — Re-Reader Hindsight Panel; 2 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-077-highlight-fingerprint.md` — Highlight Fingerprint mosaic; 1.5 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-042-follow-up-chips.md` — Suggested follow-up chips after Ask answers; 2 hr (ask-forward).
+- `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md` — Remove `/\bnext\b/i` from FUTURE_PATTERNS; 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md` — Rename `requireKeith()` to `requireAuthor()` in 5 visuals routes; 10 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — Update 12 files from stale `claude-sonnet-4-20250514` to `claude-sonnet-4-6`; 15 min.
+
+### Recommendations
+- **If you have 30 min:** IDEA-048 (15 min — Ask CTA after story summary) + FIX-050 (5 min — remove over-broad next pattern) + FIX-049 (10 min — rename requireKeith). Three quick wins, zero dependency risk.
+- **If you have 1.5 hours:** IDEA-093 (Character Voice Mode) — confirmed ready tonight. 4-file change, all plumbing verified. Makes Ask feel like a direct conversation with any crew member — ask ALARA "What do you sense in the Resonant Pad?" and get a first-person answer grounded only in her documented starting state.
+- **If you have 2 hours:** IDEA-095 (Arc Endpoint Quotes Gallery) — tonight's new plan. 2 new files, 1.5 hr. A clean, satisfying post-read-world feature that turns arc ledger data into a contemplative reader-facing artifact at `/world/voices`. Foundation for both IDEA-098 (Crew Status Board) and IDEA-101 (Crew Debrief Mode).
+
+---
+
 ## Run: 2026-05-20 (Run 35)
 
 ### Summary
