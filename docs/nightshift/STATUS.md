@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-05-21 (Nightshift Run 36)
+> Last updated: 2026-05-22 (Nightshift Run 37)
 
 ## App Summary
 
@@ -158,7 +158,7 @@
 ### Content Pipeline (brain_lab/ + scripts/)
 
 - Python pipeline for EPUB ingest + entity extraction
-- `brain_lab/out/review-queue.md`: **8 character files** still marked `reviewed: false` (down from 9 — one entry resolved in commit `724d66b`)
+- `brain_lab/out/review-queue.md`: **9 character files** listed under a single "Files requiring human review (reviewed: false):" heading (amar-cael, aven-voss, evelyn-tran, galen-voss, jax-reyes, jonah-revas, lena-osei, marco-ruiz, thane-meric). Run 36 NIGHTLOG reported "1 entry" — that was a `grep -c` artefact counting lines with the text, not list items. True count is 9. Pipeline timestamp still 2026-04-26T20:05:34Z — pipeline not re-run.
 - **Run 17 additions (commits `0e60b8c`, `58b2527`):**
   - `docs/celestial/visuals-integration-plan.md` — 348-line phased plan for reader-facing visuals integration (**⚠️ FIX-045**: stale preset names in anchor table)
 - **Run 15 additions:**
@@ -191,6 +191,7 @@
 - **Build:** PASSES — clean, ~106 routes. 1 Turbopack warning on `next.config.ts`. (Requires `npm install` before `npx next build` in a fresh clone.) Verified Run 36 (`npx next build` in fresh sandbox). No new code commits since Run 29 — codebase unchanged.
 - **Lint:** PASSES — 0 errors, **4 warnings** (`<img>` tags in visuals components — `VisualsAdminConsole.tsx` lines 230/394, `EntityVisualsGallery.tsx` lines 64/118). Verified Run 36. Unchanged since Run 17.
 - **Tests:** **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17). All green. Verified Run 36. No new code commits since Run 29 — codebase unchanged.
+- **Run 37 note:** No code commits since Run 36. Build/lint/test status confirmed unchanged. No new build execution performed.
 
 ## Known Issues (See FIXES.md)
 
@@ -219,22 +220,23 @@
 ## Next Actions (Priority Order)
 
 1. **IDEA-048 (15 min):** Add Ask CTA near top of story page (after summary, before scene navigation) — 6 lines JSX in `stories/[storyId]/page.tsx` between lines 166–168. Dev plan `DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` ready.
-2. **IDEA-084 (45 min):** Ask Home Hero Widget — text input in home page hero routes to `/ask?q=...` with auto-submit; 2-file change (`HomeHero.tsx` + `ask/page.tsx`). Dev plan `DEVPLAN-IDEA-084-ask-home-hero-widget.md` ready.
-3. **IDEA-072 (1.5 hr):** Chapter quick-facts panel on Ask page — collapsible card showing mission day range, primary location, and top 3 characters when `?story=` is set. Dev plan `DEVPLAN-IDEA-072-chapter-quick-facts-panel.md` ready.
-4. **IDEA-069 (2 hr):** Ask CTA on all entity detail pages. Dev plan `DEVPLAN-IDEA-069-entity-level-ask-cta.md` ready.
-5. **IDEA-057 (45 min):** Context-aware welcome message on Ask page. Dev plan `DEVPLAN-IDEA-057-context-aware-ask-welcome.md` ready.
-6. **IDEA-063 (30 min):** Entity hover-card tooltips on wiki links in Ask answers. Dev plan `DEVPLAN-IDEA-063-entity-hover-card.md` ready.
-7. **IDEA-066 (1.5 hr):** "Continue where you left off" in Ask empty state. Dev plan `DEVPLAN-IDEA-066-cross-session-ask-resume.md` ready.
-8. **IDEA-075 (2.5 hr):** Ask Pinned Q&A — star/save individual Ask exchanges; migration 042 required. Dev plan `DEVPLAN-IDEA-075-ask-pinned-qa.md` ready.
-9. **IDEA-087 (2 hr):** Ask Source Deep-Dive Panel — expandable entity accordion on citation links. Dev plan `DEVPLAN-IDEA-087-ask-source-deep-dive.md` ready.
-10. **IDEA-093 (1.5 hr):** Character Voice Mode — 9-chip character selector on Ask page; answers in first-person crew voice grounded in arc "Starting State". 4-file change. Dev plan `DEVPLAN-IDEA-093-character-voice-mode.md` ready *(promoted Run 36)*.
-11. **IDEA-078 (20 min):** Ask Response Confidence Ring — left-border accent on assistant bubbles. Dev plan `DEVPLAN-IDEA-078-ask-confidence-ring.md` ready.
-12. **IDEA-042 (2 hr):** Suggested follow-up chips after Ask answers. Dev plan `DEVPLAN-IDEA-042-follow-up-chips.md` ready.
-13. **IDEA-051 (30 min):** Scene-level "Ask →" hover affordance. Dev plan `DEVPLAN-IDEA-051-scene-level-ask-affordance.md` ready.
-14. **IDEA-062 (2 hr):** Re-Reader Hindsight Panel. Dev plan `DEVPLAN-IDEA-062-re-reader-hindsight-panel.md` ready.
-15. **IDEA-077 (1.5 hr):** Re-Reader Highlight Fingerprint. Dev plan `DEVPLAN-IDEA-077-highlight-fingerprint.md` ready.
-16. **IDEA-083 (2.5 hr):** World Lore Quiz for `show_all_content` readers. Dev plan `DEVPLAN-IDEA-083-world-lore-quiz.md` ready.
-17. **IDEA-095 (1.5 hr):** Arc Endpoint Quotes Gallery — `/world/voices` page showing 9 CH17 crew arc states as typographic cards; `show_all_content` gated. Dev plan `DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md` *(NEW Run 36, planned)*.
+2. **IDEA-096 (15 min, Phase 1 only):** Ask Live Context Band — dismissable pill strip above Ask input showing active story/voice/entity context. Phase 1 (story pill) deployable today in 15 minutes, 1-file change. Dev plan `DEVPLAN-IDEA-096-ask-live-context-band.md` ready *(NEW Run 37)*.
+3. **IDEA-084 (45 min):** Ask Home Hero Widget — text input in home page hero routes to `/ask?q=...` with auto-submit; 2-file change (`HomeHero.tsx` + `ask/page.tsx`). Dev plan `DEVPLAN-IDEA-084-ask-home-hero-widget.md` ready.
+4. **IDEA-072 (1.5 hr):** Chapter quick-facts panel on Ask page — collapsible card showing mission day range, primary location, and top 3 characters when `?story=` is set. Dev plan `DEVPLAN-IDEA-072-chapter-quick-facts-panel.md` ready.
+5. **IDEA-069 (2 hr):** Ask CTA on all entity detail pages. Dev plan `DEVPLAN-IDEA-069-entity-level-ask-cta.md` ready.
+6. **IDEA-057 (45 min):** Context-aware welcome message on Ask page. Dev plan `DEVPLAN-IDEA-057-context-aware-ask-welcome.md` ready.
+7. **IDEA-063 (30 min):** Entity hover-card tooltips on wiki links in Ask answers. Dev plan `DEVPLAN-IDEA-063-entity-hover-card.md` ready.
+8. **IDEA-066 (1.5 hr):** "Continue where you left off" in Ask empty state. Dev plan `DEVPLAN-IDEA-066-cross-session-ask-resume.md` ready.
+9. **IDEA-075 (2.5 hr):** Ask Pinned Q&A — star/save individual Ask exchanges; migration 042 required. Dev plan `DEVPLAN-IDEA-075-ask-pinned-qa.md` ready.
+10. **IDEA-087 (2 hr):** Ask Source Deep-Dive Panel — expandable entity accordion on citation links. Dev plan `DEVPLAN-IDEA-087-ask-source-deep-dive.md` ready.
+11. **IDEA-093 (1.5 hr):** Character Voice Mode — 9-chip character selector on Ask page; answers in first-person crew voice grounded in arc "Starting State". 4-file change. Dev plan `DEVPLAN-IDEA-093-character-voice-mode.md` ready *(promoted Run 36)*.
+12. **IDEA-078 (20 min):** Ask Response Confidence Ring — left-border accent on assistant bubbles. Dev plan `DEVPLAN-IDEA-078-ask-confidence-ring.md` ready.
+13. **IDEA-042 (2 hr):** Suggested follow-up chips after Ask answers. Dev plan `DEVPLAN-IDEA-042-follow-up-chips.md` ready.
+14. **IDEA-051 (30 min):** Scene-level "Ask →" hover affordance. Dev plan `DEVPLAN-IDEA-051-scene-level-ask-affordance.md` ready.
+15. **IDEA-062 (2 hr):** Re-Reader Hindsight Panel. Dev plan `DEVPLAN-IDEA-062-re-reader-hindsight-panel.md` ready.
+16. **IDEA-077 (1.5 hr):** Re-Reader Highlight Fingerprint. Dev plan `DEVPLAN-IDEA-077-highlight-fingerprint.md` ready.
+17. **IDEA-083 (2.5 hr):** World Lore Quiz for `show_all_content` readers. Dev plan `DEVPLAN-IDEA-083-world-lore-quiz.md` ready.
+18. **IDEA-095 (1.5 hr):** Arc Endpoint Quotes Gallery — `/world/voices` page showing 9 CH17 crew arc states as typographic cards; `show_all_content` gated. Dev plan `DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md` ready *(promoted to ready Run 37)*.
 17. **IDEA-052 (3 hr author time, 0 code):** Author seeds 9 character spec JSONs, runs batch portrait generation, approves via admin console. Plan: `DEVPLAN-IDEA-052-canonical-character-portraits.md`.
 18. **IDEA-043 (5 hr):** On-demand scene visualization via Ask. Dev plan `DEVPLAN-IDEA-043-on-demand-scene-visualization.md` ready.
 19. **FIX-051 (1 hr):** HTML sanitization for `dangerouslySetInnerHTML` in admin surfaces. Plan: `FIXPLAN-FIX-051-dangerouslysetinnerhtml-admin.md`.

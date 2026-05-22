@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-21 (Run 36)
+> Last updated: 2026-05-22 (Run 37)
 
 ## Maturity Levels
 
@@ -285,15 +285,16 @@
 ---
 
 ### [IDEA-096] Ask Live Context Band — Visual Grounding Indicator Above the Input
-- **Status:** seed
+- **Status:** ready
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-20
-- **Last Updated:** 2026-05-20
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
+- **Last Updated:** 2026-05-22
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-096-ask-live-context-band.md`
 - **Summary:** A compact strip rendered between the thread and the input bar showing the active context for the next message — story name (if `?story=` set), voice character (if IDEA-093 active), and any entity context (if `?entity=` set) — as dismissable pill badges. Gives readers visual feedback on what's grounding the companion before they type. Zero API calls; pure client-side React state display.
 - **Night Notes:**
   - 2026-05-20 (Run 35): Seeded. Currently the Ask page has a breadcrumb-style story title shown near the top of the thread, but readers have no inline reminder near the input of what context is active. This is especially relevant with IDEA-093 (Character Voice Mode) shipping — a reader may forget they have "ALARA" selected mid-session. Implementation: (1) Render a `<div>` between the thread scroll area and the form (just above the chip row from IDEA-093); (2) Shows dismissable `×` pills: one for story ("📖 Chapter N: Title"), one for voice character ("🎙 Responding as ALARA"), one for entity context ("🔍 ALARA"). Each × clears its respective state. (3) If no context is active (all null/undefined), the strip renders nothing (zero height); no layout shift when context is absent. (4) All state (storySlug, voiceCharacter, entitySlug) is already in `ask/page.tsx` React state — this is a pure display layer, ~20 lines JSX. Zero new API routes, zero DB, zero npm packages. Synergistic with IDEA-093 (character chips), IDEA-084 (home widget auto-submit), IDEA-069 (entity-level CTA). Estimated 30 minutes.
+  - 2026-05-22 (Run 37): **Promoted to `ready`.** Dev plan written: `DEVPLAN-IDEA-096-ask-live-context-band.md`. Phase 1 (story context pill using existing `contextStoryId` + `contextStoryTitle` state vars) is independently deployable today — 15 minutes, 1-file change (`ask/page.tsx`). Phase 2 (voice character pill) awaits IDEA-093; Phase 3 (entity pill) awaits IDEA-069. All three phases are backward-compatible — each pill block only renders when its state var is non-null. Priority raised to P2.
 
 ---
 
@@ -307,6 +308,19 @@
 - **Summary:** A persistent floating action button on chapter reading pages (`/stories/[storyId]`) that opens a slide-in mini Ask panel on the right edge of the viewport — showing the last 3 conversation exchanges and a text input — so readers can consult the companion without navigating away from the chapter text.
 - **Night Notes:**
   - 2026-05-21 (Run 36): Seeded. The current Ask CTAs all require navigating to `/ask`, losing the reader's scroll position and reading context. A floating drawer solves this: (1) A small circular FAB (floating action button) at the bottom-right of the chapter page — containing a sparkle or compass icon; (2) Clicking opens a `<aside>` slide-in panel (~320px wide) overlaying the right edge of the viewport, with backdrop overlay; (3) The panel hosts a mini chat thread (last 3 exchanges from the current session, stored in component state) and a single-line input that fires POST `/api/ask` with `storySlug` context; (4) Streaming responses render in the panel thread in real time; (5) An "Open in full Ask →" link at the top navigates to `/ask?story={storyId}&conversation={id}` if they want more. Implementation: a new `AskFloatingDrawer.tsx` client component — uses `useState(open)`, a `useRef` for the thread, and the same streaming pattern as `ask/page.tsx`. Added to `stories/[storyId]/page.tsx` near the page root. Context: `storySlug` passed as a prop. The drawer can start with the same 3 suggested chips from `chapter_tags.json` as IDEA-057 (context-aware welcome). Spoiler: none — the drawer uses the same `/api/ask` endpoint with the same gating; all content accessible under companion-first. Zero new routes, zero new DB tables. Estimated 3 hours (new streaming component from scratch + panel layout). Prerequisite: IDEA-057 (context-aware welcome chips) could share a server fetch. Synergistic with IDEA-093 (character voice mode chips could appear in the drawer too). Key design question: does the drawer persist state across scroll, or reset on each chapter navigation? Answer: persist in React state for the session (page mount).
+
+---
+
+### [IDEA-102] Ask Empty State Chapter Grid — Discovery Entry Point Without Story Context
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-22
+- **Last Updated:** 2026-05-22
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** When the Ask page is opened without a `?story=` param and no prior messages exist, the empty state displays a compact 17-chapter mini-grid as discovery chips — "Explore CH01", "Explore CH02", etc. — letting readers ground the companion in a chapter they want to ask about without needing to navigate back to the chapter list first.
+- **Night Notes:**
+  - 2026-05-22 (Run 37): Seeded. IDEA-057 (Context-Aware Welcome, ready) handles the empty state when `?story=` IS set — this idea is the complementary discovery flow for readers who land on Ask directly (e.g., from the home hero widget of IDEA-084 without pre-filling a query). The 17 chapter tiles can be rendered from a static constant (all 17 CH slugs + titles, sourced from `static-data.ts` or a compact server-side fetch). Clicking a tile sets `contextStoryId` (equivalent to `/ask?story=ch01`) and triggers the IDEA-057 welcome greeting. The grid displays as 6 tiles per row in a compact `text-sm` style with chapter number + short title. When `?story=` IS set, the grid is replaced by the IDEA-057 chapter-specific welcome (no overlap). Implementation: extend the empty-state branch in `ask/page.tsx` — add a 3rd sub-branch: `if (!contextStoryId && !messages.length) { show chapter grid }`. The grid can use a `CHAPTER_QUICK_TILES` static constant (17 slug + title pairs). Zero new API routes, zero DB. Chapter titles already available in `static-data.ts` story list. Estimated 45 minutes. Synergistic with IDEA-057 (which kicks in after a tile is clicked), IDEA-084 (home widget routes to Ask — these tiles are the fallback if no `?q=` is provided).
 
 ---
 
@@ -341,15 +355,16 @@
 ---
 
 ### [IDEA-094] Ship Section Schematics via Ask — Blueprint-Style Technical Diagram on Demand
-- **Status:** seed
+- **Status:** parked
 - **Theme:** genmedia
 - **Seeded:** 2026-05-19
-- **Last Updated:** 2026-05-19
+- **Last Updated:** 2026-05-22
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** When a reader asks how the Command Dome is laid out, what the Resonant Pad looks like from above, or how a specific ship section connects to others, the Ask companion detects spatial/structural intent and offers an optional "Diagram →" inline image generated via Imagen 4 with an orthographic blueprint aesthetic — distinct from the cinematic scene renders of IDEA-043.
 - **Night Notes:**
   - 2026-05-19 (Run 34): Seeded. This targets a different visual register than IDEA-043 (scene illustrations) or IDEA-094 (faction posters): schematic/technical rather than cinematic/diegetic. Reader asks "What does the Translation Bay look like?" or "Show me the Valkyrie-1 interior layout" → intent classifier detects `spatial_structure` sub-type → Imagen 4 call with a blueprint-style prompt modifier ("orthographic cutaway cross-section, labeled diagram, technical blueprint lines, no atmosphere"). The 11 interior location specs in `content/wiki/specs/` (with `parent_entity: "valkyrie-1"` inheritance chains) are ideal grounding sources — they have established WORLD A vocabulary. (1) Model/provider: Imagen 4 (`valkyrie_shipboard` preset + `schematic_overlay` style modifier string). (2) Cost budget: ~$0.06/image; 3 images/reader/hour shared with IDEA-043 rate limit. (3) Caching: per (entitySlug, "schematic", corpusVersion) hash — shared, not user-scoped; different cache key from scene renders so both can coexist. (4) Spoiler gating of prompt inputs: location/structural data is non-narrative; ship section specs contain no story events. All spec JSON and location wiki markdown is safe for all users under companion-first. (5) Canon grounding: entity spec chain from `content/wiki/specs/{slug}/` (inheriting from `valkyrie-1/master.json` via `parent_entity`) + location wiki markdown (`content/wiki/locations/{slug}.md`). Prerequisite: IDEA-043 (on-demand visualization) ships first to establish the visual intent → generation pipeline in Ask. Estimated 1.5 hours on top of IDEA-043 (adds `spatial_structure` intent sub-type + schematic prompt modifier + cache key variant).
+  - 2026-05-22 (Run 37): Stale 3 days — blocked by IDEA-043 prerequisite. The schematic/technical visual register is genuinely distinct from IDEA-043's cinematic path, and the 11 interior location spec JSONs are ideal grounding sources. Demoting to parked. Un-park after IDEA-043 ships and the visual intent pipeline is established.
 
 ---
 
@@ -376,6 +391,19 @@
 - **Summary:** When a reader asks "What does the ship look like when ALARA is in alignment?" or describes a specific Valkyrie harmonic state combined with ALARA's presence, the Ask companion detects `vessel_state_character_intent` and generates a composite image: the named harmonic state's physical spec overlaid with ALARA's noncorporeal visual signature. A portrait-within-landscape class of image unique to this story world.
 - **Night Notes:**
   - 2026-05-21 (Run 36): Seeded. All 5 Valkyrie-1 harmonic states have full spec JSON at `content/wiki/specs/valkyrie-1/states/` (dormant/wake/active/alignment/harmonic_jump). ALARA has a spec path that would use the `noncorporeal_presence` preset. A composite image would combine: the named state's physical spec overrides (vein color, intensity, aperture posture) + a noncorporeal overlay (diffuse luminescent presence throughout the space) + the `valkyrie_shipboard` background. The composition creates a "ship as perceived by ALARA" visual register — not a scene render (IDEA-043) and not a portrait (IDEA-052), but a state-mediated point-of-view image. (1) Model/provider: Imagen 4 with `valkyrie_shipboard` preset + `noncorporeal_presence` style blend in prompt. ~$0.06/image. (2) Cost budget: 3 images/reader/hour shared with IDEA-043 rate limit. (3) Caching: per `(stateSlug, "alara-composite", corpusVersion)` hash — shared, not user-scoped; all 5 states can be pre-cached. (4) Spoiler gating of prompt inputs: harmonic state names are world-building vocabulary (not narrative events). ALARA's noncorporeal presence is established in early chapters — no spoiler risk. All specs visible to all users under companion-first. (5) Canon grounding: `content/wiki/specs/valkyrie-1/master.json` (WORLD A base vocab) + `content/wiki/specs/valkyrie-1/states/{state}.json` (overrides) + `content/wiki/characters/alara.md` (noncorporeal description) + Starting State from `content/wiki/arcs/characters/alara.md` (safe section only). Prerequisite: IDEA-043 (on-demand scene visualization) ships first to establish the visual-intent → generation pipeline in Ask. This extends IDEA-043 with a new `vessel_state_character` intent sub-type. Estimated: 1 hour on top of IDEA-043.
+
+---
+
+### [IDEA-103] Chapter Atmosphere Color Thumbnails — Abstract Mood Tiles on Chapter Cards
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-22
+- **Last Updated:** 2026-05-22
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** Author pre-generates one abstract 128×128px atmosphere thumbnail per chapter via Imagen 4 using only an emotional-palette prompt (dominant color + mood word derived from `chapter_tags.json` themes, no characters or locations). Stored in `cel_visual_assets` and displayed as a small decorative accent on chapter cards in the `/stories` grid. Adds visual rhythm to the chapter list at near-zero cost.
+- **Night Notes:**
+  - 2026-05-22 (Run 37): Seeded. This is the cheapest possible use of Imagen 4 generation — abstract color-field images that carry emotional tone only. (1) Model/provider: Imagen 4 with a 1-sentence prompt: "{primary_color} tones, {mood_adjective} atmosphere, abstract, painterly field, no text, no figures" — color and mood derived from the `themes` array in `chapter_tags.json` per chapter. (2) Cost budget: ~$0.06/image × 17 chapters = ~$1.02 total for the full set; author-batch only; negligible. (3) Caching: stored in `cel_visual_assets` with `source='chapter_atmosphere'` and `target=chapter_slug`; one image per chapter; shared canonical, never user-scoped. (4) Spoiler gating of prompt inputs: the prompt contains only a color word and a mood adjective — no character names, no location names, no narrative events. Zero spoiler risk even for earliest unread chapters. (5) Canon grounding: `chapter_tags.json` themes field per chapter → the first theme string becomes the mood adjective (e.g., "isolation", "revelation", "confrontation"); the dominant color is derived from a static mood→color mapping authored by Paul (e.g., "isolation" → "deep navy", "revelation" → "amber gold"). Author controls the mapping and can adjust before batch generation. Implementation: the existing admin console (`/profile/admin/visuals`) is the generation surface — no new routes needed. A one-time batch generation of 17 images + author approval + they surface automatically on chapter cards via `EntityVisualsGallery` (or a lightweight `<img>` from a new `/api/visuals/preferred?target={slug}&style=chapter_atmosphere` call at build time). The chapter cards in `StoriesPageClient.tsx` would need a small visual slot added if not already present. Estimated: 20 minutes author time for batch + 1 hour code for displaying the thumbnail in chapter cards.
 
 ---
 
@@ -599,16 +627,17 @@
 ---
 
 ### [IDEA-095] Arc Endpoint Quotes Gallery — Closing Words of the Crew at CH17
-- **Status:** planned
+- **Status:** ready
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-19
-- **Last Updated:** 2026-05-21
+- **Last Updated:** 2026-05-22
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md`
 - **Summary:** For `show_all_content=true` readers, a `/world/voices` page surfaces one curated "final-state entry" per main character drawn from their CH17 arc ledger "State After" text — displayed as a typographic quote card gallery. Nine panels, each character's closing arc state rendered as a reflective quote. Pure static data; zero AI calls, zero DB changes. A contemplative anchor page for readers before they explore post-read-world features.
 - **Night Notes:**
   - 2026-05-19 (Run 34): Seeded. All 9 arc ledger files in `content/wiki/arcs/characters/` have a CH17 "State After" entry.
   - 2026-05-21 (Run 36): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md`. 2-file implementation: new `src/lib/wiki/arc-endpoints.ts` (parse CH17 "State After" from table rows via regex; filter arcs with no CH17 row gracefully) + new `src/app/world/voices/page.tsx` (server component, `show_all_content` gate, 3×3 quote-card grid with `sci-card-link` styling, links to character wiki pages). Zero new DB, zero new content, zero npm packages. Column index verification: after splitting CH17 table row by `|`, State After is at index 6 (0="", 1=CH17, 2=Scene, 3=Pressure, 4=Choice, 5=Consequence, 6=State After, 7=Evidence). Estimated 1.5 hours. Priority P2. Implementation: (1) New server utility `src/lib/wiki/arc-endpoints.ts` — calls `getAllCharacterArcs()` (existing), extracts the `stateAfter` text from the CH17 row for each arc; returns `ArcEndpoint[]`. The arc markdown table parsing reuses the same logic planned in IDEA-062 (`chapter-hindsight.ts`). (2) New `/world/voices/page.tsx` server component — gated by `show_all_content === true` (redirect to `/profile` if false); calls `getArcEndpoints()`, renders a 3×3 (or 2×4+1) grid of quote cards. Each card: character name (title-cased), a short "State After" excerpt (first 100 chars from CH17 entry), and a link to the character's wiki page. Tailwind styling: `italic`, large centered text, muted underline. (3) Post-read-world requirements: (a) Hidden from first-time readers and guests — server-level `show_all_content` check; (b) Integration with `show_all_content`: direct server-side check; (c) Partial-completion: flag validated server-side. Zero new DB, zero new npm packages, zero content files. The CH17 "State After" entries are arc-endpoint spoilers — this page is correctly gated behind `show_all_content`. Estimated 1.5 hours. Synergistic with IDEA-089 (completion ceremony page) — `/world/voices` can be a CTA from the ceremony page.
+  - 2026-05-22 (Run 37): **Promoted to `ready`.** Dev plan confirmed complete at 185 lines (`DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md`). No new blockers. Shares `arc-endpoints.ts` utility with IDEA-101 (Crew Debrief Mode) and IDEA-098 (Crew Final Status Board). Ready for Paul to execute — 1.5 hr, 2 new files.
 
 ---
 
@@ -635,6 +664,19 @@
 - **Summary:** For `show_all_content=true` readers, a distinct "Debrief" mode on the Ask page that activates a character voice with full arc-endpoint context — including CH17 "State After" and arc trajectory, not just Starting State. Readers can have an "after the ending" conversation with any crew member, grounded in their complete documented arc. Strictly gated by `show_all_content`.
 - **Night Notes:**
   - 2026-05-21 (Run 36): Seeded. IDEA-093 (Character Voice Mode, now ready) uses only "Starting State" (~800 chars) to avoid spoiling the arc. Crew Debrief Mode lifts this restriction for completed readers: (1) A second set of character chips appears on the Ask page only when `profile.showAllContent === true` (fetched server-side at page load and injected via a `debrief_eligible` prop); (2) The chips are visually distinct from the standard IDEA-093 crew chips — different color or "Debrief" label prefix; (3) When a debrief character is selected, the API receives `voiceCharacter` + `debriefMode: true`; (4) Server validates: if `debriefMode === true`, confirm `readerProgress.showAllContent === true` before including arc-endpoint content in the system prompt — otherwise strip to Starting State only. The debrief prompt block includes: CH17 "State After" (from `getArcEndpoints()` utility — shared with IDEA-095) + any "Current State by Chapter Boundary" section from the arc ledger. (5) Post-read-world requirements: (a) Chip row for debrief mode renders only when `showAllContent === true` — server prop injection ensures no flash on client; (b) API validates `showAllContent` server-side before unlocking the arc-endpoint context — client UI state alone cannot unlock it; (c) Partial-completion edge cases: server-side flag check is the sole gate. Prerequisite: IDEA-093 (Character Voice Mode) ships first to establish the chip row UI and API plumbing; debrief mode extends it with a server-side guard and additional context. Implementation: 3-file change after IDEA-093 ships — `api/ask/route.ts` (add `debriefMode` + `showAllContent` validation), `perspectives.ts` (add `buildDebriefBlock()` using CH17 state + arc trajectory), `ask/page.tsx` (conditional debrief chip row). Zero new DB tables; no new content. Estimated 1.5 hours on top of IDEA-093. Synergistic with IDEA-095 (shares `getArcEndpoints()` utility for CH17 state text).
+
+---
+
+### [IDEA-104] Chapter-Location Story Map — Spatial Pattern Grid for Completed Readers
+- **Status:** seed
+- **Theme:** post-read-world
+- **Seeded:** 2026-05-22
+- **Last Updated:** 2026-05-22
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** For `show_all_content=true` readers, a `/world/map` page showing a grid visualization: chapters (CH01–CH17) as columns and key locations as rows. Each cell is filled/colored when that location is tagged in a chapter via `chapter_tags.json`. Readers scan the story's spatial structure at a glance — which locations span multiple chapters, which appear only once. Zero AI, zero DB, zero new content.
+- **Night Notes:**
+  - 2026-05-22 (Run 37): Seeded. The data source is `content/raw/chapter_tags.json` which has a per-chapter list of entity slugs including location slugs. A simple server-side pass builds a `Set<locationSlug>` per chapter, then renders a CSS grid. Key design choices: (1) Which locations to show as rows — the 11 Valkyrie-1 interior locations + the key story locations (Giza Plateau, Mars Base, Earth locations) = ~20–25 rows is manageable; can be derived from locations that appear in ≥2 chapters to keep the grid dense. (2) Cell fill: binary (appears/doesn't appear) using a colored cell vs. transparent — no bar-chart complexity needed. (3) Cells link to `/ask?story={chapterSlug}&entity={locationSlug}` (or just the location wiki page) for exploration. (4) Post-read-world requirements: (a) Hidden from first-time readers and guests — `/world/map` page gated by `show_all_content === true` at server level with redirect to `/profile` if false; (b) Integration with `show_all_content`: direct server-side check; (c) Partial-completion edge cases: same `show_all_content` flag check. Zero new DB tables, zero new content files, zero npm packages (pure CSS grid + Tailwind). Estimated 2 hours (data assembly utility + grid component + page route + gate). Synergistic with IDEA-095 (`/world/voices`) and IDEA-098 (`/characters` crew board) — these three form a natural "World" nav cluster.
 
 ---
 

@@ -4,6 +4,61 @@
 
 ---
 
+## Run: 2026-05-22 (Run 37)
+
+### Summary
+- Scanned: 0 new code commits since Run 36 (last commit `f55302a` — nightshift docs only). Codebase state unchanged.
+- Issues: 0 new, 0 resolved, 0 spoiler-leak P0. All open planned issues unchanged: FIX-026, 027, 028, 029, 030, 045, 046, 047, 048, 049, 050, 051, 052. No new code to scan.
+- Ideas (by theme): ask-forward 1 seed (IDEA-102 — Ask Empty State Chapter Grid) / IDEA-096 promoted to `ready` (dev plan written); genmedia 1 seed (IDEA-103 — Chapter Atmosphere Color Thumbnails) / IDEA-094 parked (stale 3 days); post-read-world 1 seed (IDEA-104 — Chapter-Location Story Map) / IDEA-095 promoted to `ready`. Total promoted: 2 (IDEA-095 to ready, IDEA-096 to ready). Parked: 1.
+- Plans written: `DEVPLAN-IDEA-096-ask-live-context-band.md`
+
+### Build & Lint & Test Results
+- No code commits since Run 36. Status confirmed unchanged from Run 36 verification.
+- Build: **PASSES** (last verified Run 36 — no new code to re-validate)
+- Lint: **PASSES** — 0 errors, 4 `<img>` tag warnings (unchanged since Run 17)
+- Tests: **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17)
+
+### Key Findings
+
+1. **No new code commits.** Codebase is identical to Run 36. All open issues remain in their documented states.
+
+2. **Review queue count corrected.** `brain_lab/out/review-queue.md` (timestamp 2026-04-26) lists 9 character files under a single "Files requiring human review (reviewed: false):" heading. Run 36 NIGHTLOG reported "1 entry" because `grep -c "reviewed: false"` counted matching LINES (one heading line), not list items. True count: 9 files (amar-cael, aven-voss, evelyn-tran, galen-voss, jax-reyes, jonah-revas, lena-osei, marco-ruiz, thane-meric). STATUS.md corrected accordingly.
+
+3. **IDEA-096 promoted to `ready` — Ask Live Context Band dev plan written.** A dismissable-pill strip between the Ask thread and input showing active context (story, voice character, entity). Phase 1 (story context pill) is independently deployable today in 15 minutes using existing `contextStoryId` + `contextStoryTitle` state vars. Phase 2 (voice character pill) awaits IDEA-093; Phase 3 (entity pill) awaits IDEA-069. 1-file change: `ask/page.tsx`. Zero API/DB/npm. Dev plan: `DEVPLAN-IDEA-096-ask-live-context-band.md`. Priority P2.
+
+4. **IDEA-095 promoted to `ready`.** Dev plan `DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md` confirmed complete at 185 lines. 2-file change: new `arc-endpoints.ts` utility + new `/world/voices/page.tsx` server component (gated by `show_all_content`). 1.5 hr estimate. No new blockers.
+
+5. **IDEA-094 parked (stale 3 days).** Ship Section Schematics via Ask (seeded 2026-05-19, 3 days old). Blocked by IDEA-043 prerequisite. Demoted with note to un-park after IDEA-043 ships.
+
+6. **Three new ideas seeded.** IDEA-102 (ask-forward: Ask Empty State Chapter Grid — 17-chapter mini-grid in Ask empty state without story context; click-to-set story context; 45 min; zero DB/API; synergistic with IDEA-057 welcome), IDEA-103 (genmedia: Chapter Atmosphere Color Thumbnails — abstract 128×128 mood-field images per chapter via Imagen 4; color/mood only, no characters; ~$1.02 total author batch; Imagen 4; $0.06/image; shared cache; zero spoiler risk; canon grounding from chapter_tags.json themes), IDEA-104 (post-read-world: Chapter-Location Story Map — `/world/map` CSS grid with chapters × locations; cells filled from chapter_tags.json; show_all_content gated; zero AI/DB; 2 hr).
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-096-ask-live-context-band.md` — **NEW**: Ask Live Context Band — dismissable pill strip above Ask input; Phase 1 (story pill) is 15 min / 1-file change; full 30 min with cleanup (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md` — Arc Endpoint Quotes Gallery — `/world/voices` 9-crew CH17 quote cards; `show_all_content` gated; 1.5 hr, 2 new files *(promoted to ready this run)* (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-093-character-voice-mode.md` — Character Voice Mode — 9-chip crew selector; first-person answers from Starting State; 4-file change, 1.5 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-087-ask-source-deep-dive.md` — Ask Source Deep-Dive Panel — expandable entity accordion; 2-file change, 2 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-083-world-lore-quiz.md` — World Lore Quiz — `/world/quiz`, Haiku AI questions, show_all_content gated; 2.5 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-078-ask-confidence-ring.md` — Ask Response Confidence Ring — left-border grounding signal; 1-file, 20 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-084-ask-home-hero-widget.md` — Ask Home Hero Widget — text input in hero; 2-file, 45 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-075-ask-pinned-qa.md` — Ask Pinned Q&A — star/save exchanges; migration 042 needed; 2.5 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — Ask CTA after chapter summary; 15 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-057-context-aware-ask-welcome.md` — Context-aware Ask welcome; 45 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-051-scene-level-ask-affordance.md` — Scene-level "Ask →" hover; 30 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-063-entity-hover-card.md` — Entity hover-card in Ask answers; 30 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-062-re-reader-hindsight-panel.md` — Re-Reader Hindsight Panel; 2 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-077-highlight-fingerprint.md` — Highlight Fingerprint mosaic; 1.5 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-042-follow-up-chips.md` — Suggested follow-up chips; 2 hr (ask-forward).
+- `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md` — Remove `/\bnext\b/i` from FUTURE_PATTERNS; 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md` — Rename `requireKeith()` to `requireAuthor()`; 10 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — Update 12 files from stale `claude-sonnet-4-20250514` to `claude-sonnet-4-6`; 15 min.
+
+### Recommendations
+- **If you have 30 min:** IDEA-048 (15 min — Ask CTA after story summary) + IDEA-096 Phase 1 (15 min — story context pill above Ask input). Two quick ask-forward wins that make each other more legible: the chapter CTA brings readers into Ask with story context, and the context band shows they're grounded.
+- **If you have 1.5 hours:** IDEA-093 (Character Voice Mode) — 4-file change, all plumbing confirmed. 9 crew chips; Ask answers in first-person character voice grounded in arc Starting State. The most distinctive ask-forward feature in the queue, and IDEA-096 Phase 2 ships free alongside it.
+- **If you have 2 hours:** IDEA-095 (Arc Endpoint Quotes Gallery) — `/world/voices` is a natural anchor page for completed readers before they explore the rest of post-read-world. Shares `arc-endpoints.ts` utility with IDEA-101 (Crew Debrief Mode) — building it now accelerates two more features.
+
+---
+
 ## Run: 2026-05-21 (Run 36)
 
 ### Summary
