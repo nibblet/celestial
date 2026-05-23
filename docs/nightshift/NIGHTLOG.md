@@ -4,6 +4,60 @@
 
 ---
 
+## Run: 2026-05-23 (Run 38)
+
+### Summary
+- Scanned: 0 new code commits since Run 37 (last commit `55f8476` — nightshift docs only). Codebase state unchanged.
+- Issues: 0 new, 0 resolved, 0 spoiler-leak P0. All open planned issues unchanged: FIX-026, 027, 028, 029, 030, 045, 046, 047, 048, 049, 050, 051, 052. No new code to scan.
+- Ideas (by theme): ask-forward 1 seed (IDEA-105 — Ask "Brief Mode" Toggle) / IDEA-102 promoted to `planned` (dev plan written); genmedia 1 seed (IDEA-106 — Valkyrie-1 Dynamic State Header) / IDEA-097 parked (stale 3 days); post-read-world 1 seed (IDEA-107 — ALARA Observer Logs) / IDEA-098 parked (stale 3 days). Total promoted: 1 (IDEA-102 to planned). Parked: 2.
+- Plans written: `DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md`
+
+### Build & Lint & Test Results
+- No code commits since Run 37. Status confirmed unchanged from Run 36 verification.
+- Build: **PASSES** (last verified Run 36 — no new code to re-validate)
+- Lint: **PASSES** — 0 errors, 4 `<img>` tag warnings (unchanged since Run 17)
+- Tests: **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17)
+
+### Key Findings
+
+1. **No new code commits.** Codebase is identical to Run 37. All open issues remain in their documented states. FIX-047 (12 stale model ID files), FIX-049 (requireKeith in 5 routes), FIX-050 (overly broad `next` pattern in ask-intent.ts) all open and unchanged.
+
+2. **IDEA-102 promoted to `planned` — Ask Empty State Chapter Grid dev plan written.** When the Ask page opens with no `?story=` param, no prefilled prompt, no passage, and no highlight, the empty state will show a compact 17-chapter tile grid. Clicking any tile routes to `/ask?story=CH01`, triggering the breadcrumb and (once IDEA-057 ships) the chapter-specific welcome. Key implementation details confirmed via codebase read: empty state block at `ask/page.tsx` lines 672–691; `storySlug` from `searchParams.get("story")` (line 242); `useRouter` import addition needed; `CHAPTER_QUICK_TILES` constant hardcoded (17 entries) to avoid ~500KB bundle bloat from importing `static-data.ts`. All 17 chapter titles verified at plan-write time. 1-file change, 45 minutes. Dev plan: `DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md`. Priority P2.
+
+3. **IDEA-097 parked (stale 3 days).** Resonant Pad Harmonic Pulse (seeded 2026-05-20) — zero code work required, pure author-batch task. Sound idea, but the admin console generation workflow needs to be the active focus to execute it. Un-park when Paul runs a batch generation session for location visuals.
+
+4. **IDEA-098 parked (stale 3 days).** Crew Final Status Board (seeded 2026-05-20) — IDEA-095 (Arc Endpoint Quotes Gallery, ready) covers "where the crew ended" more elegantly on `/world/voices`. Adding a second surface on `/characters` index premature before IDEA-095 ships.
+
+5. **Three new ideas seeded:** IDEA-105 (ask-forward: Ask "Brief Mode" Toggle — a "Brief / Full" toggle persisted in localStorage that appends a 3-sentence constraint to the Ask answerer prompt; 30 min, 4 small file edits, zero new routes or DB; works for guests; synergistic with IDEA-093 character voice mode), IDEA-106 (genmedia: Valkyrie-1 Dynamic State Header — `/artifacts/valkyrie-1` wiki page selects which pre-approved harmonic state image to display based on reader's most recent chapter mapped via `chapter_tags.json`; uses existing 5 state renders; zero reader generation cost; `chapter_tags.json` → state mapping; `/api/visuals/preferred` already exists; ~1 hour code; prerequisite: FIX-048 moves images to Supabase), IDEA-107 (post-read-world: ALARA Observer Logs — `/world/alara-logs` route for `show_all_content` readers with 17 author-written first-person ALARA journal entries as static markdown; 1 hour code + 2–3 hours author writing; grounded in arc ledger Starting State/State After; synergistic with IDEA-095 `/world/voices`).
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md` — **NEW**: Ask Empty State Chapter Grid — 17-chapter discovery tile grid when no story context is active; 1-file change (`ask/page.tsx`), 45 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-096-ask-live-context-band.md` — Ask Live Context Band — dismissable pill strip above Ask input; Phase 1 (story pill) 15 min / 1-file change; full 30 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md` — Arc Endpoint Quotes Gallery — `/world/voices` 9-crew CH17 quote cards; `show_all_content` gated; 1.5 hr, 2 new files (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-093-character-voice-mode.md` — Character Voice Mode — 9-chip crew selector; first-person answers from Starting State; 4-file change, 1.5 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-087-ask-source-deep-dive.md` — Ask Source Deep-Dive Panel — expandable entity accordion; 2-file change, 2 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-084-ask-home-hero-widget.md` — Ask Home Hero Widget — text input in hero; 2-file, 45 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-083-world-lore-quiz.md` — World Lore Quiz — `/world/quiz`; Haiku AI questions; `show_all_content` gated; 2.5 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-078-ask-confidence-ring.md` — Ask Response Confidence Ring — left-border grounding signal; 1-file, 20 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-075-ask-pinned-qa.md` — Ask Pinned Q&A — star/save exchanges; migration 042 needed; 2.5 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — Ask CTA after chapter summary; 15 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-057-context-aware-ask-welcome.md` — Context-aware Ask welcome; 45 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-051-scene-level-ask-affordance.md` — Scene-level "Ask →" hover; 30 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-063-entity-hover-card.md` — Entity hover-card in Ask answers; 30 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-062-re-reader-hindsight-panel.md` — Re-Reader Hindsight Panel; 2 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-077-highlight-fingerprint.md` — Highlight Fingerprint mosaic; 1.5 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-042-follow-up-chips.md` — Suggested follow-up chips; 2 hr (ask-forward).
+- `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md` — Remove `/\bnext\b/i` from FUTURE_PATTERNS; 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md` — Rename `requireKeith()` to `requireAuthor()`; 10 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — Update 12 files from stale `claude-sonnet-4-20250514` to `claude-sonnet-4-6`; 15 min.
+
+### Recommendations
+- **If you have 30 min:** IDEA-048 (15 min — Ask CTA after story summary) + IDEA-102 Phase 1 already writes the whole feature (45 min). Or for a pure 30-min cluster: IDEA-102 (45 min) — a single-file change that fills the critical Ask discovery gap for readers who arrive without story context.
+- **If you have 1 hour:** IDEA-102 (45 min — chapter grid) + FIX-050 (5 min — remove over-broad next pattern) + FIX-049 (10 min — rename requireKeith). Three wins: the chapter grid solves Ask discoverability, the two fixes clean up legacy naming.
+- **If you have 1.5 hours:** IDEA-093 (Character Voice Mode) — the most distinctive ask-forward feature in the queue. 4-file change, all plumbing confirmed. Readers can ask "ALARA, what do you sense in the Resonant Pad?" and get a first-person in-character answer grounded only in documented arc Starting State.
+
+---
+
 ## Run: 2026-05-22 (Run 37)
 
 ### Summary

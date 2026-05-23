@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-22 (Run 37)
+> Last updated: 2026-05-23 (Run 38)
 
 ## Maturity Levels
 
@@ -298,6 +298,19 @@
 
 ---
 
+### [IDEA-105] Ask "Brief Mode" Toggle — 3-Sentence Response Constraint
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-23
+- **Last Updated:** 2026-05-23
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** A small "Brief / Full" toggle on the Ask page that appends a system-prompt constraint ("Respond in 3 sentences or fewer") when Brief is active. Some readers want quick factual answers; others want depth. Zero new API routes, zero DB, zero npm. Estimated 30 minutes: 1 state toggle + 1 param + 5 lines in `perspectives.ts`.
+- **Night Notes:**
+  - 2026-05-23 (Run 38): Seeded. The Ask companion currently has no response length control — it produces medium-length narrative answers by default. A "Brief" toggle is the minimum viable depth switch. Implementation: (1) Add `isBriefMode: boolean` to `ask/page.tsx` React state, initialized from `localStorage` key `celestial_ask_brief`; (2) Render a small `<button>` labeled "Brief / Full" near the input row — same row as voice chips from IDEA-093; (3) Include `briefMode: isBriefMode` in the `/api/ask` POST body; (4) In `api/ask/route.ts`, destructure `briefMode` and pass to `orchestrateAsk()`; (5) In `perspectives.ts` `buildAskAnswererPrompt()`, if `briefMode === true`, append a constraint line to the user-facing prompt: "Respond in 3 complete sentences or fewer. Prioritize the most critical fact." This is a system-prompt modification, not content filtering — no spoiler implications. Toggle persists in localStorage. Guest-compatible (no auth needed). Synergistic with IDEA-093 (voice mode can be combined with brief mode — "Brief ALARA" gives a first-person 3-sentence answer). 1 state var + 4 small file edits. Estimated 30 minutes. No new imports, no new routes, no migrations.
+
+---
+
 ### [IDEA-099] Floating Chapter Ask Widget — Inline Ask Drawer on Reading Pages
 - **Status:** seed
 - **Theme:** ask-forward
@@ -312,15 +325,16 @@
 ---
 
 ### [IDEA-102] Ask Empty State Chapter Grid — Discovery Entry Point Without Story Context
-- **Status:** seed
+- **Status:** planned
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-22
-- **Last Updated:** 2026-05-22
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
+- **Last Updated:** 2026-05-23
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md`
 - **Summary:** When the Ask page is opened without a `?story=` param and no prior messages exist, the empty state displays a compact 17-chapter mini-grid as discovery chips — "Explore CH01", "Explore CH02", etc. — letting readers ground the companion in a chapter they want to ask about without needing to navigate back to the chapter list first.
 - **Night Notes:**
   - 2026-05-22 (Run 37): Seeded. IDEA-057 (Context-Aware Welcome, ready) handles the empty state when `?story=` IS set — this idea is the complementary discovery flow for readers who land on Ask directly (e.g., from the home hero widget of IDEA-084 without pre-filling a query). The 17 chapter tiles can be rendered from a static constant (all 17 CH slugs + titles, sourced from `static-data.ts` or a compact server-side fetch). Clicking a tile sets `contextStoryId` (equivalent to `/ask?story=ch01`) and triggers the IDEA-057 welcome greeting. The grid displays as 6 tiles per row in a compact `text-sm` style with chapter number + short title. When `?story=` IS set, the grid is replaced by the IDEA-057 chapter-specific welcome (no overlap). Implementation: extend the empty-state branch in `ask/page.tsx` — add a 3rd sub-branch: `if (!contextStoryId && !messages.length) { show chapter grid }`. The grid can use a `CHAPTER_QUICK_TILES` static constant (17 slug + title pairs). Zero new API routes, zero DB. Chapter titles already available in `static-data.ts` story list. Estimated 45 minutes. Synergistic with IDEA-057 (which kicks in after a tile is clicked), IDEA-084 (home widget routes to Ask — these tiles are the fallback if no `?q=` is provided).
+  - 2026-05-23 (Run 38): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md`. Implementation confirmed via codebase read: empty state block is at `ask/page.tsx` lines 672–691. Key decisions: (1) `CHAPTER_QUICK_TILES` hardcoded (17 entries, not imported from `static-data.ts`) to avoid ~500KB bundle bloat — titles verified at plan-write time; (2) `useRouter` added alongside existing `useSearchParams` import; (3) Grid shows ONLY when `!storySlug && !prefilledPrompt && !urlPassage` — generic chips remain for all other empty-state contexts (backward compatible with IDEA-057 landing); (4) Clicking a tile calls `router.push('/ask?story=CH01')` — sets URL param, activates breadcrumb, triggers IDEA-057 welcome when that ships. Priority raised to P2. Estimated 45 minutes. 1-file change: `ask/page.tsx`.
 
 ---
 
@@ -368,16 +382,30 @@
 
 ---
 
-### [IDEA-097] Resonant Pad Harmonic Pulse — Pre-Generated Abstract Visualization for Location Page
+### [IDEA-106] Valkyrie-1 Dynamic State Header — Reader-Progress-Driven Harmonic State Image on Ship Wiki Page
 - **Status:** seed
 - **Theme:** genmedia
+- **Seeded:** 2026-05-23
+- **Last Updated:** 2026-05-23
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** The `/artifacts/valkyrie-1` wiki page selects which pre-approved harmonic state image (dormant/wake/active/alignment/harmonic_jump) to display as a header image based on which state appears in the reader's most recently read chapter, derived from `chapter_tags.json`. Zero reader generation cost — uses the 5 approved state renders already committed (or moved to Supabase after FIX-048). As the reader progresses through the story, the ship's wiki page "evolves" visually.
+- **Night Notes:**
+  - 2026-05-23 (Run 38): Seeded. The 5 Valkyrie-1 harmonic state renders already exist at `public/images/` (FIX-048 notes they're ~15MB committed test renders). After FIX-048 resolves, these would live in `cel_visual_assets` with `approved=true` and `source='harmonic_state'`. (1) Model/provider: Imagen 4 — images already generated; author batch only, zero reader cost. (2) Cost per generation: $0 for readers — 5 pre-approved author images. (3) Caching: images in Supabase Storage with public URLs; asset lookup uses existing `/api/visuals/preferred?target=valkyrie-1&style={stateSlug}` endpoint (already exists); result cached in component state for session. (4) Spoiler gating of prompt inputs: N/A — no generation; state-to-chapter mapping uses `chapter_tags.json` entity list (world-building data, not narrative prose). No spoiler risk: showing "harmonic_jump" imagery to a reader who hasn't reached the chapter where it appears reveals only a visual aesthetic, not story events. (5) Canon grounding: `content/wiki/specs/valkyrie-1/states/{state}.json` specs ground the imagery; already generated. Implementation: (1) A new `ChapterToHarmonicState` mapping constant in `src/lib/wiki/` or inline on the page — maps chapter ranges to the ship state most prominent in that chapter group, derived from `chapter_tags.json` harmonic-state entity entries; (2) In `/artifacts/valkyrie-1` page (or `FictionEntityDetailPage`), fetch `readerProgress.currentChapterNumber`; look up the corresponding state slug; fetch the preferred approved asset via `/api/visuals/preferred`; render as a `<Image>` header if found, otherwise no header. Zero new routes beyond what already exists. Estimated 1 hour: mapping constant + one `getServerSideProps`-equivalent data fetch + header `<Image>` render. Prerequisite: FIX-048 (move images to Supabase) should execute first so the images are in `cel_visual_assets` and accessible via the preferred API — otherwise the feature works only if images remain in `public/images/` and paths are known. Synergistic with IDEA-047 (Harmonic State Gallery, parked) — this feature is a simpler first step.
+
+---
+
+### [IDEA-097] Resonant Pad Harmonic Pulse — Pre-Generated Abstract Visualization for Location Page
+- **Status:** parked
+- **Theme:** genmedia
 - **Seeded:** 2026-05-20
-- **Last Updated:** 2026-05-20
+- **Last Updated:** 2026-05-23
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** A pre-generated Imagen 4 abstract visualization of the Resonant Pad's harmonic emission pattern — an alien-organic energy field render, not a scene illustration — displayed on the `/locations/resonant-pad` wiki page via `EntityVisualsGallery`. Author-batch only (zero reader generation cost). Leverages the existing `resonant-pad` spec JSON and the WORLD A `alien_organic` vocabulary.
 - **Night Notes:**
   - 2026-05-20 (Run 35): Seeded. The `resonant-pad` location has a `content/wiki/specs/resonant-pad/master.json` spec file (added commits `03d7d20` + `74aeae5`, see STATUS.md) with `parent_entity: "valkyrie-1"`. The spec chain gives full WORLD A vocabulary (bio-crystalline, petal apertures, subdermal vein emission). An abstract energy-field visualization — showing harmonic emission lines converging on the pad surface — is achievable with an Imagen 4 prompt tuned to the WORLD A aesthetic without depicting narrative events. (1) Model/provider: Imagen 4 with `valkyrie_shipboard` or `alien_organic` vocabulary (WORLD A). ~$0.06/image. (2) Cost budget: 1–2 images; author-batch only; ~$0.06–$0.12 total. (3) Caching: stored in `cel_visual_assets` with `approved=true`; surfaced on location page via existing `EntityVisualsGallery`. (4) Spoiler gating of prompt inputs: Resonant Pad specs contain no narrative events — the spec describes the physical/spatial object only. No spoiler risk. (5) Canon grounding: `content/wiki/specs/resonant-pad/master.json` + parent chain from `valkyrie-1/master.json` + `content/wiki/locations/resonant-pad.md`. No additional content needed. Prerequisite: author runs via admin console, approves asset. The existing `EntityVisualsGallery` on the location page will surface it automatically. Estimated: 20 minutes of author time, zero code changes.
+  - 2026-05-23 (Run 38): Stale 3 days — likely low priority or too complex. Demoting to parked. An excellent low-cost author task (20 min, zero code), but it requires the admin console workflow to be the active focus. Un-park when Paul is running a batch generation session for location visuals. The `resonant-pad` spec is fully ready to drive generation.
 
 ---
 
@@ -641,16 +669,30 @@
 
 ---
 
-### [IDEA-098] Crew Final Status Board — Character State Grid on Characters Index for Completed Readers
+### [IDEA-107] ALARA Observer Logs — Author-Written First-Person Chapter Journals at `/world/alara-logs`
 - **Status:** seed
 - **Theme:** post-read-world
+- **Seeded:** 2026-05-23
+- **Last Updated:** 2026-05-23
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** A `/world/alara-logs` page for `show_all_content=true` readers presenting 17 short first-person journal entries written by the author in ALARA's voice — one per chapter, drawn from her arc ledger "Starting State"/"State After" observations. Reads like private ship logs: "Mission Day 1. I observe. The humans call this 'initialization.' I call it waking." Zero on-demand AI cost — author writes 17 entries offline and commits them as static markdown. A narrative artifact that transforms arc data into a reader-facing companion text.
+- **Night Notes:**
+  - 2026-05-23 (Run 38): Seeded. This is primarily a content creation task for Paul (writing 17 short log entries in ALARA's voice, ~100–200 words each) with minimal code. (1) Post-read-world requirements: (a) `/world/alara-logs` gated by `show_all_content === true` at server level — redirect to `/profile` if false; (b) Integration with `show_all_content`: direct server-side check via `getReaderProgress()`; (c) Partial-completion edge cases: `show_all_content` is the sole gate — arc-endpoint voice is appropriate only for completed readers. (2) Content format: 17 markdown files at `content/wiki/logs/alara/ch01.md` through `ch17.md` — no `<!-- generated:ingest -->` marker (manually authored); (3) Code: new `/world/alara-logs/page.tsx` server component — reads all 17 log files via `fs.readdir` + `fs.readFile`, renders as a scrollable timeline of `<article>` cards with chapter label + ALARA's log text via `react-markdown`. The StoryMarkdown component can be reused for consistent prose rendering. (4) Navigation: add a link from `/world/voices` (IDEA-095) to `/world/alara-logs` as a companion post-read-world route. No new DB, no AI calls at render time, zero npm packages. Estimated code: 1 hour (route + file reader utility + card layout). Content: Paul estimates 2–3 hours writing time. The `arc-endpoints.ts` utility from IDEA-095 + the arc ledger "Starting State" sections provide the grounding material for each log entry. Synergistic with IDEA-095 (both live under `/world/`), IDEA-101 (Crew Debrief Mode), and character voice work in IDEA-093. A unique piece of companion content that turns technical arc data into living voice.
+
+---
+
+### [IDEA-098] Crew Final Status Board — Character State Grid on Characters Index for Completed Readers
+- **Status:** parked
+- **Theme:** post-read-world
 - **Seeded:** 2026-05-20
-- **Last Updated:** 2026-05-20
+- **Last Updated:** 2026-05-23
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** For `show_all_content=true` readers, the `/characters` index page gains a "Crew Status at Book's End" summary grid above the character list — a 3×3 compact card layout, one card per main character showing their name and a 3–5 word CH17 arc-state summary drawn from their arc ledger. Gives completed readers a living roster view, not just a list of wiki links.
 - **Night Notes:**
   - 2026-05-20 (Run 35): Seeded. The `/characters` page currently renders all character slugs as link cards. For `show_all_content` readers, a companion "crew status" panel above the character list would surface the arc endpoint in a compact at-a-glance format. Implementation: (1) In `characters/page.tsx` (server component), check `readerProgress.showAllContent`; if true, call `getAllCharacterArcs()` (existing), extract CH17 "State After" text, truncate to ~6 words per character; (2) Render a `<section>` with a heading "Crew — Where They Ended" and a 3×3 CSS grid of small cards (character name + 6-word state excerpt + link to character page); (3) Post-read-world requirements: (a) Hidden from first-time readers and guests — `show_all_content` check at server level; entire `<section>` not rendered without the flag; (b) Integration with `show_all_content`: direct server-side check before calling arc utility; (c) Partial-completion edge cases: `show_all_content` is the sole gate — server validates flag. Zero new DB, zero new content, zero npm packages. The CH17 "State After" text in the arc ledger is the same data sourced by IDEA-095 (Arc Endpoint Quotes Gallery) — these two features share the same data utility `arc-endpoints.ts` from IDEA-062. Estimated 1 hour. Synergistic with IDEA-095 (can cross-link each card to the `/world/voices` quote gallery). Prerequisite: IDEA-062 (hindsight panel) establishes arc parsing utilities; can be built independently with an inline `getAllCharacterArcs()` call.
+  - 2026-05-23 (Run 38): Stale 3 days — likely low priority or too complex. Demoting to parked. IDEA-095 (Arc Endpoint Quotes Gallery, ready) covers the "where the crew ended" content more elegantly on `/world/voices`. Adding a second surface on the `/characters` index adds noise before IDEA-095 ships. Un-park after IDEA-095 ships; revisit as a compact inline widget once readers have the full quotes gallery as context.
 
 ---
 
