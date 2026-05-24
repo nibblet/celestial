@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-05-23 (Nightshift Run 38)
+> Last updated: 2026-05-24 (Nightshift Run 39)
 
 ## App Summary
 
@@ -191,7 +191,7 @@
 - **Build:** PASSES — clean, ~106 routes. 1 Turbopack warning on `next.config.ts`. (Requires `npm install` before `npx next build` in a fresh clone.) Verified Run 36 (`npx next build` in fresh sandbox). No new code commits since Run 29 — codebase unchanged.
 - **Lint:** PASSES — 0 errors, **4 warnings** (`<img>` tags in visuals components — `VisualsAdminConsole.tsx` lines 230/394, `EntityVisualsGallery.tsx` lines 64/118). Verified Run 36. Unchanged since Run 17.
 - **Tests:** **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17). All green. Verified Run 36. No new code commits since Run 29 — codebase unchanged.
-- **Run 38 note:** No code commits since Run 37. Build/lint/test status confirmed unchanged. No new build execution performed (codebase unchanged).
+- **Run 39 note:** No code commits since Run 38. Build/lint/test status confirmed unchanged. No new build execution performed (codebase unchanged).
 
 ## Known Issues (See FIXES.md)
 
@@ -220,7 +220,8 @@
 ## Next Actions (Priority Order)
 
 1. **IDEA-048 (15 min):** Add Ask CTA near top of story page (after summary, before scene navigation) — 6 lines JSX in `stories/[storyId]/page.tsx` between lines 166–168. Dev plan `DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` ready.
-2. **IDEA-102 (45 min):** Ask Empty State Chapter Grid — 17-chapter tile grid in Ask page when no story context set; clicking a tile routes to `/ask?story=CH01`; 1-file change (`ask/page.tsx`). Dev plan `DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md` ready *(NEW Run 38)*.
+2. **IDEA-105 (30 min):** Ask Brief Mode Toggle — 4-file change to add a localStorage-persisted "Brief / Full" response-length toggle; mirrors existing Deep/Fast askMode pattern exactly. Dev plan `DEVPLAN-IDEA-105-ask-brief-mode-toggle.md` ready *(NEW Run 39)*.
+3. **IDEA-102 (45 min):** Ask Empty State Chapter Grid — 17-chapter tile grid in Ask page when no story context set; clicking a tile routes to `/ask?story=CH01`; 1-file change (`ask/page.tsx`). Dev plan `DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md` ready.
 3. **IDEA-096 (15 min, Phase 1 only):** Ask Live Context Band — dismissable pill strip above Ask input showing active story/voice/entity context. Phase 1 (story pill) deployable today in 15 minutes, 1-file change. Dev plan `DEVPLAN-IDEA-096-ask-live-context-band.md` ready.
 3. **IDEA-084 (45 min):** Ask Home Hero Widget — text input in home page hero routes to `/ask?q=...` with auto-submit; 2-file change (`HomeHero.tsx` + `ask/page.tsx`). Dev plan `DEVPLAN-IDEA-084-ask-home-hero-widget.md` ready.
 4. **IDEA-072 (1.5 hr):** Chapter quick-facts panel on Ask page — collapsible card showing mission day range, primary location, and top 3 characters when `?story=` is set. Dev plan `DEVPLAN-IDEA-072-chapter-quick-facts-panel.md` ready.

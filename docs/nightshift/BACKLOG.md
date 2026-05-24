@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-23 (Run 38)
+> Last updated: 2026-05-24 (Run 39)
 
 ## Maturity Levels
 
@@ -299,28 +299,43 @@
 ---
 
 ### [IDEA-105] Ask "Brief Mode" Toggle — 3-Sentence Response Constraint
-- **Status:** seed
+- **Status:** planned
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-23
-- **Last Updated:** 2026-05-23
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
+- **Last Updated:** 2026-05-24
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-105-ask-brief-mode-toggle.md`
 - **Summary:** A small "Brief / Full" toggle on the Ask page that appends a system-prompt constraint ("Respond in 3 sentences or fewer") when Brief is active. Some readers want quick factual answers; others want depth. Zero new API routes, zero DB, zero npm. Estimated 30 minutes: 1 state toggle + 1 param + 5 lines in `perspectives.ts`.
 - **Night Notes:**
   - 2026-05-23 (Run 38): Seeded. The Ask companion currently has no response length control — it produces medium-length narrative answers by default. A "Brief" toggle is the minimum viable depth switch. Implementation: (1) Add `isBriefMode: boolean` to `ask/page.tsx` React state, initialized from `localStorage` key `celestial_ask_brief`; (2) Render a small `<button>` labeled "Brief / Full" near the input row — same row as voice chips from IDEA-093; (3) Include `briefMode: isBriefMode` in the `/api/ask` POST body; (4) In `api/ask/route.ts`, destructure `briefMode` and pass to `orchestrateAsk()`; (5) In `perspectives.ts` `buildAskAnswererPrompt()`, if `briefMode === true`, append a constraint line to the user-facing prompt: "Respond in 3 complete sentences or fewer. Prioritize the most critical fact." This is a system-prompt modification, not content filtering — no spoiler implications. Toggle persists in localStorage. Guest-compatible (no auth needed). Synergistic with IDEA-093 (voice mode can be combined with brief mode — "Brief ALARA" gives a first-person 3-sentence answer). 1 state var + 4 small file edits. Estimated 30 minutes. No new imports, no new routes, no migrations.
+  - 2026-05-24 (Run 39): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-105-ask-brief-mode-toggle.md`. Implementation confirmed via codebase read: `PersonaPromptArgs` type at `perspectives.ts:71`; `buildAskAnswererPrompt` at `perspectives.ts:282`; `OrchestrateParams` at `orchestrator.ts:60`; `buildPromptArgs` return at `orchestrator.ts:324`; POST body at `ask/page.tsx:401`; mode toggle UI at `ask/page.tsx:597`. Exact pattern matches existing `askMode` localStorage toggle (same constant/reader/state/effect/POST-body/UI structure). 4-file change. Priority raised to P2. Estimated 30 minutes.
+
+---
+
+### [IDEA-108] Ask Reading Dwell Nudge — Ambient Chapter-Page Ask Prompt After 90s
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-24
+- **Last Updated:** 2026-05-24
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** After a reader has been on a chapter page for 90 seconds with scrolling activity detected (not idle), a subtle non-modal floating bar appears at the bottom of the viewport: "Ask about [Chapter N] →" with a dismiss `×`. Clicking navigates to `/ask?story={storyId}`. A lightweight presence cue for readers who haven't discovered Ask organically. One-per-chapter-session (sessionStorage flag prevents repeat). Pure client-side component, zero API, zero DB.
+- **Night Notes:**
+  - 2026-05-24 (Run 39): Seeded. The current Ask CTAs are explicit (buttons Paul must build) or page-level (a link in the hero). The dwell nudge is passive — it appears only after the reader is clearly engaged (90s + scroll). Implementation: (1) New `src/components/stories/AskDwellNudge.tsx` client component — `useEffect` starts a 90s `setTimeout` on mount; if the page has received at least one `scroll` event during that window, the nudge bar renders into a portal (`document.body`) as a `fixed bottom-4` bar; (2) Dismiss `×` sets `sessionStorage.setItem('ask_nudge_dismissed_{storyId}', '1')`; component checks this key on mount and skips if already dismissed; (3) The 90s timer is cleared on unmount (page navigation); (4) `AskDwellNudge` receives `storyId` as a prop and is added to `stories/[storyId]/page.tsx` near the page root. Scroll detection: add a `scroll` event listener in the same `useEffect`; set a `hasScrolled` ref. If `hasScrolled === false` when the timer fires, do not show the nudge (reader may have navigated to a specific anchor and stopped). Zero new API routes. Zero DB. Zero npm packages. No spoiler concern — the bar just links to Ask with story context. Works for guests (no auth check). Estimated: 1 hour (component + portal + sessionStorage guard + wiring into chapter page). Synergistic with IDEA-057 (context-aware welcome) — the nudge routes to Ask which shows the chapter-specific welcome. Prerequisite: none.
 
 ---
 
 ### [IDEA-099] Floating Chapter Ask Widget — Inline Ask Drawer on Reading Pages
-- **Status:** seed
+- **Status:** parked
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-21
-- **Last Updated:** 2026-05-21
+- **Last Updated:** 2026-05-24
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** A persistent floating action button on chapter reading pages (`/stories/[storyId]`) that opens a slide-in mini Ask panel on the right edge of the viewport — showing the last 3 conversation exchanges and a text input — so readers can consult the companion without navigating away from the chapter text.
 - **Night Notes:**
   - 2026-05-21 (Run 36): Seeded. The current Ask CTAs all require navigating to `/ask`, losing the reader's scroll position and reading context. A floating drawer solves this: (1) A small circular FAB (floating action button) at the bottom-right of the chapter page — containing a sparkle or compass icon; (2) Clicking opens a `<aside>` slide-in panel (~320px wide) overlaying the right edge of the viewport, with backdrop overlay; (3) The panel hosts a mini chat thread (last 3 exchanges from the current session, stored in component state) and a single-line input that fires POST `/api/ask` with `storySlug` context; (4) Streaming responses render in the panel thread in real time; (5) An "Open in full Ask →" link at the top navigates to `/ask?story={storyId}&conversation={id}` if they want more. Implementation: a new `AskFloatingDrawer.tsx` client component — uses `useState(open)`, a `useRef` for the thread, and the same streaming pattern as `ask/page.tsx`. Added to `stories/[storyId]/page.tsx` near the page root. Context: `storySlug` passed as a prop. The drawer can start with the same 3 suggested chips from `chapter_tags.json` as IDEA-057 (context-aware welcome). Spoiler: none — the drawer uses the same `/api/ask` endpoint with the same gating; all content accessible under companion-first. Zero new routes, zero new DB tables. Estimated 3 hours (new streaming component from scratch + panel layout). Prerequisite: IDEA-057 (context-aware welcome chips) could share a server fetch. Synergistic with IDEA-093 (character voice mode chips could appear in the drawer too). Key design question: does the drawer persist state across scroll, or reset on each chapter navigation? Answer: persist in React state for the session (page mount).
+  - 2026-05-24 (Run 39): Stale 3 days — likely low priority or too complex. Demoting to parked. The 3-hour new streaming component scope is substantial; simpler Ask CTAs (IDEA-048, IDEA-051, IDEA-102) should ship first to validate the chapter-page Ask entry pattern before building an embedded panel. Un-park when Paul is ready to invest in a native in-chapter Ask surface.
 
 ---
 
@@ -409,29 +424,44 @@
 
 ---
 
-### [IDEA-100] Harmonic State Portrait Composite — Character-Within-Ship State Visual via Ask
+### [IDEA-109] Vault Entry Preview Images — 10 Canonical Threshold-View Renders for Vault Wiki Pages
 - **Status:** seed
 - **Theme:** genmedia
+- **Seeded:** 2026-05-24
+- **Last Updated:** 2026-05-24
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** Author pre-generates one canonical "threshold view" image per vault entity (giza-vault, vault-002 through vault-010) via Imagen 4 using the `vault_threshold` preset and WORLD C vocabulary (carved stone, glyph reliefs, candle-warm interior). Images stored in `cel_visual_assets` with `approved=true` and surfaced on each vault detail page via the existing `EntityVisualsGallery`. Zero code changes — purely author-batch via admin console. Total cost: ~$0.60 for all 10 vaults.
+- **Night Notes:**
+  - 2026-05-24 (Run 39): Seeded. Vault entities are among the most visually distinctive in the story world — WORLD C (ancient_vault) vocabulary with glyph reliefs, carved stone, and dim interior lighting is a strong aesthetic fit for Imagen 4. The 10 vault entities in `content/wiki/vaults/` each have markdown wiki entries describing their physical characteristics. Vault spec JSONs are minimal (stub `master.json` files or absent), but `content/wiki/specs/` already has `giza-vault/` with some spec data — enough to anchor the `vault_threshold` preset. For vaults without spec JSON, the vault wiki markdown alone provides sufficient WORLD C vocabulary for a threshold-view prompt. (1) Model/provider: Imagen 4 with `vault_threshold` preset. ~$0.06/image × 10 vaults = $0.60 total; author-batch only. (2) Cost budget: ~$0.06/image; 10 images in one session; no reader generation. (3) Caching: stored in `cel_visual_assets` with `approved=true`, `source='vault_threshold'`, `target={vault-slug}`; shared/canonical. (4) Spoiler gating of prompt inputs: vault physical descriptions are world-building data — no narrative events in wiki markdown or spec JSON. Zero spoiler risk. (5) Canon grounding: `content/wiki/vaults/{slug}.md` wiki markdown + `content/wiki/specs/{vault-slug}/master.json` (where it exists, e.g., giza-vault); `vault_threshold` preset provides WORLD C base vocabulary. Prerequisite: none — author console workflow is fully operational. `EntityVisualsGallery` on vault pages already fetches and displays approved assets (confirmed in STATUS.md — gallery renders on vault detail pages). Estimated: 20–30 minutes of author time in the admin console; zero code changes.
+
+---
+
+### [IDEA-100] Harmonic State Portrait Composite — Character-Within-Ship State Visual via Ask
+- **Status:** parked
+- **Theme:** genmedia
 - **Seeded:** 2026-05-21
-- **Last Updated:** 2026-05-21
+- **Last Updated:** 2026-05-24
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** When a reader asks "What does the ship look like when ALARA is in alignment?" or describes a specific Valkyrie harmonic state combined with ALARA's presence, the Ask companion detects `vessel_state_character_intent` and generates a composite image: the named harmonic state's physical spec overlaid with ALARA's noncorporeal visual signature. A portrait-within-landscape class of image unique to this story world.
 - **Night Notes:**
   - 2026-05-21 (Run 36): Seeded. All 5 Valkyrie-1 harmonic states have full spec JSON at `content/wiki/specs/valkyrie-1/states/` (dormant/wake/active/alignment/harmonic_jump). ALARA has a spec path that would use the `noncorporeal_presence` preset. A composite image would combine: the named state's physical spec overrides (vein color, intensity, aperture posture) + a noncorporeal overlay (diffuse luminescent presence throughout the space) + the `valkyrie_shipboard` background. The composition creates a "ship as perceived by ALARA" visual register — not a scene render (IDEA-043) and not a portrait (IDEA-052), but a state-mediated point-of-view image. (1) Model/provider: Imagen 4 with `valkyrie_shipboard` preset + `noncorporeal_presence` style blend in prompt. ~$0.06/image. (2) Cost budget: 3 images/reader/hour shared with IDEA-043 rate limit. (3) Caching: per `(stateSlug, "alara-composite", corpusVersion)` hash — shared, not user-scoped; all 5 states can be pre-cached. (4) Spoiler gating of prompt inputs: harmonic state names are world-building vocabulary (not narrative events). ALARA's noncorporeal presence is established in early chapters — no spoiler risk. All specs visible to all users under companion-first. (5) Canon grounding: `content/wiki/specs/valkyrie-1/master.json` (WORLD A base vocab) + `content/wiki/specs/valkyrie-1/states/{state}.json` (overrides) + `content/wiki/characters/alara.md` (noncorporeal description) + Starting State from `content/wiki/arcs/characters/alara.md` (safe section only). Prerequisite: IDEA-043 (on-demand scene visualization) ships first to establish the visual-intent → generation pipeline in Ask. This extends IDEA-043 with a new `vessel_state_character` intent sub-type. Estimated: 1 hour on top of IDEA-043.
+  - 2026-05-24 (Run 39): Stale 3 days — likely low priority or too complex. Demoting to parked. Blocked by IDEA-043 (on-demand scene visualization) as a prerequisite. Un-park after IDEA-043 ships and the visual-intent pipeline is in place.
 
 ---
 
 ### [IDEA-103] Chapter Atmosphere Color Thumbnails — Abstract Mood Tiles on Chapter Cards
-- **Status:** seed
+- **Status:** exploring
 - **Theme:** genmedia
 - **Seeded:** 2026-05-22
-- **Last Updated:** 2026-05-22
+- **Last Updated:** 2026-05-24
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** Author pre-generates one abstract 128×128px atmosphere thumbnail per chapter via Imagen 4 using only an emotional-palette prompt (dominant color + mood word derived from `chapter_tags.json` themes, no characters or locations). Stored in `cel_visual_assets` and displayed as a small decorative accent on chapter cards in the `/stories` grid. Adds visual rhythm to the chapter list at near-zero cost.
 - **Night Notes:**
   - 2026-05-22 (Run 37): Seeded. This is the cheapest possible use of Imagen 4 generation — abstract color-field images that carry emotional tone only. (1) Model/provider: Imagen 4 with a 1-sentence prompt: "{primary_color} tones, {mood_adjective} atmosphere, abstract, painterly field, no text, no figures" — color and mood derived from the `themes` array in `chapter_tags.json` per chapter. (2) Cost budget: ~$0.06/image × 17 chapters = ~$1.02 total for the full set; author-batch only; negligible. (3) Caching: stored in `cel_visual_assets` with `source='chapter_atmosphere'` and `target=chapter_slug`; one image per chapter; shared canonical, never user-scoped. (4) Spoiler gating of prompt inputs: the prompt contains only a color word and a mood adjective — no character names, no location names, no narrative events. Zero spoiler risk even for earliest unread chapters. (5) Canon grounding: `chapter_tags.json` themes field per chapter → the first theme string becomes the mood adjective (e.g., "isolation", "revelation", "confrontation"); the dominant color is derived from a static mood→color mapping authored by Paul (e.g., "isolation" → "deep navy", "revelation" → "amber gold"). Author controls the mapping and can adjust before batch generation. Implementation: the existing admin console (`/profile/admin/visuals`) is the generation surface — no new routes needed. A one-time batch generation of 17 images + author approval + they surface automatically on chapter cards via `EntityVisualsGallery` (or a lightweight `<img>` from a new `/api/visuals/preferred?target={slug}&style=chapter_atmosphere` call at build time). The chapter cards in `StoriesPageClient.tsx` would need a small visual slot added if not already present. Estimated: 20 minutes author time for batch + 1 hour code for displaying the thumbnail in chapter cards.
+  - 2026-05-24 (Run 39): **Advanced to `exploring`.** Feasibility assessment: (1) Author workflow is well-defined — `chapter_tags.json` already has per-chapter `themes` arrays; Paul can map each chapter's first theme to a color word offline and generate 17 prompts in a single admin console session. (2) One code gap identified: `StoriesPageClient.tsx` chapter cards have no visual thumbnail slot currently — the chapter card grid would need a small `<img>` slot or colored border accent to surface the approved asset. (3) The `/api/visuals/preferred?target={slug}&style=chapter_atmosphere` endpoint already exists and would return the approved URL without auth. Recommend: Paul defines the 17 mood→color pairs, runs the batch, and assesses visual quality before committing to the card display code. Advance to `planned` when Paul confirms the mood→color mapping approach and card display slot design.
 
 ---
 
@@ -696,29 +726,44 @@
 
 ---
 
-### [IDEA-101] Crew Debrief Mode — Post-Completion First-Person Arc Conversation
+### [IDEA-110] World Glossary Accordion — All 25 Rules as Expandable Reference for Completed Readers
 - **Status:** seed
 - **Theme:** post-read-world
+- **Seeded:** 2026-05-24
+- **Last Updated:** 2026-05-24
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** For `show_all_content=true` readers, a `/world/glossary` page listing all 25 rules/concepts from `content/wiki/rules/` as expandable `<details>` accordions, grouped by series-bible category, with a keyword filter and per-rule chapter cross-reference links derived from `chapter_tags.json`. A living reference for the rule-set governing the story world. Zero AI, zero DB, zero new content — all data from existing static files and `static-data.ts`.
+- **Night Notes:**
+  - 2026-05-24 (Run 39): Seeded. The 25 rules in `content/wiki/rules/` represent the full Series Bible rule-set (ancients-philosophy, conscious-machines, containment-morality, earth-2050, moral-questions, prologue-timeline, spiritual-symbols, technology-limits, vault-network, plus older lore rules). They are already surfaced on the `/rules` index page as plain cards and individual `/rules/[slug]` pages. A glossary accordion brings them into a single scrollable reference optimized for re-reading: (1) A new `/world/glossary/page.tsx` server component gated by `show_all_content === true` (redirect to `/profile` if false); (2) Load all 25 rules from `static-data.ts` (or direct from `content/wiki/rules/` via `fs.readdir` — same pattern as `getCanonicalWikiSummaries()`); (3) Group by category (series-bible rules vs. older foundational lore rules) based on file metadata or a hardcoded category map; (4) Render each rule as a `<details><summary>{name}</summary>{lore/description}</details>` accordion; (5) Add a client-side keyword filter (`<input>` that hides non-matching accordions via CSS — no React state needed, pure DOM `filter()`); (6) Per-rule chapter cross-reference: query `chapter_tags.json` for chapters where the rule slug appears in entity tags; render as compact chapter chips linking to `/ask?story={ch}&entity={slug}` (or plain chapter links). Post-read-world requirements: (a) Hidden from first-time and guest readers — `show_all_content` server-side check; (b) Integration with `show_all_content`: direct check before rendering; (c) Partial-completion edge cases: flag validated server-side. Zero new DB, zero new content files, zero npm packages. Add link to `/world/glossary` from `/rules` (with `show_all_content` guard) and from `/world/voices` (IDEA-095 page). Estimated 1.5 hours (route + grouping logic + accordion + keyword filter + chapter cross-ref). Synergistic with IDEA-095 (`/world/voices`) and IDEA-104 (`/world/map`) — the three form a natural `/world/` nav cluster for completed readers.
+
+---
+
+### [IDEA-101] Crew Debrief Mode — Post-Completion First-Person Arc Conversation
+- **Status:** parked
+- **Theme:** post-read-world
 - **Seeded:** 2026-05-21
-- **Last Updated:** 2026-05-21
+- **Last Updated:** 2026-05-24
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** For `show_all_content=true` readers, a distinct "Debrief" mode on the Ask page that activates a character voice with full arc-endpoint context — including CH17 "State After" and arc trajectory, not just Starting State. Readers can have an "after the ending" conversation with any crew member, grounded in their complete documented arc. Strictly gated by `show_all_content`.
 - **Night Notes:**
   - 2026-05-21 (Run 36): Seeded. IDEA-093 (Character Voice Mode, now ready) uses only "Starting State" (~800 chars) to avoid spoiling the arc. Crew Debrief Mode lifts this restriction for completed readers: (1) A second set of character chips appears on the Ask page only when `profile.showAllContent === true` (fetched server-side at page load and injected via a `debrief_eligible` prop); (2) The chips are visually distinct from the standard IDEA-093 crew chips — different color or "Debrief" label prefix; (3) When a debrief character is selected, the API receives `voiceCharacter` + `debriefMode: true`; (4) Server validates: if `debriefMode === true`, confirm `readerProgress.showAllContent === true` before including arc-endpoint content in the system prompt — otherwise strip to Starting State only. The debrief prompt block includes: CH17 "State After" (from `getArcEndpoints()` utility — shared with IDEA-095) + any "Current State by Chapter Boundary" section from the arc ledger. (5) Post-read-world requirements: (a) Chip row for debrief mode renders only when `showAllContent === true` — server prop injection ensures no flash on client; (b) API validates `showAllContent` server-side before unlocking the arc-endpoint context — client UI state alone cannot unlock it; (c) Partial-completion edge cases: server-side flag check is the sole gate. Prerequisite: IDEA-093 (Character Voice Mode) ships first to establish the chip row UI and API plumbing; debrief mode extends it with a server-side guard and additional context. Implementation: 3-file change after IDEA-093 ships — `api/ask/route.ts` (add `debriefMode` + `showAllContent` validation), `perspectives.ts` (add `buildDebriefBlock()` using CH17 state + arc trajectory), `ask/page.tsx` (conditional debrief chip row). Zero new DB tables; no new content. Estimated 1.5 hours on top of IDEA-093. Synergistic with IDEA-095 (shares `getArcEndpoints()` utility for CH17 state text).
+  - 2026-05-24 (Run 39): Stale 3 days — likely low priority or too complex. Demoting to parked. Blocked by IDEA-093 (Character Voice Mode, ready) as a prerequisite — debrief mode extends the character chip plumbing IDEA-093 introduces. Un-park after IDEA-093 ships and is confirmed working end-to-end.
 
 ---
 
 ### [IDEA-104] Chapter-Location Story Map — Spatial Pattern Grid for Completed Readers
-- **Status:** seed
+- **Status:** exploring
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-22
-- **Last Updated:** 2026-05-22
+- **Last Updated:** 2026-05-24
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** For `show_all_content=true` readers, a `/world/map` page showing a grid visualization: chapters (CH01–CH17) as columns and key locations as rows. Each cell is filled/colored when that location is tagged in a chapter via `chapter_tags.json`. Readers scan the story's spatial structure at a glance — which locations span multiple chapters, which appear only once. Zero AI, zero DB, zero new content.
 - **Night Notes:**
   - 2026-05-22 (Run 37): Seeded. The data source is `content/raw/chapter_tags.json` which has a per-chapter list of entity slugs including location slugs. A simple server-side pass builds a `Set<locationSlug>` per chapter, then renders a CSS grid. Key design choices: (1) Which locations to show as rows — the 11 Valkyrie-1 interior locations + the key story locations (Giza Plateau, Mars Base, Earth locations) = ~20–25 rows is manageable; can be derived from locations that appear in ≥2 chapters to keep the grid dense. (2) Cell fill: binary (appears/doesn't appear) using a colored cell vs. transparent — no bar-chart complexity needed. (3) Cells link to `/ask?story={chapterSlug}&entity={locationSlug}` (or just the location wiki page) for exploration. (4) Post-read-world requirements: (a) Hidden from first-time readers and guests — `/world/map` page gated by `show_all_content === true` at server level with redirect to `/profile` if false; (b) Integration with `show_all_content`: direct server-side check; (c) Partial-completion edge cases: same `show_all_content` flag check. Zero new DB tables, zero new content files, zero npm packages (pure CSS grid + Tailwind). Estimated 2 hours (data assembly utility + grid component + page route + gate). Synergistic with IDEA-095 (`/world/voices`) and IDEA-098 (`/characters` crew board) — these three form a natural "World" nav cluster.
+  - 2026-05-24 (Run 39): **Advanced to `exploring`.** Feasibility confirmed: `chapter_tags.json` contains entity slugs per chapter (verified in STATUS.md — 17 chapters tagged, all entity types included). Key design decision for the row list: filter location slugs to those appearing in ≥2 chapters (avoids one-off locations bloating the grid). The grid header row would be chapter labels (CH01–CH17 abbreviated) and left column would be location names — this fits within a Tailwind `grid-cols-[auto_repeat(17,1fr)]` layout. Cell links pointing to `/ask?story={chSlug}&entity={locSlug}` would require IDEA-069 (entity Ask CTA) to already ship for the best UX, but work as plain links to location wiki pages as a fallback. Advance to `planned` when the `/world/` nav cluster is being developed alongside IDEA-095.
 
 ---
 

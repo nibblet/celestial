@@ -4,6 +4,55 @@
 
 ---
 
+## Run: 2026-05-24 (Run 39)
+
+### Summary
+- Scanned: 0 new code commits since Run 38 (last commit `87ece10` — nightshift docs only). Codebase unchanged.
+- Issues: 0 new, 0 resolved, 0 spoiler-leak P0. 13 open planned issues unchanged (FIX-026, 027, 028, 029, 030, 045, 046, 047, 048, 049, 050, 051, 052).
+- Ideas (by theme): ask-forward — 1 seed (IDEA-108 — Reading Dwell Nudge), IDEA-099 parked (stale 3 days), IDEA-105 promoted to `planned`; genmedia — 1 seed (IDEA-109 — Vault Entry Preview Images), IDEA-100 parked (stale 3 days), IDEA-103 advanced to `exploring`; post-read-world — 1 seed (IDEA-110 — World Glossary Accordion), IDEA-101 parked (stale 3 days), IDEA-104 advanced to `exploring`. Total promoted: 1 (IDEA-105 to planned). Parked: 3.
+- Plans written: `DEVPLAN-IDEA-105-ask-brief-mode-toggle.md`
+
+### Build & Lint & Test Results
+- No code commits since Run 38. Status confirmed unchanged from Run 36 verification.
+- Build: **PASSES** (last verified Run 36 — no new code to re-validate)
+- Lint: **PASSES** — 0 errors, 4 `<img>` tag warnings (unchanged since Run 17)
+- Tests: **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17)
+
+### Key Findings
+
+1. **No new code commits.** Codebase is identical to Run 38. All 13 open planned issues unchanged (FIX-047 stale model IDs, FIX-049 requireKeith naming, FIX-050 overly broad intent pattern — all quick wins ready to execute).
+
+2. **IDEA-105 promoted to `planned` — Ask Brief Mode Toggle dev plan written.** A "Brief / Full" response-length toggle that appends a 3-sentence brevity constraint to `buildAskAnswererPrompt()` when active. Follows the exact same pattern as the existing "Deep / Fast" `askMode` switch already in production: `localStorage` reader fn → `useState` init → `useEffect` persist → POST body field → API body type → `OrchestrateParams` → `PersonaPromptArgs` → prompt builder append. 4-file change (`perspectives.ts`, `orchestrator.ts`, `api/ask/route.ts`, `ask/page.tsx`). Zero new routes, zero DB, zero npm. Spoiler-safe (prompt constraint only). Guest-compatible. Synergistic with IDEA-093 (character voice mode) and IDEA-096 (live context band). Dev plan at `DEVPLAN-IDEA-105-ask-brief-mode-toggle.md`. Priority P2. Estimated 30 minutes.
+
+3. **Three new ideas seeded.** IDEA-108 (ask-forward: Ask Reading Dwell Nudge — after 90s of active reading + scroll on a chapter page, a fixed bottom-of-viewport bar appears: "Ask about [Chapter N] →"; dismiss sets a sessionStorage flag so it only shows once per chapter session; pure client component, zero API, zero DB, 1 new `AskDwellNudge.tsx` component + wiring in `stories/[storyId]/page.tsx`, estimated 1 hour), IDEA-109 (genmedia: Vault Entry Preview Images — 10 Imagen 4 canonical threshold-view renders for all 10 vault wiki pages using `vault_threshold` preset + WORLD C vocab; author-batch only, ~$0.60 total, zero code changes required — `EntityVisualsGallery` already renders approved assets on vault detail pages), IDEA-110 (post-read-world: World Glossary Accordion — `/world/glossary` for `show_all_content` readers showing all 25 rules as expandable `<details>` accordions grouped by series-bible category with a keyword filter and chapter cross-reference links from `chapter_tags.json`; zero AI, zero DB, estimated 1.5 hours; completes the `/world/` nav cluster with IDEA-095 and IDEA-104).
+
+4. **Three ideas parked (stale 3 days).** IDEA-099 (Floating Chapter Ask Widget, seeded 2026-05-21): 3-hour streaming component scope is too large while simpler CTAs (IDEA-048, IDEA-051, IDEA-102) ship first; un-park after those land. IDEA-100 (Harmonic State Portrait Composite, seeded 2026-05-21): blocked by IDEA-043 prerequisite; un-park after IDEA-043 ships. IDEA-101 (Crew Debrief Mode, seeded 2026-05-21): blocked by IDEA-093 (Character Voice Mode, ready) as prerequisite; un-park after IDEA-093 ships.
+
+5. **IDEA-103 and IDEA-104 advanced to `exploring`.** IDEA-103 (Chapter Atmosphere Color Thumbnails): author batch workflow confirmed feasible — 17 Imagen 4 calls at $0.06 each from `chapter_tags.json` mood words; one code gap identified (chapter card thumbnail slot in `StoriesPageClient.tsx` doesn't exist yet); advance to `planned` when Paul defines the 17 mood→color pairs. IDEA-104 (Chapter-Location Story Map): feasibility confirmed from `chapter_tags.json` structure; key design decision is the row-location filter (≥2-chapter appearances); the Tailwind CSS grid layout is straightforward; advance to `planned` when the `/world/` cluster is being built alongside IDEA-095.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-105-ask-brief-mode-toggle.md` — **NEW**: Ask Brief Mode Toggle — 4-file, 30 min; mirrors existing askMode pattern exactly (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md` — Ask Empty State Chapter Grid — 17-chapter discovery tiles; 1-file, 45 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-096-ask-live-context-band.md` — Ask Live Context Band — Phase 1 story pill: 15 min, 1-file (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md` — Arc Endpoint Quotes Gallery — `/world/voices`; `show_all_content` gated; 1.5 hr, 2 files (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-093-character-voice-mode.md` — Character Voice Mode — 9-chip crew selector; 1.5 hr, 4 files (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-087-ask-source-deep-dive.md` — Ask Source Deep-Dive; 2 hr, 2 files (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-084-ask-home-hero-widget.md` — Ask Home Hero Widget; 45 min, 2 files (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-083-world-lore-quiz.md` — World Lore Quiz; 2.5 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-078-ask-confidence-ring.md` — Confidence Ring; 20 min, 1 file (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-075-ask-pinned-qa.md` — Ask Pinned Q&A; 2.5 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — Ask CTA after chapter summary; 15 min (ask-forward).
+- `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md` — Remove `/\bnext\b/i` from FUTURE_PATTERNS; 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md` — Rename `requireKeith()` to `requireAuthor()`; 10 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — Update 12 files from stale `claude-sonnet-4-20250514` to `claude-sonnet-4-6`; 15 min.
+
+### Recommendations
+- **If you have 30 min:** IDEA-105 (Brief Mode Toggle, 30 min) — 4-file, mirrors existing askMode pattern exactly, zero ambiguity. Or: FIX-050 (5 min) + FIX-049 (10 min) + FIX-047 (15 min) = 30 min, 3 quick-win fixes clearing the legacy naming debt.
+- **If you have 1 hour:** IDEA-102 (45 min — chapter grid empty state) + FIX-050 (5 min) + FIX-049 (10 min). Chapter grid solves Ask discoverability for direct landings; two fixes clean up legacy names.
+- **If you have 2 hours:** IDEA-093 (Character Voice Mode — 1.5 hr, 4 files) + IDEA-105 (30 min). Most distinctive ask-forward feature in the queue plus the length control. Readers can ask ALARA questions in her voice in Brief mode.
+
+---
+
 ## Run: 2026-05-23 (Run 38)
 
 ### Summary
