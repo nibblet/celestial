@@ -4,6 +4,56 @@
 
 ---
 
+## Run: 2026-05-25 (Run 40)
+
+### Summary
+- Scanned: 0 new code commits since Run 39 (last commit `91e1f56` — nightshift docs only). Codebase unchanged.
+- Issues: 0 new, 0 resolved, 0 spoiler-leak P0. 13 open planned issues unchanged (FIX-026, 027, 028, 029, 030, 045, 046, 047, 048, 049, 050, 051, 052).
+- Ideas (by theme): ask-forward — 1 seed (IDEA-111 — Ask Scene Jump), IDEA-108 promoted to `planned`; genmedia — 1 seed (IDEA-112 — Faction Identity Tile), IDEA-106 advanced to `exploring`; post-read-world — 1 seed (IDEA-113 — Arc Progression Heatmap), IDEA-107 advanced to `exploring`. Total promoted: 1 (IDEA-108 to planned). Stale parks: 0 (all active ideas <3 days old or already advanced).
+- Plans written: `DEVPLAN-IDEA-108-ask-reading-dwell-nudge.md`
+
+### Build & Lint & Test Results
+- No code commits since Run 39. Status confirmed unchanged from Run 36 verification.
+- Build: **PASSES** (last verified Run 36 — no new code to re-validate)
+- Lint: **PASSES** — 0 errors, 4 `<img>` tag warnings (unchanged since Run 17)
+- Tests: **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17)
+
+### Key Findings
+
+1. **No new code commits.** Codebase is identical to Run 39. All 13 open planned issues unchanged. FIX-047 (12 stale model ID files), FIX-049 (requireKeith in 5 routes), FIX-050 (overly broad `next` pattern in ask-intent.ts) remain quick wins ready to execute at any time.
+
+2. **IDEA-108 promoted to `planned` — Ask Reading Dwell Nudge dev plan written.** A passive ambient Ask discovery mechanism: after 90 seconds of active scroll on a chapter page, a fixed pill bar appears at the bottom viewport — "Ask about [Chapter Title] →" with a dismiss ×. SessionStorage key prevents re-show within the same browser session. Implementation: 2-file change — new `src/components/stories/AskDwellNudge.tsx` (client component with `useRef hasScrolled`, 90s `setTimeout`, `{ passive: true }` scroll listener, sessionStorage guard) + `src/app/stories/[storyId]/page.tsx` (add `<AskDwellNudge />` near return root). No portal needed — `fixed` CSS does the overlay. Zero API calls, zero DB, zero npm. Guest-compatible. Works for all 17 chapter pages. Spoiler-safe (links to Ask page only, exposes no content). Synergistic with IDEA-057 (context-aware welcome kicks in once the reader arrives at Ask). Priority P2. Estimated 1 hour.
+
+3. **IDEA-106 advanced to `exploring` (genmedia).** Valkyrie-1 Dynamic State Header — feasibility confirmed. The `/api/visuals/preferred` endpoint already accepts `?target=valkyrie-1&style={stateSlug}`. Key blocker identified: `FictionEntityDetailPage` handles the artifact page generically; a custom override for `/artifacts/valkyrie-1` would need a standalone `page.tsx` or a new prop on the generic component. FIX-048 must execute first (move images to Supabase). Advance to `planned` after FIX-048 targets.
+
+4. **IDEA-107 advanced to `exploring` (post-read-world).** ALARA Observer Logs — implementation path clear: 17 authored markdown files at `content/wiki/logs/alara/ch01.md`–`ch17.md` + new `/world/alara-logs/page.tsx` server component with `show_all_content` gate. The code is 1 hour; the bottleneck is Paul's writing time (~3 hours for 17 log entries). Recommend: write 3 samples (CH01, CH08, CH17) first. Advance to `planned` after IDEA-095 ships (both live under `/world/`).
+
+5. **Three new ideas seeded.** IDEA-111 (ask-forward: Ask Scene Jump — story links in `linksInAnswer` filtered for `/stories/` hrefs; a "Jump to scene →" button row appears below the answer bubble post-stream; ~15 lines JSX in `ask/page.tsx`; 30 minutes; zero API changes), IDEA-112 (genmedia: Faction Identity Tile — 128×128 abstract faction emblem per faction wiki page via Imagen 4; $0.36–$0.48 total author batch; zero code changes; EntityVisualsGallery picks them up automatically on faction pages), IDEA-113 (post-read-world: Arc Progression Heatmap — 9×17 grid at `/world/arcs` for `show_all_content` readers; arc-active chapters colored per character; derived from "Choice"+"Consequence" columns in arc ledger tables; shares `getAllCharacterArcs()` with IDEA-095; 2 hours, 2 new files).
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-108-ask-reading-dwell-nudge.md` — **NEW**: Ask Reading Dwell Nudge — fixed pill bar after 90s scroll; 2-file change (1 new component + 1 existing page), 1 hour (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-105-ask-brief-mode-toggle.md` — Ask Brief Mode Toggle — 4-file, 30 min; mirrors existing askMode pattern exactly (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md` — Ask Empty State Chapter Grid — 17-chapter discovery tiles; 1-file, 45 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-096-ask-live-context-band.md` — Ask Live Context Band — Phase 1 story pill: 15 min, 1-file (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md` — Arc Endpoint Quotes Gallery — `/world/voices`; `show_all_content` gated; 1.5 hr, 2 files (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-093-character-voice-mode.md` — Character Voice Mode — 9-chip crew selector; 1.5 hr, 4 files (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-087-ask-source-deep-dive.md` — Ask Source Deep-Dive; 2 hr, 2 files (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-084-ask-home-hero-widget.md` — Ask Home Hero Widget; 45 min, 2 files (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-083-world-lore-quiz.md` — World Lore Quiz; 2.5 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-078-ask-confidence-ring.md` — Confidence Ring; 20 min, 1 file (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-075-ask-pinned-qa.md` — Ask Pinned Q&A; 2.5 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — Ask CTA after chapter summary; 15 min (ask-forward).
+- `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md` — Remove `/\bnext\b/i` from FUTURE_PATTERNS; 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md` — Rename `requireKeith()` to `requireAuthor()`; 10 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — Update 12 files from stale `claude-sonnet-4-20250514` to `claude-sonnet-4-6`; 15 min.
+
+### Recommendations
+- **If you have 30 min:** FIX-050 (5 min) + FIX-049 (10 min) + FIX-047 (15 min) = exactly 30 min. Three quick-win fixes clearing the legacy naming debt and stale model IDs. No new features, no migrations, just cleanup.
+- **If you have 1 hour:** IDEA-108 (Ask Reading Dwell Nudge, 1 hr) — new component, zero ambiguity, makes Ask discoverable for passive readers without requiring any new buttons or explicit CTAs. Or: IDEA-096 Phase 1 (15 min) + IDEA-048 (15 min) + FIX-050 (5 min) + FIX-049 (10 min) + FIX-047 (15 min) = 1 hr total for 5 small wins.
+- **If you have 2 hours:** IDEA-093 (Character Voice Mode — 1.5 hr, 4 files) + IDEA-108 (1 hr, 2 files) — ship the most distinctive ask-forward feature in the queue alongside the ambient discovery nudge. Readers can ask questions in ALARA's voice while reading Chapter 6, and discover that via the dwell nudge if they haven't already.
+
+---
+
 ## Run: 2026-05-24 (Run 39)
 
 ### Summary

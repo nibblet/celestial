@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-24 (Run 39)
+> Last updated: 2026-05-25 (Run 40)
 
 ## Maturity Levels
 
@@ -313,15 +313,16 @@
 ---
 
 ### [IDEA-108] Ask Reading Dwell Nudge — Ambient Chapter-Page Ask Prompt After 90s
-- **Status:** seed
+- **Status:** planned
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-24
-- **Last Updated:** 2026-05-24
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
-- **Summary:** After a reader has been on a chapter page for 90 seconds with scrolling activity detected (not idle), a subtle non-modal floating bar appears at the bottom of the viewport: "Ask about [Chapter N] →" with a dismiss `×`. Clicking navigates to `/ask?story={storyId}`. A lightweight presence cue for readers who haven't discovered Ask organically. One-per-chapter-session (sessionStorage flag prevents repeat). Pure client-side component, zero API, zero DB.
+- **Last Updated:** 2026-05-25
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-108-ask-reading-dwell-nudge.md`
+- **Summary:** After a reader has been on a chapter page for 90 seconds with scrolling activity detected (not idle), a subtle non-modal floating pill bar appears at the bottom of the viewport: "Ask about [Chapter Title] →" with a dismiss `×`. Clicking navigates to `/ask?story={storyId}`. A lightweight presence cue for readers who haven't discovered Ask organically. One-per-chapter-session (sessionStorage flag prevents repeat). Pure client-side component, zero API, zero DB.
 - **Night Notes:**
-  - 2026-05-24 (Run 39): Seeded. The current Ask CTAs are explicit (buttons Paul must build) or page-level (a link in the hero). The dwell nudge is passive — it appears only after the reader is clearly engaged (90s + scroll). Implementation: (1) New `src/components/stories/AskDwellNudge.tsx` client component — `useEffect` starts a 90s `setTimeout` on mount; if the page has received at least one `scroll` event during that window, the nudge bar renders into a portal (`document.body`) as a `fixed bottom-4` bar; (2) Dismiss `×` sets `sessionStorage.setItem('ask_nudge_dismissed_{storyId}', '1')`; component checks this key on mount and skips if already dismissed; (3) The 90s timer is cleared on unmount (page navigation); (4) `AskDwellNudge` receives `storyId` as a prop and is added to `stories/[storyId]/page.tsx` near the page root. Scroll detection: add a `scroll` event listener in the same `useEffect`; set a `hasScrolled` ref. If `hasScrolled === false` when the timer fires, do not show the nudge (reader may have navigated to a specific anchor and stopped). Zero new API routes. Zero DB. Zero npm packages. No spoiler concern — the bar just links to Ask with story context. Works for guests (no auth check). Estimated: 1 hour (component + portal + sessionStorage guard + wiring into chapter page). Synergistic with IDEA-057 (context-aware welcome) — the nudge routes to Ask which shows the chapter-specific welcome. Prerequisite: none.
+  - 2026-05-24 (Run 39): Seeded. The current Ask CTAs are explicit (buttons Paul must build) or page-level (a link in the hero). The dwell nudge is passive — it appears only after the reader is clearly engaged (90s + scroll). Zero new API routes. Zero DB. Zero npm packages. No spoiler concern — the bar just links to Ask with story context. Works for guests (no auth check). Estimated: 1 hour. Synergistic with IDEA-057 (context-aware welcome) — the nudge routes to Ask which shows the chapter-specific welcome. Prerequisite: none.
+  - 2026-05-25 (Run 40): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-108-ask-reading-dwell-nudge.md`. Implementation confirmed: 2-file change — new `src/components/stories/AskDwellNudge.tsx` (client component with `useRef hasScrolled`, 90s `setTimeout`, sessionStorage guard, fixed pill bar) + `src/app/stories/[storyId]/page.tsx` (add component near return root). No portal needed — `fixed` CSS positioning achieves the overlay effect without `document.body` mutation. The scroll listener uses `{ passive: true }`. Session key: `ask_nudge_{storyId}`. Priority raised to P2. Estimated 1 hour.
 
 ---
 
@@ -350,6 +351,19 @@
 - **Night Notes:**
   - 2026-05-22 (Run 37): Seeded. IDEA-057 (Context-Aware Welcome, ready) handles the empty state when `?story=` IS set — this idea is the complementary discovery flow for readers who land on Ask directly (e.g., from the home hero widget of IDEA-084 without pre-filling a query). The 17 chapter tiles can be rendered from a static constant (all 17 CH slugs + titles, sourced from `static-data.ts` or a compact server-side fetch). Clicking a tile sets `contextStoryId` (equivalent to `/ask?story=ch01`) and triggers the IDEA-057 welcome greeting. The grid displays as 6 tiles per row in a compact `text-sm` style with chapter number + short title. When `?story=` IS set, the grid is replaced by the IDEA-057 chapter-specific welcome (no overlap). Implementation: extend the empty-state branch in `ask/page.tsx` — add a 3rd sub-branch: `if (!contextStoryId && !messages.length) { show chapter grid }`. The grid can use a `CHAPTER_QUICK_TILES` static constant (17 slug + title pairs). Zero new API routes, zero DB. Chapter titles already available in `static-data.ts` story list. Estimated 45 minutes. Synergistic with IDEA-057 (which kicks in after a tile is clicked), IDEA-084 (home widget routes to Ask — these tiles are the fallback if no `?q=` is provided).
   - 2026-05-23 (Run 38): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md`. Implementation confirmed via codebase read: empty state block is at `ask/page.tsx` lines 672–691. Key decisions: (1) `CHAPTER_QUICK_TILES` hardcoded (17 entries, not imported from `static-data.ts`) to avoid ~500KB bundle bloat — titles verified at plan-write time; (2) `useRouter` added alongside existing `useSearchParams` import; (3) Grid shows ONLY when `!storySlug && !prefilledPrompt && !urlPassage` — generic chips remain for all other empty-state contexts (backward compatible with IDEA-057 landing); (4) Clicking a tile calls `router.push('/ask?story=CH01')` — sets URL param, activates breadcrumb, triggers IDEA-057 welcome when that ships. Priority raised to P2. Estimated 45 minutes. 1-file change: `ask/page.tsx`.
+
+---
+
+### [IDEA-111] Ask Scene Jump — Inline Source Navigation from Companion Answer to Chapter Text
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-25
+- **Last Updated:** 2026-05-25
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** When an Ask answer references a specific chapter scene (identified by a story link in `linksInAnswer`), a small "Jump to scene →" link appears below the answer bubble routing to `/stories/{storyId}`. Makes Ask a two-way navigation layer: readers ask a question, get an answer grounded in a chapter, then jump directly to that chapter to read the source text.
+- **Night Notes:**
+  - 2026-05-25 (Run 40): Seeded. The `done` SSE event already returns `linksInAnswer: { href, text }[]` on the client. Story links follow the pattern `/stories/CH01`, `/stories/CH02` etc. After stream completion, filter `linksInAnswer` for hrefs starting with `/stories/` — if any exist, render a compact "Jump to scene →" button row below the assistant message bubble (between the text bubble and `AskSourcesDisclosure`). The button links to `/stories/{storyId}` (without a scene anchor initially; scene-level linking can be added later when scene slugs are in the evidence payload). Multiple story links → first one is used (or a short list of distinct chapter links, max 2). No API changes needed. No DB. No npm packages. Client-side only: add a `storyLinksInAnswer` computed value from `msg.evidence.linksInAnswer` after the `done` event. Implementation: ~15 lines of JSX in `ask/page.tsx` within the assistant message render block (between the text div and AskSourcesDisclosure — same location where the confidence ring from IDEA-078 would go). Estimated 30 minutes. Synergistic with IDEA-078 (confidence ring) and IDEA-087 (source deep-dive) — all three add layers to the same assistant bubble post-stream area. Works for all users under companion-first. No spoiler concern — the link goes to a chapter page already accessible to the reader.
 
 ---
 
@@ -398,15 +412,16 @@
 ---
 
 ### [IDEA-106] Valkyrie-1 Dynamic State Header — Reader-Progress-Driven Harmonic State Image on Ship Wiki Page
-- **Status:** seed
+- **Status:** exploring
 - **Theme:** genmedia
 - **Seeded:** 2026-05-23
-- **Last Updated:** 2026-05-23
+- **Last Updated:** 2026-05-25
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** The `/artifacts/valkyrie-1` wiki page selects which pre-approved harmonic state image (dormant/wake/active/alignment/harmonic_jump) to display as a header image based on which state appears in the reader's most recently read chapter, derived from `chapter_tags.json`. Zero reader generation cost — uses the 5 approved state renders already committed (or moved to Supabase after FIX-048). As the reader progresses through the story, the ship's wiki page "evolves" visually.
 - **Night Notes:**
   - 2026-05-23 (Run 38): Seeded. The 5 Valkyrie-1 harmonic state renders already exist at `public/images/` (FIX-048 notes they're ~15MB committed test renders). After FIX-048 resolves, these would live in `cel_visual_assets` with `approved=true` and `source='harmonic_state'`. (1) Model/provider: Imagen 4 — images already generated; author batch only, zero reader cost. (2) Cost per generation: $0 for readers — 5 pre-approved author images. (3) Caching: images in Supabase Storage with public URLs; asset lookup uses existing `/api/visuals/preferred?target=valkyrie-1&style={stateSlug}` endpoint (already exists); result cached in component state for session. (4) Spoiler gating of prompt inputs: N/A — no generation; state-to-chapter mapping uses `chapter_tags.json` entity list (world-building data, not narrative prose). No spoiler risk: showing "harmonic_jump" imagery to a reader who hasn't reached the chapter where it appears reveals only a visual aesthetic, not story events. (5) Canon grounding: `content/wiki/specs/valkyrie-1/states/{state}.json` specs ground the imagery; already generated. Implementation: (1) A new `ChapterToHarmonicState` mapping constant in `src/lib/wiki/` or inline on the page — maps chapter ranges to the ship state most prominent in that chapter group, derived from `chapter_tags.json` harmonic-state entity entries; (2) In `/artifacts/valkyrie-1` page (or `FictionEntityDetailPage`), fetch `readerProgress.currentChapterNumber`; look up the corresponding state slug; fetch the preferred approved asset via `/api/visuals/preferred`; render as a `<Image>` header if found, otherwise no header. Zero new routes beyond what already exists. Estimated 1 hour: mapping constant + one `getServerSideProps`-equivalent data fetch + header `<Image>` render. Prerequisite: FIX-048 (move images to Supabase) should execute first so the images are in `cel_visual_assets` and accessible via the preferred API — otherwise the feature works only if images remain in `public/images/` and paths are known. Synergistic with IDEA-047 (Harmonic State Gallery, parked) — this feature is a simpler first step.
+  - 2026-05-25 (Run 40): **Advanced to `exploring`.** Feasibility confirmed: `chapter_tags.json` entity-slug lists per chapter provide the data source for the `ChapterToHarmonicState` mapping. The `/api/visuals/preferred` endpoint already exists and accepts `?target=valkyrie-1&style={stateSlug}` — no new routes needed. Key blocker: FIX-048 must execute first to move images from `public/images/` into `cel_visual_assets` so the preferred API can return them. One design gap: the `FictionEntityDetailPage` component in `FictionEntityViews.tsx` handles the Valkyrie-1 artifact page; adding a header image slot requires either a new prop or a direct page-level fetch in `/artifacts/valkyrie-1/page.tsx` (which doesn't exist as a custom override — it falls through to the generic artifacts route). Advance to `planned` after FIX-048 is confirmed as the next execution target.
 
 ---
 
@@ -654,6 +669,19 @@
 
 ---
 
+### [IDEA-112] Faction Identity Tile — Single Compact Emblem per Faction Wiki Page
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-25
+- **Last Updated:** 2026-05-25
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** Author pre-generates one compact 128×128px "faction identity" tile per named faction via Imagen 4 — stylized iconographic color-field (no characters, no scenes) representing the faction's aesthetic identity. Stored in `cel_visual_assets` with `approved=true` and surfaced in the faction wiki page header via `EntityVisualsGallery`. Zero code changes beyond what already exists. Total cost: ~$0.06/faction × 6–8 factions ≈ $0.36–$0.48.
+- **Night Notes:**
+  - 2026-05-25 (Run 40): Seeded. Faction wiki pages (`/factions/[slug]`) already render `EntityVisualsGallery` (confirmed in STATUS.md). No faction spec JSON files exist yet (`content/wiki/specs/` has ship/location specs but no faction entries), but the faction wiki markdown at `content/wiki/factions/{slug}.md` is sufficient for an identity tile prompt: faction name + affiliation + visual style preset. (1) Model/provider: Imagen 4 with preset auto-selected by faction world-affiliation: `earth_institutional` for military/bureaucratic Earth factions (Rigel Protocol, MARU Command), `alien_organic` for Resonant-aligned entities, `ancient_vault` for Vault-keepers. ~$0.06/tile. (2) Cost budget: 6–8 factions × $0.06 = $0.36–$0.48 total; author-batch only; zero reader generation. (3) Caching: stored in `cel_visual_assets` with `approved=true`, `target={faction-slug}`, `source='faction_identity'`; shared canonical. (4) Spoiler gating of prompt inputs: faction identity (name, affiliation, color palette, symbol vocabulary) is world-building data — no narrative events in the prompt. Zero spoiler risk. (5) Canon grounding: `content/wiki/factions/{slug}.md` wiki markdown provides the faction's mission, membership, and color/symbol vocabulary; preset vocabulary provides the visual aesthetic. Each tile is abstract (emblem/field aesthetic, not a scene render) — does not require a `master.json` spec file, unlike character portraits. Author workflow: generate via admin console with a 1-line prompt per faction: "{faction name}, {world vocab keywords}, abstract identity emblem, no text, no figures." Estimated: 15 minutes author time per faction in the admin console; zero code changes required. EntityVisualsGallery on faction pages picks them up automatically. Prerequisite: none — admin console is fully operational. Synergistic with IDEA-091 (Faction Propaganda Poster, parked) which builds on this after IDEA-043 ships.
+
+---
+
 ## post-read-world
 
 ### [IDEA-089] Completion Ceremony Page — Transition Surface for Finished Readers
@@ -700,15 +728,16 @@
 ---
 
 ### [IDEA-107] ALARA Observer Logs — Author-Written First-Person Chapter Journals at `/world/alara-logs`
-- **Status:** seed
+- **Status:** exploring
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-23
-- **Last Updated:** 2026-05-23
+- **Last Updated:** 2026-05-25
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** A `/world/alara-logs` page for `show_all_content=true` readers presenting 17 short first-person journal entries written by the author in ALARA's voice — one per chapter, drawn from her arc ledger "Starting State"/"State After" observations. Reads like private ship logs: "Mission Day 1. I observe. The humans call this 'initialization.' I call it waking." Zero on-demand AI cost — author writes 17 entries offline and commits them as static markdown. A narrative artifact that transforms arc data into a reader-facing companion text.
 - **Night Notes:**
   - 2026-05-23 (Run 38): Seeded. This is primarily a content creation task for Paul (writing 17 short log entries in ALARA's voice, ~100–200 words each) with minimal code. (1) Post-read-world requirements: (a) `/world/alara-logs` gated by `show_all_content === true` at server level — redirect to `/profile` if false; (b) Integration with `show_all_content`: direct server-side check via `getReaderProgress()`; (c) Partial-completion edge cases: `show_all_content` is the sole gate — arc-endpoint voice is appropriate only for completed readers. (2) Content format: 17 markdown files at `content/wiki/logs/alara/ch01.md` through `ch17.md` — no `<!-- generated:ingest -->` marker (manually authored); (3) Code: new `/world/alara-logs/page.tsx` server component — reads all 17 log files via `fs.readdir` + `fs.readFile`, renders as a scrollable timeline of `<article>` cards with chapter label + ALARA's log text via `react-markdown`. The StoryMarkdown component can be reused for consistent prose rendering. (4) Navigation: add a link from `/world/voices` (IDEA-095) to `/world/alara-logs` as a companion post-read-world route. No new DB, no AI calls at render time, zero npm packages. Estimated code: 1 hour (route + file reader utility + card layout). Content: Paul estimates 2–3 hours writing time. The `arc-endpoints.ts` utility from IDEA-095 + the arc ledger "Starting State" sections provide the grounding material for each log entry. Synergistic with IDEA-095 (both live under `/world/`), IDEA-101 (Crew Debrief Mode), and character voice work in IDEA-093. A unique piece of companion content that turns technical arc data into living voice.
+  - 2026-05-25 (Run 40): **Advanced to `exploring`.** Implementation path is clear: (1) `content/wiki/logs/alara/` directory with 17 authored markdown files — no generated marker, fully manual ownership; (2) `src/app/world/alara-logs/page.tsx` server component using `fs.readdir`/`fs.readFile` to load and render them as a timeline; (3) `show_all_content` gate via `getReaderProgress()` server-side; (4) Cross-link from IDEA-095's `/world/voices` page. The code is straightforward (1 hour); the bottleneck is Paul's writing time (~3 hours for 17 log entries). Recommend: Paul writes 3 sample entries first (CH01, CH08, CH17) to validate voice before committing to all 17. Advance to `planned` after IDEA-095 ships (the `/world/` cluster should be built together).
 
 ---
 
@@ -949,6 +978,19 @@
 - **Night Notes:**
   - 2026-05-16 (Run 31): Seeded. All three data sources already exist: (a) `cel_story_reads` — `created_at` per chapter read event per user; (b) `cel_story_highlights` — count per chapter per user; (c) `cel_chapter_questions` — count per chapter per user. Implementation: (1) New `/profile/journey/page.tsx` server component gated by `show_all_content === true` (redirect to `/profile` if false); (2) Three server-side Supabase queries: reads with timestamps, highlight counts grouped by story_id, question counts grouped by story_id; (3) Render a vertical timeline (ordered CH01–CH17) with a `<time>` element showing the read date, a bar or number for highlights, and a bar or number for questions asked. Chapters not yet read (no `cel_story_reads` row) still appear as empty timeline entries in muted style. (4) Post-read-world requirements: (a) Hidden from first-time and guest readers — gated by `show_all_content === true`; (b) Integration with `show_all_content`: direct server-side check; (c) Partial-completion: the `show_all_content` flag is the gate — under companion-first, `show_all_content` is the author-set signal for re-reader status. Zero new DB tables, zero content files. Synergistic with IDEA-077 (Highlight Fingerprint mosaic on `/profile/highlights`) and IDEA-080 (Personalized Reread Guide on `/profile/reread`). Estimated 2 hours.
   - 2026-05-19 (Run 34): Stale 3 days — likely low priority or too complex. Demoting to parked. The completion ceremony page (IDEA-089) and highlight fingerprint (IDEA-077) cover the high-value parts of this idea as separate, more focused features. Un-park after IDEA-077 and IDEA-089 ship to see if a dedicated journey timeline page adds meaningful new ground.
+
+---
+
+### [IDEA-113] Arc Progression Heatmap — Character Activity Grid for Completed Readers
+- **Status:** seed
+- **Theme:** post-read-world
+- **Seeded:** 2026-05-25
+- **Last Updated:** 2026-05-25
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** For `show_all_content=true` readers, a `/world/arcs` page showing a 9×17 heatmap grid (9 main characters as rows, CH01–CH17 as columns). Each cell is filled/colored when that character has a documented arc entry in that chapter (derived from "Choice" + "Consequence" column content in the arc ledger tables). Darker fill = more arc activity. Gives completed readers a spatial view of the story's dramatic density. Zero AI, zero DB, zero new content.
+- **Night Notes:**
+  - 2026-05-25 (Run 40): Seeded. The 9 arc ledger files at `content/wiki/arcs/characters/` each contain a "Chapter Arc Entries" table with rows for each chapter. Each row has "Choice" and "Consequence" columns — cells that are non-empty (not `—` or blank) signal arc-active chapters for that character. A heatmap cell intensity can be derived simply from: both Choice AND Consequence non-empty → full fill; one non-empty → half fill; both empty → no fill. Implementation: (1) A new server utility `src/lib/wiki/arc-heatmap.ts` — calls `getAllCharacterArcs()` (existing), parses each arc ledger table via the same row-splitting logic as `arc-endpoints.ts` (planned in IDEA-095), returns `ArcCell[][]` (9 rows × 17 columns with `intensity: 0 | 0.5 | 1`). (2) New `src/app/world/arcs/page.tsx` server component — gated by `show_all_content === true` (redirect to `/profile` if false); calls `getArcHeatmap()`, renders as a CSS grid with `grid-cols-[auto_repeat(17,1fr)]`. Column headers: CH01–CH17 labels. Row labels: character names. Cell fill: Tailwind background opacity classes (`bg-[var(--color-ocean)]/100`, `/50`, or transparent). Cell click → `/ask?story={chSlug}&entity={charSlug}` for exploration. (3) Post-read-world requirements: (a) Hidden from first-time readers and guests — `show_all_content` server-side gate; (b) Integration with `show_all_content`: direct server check, redirect if false; (c) Partial-completion edge cases: `show_all_content` is the sole gate. Zero new DB tables, zero new content, zero npm. Estimated 2 hours. Shares `getAllCharacterArcs()` with IDEA-095 (`arc-endpoints.ts`) and IDEA-062 (`chapter-hindsight.ts`). Completes the `/world/` nav cluster with IDEA-095, IDEA-104, IDEA-110. Prerequisite: IDEA-095 should ship first to establish the arc parsing utility; this feature reuses and extends it.
 
 ---
 
