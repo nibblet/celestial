@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-25 (Run 40)
+> Last updated: 2026-05-26 (Run 41)
 
 ## Maturity Levels
 
@@ -355,15 +355,29 @@
 ---
 
 ### [IDEA-111] Ask Scene Jump — Inline Source Navigation from Companion Answer to Chapter Text
-- **Status:** seed
+- **Status:** planned
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-25
-- **Last Updated:** 2026-05-25
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
-- **Summary:** When an Ask answer references a specific chapter scene (identified by a story link in `linksInAnswer`), a small "Jump to scene →" link appears below the answer bubble routing to `/stories/{storyId}`. Makes Ask a two-way navigation layer: readers ask a question, get an answer grounded in a chapter, then jump directly to that chapter to read the source text.
+- **Last Updated:** 2026-05-26
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-111-ask-scene-jump.md`
+- **Summary:** When an Ask answer references a specific chapter scene (identified by a story link in `linksInAnswer`), a small "↗ Jump to scene: [Title] →" link row appears below the answer bubble routing to `/stories/{storyId}`. Makes Ask a two-way navigation layer: readers ask a question, get an answer grounded in a chapter, then jump directly to that chapter to read the source text.
 - **Night Notes:**
   - 2026-05-25 (Run 40): Seeded. The `done` SSE event already returns `linksInAnswer: { href, text }[]` on the client. Story links follow the pattern `/stories/CH01`, `/stories/CH02` etc. After stream completion, filter `linksInAnswer` for hrefs starting with `/stories/` — if any exist, render a compact "Jump to scene →" button row below the assistant message bubble (between the text bubble and `AskSourcesDisclosure`). The button links to `/stories/{storyId}` (without a scene anchor initially; scene-level linking can be added later when scene slugs are in the evidence payload). Multiple story links → first one is used (or a short list of distinct chapter links, max 2). No API changes needed. No DB. No npm packages. Client-side only: add a `storyLinksInAnswer` computed value from `msg.evidence.linksInAnswer` after the `done` event. Implementation: ~15 lines of JSX in `ask/page.tsx` within the assistant message render block (between the text div and AskSourcesDisclosure — same location where the confidence ring from IDEA-078 would go). Estimated 30 minutes. Synergistic with IDEA-078 (confidence ring) and IDEA-087 (source deep-dive) — all three add layers to the same assistant bubble post-stream area. Works for all users under companion-first. No spoiler concern — the link goes to a chapter page already accessible to the reader.
+  - 2026-05-26 (Run 41): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-111-ask-scene-jump.md`. Implementation confirmed: 1-file change (`ask/page.tsx`), ~15 lines JSX, IIFE pattern consistent with surrounding code. Filter: `l.href.startsWith('/stories/')` AND excludes `/stories/timeline`. Deduplication via `findIndex` before `slice(0, 2)`. Link styled with `--color-ocean` text + `--color-sci-panel` hover bg — matches existing Ask UI token vocabulary. `Link` import from `next/link` already present. `/stories/timeline` exclusion filter noted. Priority raised to P2. Estimated 30 minutes.
+
+---
+
+### [IDEA-114] Ask Pre-Send Context Chips — Personalized Prefill Chips from Reader's Own Highlights
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-26
+- **Last Updated:** 2026-05-26
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** When the Ask page has `?story=` context AND the authenticated reader has saved highlights in that chapter (from `cel_story_highlights`), a horizontal scrollable chip strip appears between the Live Context Band (IDEA-096) and the input field showing 2–3 question chips derived from the reader's own highlighted passages ("Ask about this passage →", "Who is involved here →"). Clicking pre-fills the input text without submitting. Distinct from IDEA-042 (follow-up chips after answers) and IDEA-057 (chapter-tag-based chips on arrival) — this is personalized from the reader's own engagement history.
+- **Night Notes:**
+  - 2026-05-26 (Run 41): Seeded. `cel_story_highlights` stores `user_id`, `story_id`, `passage_text`. Implementation: (1) In `ask/page.tsx`, when `contextStoryId` is set and user is authenticated, issue one Supabase client-side query after mount: `SELECT passage_text FROM cel_story_highlights WHERE user_id = $user AND story_id = $storyId ORDER BY created_at DESC LIMIT 3`; (2) Truncate each passage to 80 chars; (3) Render a `<div className="flex overflow-x-auto gap-2 pb-2">` chip strip with each passage as `<button onClick={() => setInputText(passage)}>`; (4) Chips visible only if ≥1 highlight exists for this chapter — strip is hidden if the query returns empty. For guests (no auth), the chip strip does not render. For authenticated readers with no highlights in this chapter, the strip is hidden. Implementation: ~20 lines in `ask/page.tsx` + 1 useEffect + 1 state variable. Zero new API routes (direct client Supabase query). No npm. Spoiler-safe: passages are the reader's own highlights from already-read content. Synergistic with IDEA-096 (Live Context Band) — both occupy the area above the input; they can stack vertically. Estimated 45 minutes.
 
 ---
 
@@ -412,16 +426,17 @@
 ---
 
 ### [IDEA-106] Valkyrie-1 Dynamic State Header — Reader-Progress-Driven Harmonic State Image on Ship Wiki Page
-- **Status:** exploring
+- **Status:** planned
 - **Theme:** genmedia
 - **Seeded:** 2026-05-23
-- **Last Updated:** 2026-05-25
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
+- **Last Updated:** 2026-05-26
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-106-valkyrie-dynamic-state-header.md`
 - **Summary:** The `/artifacts/valkyrie-1` wiki page selects which pre-approved harmonic state image (dormant/wake/active/alignment/harmonic_jump) to display as a header image based on which state appears in the reader's most recently read chapter, derived from `chapter_tags.json`. Zero reader generation cost — uses the 5 approved state renders already committed (or moved to Supabase after FIX-048). As the reader progresses through the story, the ship's wiki page "evolves" visually.
 - **Night Notes:**
   - 2026-05-23 (Run 38): Seeded. The 5 Valkyrie-1 harmonic state renders already exist at `public/images/` (FIX-048 notes they're ~15MB committed test renders). After FIX-048 resolves, these would live in `cel_visual_assets` with `approved=true` and `source='harmonic_state'`. (1) Model/provider: Imagen 4 — images already generated; author batch only, zero reader cost. (2) Cost per generation: $0 for readers — 5 pre-approved author images. (3) Caching: images in Supabase Storage with public URLs; asset lookup uses existing `/api/visuals/preferred?target=valkyrie-1&style={stateSlug}` endpoint (already exists); result cached in component state for session. (4) Spoiler gating of prompt inputs: N/A — no generation; state-to-chapter mapping uses `chapter_tags.json` entity list (world-building data, not narrative prose). No spoiler risk: showing "harmonic_jump" imagery to a reader who hasn't reached the chapter where it appears reveals only a visual aesthetic, not story events. (5) Canon grounding: `content/wiki/specs/valkyrie-1/states/{state}.json` specs ground the imagery; already generated. Implementation: (1) A new `ChapterToHarmonicState` mapping constant in `src/lib/wiki/` or inline on the page — maps chapter ranges to the ship state most prominent in that chapter group, derived from `chapter_tags.json` harmonic-state entity entries; (2) In `/artifacts/valkyrie-1` page (or `FictionEntityDetailPage`), fetch `readerProgress.currentChapterNumber`; look up the corresponding state slug; fetch the preferred approved asset via `/api/visuals/preferred`; render as a `<Image>` header if found, otherwise no header. Zero new routes beyond what already exists. Estimated 1 hour: mapping constant + one `getServerSideProps`-equivalent data fetch + header `<Image>` render. Prerequisite: FIX-048 (move images to Supabase) should execute first so the images are in `cel_visual_assets` and accessible via the preferred API — otherwise the feature works only if images remain in `public/images/` and paths are known. Synergistic with IDEA-047 (Harmonic State Gallery, parked) — this feature is a simpler first step.
   - 2026-05-25 (Run 40): **Advanced to `exploring`.** Feasibility confirmed: `chapter_tags.json` entity-slug lists per chapter provide the data source for the `ChapterToHarmonicState` mapping. The `/api/visuals/preferred` endpoint already exists and accepts `?target=valkyrie-1&style={stateSlug}` — no new routes needed. Key blocker: FIX-048 must execute first to move images from `public/images/` into `cel_visual_assets` so the preferred API can return them. One design gap: the `FictionEntityDetailPage` component in `FictionEntityViews.tsx` handles the Valkyrie-1 artifact page; adding a header image slot requires either a new prop or a direct page-level fetch in `/artifacts/valkyrie-1/page.tsx` (which doesn't exist as a custom override — it falls through to the generic artifacts route). Advance to `planned` after FIX-048 is confirmed as the next execution target.
+  - 2026-05-26 (Run 41): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-106-valkyrie-dynamic-state-header.md`. Solution: Next.js App Router static route override — new `src/app/artifacts/valkyrie-1/page.tsx` intercepts before `[slug]` dynamic route. Two-file change: (1) `src/lib/wiki/harmonic-state-map.ts` — `CHAPTER_TO_HARMONIC_STATE` Record<number, string> + `getHarmonicStateForChapter()` helper (Paul must verify chapter → state mapping against canon); (2) custom `/artifacts/valkyrie-1/page.tsx` — server component that fetches `getReaderProgress()` + calls `/api/visuals/preferred` with state slug + renders full-width `<Image>` header above `FictionEntityDetailPage`. Fail-open: if no approved asset exists, page renders without header. Prerequisite: FIX-048 must run first to move harmonic state renders to `cel_visual_assets`. Priority raised to P2. Estimated 1.5 hours.
 
 ---
 
@@ -666,6 +681,19 @@
 - **Night Notes:**
   - 2026-05-16 (Run 31): Seeded. The AI ledger (`cel_ai_interactions`) stores all Ask exchanges. The author could periodically select a favorite exchange via the admin interface and generate a poster-style typographic visual using Imagen 4 with the `earth_institutional` or `intimate_crew` preset. The image prompt would include: a background scene (from the chapter's location spec), a typographic treatment of the Q, and a visual focal point matching the answer's central entity. This is a curation and publishing workflow, not a reader-triggered generation. (1) Model/provider: Imagen 4 with typographic overlay (text-in-image support). (2) Cost: ~$0.06/image; author-batch only, no reader generation cost. (3) Caching: stored in `cel_visual_assets` with `source='ink_print'`; one or a small rotating gallery. (4) Spoiler gating of prompt inputs: author selects the exchange manually — they choose exchanges safe for all readers to see (world-building answers, not narrative endpoints). No automated spoiler risk. (5) Canon grounding: entity spec from the answer's primary `linksInAnswer` entity slug + preset per entity type. A "Featured exchange" could also be surfaced on the Ask empty state as an example of what the companion does — serving a dual role as showcase and Ask onboarding.
   - 2026-05-19 (Run 34): Stale 3 days — likely low priority or too complex. Demoting to parked. A `/about/ink-print` page is additional routing scope; the "featured exchange" use case is covered more directly by IDEA-043 (on-demand visualization) and the Ask confidence ring (IDEA-078). Un-park if Paul wants an explicit editorial curation surface for Ask exchanges.
+
+---
+
+### [IDEA-115] Entity Portrait Reveal in Ask — Inline Character Avatar from Approved Assets
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-26
+- **Last Updated:** 2026-05-26
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** After the Ask companion streams a response, character entities identified in `linksInAnswer` that have an approved portrait in `cel_visual_assets` get a small circular avatar (36×36px) appended inline next to their entity link in the `AskSourcesDisclosure` panel. Zero generation cost — uses only pre-approved author assets. One batched Supabase query after stream completion for all character slugs in `linksInAnswer`. Prerequisite: IDEA-052 (canonical character portraits) must populate `cel_visual_assets` first.
+- **Night Notes:**
+  - 2026-05-26 (Run 41): Seeded. Distinct from IDEA-070 (inline thumbnail inside markdown answer text — parked) and IDEA-088 (inline thumbnail inside answer prose — parked). This targets `AskSourcesDisclosure` specifically — the citations panel already renders `linksInAnswer` as a list. Adding a small circular `<img>` next to each character link in the disclosure is less intrusive than injecting into the prose itself. (1) Model/provider: N/A — no generation. (2) Cost per generation: $0 — pre-approved author assets only. (3) Caching: assets are in Supabase Storage with public URLs; component-state cache for session. (4) Spoiler gating of prompt inputs: N/A — no AI generation. Entity portraits are decorative world-building visuals. (5) Canon grounding: thumbnails from `cel_visual_assets` with `approved=true` — exclusively author-curated canonical renders. Implementation: after `done` SSE event, extract character slugs from `linksInAnswer` (those with `/characters/` hrefs), batch-fetch approved asset URLs via one Supabase query (`SELECT target, asset_url FROM cel_visual_assets WHERE approved = true AND target = ANY($slugs) LIMIT $n`), store in a `Map<string, string>` state. In `AskSourcesDisclosure`, for each link whose href starts with `/characters/`, if the map has an entry, render `<img src={map.get(slug)} className="inline-block w-9 h-9 rounded-full mr-2 object-cover" />` before the link text. Graceful fallback: if no approved asset exists, link renders exactly as today. Zero new API routes. Estimated 1.5 hours (Supabase client query + state + conditional render in AskSourcesDisclosure). Prerequisite: IDEA-052 must ship first to populate approved character assets.
 
 ---
 
@@ -981,16 +1009,30 @@
 
 ---
 
-### [IDEA-113] Arc Progression Heatmap — Character Activity Grid for Completed Readers
+### [IDEA-116] World Crew Manifest — Diegetic Valkyrie-1 Mission Roster for Completed Readers
 - **Status:** seed
 - **Theme:** post-read-world
+- **Seeded:** 2026-05-26
+- **Last Updated:** 2026-05-26
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** For `show_all_content=true` readers, a `/world/manifest` page presents a styled diegetic Valkyrie-1 crew manifest — formatted as an in-world mission document. Includes: mission designation (VALKYRIE MISSION, MARU DIRECTIVE-14), vessel registry code, departure date (Mission Day 1 from `getMissionTimelineContext()`), and 9 crew entry cards (name, role, species, CH17 arc-status from `getArcEndpoints()` once IDEA-095 ships). A post-read artifact that makes the crew feel like real people who completed a real mission. Zero AI, zero DB, zero new content. 2 new files.
+- **Night Notes:**
+  - 2026-05-26 (Run 41): Seeded. The crew manifest concept is a natural post-read artifact: readers who finish the book want to hold the mission in their minds as a real event. A manifest page styled as an in-world MARU document does this. (1) Post-read-world requirements: (a) `/world/manifest` gated by `show_all_content === true` at server level — redirect to `/profile` if false; (b) Integration with `show_all_content`: direct server-side check via `getReaderProgress()`; (c) Partial-completion edge cases: `show_all_content` flag is the sole gate. (2) Data sources: crew list from `getAllCharacterArcs()` (9 main characters); CH17 arc status from `getArcEndpoints()` (IDEA-095 utility — prerequisite: IDEA-095 ships first); mission metadata (designation, vessel registry, departure date) from `getMissionTimelineContext()` (already available in `src/lib/ai/prompts.ts`) or from `content/raw/mission_logs_inventory.json`. (3) Visual design: styled as a MARU classified briefing document — `font-mono`, a header stamp ("CLASSIFIED — MARU ARCHIVE"), a mission metadata block (designation, registry, date), and 9 crew cards in a 3×3 grid (each: name in title case, role/species, CH17 status in italics). No actual character images needed (portraits are decorative — the manifest works text-only). Prerequisite: IDEA-095 should ship first so `getArcEndpoints()` is available; the page can be scaffolded without it (showing "Status: CLASSIFIED" placeholder). Implementation: (1) `src/app/world/manifest/page.tsx` — server component with `show_all_content` gate, calls `getAllCharacterArcs()` + `getArcEndpoints()` (or placeholder); (2) A `<CrewManifest>` client component (could be a simple server component with no interactivity) rendering the document format. Zero new DB, zero npm packages, zero new content files. Estimated 1.5 hours. Synergistic with IDEA-095 (`/world/voices` crew quotes) and IDEA-107 (`/world/alara-logs`) — the three form a coherent `/world/` narrative archive for completed readers.
+
+---
+
+### [IDEA-113] Arc Progression Heatmap — Character Activity Grid for Completed Readers
+- **Status:** exploring
+- **Theme:** post-read-world
 - **Seeded:** 2026-05-25
-- **Last Updated:** 2026-05-25
+- **Last Updated:** 2026-05-26
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** For `show_all_content=true` readers, a `/world/arcs` page showing a 9×17 heatmap grid (9 main characters as rows, CH01–CH17 as columns). Each cell is filled/colored when that character has a documented arc entry in that chapter (derived from "Choice" + "Consequence" column content in the arc ledger tables). Darker fill = more arc activity. Gives completed readers a spatial view of the story's dramatic density. Zero AI, zero DB, zero new content.
 - **Night Notes:**
   - 2026-05-25 (Run 40): Seeded. The 9 arc ledger files at `content/wiki/arcs/characters/` each contain a "Chapter Arc Entries" table with rows for each chapter. Each row has "Choice" and "Consequence" columns — cells that are non-empty (not `—` or blank) signal arc-active chapters for that character. A heatmap cell intensity can be derived simply from: both Choice AND Consequence non-empty → full fill; one non-empty → half fill; both empty → no fill. Implementation: (1) A new server utility `src/lib/wiki/arc-heatmap.ts` — calls `getAllCharacterArcs()` (existing), parses each arc ledger table via the same row-splitting logic as `arc-endpoints.ts` (planned in IDEA-095), returns `ArcCell[][]` (9 rows × 17 columns with `intensity: 0 | 0.5 | 1`). (2) New `src/app/world/arcs/page.tsx` server component — gated by `show_all_content === true` (redirect to `/profile` if false); calls `getArcHeatmap()`, renders as a CSS grid with `grid-cols-[auto_repeat(17,1fr)]`. Column headers: CH01–CH17 labels. Row labels: character names. Cell fill: Tailwind background opacity classes (`bg-[var(--color-ocean)]/100`, `/50`, or transparent). Cell click → `/ask?story={chSlug}&entity={charSlug}` for exploration. (3) Post-read-world requirements: (a) Hidden from first-time readers and guests — `show_all_content` server-side gate; (b) Integration with `show_all_content`: direct server check, redirect if false; (c) Partial-completion edge cases: `show_all_content` is the sole gate. Zero new DB tables, zero new content, zero npm. Estimated 2 hours. Shares `getAllCharacterArcs()` with IDEA-095 (`arc-endpoints.ts`) and IDEA-062 (`chapter-hindsight.ts`). Completes the `/world/` nav cluster with IDEA-095, IDEA-104, IDEA-110. Prerequisite: IDEA-095 should ship first to establish the arc parsing utility; this feature reuses and extends it.
+  - 2026-05-26 (Run 41): **Advanced to `exploring`.** Feasibility confirmed: `getAllCharacterArcs()` already exists and reads all 9 arc ledger markdown files. The "Chapter Arc Entries" table has consistent column structure: pipe-delimited rows with "Choice" at index 4 and "Consequence" at index 5 (after splitting on `|` and trimming). A cell is "non-empty" when it contains text other than `—`, `-`, or blank. The IIFE heatmap parser can be derived directly from the planned `arc-endpoints.ts` row-splitting logic (IDEA-095). Key design decision: the `grid-cols-[auto_repeat(17,1fr)]` Tailwind CSS grid layout requires that the Tailwind content config includes this utility or it's written as an inline style. In Tailwind 4, dynamic arbitrary values are supported. Advance to `planned` after IDEA-095 ships and `arc-endpoints.ts` is available as a shared parsing primitive.
 
 ---
 

@@ -4,6 +4,55 @@
 
 ---
 
+## Run: 2026-05-26 (Run 41)
+
+### Summary
+- Scanned: 0 new code commits since Run 40 (last commit `9dda10c` — nightshift docs only). Codebase unchanged.
+- Issues: 0 new, 0 resolved, 0 spoiler-leak P0. All 13 open planned issues confirmed unchanged (FIX-026, 027, 028, 029, 030, 045, 046, 047, 048, 049, 050, 051, 052). FIX-047 (12 stale model ID files) re-confirmed via grep. FIX-049 (requireKeith in 5 routes) re-confirmed via grep.
+- Ideas (by theme): ask-forward — 1 seed (IDEA-114 — Ask Pre-Send Context Chips from Highlights), IDEA-111 promoted to `planned`; genmedia — 1 seed (IDEA-115 — Entity Portrait Reveal in Ask), IDEA-106 promoted to `planned`; post-read-world — 1 seed (IDEA-116 — World Crew Manifest), IDEA-113 advanced to `exploring`. Total promoted: 2 (IDEA-111 → planned, IDEA-106 → planned). Stale parks: 0 (no ideas ≥3 days old without advancement).
+- Plans written: `DEVPLAN-IDEA-111-ask-scene-jump.md`, `DEVPLAN-IDEA-106-valkyrie-dynamic-state-header.md`
+
+### Build & Lint & Test Results
+- No code commits since Run 40. Status confirmed unchanged from Run 36 verification.
+- Build: **PASSES** (last verified Run 36 — no new code to re-validate)
+- Lint: **PASSES** — 0 errors, 4 `<img>` tag warnings (unchanged since Run 17)
+- Tests: **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17)
+
+### Key Findings
+
+1. **No new code commits.** Codebase is identical to Run 40. All 13 open planned issues confirmed in place. The three fastest quick-win fixes remain: FIX-050 (5 min — remove `/\bnext\b/i` from ask-intent.ts), FIX-049 (10 min — rename requireKeith to requireAuthor in 5 routes), FIX-047 (15 min — update 12 stale model IDs to `claude-sonnet-4-6`). Together: 30 minutes of unambiguous cleanup.
+
+2. **IDEA-111 promoted to `planned` — Ask Scene Jump dev plan written.** The Ask companion already returns story chapter hrefs in `linksInAnswer` after streaming. Filtering for `/stories/CH*` hrefs and rendering a "↗ Jump to scene: [Title] →" link row below the answer bubble takes ~15 lines of JSX in `ask/page.tsx` using an IIFE pattern consistent with the surrounding code. `/stories/timeline` excluded. Deduplicated, max 2 links. Link styled with `--color-ocean` text + `--color-sci-panel` hover background — matches existing Ask UI tokens. Zero new API routes, zero DB, zero npm, zero new files. Estimated 30 minutes. Plan: `DEVPLAN-IDEA-111-ask-scene-jump.md`. Priority P2.
+
+3. **IDEA-106 promoted to `planned` — Valkyrie-1 Dynamic State Header dev plan written.** Next.js App Router static-route override: a new `src/app/artifacts/valkyrie-1/page.tsx` intercepts before the generic `[slug]` dynamic route. Two-file plan: (1) `src/lib/wiki/harmonic-state-map.ts` — `CHAPTER_TO_HARMONIC_STATE` Record<number, string> constant (Paul must verify chapter → state assignment against canon); (2) custom page that fetches `getReaderProgress()`, looks up the state slug, calls `/api/visuals/preferred?target=valkyrie-1&style={stateSlug}`, and renders a full-width `<Image>` header with gradient overlay above `FictionEntityDetailPage`. Fail-open: if no approved asset exists (FIX-048 not yet executed), page renders without header. Prerequisite: FIX-048 must run first to move harmonic state renders into `cel_visual_assets`. (1) Model: Imagen 4 (pre-generated); (2) Cost: $0/reader; (3) Caching: Supabase Storage public URLs; (4) Spoiler: none — state slug is world-building vocabulary; (5) Canon grounding: `content/wiki/specs/valkyrie-1/states/*.json`. Plan: `DEVPLAN-IDEA-106-valkyrie-dynamic-state-header.md`. Priority P2. Estimated 1.5 hours.
+
+4. **IDEA-113 advanced to `exploring` (post-read-world).** Arc Progression Heatmap — feasibility confirmed: `getAllCharacterArcs()` already reads all 9 arc ledger tables; "Choice" is at pipe-split column index 4, "Consequence" at index 5. Heatmap intensity: both non-empty → full, one → half, both blank/dash → none. CSS grid: `grid-cols-[auto_repeat(17,1fr)]`. Advance to `planned` after IDEA-095 ships and `arc-endpoints.ts` table-parsing primitives are available.
+
+5. **Three new ideas seeded.** IDEA-114 (ask-forward: Ask Pre-Send Context Chips from Highlights — when Ask page has `?story=` context, chip strip shows 2–3 of the reader's own `cel_story_highlights` passages for that chapter as prefill buttons; ~20 lines + 1 useEffect + 1 Supabase client query; 45 min; personalized from reader's actual engagement history, distinct from IDEA-042/057 which use chapter tags or post-answer follow-ups), IDEA-115 (genmedia: Entity Portrait Reveal — circular 36×36px portrait avatar next to character entity links in `AskSourcesDisclosure`, sourced from pre-approved `cel_visual_assets`; one batched Supabase query after stream completion; zero generation cost; prerequisite: IDEA-052 must populate assets; 1.5 hours; graceful fallback if no approved portrait), IDEA-116 (post-read-world: World Crew Manifest — `/world/manifest` diegetic Valkyrie-1 crew roster for `show_all_content` readers; MARU document format with mission metadata + 9 crew cards showing name/role/CH17 status from `getArcEndpoints()`; zero AI; 1.5 hours, 2 new files; prerequisite: IDEA-095 ships first for `getArcEndpoints()`).
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-111-ask-scene-jump.md` — **NEW**: Ask Scene Jump — "↗ Jump to scene" link row below answer bubbles; 1-file change (`ask/page.tsx`), ~15 lines JSX, 30 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-106-valkyrie-dynamic-state-header.md` — **NEW**: Valkyrie-1 Dynamic State Header — custom `/artifacts/valkyrie-1` page override; 2-file change + FIX-048 prerequisite; 1.5 hr (genmedia).
+- `docs/nightshift/plans/DEVPLAN-IDEA-108-ask-reading-dwell-nudge.md` — Ask Reading Dwell Nudge — fixed pill bar after 90s scroll; 2-file change, 1 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-105-ask-brief-mode-toggle.md` — Ask Brief Mode Toggle — 4-file, 30 min; mirrors existing askMode pattern exactly (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md` — Ask Empty State Chapter Grid — 17-chapter discovery tiles; 1-file, 45 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-096-ask-live-context-band.md` — Ask Live Context Band — Phase 1 story pill: 15 min, 1-file (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md` — Arc Endpoint Quotes Gallery — `/world/voices`; `show_all_content` gated; 1.5 hr, 2 files (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-093-character-voice-mode.md` — Character Voice Mode — 9-chip crew selector; 1.5 hr, 4 files (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-087-ask-source-deep-dive.md` — Ask Source Deep-Dive; 2 hr, 2 files (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-084-ask-home-hero-widget.md` — Ask Home Hero Widget; 45 min, 2 files (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — Ask CTA after chapter summary; 15 min (ask-forward).
+- `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md` — Remove `/\bnext\b/i` from FUTURE_PATTERNS; 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md` — Rename `requireKeith()` to `requireAuthor()`; 10 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — Update 12 files from stale `claude-sonnet-4-20250514` to `claude-sonnet-4-6`; 15 min.
+
+### Recommendations
+- **If you have 30 min:** IDEA-111 (Ask Scene Jump, 30 min) — 1-file change, zero ambiguity, makes Ask answers directly navigable to cited chapters. Or: FIX-050 (5 min) + FIX-049 (10 min) + FIX-047 (15 min) = 30 min of legacy debt clearance.
+- **If you have 1 hour:** IDEA-111 (30 min) + IDEA-048 (15 min — Ask CTA after story summary) + FIX-050 (5 min) + FIX-049 (10 min) = 1 hour, 4 wins: jump links in answers, top-of-page story CTA, two naming fixes.
+- **If you have 2 hours:** IDEA-093 (Character Voice Mode — 1.5 hr, 4 files) + IDEA-111 (30 min). The most distinctive ask-forward pair: readers can ask questions in ALARA's voice and then jump directly to the chapter the answer cites — a complete forward/backward navigation arc within the companion.
+
+---
+
 ## Run: 2026-05-25 (Run 40)
 
 ### Summary
