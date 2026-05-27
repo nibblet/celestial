@@ -4,6 +4,56 @@
 
 ---
 
+## Run: 2026-05-27 (Run 42)
+
+### Summary
+- Scanned: 0 new code commits since Run 41 (last commit `432da55` — nightshift docs only). Codebase unchanged since Run 17.
+- Issues: 0 new, 0 resolved, 0 spoiler-leak P0. All 13 open planned issues confirmed unchanged (FIX-026, 027, 028, 029, 030, 045, 046, 047, 048, 049, 050, 051, 052).
+- Ideas (by theme): ask-forward — 1 seed (IDEA-117 — Entity Typeahead), 4 promoted to ready (IDEA-105, IDEA-108, IDEA-102, IDEA-111), 1 advanced to exploring (IDEA-114); genmedia — 1 seed (IDEA-118 — Scene Mood Video Loop), 1 promoted to ready (IDEA-106), 1 advanced to exploring (IDEA-115), 2 parked (IDEA-109, IDEA-103); post-read-world — 1 seed (IDEA-119 — Faction Final Status Board), 1 promoted to planned with new dev plan (IDEA-116), 2 parked (IDEA-110, IDEA-104). Total promoted: 6 (IDEA-105/108/102/111 → ready, IDEA-106 → ready, IDEA-116 → planned). Stale parks: 4 (IDEA-109, IDEA-103, IDEA-110, IDEA-104 all exactly 3 days old).
+- Plans written: `DEVPLAN-IDEA-116-world-crew-manifest.md`
+
+### Build & Lint & Test Results
+- No code commits since Run 41. Status confirmed unchanged from Run 36 verification.
+- Build: **PASSES** (last verified Run 36 — no new code to re-validate)
+- Lint: **PASSES** — 0 errors, 4 `<img>` tag warnings (unchanged since Run 17)
+- Tests: **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17)
+
+### Key Findings
+
+1. **No new code commits.** Codebase is identical to Run 41. All 13 open planned issues remain. Top three quick-win fixes: FIX-050 (5 min), FIX-049 (10 min), FIX-047 (15 min) = 30 minutes of legacy cleanup with zero risk. The queue of ready ideas now has **12 items** spanning 15 min to 2.5 hours.
+
+2. **Four ask-forward ideas promoted to `ready` this run.** IDEA-105 (Brief Mode Toggle, 30 min, 4 files), IDEA-108 (Reading Dwell Nudge, 1 hr, 2 files), IDEA-102 (Empty State Chapter Grid, 45 min, 1 file), IDEA-111 (Ask Scene Jump, 30 min, 1 file). All have confirmed dev plans and zero blockers. The shortest — IDEA-111 + IDEA-102 — together cover the two most critical cold-start Ask gaps in under 1 hour of work.
+
+3. **IDEA-106 (genmedia) promoted to `ready`.** Valkyrie-1 Dynamic State Header — dev plan complete, FIX-048 remains the only prerequisite (move harmonic state renders from `public/images/` to `cel_visual_assets`). Once FIX-048 is done, IDEA-106 is executable in 1.5 hours with 2 files.
+
+4. **IDEA-116 (post-read-world) promoted to `planned` — dev plan written.** World Crew Manifest at `/world/manifest` — a font-mono MARU classified mission roster with 9 crew cards. Phase 1 buildable today (name + role/species + "MARU CLASSIFIED" placeholder); Phase 2 upgrades to real CH17 "State After" text after IDEA-095 ships. Executor must read 9 character wiki files to populate the `CREW_META` table with accurate role/species values. 1 new file, 1.5 hours. Priority P2. `show_all_content` gate enforced server-side.
+
+5. **Four ideas parked by 3-day stale rule.** IDEA-109 (Vault Entry Preview Images), IDEA-103 (Chapter Atmosphere Color Thumbnails), IDEA-110 (World Glossary Accordion), IDEA-104 (Chapter-Location Story Map) — all last updated 2026-05-24, exactly 3 days old. All are either blocked by missing author content decisions or waiting on IDEA-095 to ship. Parking notes added; can be un-parked when blockers resolve.
+
+6. **Three new ideas seeded.** IDEA-117 (ask-forward: Entity Typeahead in Ask Input — client-side entity name autocomplete via prop-injected entity list; ~40 lines JSX; 1 hour), IDEA-118 (genmedia: Scene Mood Video Loop — Runway Gen-4 ambient 4-second muted loop per primary-location chapter; `<video autoplay loop muted>`; author-batch only; ~$0.15/clip; zero reader cost), IDEA-119 (post-read-world: Faction Final Status Board — lexical CH17 status derivation from arc ledger "State After" + faction wiki; collapsible accordion on `/factions` page for `show_all_content` readers; prerequisite: IDEA-095 for `getArcEndpoints()`).
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-116-world-crew-manifest.md` — **NEW**: World Crew Manifest — `/world/manifest` page, `show_all_content` gated, font-mono MARU doc format, 9 crew cards; 1 new file, 1.5 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-111-ask-scene-jump.md` — Ask Scene Jump — 1-file, 30 min (ask-forward). **Fastest Ask navigation win in the queue.**
+- `docs/nightshift/plans/DEVPLAN-IDEA-105-ask-brief-mode-toggle.md` — Ask Brief Mode Toggle — 4-file, 30 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md` — Ask Empty State Chapter Grid — 1-file, 45 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-108-ask-reading-dwell-nudge.md` — Ask Reading Dwell Nudge — 2-file, 1 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-106-valkyrie-dynamic-state-header.md` — Valkyrie-1 Dynamic State Header — 2-file, 1.5 hr; requires FIX-048 first (genmedia).
+- `docs/nightshift/plans/DEVPLAN-IDEA-096-ask-live-context-band.md` — Ask Live Context Band Phase 1 — 1-file, 15 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-093-character-voice-mode.md` — Character Voice Mode — 4-file, 1.5 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md` — Arc Endpoint Quotes Gallery — 2-file, 1.5 hr; `show_all_content` gated (post-read-world). **Unlocks many other post-read-world features.**
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — Ask CTA after chapter summary — 1-file, 15 min (ask-forward).
+- `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md` — Remove `/\bnext\b/i` from FUTURE_PATTERNS — 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md` — Rename `requireKeith()` to `requireAuthor()` — 10 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — Update 12 stale model IDs to `claude-sonnet-4-6` — 15 min.
+
+### Recommendations
+- **If you have 30 min:** IDEA-111 (Ask Scene Jump, 30 min, 1-file) — makes every grounded answer navigable to the source chapter. Or: FIX-050 (5 min) + FIX-049 (10 min) + FIX-047 (15 min) = three legacy cleanups, zero risk.
+- **If you have 1 hour:** IDEA-111 (30 min) + IDEA-102 (45 min) = the two biggest cold-start Ask UX gaps: jump links on answers + 17-chapter discovery grid. Combined: 75 min, 2 files total.
+- **If you have 2 hours:** IDEA-095 (Arc Endpoint Quotes Gallery, 1.5 hr) — the highest-leverage post-read-world foundation feature. Ships `/world/voices`, creates `arc-endpoints.ts` utility used by IDEA-113, IDEA-116, IDEA-119. Un-blocks the entire post-read `/world/` cluster.
+
+---
+
 ## Run: 2026-05-26 (Run 41)
 
 ### Summary
