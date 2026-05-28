@@ -4,6 +4,55 @@
 
 ---
 
+## Run: 2026-05-28 (Run 43)
+
+### Summary
+- Scanned: 0 new code commits since Run 42 (last commit `a0219c8` — nightshift docs only). Codebase unchanged since Run 17.
+- Issues: 0 new, 0 resolved, 0 spoiler-leak P0. All 13 open planned issues confirmed unchanged (FIX-026, 027, 028, 029, 030, 045, 046, 047, 048, 049, 050, 051, 052). FIX-047 (12 stale model ID files) re-confirmed via grep. FIX-049 (requireKeith in 5 routes) re-confirmed via grep.
+- Ideas (by theme): ask-forward — 1 seed (IDEA-120 — Ask Mood Responder), IDEA-117 advanced to exploring; genmedia — 1 seed (IDEA-121 — Valkyrie Harmonic Transition Clips); post-read-world — 1 seed (IDEA-122 — Mission Day Coverage Chart), IDEA-119 advanced to exploring, IDEA-113 promoted to planned with new dev plan. Parked: IDEA-107 (stale 3 days). Total promoted: 1 (IDEA-113 → planned). Advanced to exploring: 2 (IDEA-117, IDEA-119). Parked: 1 (IDEA-107).
+- Plans written: `DEVPLAN-IDEA-113-arc-progression-heatmap.md`
+
+### Build & Lint & Test Results
+- No code commits since Run 42. Status confirmed unchanged from Run 36 verification.
+- Build: **PASSES** (last verified Run 36 — no new code to re-validate)
+- Lint: **PASSES** — 0 errors, 4 `<img>` tag warnings (unchanged since Run 17)
+- Tests: **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17)
+
+### Key Findings
+
+1. **No new code commits.** Codebase is identical to Run 42. All 13 open planned issues remain. The three fastest quick-win fixes: FIX-050 (5 min), FIX-049 (10 min), FIX-047 (15 min) = 30 minutes of unambiguous legacy cleanup with zero risk. The queue of ready ideas now has 12 items; IDEA-113 (Arc Progression Heatmap) is the newest planned item with a full dev plan.
+
+2. **IDEA-113 promoted to `planned` — Arc Progression Heatmap dev plan written.** A new `/world/arcs` page for `show_all_content=true` readers: a 9×17 heatmap grid showing which characters had documented arc beats (Choice + Consequence in arc ledger table) per chapter. Zero dependencies on IDEA-095 — `arc-heatmap.ts` is self-contained, parsing the arc table directly. Cell coloring uses `color-mix(in srgb, var(--color-ocean) X%, transparent)` (modern CSS, no npm). Each cell links to `/ask?story={ch}&entity={slug}`. Two new files; 2 hours. Plan: `DEVPLAN-IDEA-113-arc-progression-heatmap.md`.
+
+3. **Three new ideas seeded.** IDEA-120 (ask-forward: Ask Mood Responder — Factual/Speculative/Emotional one-shot tone chip; ~20 min, 1 state var + 3 lines in `perspectives.ts`; zero API/DB/npm), IDEA-121 (genmedia: Valkyrie Harmonic Transition Clips — 4 Runway Gen-4 2–3s ambient state-to-state clips; $0.60 author-batch; prerequisite FIX-048 + IDEA-106; 30 min code), IDEA-122 (post-read-world: Mission Day Coverage Chart on `/stories/timeline` — `show_all_content`-gated bar chart of chapter count per Mission Day from `mission_logs_inventory.json`; 1-file change; 1 hour).
+
+4. **IDEA-107 (ALARA Observer Logs) parked — stale 3 days.** Last updated 2026-05-25 at `exploring` state. The bottleneck is 17 author-written ALARA journal entries (~3 hours of writing time) before code can be meaningfully tested. Un-park when IDEA-095 ships and Paul is ready to write the log content.
+
+5. **IDEA-117 and IDEA-119 advanced to `exploring`.** IDEA-117 (Ask Input Entity Typeahead): feasibility confirmed; recommend a lightweight `/api/entity-names` GET route to avoid bundle bloat, advancing to `planned` once IDEA-096 settles the pre-input area. IDEA-119 (Faction Final Status Board): feasibility confirmed with fallback for sparse arc ledger matches; advance to `planned` after IDEA-095 ships and `getArcEndpoints()` is available.
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-113-arc-progression-heatmap.md` — **NEW**: Arc Progression Heatmap — `/world/arcs` page, `show_all_content` gated, 9×17 character/chapter arc activity grid; 2 new files, 2 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-116-world-crew-manifest.md` — World Crew Manifest — `/world/manifest`, `show_all_content` gated, MARU classified doc format, 9 crew cards; 1 new file, 1.5 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-111-ask-scene-jump.md` — Ask Scene Jump — 1-file, 30 min (ask-forward). **Fastest Ask navigation win.**
+- `docs/nightshift/plans/DEVPLAN-IDEA-105-ask-brief-mode-toggle.md` — Ask Brief Mode Toggle — 4-file, 30 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md` — Ask Empty State Chapter Grid — 1-file, 45 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-108-ask-reading-dwell-nudge.md` — Ask Reading Dwell Nudge — 2-file, 1 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-106-valkyrie-dynamic-state-header.md` — Valkyrie-1 Dynamic State Header — 2-file, 1.5 hr; FIX-048 prerequisite (genmedia).
+- `docs/nightshift/plans/DEVPLAN-IDEA-096-ask-live-context-band.md` — Ask Live Context Band Phase 1 — 1-file, 15 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-093-character-voice-mode.md` — Character Voice Mode — 4-file, 1.5 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md` — Arc Endpoint Quotes Gallery — 2-file, 1.5 hr; `show_all_content` gated (post-read-world). **Unlocks `getArcEndpoints()` for IDEA-113, IDEA-116, IDEA-119.**
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — Ask CTA after chapter summary — 1-file, 15 min (ask-forward).
+- `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md` — Remove `/\bnext\b/i` from FUTURE_PATTERNS — 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md` — Rename `requireKeith()` to `requireAuthor()` — 10 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — Update 12 stale model IDs to `claude-sonnet-4-6` — 15 min.
+
+### Recommendations
+- **If you have 30 min:** IDEA-111 (Ask Scene Jump, 30 min, 1-file) — makes every grounded Ask answer directly navigable to the source chapter. Or: FIX-050 + FIX-049 + FIX-047 = three legacy cleanups, zero risk, 30 min combined.
+- **If you have 2 hours:** IDEA-095 (Arc Endpoint Quotes Gallery, 1.5 hr) — ships `/world/voices`, creates `getArcEndpoints()` utility shared by IDEA-113, IDEA-116, IDEA-119. The highest-leverage post-read-world foundation feature in the queue.
+- **If you have 2+ hours and want a standalone post-read feature:** IDEA-113 (Arc Progression Heatmap, 2 hr) — zero prerequisites, ships immediately as its own value. The `/world/arcs` page gives completed readers a structural view of the story they can't get anywhere else.
+
+---
+
 ## Run: 2026-05-27 (Run 42)
 
 ### Summary

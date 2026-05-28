@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-27 (Run 42)
+> Last updated: 2026-05-28 (Run 43)
 
 ## Maturity Levels
 
@@ -387,15 +387,29 @@
 ---
 
 ### [IDEA-117] Ask Input Entity Typeahead — Entity Name Autocomplete in the Ask Input
-- **Status:** seed
+- **Status:** exploring
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-27
-- **Last Updated:** 2026-05-27
+- **Last Updated:** 2026-05-28
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** When a reader types 3+ characters in the Ask input that match an entity name (characters, factions, locations) from `static-data.ts`, a small dropdown appears below the input field showing up to 3 matching entity names. Selecting a name inserts it at the cursor position. Helps readers get canonical entity names right without leaving the input flow.
 - **Night Notes:**
   - 2026-05-27 (Run 42): Seeded. Entity names in the companion (especially "Valkyrie-1", "Resonant Pad", "ALARA") are sometimes mis-typed by readers leading to grounding mismatches. A lightweight client-side typeahead prevents this. Implementation: (1) A compact entity name list (character names + faction names + location names) passed from the server-component wrapper as a prop via a JSON `<script>` block or a small server-side render — avoids importing full `static-data.ts` bundle on the client; (2) `useState(query)` + `useMemo` filter on each keystroke when length ≥ 3; (3) A `<ul>` dropdown absolutely positioned below the `<textarea>` with Tailwind `absolute top-full left-0 z-10 bg-[var(--color-sci-panel)]`; (4) Click or Enter selects and inserts name at cursor via `selectionStart`/`selectionEnd`; (5) Dismiss on Escape or blur. Zero API calls, zero DB, zero npm. ~40 lines JSX in `ask/page.tsx` + server prop injection. Distinct from IDEA-063 (hover cards on links in answers) and IDEA-069 (entity Ask CTAs). Estimated 1 hour.
+  - 2026-05-28 (Run 43): **Advanced to `exploring`.** Feasibility confirmed: `ask/page.tsx` is a `'use client'` component that receives no server-side props — entity names must be injected via a thin server wrapper or a lightweight `/api/entity-names` GET route (returns name+slug for all characters/factions/locations, ~100 entries total, cacheable). The `<textarea>` for the Ask input is at `ask/page.tsx:595` (search field). The `selectionStart`/`selectionEnd` insertion pattern works on `<textarea>` in all modern browsers. Key concern: the typeahead dropdown must not conflict with the existing suggestion chips UI (IDEA-042, IDEA-114). Position it as `absolute` relative to the `<textarea>` wrapper div (add `relative` to the container). Advance to `planned` when IDEA-096 (Live Context Band) ships and the pre-input area is settled in its final form.
+
+---
+
+### [IDEA-120] Ask Mood Responder — Tone Intent Chips for Answer Register
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-28
+- **Last Updated:** 2026-05-28
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** Three small tone-intent chips below the Ask input — "Factual 📚", "Speculative 🌌", "Emotional 🫀" — that adjust the companion's response register when selected. Selecting a chip appends a meta-instruction to the next message's system prompt: "Respond with focused factual precision" / "Speculate about what this might imply beyond what's documented" / "Explore the emotional resonance of this for the reader." The chip is cleared after each message (one-shot, not persistent). Zero new API routes, zero DB, zero npm.
+- **Night Notes:**
+  - 2026-05-28 (Run 43): Seeded. Current Ask answers are uniformly in the archivist register — helpful but tonally flat. Some readers want sharp factual answers ("Who was ALARA's first interlocutor?") while others want the companion to lean into speculation ("What might ALARA's merge feel like?") or emotional resonance ("Why does Thane's arc hit so hard?"). The three chips give readers a one-tap way to tune the register without changing the underlying data. Implementation: (1) Add `toneIntent: "factual" | "speculative" | "emotional" | null` to `ask/page.tsx` React state, default null, cleared after each submission; (2) Render 3 small `<button>` chips in a row above or alongside the Submit button — styled as toggle pills, only one active at a time; (3) Include `toneIntent` in POST body to `/api/ask`; (4) In `perspectives.ts` `buildAskAnswererPrompt()`, if `toneIntent` is non-null, append a 1-line system-prompt modifier (no change to retrieval depth or content filtering). Distinct from IDEA-105 (Brief Mode Toggle — controls length, not register) and IDEA-093 (Character Voice Mode — controls persona, not tone). Spoiler: none — the chips affect register only, not content gating. Guest-compatible. 1 state var + chip UI + 1 param added to POST body + 3 lines in `perspectives.ts`. Estimated 20 minutes.
 
 ---
 
@@ -732,6 +746,19 @@
 
 ---
 
+### [IDEA-121] Valkyrie Harmonic State Transition Clips — Ambient State-to-State Runway Animations
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-28
+- **Last Updated:** 2026-05-28
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** Author pre-generates 4 short ambient transition clips (dormant→wake, wake→active, active→alignment, alignment→harmonic_jump) using Runway Gen-4 — each 2–3 seconds, seamless, no characters, environment-only visual showing the ship's ambient vibe shifting between states. Stored in Supabase Storage; surfaced on the Valkyrie-1 wiki page (`/artifacts/valkyrie-1`) as a subtle "state transition gallery" accordion. Total cost ~$0.15/clip × 4 = ~$0.60. Author-batch only; zero reader generation cost. Builds on IDEA-106 (Valkyrie Dynamic State Header) and FIX-048 (images moved to Supabase).
+- **Night Notes:**
+  - 2026-05-28 (Run 43): Seeded. The 5 Valkyrie-1 harmonic state spec JSON files at `content/wiki/specs/valkyrie-1/states/` define distinct visual signatures per state (vein color, intensity, aperture posture). A transition clip between two adjacent states requires only: the source state's visual description + the target state's visual description + a "transition" prompt modifier + WORLD A `alien_organic` vocabulary. (1) Model/provider: Runway Gen-4 via `providers/runway.ts` — already integrated. ~$0.15/clip. (2) Cost budget: 4 clips × $0.15 = $0.60 total; author-batch only. (3) Caching: stored in Supabase Storage with `source='state_transition'`, `target='valkyrie-1'`, `style='{from}-to-{to}'` (e.g., `dormant-to-wake`); public URLs; shared canonical. (4) Spoiler gating of prompt inputs: harmonic state names and spec vocabulary are world-building data — no narrative events in specs. Zero spoiler risk. (5) Canon grounding: `content/wiki/specs/valkyrie-1/states/{from}.json` + `content/wiki/specs/valkyrie-1/states/{to}.json` + WORLD A vocabulary from `content/wiki/specs/valkyrie-1/master.json`. Implementation: existing admin console (`/profile/admin/visuals`) already supports Runway Gen-4 generation. Code change: ~15 lines in IDEA-106's custom `artifacts/valkyrie-1/page.tsx` to render a `<details>` accordion with `<video>` tags for each approved transition clip. Prerequisite: FIX-048 must execute first (move images/videos to Supabase); IDEA-106 should ship first to establish the custom page. Estimated: 15 minutes author time per clip in admin console + 30 minutes code for the transitions accordion. Synergistic with IDEA-106 (dynamic state header) — the page already has the custom static-route override.
+
+---
+
 ### [IDEA-118] Scene Mood Video Loop — Runway Gen-4 Ambient Clip for Chapter Header
 - **Status:** seed
 - **Theme:** genmedia
@@ -791,16 +818,17 @@
 ---
 
 ### [IDEA-107] ALARA Observer Logs — Author-Written First-Person Chapter Journals at `/world/alara-logs`
-- **Status:** exploring
+- **Status:** parked
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-23
-- **Last Updated:** 2026-05-25
+- **Last Updated:** 2026-05-28
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** A `/world/alara-logs` page for `show_all_content=true` readers presenting 17 short first-person journal entries written by the author in ALARA's voice — one per chapter, drawn from her arc ledger "Starting State"/"State After" observations. Reads like private ship logs: "Mission Day 1. I observe. The humans call this 'initialization.' I call it waking." Zero on-demand AI cost — author writes 17 entries offline and commits them as static markdown. A narrative artifact that transforms arc data into a reader-facing companion text.
 - **Night Notes:**
   - 2026-05-23 (Run 38): Seeded. This is primarily a content creation task for Paul (writing 17 short log entries in ALARA's voice, ~100–200 words each) with minimal code. (1) Post-read-world requirements: (a) `/world/alara-logs` gated by `show_all_content === true` at server level — redirect to `/profile` if false; (b) Integration with `show_all_content`: direct server-side check via `getReaderProgress()`; (c) Partial-completion edge cases: `show_all_content` is the sole gate — arc-endpoint voice is appropriate only for completed readers. (2) Content format: 17 markdown files at `content/wiki/logs/alara/ch01.md` through `ch17.md` — no `<!-- generated:ingest -->` marker (manually authored); (3) Code: new `/world/alara-logs/page.tsx` server component — reads all 17 log files via `fs.readdir` + `fs.readFile`, renders as a scrollable timeline of `<article>` cards with chapter label + ALARA's log text via `react-markdown`. The StoryMarkdown component can be reused for consistent prose rendering. (4) Navigation: add a link from `/world/voices` (IDEA-095) to `/world/alara-logs` as a companion post-read-world route. No new DB, no AI calls at render time, zero npm packages. Estimated code: 1 hour (route + file reader utility + card layout). Content: Paul estimates 2–3 hours writing time. The `arc-endpoints.ts` utility from IDEA-095 + the arc ledger "Starting State" sections provide the grounding material for each log entry. Synergistic with IDEA-095 (both live under `/world/`), IDEA-101 (Crew Debrief Mode), and character voice work in IDEA-093. A unique piece of companion content that turns technical arc data into living voice.
   - 2026-05-25 (Run 40): **Advanced to `exploring`.** Implementation path is clear: (1) `content/wiki/logs/alara/` directory with 17 authored markdown files — no generated marker, fully manual ownership; (2) `src/app/world/alara-logs/page.tsx` server component using `fs.readdir`/`fs.readFile` to load and render them as a timeline; (3) `show_all_content` gate via `getReaderProgress()` server-side; (4) Cross-link from IDEA-095's `/world/voices` page. The code is straightforward (1 hour); the bottleneck is Paul's writing time (~3 hours for 17 log entries). Recommend: Paul writes 3 sample entries first (CH01, CH08, CH17) to validate voice before committing to all 17. Advance to `planned` after IDEA-095 ships (the `/world/` cluster should be built together).
+  - 2026-05-28 (Run 43): Stale 3 days — likely low priority or too complex. Demoting to parked. The bottleneck is 17 author-written ALARA journal entries (~3 hours of writing time) before any code can be meaningfully tested. Un-park when IDEA-095 ships, the `/world/` cluster is active, and Paul is ready to write the log content.
 
 ---
 
@@ -1061,29 +1089,44 @@
 ---
 
 ### [IDEA-113] Arc Progression Heatmap — Character Activity Grid for Completed Readers
-- **Status:** exploring
+- **Status:** planned
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-25
-- **Last Updated:** 2026-05-26
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
+- **Last Updated:** 2026-05-28
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-113-arc-progression-heatmap.md`
 - **Summary:** For `show_all_content=true` readers, a `/world/arcs` page showing a 9×17 heatmap grid (9 main characters as rows, CH01–CH17 as columns). Each cell is filled/colored when that character has a documented arc entry in that chapter (derived from "Choice" + "Consequence" column content in the arc ledger tables). Darker fill = more arc activity. Gives completed readers a spatial view of the story's dramatic density. Zero AI, zero DB, zero new content.
 - **Night Notes:**
   - 2026-05-25 (Run 40): Seeded. The 9 arc ledger files at `content/wiki/arcs/characters/` each contain a "Chapter Arc Entries" table with rows for each chapter. Each row has "Choice" and "Consequence" columns — cells that are non-empty (not `—` or blank) signal arc-active chapters for that character. A heatmap cell intensity can be derived simply from: both Choice AND Consequence non-empty → full fill; one non-empty → half fill; both empty → no fill. Implementation: (1) A new server utility `src/lib/wiki/arc-heatmap.ts` — calls `getAllCharacterArcs()` (existing), parses each arc ledger table via the same row-splitting logic as `arc-endpoints.ts` (planned in IDEA-095), returns `ArcCell[][]` (9 rows × 17 columns with `intensity: 0 | 0.5 | 1`). (2) New `src/app/world/arcs/page.tsx` server component — gated by `show_all_content === true` (redirect to `/profile` if false); calls `getArcHeatmap()`, renders as a CSS grid with `grid-cols-[auto_repeat(17,1fr)]`. Column headers: CH01–CH17 labels. Row labels: character names. Cell fill: Tailwind background opacity classes (`bg-[var(--color-ocean)]/100`, `/50`, or transparent). Cell click → `/ask?story={chSlug}&entity={charSlug}` for exploration. (3) Post-read-world requirements: (a) Hidden from first-time readers and guests — `show_all_content` server-side gate; (b) Integration with `show_all_content`: direct server check, redirect if false; (c) Partial-completion edge cases: `show_all_content` is the sole gate. Zero new DB tables, zero new content, zero npm. Estimated 2 hours. Shares `getAllCharacterArcs()` with IDEA-095 (`arc-endpoints.ts`) and IDEA-062 (`chapter-hindsight.ts`). Completes the `/world/` nav cluster with IDEA-095, IDEA-104, IDEA-110. Prerequisite: IDEA-095 should ship first to establish the arc parsing utility; this feature reuses and extends it.
   - 2026-05-26 (Run 41): **Advanced to `exploring`.** Feasibility confirmed: `getAllCharacterArcs()` already exists and reads all 9 arc ledger markdown files. The "Chapter Arc Entries" table has consistent column structure: pipe-delimited rows with "Choice" at index 4 and "Consequence" at index 5 (after splitting on `|` and trimming). A cell is "non-empty" when it contains text other than `—`, `-`, or blank. The IIFE heatmap parser can be derived directly from the planned `arc-endpoints.ts` row-splitting logic (IDEA-095). Key design decision: the `grid-cols-[auto_repeat(17,1fr)]` Tailwind CSS grid layout requires that the Tailwind content config includes this utility or it's written as an inline style. In Tailwind 4, dynamic arbitrary values are supported. Advance to `planned` after IDEA-095 ships and `arc-endpoints.ts` is available as a shared parsing primitive.
+  - 2026-05-28 (Run 43): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-113-arc-progression-heatmap.md`. Key design decisions: (1) `arc-heatmap.ts` is self-contained — does NOT depend on IDEA-095's `arc-endpoints.ts`; the two utilities share similar row-parsing logic independently (DRY consolidation optional post-ship); (2) Grid rendered via inline `style={{ gridTemplateColumns: ... }}` to avoid Tailwind 4 arbitrary-value content config concerns with SSR; (3) Cell coloring uses `color-mix(in srgb, var(--color-ocean) X%, transparent)` for full/half intensity — supported in all modern browsers and Next.js 16 RSC; (4) Each cell links to `/ask?story={ch}&entity={slug}` — works regardless of IDEA-069 shipping; (5) Character name column links to `/characters/{slug}`. `IDEA-095 is NOT a prerequisite` — `arc-heatmap.ts` can run today. Priority raised to P2. Estimated 2 hours.
+
+---
+
+### [IDEA-122] Mission Day Coverage Chart — Pacing Visualization on `/stories/timeline` for Completed Readers
+- **Status:** seed
+- **Theme:** post-read-world
+- **Seeded:** 2026-05-28
+- **Last Updated:** 2026-05-28
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** For `show_all_content=true` readers, a compact horizontal bar chart at the top of `/stories/timeline` showing how many chapters map to each Mission Day (from `mission_logs_inventory.json`). The chart reveals the story's temporal compression — some Mission Days span multiple chapters, others are covered in one. A structural post-read revelation: the reader sees the book's pacing architecture at a glance. Zero AI, zero DB, zero new content. Pure CSS bar chart, 1-file change.
+- **Night Notes:**
+  - 2026-05-28 (Run 43): Seeded. The existing `/stories/timeline` page (`TimelineView.tsx`) shows chapters in order but does not surface the Mission Day dimension. `content/raw/mission_logs_inventory.json` maps chapter slugs to Mission Day numbers (used by `getMissionTimelineContext()` in `prompts.ts`). A bar chart: x-axis = Mission Day numbers, y-axis = number of chapters per day. Bars colored by `--color-ocean`. Each bar is clickable → filters the timeline to show only those chapters. Post-read-world requirements: (1) Chart renders only when `show_all_content === true` at server level — the rest of the timeline page remains visible to all users; only the chart section is gated (unlike `/world/*` pages which redirect entirely, this adds a section to an existing page that all users can see). (2) `show_all_content` integration: page already fetches `readerProgress` (needed to show completed chapters); add a conditional `{readerProgress.showAllContent && <MissionDayCoverageChart ... />}` block. (3) Partial-completion edge cases: `showAllContent` is the sole gate — server-side check already present on the timeline page. Zero new DB tables, zero new content files, zero npm packages. Estimated 1 hour: parse `mission_logs_inventory.json` → group by Mission Day → render bar chart component. No spoiler risk: Mission Day numbers are structural metadata, not narrative text.
 
 ---
 
 ### [IDEA-119] Faction Final Status Board — CH17 Diplomatic Alignment Summary for Completed Readers
-- **Status:** seed
+- **Status:** exploring
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-27
-- **Last Updated:** 2026-05-27
+- **Last Updated:** 2026-05-28
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** For `show_all_content=true` readers, the `/factions` index page gains a collapsible "Faction Status at Book's End" accordion section showing each named faction's CH17 disposition (operational, fragmented, dissolved, allied) — derived from arc ledger "State After" references and faction wiki markdown. Turns the faction index from a static encyclopedia into a living post-read record of political outcomes.
 - **Night Notes:**
   - 2026-05-27 (Run 42): Seeded. `content/wiki/factions/*.md` files describe each faction's mission, membership, and affiliation. Arc ledger "State After" entries at CH17 (via `getArcEndpoints()` — IDEA-095 utility) contain free-text references to factions that appear in each character's final state (e.g., "defied Rigel Protocol directive", "Vault Accord dissolved"). Implementation: (1) A server utility `src/lib/wiki/faction-status.ts` — accepts the 9 `ArcEndpoint` objects from `getArcEndpoints()`; for each known faction slug/name, scans the combined CH17 "State After" texts for lexical mentions; returns `FactionStatus[]` = `{ slug, name, statusLabel, mentioningChars }`. `statusLabel` is inferred from phrase patterns (e.g., "dissolved" → dissolved; "active", "remains" → operational; "fragmented" → fragmented). The inference is lexical (simple keyword match), not semantic — results should be author-verified before deploying. (2) On `/factions/page.tsx`, when `readerProgress.showAllContent === true`, call the utility and render a `<details>` accordion labeled "Faction Status — End of Mission" above the faction card list. Each row: faction name badge + status label + which characters referenced it. (3) Post-read-world requirements: (a) Accordion not rendered when `showAllContent === false` — server check; (b) `show_all_content` integration: direct server-side flag; (c) Partial-completion: `show_all_content` is sole gate. Zero new DB, zero new content, zero npm. Prerequisite: IDEA-095 ships first to make `getArcEndpoints()` available. Estimated 1.5 hours. Synergistic with IDEA-095 (shares `getArcEndpoints()`) and IDEA-092 (Faction Alignment Reveal, parked — this is a simpler tabular precursor to that idea).
+  - 2026-05-28 (Run 43): **Advanced to `exploring`.** Feasibility confirmed: `content/wiki/factions/` has faction markdown files with consistent naming. The lexical mention approach is verified workable — ALARA's CH17 "State After" text reads "Merged, distributed continuity participant" which does not mention factions directly; Galen's, Marco's, or Jonah's entries are more likely to reference Rigel Protocol / Directive 14 outcomes. Key risk: lexical faction-mention detection in arc free text may find few matches for some factions (arc ledger entries are concise). Mitigating approach: (1) Primary lookup: scan ALL 9 CH17 "State After" strings for faction slug and name variants; (2) Fallback: if zero matches, show the faction with a "Status: Undocumented in arc ledger" note rather than suppressing it. This guarantees all known factions appear in the accordion even if arc ledger data is sparse. Advance to `planned` after IDEA-095 ships (prerequisite: `getArcEndpoints()` utility must exist).
 
 ---
 

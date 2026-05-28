@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-05-27 (Nightshift Run 42)
+> Last updated: 2026-05-28 (Nightshift Run 43)
 
 ## App Summary
 
@@ -191,6 +191,7 @@
 - **Build:** PASSES — clean, ~106 routes. 1 Turbopack warning on `next.config.ts`. (Requires `npm install` before `npx next build` in a fresh clone.) Verified Run 36 (`npx next build` in fresh sandbox). No new code commits since Run 29 — codebase unchanged.
 - **Lint:** PASSES — 0 errors, **4 warnings** (`<img>` tags in visuals components — `VisualsAdminConsole.tsx` lines 230/394, `EntityVisualsGallery.tsx` lines 64/118). Verified Run 36. Unchanged since Run 17.
 - **Tests:** **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17). All green. Verified Run 36. No new code commits since Run 29 — codebase unchanged.
+- **Run 43 note:** No code commits since Run 42. Build/lint/test status confirmed unchanged. No new build execution performed (codebase unchanged). FIX-047 confirmed: 12 files still use stale `claude-sonnet-4-20250514` (grep re-verified). `requireKeith()` in 5 visuals routes confirmed via grep.
 - **Run 42 note:** No code commits since Run 41. Build/lint/test status confirmed unchanged. No new build execution performed (codebase unchanged).
 - **Run 41 note:** No code commits since Run 40. Build/lint/test status confirmed unchanged. No new build execution performed (codebase unchanged).
 - **Run 40 note:** No code commits since Run 39. Build/lint/test status confirmed unchanged. No new build execution performed (codebase unchanged).
@@ -227,6 +228,7 @@
 3. **IDEA-102 (45 min):** Ask Empty State Chapter Grid — 17-chapter tile grid in Ask page when no story context set; clicking a tile routes to `/ask?story=CH01`; 1-file change (`ask/page.tsx`). Dev plan `DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md` ready *(promoted to ready Run 42)*.
 3. **IDEA-108 (1 hr):** Ask Reading Dwell Nudge — new `AskDwellNudge.tsx` client component + 1-line addition to `stories/[storyId]/page.tsx`; fixed pill bar after 90s of active scroll. Dev plan `DEVPLAN-IDEA-108-ask-reading-dwell-nudge.md` ready *(promoted to ready Run 42)*.
 3. **IDEA-116 (1.5 hr):** World Crew Manifest — new `/world/manifest` page with `show_all_content` gate; font-mono MARU classified document format; 9 crew cards; Phase 2 upgrades to `getArcEndpoints()` after IDEA-095 ships. Dev plan `DEVPLAN-IDEA-116-world-crew-manifest.md` *(NEW Run 42, planned)*.
+3. **IDEA-113 (2 hr):** Arc Progression Heatmap — new `/world/arcs` page; 9×17 heatmap grid derived from arc ledger Choice + Consequence columns; `show_all_content` gated; cells link to `/ask?story={ch}&entity={slug}`; zero deps on IDEA-095. Dev plan `DEVPLAN-IDEA-113-arc-progression-heatmap.md` *(NEW Run 43, planned)*.
 3. **IDEA-096 (15 min, Phase 1 only):** Ask Live Context Band — dismissable pill strip above Ask input showing active story/voice/entity context. Phase 1 (story pill) deployable today in 15 minutes, 1-file change. Dev plan `DEVPLAN-IDEA-096-ask-live-context-band.md` ready.
 3. **IDEA-084 (45 min):** Ask Home Hero Widget — text input in home page hero routes to `/ask?q=...` with auto-submit; 2-file change (`HomeHero.tsx` + `ask/page.tsx`). Dev plan `DEVPLAN-IDEA-084-ask-home-hero-widget.md` ready.
 4. **IDEA-072 (1.5 hr):** Chapter quick-facts panel on Ask page — collapsible card showing mission day range, primary location, and top 3 characters when `?story=` is set. Dev plan `DEVPLAN-IDEA-072-chapter-quick-facts-panel.md` ready.
