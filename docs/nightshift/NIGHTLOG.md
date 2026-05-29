@@ -4,6 +4,56 @@
 
 ---
 
+## Run: 2026-05-29 (Run 44)
+
+### Summary
+- Scanned: 0 new code commits since Run 43 (last commit `797f872` — nightshift docs only). Codebase unchanged since Run 17.
+- Issues: 0 new, 0 resolved, 0 spoiler-leak P0. All 13 open planned issues confirmed unchanged (FIX-026, 027, 028, 029, 030, 045, 046, 047, 048, 049, 050, 051, 052). FIX-047 (12 stale model ID files) re-confirmed via grep. FIX-049 (requireKeith in 5 routes) re-confirmed via grep.
+- Ideas (by theme): ask-forward — 1 seed (IDEA-123 — Ask Conversation Exporter), IDEA-120 promoted to planned with new dev plan; genmedia — 1 seed (IDEA-124 — Ask Image Gallery Mode), IDEA-121 advanced to exploring, IDEA-118 advanced to exploring, IDEA-112 parked (stale 4 days); post-read-world — 1 seed (IDEA-125 — Completion Stamp), IDEA-122 advanced to exploring. Total promoted: 1 (IDEA-120 → planned). Advanced to exploring: 3 (IDEA-121, IDEA-118, IDEA-122). Parked: 1 (IDEA-112).
+- Plans written: `DEVPLAN-IDEA-120-ask-mood-responder.md`
+
+### Build & Lint & Test Results
+- No code commits since Run 43. Status confirmed unchanged from Run 36 verification.
+- Build: **PASSES** (last verified Run 36 — no new code to re-validate)
+- Lint: **PASSES** — 0 errors, 4 `<img>` tag warnings (unchanged since Run 17)
+- Tests: **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17)
+
+### Key Findings
+
+1. **No new code commits.** Codebase identical to Run 43. All 13 open planned issues remain. The fastest three cleanups are still: FIX-050 (5 min — remove `/\bnext\b/i` from ask-intent.ts), FIX-049 (10 min — rename requireKeith to requireAuthor), FIX-047 (15 min — update 12 stale model IDs). Together: 30 minutes of unambiguous zero-risk cleanup that would move the codebase forward.
+
+2. **IDEA-120 promoted to `planned` — Ask Mood Responder dev plan written.** Three tone-intent chips ("Factual 📚", "Speculative 🌌", "Emotional 🫀") below the Ask input that append a one-shot system-prompt register modifier. Cleared after each submission. 4-file change following the exact same pattern as IDEA-105 (Brief Mode Toggle): `perspectives.ts` (type + tone block), `orchestrator.ts` (type + pass-through), `api/ask/route.ts` (validate against allowlist), `ask/page.tsx` (state + chip UI + submit clear + POST body). Server validates `toneIntent` against an allowlist — no arbitrary injection. Zero API, zero DB, zero npm. Estimated 20 minutes. Plan: `DEVPLAN-IDEA-120-ask-mood-responder.md`.
+
+3. **IDEA-112 (Faction Identity Tiles) parked — stale 4 days.** Last updated 2026-05-25 at `seed` state. This is a pure author-batch task (15 min per faction in the admin console, zero code changes) with no code development needed. Un-park when Paul is running a faction asset generation session.
+
+4. **Three ideas advanced to `exploring`.** IDEA-121 (Valkyrie Harmonic Transition Clips): Runway Gen-4 feasibility confirmed — `providers/runway.ts` is operational, `/api/visuals/preferred` accepts arbitrary `style` strings, admin console dispatches to Runway. One detail to verify: `generate-asset.ts` video MIME type handling. Advance to `planned` after IDEA-106 ships. IDEA-118 (Scene Mood Video Loop): same feasibility path as IDEA-121; `<video>` element in chapter page fail-open pattern matches IDEA-106. Advance to `planned` when Paul is ready to batch 3–5 clips. IDEA-122 (Mission Day Coverage Chart): `mission_logs_inventory.json` confirmed present; `TimelineView.tsx` component type (client vs. server wrapper) needs direct read to finalize the `show_all_content` prop injection approach.
+
+5. **Three new ideas seeded.** IDEA-123 (ask-forward: Ask Conversation Exporter — client-side Markdown download of current session, 15 lines of JS, 15 min, zero backend, ~15 lines in `ask/page.tsx`), IDEA-124 (genmedia: Ask Image Gallery Mode — session grid of images generated during an Ask session via IDEA-043; 30 min once IDEA-043 ships; prerequisite: IDEA-043), IDEA-125 (post-read-world: Completion Stamp on Profile — "MISSION COMPLETE · DIRECTIVE-14 · VALKYRIE-1" CSS ink stamp for `show_all_content` readers; 10 min, 1-file, ~5 lines JSX, zero deps).
+
+### Plans Ready to Execute
+- `docs/nightshift/plans/DEVPLAN-IDEA-120-ask-mood-responder.md` — **NEW**: Ask Mood Responder — 3 tone chips adjusting Ask register; 20 min, 4 files, zero deps (ask-forward). **Fastest new plan in the queue.**
+- `docs/nightshift/plans/DEVPLAN-IDEA-113-arc-progression-heatmap.md` — Arc Progression Heatmap — `/world/arcs` page, `show_all_content` gated, 9×17 heatmap; 2 new files, 2 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-116-world-crew-manifest.md` — World Crew Manifest — `/world/manifest`, `show_all_content` gated, MARU classified format; 1 new file, 1.5 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-111-ask-scene-jump.md` — Ask Scene Jump — 1-file, 30 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-105-ask-brief-mode-toggle.md` — Ask Brief Mode Toggle — 4-file, 30 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md` — Ask Empty State Chapter Grid — 1-file, 45 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-108-ask-reading-dwell-nudge.md` — Ask Reading Dwell Nudge — 2-file, 1 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-106-valkyrie-dynamic-state-header.md` — Valkyrie-1 Dynamic State Header — 2-file, 1.5 hr; FIX-048 prerequisite (genmedia).
+- `docs/nightshift/plans/DEVPLAN-IDEA-096-ask-live-context-band.md` — Ask Live Context Band Phase 1 — 1-file, 15 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-093-character-voice-mode.md` — Character Voice Mode — 4-file, 1.5 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md` — Arc Endpoint Quotes Gallery — 2-file, 1.5 hr; `show_all_content` gated (post-read-world). **Unlocks `getArcEndpoints()` for IDEA-113, IDEA-116, IDEA-119.**
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — Ask CTA after chapter summary — 1-file, 15 min (ask-forward).
+- `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md` — Remove `/\bnext\b/i` from FUTURE_PATTERNS — 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md` — Rename `requireKeith()` to `requireAuthor()` — 10 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — Update 12 stale model IDs to `claude-sonnet-4-6` — 15 min.
+
+### Recommendations
+- **If you have 20 min:** IDEA-120 (Ask Mood Responder, 20 min) — 3 tone chips giving readers Factual/Speculative/Emotional register control. Smallest new ask-forward feature in the queue. Or: FIX-050 (5 min) + FIX-049 (10 min) + FIX-047 (15 min) = 30 minutes of zero-risk legacy cleanup.
+- **If you have 30 min:** IDEA-111 (Ask Scene Jump, 30 min, 1-file) — makes every grounded answer navigable to the source chapter. The single most impactful UX improvement for the answer surface.
+- **If you have 2 hours:** IDEA-095 (Arc Endpoint Quotes Gallery, 1.5 hr) + IDEA-120 (20 min) = 2 ships: the highest-leverage post-read-world foundation feature (`getArcEndpoints()` shared by IDEA-113, IDEA-116, IDEA-119) plus a fresh Ask tone improvement.
+
+---
+
 ## Run: 2026-05-28 (Run 43)
 
 ### Summary

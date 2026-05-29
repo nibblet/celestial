@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-28 (Run 43)
+> Last updated: 2026-05-29 (Run 44)
 
 ## Maturity Levels
 
@@ -400,16 +400,30 @@
 
 ---
 
-### [IDEA-120] Ask Mood Responder — Tone Intent Chips for Answer Register
+### [IDEA-123] Ask Conversation Exporter — Client-Side Markdown Download of Current Session
 - **Status:** seed
 - **Theme:** ask-forward
-- **Seeded:** 2026-05-28
-- **Last Updated:** 2026-05-28
+- **Seeded:** 2026-05-29
+- **Last Updated:** 2026-05-29
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
+- **Summary:** A small "Export ↓" button at the bottom of any Ask session with 3+ messages that generates a Markdown document of the conversation (Q&A formatted with headings) and triggers a browser download — no API, no DB, no npm. Makes the companion feel like a personal research tool that outputs durable artifacts.
+- **Night Notes:**
+  - 2026-05-29 (Run 44): Seeded. Readers who use Ask as a research tool for the universe want to keep a record of what they learned. A client-side export: (1) Appears as a small `<button>` at the bottom of the message thread after 3+ messages exist; (2) On click: maps `messages.filter(m => m.role !== 'system')` into a Markdown string — user messages as `**Q:** {text}`, assistant messages as `**A:** {text}`, separated by `---`; adds a header `# Celestial Archive — Ask Session\n\n> Chapter: {contextStoryTitle}\n> Date: {new Date().toLocaleDateString()}\n\n`; (3) Creates a `Blob` with `type: 'text/markdown'`, a temporary `<a>` with `href=URL.createObjectURL(blob)` and `download='celestial-session.md'`, clicks it programmatically, then revokes the URL. All client-side. Zero API, zero DB, zero npm, zero server changes. ~15 lines of JS in `ask/page.tsx`. Estimated 15 minutes. Auth-agnostic — works for guests and authenticated readers. Distinct from IDEA-066 (cross-session resume, uses localStorage) and IDEA-075 (pinned Q&A, uses DB) — this is ephemeral, stateless, and output-focused.
+
+---
+
+### [IDEA-120] Ask Mood Responder — Tone Intent Chips for Answer Register
+- **Status:** planned
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-28
+- **Last Updated:** 2026-05-29
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-120-ask-mood-responder.md`
 - **Summary:** Three small tone-intent chips below the Ask input — "Factual 📚", "Speculative 🌌", "Emotional 🫀" — that adjust the companion's response register when selected. Selecting a chip appends a meta-instruction to the next message's system prompt: "Respond with focused factual precision" / "Speculate about what this might imply beyond what's documented" / "Explore the emotional resonance of this for the reader." The chip is cleared after each message (one-shot, not persistent). Zero new API routes, zero DB, zero npm.
 - **Night Notes:**
   - 2026-05-28 (Run 43): Seeded. Current Ask answers are uniformly in the archivist register — helpful but tonally flat. Some readers want sharp factual answers ("Who was ALARA's first interlocutor?") while others want the companion to lean into speculation ("What might ALARA's merge feel like?") or emotional resonance ("Why does Thane's arc hit so hard?"). The three chips give readers a one-tap way to tune the register without changing the underlying data. Implementation: (1) Add `toneIntent: "factual" | "speculative" | "emotional" | null` to `ask/page.tsx` React state, default null, cleared after each submission; (2) Render 3 small `<button>` chips in a row above or alongside the Submit button — styled as toggle pills, only one active at a time; (3) Include `toneIntent` in POST body to `/api/ask`; (4) In `perspectives.ts` `buildAskAnswererPrompt()`, if `toneIntent` is non-null, append a 1-line system-prompt modifier (no change to retrieval depth or content filtering). Distinct from IDEA-105 (Brief Mode Toggle — controls length, not register) and IDEA-093 (Character Voice Mode — controls persona, not tone). Spoiler: none — the chips affect register only, not content gating. Guest-compatible. 1 state var + chip UI + 1 param added to POST body + 3 lines in `perspectives.ts`. Estimated 20 minutes.
+  - 2026-05-29 (Run 44): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-120-ask-mood-responder.md`. Implementation confirmed via codebase knowledge: 4-file change — `perspectives.ts` (type + tone block in `buildAskAnswererPrompt()`), `orchestrator.ts` (type + pass-through), `api/ask/route.ts` (destructure + validate), `ask/page.tsx` (state + chip row JSX + clear on submit + POST body). Follows same 4-file pattern as IDEA-105 (Brief Mode Toggle). Server validates `toneIntent` against an allowlist — no arbitrary injection. Priority raised to P2. Estimated 20 minutes.
 
 ---
 
@@ -734,41 +748,57 @@
 ---
 
 ### [IDEA-112] Faction Identity Tile — Single Compact Emblem per Faction Wiki Page
-- **Status:** seed
+- **Status:** parked
 - **Theme:** genmedia
 - **Seeded:** 2026-05-25
-- **Last Updated:** 2026-05-25
+- **Last Updated:** 2026-05-29
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** Author pre-generates one compact 128×128px "faction identity" tile per named faction via Imagen 4 — stylized iconographic color-field (no characters, no scenes) representing the faction's aesthetic identity. Stored in `cel_visual_assets` with `approved=true` and surfaced in the faction wiki page header via `EntityVisualsGallery`. Zero code changes beyond what already exists. Total cost: ~$0.06/faction × 6–8 factions ≈ $0.36–$0.48.
 - **Night Notes:**
   - 2026-05-25 (Run 40): Seeded. Faction wiki pages (`/factions/[slug]`) already render `EntityVisualsGallery` (confirmed in STATUS.md). No faction spec JSON files exist yet (`content/wiki/specs/` has ship/location specs but no faction entries), but the faction wiki markdown at `content/wiki/factions/{slug}.md` is sufficient for an identity tile prompt: faction name + affiliation + visual style preset. (1) Model/provider: Imagen 4 with preset auto-selected by faction world-affiliation: `earth_institutional` for military/bureaucratic Earth factions (Rigel Protocol, MARU Command), `alien_organic` for Resonant-aligned entities, `ancient_vault` for Vault-keepers. ~$0.06/tile. (2) Cost budget: 6–8 factions × $0.06 = $0.36–$0.48 total; author-batch only; zero reader generation. (3) Caching: stored in `cel_visual_assets` with `approved=true`, `target={faction-slug}`, `source='faction_identity'`; shared canonical. (4) Spoiler gating of prompt inputs: faction identity (name, affiliation, color palette, symbol vocabulary) is world-building data — no narrative events in the prompt. Zero spoiler risk. (5) Canon grounding: `content/wiki/factions/{slug}.md` wiki markdown provides the faction's mission, membership, and color/symbol vocabulary; preset vocabulary provides the visual aesthetic. Each tile is abstract (emblem/field aesthetic, not a scene render) — does not require a `master.json` spec file, unlike character portraits. Author workflow: generate via admin console with a 1-line prompt per faction: "{faction name}, {world vocab keywords}, abstract identity emblem, no text, no figures." Estimated: 15 minutes author time per faction in the admin console; zero code changes required. EntityVisualsGallery on faction pages picks them up automatically. Prerequisite: none — admin console is fully operational. Synergistic with IDEA-091 (Faction Propaganda Poster, parked) which builds on this after IDEA-043 ships.
+  - 2026-05-29 (Run 44): Stale 4 days — likely low priority or too complex. Demoting to parked. This is a pure author-batch task requiring Paul to run a generation session via the admin console; no code changes are needed. Un-park when Paul is running a faction visuals batch session. The faction wiki pages already surface any approved assets via `EntityVisualsGallery` — the assets just need to be generated and approved.
 
 ---
 
 ### [IDEA-121] Valkyrie Harmonic State Transition Clips — Ambient State-to-State Runway Animations
-- **Status:** seed
+- **Status:** exploring
 - **Theme:** genmedia
 - **Seeded:** 2026-05-28
-- **Last Updated:** 2026-05-28
+- **Last Updated:** 2026-05-29
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** Author pre-generates 4 short ambient transition clips (dormant→wake, wake→active, active→alignment, alignment→harmonic_jump) using Runway Gen-4 — each 2–3 seconds, seamless, no characters, environment-only visual showing the ship's ambient vibe shifting between states. Stored in Supabase Storage; surfaced on the Valkyrie-1 wiki page (`/artifacts/valkyrie-1`) as a subtle "state transition gallery" accordion. Total cost ~$0.15/clip × 4 = ~$0.60. Author-batch only; zero reader generation cost. Builds on IDEA-106 (Valkyrie Dynamic State Header) and FIX-048 (images moved to Supabase).
 - **Night Notes:**
   - 2026-05-28 (Run 43): Seeded. The 5 Valkyrie-1 harmonic state spec JSON files at `content/wiki/specs/valkyrie-1/states/` define distinct visual signatures per state (vein color, intensity, aperture posture). A transition clip between two adjacent states requires only: the source state's visual description + the target state's visual description + a "transition" prompt modifier + WORLD A `alien_organic` vocabulary. (1) Model/provider: Runway Gen-4 via `providers/runway.ts` — already integrated. ~$0.15/clip. (2) Cost budget: 4 clips × $0.15 = $0.60 total; author-batch only. (3) Caching: stored in Supabase Storage with `source='state_transition'`, `target='valkyrie-1'`, `style='{from}-to-{to}'` (e.g., `dormant-to-wake`); public URLs; shared canonical. (4) Spoiler gating of prompt inputs: harmonic state names and spec vocabulary are world-building data — no narrative events in specs. Zero spoiler risk. (5) Canon grounding: `content/wiki/specs/valkyrie-1/states/{from}.json` + `content/wiki/specs/valkyrie-1/states/{to}.json` + WORLD A vocabulary from `content/wiki/specs/valkyrie-1/master.json`. Implementation: existing admin console (`/profile/admin/visuals`) already supports Runway Gen-4 generation. Code change: ~15 lines in IDEA-106's custom `artifacts/valkyrie-1/page.tsx` to render a `<details>` accordion with `<video>` tags for each approved transition clip. Prerequisite: FIX-048 must execute first (move images/videos to Supabase); IDEA-106 should ship first to establish the custom page. Estimated: 15 minutes author time per clip in admin console + 30 minutes code for the transitions accordion. Synergistic with IDEA-106 (dynamic state header) — the page already has the custom static-route override.
+  - 2026-05-29 (Run 44): **Advanced to `exploring`.** Feasibility confirmed: `providers/runway.ts` is integrated and the admin console's generate endpoint already dispatches to Runway. The `style` param in `cel_visual_assets` accepts arbitrary strings — using `dormant-to-wake`, `wake-to-active`, etc. as style values is valid and queryable via `/api/visuals/preferred?target=valkyrie-1&style=dormant-to-wake`. The admin console UI already has a `style` text input field (confirmed from STATUS.md: "`view` and `state` params added to `/api/visuals/prompt` POST body and `VisualsAdminConsole.tsx`"). One implementation detail to verify: `generate-asset.ts` must return a video URL (not just image URL) when the Runway provider is used — confirm `generate-asset.ts` handles video MIME types in its storage path. Key prerequisite: FIX-048 (move public/images to Supabase) + IDEA-106 (custom Valkyrie-1 page) must ship first. Advance to `planned` once IDEA-106 ships and the custom page exists to host the transitions accordion.
+
+---
+
+### [IDEA-124] Ask Image Gallery Mode — Session Grid of On-Demand Generated Images
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-29
+- **Last Updated:** 2026-05-29
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** After IDEA-043 (on-demand scene visualization) ships, the Ask page accumulates any generated images in client state during a session. A small "Gallery" tab or slide-out in the Ask toolbar reveals a compact grid of all images generated in the current session — each with the question that triggered it as a caption. Zero new storage (images already in `cel_visual_assets`), zero new API routes. Pure client-side state accumulation. Estimated 30 minutes once IDEA-043 is live.
+- **Night Notes:**
+  - 2026-05-29 (Run 44): Seeded. When IDEA-043 ships, the Ask page will receive inline image URLs in the `done` SSE event or as a special message type. A `sessionImages: {imageUrl: string, question: string}[]` state array accumulates these during the session. A small tab button (e.g., a grid icon `⊞`) in the Ask input bar opens a slide-in panel or a `<details>` accordion showing a 3-column image grid. Each image displays with a truncated question caption below it. Clicking an image opens it full-screen or links to the entity wiki page from which it was derived. Gallery is ephemeral — it resets when the page is reloaded (no persistence, no DB). No generation cost (images already generated during the session). (1) Model/provider: N/A — no new generation. (2) Cost per generation: $0 for the gallery itself. (3) Caching: session-scoped React state only; images are already persisted in `cel_visual_assets`. (4) Spoiler gating of prompt inputs: N/A — no new generation; images already generated under IDEA-043's gating rules. (5) Canon grounding: N/A — gallery displays images generated during the session. Prerequisite: IDEA-043 must ship first to produce images during Ask sessions. Estimated: 30 minutes (state array + grid render + tab UI in `ask/page.tsx`).
 
 ---
 
 ### [IDEA-118] Scene Mood Video Loop — Runway Gen-4 Ambient Clip for Chapter Header
-- **Status:** seed
+- **Status:** exploring
 - **Theme:** genmedia
 - **Seeded:** 2026-05-27
-- **Last Updated:** 2026-05-27
+- **Last Updated:** 2026-05-29
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** For chapters with a dominant primary-location setting (Valkyrie exterior, Giza exterior, Mars excavation site), the author pre-generates one 4-second seamless ambient video loop via Runway Gen-4 (`providers/runway.ts` — already in the pipeline) — a muted, non-narrative environment clip (stars drifting past a viewport, desert wind, vault torch flicker). Stored in Supabase Storage. Played as `<video autoplay loop muted playsinline>` in the chapter hero/header area. Zero reader generation cost; author-batch only.
 - **Night Notes:**
   - 2026-05-27 (Run 42): Seeded. This is a distinct genmedia register from IDEA-043 (on-demand reader-triggered scene illustrations) and IDEA-049 (static hero image, parked). The video loop is ambient/atmospheric — environment only, no characters, no narrative events — functioning as a moving backdrop rather than a scene illustration. (1) Model/provider: Runway Gen-4 via `providers/runway.ts` (already integrated in the visuals pipeline). ~$0.10–$0.20/clip. (2) Cost budget: 3–5 representative chapter settings × ~$0.15/clip = $0.45–$0.75 total; author-batch only; zero reader generation cost. (3) Caching: stored in Supabase Storage with a public URL; surfaced via a new `source='chapter_ambient'` asset type in `cel_visual_assets`. The `/api/visuals/preferred?target={chSlug}&style=ambient_loop` endpoint would return the approved URL. (4) Spoiler gating of prompt inputs: prompts contain only environment/atmosphere keywords (e.g., "deep space, stars drifting past a curved metal viewport, no figures, seamless loop, WORLD A alien organic vocabulary") — no characters, no character names, no narrative events. Zero spoiler risk even for Chapter 1. (5) Canon grounding: `chapter_tags.json` primary location tag per chapter → select the matching WORLD A/B/C preset and location-specific vocabulary from `content/wiki/specs/{location-slug}/` (where available) or `content/wiki/locations/{slug}.md`. No spec JSON required — the preset vocabulary alone is sufficient for atmospheric clips. Implementation: one new `source='chapter_ambient'` asset type used in admin console generation; `<video>` element in the chapter page header area replaces or augments the existing hero section. Code change: ~15 lines in `stories/[storyId]/page.tsx` to load and render `<video>` when preferred ambient asset exists (fail-open). Estimated: 30 minutes code + 15 minutes author time per clip. Prerequisite: none — the Runway Gen-4 provider is already operational.
+  - 2026-05-29 (Run 44): **Advanced to `exploring`.** Feasibility confirmed: `providers/runway.ts` is operational; `/api/visuals/preferred` accepts arbitrary `style` strings — `ambient_loop` is a valid style key. The `stories/[storyId]/page.tsx` is a server component; adding a conditional `<video>` element that calls `/api/visuals/preferred` at render time is the same fail-open pattern as IDEA-106 (Valkyrie-1 dynamic header). Note: `<video autoplay loop muted playsinline>` in React 19 JSX uses `playsInline` (camelCase). Advance to `planned` when Paul is ready to batch-generate 3–5 priority chapter ambient clips.
 
 ---
 
@@ -1103,16 +1133,30 @@
 
 ---
 
-### [IDEA-122] Mission Day Coverage Chart — Pacing Visualization on `/stories/timeline` for Completed Readers
+### [IDEA-125] Completion Stamp on Profile — "Mission Complete" Seal for Finished Readers
 - **Status:** seed
 - **Theme:** post-read-world
+- **Seeded:** 2026-05-29
+- **Last Updated:** 2026-05-29
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** For `show_all_content=true` readers, the `/profile` page header gains a typographic CSS stamp reading "MISSION COMPLETE · DIRECTIVE-14 · VALKYRIE-1" — styled as a tilted ink-stamp seal using pure Tailwind CSS (no image). A small, satisfying completion signal that acknowledges the reader finished the book. Zero AI, zero DB, zero npm. ~5 lines of JSX + Tailwind. Estimated 10 minutes.
+- **Night Notes:**
+  - 2026-05-29 (Run 44): Seeded. The profile page (`/profile/page.tsx`) currently shows the reader's name, stats, and navigation links. For completed readers (those the author has granted `show_all_content=true`), a visual acknowledgment is absent — the profile looks identical to a mid-journey reader's. A completion stamp is the minimum viable celebration signal: (1) In `/profile/page.tsx`, check `readerProgress.showAllContent === true`; if true, render a small stamp `<div>` in the page header area: `<div className="inline-block rotate-[-8deg] border-4 border-[var(--color-ocean)] rounded-sm px-3 py-1 text-xs font-mono tracking-widest text-[var(--color-ocean)] opacity-70 select-none">MISSION COMPLETE · DIRECTIVE-14 · VALKYRIE-1</div>`; (2) Post-read-world requirements: (a) Stamp only renders when `show_all_content === true` — server-side check (profile page already fetches `readerProgress`); (b) `show_all_content` integration: direct dependency; (c) Partial-completion edge cases: `show_all_content` is the sole gate. Zero new DB tables, zero new content, zero npm packages. Estimated 10 minutes: 1-file change (`/profile/page.tsx`), ~5 lines of JSX. Synergistic with IDEA-089 (Completion Ceremony, parked) — this stamp could also appear on the ceremony page. The CSS stamp is purely presentational: no animation, no interaction, no state.
+
+---
+
+### [IDEA-122] Mission Day Coverage Chart — Pacing Visualization on `/stories/timeline` for Completed Readers
+- **Status:** exploring
+- **Theme:** post-read-world
 - **Seeded:** 2026-05-28
-- **Last Updated:** 2026-05-28
+- **Last Updated:** 2026-05-29
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** For `show_all_content=true` readers, a compact horizontal bar chart at the top of `/stories/timeline` showing how many chapters map to each Mission Day (from `mission_logs_inventory.json`). The chart reveals the story's temporal compression — some Mission Days span multiple chapters, others are covered in one. A structural post-read revelation: the reader sees the book's pacing architecture at a glance. Zero AI, zero DB, zero new content. Pure CSS bar chart, 1-file change.
 - **Night Notes:**
   - 2026-05-28 (Run 43): Seeded. The existing `/stories/timeline` page (`TimelineView.tsx`) shows chapters in order but does not surface the Mission Day dimension. `content/raw/mission_logs_inventory.json` maps chapter slugs to Mission Day numbers (used by `getMissionTimelineContext()` in `prompts.ts`). A bar chart: x-axis = Mission Day numbers, y-axis = number of chapters per day. Bars colored by `--color-ocean`. Each bar is clickable → filters the timeline to show only those chapters. Post-read-world requirements: (1) Chart renders only when `show_all_content === true` at server level — the rest of the timeline page remains visible to all users; only the chart section is gated (unlike `/world/*` pages which redirect entirely, this adds a section to an existing page that all users can see). (2) `show_all_content` integration: page already fetches `readerProgress` (needed to show completed chapters); add a conditional `{readerProgress.showAllContent && <MissionDayCoverageChart ... />}` block. (3) Partial-completion edge cases: `showAllContent` is the sole gate — server-side check already present on the timeline page. Zero new DB tables, zero new content files, zero npm packages. Estimated 1 hour: parse `mission_logs_inventory.json` → group by Mission Day → render bar chart component. No spoiler risk: Mission Day numbers are structural metadata, not narrative text.
+  - 2026-05-29 (Run 44): **Advanced to `exploring`.** Feasibility confirmed: `content/raw/mission_logs_inventory.json` exists (confirmed in STATUS.md — used by `getMissionTimelineContext()`). The `/stories/timeline` route renders `TimelineView.tsx`; whether the server component or the client component reads `readerProgress.showAllContent` needs verification — the timeline page may be a client component (since it has interactive chapter ordering state). If `TimelineView.tsx` is a `'use client'` component, the chart section can be driven by a `showAllContent` boolean prop passed from the server page wrapper. Pure CSS bar chart: each bar is a `<div style={{ width: `${(count/maxCount)*100}%` }}>` inside a fixed-height container — no chart library needed. The clickable bar filter would need `useState(activeMissionDay)` and a filter on the chapter list. Advance to `planned` once the `TimelineView.tsx` component architecture (client vs. server wrapper) is verified and `mission_logs_inventory.json` schema is read directly.
 
 ---
 

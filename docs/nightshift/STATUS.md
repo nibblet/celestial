@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-05-28 (Nightshift Run 43)
+> Last updated: 2026-05-29 (Nightshift Run 44)
 
 ## App Summary
 
@@ -191,6 +191,7 @@
 - **Build:** PASSES — clean, ~106 routes. 1 Turbopack warning on `next.config.ts`. (Requires `npm install` before `npx next build` in a fresh clone.) Verified Run 36 (`npx next build` in fresh sandbox). No new code commits since Run 29 — codebase unchanged.
 - **Lint:** PASSES — 0 errors, **4 warnings** (`<img>` tags in visuals components — `VisualsAdminConsole.tsx` lines 230/394, `EntityVisualsGallery.tsx` lines 64/118). Verified Run 36. Unchanged since Run 17.
 - **Tests:** **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17). All green. Verified Run 36. No new code commits since Run 29 — codebase unchanged.
+- **Run 44 note:** No code commits since Run 43. Build/lint/test status confirmed unchanged. No new build execution performed (codebase unchanged). FIX-047 confirmed: 12 files still use stale `claude-sonnet-4-20250514` (grep re-verified). `requireKeith()` in 5 visuals routes confirmed via grep.
 - **Run 43 note:** No code commits since Run 42. Build/lint/test status confirmed unchanged. No new build execution performed (codebase unchanged). FIX-047 confirmed: 12 files still use stale `claude-sonnet-4-20250514` (grep re-verified). `requireKeith()` in 5 visuals routes confirmed via grep.
 - **Run 42 note:** No code commits since Run 41. Build/lint/test status confirmed unchanged. No new build execution performed (codebase unchanged).
 - **Run 41 note:** No code commits since Run 40. Build/lint/test status confirmed unchanged. No new build execution performed (codebase unchanged).
@@ -222,7 +223,8 @@
 
 ## Next Actions (Priority Order)
 
-1. **IDEA-048 (15 min):** Add Ask CTA near top of story page (after summary, before scene navigation) — 6 lines JSX in `stories/[storyId]/page.tsx` between lines 166–168. Dev plan `DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` ready.
+1. **IDEA-120 (20 min):** Ask Mood Responder — 3 tone-intent chips ("Factual", "Speculative", "Emotional") appending a register modifier to the next Ask message's system prompt. 4-file change. Dev plan `DEVPLAN-IDEA-120-ask-mood-responder.md` **NEW**.
+2. **IDEA-048 (15 min):** Add Ask CTA near top of story page (after summary, before scene navigation) — 6 lines JSX in `stories/[storyId]/page.tsx` between lines 166–168. Dev plan `DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` ready.
 2. **IDEA-111 (30 min):** Ask Scene Jump — "↗ Jump to scene" link row below Ask answer bubbles when `linksInAnswer` contains `/stories/` hrefs. 1-file change (`ask/page.tsx`), ~15 lines JSX. Dev plan `DEVPLAN-IDEA-111-ask-scene-jump.md` ready *(promoted to ready Run 42)*.
 3. **IDEA-105 (30 min):** Ask Brief Mode Toggle — 4-file change to add a localStorage-persisted "Brief / Full" response-length toggle; mirrors existing Deep/Fast askMode pattern exactly. Dev plan `DEVPLAN-IDEA-105-ask-brief-mode-toggle.md` ready *(promoted to ready Run 42)*.
 3. **IDEA-102 (45 min):** Ask Empty State Chapter Grid — 17-chapter tile grid in Ask page when no story context set; clicking a tile routes to `/ask?story=CH01`; 1-file change (`ask/page.tsx`). Dev plan `DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md` ready *(promoted to ready Run 42)*.
