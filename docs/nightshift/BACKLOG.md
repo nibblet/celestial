@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-29 (Run 44)
+> Last updated: 2026-05-30 (Run 45)
 
 ## Maturity Levels
 
@@ -373,16 +373,17 @@
 ---
 
 ### [IDEA-114] Ask Pre-Send Context Chips — Personalized Prefill Chips from Reader's Own Highlights
-- **Status:** exploring
+- **Status:** parked
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-26
-- **Last Updated:** 2026-05-27
+- **Last Updated:** 2026-05-30
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** When the Ask page has `?story=` context AND the authenticated reader has saved highlights in that chapter (from `cel_story_highlights`), a horizontal scrollable chip strip appears between the Live Context Band (IDEA-096) and the input field showing 2–3 question chips derived from the reader's own highlighted passages ("Ask about this passage →", "Who is involved here →"). Clicking pre-fills the input text without submitting. Distinct from IDEA-042 (follow-up chips after answers) and IDEA-057 (chapter-tag-based chips on arrival) — this is personalized from the reader's own engagement history.
 - **Night Notes:**
   - 2026-05-26 (Run 41): Seeded. `cel_story_highlights` stores `user_id`, `story_id`, `passage_text`. Implementation: (1) In `ask/page.tsx`, when `contextStoryId` is set and user is authenticated, issue one Supabase client-side query after mount: `SELECT passage_text FROM cel_story_highlights WHERE user_id = $user AND story_id = $storyId ORDER BY created_at DESC LIMIT 3`; (2) Truncate each passage to 80 chars; (3) Render a `<div className="flex overflow-x-auto gap-2 pb-2">` chip strip with each passage as `<button onClick={() => setInputText(passage)}>`; (4) Chips visible only if ≥1 highlight exists for this chapter — strip is hidden if the query returns empty. For guests (no auth), the chip strip does not render. For authenticated readers with no highlights in this chapter, the strip is hidden. Implementation: ~20 lines in `ask/page.tsx` + 1 useEffect + 1 state variable. Zero new API routes (direct client Supabase query). No npm. Spoiler-safe: passages are the reader's own highlights from already-read content. Synergistic with IDEA-096 (Live Context Band) — both occupy the area above the input; they can stack vertically. Estimated 45 minutes.
   - 2026-05-27 (Run 42): **Advanced to `exploring`.** Feasibility confirmed: `cel_story_highlights` schema verified in STATUS.md (`user_id`, `story_id`, `passage_text`, `created_at`). Supabase client-side query is the right approach — no new server endpoint needed. Key edge case: passages truncated to 80 chars for chip display but full text sent as `inputText` on click. One design concern: truncated passage text may confuse readers out of context; add an ellipsis (`…`) suffix and an "Ask about this →" label prefix on the chip. Estimated 45 minutes. Advance to `planned` when IDEA-096 (Live Context Band) ships, since both live in the same pre-input area of `ask/page.tsx`.
+  - 2026-05-30 (Run 45): Stale 3 days — likely low priority or too complex. Demoting to parked. Blocked on IDEA-096 shipping first before the pre-input area is settled. Un-park when IDEA-096 lands and the pre-input zone is finalized.
 
 ---
 
@@ -401,15 +402,29 @@
 ---
 
 ### [IDEA-123] Ask Conversation Exporter — Client-Side Markdown Download of Current Session
-- **Status:** seed
+- **Status:** planned
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-29
-- **Last Updated:** 2026-05-29
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
+- **Last Updated:** 2026-05-30
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-123-ask-conversation-exporter.md`
 - **Summary:** A small "Export ↓" button at the bottom of any Ask session with 3+ messages that generates a Markdown document of the conversation (Q&A formatted with headings) and triggers a browser download — no API, no DB, no npm. Makes the companion feel like a personal research tool that outputs durable artifacts.
 - **Night Notes:**
   - 2026-05-29 (Run 44): Seeded. Readers who use Ask as a research tool for the universe want to keep a record of what they learned. A client-side export: (1) Appears as a small `<button>` at the bottom of the message thread after 3+ messages exist; (2) On click: maps `messages.filter(m => m.role !== 'system')` into a Markdown string — user messages as `**Q:** {text}`, assistant messages as `**A:** {text}`, separated by `---`; adds a header `# Celestial Archive — Ask Session\n\n> Chapter: {contextStoryTitle}\n> Date: {new Date().toLocaleDateString()}\n\n`; (3) Creates a `Blob` with `type: 'text/markdown'`, a temporary `<a>` with `href=URL.createObjectURL(blob)` and `download='celestial-session.md'`, clicks it programmatically, then revokes the URL. All client-side. Zero API, zero DB, zero npm, zero server changes. ~15 lines of JS in `ask/page.tsx`. Estimated 15 minutes. Auth-agnostic — works for guests and authenticated readers. Distinct from IDEA-066 (cross-session resume, uses localStorage) and IDEA-075 (pinned Q&A, uses DB) — this is ephemeral, stateless, and output-focused.
+  - 2026-05-30 (Run 45): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-123-ask-conversation-exporter.md`. Implementation confirmed: `handleExport` callback using `useCallback` (already imported), `Blob` + `URL.createObjectURL` download pattern, conditional button rendering below message thread when `≥ 3` non-system messages exist. System message exclusion via `messages.filter(m => m.role !== 'system')`. `contextStoryTitle` state var for header chapter line (null-safe). Priority raised to P2. Estimated 15 minutes. 1-file change: `ask/page.tsx`.
+
+---
+
+### [IDEA-126] Ask Input Keyboard History — Up/Down Arrow Key Question History in Session
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-30
+- **Last Updated:** 2026-05-30
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** Up/Down arrow keys in the Ask text input (`<textarea>`) cycle through the reader's previously submitted questions in the current session — common shell/browser-URL-bar behavior. Stored in a `useRef<string[]>` that accumulates messages on submit and is indexed with a history cursor ref. Pressing Up in an empty input pre-fills the most recent question for easy re-ask or slight variation. ~20 lines in `ask/page.tsx`. Zero API, zero DB, zero npm. Estimated 15 minutes.
+- **Night Notes:**
+  - 2026-05-30 (Run 45): Seeded. The Ask input is a `<textarea>` element in `ask/page.tsx`. Keyboard history: (1) On `handleSubmit`, push the submitted question text into `historyRef.current` (max 10 entries); (2) Add `onKeyDown` handler to the `<textarea>`: if `key === 'ArrowUp'` and cursor is at position 0 (or input is empty), decrement `historyCursorRef.current` and set input text to `historyRef.current[cursor]`; if `key === 'ArrowDown'`, increment cursor (empty string at end of history); (3) Reset cursor to end-of-history on each new submit. No state variables needed — `useRef` keeps the array and cursor without re-renders. The `onKeyDown` handler must call `e.preventDefault()` on Up/Down when history navigation fires to prevent textarea caret movement. Works for all users (guests, authenticated, re-reader). Distinct from IDEA-066 (cross-session resume — uses localStorage + Supabase) — this is in-session only, ephemeral.
 
 ---
 
@@ -734,16 +749,17 @@
 ---
 
 ### [IDEA-115] Entity Portrait Reveal in Ask — Inline Character Avatar from Approved Assets
-- **Status:** exploring
+- **Status:** parked
 - **Theme:** genmedia
 - **Seeded:** 2026-05-26
-- **Last Updated:** 2026-05-27
+- **Last Updated:** 2026-05-30
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** After the Ask companion streams a response, character entities identified in `linksInAnswer` that have an approved portrait in `cel_visual_assets` get a small circular avatar (36×36px) appended inline next to their entity link in the `AskSourcesDisclosure` panel. Zero generation cost — uses only pre-approved author assets. One batched Supabase query after stream completion for all character slugs in `linksInAnswer`. Prerequisite: IDEA-052 (canonical character portraits) must populate `cel_visual_assets` first.
 - **Night Notes:**
   - 2026-05-26 (Run 41): Seeded. Distinct from IDEA-070 (inline thumbnail inside markdown answer text — parked) and IDEA-088 (inline thumbnail inside answer prose — parked). This targets `AskSourcesDisclosure` specifically — the citations panel already renders `linksInAnswer` as a list. Adding a small circular `<img>` next to each character link in the disclosure is less intrusive than injecting into the prose itself. (1) Model/provider: N/A — no generation. (2) Cost per generation: $0 — pre-approved author assets only. (3) Caching: assets are in Supabase Storage with public URLs; component-state cache for session. (4) Spoiler gating of prompt inputs: N/A — no AI generation. Entity portraits are decorative world-building visuals. (5) Canon grounding: thumbnails from `cel_visual_assets` with `approved=true` — exclusively author-curated canonical renders. Implementation: after `done` SSE event, extract character slugs from `linksInAnswer` (those with `/characters/` hrefs), batch-fetch approved asset URLs via one Supabase query (`SELECT target, asset_url FROM cel_visual_assets WHERE approved = true AND target = ANY($slugs) LIMIT $n`), store in a `Map<string, string>` state. In `AskSourcesDisclosure`, for each link whose href starts with `/characters/`, if the map has an entry, render `<img src={map.get(slug)} className="inline-block w-9 h-9 rounded-full mr-2 object-cover" />` before the link text. Graceful fallback: if no approved asset exists, link renders exactly as today. Zero new API routes. Estimated 1.5 hours (Supabase client query + state + conditional render in AskSourcesDisclosure). Prerequisite: IDEA-052 must ship first to populate approved character assets.
   - 2026-05-27 (Run 42): **Advanced to `exploring`.** Feasibility confirmed: `AskSourcesDisclosure` is a standalone component or inline block in `ask/page.tsx` (confirmed from prior reads of the Ask page). The Supabase client query is `@supabase/auth-helpers-nextjs` — same pattern used elsewhere in the client-side Ask page. Key implementation decision: whether the avatar render belongs inside `AskSourcesDisclosure`'s render block or is passed as a prop map. Prop map preferred (cleaner separation). Advance to `planned` when IDEA-052 ships and at least one approved character portrait exists to test against.
+  - 2026-05-30 (Run 45): Stale 3 days — likely low priority or too complex. Demoting to parked. Hard blocked by IDEA-052 (canonical character portraits) prerequisite — no approved character assets to display yet. Un-park after IDEA-052 ships and the portrait batch is approved.
 
 ---
 
@@ -785,6 +801,19 @@
 - **Summary:** After IDEA-043 (on-demand scene visualization) ships, the Ask page accumulates any generated images in client state during a session. A small "Gallery" tab or slide-out in the Ask toolbar reveals a compact grid of all images generated in the current session — each with the question that triggered it as a caption. Zero new storage (images already in `cel_visual_assets`), zero new API routes. Pure client-side state accumulation. Estimated 30 minutes once IDEA-043 is live.
 - **Night Notes:**
   - 2026-05-29 (Run 44): Seeded. When IDEA-043 ships, the Ask page will receive inline image URLs in the `done` SSE event or as a special message type. A `sessionImages: {imageUrl: string, question: string}[]` state array accumulates these during the session. A small tab button (e.g., a grid icon `⊞`) in the Ask input bar opens a slide-in panel or a `<details>` accordion showing a 3-column image grid. Each image displays with a truncated question caption below it. Clicking an image opens it full-screen or links to the entity wiki page from which it was derived. Gallery is ephemeral — it resets when the page is reloaded (no persistence, no DB). No generation cost (images already generated during the session). (1) Model/provider: N/A — no new generation. (2) Cost per generation: $0 for the gallery itself. (3) Caching: session-scoped React state only; images are already persisted in `cel_visual_assets`. (4) Spoiler gating of prompt inputs: N/A — no new generation; images already generated under IDEA-043's gating rules. (5) Canon grounding: N/A — gallery displays images generated during the session. Prerequisite: IDEA-043 must ship first to produce images during Ask sessions. Estimated: 30 minutes (state array + grid render + tab UI in `ask/page.tsx`).
+
+---
+
+### [IDEA-127] Runway Valkyrie Exterior Cinematic — Ship Reveal Ambient Clip on Wiki Page
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-30
+- **Last Updated:** 2026-05-30
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** Author pre-generates a single 4-second Runway Gen-4 cinematic clip of Valkyrie-1 exterior in deep space — bio-crystalline hull, petal apertures, soft subdermal vein emission in WORLD A `alien_organic` vocabulary. No characters, no narrative events: pure ship exterior ambient video. Played as `<video autoplay loop muted playsInline>` on the `/artifacts/valkyrie-1` wiki page (the custom page from IDEA-106). One generation, ~$0.30 total. Stored in `cel_visual_assets`. Code: ~10 new lines in IDEA-106's custom page.
+- **Night Notes:**
+  - 2026-05-30 (Run 45): Seeded. The custom `/artifacts/valkyrie-1/page.tsx` from IDEA-106 is the natural host for this clip. Runway Gen-4 via `providers/runway.ts` is already operational in the admin console. (1) Model/provider: Runway Gen-4. (2) Cost: one clip × ~$0.15–$0.30 = $0.30 max; author-batch, one-time. (3) Caching: stored in `cel_visual_assets` with `source='valkyrie_cinematic'`, `target='valkyrie-1'`, `style='exterior_ambient'`; retrieved via `/api/visuals/preferred?target=valkyrie-1&style=exterior_ambient`; public URL, shared. (4) Spoiler gating of prompt inputs: ship exterior appearance is world-building vocabulary — no character names, no narrative events. WORLD A spec vocabulary from `content/wiki/specs/valkyrie-1/master.json`. All content visible under companion-first. (5) Canon grounding: `content/wiki/specs/valkyrie-1/master.json` WORLD A vocabulary (bio-crystalline, petal apertures, subdermal vein emission, phosphorescent glyph lines). Prompt: "Valkyrie-1 exterior, deep space, alien organic hull, bio-crystalline structures, petal apertures closed, subdermal vein emission blue-green, no figures, seamless ambient loop, WORLD A vocabulary." Code change: in IDEA-106's custom page, after the state header `<Image>`, add a conditional `<video>` block that fetches `/api/visuals/preferred?target=valkyrie-1&style=exterior_ambient` at render time (fail-open if no asset). Prerequisite: FIX-048 (move images to Supabase) + IDEA-106 (custom Valkyrie-1 page) must ship first. Estimated: 10 minutes author time in admin console + 15 minutes code.
 
 ---
 
@@ -1134,29 +1163,46 @@
 ---
 
 ### [IDEA-125] Completion Stamp on Profile — "Mission Complete" Seal for Finished Readers
-- **Status:** seed
+- **Status:** planned
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-29
-- **Last Updated:** 2026-05-29
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
+- **Last Updated:** 2026-05-30
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-125-completion-stamp.md`
 - **Summary:** For `show_all_content=true` readers, the `/profile` page header gains a typographic CSS stamp reading "MISSION COMPLETE · DIRECTIVE-14 · VALKYRIE-1" — styled as a tilted ink-stamp seal using pure Tailwind CSS (no image). A small, satisfying completion signal that acknowledges the reader finished the book. Zero AI, zero DB, zero npm. ~5 lines of JSX + Tailwind. Estimated 10 minutes.
 - **Night Notes:**
   - 2026-05-29 (Run 44): Seeded. The profile page (`/profile/page.tsx`) currently shows the reader's name, stats, and navigation links. For completed readers (those the author has granted `show_all_content=true`), a visual acknowledgment is absent — the profile looks identical to a mid-journey reader's. A completion stamp is the minimum viable celebration signal: (1) In `/profile/page.tsx`, check `readerProgress.showAllContent === true`; if true, render a small stamp `<div>` in the page header area: `<div className="inline-block rotate-[-8deg] border-4 border-[var(--color-ocean)] rounded-sm px-3 py-1 text-xs font-mono tracking-widest text-[var(--color-ocean)] opacity-70 select-none">MISSION COMPLETE · DIRECTIVE-14 · VALKYRIE-1</div>`; (2) Post-read-world requirements: (a) Stamp only renders when `show_all_content === true` — server-side check (profile page already fetches `readerProgress`); (b) `show_all_content` integration: direct dependency; (c) Partial-completion edge cases: `show_all_content` is the sole gate. Zero new DB tables, zero new content, zero npm packages. Estimated 10 minutes: 1-file change (`/profile/page.tsx`), ~5 lines of JSX. Synergistic with IDEA-089 (Completion Ceremony, parked) — this stamp could also appear on the ceremony page. The CSS stamp is purely presentational: no animation, no interaction, no state.
+  - 2026-05-30 (Run 45): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-125-completion-stamp.md`. Implementation confirmed: `/profile/page.tsx` is a server component that already calls `getReaderProgress()`. The stamp JSX block is 5 lines; `progress?.showAllContent` is the conditional. `rotate-[-8deg]` Tailwind class supported in Tailwind 4. `pointer-events-none select-none` makes it fully decorative. Priority raised to P2. Estimated 10 minutes. 1-file change: `/profile/page.tsx`.
 
 ---
 
 ### [IDEA-122] Mission Day Coverage Chart — Pacing Visualization on `/stories/timeline` for Completed Readers
-- **Status:** exploring
+- **Status:** planned
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-28
-- **Last Updated:** 2026-05-29
+- **Last Updated:** 2026-05-30
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-122-mission-day-coverage-chart.md`
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** For `show_all_content=true` readers, a compact horizontal bar chart at the top of `/stories/timeline` showing how many chapters map to each Mission Day (from `mission_logs_inventory.json`). The chart reveals the story's temporal compression — some Mission Days span multiple chapters, others are covered in one. A structural post-read revelation: the reader sees the book's pacing architecture at a glance. Zero AI, zero DB, zero new content. Pure CSS bar chart, 1-file change.
 - **Night Notes:**
   - 2026-05-28 (Run 43): Seeded. The existing `/stories/timeline` page (`TimelineView.tsx`) shows chapters in order but does not surface the Mission Day dimension. `content/raw/mission_logs_inventory.json` maps chapter slugs to Mission Day numbers (used by `getMissionTimelineContext()` in `prompts.ts`). A bar chart: x-axis = Mission Day numbers, y-axis = number of chapters per day. Bars colored by `--color-ocean`. Each bar is clickable → filters the timeline to show only those chapters. Post-read-world requirements: (1) Chart renders only when `show_all_content === true` at server level — the rest of the timeline page remains visible to all users; only the chart section is gated (unlike `/world/*` pages which redirect entirely, this adds a section to an existing page that all users can see). (2) `show_all_content` integration: page already fetches `readerProgress` (needed to show completed chapters); add a conditional `{readerProgress.showAllContent && <MissionDayCoverageChart ... />}` block. (3) Partial-completion edge cases: `showAllContent` is the sole gate — server-side check already present on the timeline page. Zero new DB tables, zero new content files, zero npm packages. Estimated 1 hour: parse `mission_logs_inventory.json` → group by Mission Day → render bar chart component. No spoiler risk: Mission Day numbers are structural metadata, not narrative text.
   - 2026-05-29 (Run 44): **Advanced to `exploring`.** Feasibility confirmed: `content/raw/mission_logs_inventory.json` exists (confirmed in STATUS.md — used by `getMissionTimelineContext()`). The `/stories/timeline` route renders `TimelineView.tsx`; whether the server component or the client component reads `readerProgress.showAllContent` needs verification — the timeline page may be a client component (since it has interactive chapter ordering state). If `TimelineView.tsx` is a `'use client'` component, the chart section can be driven by a `showAllContent` boolean prop passed from the server page wrapper. Pure CSS bar chart: each bar is a `<div style={{ width: `${(count/maxCount)*100}%` }}>` inside a fixed-height container — no chart library needed. The clickable bar filter would need `useState(activeMissionDay)` and a filter on the chapter list. Advance to `planned` once the `TimelineView.tsx` component architecture (client vs. server wrapper) is verified and `mission_logs_inventory.json` schema is read directly.
+  - 2026-05-30 (Run 45): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-122-mission-day-coverage-chart.md`. Architecture confirmed: `TimelineView.tsx` is a server component (no `'use client'` — verified directly). `StoriesTimelinePage` is a simple synchronous wrapper; converting it to `async` to call `getReaderProgress()` is safe. New `MissionDayCoverageChart.tsx` server component handles all data read + render independently — clean separation, no changes to `TimelineView.tsx`. Mission log data confirmed: 69 log entries, 21 unique mission days, non-linear chapter ordering (CH02 spans days 38+43, CH08 spans days 44+113 etc.). Bar chart reveals the story's temporal architecture. Zero new deps. 2-file change, 1 hour. Priority raised to P2.
+
+---
+
+### [IDEA-128] World Faction Relations Matrix — Static Diplomatic Status Table for Completed Readers
+- **Status:** seed
+- **Theme:** post-read-world
+- **Seeded:** 2026-05-30
+- **Last Updated:** 2026-05-30
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** For `show_all_content=true` readers, a new `/world/factions` page (or an accordion on the existing `/factions` page) presenting a static faction-to-faction diplomatic relations matrix as of CH17 — authored by Paul as a `FACTION_RELATIONS` constant in the page component. Each cell shows the relationship type (allied, contested, dissolved, absorbed, unknown) between two named factions at book's end. Zero AI, zero DB, pure static authored data. A structural post-read lens that shows the political landscape Paul constructed. ~1 hour code + Paul writes the 6×6 (or N×N) relation matrix.
+- **Night Notes:**
+  - 2026-05-30 (Run 45): Seeded. The key factions in `content/wiki/factions/` include (at minimum): Rigel Protocol, MARU Command, Vault Accord, and others named in the chapters. A matrix where rows = factions and columns = factions (or powers), with cells showing CH17 disposition, would give completed readers the diplomatic "final state" of the story world. Implementation: (1) Paul authors the `FACTION_RELATIONS` constant (a Record<string, Record<string, 'allied' | 'contested' | 'dissolved' | 'absorbed' | 'unknown'>>) in the new page file — 15 minutes of author decision-making; (2) New `/world/factions/page.tsx` server component gated by `show_all_content === true` (redirect to `/profile` if false); renders the matrix as an HTML `<table>` with Tailwind styling — cells colored by relationship type (e.g., `bg-[var(--color-ocean)]/20` for allied, `bg-red-900/20` for contested, `bg-[var(--color-text-muted)]/10` for dissolved); (3) Post-read-world requirements: (a) Page gated entirely — redirect if `showAllContent` false; (b) `show_all_content` integration: direct server-side check; (c) Partial-completion: flag is sole gate. Zero new DB, zero npm, zero AI. Synergistic with IDEA-119 (Faction Final Status Board on `/factions` index — this is a companion dedicated page, not just an accordion). Estimated 1 hour code + 15 min Paul authoring the relations data.
 
 ---
 

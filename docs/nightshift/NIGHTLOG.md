@@ -4,6 +4,64 @@
 
 ---
 
+## Run: 2026-05-30 (Run 45)
+
+### Summary
+- Scanned: 0 new code commits since Run 44 (last commit `4dd8ed1` — nightshift docs only). Codebase unchanged since Run 17.
+- Issues: 0 new, 0 resolved, 0 spoiler-leak P0. All 13 open planned issues confirmed unchanged (FIX-026, 027, 028, 029, 030, 045, 046, 047, 048, 049, 050, 051, 052). FIX-047 (12 stale model ID files) re-confirmed via grep. FIX-049 (requireKeith in 5 routes) re-confirmed via grep.
+- Ideas (by theme): ask-forward — 1 seed (IDEA-126 — Ask Input Keyboard History), IDEA-123 promoted to planned; genmedia — 1 seed (IDEA-127 — Runway Valkyrie Exterior Cinematic), IDEA-115 parked (stale 3 days); post-read-world — 1 seed (IDEA-128 — World Faction Relations Matrix), IDEA-122 promoted to planned, IDEA-125 promoted to planned, IDEA-114 parked (stale 3 days). Total promoted: 3 (IDEA-122, IDEA-123, IDEA-125 → planned). Parked: 2 (IDEA-114, IDEA-115 — stale 3 days).
+- Plans written: `DEVPLAN-IDEA-122-mission-day-coverage-chart.md`, `DEVPLAN-IDEA-123-ask-conversation-exporter.md`, `DEVPLAN-IDEA-125-completion-stamp.md`
+
+### Build & Lint & Test Results
+- No code commits since Run 44. Status confirmed unchanged from Run 36 verification.
+- Build: **PASSES** (last verified Run 36 — no new code to re-validate)
+- Lint: **PASSES** — 0 errors, 4 `<img>` tag warnings (unchanged since Run 17)
+- Tests: **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17)
+
+### Key Findings
+
+1. **No new code commits.** Codebase identical to Run 44. All 13 open planned issues remain. The three fastest cleanups are unchanged: FIX-050 (5 min), FIX-049 (10 min), FIX-047 (15 min) = 30 minutes of zero-risk legacy cleanup. The queue now has 17 ready-or-planned ideas — IDEA-125 (10 min) and IDEA-123 (15 min) are the two fastest new entries tonight.
+
+2. **Three ideas promoted to `planned` with dev plans written.** IDEA-123 (Ask Conversation Exporter, ask-forward): client-side Markdown download of current Ask session — `handleExport` callback + conditional button in `ask/page.tsx`, 15 min, 1-file, zero deps. IDEA-125 (Completion Stamp, post-read-world): CSS ink-stamp "MISSION COMPLETE · DIRECTIVE-14 · VALKYRIE-1" in the `/profile` header for `show_all_content` readers — 10 min, 1-file, ~5 lines JSX. IDEA-122 (Mission Day Coverage Chart, post-read-world): new `MissionDayCoverageChart.tsx` server component on `/stories/timeline` showing 21 mission days × chapter bar chart from `mission_logs_inventory.json` — reveals non-linear temporal architecture; 1 hour, 2 files.
+
+3. **IDEA-122 architecture fully confirmed.** `TimelineView.tsx` is a server component (no `'use client'` — verified directly). `StoriesTimelinePage` is a simple one-liner wrapper. `mission_logs_inventory.json` parsed: 69 log entries across 21 unique mission days; non-linear structure confirmed (CH02 appears at Mission Days 38 AND 43, CH08 at Days 44 AND 113). The bar chart reveals this compression in one visual. Clean 2-file change.
+
+4. **IDEA-114 and IDEA-115 parked (stale 3 days).** IDEA-114 (Ask Pre-Send Context Chips): exploring since Run 42, blocked on IDEA-096 shipping first. IDEA-115 (Entity Portrait Reveal in Ask): exploring since Run 42, hard-blocked by IDEA-052 (character portraits) prerequisite. Both parked per 3-day stale rule.
+
+5. **Three new ideas seeded.** IDEA-126 (ask-forward: Ask Input Keyboard History — Up/Down arrow key history cycling in Ask textarea, ~20 lines, 15 min, zero deps). IDEA-127 (genmedia: Runway Valkyrie Exterior Cinematic — single 4-second ambient exterior clip via Runway Gen-4, ~$0.30 author-batch, ~15 min code, prerequisite FIX-048 + IDEA-106). IDEA-128 (post-read-world: World Faction Relations Matrix — static CH17 diplomatic status matrix on `/world/factions`, `show_all_content` gated, author-authored `FACTION_RELATIONS` constant, ~1 hour code + 15 min Paul authoring).
+
+### Plans Ready to Execute
+
+**New tonight:**
+- `docs/nightshift/plans/DEVPLAN-IDEA-125-completion-stamp.md` — **NEW**: Completion Stamp on Profile — 10 min, 1-file, ~5 lines JSX (post-read-world). **Fastest ship in the entire queue.**
+- `docs/nightshift/plans/DEVPLAN-IDEA-123-ask-conversation-exporter.md` — **NEW**: Ask Conversation Exporter — 15 min, 1-file, client-side Markdown download (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-122-mission-day-coverage-chart.md` — **NEW**: Mission Day Coverage Chart — 1 hr, 2 files, `show_all_content` gated bar chart on timeline page (post-read-world).
+
+**Previously queued (full list):**
+- `docs/nightshift/plans/DEVPLAN-IDEA-120-ask-mood-responder.md` — Ask Mood Responder — 20 min, 4 files (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-113-arc-progression-heatmap.md` — Arc Progression Heatmap — 2 new files, 2 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-116-world-crew-manifest.md` — World Crew Manifest — 1 new file, 1.5 hr (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-111-ask-scene-jump.md` — Ask Scene Jump — 1-file, 30 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-105-ask-brief-mode-toggle.md` — Ask Brief Mode Toggle — 4-file, 30 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md` — Ask Empty State Chapter Grid — 1-file, 45 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-108-ask-reading-dwell-nudge.md` — Ask Reading Dwell Nudge — 2-file, 1 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-106-valkyrie-dynamic-state-header.md` — Valkyrie-1 Dynamic State Header — 2-file, 1.5 hr; FIX-048 prerequisite (genmedia).
+- `docs/nightshift/plans/DEVPLAN-IDEA-096-ask-live-context-band.md` — Ask Live Context Band Phase 1 — 1-file, 15 min (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-093-character-voice-mode.md` — Character Voice Mode — 4-file, 1.5 hr (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md` — Arc Endpoint Quotes Gallery — 2-file, 1.5 hr; `show_all_content` gated (post-read-world). **Unlocks `getArcEndpoints()` for IDEA-113, IDEA-116, IDEA-119.**
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — Ask CTA after chapter summary — 1-file, 15 min (ask-forward).
+- `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md` — Remove `/\bnext\b/i` from FUTURE_PATTERNS — 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md` — Rename `requireKeith()` to `requireAuthor()` — 10 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — Update 12 stale model IDs to `claude-sonnet-4-6` — 15 min.
+
+### Recommendations
+- **If you have 10 min:** IDEA-125 (Completion Stamp, 10 min) — the profile header gains a CSS ink stamp for completed readers. Single JSX block, zero risk. Fastest deliverable in the entire backlog.
+- **If you have 30 min:** IDEA-123 (Conversation Exporter, 15 min) + FIX-050 (5 min) + FIX-049 (10 min) = two ships + two legacy cleanups. Or IDEA-120 (Ask Mood Responder, 20 min) for a fresh ask-forward feature with direct reader-facing impact.
+- **If you have 1 hour:** IDEA-122 (Mission Day Coverage Chart, 1 hr) — the most structurally interesting post-read-world feature in the new queue; reveals how the novel's chapters map non-linearly onto mission days. Plus IDEA-125 in the same session (10 min).
+- **If you have 2 hours:** IDEA-095 (Arc Endpoint Quotes Gallery, 1.5 hr) + IDEA-125 (10 min) + IDEA-123 (15 min) = the highest-leverage post-read-world foundation (`getArcEndpoints()` shared by IDEA-113, IDEA-116, IDEA-119) plus two fast ask-forward wins.
+
+---
+
 ## Run: 2026-05-29 (Run 44)
 
 ### Summary
