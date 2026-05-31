@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-30 (Run 45)
+> Last updated: 2026-05-31 (Run 46)
 
 ## Maturity Levels
 
@@ -388,16 +388,17 @@
 ---
 
 ### [IDEA-117] Ask Input Entity Typeahead — Entity Name Autocomplete in the Ask Input
-- **Status:** exploring
+- **Status:** parked
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-27
-- **Last Updated:** 2026-05-28
+- **Last Updated:** 2026-05-31
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** When a reader types 3+ characters in the Ask input that match an entity name (characters, factions, locations) from `static-data.ts`, a small dropdown appears below the input field showing up to 3 matching entity names. Selecting a name inserts it at the cursor position. Helps readers get canonical entity names right without leaving the input flow.
 - **Night Notes:**
   - 2026-05-27 (Run 42): Seeded. Entity names in the companion (especially "Valkyrie-1", "Resonant Pad", "ALARA") are sometimes mis-typed by readers leading to grounding mismatches. A lightweight client-side typeahead prevents this. Implementation: (1) A compact entity name list (character names + faction names + location names) passed from the server-component wrapper as a prop via a JSON `<script>` block or a small server-side render — avoids importing full `static-data.ts` bundle on the client; (2) `useState(query)` + `useMemo` filter on each keystroke when length ≥ 3; (3) A `<ul>` dropdown absolutely positioned below the `<textarea>` with Tailwind `absolute top-full left-0 z-10 bg-[var(--color-sci-panel)]`; (4) Click or Enter selects and inserts name at cursor via `selectionStart`/`selectionEnd`; (5) Dismiss on Escape or blur. Zero API calls, zero DB, zero npm. ~40 lines JSX in `ask/page.tsx` + server prop injection. Distinct from IDEA-063 (hover cards on links in answers) and IDEA-069 (entity Ask CTAs). Estimated 1 hour.
   - 2026-05-28 (Run 43): **Advanced to `exploring`.** Feasibility confirmed: `ask/page.tsx` is a `'use client'` component that receives no server-side props — entity names must be injected via a thin server wrapper or a lightweight `/api/entity-names` GET route (returns name+slug for all characters/factions/locations, ~100 entries total, cacheable). The `<textarea>` for the Ask input is at `ask/page.tsx:595` (search field). The `selectionStart`/`selectionEnd` insertion pattern works on `<textarea>` in all modern browsers. Key concern: the typeahead dropdown must not conflict with the existing suggestion chips UI (IDEA-042, IDEA-114). Position it as `absolute` relative to the `<textarea>` wrapper div (add `relative` to the container). Advance to `planned` when IDEA-096 (Live Context Band) ships and the pre-input area is settled in its final form.
+  - 2026-05-31 (Run 46): Stale 3 days — likely low priority or too complex. Demoting to parked. Blocked on IDEA-096 (Live Context Band) shipping before the pre-input area is finalized. Un-park when the input zone is stable and entity name mis-typing is reported as a real user friction.
 
 ---
 
@@ -416,15 +417,16 @@
 ---
 
 ### [IDEA-126] Ask Input Keyboard History — Up/Down Arrow Key Question History in Session
-- **Status:** seed
+- **Status:** planned
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-30
-- **Last Updated:** 2026-05-30
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
-- **Summary:** Up/Down arrow keys in the Ask text input (`<textarea>`) cycle through the reader's previously submitted questions in the current session — common shell/browser-URL-bar behavior. Stored in a `useRef<string[]>` that accumulates messages on submit and is indexed with a history cursor ref. Pressing Up in an empty input pre-fills the most recent question for easy re-ask or slight variation. ~20 lines in `ask/page.tsx`. Zero API, zero DB, zero npm. Estimated 15 minutes.
+- **Last Updated:** 2026-05-31
+- **Priority:** P3
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-126-ask-input-keyboard-history.md`
+- **Summary:** Up/Down arrow keys in the Ask text input (`<textarea>`) cycle through the reader's previously submitted questions in the current session — common shell/browser-URL-bar behavior. Stored in a `useRef<string[]>` that accumulates messages on submit and is indexed with a history cursor ref. Pressing Up pre-fills the most recent question; pressing Down advances forward (or restores in-progress draft). Only intercepts when input has no newlines to preserve normal multi-line caret behavior. ~25 lines in `ask/page.tsx`. Zero API, zero DB, zero npm. Estimated 15 minutes.
 - **Night Notes:**
   - 2026-05-30 (Run 45): Seeded. The Ask input is a `<textarea>` element in `ask/page.tsx`. Keyboard history: (1) On `handleSubmit`, push the submitted question text into `historyRef.current` (max 10 entries); (2) Add `onKeyDown` handler to the `<textarea>`: if `key === 'ArrowUp'` and cursor is at position 0 (or input is empty), decrement `historyCursorRef.current` and set input text to `historyRef.current[cursor]`; if `key === 'ArrowDown'`, increment cursor (empty string at end of history); (3) Reset cursor to end-of-history on each new submit. No state variables needed — `useRef` keeps the array and cursor without re-renders. The `onKeyDown` handler must call `e.preventDefault()` on Up/Down when history navigation fires to prevent textarea caret movement. Works for all users (guests, authenticated, re-reader). Distinct from IDEA-066 (cross-session resume — uses localStorage + Supabase) — this is in-session only, ephemeral.
+  - 2026-05-31 (Run 46): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-126-ask-input-keyboard-history.md`. Implementation confirmed: 3 `useRef` declarations (history array, cursor, draft) + history push in `handleSubmit` + `handleInputKeyDown` callback + `onKeyDown` prop on the Ask textarea. Guard `!inputText.includes('\n')` ensures Up/Down only intercepts single-line input — multi-line caret navigation preserved. `historyDraftRef` saves in-progress text when entering history mode, restored on Down-to-end. 1-file change (`ask/page.tsx`). Priority set to P3 (polish, not blocking). Estimated 15 minutes.
 
 ---
 
@@ -439,6 +441,19 @@
 - **Night Notes:**
   - 2026-05-28 (Run 43): Seeded. Current Ask answers are uniformly in the archivist register — helpful but tonally flat. Some readers want sharp factual answers ("Who was ALARA's first interlocutor?") while others want the companion to lean into speculation ("What might ALARA's merge feel like?") or emotional resonance ("Why does Thane's arc hit so hard?"). The three chips give readers a one-tap way to tune the register without changing the underlying data. Implementation: (1) Add `toneIntent: "factual" | "speculative" | "emotional" | null` to `ask/page.tsx` React state, default null, cleared after each submission; (2) Render 3 small `<button>` chips in a row above or alongside the Submit button — styled as toggle pills, only one active at a time; (3) Include `toneIntent` in POST body to `/api/ask`; (4) In `perspectives.ts` `buildAskAnswererPrompt()`, if `toneIntent` is non-null, append a 1-line system-prompt modifier (no change to retrieval depth or content filtering). Distinct from IDEA-105 (Brief Mode Toggle — controls length, not register) and IDEA-093 (Character Voice Mode — controls persona, not tone). Spoiler: none — the chips affect register only, not content gating. Guest-compatible. 1 state var + chip UI + 1 param added to POST body + 3 lines in `perspectives.ts`. Estimated 20 minutes.
   - 2026-05-29 (Run 44): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-120-ask-mood-responder.md`. Implementation confirmed via codebase knowledge: 4-file change — `perspectives.ts` (type + tone block in `buildAskAnswererPrompt()`), `orchestrator.ts` (type + pass-through), `api/ask/route.ts` (destructure + validate), `ask/page.tsx` (state + chip row JSX + clear on submit + POST body). Follows same 4-file pattern as IDEA-105 (Brief Mode Toggle). Server validates `toneIntent` against an allowlist — no arbitrary injection. Priority raised to P2. Estimated 20 minutes.
+
+---
+
+### [IDEA-129] Ask Greeting Personalization — Time-of-Day and Returning Reader Welcome Variants
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-05-31
+- **Last Updated:** 2026-05-31
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** When the Ask page loads without `?story=` context and no prior messages exist, the generic welcome text adapts to: (1) time of day — "Good morning, archivist" / "Exploring the archive tonight?" / afternoon variant; (2) returning reader — if `localStorage` key `celestial_last_ask_date` matches today, show a "Back again?" variant instead of the standard greeting. All client-side `useEffect` using `new Date().getHours()` and `localStorage`. ~10 lines in `ask/page.tsx`. Zero API, zero DB. Complementary to IDEA-057 (which handles the story-context case) — this governs the no-story generic case only. Estimated 15 minutes.
+- **Night Notes:**
+  - 2026-05-31 (Run 46): Seeded. The current generic welcome is static ("What would you like to explore in the universe of Celestial?" or similar). A time-of-day greeting adds a sense of the companion being a persistent presence rather than a stateless tool. Implementation: (1) `const hour = new Date().getHours()` in a `useEffect` — `morning` (5–11), `afternoon` (12–17), `evening` (18–23), `night` (0–4); (2) Check `localStorage.getItem('celestial_last_ask_date')` — if matches `new Date().toDateString()`, flag as `returning`; on greeting display, write today's date string to that key; (3) 4×2 message variants (4 times × returning/new = 8 strings) as a constant object — swap the generic welcome `<p>` text with the selected variant. Affects only the no-story empty state that IDEA-057 doesn't touch. Compatible with IDEA-102 (Chapter Grid, no-story empty state) — the greeting sits above the chapter grid. Guest-compatible (no auth check). Re-reader compatible (same logic applies). 1-file change (`ask/page.tsx`). Distinct from IDEA-057 (story-context case), IDEA-102 (chapter discovery grid).
 
 ---
 
@@ -805,15 +820,29 @@
 ---
 
 ### [IDEA-127] Runway Valkyrie Exterior Cinematic — Ship Reveal Ambient Clip on Wiki Page
-- **Status:** seed
+- **Status:** planned
 - **Theme:** genmedia
 - **Seeded:** 2026-05-30
-- **Last Updated:** 2026-05-30
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
-- **Summary:** Author pre-generates a single 4-second Runway Gen-4 cinematic clip of Valkyrie-1 exterior in deep space — bio-crystalline hull, petal apertures, soft subdermal vein emission in WORLD A `alien_organic` vocabulary. No characters, no narrative events: pure ship exterior ambient video. Played as `<video autoplay loop muted playsInline>` on the `/artifacts/valkyrie-1` wiki page (the custom page from IDEA-106). One generation, ~$0.30 total. Stored in `cel_visual_assets`. Code: ~10 new lines in IDEA-106's custom page.
+- **Last Updated:** 2026-05-31
+- **Priority:** P3
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-127-runway-valkyrie-exterior-cinematic.md`
+- **Summary:** Author pre-generates a single 4-second Runway Gen-4 cinematic clip of Valkyrie-1 exterior in deep space — bio-crystalline hull, petal apertures, soft subdermal vein emission in WORLD A `alien_organic` vocabulary. No characters, no narrative events: pure ship exterior ambient video. Played as `<video autoplay loop muted playsInline>` on the `/artifacts/valkyrie-1` wiki page (the custom page from IDEA-106). One generation, ~$0.30 total. Stored in `cel_visual_assets`. Code: ~10 new lines in IDEA-106's custom page. Fail-open — no visual regression if clip not yet generated.
 - **Night Notes:**
   - 2026-05-30 (Run 45): Seeded. The custom `/artifacts/valkyrie-1/page.tsx` from IDEA-106 is the natural host for this clip. Runway Gen-4 via `providers/runway.ts` is already operational in the admin console. (1) Model/provider: Runway Gen-4. (2) Cost: one clip × ~$0.15–$0.30 = $0.30 max; author-batch, one-time. (3) Caching: stored in `cel_visual_assets` with `source='valkyrie_cinematic'`, `target='valkyrie-1'`, `style='exterior_ambient'`; retrieved via `/api/visuals/preferred?target=valkyrie-1&style=exterior_ambient`; public URL, shared. (4) Spoiler gating of prompt inputs: ship exterior appearance is world-building vocabulary — no character names, no narrative events. WORLD A spec vocabulary from `content/wiki/specs/valkyrie-1/master.json`. All content visible under companion-first. (5) Canon grounding: `content/wiki/specs/valkyrie-1/master.json` WORLD A vocabulary (bio-crystalline, petal apertures, subdermal vein emission, phosphorescent glyph lines). Prompt: "Valkyrie-1 exterior, deep space, alien organic hull, bio-crystalline structures, petal apertures closed, subdermal vein emission blue-green, no figures, seamless ambient loop, WORLD A vocabulary." Code change: in IDEA-106's custom page, after the state header `<Image>`, add a conditional `<video>` block that fetches `/api/visuals/preferred?target=valkyrie-1&style=exterior_ambient` at render time (fail-open if no asset). Prerequisite: FIX-048 (move images to Supabase) + IDEA-106 (custom Valkyrie-1 page) must ship first. Estimated: 10 minutes author time in admin console + 15 minutes code.
+  - 2026-05-31 (Run 46): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-127-runway-valkyrie-exterior-cinematic.md`. All 5 genmedia requirements confirmed: (1) Runway Gen-4; (2) ~$0.30 one-time; (3) shared canonical asset in `cel_visual_assets`; (4) no story events in prompt; (5) `content/wiki/specs/valkyrie-1/master.json` WORLD A vocabulary grounds prompt. Implementation: Phase 1 author-batch (15 min in admin console) + Phase 2 code (~15 min, `<video>` block in IDEA-106's custom page). Fail-open — page renders exactly as before if no clip approved. Priority P3.
+
+---
+
+### [IDEA-130] Character Emotion Portrait Series — 3-State Visual Arc per Main Crew Member
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-05-31
+- **Last Updated:** 2026-05-31
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** For each of the 9 main crew members, the author generates 3 canonical portrait variants via Imagen 4: (1) "Starting State" — CH01 appearance grounded in arc ledger "Starting State" text; (2) "Peak Tension" — mid-arc defining moment from the arc's Choice/Consequence column; (3) "State After" — CH17 outcome. When approved, these display as a 3-card horizontal scroll carousel on each character detail page. 9 × 3 = 27 images × ~$0.03–$0.04 = ~$0.81–$1.08 author-batch total. Builds on IDEA-052 (single portrait per character) as a narrative arc visualization. Canon-grounded in character spec JSONs + arc ledger state text.
+- **Night Notes:**
+  - 2026-05-31 (Run 46): Seeded. IDEA-052 (canonical character portraits) covers a single static portrait per crew member. This idea extends it to a 3-state arc — the portrait becomes a visual narrative arc rather than a static headshot. The 3 states map to arc ledger data already authored: "Starting State" (~CH01), a mid-arc inflection point (determined per character from the arc's Choice column for the highest-drama chapter), and "State After" (CH17). (1) Model/provider: Imagen 4 via `providers/imagen.ts` + character `master.json` spec (if seeded) + `content/wiki/arcs/characters/{slug}.md` state text as prompt grounding. Existing admin console supports this generation flow. (2) Cost: 27 images × ~$0.04/image = ~$1.08 total; author-batch only. (3) Caching: `cel_visual_assets` with `target={characterSlug}`, `style=state_{starting|tension|after}`; shared canonical assets; public URLs. One query per character fetches all 3 styles. (4) Spoiler gating of prompt inputs: "Starting State" text is spoiler-safe (CH01 state). "Peak Tension" and "State After" texts contain arc-endpoint spoilers — these prompts should be generated by the author, not exposed to reader-triggered generation. These assets are author-batch only; no reader can trigger generation. The gallery on character detail pages shows approved assets only — under companion-first, all readers can see the full arc. (5) Canon grounding: `content/wiki/arcs/characters/{slug}.md` state entries per character + existing character spec JSON (if seeded) for visual consistency across the 3-state sequence. Code: extend `EntityVisualsGallery.tsx` on character pages to detect and group `state_{starting|tension|after}` assets into a 3-card row if all 3 are approved; otherwise fall through to existing single-portrait display. Estimated: 2 hours code + ~2 hours author batch generation + approval. Prerequisite: IDEA-052 (author seeds 9 character spec JSONs) should complete before the first state portraits are generated, for visual consistency.
 
 ---
 
@@ -1194,29 +1223,44 @@
 ---
 
 ### [IDEA-128] World Faction Relations Matrix — Static Diplomatic Status Table for Completed Readers
-- **Status:** seed
+- **Status:** planned
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-30
-- **Last Updated:** 2026-05-30
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
-- **Summary:** For `show_all_content=true` readers, a new `/world/factions` page (or an accordion on the existing `/factions` page) presenting a static faction-to-faction diplomatic relations matrix as of CH17 — authored by Paul as a `FACTION_RELATIONS` constant in the page component. Each cell shows the relationship type (allied, contested, dissolved, absorbed, unknown) between two named factions at book's end. Zero AI, zero DB, pure static authored data. A structural post-read lens that shows the political landscape Paul constructed. ~1 hour code + Paul writes the 6×6 (or N×N) relation matrix.
+- **Last Updated:** 2026-05-31
+- **Priority:** P2
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-128-world-faction-relations-matrix.md`
+- **Summary:** For `show_all_content=true` readers, a new `/world/factions` server-component page presenting a static faction-to-faction diplomatic relations matrix as of CH17 — authored by Paul as a `FACTION_RELATIONS` constant. Each cell shows relationship type (allied, contested, dissolved, absorbed, unknown) with color-coded styling. Server-side redirect for non-completed readers. Zero AI, zero DB, zero npm. ~1 hour code + 15 min Paul authoring the matrix.
 - **Night Notes:**
   - 2026-05-30 (Run 45): Seeded. The key factions in `content/wiki/factions/` include (at minimum): Rigel Protocol, MARU Command, Vault Accord, and others named in the chapters. A matrix where rows = factions and columns = factions (or powers), with cells showing CH17 disposition, would give completed readers the diplomatic "final state" of the story world. Implementation: (1) Paul authors the `FACTION_RELATIONS` constant (a Record<string, Record<string, 'allied' | 'contested' | 'dissolved' | 'absorbed' | 'unknown'>>) in the new page file — 15 minutes of author decision-making; (2) New `/world/factions/page.tsx` server component gated by `show_all_content === true` (redirect to `/profile` if false); renders the matrix as an HTML `<table>` with Tailwind styling — cells colored by relationship type (e.g., `bg-[var(--color-ocean)]/20` for allied, `bg-red-900/20` for contested, `bg-[var(--color-text-muted)]/10` for dissolved); (3) Post-read-world requirements: (a) Page gated entirely — redirect if `showAllContent` false; (b) `show_all_content` integration: direct server-side check; (c) Partial-completion: flag is sole gate. Zero new DB, zero npm, zero AI. Synergistic with IDEA-119 (Faction Final Status Board on `/factions` index — this is a companion dedicated page, not just an accordion). Estimated 1 hour code + 15 min Paul authoring the relations data.
+  - 2026-05-31 (Run 46): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-128-world-faction-relations-matrix.md`. Implementation: 1 new file (`src/app/world/factions/page.tsx`, ~80 lines) + minor addition to `/factions` index (conditional nav link). Paul provides `FACTION_RELATIONS` data constant. Theme-specific post-read-world requirements confirmed: server-side redirect gate, `show_all_content` integration, partial-completion edge case handled by the same gate. Priority P2.
+
+---
+
+### [IDEA-131] Mission Final Debrief Page — Diegetic MARU Outcome Summary for Completed Readers
+- **Status:** seed
+- **Theme:** post-read-world
+- **Seeded:** 2026-05-31
+- **Last Updated:** 2026-05-31
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** A `/world/debrief` server-component page, `show_all_content`-gated, presenting a MARU classified-document aesthetic structured mission debrief: mission objectives → crew status → ALARA outcome → Directive-14 resolution → post-mission open questions. Author-written static content (~200 words) rendered with font-mono styling matching `/world/manifest` (IDEA-116). The reader's diegetic "mission wrap-up" artifact — a canonical endpoint document. ~45 min code + Paul writes the debrief text (~200 words). Zero AI generation at reader time, zero DB.
+- **Night Notes:**
+  - 2026-05-31 (Run 46): Seeded. Completed readers have access to IDEA-095 (Arc Endpoint Quotes Gallery — character voices) and IDEA-116 (Crew Manifest — roster document) and the planned IDEA-128 (Faction Relations Matrix). What's missing is a single synthetic mission-outcome summary — what actually happened on Directive-14 from a MARU operational perspective. This is the "debrief document" that would exist in-world after the mission concluded. Implementation: (1) New `src/app/world/debrief/page.tsx` server component — `show_all_content` gate (redirect to `/` if false); (2) Paul authors `DEBRIEF_SECTIONS` constant (or short markdown file) with structured sections: `[MISSION OBJECTIVES]`, `[CREW STATUS: END OF DIRECTIVE]`, `[ALARA STATUS]`, `[DIRECTIVE-14 OUTCOME]`, `[CLASSIFIED NOTES]`; (3) Page renders with MARU document aesthetic: `[CLASSIFICATION: LEVEL 5]` header bar (same as `/world/manifest` from IDEA-116), font-mono, muted earth tones, redaction-style `████` blocks for Paul's choice of withheld details (adds authenticity); (4) Add a link from `/world/manifest` (IDEA-116) to `/world/debrief` as a companion reference. Post-read-world requirements: (a) Server-side `show_all_content` gate — redirect to `/` if false; (b) `show_all_content` integration: direct server-side check consistent with IDEA-095/116/125/128; (c) Partial-completion: same `show_all_content` flag gate. Zero new DB, zero npm, zero AI generation. Estimated: 45 min code + Paul writes 200-word debrief text (20 min). Synergistic with IDEA-116 (Crew Manifest) and IDEA-095 (Arc Endpoint Quotes) — all three live under `/world/` and form a post-read "mission archive."
 
 ---
 
 ### [IDEA-119] Faction Final Status Board — CH17 Diplomatic Alignment Summary for Completed Readers
-- **Status:** exploring
+- **Status:** parked
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-27
-- **Last Updated:** 2026-05-28
+- **Last Updated:** 2026-05-31
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** For `show_all_content=true` readers, the `/factions` index page gains a collapsible "Faction Status at Book's End" accordion section showing each named faction's CH17 disposition (operational, fragmented, dissolved, allied) — derived from arc ledger "State After" references and faction wiki markdown. Turns the faction index from a static encyclopedia into a living post-read record of political outcomes.
 - **Night Notes:**
   - 2026-05-27 (Run 42): Seeded. `content/wiki/factions/*.md` files describe each faction's mission, membership, and affiliation. Arc ledger "State After" entries at CH17 (via `getArcEndpoints()` — IDEA-095 utility) contain free-text references to factions that appear in each character's final state (e.g., "defied Rigel Protocol directive", "Vault Accord dissolved"). Implementation: (1) A server utility `src/lib/wiki/faction-status.ts` — accepts the 9 `ArcEndpoint` objects from `getArcEndpoints()`; for each known faction slug/name, scans the combined CH17 "State After" texts for lexical mentions; returns `FactionStatus[]` = `{ slug, name, statusLabel, mentioningChars }`. `statusLabel` is inferred from phrase patterns (e.g., "dissolved" → dissolved; "active", "remains" → operational; "fragmented" → fragmented). The inference is lexical (simple keyword match), not semantic — results should be author-verified before deploying. (2) On `/factions/page.tsx`, when `readerProgress.showAllContent === true`, call the utility and render a `<details>` accordion labeled "Faction Status — End of Mission" above the faction card list. Each row: faction name badge + status label + which characters referenced it. (3) Post-read-world requirements: (a) Accordion not rendered when `showAllContent === false` — server check; (b) `show_all_content` integration: direct server-side flag; (c) Partial-completion: `show_all_content` is sole gate. Zero new DB, zero new content, zero npm. Prerequisite: IDEA-095 ships first to make `getArcEndpoints()` available. Estimated 1.5 hours. Synergistic with IDEA-095 (shares `getArcEndpoints()`) and IDEA-092 (Faction Alignment Reveal, parked — this is a simpler tabular precursor to that idea).
   - 2026-05-28 (Run 43): **Advanced to `exploring`.** Feasibility confirmed: `content/wiki/factions/` has faction markdown files with consistent naming. The lexical mention approach is verified workable — ALARA's CH17 "State After" text reads "Merged, distributed continuity participant" which does not mention factions directly; Galen's, Marco's, or Jonah's entries are more likely to reference Rigel Protocol / Directive 14 outcomes. Key risk: lexical faction-mention detection in arc free text may find few matches for some factions (arc ledger entries are concise). Mitigating approach: (1) Primary lookup: scan ALL 9 CH17 "State After" strings for faction slug and name variants; (2) Fallback: if zero matches, show the faction with a "Status: Undocumented in arc ledger" note rather than suppressing it. This guarantees all known factions appear in the accordion even if arc ledger data is sparse. Advance to `planned` after IDEA-095 ships (prerequisite: `getArcEndpoints()` utility must exist).
+  - 2026-05-31 (Run 46): Stale 3 days — likely low priority or too complex. Demoting to parked. The lexical faction-mention inference approach is fragile and the lexical utility (`faction-status.ts`) is blocked on IDEA-095 shipping first (`getArcEndpoints()`). IDEA-128 (World Faction Relations Matrix, now planned) covers the same post-read political-landscape need with Paul-authored data rather than inferred data — simpler and more accurate. Un-park when IDEA-095 ships if the lexical approach is still desired as a complement to IDEA-128's authored matrix.
 
 ---
 

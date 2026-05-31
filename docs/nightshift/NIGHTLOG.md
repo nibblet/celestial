@@ -4,6 +4,64 @@
 
 ---
 
+## Run: 2026-05-31 (Run 46)
+
+### Summary
+- Scanned: 0 new code commits since Run 45 (last commit `7dd73d4` — nightshift docs only). Codebase unchanged since Run 17.
+- Issues: 0 new, 0 resolved, 0 spoiler-leak P0. All 13 open planned issues confirmed unchanged (FIX-026, 027, 028, 029, 030, 045, 046, 047, 048, 049, 050, 051, 052). FIX-047 (12 stale model ID files) re-confirmed via grep. FIX-049 (requireKeith in 5 routes) re-confirmed via grep.
+- Ideas (by theme): ask-forward — 1 seed (IDEA-129 — Ask Greeting Personalization), IDEA-126 promoted to planned; genmedia — 1 seed (IDEA-130 — Character Emotion Portrait Series), IDEA-127 promoted to planned; post-read-world — 1 seed (IDEA-131 — Mission Final Debrief Page), IDEA-128 promoted to planned. Parked: 2 (IDEA-117, IDEA-119 — stale 3 days). Total promoted: 3 (IDEA-126, IDEA-127, IDEA-128 → planned). Seeds: 3. Parked: 2.
+- Plans written: `DEVPLAN-IDEA-126-ask-input-keyboard-history.md`, `DEVPLAN-IDEA-127-runway-valkyrie-exterior-cinematic.md`, `DEVPLAN-IDEA-128-world-faction-relations-matrix.md`
+
+### Build & Lint & Test Results
+- No code commits since Run 45. Status confirmed unchanged from Run 36 verification.
+- Build: **PASSES** (last verified Run 36 — no new code to re-validate)
+- Lint: **PASSES** — 0 errors, 4 `<img>` tag warnings (unchanged since Run 17)
+- Tests: **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17)
+
+### Key Findings
+
+1. **No new code commits.** Codebase identical to Run 45. All 13 open planned issues remain. The three fastest cleanups are still: FIX-050 (5 min), FIX-049 (10 min), FIX-047 (15 min) = 30 minutes of zero-risk legacy cleanup. The queue now has 18+ ready-or-planned ideas.
+
+2. **Three ideas promoted to `planned` with dev plans written.** IDEA-126 (Ask Input Keyboard History, ask-forward): Up/Down arrow key question cycling in Ask textarea — 3 refs + `handleInputKeyDown` + guard for single-line mode; 1-file change (`ask/page.tsx`), 15 min. IDEA-127 (Runway Valkyrie Exterior Cinematic, genmedia): ~$0.30 author-batch Runway Gen-4 exterior ambient clip + ~15 min code to add `<video>` to IDEA-106's custom Valkyrie-1 page; all 5 genmedia requirements confirmed. IDEA-128 (World Faction Relations Matrix, post-read-world): new `/world/factions` page with Paul-authored `FACTION_RELATIONS` constant + color-coded HTML table; server-side `show_all_content` gate; 1 new file + minor `/factions` nav addition; 1 hr code + 15 min Paul authoring.
+
+3. **IDEA-117 and IDEA-119 parked (stale 3 days).** IDEA-117 (Ask Input Entity Typeahead): exploring since Run 43, blocked on IDEA-096 shipping before the pre-input area is finalized. IDEA-119 (Faction Final Status Board): exploring since Run 43, blocked on IDEA-095 shipping for `getArcEndpoints()`; superseded by IDEA-128 (faction relations matrix via authored data, now planned — simpler and more accurate).
+
+4. **Three new ideas seeded.** IDEA-129 (ask-forward: Ask Greeting Personalization — time-of-day and returning-reader welcome variants, client-side `useEffect` + localStorage, ~10 lines, 15 min, zero deps). IDEA-130 (genmedia: Character Emotion Portrait Series — 3-state arc portraits per crew member via Imagen 4, 9×3=27 images ~$1.08 author-batch, `EntityVisualsGallery` 3-card carousel on character pages). IDEA-131 (post-read-world: Mission Final Debrief Page — MARU classified-document aesthetic `/world/debrief`, `show_all_content` gated, Paul authors 200-word debrief text, ~45 min code).
+
+5. **IDEA-128 supersedes IDEA-119 as the faction post-read-world entry point.** IDEA-128 uses Paul-authored `FACTION_RELATIONS` data (certain, authoritative) instead of IDEA-119's lexical arc-ledger inference (fragile, potentially sparse). Both are post-read-world gated. IDEA-119 parked — un-park after IDEA-095 ships if the inferred accordion on `/factions` is still desired alongside the dedicated matrix page.
+
+### Plans Ready to Execute
+
+**New tonight:**
+- `docs/nightshift/plans/DEVPLAN-IDEA-126-ask-input-keyboard-history.md` — **NEW**: Ask Input Keyboard History — 15 min, 1-file, Up/Down arrow key question cycling (ask-forward). Second-fastest ship in queue.
+- `docs/nightshift/plans/DEVPLAN-IDEA-127-runway-valkyrie-exterior-cinematic.md` — **NEW**: Runway Valkyrie Exterior Cinematic — 30 min total (15 min author batch + 15 min code); prereqs FIX-048 + IDEA-106 (genmedia).
+- `docs/nightshift/plans/DEVPLAN-IDEA-128-world-faction-relations-matrix.md` — **NEW**: World Faction Relations Matrix — 1 hr code + 15 min authoring; `show_all_content` gated, faction diplomatic matrix as of CH17 (post-read-world).
+
+**Previously queued (top items):**
+- `docs/nightshift/plans/DEVPLAN-IDEA-125-completion-stamp.md` — Completion Stamp — 10 min, 1-file (post-read-world). **Fastest ship in entire queue.**
+- `docs/nightshift/plans/DEVPLAN-IDEA-123-ask-conversation-exporter.md` — Ask Conversation Exporter — 15 min, 1-file (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-120-ask-mood-responder.md` — Ask Mood Responder — 20 min, 4 files (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — Ask CTA after chapter summary — 15 min, 1-file (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-111-ask-scene-jump.md` — Ask Scene Jump — 30 min, 1-file (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-096-ask-live-context-band.md` — Ask Live Context Band Phase 1 — 15 min, 1-file (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-105-ask-brief-mode-toggle.md` — Ask Brief Mode Toggle — 30 min, 4-file (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md` — Ask Empty State Chapter Grid — 45 min, 1-file (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-108-ask-reading-dwell-nudge.md` — Ask Reading Dwell Nudge — 1 hr, 2-file (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-122-mission-day-coverage-chart.md` — Mission Day Coverage Chart — 1 hr, 2-file (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md` — Arc Endpoint Quotes Gallery — 1.5 hr, 2-file (post-read-world). Unlocks `getArcEndpoints()`.
+- `docs/nightshift/plans/DEVPLAN-IDEA-093-character-voice-mode.md` — Character Voice Mode — 1.5 hr, 4-file (ask-forward).
+- `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md` — 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md` — 10 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — 15 min.
+
+### Recommendations
+- **If you have 10 min:** IDEA-125 (Completion Stamp, 10 min) — single JSX block, zero risk. Fastest deliverable in the entire backlog.
+- **If you have 30 min:** IDEA-126 (Ask Input Keyboard History, 15 min) + IDEA-123 (Conversation Exporter, 15 min) = two ask-forward quality-of-life ships in one session. Or FIX-050 (5 min) + FIX-049 (10 min) + FIX-047 (15 min) = 30 min of legacy cleanup.
+- **If you have 1 hour:** IDEA-128 (World Faction Relations Matrix, 1 hr code) — complete a new post-read-world landmark page revealing the story's political landscape. Pair with IDEA-125 (10 min) in the same session.
+- **If you have 2 hours:** IDEA-095 (Arc Endpoint Quotes Gallery, 1.5 hr) + IDEA-125 (10 min) + IDEA-126 (15 min) = the highest-leverage post-read-world foundation (`getArcEndpoints()` shared by IDEA-113, IDEA-116, IDEA-119 + others) plus two fast ask-forward wins.
+
+---
+
 ## Run: 2026-05-30 (Run 45)
 
 ### Summary
