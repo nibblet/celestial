@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-05-31 (Nightshift Run 46)
+> Last updated: 2026-06-01 (Nightshift Run 47)
 
 ## App Summary
 
@@ -191,6 +191,7 @@
 - **Build:** PASSES — clean, ~106 routes. 1 Turbopack warning on `next.config.ts`. (Requires `npm install` before `npx next build` in a fresh clone.) Verified Run 36 (`npx next build` in fresh sandbox). No new code commits since Run 29 — codebase unchanged.
 - **Lint:** PASSES — 0 errors, **4 warnings** (`<img>` tags in visuals components — `VisualsAdminConsole.tsx` lines 230/394, `EntityVisualsGallery.tsx` lines 64/118). Verified Run 36. Unchanged since Run 17.
 - **Tests:** **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17). All green. Verified Run 36. No new code commits since Run 29 — codebase unchanged.
+- **Run 47 note:** No code commits since Run 46. Build/lint/test status confirmed unchanged. No new build execution performed (codebase unchanged). FIX-047 confirmed: 12 files still use stale `claude-sonnet-4-20250514` (grep re-verified). `requireKeith()` in 5 visuals routes confirmed via grep (FIX-049). IDEA-121, IDEA-118, IDEA-124 parked (stale 3 days). IDEA-120 and IDEA-123 promoted to `ready`. IDEA-129 promoted to `planned` with dev plan written. IDEA-130 and IDEA-131 advanced to `exploring`. 3 new seeds: IDEA-132 (ask session summary card), IDEA-133 (crew constellation diagram), IDEA-134 (annotated re-reader mode).
 - **Run 46 note:** No code commits since Run 45. Build/lint/test status confirmed unchanged. No new build execution performed (codebase unchanged). FIX-047 confirmed: 12 files still use stale `claude-sonnet-4-20250514` (grep re-verified). `requireKeith()` in 5 visuals routes confirmed via grep (FIX-049). IDEA-117 and IDEA-119 parked (stale 3 days). IDEA-126 (ask-input keyboard history), IDEA-127 (Runway Valkyrie cinematic), IDEA-128 (world faction relations matrix) promoted to `planned` with dev plans. 3 new seeds: IDEA-129 (ask-forward), IDEA-130 (genmedia), IDEA-131 (post-read-world).
 - **Run 45 note:** No code commits since Run 44. Build/lint/test status confirmed unchanged. No new build execution performed (codebase unchanged). FIX-047 confirmed: 12 files still use stale `claude-sonnet-4-20250514` (grep re-verified). `requireKeith()` in 5 visuals routes confirmed via grep (FIX-049). IDEA-114 and IDEA-115 parked (stale 3 days). IDEA-122, IDEA-123, IDEA-125 promoted to `planned` with dev plans. 3 new seeds: IDEA-126 (ask-forward), IDEA-127 (genmedia), IDEA-128 (post-read-world).
 - **Run 44 note:** No code commits since Run 43. Build/lint/test status confirmed unchanged. No new build execution performed (codebase unchanged). FIX-047 confirmed: 12 files still use stale `claude-sonnet-4-20250514` (grep re-verified). `requireKeith()` in 5 visuals routes confirmed via grep.
@@ -226,9 +227,11 @@
 ## Next Actions (Priority Order)
 
 1. **IDEA-125 (10 min):** Completion Stamp on Profile — ~5 lines JSX in `/profile/page.tsx`. Dev plan `DEVPLAN-IDEA-125-completion-stamp.md`. Fastest ship in the queue.
-1. **IDEA-126 (15 min):** Ask Input Keyboard History — 3 refs + `handleInputKeyDown` + `onKeyDown` on textarea in `ask/page.tsx`. Dev plan `DEVPLAN-IDEA-126-ask-input-keyboard-history.md` **NEW**.
-1. **IDEA-123 (15 min):** Ask Conversation Exporter — `handleExport` callback + button in `ask/page.tsx`. Dev plan `DEVPLAN-IDEA-123-ask-conversation-exporter.md` **NEW**.
+1. **IDEA-126 (15 min):** Ask Input Keyboard History — 3 refs + `handleInputKeyDown` + `onKeyDown` on textarea in `ask/page.tsx`. Dev plan `DEVPLAN-IDEA-126-ask-input-keyboard-history.md`.
+1. **IDEA-123 (15 min):** Ask Conversation Exporter — `handleExport` callback + button in `ask/page.tsx`. Dev plan `DEVPLAN-IDEA-123-ask-conversation-exporter.md` *(promoted to ready Run 47)*.
+1. **IDEA-129 (15 min):** Ask Greeting Personalization — 1 state var + 1 `useEffect` + 1 text swap in empty-state block of `ask/page.tsx`. Dev plan `DEVPLAN-IDEA-129-ask-greeting-personalization.md` **NEW Run 47**.
 1. **IDEA-120 (20 min):** Ask Mood Responder — 3 tone-intent chips ("Factual", "Speculative", "Emotional") appending a register modifier to the next Ask message's system prompt. 4-file change. Dev plan `DEVPLAN-IDEA-120-ask-mood-responder.md`.
+1. **IDEA-120 (20 min):** Ask Mood Responder — 3 tone chips, 4-file change. Dev plan `DEVPLAN-IDEA-120-ask-mood-responder.md` *(promoted to ready Run 47)*.
 2. **IDEA-048 (15 min):** Add Ask CTA near top of story page (after summary, before scene navigation) — 6 lines JSX in `stories/[storyId]/page.tsx` between lines 166–168. Dev plan `DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` ready.
 2. **IDEA-111 (30 min):** Ask Scene Jump — "↗ Jump to scene" link row below Ask answer bubbles when `linksInAnswer` contains `/stories/` hrefs. 1-file change (`ask/page.tsx`), ~15 lines JSX. Dev plan `DEVPLAN-IDEA-111-ask-scene-jump.md` ready *(promoted to ready Run 42)*.
 3. **IDEA-105 (30 min):** Ask Brief Mode Toggle — 4-file change to add a localStorage-persisted "Brief / Full" response-length toggle; mirrors existing Deep/Fast askMode pattern exactly. Dev plan `DEVPLAN-IDEA-105-ask-brief-mode-toggle.md` ready *(promoted to ready Run 42)*.

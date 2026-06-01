@@ -2,7 +2,7 @@
 
 > Ideas backlog with maturity tracking. Three focused themes: **ask-forward**, **genmedia**, **post-read-world**.
 > **Context note:** This backlog was restructured on 2026-05-01 (Run 17) to adopt the three-theme format. All Category 1/Category 2 ideas that did not fit a theme are now parked.
-> Last updated: 2026-05-31 (Run 46)
+> Last updated: 2026-06-01 (Run 47)
 
 ## Maturity Levels
 
@@ -403,16 +403,17 @@
 ---
 
 ### [IDEA-123] Ask Conversation Exporter — Client-Side Markdown Download of Current Session
-- **Status:** planned
+- **Status:** ready
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-29
-- **Last Updated:** 2026-05-30
+- **Last Updated:** 2026-06-01
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-123-ask-conversation-exporter.md`
 - **Summary:** A small "Export ↓" button at the bottom of any Ask session with 3+ messages that generates a Markdown document of the conversation (Q&A formatted with headings) and triggers a browser download — no API, no DB, no npm. Makes the companion feel like a personal research tool that outputs durable artifacts.
 - **Night Notes:**
   - 2026-05-29 (Run 44): Seeded. Readers who use Ask as a research tool for the universe want to keep a record of what they learned. A client-side export: (1) Appears as a small `<button>` at the bottom of the message thread after 3+ messages exist; (2) On click: maps `messages.filter(m => m.role !== 'system')` into a Markdown string — user messages as `**Q:** {text}`, assistant messages as `**A:** {text}`, separated by `---`; adds a header `# Celestial Archive — Ask Session\n\n> Chapter: {contextStoryTitle}\n> Date: {new Date().toLocaleDateString()}\n\n`; (3) Creates a `Blob` with `type: 'text/markdown'`, a temporary `<a>` with `href=URL.createObjectURL(blob)` and `download='celestial-session.md'`, clicks it programmatically, then revokes the URL. All client-side. Zero API, zero DB, zero npm, zero server changes. ~15 lines of JS in `ask/page.tsx`. Estimated 15 minutes. Auth-agnostic — works for guests and authenticated readers. Distinct from IDEA-066 (cross-session resume, uses localStorage) and IDEA-075 (pinned Q&A, uses DB) — this is ephemeral, stateless, and output-focused.
   - 2026-05-30 (Run 45): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-123-ask-conversation-exporter.md`. Implementation confirmed: `handleExport` callback using `useCallback` (already imported), `Blob` + `URL.createObjectURL` download pattern, conditional button rendering below message thread when `≥ 3` non-system messages exist. System message exclusion via `messages.filter(m => m.role !== 'system')`. `contextStoryTitle` state var for header chapter line (null-safe). Priority raised to P2. Estimated 15 minutes. 1-file change: `ask/page.tsx`.
+  - 2026-06-01 (Run 47): **Promoted to `ready`.** Dev plan confirmed present and complete. No blockers. Fastest client-side utility in the queue — 15 min, 1 file.
 
 ---
 
@@ -431,29 +432,44 @@
 ---
 
 ### [IDEA-120] Ask Mood Responder — Tone Intent Chips for Answer Register
-- **Status:** planned
+- **Status:** ready
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-28
-- **Last Updated:** 2026-05-29
+- **Last Updated:** 2026-06-01
 - **Priority:** P2
 - **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-120-ask-mood-responder.md`
 - **Summary:** Three small tone-intent chips below the Ask input — "Factual 📚", "Speculative 🌌", "Emotional 🫀" — that adjust the companion's response register when selected. Selecting a chip appends a meta-instruction to the next message's system prompt: "Respond with focused factual precision" / "Speculate about what this might imply beyond what's documented" / "Explore the emotional resonance of this for the reader." The chip is cleared after each message (one-shot, not persistent). Zero new API routes, zero DB, zero npm.
 - **Night Notes:**
   - 2026-05-28 (Run 43): Seeded. Current Ask answers are uniformly in the archivist register — helpful but tonally flat. Some readers want sharp factual answers ("Who was ALARA's first interlocutor?") while others want the companion to lean into speculation ("What might ALARA's merge feel like?") or emotional resonance ("Why does Thane's arc hit so hard?"). The three chips give readers a one-tap way to tune the register without changing the underlying data. Implementation: (1) Add `toneIntent: "factual" | "speculative" | "emotional" | null` to `ask/page.tsx` React state, default null, cleared after each submission; (2) Render 3 small `<button>` chips in a row above or alongside the Submit button — styled as toggle pills, only one active at a time; (3) Include `toneIntent` in POST body to `/api/ask`; (4) In `perspectives.ts` `buildAskAnswererPrompt()`, if `toneIntent` is non-null, append a 1-line system-prompt modifier (no change to retrieval depth or content filtering). Distinct from IDEA-105 (Brief Mode Toggle — controls length, not register) and IDEA-093 (Character Voice Mode — controls persona, not tone). Spoiler: none — the chips affect register only, not content gating. Guest-compatible. 1 state var + chip UI + 1 param added to POST body + 3 lines in `perspectives.ts`. Estimated 20 minutes.
   - 2026-05-29 (Run 44): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-120-ask-mood-responder.md`. Implementation confirmed via codebase knowledge: 4-file change — `perspectives.ts` (type + tone block in `buildAskAnswererPrompt()`), `orchestrator.ts` (type + pass-through), `api/ask/route.ts` (destructure + validate), `ask/page.tsx` (state + chip row JSX + clear on submit + POST body). Follows same 4-file pattern as IDEA-105 (Brief Mode Toggle). Server validates `toneIntent` against an allowlist — no arbitrary injection. Priority raised to P2. Estimated 20 minutes.
+  - 2026-06-01 (Run 47): **Promoted to `ready`.** Dev plan confirmed present and complete: `DEVPLAN-IDEA-120-ask-mood-responder.md`. No new blockers. Ready to execute — 20 min, 4 files.
+
+---
+
+### [IDEA-132] Ask Session Summary Card — End-of-Session Digest After Long Conversations
+- **Status:** seed
+- **Theme:** ask-forward
+- **Seeded:** 2026-06-01
+- **Last Updated:** 2026-06-01
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** After an Ask session reaches 5+ messages and the reader pauses for 5 seconds (idle detection), a compact "Session Summary" card slides in below the last message. It shows: total messages, number of wiki entities cited (from `linksInAnswer` accumulation), and a 1-sentence synopsis generated by a single follow-up Claude Haiku call ("You explored ALARA's integration with Valkyrie-1 across CH04–CH07"). Gives readers a sense of what they learned without requiring them to scroll back. Zero new DB; Haiku call ~$0.001 per session; triggered lazily post-idle.
+- **Night Notes:**
+  - 2026-06-01 (Run 47): Seeded. The companion currently gives no session-level feedback — readers ask 8 questions and have no sense of the terrain they covered. A lazy session summary (fire 5s after no new messages) solves this without interrupting the flow. Implementation sketch: (1) `useRef<number>(0)` idle timer; on each new assistant message, clear + restart a 5s `setTimeout`; when it fires, if `messages.length >= 5`, trigger summary generation; (2) New `/api/ask/summary` POST route accepting `{ messages: MessagePair[] }` — calls `claude-haiku-4-5-20251001` with a 1-sentence instruction: "In one sentence, summarize what topics this archive conversation covered. Start with 'You explored…'"; returns `{ summary: string }`; (3) Client adds a special `{ role: 'summary', text: string, entityCount: number }` message entry to the thread state, rendered as a compact muted card below the last message (not styled as a chat bubble — visually distinct); (4) Entity count: count distinct hrefs starting with `/characters/`, `/factions/`, `/locations/` across all `msg.evidence.linksInAnswer` in the session. Rate limit: 1 summary per session (flag ref). Auth-agnostic. (5) Model/provider: `claude-haiku-4-5-20251001`. Cost: ~$0.001/summary. Spoiler: none — the summary is generated from question+answer text already shown to the reader. Canon grounding: N/A (summary is descriptive, not a new knowledge claim). Estimated: 30 minutes code + new `/api/ask/summary` route. Zero DB, zero new tables, zero npm.
 
 ---
 
 ### [IDEA-129] Ask Greeting Personalization — Time-of-Day and Returning Reader Welcome Variants
-- **Status:** seed
+- **Status:** planned
 - **Theme:** ask-forward
 - **Seeded:** 2026-05-31
-- **Last Updated:** 2026-05-31
-- **Priority:** unranked
-- **Plan:** *(not yet written)*
+- **Last Updated:** 2026-06-01
+- **Priority:** P3
+- **Plan:** `docs/nightshift/plans/DEVPLAN-IDEA-129-ask-greeting-personalization.md`
 - **Summary:** When the Ask page loads without `?story=` context and no prior messages exist, the generic welcome text adapts to: (1) time of day — "Good morning, archivist" / "Exploring the archive tonight?" / afternoon variant; (2) returning reader — if `localStorage` key `celestial_last_ask_date` matches today, show a "Back again?" variant instead of the standard greeting. All client-side `useEffect` using `new Date().getHours()` and `localStorage`. ~10 lines in `ask/page.tsx`. Zero API, zero DB. Complementary to IDEA-057 (which handles the story-context case) — this governs the no-story generic case only. Estimated 15 minutes.
 - **Night Notes:**
   - 2026-05-31 (Run 46): Seeded. The current generic welcome is static ("What would you like to explore in the universe of Celestial?" or similar). A time-of-day greeting adds a sense of the companion being a persistent presence rather than a stateless tool. Implementation: (1) `const hour = new Date().getHours()` in a `useEffect` — `morning` (5–11), `afternoon` (12–17), `evening` (18–23), `night` (0–4); (2) Check `localStorage.getItem('celestial_last_ask_date')` — if matches `new Date().toDateString()`, flag as `returning`; on greeting display, write today's date string to that key; (3) 4×2 message variants (4 times × returning/new = 8 strings) as a constant object — swap the generic welcome `<p>` text with the selected variant. Affects only the no-story empty state that IDEA-057 doesn't touch. Compatible with IDEA-102 (Chapter Grid, no-story empty state) — the greeting sits above the chapter grid. Guest-compatible (no auth check). Re-reader compatible (same logic applies). 1-file change (`ask/page.tsx`). Distinct from IDEA-057 (story-context case), IDEA-102 (chapter discovery grid).
+  - 2026-06-01 (Run 47): **Promoted to `planned`.** Dev plan written: `DEVPLAN-IDEA-129-ask-greeting-personalization.md`. Implementation fully specified: 1 state var (`greeting`) + 1 `useEffect` (mount-only, reads `Date().getHours()` + `localStorage` key `celestial_last_ask_date`) + 1 template-text substitution in empty-state render block. No hydration mismatch because initial state is the original fallback copy. Priority set to P3 (polish). Estimated 15 minutes. 1-file change: `ask/page.tsx`.
 
 ---
 
@@ -793,29 +809,31 @@
 ---
 
 ### [IDEA-121] Valkyrie Harmonic State Transition Clips — Ambient State-to-State Runway Animations
-- **Status:** exploring
+- **Status:** parked
 - **Theme:** genmedia
 - **Seeded:** 2026-05-28
-- **Last Updated:** 2026-05-29
+- **Last Updated:** 2026-06-01
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** Author pre-generates 4 short ambient transition clips (dormant→wake, wake→active, active→alignment, alignment→harmonic_jump) using Runway Gen-4 — each 2–3 seconds, seamless, no characters, environment-only visual showing the ship's ambient vibe shifting between states. Stored in Supabase Storage; surfaced on the Valkyrie-1 wiki page (`/artifacts/valkyrie-1`) as a subtle "state transition gallery" accordion. Total cost ~$0.15/clip × 4 = ~$0.60. Author-batch only; zero reader generation cost. Builds on IDEA-106 (Valkyrie Dynamic State Header) and FIX-048 (images moved to Supabase).
 - **Night Notes:**
   - 2026-05-28 (Run 43): Seeded. The 5 Valkyrie-1 harmonic state spec JSON files at `content/wiki/specs/valkyrie-1/states/` define distinct visual signatures per state (vein color, intensity, aperture posture). A transition clip between two adjacent states requires only: the source state's visual description + the target state's visual description + a "transition" prompt modifier + WORLD A `alien_organic` vocabulary. (1) Model/provider: Runway Gen-4 via `providers/runway.ts` — already integrated. ~$0.15/clip. (2) Cost budget: 4 clips × $0.15 = $0.60 total; author-batch only. (3) Caching: stored in Supabase Storage with `source='state_transition'`, `target='valkyrie-1'`, `style='{from}-to-{to}'` (e.g., `dormant-to-wake`); public URLs; shared canonical. (4) Spoiler gating of prompt inputs: harmonic state names and spec vocabulary are world-building data — no narrative events in specs. Zero spoiler risk. (5) Canon grounding: `content/wiki/specs/valkyrie-1/states/{from}.json` + `content/wiki/specs/valkyrie-1/states/{to}.json` + WORLD A vocabulary from `content/wiki/specs/valkyrie-1/master.json`. Implementation: existing admin console (`/profile/admin/visuals`) already supports Runway Gen-4 generation. Code change: ~15 lines in IDEA-106's custom `artifacts/valkyrie-1/page.tsx` to render a `<details>` accordion with `<video>` tags for each approved transition clip. Prerequisite: FIX-048 must execute first (move images/videos to Supabase); IDEA-106 should ship first to establish the custom page. Estimated: 15 minutes author time per clip in admin console + 30 minutes code for the transitions accordion. Synergistic with IDEA-106 (dynamic state header) — the page already has the custom static-route override.
   - 2026-05-29 (Run 44): **Advanced to `exploring`.** Feasibility confirmed: `providers/runway.ts` is integrated and the admin console's generate endpoint already dispatches to Runway. The `style` param in `cel_visual_assets` accepts arbitrary strings — using `dormant-to-wake`, `wake-to-active`, etc. as style values is valid and queryable via `/api/visuals/preferred?target=valkyrie-1&style=dormant-to-wake`. The admin console UI already has a `style` text input field (confirmed from STATUS.md: "`view` and `state` params added to `/api/visuals/prompt` POST body and `VisualsAdminConsole.tsx`"). One implementation detail to verify: `generate-asset.ts` must return a video URL (not just image URL) when the Runway provider is used — confirm `generate-asset.ts` handles video MIME types in its storage path. Key prerequisite: FIX-048 (move public/images to Supabase) + IDEA-106 (custom Valkyrie-1 page) must ship first. Advance to `planned` once IDEA-106 ships and the custom page exists to host the transitions accordion.
+  - 2026-06-01 (Run 47): Stale 3 days — likely low priority or too complex. Demoting to parked. Hard-blocked by FIX-048 + IDEA-106 (custom Valkyrie-1 page) prerequisites not yet shipped. Un-park after IDEA-106 is live and the custom page exists to host the accordion.
 
 ---
 
 ### [IDEA-124] Ask Image Gallery Mode — Session Grid of On-Demand Generated Images
-- **Status:** seed
+- **Status:** parked
 - **Theme:** genmedia
 - **Seeded:** 2026-05-29
-- **Last Updated:** 2026-05-29
+- **Last Updated:** 2026-06-01
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** After IDEA-043 (on-demand scene visualization) ships, the Ask page accumulates any generated images in client state during a session. A small "Gallery" tab or slide-out in the Ask toolbar reveals a compact grid of all images generated in the current session — each with the question that triggered it as a caption. Zero new storage (images already in `cel_visual_assets`), zero new API routes. Pure client-side state accumulation. Estimated 30 minutes once IDEA-043 is live.
 - **Night Notes:**
   - 2026-05-29 (Run 44): Seeded. When IDEA-043 ships, the Ask page will receive inline image URLs in the `done` SSE event or as a special message type. A `sessionImages: {imageUrl: string, question: string}[]` state array accumulates these during the session. A small tab button (e.g., a grid icon `⊞`) in the Ask input bar opens a slide-in panel or a `<details>` accordion showing a 3-column image grid. Each image displays with a truncated question caption below it. Clicking an image opens it full-screen or links to the entity wiki page from which it was derived. Gallery is ephemeral — it resets when the page is reloaded (no persistence, no DB). No generation cost (images already generated during the session). (1) Model/provider: N/A — no new generation. (2) Cost per generation: $0 for the gallery itself. (3) Caching: session-scoped React state only; images are already persisted in `cel_visual_assets`. (4) Spoiler gating of prompt inputs: N/A — no new generation; images already generated under IDEA-043's gating rules. (5) Canon grounding: N/A — gallery displays images generated during the session. Prerequisite: IDEA-043 must ship first to produce images during Ask sessions. Estimated: 30 minutes (state array + grid render + tab UI in `ask/page.tsx`).
+  - 2026-06-01 (Run 47): Stale 3 days — hard blocked by IDEA-043 (on-demand scene visualization) prerequisite. Demoting to parked. Un-park after IDEA-043 ships and the Ask page is producing inline image messages.
 
 ---
 
@@ -834,29 +852,44 @@
 ---
 
 ### [IDEA-130] Character Emotion Portrait Series — 3-State Visual Arc per Main Crew Member
-- **Status:** seed
+- **Status:** exploring
 - **Theme:** genmedia
 - **Seeded:** 2026-05-31
-- **Last Updated:** 2026-05-31
+- **Last Updated:** 2026-06-01
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** For each of the 9 main crew members, the author generates 3 canonical portrait variants via Imagen 4: (1) "Starting State" — CH01 appearance grounded in arc ledger "Starting State" text; (2) "Peak Tension" — mid-arc defining moment from the arc's Choice/Consequence column; (3) "State After" — CH17 outcome. When approved, these display as a 3-card horizontal scroll carousel on each character detail page. 9 × 3 = 27 images × ~$0.03–$0.04 = ~$0.81–$1.08 author-batch total. Builds on IDEA-052 (single portrait per character) as a narrative arc visualization. Canon-grounded in character spec JSONs + arc ledger state text.
 - **Night Notes:**
   - 2026-05-31 (Run 46): Seeded. IDEA-052 (canonical character portraits) covers a single static portrait per crew member. This idea extends it to a 3-state arc — the portrait becomes a visual narrative arc rather than a static headshot. The 3 states map to arc ledger data already authored: "Starting State" (~CH01), a mid-arc inflection point (determined per character from the arc's Choice column for the highest-drama chapter), and "State After" (CH17). (1) Model/provider: Imagen 4 via `providers/imagen.ts` + character `master.json` spec (if seeded) + `content/wiki/arcs/characters/{slug}.md` state text as prompt grounding. Existing admin console supports this generation flow. (2) Cost: 27 images × ~$0.04/image = ~$1.08 total; author-batch only. (3) Caching: `cel_visual_assets` with `target={characterSlug}`, `style=state_{starting|tension|after}`; shared canonical assets; public URLs. One query per character fetches all 3 styles. (4) Spoiler gating of prompt inputs: "Starting State" text is spoiler-safe (CH01 state). "Peak Tension" and "State After" texts contain arc-endpoint spoilers — these prompts should be generated by the author, not exposed to reader-triggered generation. These assets are author-batch only; no reader can trigger generation. The gallery on character detail pages shows approved assets only — under companion-first, all readers can see the full arc. (5) Canon grounding: `content/wiki/arcs/characters/{slug}.md` state entries per character + existing character spec JSON (if seeded) for visual consistency across the 3-state sequence. Code: extend `EntityVisualsGallery.tsx` on character pages to detect and group `state_{starting|tension|after}` assets into a 3-card row if all 3 are approved; otherwise fall through to existing single-portrait display. Estimated: 2 hours code + ~2 hours author batch generation + approval. Prerequisite: IDEA-052 (author seeds 9 character spec JSONs) should complete before the first state portraits are generated, for visual consistency.
+  - 2026-06-01 (Run 47): **Advanced to `exploring`.** Feasibility confirmed: `EntityVisualsGallery.tsx` already fetches approved assets by `target` — detecting `style=state_starting|tension|after` conventions and grouping them into a 3-card carousel row is a clean extension. The `cel_visual_assets` `style` field accepts arbitrary strings; no schema change needed. Key design decision: the 3-card row renders only when all 3 `state_*` styles are approved for that character; otherwise falls through to the existing single-asset display. The `style` naming convention must be documented before the author starts the batch. Advance to `planned` after IDEA-052 ships so the admin console workflow is proven and at least one character has approved assets to test the 3-card grouping against.
+
+---
+
+### [IDEA-133] Crew Constellation Diagram — Abstract Character Relationship Visual for Characters Index
+- **Status:** seed
+- **Theme:** genmedia
+- **Seeded:** 2026-06-01
+- **Last Updated:** 2026-06-01
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** Author pre-generates a single Imagen 4 image showing all 9 main crew members as abstract colored orbs arranged in a relationship-distance constellation, with soft luminescent connection lines between orbs that shared the most chapter co-appearances (derived from `chapter_tags.json`). Style: `noncorporeal_presence` preset — dark background, soft glow, labeled dots. Displayed on the `/characters` index page as a "Crew Constellation" visual accent. Zero code at reader time; author-batch, one image, ~$0.06. No spoiler risk — the diagram shows relational proximity only, not narrative events.
+- **Night Notes:**
+  - 2026-06-01 (Run 47): Seeded. The `/characters` index page currently lists character cards with no visual sense of the crew as a relational unit. A constellation diagram fixes this: it transforms a flat list into a spatial map of relationships. (1) Model/provider: Imagen 4 with `noncorporeal_presence` preset (dark ambient background, soft glow — appropriate for a "presence network" aesthetic). ~$0.06/image. (2) Cost: 1 image, one-time author-batch. (3) Caching: stored in `cel_visual_assets` with `target='crew-constellation'`, `style='relational'`, `approved=true`; surfaced on `/characters` index page via a simple `<img>` or `<Image>` block — no `EntityVisualsGallery` overhead needed (just a single asset fetch). (4) Spoiler gating of prompt inputs: the prompt encodes only character name labels + relative proximity based on co-occurrence frequency — no narrative events, no arc-endpoint information. Zero spoiler risk. (5) Canon grounding: `chapter_tags.json` provides per-chapter entity co-occurrences that define connection strength; character names from `content/wiki/characters/` provide labels; `noncorporeal_presence` preset provides the visual aesthetic (luminescent orbs, dark void background — matches ALARA's identity). The author computes the connection layout offline (9 nodes × connection strength from co-occurrence counts) and describes it in the prompt as coordinate hints ("ALARA center-left, Jonah adjacent to ALARA, Galen upper-right, etc."). Code: add a single conditional `<Image>` block near the top of `/characters/page.tsx` that calls `/api/visuals/preferred?target=crew-constellation&style=relational` (fail-open if no approved asset). Estimated: 30 minutes author time for prompt + generation + approval + 15 minutes code. Prerequisite: none — the visuals pipeline is fully operational. The diagram is decorative world-building; no gating needed under companion-first.
 
 ---
 
 ### [IDEA-118] Scene Mood Video Loop — Runway Gen-4 Ambient Clip for Chapter Header
-- **Status:** exploring
+- **Status:** parked
 - **Theme:** genmedia
 - **Seeded:** 2026-05-27
-- **Last Updated:** 2026-05-29
+- **Last Updated:** 2026-06-01
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** For chapters with a dominant primary-location setting (Valkyrie exterior, Giza exterior, Mars excavation site), the author pre-generates one 4-second seamless ambient video loop via Runway Gen-4 (`providers/runway.ts` — already in the pipeline) — a muted, non-narrative environment clip (stars drifting past a viewport, desert wind, vault torch flicker). Stored in Supabase Storage. Played as `<video autoplay loop muted playsinline>` in the chapter hero/header area. Zero reader generation cost; author-batch only.
 - **Night Notes:**
   - 2026-05-27 (Run 42): Seeded. This is a distinct genmedia register from IDEA-043 (on-demand reader-triggered scene illustrations) and IDEA-049 (static hero image, parked). The video loop is ambient/atmospheric — environment only, no characters, no narrative events — functioning as a moving backdrop rather than a scene illustration. (1) Model/provider: Runway Gen-4 via `providers/runway.ts` (already integrated in the visuals pipeline). ~$0.10–$0.20/clip. (2) Cost budget: 3–5 representative chapter settings × ~$0.15/clip = $0.45–$0.75 total; author-batch only; zero reader generation cost. (3) Caching: stored in Supabase Storage with a public URL; surfaced via a new `source='chapter_ambient'` asset type in `cel_visual_assets`. The `/api/visuals/preferred?target={chSlug}&style=ambient_loop` endpoint would return the approved URL. (4) Spoiler gating of prompt inputs: prompts contain only environment/atmosphere keywords (e.g., "deep space, stars drifting past a curved metal viewport, no figures, seamless loop, WORLD A alien organic vocabulary") — no characters, no character names, no narrative events. Zero spoiler risk even for Chapter 1. (5) Canon grounding: `chapter_tags.json` primary location tag per chapter → select the matching WORLD A/B/C preset and location-specific vocabulary from `content/wiki/specs/{location-slug}/` (where available) or `content/wiki/locations/{slug}.md`. No spec JSON required — the preset vocabulary alone is sufficient for atmospheric clips. Implementation: one new `source='chapter_ambient'` asset type used in admin console generation; `<video>` element in the chapter page header area replaces or augments the existing hero section. Code change: ~15 lines in `stories/[storyId]/page.tsx` to load and render `<video>` when preferred ambient asset exists (fail-open). Estimated: 30 minutes code + 15 minutes author time per clip. Prerequisite: none — the Runway Gen-4 provider is already operational.
   - 2026-05-29 (Run 44): **Advanced to `exploring`.** Feasibility confirmed: `providers/runway.ts` is operational; `/api/visuals/preferred` accepts arbitrary `style` strings — `ambient_loop` is a valid style key. The `stories/[storyId]/page.tsx` is a server component; adding a conditional `<video>` element that calls `/api/visuals/preferred` at render time is the same fail-open pattern as IDEA-106 (Valkyrie-1 dynamic header). Note: `<video autoplay loop muted playsinline>` in React 19 JSX uses `playsInline` (camelCase). Advance to `planned` when Paul is ready to batch-generate 3–5 priority chapter ambient clips.
+  - 2026-06-01 (Run 47): Stale 3 days — likely low priority or too complex. Demoting to parked. Blocked by Paul needing to batch-generate priority clips before code can be tested end-to-end. Un-park when Paul is running a Runway generation session for ambient chapter clips.
 
 ---
 
@@ -1237,15 +1270,29 @@
 ---
 
 ### [IDEA-131] Mission Final Debrief Page — Diegetic MARU Outcome Summary for Completed Readers
-- **Status:** seed
+- **Status:** exploring
 - **Theme:** post-read-world
 - **Seeded:** 2026-05-31
-- **Last Updated:** 2026-05-31
+- **Last Updated:** 2026-06-01
 - **Priority:** unranked
 - **Plan:** *(not yet written)*
 - **Summary:** A `/world/debrief` server-component page, `show_all_content`-gated, presenting a MARU classified-document aesthetic structured mission debrief: mission objectives → crew status → ALARA outcome → Directive-14 resolution → post-mission open questions. Author-written static content (~200 words) rendered with font-mono styling matching `/world/manifest` (IDEA-116). The reader's diegetic "mission wrap-up" artifact — a canonical endpoint document. ~45 min code + Paul writes the debrief text (~200 words). Zero AI generation at reader time, zero DB.
 - **Night Notes:**
   - 2026-05-31 (Run 46): Seeded. Completed readers have access to IDEA-095 (Arc Endpoint Quotes Gallery — character voices) and IDEA-116 (Crew Manifest — roster document) and the planned IDEA-128 (Faction Relations Matrix). What's missing is a single synthetic mission-outcome summary — what actually happened on Directive-14 from a MARU operational perspective. This is the "debrief document" that would exist in-world after the mission concluded. Implementation: (1) New `src/app/world/debrief/page.tsx` server component — `show_all_content` gate (redirect to `/` if false); (2) Paul authors `DEBRIEF_SECTIONS` constant (or short markdown file) with structured sections: `[MISSION OBJECTIVES]`, `[CREW STATUS: END OF DIRECTIVE]`, `[ALARA STATUS]`, `[DIRECTIVE-14 OUTCOME]`, `[CLASSIFIED NOTES]`; (3) Page renders with MARU document aesthetic: `[CLASSIFICATION: LEVEL 5]` header bar (same as `/world/manifest` from IDEA-116), font-mono, muted earth tones, redaction-style `████` blocks for Paul's choice of withheld details (adds authenticity); (4) Add a link from `/world/manifest` (IDEA-116) to `/world/debrief` as a companion reference. Post-read-world requirements: (a) Server-side `show_all_content` gate — redirect to `/` if false; (b) `show_all_content` integration: direct server-side check consistent with IDEA-095/116/125/128; (c) Partial-completion: same `show_all_content` flag gate. Zero new DB, zero npm, zero AI generation. Estimated: 45 min code + Paul writes 200-word debrief text (20 min). Synergistic with IDEA-116 (Crew Manifest) and IDEA-095 (Arc Endpoint Quotes) — all three live under `/world/` and form a post-read "mission archive."
+  - 2026-06-01 (Run 47): **Advanced to `exploring`.** Feasibility confirmed: `src/app/world/manifest/page.tsx` (IDEA-116) establishes the exact pattern — server component, `show_all_content` gate via `getReaderProgress()`, MARU font-mono document aesthetic. The debrief page is structurally identical but shorter (single-document layout vs. 9-card manifest grid). The bottleneck is Paul writing ~200 words of debrief text; the code is ~40–50 lines. Advance to `planned` after IDEA-116 ships so the MARU document aesthetic tokens are established in code and the debrief can inherit the exact same CSS/layout approach. Synergistic with IDEA-116 (same aesthetic) — plan them together.
+
+---
+
+### [IDEA-134] Annotated Re-Reader Mode — Foreshadowing Highlights with Hindsight Tooltips
+- **Status:** seed
+- **Theme:** post-read-world
+- **Seeded:** 2026-06-01
+- **Last Updated:** 2026-06-01
+- **Priority:** unranked
+- **Plan:** *(not yet written)*
+- **Summary:** For `show_all_content=true` readers, a "Re-Reader" toggle button on chapter pages that, when active, highlights key phrases in the chapter text that foreshadow later events. Highlights are driven by a `FORESHADOW_ANNOTATIONS` constant Paul authors and stores in `content/wiki/annotations/ch{num}.json` — each entry is a phrase + the hindsight context sentence. Hovering a highlighted phrase shows a tooltip: "Foreshadows: The CH14 merge event." Toggle is localStorage-persisted. Zero AI generation at reader time; zero new DB. Author writes the annotation JSON files offline.
+- **Night Notes:**
+  - 2026-06-01 (Run 47): Seeded. Re-readers of Celestial know the ending and want to see which phrases in early chapters pointed to it. The annotation system gives Paul a structured way to author these hindsight markers once and surface them as interactive tooltips. The foreshadowing highlight is a classic re-reader companion feature — it transforms a straight read into an authored commentary experience. (1) Post-read-world requirements: (a) Toggle only appears when `show_all_content === true` — passed as a server prop to the chapter page client component; (b) Integration with `show_all_content`: server-side check before passing the toggle and annotation data down to the client; (c) Partial-completion: `show_all_content` is the sole gate — no edge case. (2) Content format: `content/wiki/annotations/ch01.json` through `ch17.json` — manually authored, no `<!-- generated:ingest -->` marker. Schema: `{ annotations: [{ phrase: string, hindsight: string }] }` per file. Each `phrase` is matched (case-insensitive, whole-word) against the chapter markdown text on the client; matching text spans get a Tailwind `underline decoration-dotted text-[var(--color-ocean)]/70` style + a `<span data-tip="{hindsight}">` hover tooltip implemented via Tailwind group-hover or a custom `Tooltip` component (10 lines). (3) Toggle: `localStorage` key `celestial_rereader_mode`; a `<button>` in the chapter page controls area (near the top, alongside scene TOC). Active state: button styled with ocean border. (4) Code: Chapter page passes `showAllContent` + preloaded annotation list for that chapter to `StoryBodyWithHighlighting.tsx` (or a wrapper); the client applies phrase matching + highlight rendering in a `useEffect` that mutates rendered text spans — or via a remark plugin in `StoryMarkdown`. Complexity: medium (phrase matching in markdown prose requires careful rendering pass to avoid corrupting existing links/headings). Remark plugin approach is cleaner. Estimated: 3 hours code + Paul authors annotation JSON files (1–2 per chapter × 17 chapters = 30 min total at 5 annotations/chapter). Prerequisite: IDEA-062 (Hindsight Panel) establishes the arc-ledger-to-chapter insight infrastructure; this feature is complementary but independently buildable (annotation data comes from Paul's manual JSON files, not arc ledger parsing).
 
 ---
 
