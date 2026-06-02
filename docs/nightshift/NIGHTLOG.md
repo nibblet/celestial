@@ -4,6 +4,61 @@
 
 ---
 
+## Run: 2026-06-02 (Run 48)
+
+### Summary
+- Scanned: 0 new code commits since Run 47 (last commit `98eaaa7` — nightshift docs only). Codebase unchanged since Run 17.
+- Issues: 0 new, 0 resolved, 0 spoiler-leak P0. All 13 open planned issues confirmed unchanged (FIX-026, 027, 028, 029, 030, 045, 046, 047, 048, 049, 050, 051, 052). FIX-047 (12 stale model ID files) re-confirmed via grep. FIX-049 (`requireKeith()` in 5 routes) re-confirmed via grep.
+- Ideas (by theme): ask-forward — 1 seed (IDEA-135 — Ask Answer Fact-Check Button), IDEA-129 + IDEA-126 promoted to ready; genmedia — 1 seed (IDEA-136 — Character First Appearance Portrait), IDEA-127 promoted to ready; post-read-world — 1 seed (IDEA-137 — Hidden Canon Tour), IDEA-125 + IDEA-128 promoted to ready; IDEA-132 promoted from seed to planned (dev plan written). Total promoted to ready: 5 (IDEA-125, 126, 127, 128, 129). To planned: 1 (IDEA-132). Seeds: 3. Parked: 0. Stale: 0.
+- Plans written: `DEVPLAN-IDEA-132-ask-session-summary-card.md`
+
+### Build & Lint & Test Results
+- No code commits since Run 47. Status confirmed unchanged from Run 36 verification.
+- Build: **PASSES** (last verified Run 36 — no new code to re-validate)
+- Lint: **PASSES** — 0 errors, 4 `<img>` tag warnings (unchanged since Run 17)
+- Tests: **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17)
+
+### Key Findings
+
+1. **No new code commits.** Codebase identical to Run 47. The five fastest ships in the queue — all ≤20 min each — are IDEA-125 (10 min, 1 file), IDEA-126 (15 min, 1 file), IDEA-123 (15 min, 1 file), IDEA-129 (15 min, 1 file), IDEA-120 (20 min, 4 files). Combined: ~75 minutes for 5 Ask-forward improvements. The queue now has 25+ ready-or-planned ideas across all three themes.
+
+2. **IDEA-132 promoted to `planned` with dev plan written.** Ask Session Summary Card (ask-forward): after 5+ assistant responses and 5s idle, a Haiku call generates a 1-sentence "You explored…" synopsis + distinct wiki entity count. 2-file change: `ask/page.tsx` (~35 lines) + new `/api/ask/summary/route.ts` (~30 lines). Cost ~$0.001/session. Zero DB, zero npm. 30 minutes estimated.
+
+3. **Five ideas promoted to `ready` (plans confirmed in plans dir).** IDEA-125 (Completion Stamp, 10 min), IDEA-126 (Ask Keyboard History, 15 min), IDEA-127 (Runway Valkyrie Cinematic, 30 min + author batch), IDEA-128 (Faction Relations Matrix, 1 hr + Paul authors data), IDEA-129 (Ask Greeting, 15 min). All plans self-contained. The `ready` queue now has 30+ items across all three themes.
+
+4. **Three new ideas seeded — one per theme.** IDEA-135 (ask-forward: Ask Answer Fact-Check Button — hover button on each bubble triggers Haiku "rank the 3 most relevant wiki entries for this answer" — ~$0.001/click, 30–45 min code). IDEA-136 (genmedia: Character First Appearance Portrait — debut-moment Imagen 4 portrait grounded in first-chapter context, `intimate_crew` preset, ~$0.54 for all 9, zero code changes). IDEA-137 (post-read-world: Hidden Canon Tour — `/world/tour` page; Paul authors 5–7 foreshadowing callback pairs in `content/wiki/tour/callbacks.md`; 1 new route, ~1 hr code + 30 min Paul writes the callbacks).
+
+5. **IDEA-130 and IDEA-131 remain `exploring`** with updated notes. IDEA-130 (Character Emotion Portrait Series) still waiting on IDEA-052 to prove admin console batch workflow. IDEA-131 (Mission Final Debrief) still waiting on IDEA-116 to establish MARU document aesthetic. Both have full technical specs written in the exploring notes — ready to advance to planned immediately when prerequisites ship.
+
+### Plans Ready to Execute
+
+**New tonight:**
+- `docs/nightshift/plans/DEVPLAN-IDEA-132-ask-session-summary-card.md` — **NEW**: Ask Session Summary Card — 30 min, 2 files (1 new API route + `ask/page.tsx` edits), Haiku idle digest card (ask-forward).
+
+**Newly promoted to ready tonight:**
+- `docs/nightshift/plans/DEVPLAN-IDEA-125-completion-stamp.md` — Completion Stamp — 10 min, 1-file (post-read-world). **Fastest ship in entire queue.**
+- `docs/nightshift/plans/DEVPLAN-IDEA-126-ask-input-keyboard-history.md` — Ask Input Keyboard History — 15 min, 1-file (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-129-ask-greeting-personalization.md` — Ask Greeting Personalization — 15 min, 1-file (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-128-world-faction-relations-matrix.md` — World Faction Relations Matrix — 1 hr code + 15 min Paul data (post-read-world).
+- `docs/nightshift/plans/DEVPLAN-IDEA-127-runway-valkyrie-exterior-cinematic.md` — Runway Valkyrie Cinematic — 15 min code + 15 min author batch (genmedia).
+
+**Previously queued (top items):**
+- `docs/nightshift/plans/DEVPLAN-IDEA-123-ask-conversation-exporter.md` — Ask Conversation Exporter — 15 min, 1-file (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-120-ask-mood-responder.md` — Ask Mood Responder — 20 min, 4 files (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` — Ask CTA after chapter summary — 15 min, 1-file (ask-forward).
+- `docs/nightshift/plans/DEVPLAN-IDEA-111-ask-scene-jump.md` — Ask Scene Jump — 30 min, 1-file (ask-forward).
+- `docs/nightshift/plans/FIXPLAN-FIX-050-ask-intent-next-pattern.md` — 5 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-049-requirekeith-function-name.md` — 10 min.
+- `docs/nightshift/plans/FIXPLAN-FIX-047-stale-model-id.md` — 15 min.
+
+### Recommendations
+- **If you have 10 min:** IDEA-125 (Completion Stamp, 10 min) — single JSX block, zero risk. Fastest deliverable in the entire backlog.
+- **If you have 30 min:** IDEA-126 (Ask Keyboard History, 15 min) + IDEA-129 (Ask Greeting, 15 min) = two ask-forward polish ships back-to-back, both 1-file changes.
+- **If you have 1 hour:** IDEA-123 (15 min) + IDEA-129 (15 min) + IDEA-126 (15 min) + IDEA-125 (10 min) = four ships in one session covering 3 themes. Or FIX-050 (5 min) + FIX-049 (10 min) + FIX-047 (15 min) + IDEA-125 (10 min) = 40 min of legacy cleanup + fastest post-read-world feature.
+- **If you have 2 hours:** IDEA-095 (Arc Endpoint Quotes Gallery, 1.5 hr) + IDEA-125 (10 min) = the highest-leverage post-read-world foundation (`getArcEndpoints()` shared by IDEA-113, IDEA-116, IDEA-128 + others) plus fastest read-world win. Or IDEA-120 (20 min) + IDEA-132 (30 min) + IDEA-111 (30 min) + IDEA-126 (15 min) = four ask-forward features across tone, summary, navigation, and keyboard UX.
+
+---
+
 ## Run: 2026-06-01 (Run 47)
 
 ### Summary

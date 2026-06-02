@@ -1,6 +1,6 @@
 # STATUS — Celestial Interactive Book Companion
 
-> Last updated: 2026-06-01 (Nightshift Run 47)
+> Last updated: 2026-06-02 (Nightshift Run 48)
 
 ## App Summary
 
@@ -191,6 +191,7 @@
 - **Build:** PASSES — clean, ~106 routes. 1 Turbopack warning on `next.config.ts`. (Requires `npm install` before `npx next build` in a fresh clone.) Verified Run 36 (`npx next build` in fresh sandbox). No new code commits since Run 29 — codebase unchanged.
 - **Lint:** PASSES — 0 errors, **4 warnings** (`<img>` tags in visuals components — `VisualsAdminConsole.tsx` lines 230/394, `EntityVisualsGallery.tsx` lines 64/118). Verified Run 36. Unchanged since Run 17.
 - **Tests:** **192 total / 192 PASS / 0 FAIL** (unchanged since Run 17). All green. Verified Run 36. No new code commits since Run 29 — codebase unchanged.
+- **Run 48 note:** No code commits since Run 47. Build/lint/test status confirmed unchanged. No new build execution performed (codebase unchanged). FIX-047 confirmed: 12 files still use stale `claude-sonnet-4-20250514` (grep re-verified). `requireKeith()` in 5 visuals routes confirmed via grep (FIX-049). No new issues found. IDEA-129 promoted to `ready`. IDEA-125, IDEA-126, IDEA-127, IDEA-128 all promoted to `ready` (plans confirmed in plans dir). IDEA-132 promoted from seed to `planned` with dev plan written (`DEVPLAN-IDEA-132-ask-session-summary-card.md`). IDEA-130 and IDEA-131 remain `exploring` with updated notes. 3 new seeds: IDEA-135 (ask answer fact-check button), IDEA-136 (character first-appearance portrait), IDEA-137 (hidden canon tour).
 - **Run 47 note:** No code commits since Run 46. Build/lint/test status confirmed unchanged. No new build execution performed (codebase unchanged). FIX-047 confirmed: 12 files still use stale `claude-sonnet-4-20250514` (grep re-verified). `requireKeith()` in 5 visuals routes confirmed via grep (FIX-049). IDEA-121, IDEA-118, IDEA-124 parked (stale 3 days). IDEA-120 and IDEA-123 promoted to `ready`. IDEA-129 promoted to `planned` with dev plan written. IDEA-130 and IDEA-131 advanced to `exploring`. 3 new seeds: IDEA-132 (ask session summary card), IDEA-133 (crew constellation diagram), IDEA-134 (annotated re-reader mode).
 - **Run 46 note:** No code commits since Run 45. Build/lint/test status confirmed unchanged. No new build execution performed (codebase unchanged). FIX-047 confirmed: 12 files still use stale `claude-sonnet-4-20250514` (grep re-verified). `requireKeith()` in 5 visuals routes confirmed via grep (FIX-049). IDEA-117 and IDEA-119 parked (stale 3 days). IDEA-126 (ask-input keyboard history), IDEA-127 (Runway Valkyrie cinematic), IDEA-128 (world faction relations matrix) promoted to `planned` with dev plans. 3 new seeds: IDEA-129 (ask-forward), IDEA-130 (genmedia), IDEA-131 (post-read-world).
 - **Run 45 note:** No code commits since Run 44. Build/lint/test status confirmed unchanged. No new build execution performed (codebase unchanged). FIX-047 confirmed: 12 files still use stale `claude-sonnet-4-20250514` (grep re-verified). `requireKeith()` in 5 visuals routes confirmed via grep (FIX-049). IDEA-114 and IDEA-115 parked (stale 3 days). IDEA-122, IDEA-123, IDEA-125 promoted to `planned` with dev plans. 3 new seeds: IDEA-126 (ask-forward), IDEA-127 (genmedia), IDEA-128 (post-read-world).
@@ -226,22 +227,23 @@
 
 ## Next Actions (Priority Order)
 
-1. **IDEA-125 (10 min):** Completion Stamp on Profile — ~5 lines JSX in `/profile/page.tsx`. Dev plan `DEVPLAN-IDEA-125-completion-stamp.md`. Fastest ship in the queue.
-1. **IDEA-126 (15 min):** Ask Input Keyboard History — 3 refs + `handleInputKeyDown` + `onKeyDown` on textarea in `ask/page.tsx`. Dev plan `DEVPLAN-IDEA-126-ask-input-keyboard-history.md`.
-1. **IDEA-123 (15 min):** Ask Conversation Exporter — `handleExport` callback + button in `ask/page.tsx`. Dev plan `DEVPLAN-IDEA-123-ask-conversation-exporter.md` *(promoted to ready Run 47)*.
-1. **IDEA-129 (15 min):** Ask Greeting Personalization — 1 state var + 1 `useEffect` + 1 text swap in empty-state block of `ask/page.tsx`. Dev plan `DEVPLAN-IDEA-129-ask-greeting-personalization.md` **NEW Run 47**.
-1. **IDEA-120 (20 min):** Ask Mood Responder — 3 tone-intent chips ("Factual", "Speculative", "Emotional") appending a register modifier to the next Ask message's system prompt. 4-file change. Dev plan `DEVPLAN-IDEA-120-ask-mood-responder.md`.
-1. **IDEA-120 (20 min):** Ask Mood Responder — 3 tone chips, 4-file change. Dev plan `DEVPLAN-IDEA-120-ask-mood-responder.md` *(promoted to ready Run 47)*.
+1. **IDEA-125 (10 min):** Completion Stamp on Profile — ~5 lines JSX in `/profile/page.tsx`. Dev plan `DEVPLAN-IDEA-125-completion-stamp.md` ready *(promoted to ready Run 48)*.
+1. **IDEA-126 (15 min):** Ask Input Keyboard History — 3 refs + `handleInputKeyDown` + `onKeyDown` on textarea in `ask/page.tsx`. Dev plan `DEVPLAN-IDEA-126-ask-input-keyboard-history.md` ready *(promoted to ready Run 48)*.
+1. **IDEA-123 (15 min):** Ask Conversation Exporter — `handleExport` callback + button in `ask/page.tsx`. Dev plan `DEVPLAN-IDEA-123-ask-conversation-exporter.md` ready.
+1. **IDEA-129 (15 min):** Ask Greeting Personalization — 1 state var + 1 `useEffect` + 1 text swap in empty-state block of `ask/page.tsx`. Dev plan `DEVPLAN-IDEA-129-ask-greeting-personalization.md` ready *(promoted to ready Run 48)*.
+1. **IDEA-120 (20 min):** Ask Mood Responder — 3 tone-intent chips ("Factual", "Speculative", "Emotional") appending a register modifier to the next Ask message's system prompt. 4-file change. Dev plan `DEVPLAN-IDEA-120-ask-mood-responder.md` ready.
 2. **IDEA-048 (15 min):** Add Ask CTA near top of story page (after summary, before scene navigation) — 6 lines JSX in `stories/[storyId]/page.tsx` between lines 166–168. Dev plan `DEVPLAN-IDEA-048-ask-cta-top-of-story-page.md` ready.
-2. **IDEA-111 (30 min):** Ask Scene Jump — "↗ Jump to scene" link row below Ask answer bubbles when `linksInAnswer` contains `/stories/` hrefs. 1-file change (`ask/page.tsx`), ~15 lines JSX. Dev plan `DEVPLAN-IDEA-111-ask-scene-jump.md` ready *(promoted to ready Run 42)*.
-3. **IDEA-105 (30 min):** Ask Brief Mode Toggle — 4-file change to add a localStorage-persisted "Brief / Full" response-length toggle; mirrors existing Deep/Fast askMode pattern exactly. Dev plan `DEVPLAN-IDEA-105-ask-brief-mode-toggle.md` ready *(promoted to ready Run 42)*.
-3. **IDEA-102 (45 min):** Ask Empty State Chapter Grid — 17-chapter tile grid in Ask page when no story context set; clicking a tile routes to `/ask?story=CH01`; 1-file change (`ask/page.tsx`). Dev plan `DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md` ready *(promoted to ready Run 42)*.
-3. **IDEA-108 (1 hr):** Ask Reading Dwell Nudge — new `AskDwellNudge.tsx` client component + 1-line addition to `stories/[storyId]/page.tsx`; fixed pill bar after 90s of active scroll. Dev plan `DEVPLAN-IDEA-108-ask-reading-dwell-nudge.md` ready *(promoted to ready Run 42)*.
-3. **IDEA-116 (1.5 hr):** World Crew Manifest — new `/world/manifest` page with `show_all_content` gate; font-mono MARU classified document format; 9 crew cards; Phase 2 upgrades to `getArcEndpoints()` after IDEA-095 ships. Dev plan `DEVPLAN-IDEA-116-world-crew-manifest.md` *(NEW Run 42, planned)*.
-3. **IDEA-122 (1 hr):** Mission Day Coverage Chart — new `MissionDayCoverageChart.tsx` server component + 5-line change to `/stories/timeline/page.tsx`; `show_all_content` gated; reveals non-linear chapter/mission-day architecture (21 days, 69 logs). Dev plan `DEVPLAN-IDEA-122-mission-day-coverage-chart.md` **NEW**.
-3. **IDEA-113 (2 hr):** Arc Progression Heatmap — new `/world/arcs` page; 9×17 heatmap grid derived from arc ledger Choice + Consequence columns; `show_all_content` gated; cells link to `/ask?story={ch}&entity={slug}`; zero deps on IDEA-095. Dev plan `DEVPLAN-IDEA-113-arc-progression-heatmap.md` *(planned Run 43)*.
+2. **IDEA-111 (30 min):** Ask Scene Jump — "↗ Jump to scene" link row below Ask answer bubbles when `linksInAnswer` contains `/stories/` hrefs. 1-file change (`ask/page.tsx`), ~15 lines JSX. Dev plan `DEVPLAN-IDEA-111-ask-scene-jump.md` ready.
+3. **IDEA-105 (30 min):** Ask Brief Mode Toggle — 4-file change to add a localStorage-persisted "Brief / Full" response-length toggle; mirrors existing Deep/Fast askMode pattern exactly. Dev plan `DEVPLAN-IDEA-105-ask-brief-mode-toggle.md` ready.
+3. **IDEA-102 (45 min):** Ask Empty State Chapter Grid — 17-chapter tile grid in Ask page when no story context set; clicking a tile routes to `/ask?story=CH01`; 1-file change (`ask/page.tsx`). Dev plan `DEVPLAN-IDEA-102-ask-empty-state-chapter-grid.md` ready.
+3. **IDEA-108 (1 hr):** Ask Reading Dwell Nudge — new `AskDwellNudge.tsx` client component + 1-line addition to `stories/[storyId]/page.tsx`; fixed pill bar after 90s of active scroll. Dev plan `DEVPLAN-IDEA-108-ask-reading-dwell-nudge.md` ready.
+3. **IDEA-128 (1 hr):** World Faction Relations Matrix — `/world/factions` page; `show_all_content` gated; Paul authors `FACTION_RELATIONS` constant, 1 new file. Dev plan `DEVPLAN-IDEA-128-world-faction-relations-matrix.md` ready *(promoted to ready Run 48)*.
+3. **IDEA-116 (1.5 hr):** World Crew Manifest — new `/world/manifest` page with `show_all_content` gate; font-mono MARU classified document format; 9 crew cards. Dev plan `DEVPLAN-IDEA-116-world-crew-manifest.md` planned.
+3. **IDEA-122 (1 hr):** Mission Day Coverage Chart — new `MissionDayCoverageChart.tsx` server component + 5-line change to `/stories/timeline/page.tsx`; `show_all_content` gated. Dev plan `DEVPLAN-IDEA-122-mission-day-coverage-chart.md` planned.
+3. **IDEA-113 (2 hr):** Arc Progression Heatmap — new `/world/arcs` page; 9×17 heatmap grid derived from arc ledger Choice + Consequence columns; `show_all_content` gated. Dev plan `DEVPLAN-IDEA-113-arc-progression-heatmap.md` planned.
 3. **IDEA-096 (15 min, Phase 1 only):** Ask Live Context Band — dismissable pill strip above Ask input showing active story/voice/entity context. Phase 1 (story pill) deployable today in 15 minutes, 1-file change. Dev plan `DEVPLAN-IDEA-096-ask-live-context-band.md` ready.
 3. **IDEA-084 (45 min):** Ask Home Hero Widget — text input in home page hero routes to `/ask?q=...` with auto-submit; 2-file change (`HomeHero.tsx` + `ask/page.tsx`). Dev plan `DEVPLAN-IDEA-084-ask-home-hero-widget.md` ready.
+4. **IDEA-127 (30 min + author batch):** Runway Valkyrie Exterior Cinematic — 4-second ambient clip, `<video>` block in IDEA-106's custom page. Dev plan `DEVPLAN-IDEA-127-runway-valkyrie-exterior-cinematic.md` ready *(promoted to ready Run 48)*.
 4. **IDEA-072 (1.5 hr):** Chapter quick-facts panel on Ask page — collapsible card showing mission day range, primary location, and top 3 characters when `?story=` is set. Dev plan `DEVPLAN-IDEA-072-chapter-quick-facts-panel.md` ready.
 5. **IDEA-069 (2 hr):** Ask CTA on all entity detail pages. Dev plan `DEVPLAN-IDEA-069-entity-level-ask-cta.md` ready.
 6. **IDEA-057 (45 min):** Context-aware welcome message on Ask page. Dev plan `DEVPLAN-IDEA-057-context-aware-ask-welcome.md` ready.
@@ -249,14 +251,14 @@
 8. **IDEA-066 (1.5 hr):** "Continue where you left off" in Ask empty state. Dev plan `DEVPLAN-IDEA-066-cross-session-ask-resume.md` ready.
 9. **IDEA-075 (2.5 hr):** Ask Pinned Q&A — star/save individual Ask exchanges; migration 042 required. Dev plan `DEVPLAN-IDEA-075-ask-pinned-qa.md` ready.
 10. **IDEA-087 (2 hr):** Ask Source Deep-Dive Panel — expandable entity accordion on citation links. Dev plan `DEVPLAN-IDEA-087-ask-source-deep-dive.md` ready.
-11. **IDEA-093 (1.5 hr):** Character Voice Mode — 9-chip character selector on Ask page; answers in first-person crew voice grounded in arc "Starting State". 4-file change. Dev plan `DEVPLAN-IDEA-093-character-voice-mode.md` ready *(promoted Run 36)*.
+11. **IDEA-093 (1.5 hr):** Character Voice Mode — 9-chip character selector on Ask page; answers in first-person crew voice grounded in arc "Starting State". 4-file change. Dev plan `DEVPLAN-IDEA-093-character-voice-mode.md` ready.
 12. **IDEA-078 (20 min):** Ask Response Confidence Ring — left-border accent on assistant bubbles. Dev plan `DEVPLAN-IDEA-078-ask-confidence-ring.md` ready.
 13. **IDEA-042 (2 hr):** Suggested follow-up chips after Ask answers. Dev plan `DEVPLAN-IDEA-042-follow-up-chips.md` ready.
 14. **IDEA-051 (30 min):** Scene-level "Ask →" hover affordance. Dev plan `DEVPLAN-IDEA-051-scene-level-ask-affordance.md` ready.
 15. **IDEA-062 (2 hr):** Re-Reader Hindsight Panel. Dev plan `DEVPLAN-IDEA-062-re-reader-hindsight-panel.md` ready.
 16. **IDEA-077 (1.5 hr):** Re-Reader Highlight Fingerprint. Dev plan `DEVPLAN-IDEA-077-highlight-fingerprint.md` ready.
 17. **IDEA-083 (2.5 hr):** World Lore Quiz for `show_all_content` readers. Dev plan `DEVPLAN-IDEA-083-world-lore-quiz.md` ready.
-18. **IDEA-095 (1.5 hr):** Arc Endpoint Quotes Gallery — `/world/voices` page showing 9 CH17 crew arc states as typographic cards; `show_all_content` gated. Dev plan `DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md` ready *(promoted to ready Run 37)*.
+18. **IDEA-095 (1.5 hr):** Arc Endpoint Quotes Gallery — `/world/voices` page showing 9 CH17 crew arc states as typographic cards; `show_all_content` gated. Dev plan `DEVPLAN-IDEA-095-arc-endpoint-quotes-gallery.md` ready.
 17. **IDEA-052 (3 hr author time, 0 code):** Author seeds 9 character spec JSONs, runs batch portrait generation, approves via admin console. Plan: `DEVPLAN-IDEA-052-canonical-character-portraits.md`.
 18. **IDEA-043 (5 hr):** On-demand scene visualization via Ask. Dev plan `DEVPLAN-IDEA-043-on-demand-scene-visualization.md` ready.
 19. **FIX-051 (1 hr):** HTML sanitization for `dangerouslySetInnerHTML` in admin surfaces. Plan: `FIXPLAN-FIX-051-dangerouslysetinnerhtml-admin.md`.
