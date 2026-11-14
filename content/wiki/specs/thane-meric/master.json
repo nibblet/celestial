@@ -19,6 +19,13 @@
     "facial_hair": "light_two_day_stubble",
     "distinguishing": "family_resemblance_to_galen_and_aven_must_read_on_screen"
   },
+  "shipboard_uniform": {
+    "tier": "civilian_field_jacket",
+    "garment": "hip_length_field_jacket_in_the_uniform_fabric_open_at_the_front",
+    "department": "science",
+    "role_tab_color": "muted_slate_blue",
+    "worn": "over_a_charcoal_henley_and_worn_utility_trousers"
+  },
   "signature_props": [
     "scanner_slate_modified_after_the_first_vault",
     "wrist_slate",

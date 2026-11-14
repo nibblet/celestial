@@ -19,6 +19,13 @@
     "facial_hair": "neat_short_beard_flecked_with_gray",
     "distinguishing": "loose_layered_linen_like_overshirt_over_his_shipboard_wear"
   },
+  "shipboard_uniform": {
+    "tier": "civilian_field_jacket",
+    "garment": "hip_length_field_jacket_in_the_uniform_fabric_open_at_the_front",
+    "department": "civilian_advisor",
+    "role_tab_color": "bone_white",
+    "worn": "over_a_loose_undyed_linen_like_shirt"
+  },
   "signature_props": [
     "mug_of_tea_gone_cold",
     "hand_drawn_sketchbook_of_the_nine_archetypes"

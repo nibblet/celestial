@@ -20,6 +20,14 @@ This folder is the reference for anything we render: character portraits, ship s
 2. **CAEDEN is the AI.** The human crewman "Caeden Lor" (CH11) / "Caeden Merek" (CH13) needs a new name in the manuscript.
 3. **The Rigel Ascendant's captain is Captain Rhea Solari.** "Colonel Riva Doss" in CH07, CH10 and CH11 should be renamed.
 4. **Valkyrie-1 interiors: the specs win over the prose.** No consoles, screens, railings or window frames on screen. Prose lines that describe consoles and so on are listed under "Manuscript fixes" so you can revise them when convenient.
+5. **All images will be regenerated** with the latest models. Old approved images are used only as references for adjusting the looks.
+6. **Uniforms: two tiers, plus a role tab.** Project VALKYRIE is jointly funded by the U.S. and a corporation, and CH12 names three civilians aboard.
+   - **Mission crew** (Galen, Aven, Marco, Jax, Lena) wear a flight-suit-cut coverall.
+   - **Civilians** (Jonah, Evelyn, Thane) wear a field jacket in the same fabric over their own clothes.
+   - **Shared details:** muted olive-slate ripstop; a triple-curve "PROJECT VALKYRIE" patch on the left chest; a name tape; a U.S. flag and blank sponsor tab on the left shoulder; no service-branch insignia.
+   - **Role tab colors:** command muted gold (Galen); medical sage green (Aven); security oxblood (Marco); systems burnt orange (Jax); science slate blue (Lena, Evelyn, Thane); civilian advisor bone white (Jonah).
+   - **Where it lives:** the shared parts are in `valkyrie-crew/states/shipboard.json`; each character's tier and tab are in `shipboard_uniform` in their `master.json`. Amar Cael is corporate, not crew, and keeps his own suit.
+7. **Galen's look is approved.** It's taken from the reference portrait already in Supabase (`visuals/reference/galen-voss/…`): blue-gray eyes, brown hair graying at the temples in a military cut, a sun-weathered face with deep forehead lines, a square jaw, and early-to-mid 50s apparent age. That image's USAF flight suit is **not** canon.
 
 ## What was added or changed
 
@@ -61,7 +69,7 @@ Each character's `master.json` has a `_provenance` block that separates canon fi
 
 | Character | Apparent age | Proposed look (the canon parts are in **bold**) |
 |---|---|---|
-| Galen Voss | ~50 (**chronologically early 80s, rejuvenated**) | tall, lean pilot build; fair weathered skin; **drawn face, tight jaw**; pale gray-blue eyes (**"clear but hollow"**); close-cropped dark hair, steel-gray at the temples; clean-shaven; small scar through the left eyebrow |
+| Galen Voss ✅ approved | early-to-mid 50s (**chronologically early 80s, rejuvenated**) | from the reference portrait: tall, lean pilot build; sun-weathered ruddy skin; **drawn face, tight jaw**, square jaw and deep forehead lines; blue-gray eyes (**"clear but hollow"**); brown military cut graying at the temples; clean-shaven |
 | Aven Voss | ~50 (**rejuvenated**) | medium height, athletic; fair freckled skin; green-hazel eyes; **red-blonde hair tied back** (shoulder length, low knot); **silver constellation medallion under the suit collar** |
 | Thane Meric | **early 30s** | lean, wiry; dark auburn-brown wavy hair falling over the forehead; Galen's gray eyes; light stubble; a family resemblance to both grandparents that reads on screen |
 | Lena Osei | mid-40s | tall, slender; deep brown skin; high cheekbones; natural hair in tight braids bound at the nape; small gold studs; **arms folded** as her signature pose |
@@ -72,7 +80,7 @@ Each character's `master.json` has a `_provenance` block that separates canon fi
 | Amar Cael | late 50s (**"refined… less glass tower, more iron core"**) | tall, spare; medium brown skin; black-to-silver hair combed back; trimmed beard; **corporate-issue suit** |
 | Rhea Solari | late 50s (**"trim lines, eyes too sharp to soften"**) | pale; ice-gray eyes; silver-white hair in a tight low chignon; high-collared slate-gray uniform with the **Sovereign Ethics Bureau seal** |
 
-Also review: the `shipboard` wardrobe (charcoal and slate layers, triple-curve mission patch) and the whole `rigel-ascendant` exterior (a hard-edged graphite modular cruiser, built as the visual opposite of Valkyrie).
+Also review: the whole `rigel-ascendant` exterior (a hard-edged graphite modular cruiser, built as the visual opposite of Valkyrie).
 
 **Order of work after approval:** generate each `three_quarter` portrait first and approve the best one. Its seed and the vision fingerprint become the identity anchor that every later still and video reuses. This is what keeps a face the same across clips.
 

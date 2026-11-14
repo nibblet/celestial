@@ -52,5 +52,6 @@
   "avoid": [
     "generic_stock_photo_face",
     "celebrity_likeness"
-  ]
+  ],
+  "_uniform_note": "Not Project VALKYRIE crew: do not use the shipboard state; he keeps the corporate suit in wardrobe_overrides."
 }

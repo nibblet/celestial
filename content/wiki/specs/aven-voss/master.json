@@ -19,6 +19,12 @@
     "facial_hair": "none",
     "distinguishing": "silver_medallion_etched_with_faint_constellations_worn_on_a_fine_chain_tucked_beneath_her_suit_collar"
   },
+  "shipboard_uniform": {
+    "tier": "mission_coverall",
+    "garment": "one_piece_flight_suit_cut_coverall_front_zip_chest_and_thigh_pockets",
+    "department": "medical",
+    "role_tab_color": "muted_sage_green"
+  },
   "signature_props": [
     "silver_constellation_medallion",
     "medpack_on_back_with_small_resonance_node",

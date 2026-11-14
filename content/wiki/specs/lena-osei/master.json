@@ -19,6 +19,12 @@
     "facial_hair": "none",
     "distinguishing": "small_gold_stud_earrings_and_a_field_worn_wristband_from_the_giza_dig"
   },
+  "shipboard_uniform": {
+    "tier": "mission_coverall",
+    "garment": "one_piece_flight_suit_cut_coverall_front_zip_chest_and_thigh_pockets",
+    "department": "science",
+    "role_tab_color": "muted_slate_blue"
+  },
   "signature_props": [
     "scan_wand",
     "wrist_display",

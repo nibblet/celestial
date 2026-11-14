@@ -19,6 +19,13 @@
     "facial_hair": "uneven_stubble",
     "distinguishing": "burn_marks_and_small_cuts_on_fingers_tool_grime_under_nails"
   },
+  "shipboard_uniform": {
+    "tier": "mission_coverall",
+    "garment": "one_piece_flight_suit_cut_coverall_front_zip_chest_and_thigh_pockets",
+    "department": "systems",
+    "role_tab_color": "muted_burnt_orange",
+    "worn": "sleeves_pushed_up_and_tool_grime_on_the_cuffs"
+  },
   "signature_props": [
     "datapad",
     "plasma_cutter",

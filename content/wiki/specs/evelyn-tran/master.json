@@ -19,6 +19,13 @@
     "facial_hair": "none",
     "distinguishing": "thin_metal_framed_rectangular_glasses_she_takes_off_to_rub_her_eyes"
   },
+  "shipboard_uniform": {
+    "tier": "civilian_field_jacket",
+    "garment": "hip_length_field_jacket_in_the_uniform_fabric_open_at_the_front",
+    "department": "science",
+    "role_tab_color": "muted_slate_blue",
+    "worn": "over_a_fitted_black_turtleneck_and_dark_trousers"
+  },
   "signature_props": [
     "data_slate_always_in_hand",
     "modified_field_array_built_from_obsolete_mining_tech",

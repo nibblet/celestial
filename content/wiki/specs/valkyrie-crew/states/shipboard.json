@@ -1,22 +1,33 @@
 {
   "state": "shipboard",
-  "display_name": "Shipboard wear aboard Valkyrie-1",
-  "_canon_basis": "No uniform is described in prose (CH17 'Not in uniform' implies one exists). Proposed so crew read as one team without military dress.",
-  "wardrobe": {
-    "base": "fitted_long_sleeve_thermal_layer_in_charcoal_or_slate",
-    "outer": "unstructured_soft_jacket_or_vest_with_mission_patch_on_left_shoulder",
-    "mission_patch": "small_embroidered_patch_triple_curve_and_circle_on_dark_field",
-    "trousers": "utility_trousers_with_thigh_pockets",
+  "display_name": "Project VALKYRIE shipboard uniform",
+  "_canon_basis": "Author decision 2026-11-14: two-tier system. Mission personnel wear a flight-suit-cut coverall; the civilians Marco names in CH12 (Jonah, Evelyn, Thane) wear a field jacket of the same fabric over their own clothes. Project VALKYRIE is joint U.S. and corporate funded (faction dossier, 2049), so a U.S. flag and an unbranded sponsor tab appear, but no service-branch insignia. Each character's master.json sets their tier and role-tab color.",
+  "_role_tab_legend": {
+    "command": "muted_gold",
+    "medical": "muted_sage_green",
+    "security": "muted_oxblood",
+    "systems": "muted_burnt_orange",
+    "science": "muted_slate_blue",
+    "civilian_advisor": "bone_white"
+  },
+  "uniform_system": {
+    "fabric": "matte_ripstop_in_muted_olive_slate_worn_soft_at_elbows_and_knees",
+    "mission_patch": "left_chest_embroidered_patch_triple_curve_and_circle_on_a_dark_navy_field_ringed_by_the_words_PROJECT_VALKYRIE",
+    "name_tape": "right_chest_dark_navy_name_tape_with_the_surname_in_pale_thread",
+    "shoulder": "small_us_flag_on_the_left_shoulder_and_a_blank_sponsor_tab_beneath_it",
+    "role_tab": "narrow_colored_tab_on_the_right_shoulder_seam_showing_department",
     "footwear": "soft_soled_deck_boots",
-    "wrist": "wrist_slate_always_worn"
+    "wrist": "wrist_slate_on_the_left_forearm"
   },
   "palette": [
-    "charcoal",
-    "slate_blue_gray",
-    "muted_bone",
-    "single_accent_of_worn_ochre"
+    "muted_olive_slate",
+    "dark_navy",
+    "pale_thread"
   ],
   "avoid": [
+    "usaf_or_any_service_branch_patches",
+    "rank_insignia_or_wings_badges",
+    "legible_corporate_logos",
     "bright_primary_color_uniforms",
     "capes_or_sashes",
     "armor_plating"

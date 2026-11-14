@@ -19,6 +19,12 @@
     "facial_hair": "clean_shaven_with_gray_shadow",
     "distinguishing": "old_faded_scar_on_the_chin"
   },
+  "shipboard_uniform": {
+    "tier": "mission_coverall",
+    "garment": "one_piece_flight_suit_cut_coverall_front_zip_chest_and_thigh_pockets",
+    "department": "security",
+    "role_tab_color": "muted_oxblood"
+  },
   "signature_props": [
     "wrist_slate",
     "secure_comm",
