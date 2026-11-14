@@ -9,7 +9,9 @@
     "skin": "real_pores_and_texture_no_beauty_filter",
     "faces": "lived_in_asymmetry_fine_lines_appropriate_to_apparent_age",
     "wardrobe": "worn_and_used_scuffed_dust_in_seams",
-    "performance": "restrained_naturalistic_micro_expressions"
+    "performance": "restrained_naturalistic_micro_expressions",
+    "casting": "ordinary_characterful_faces_like_a_working_expedition_crew_not_a_cast_photo_real_asymmetry_imperfect_teeth_and_skin",
+    "grooming": "no_makeup_months_into_a_dig_hair_practical_not_styled"
   },
   "world_rules": {
     "year": "2050",
@@ -38,6 +40,9 @@
     "rank_pips_or_military_dress_medals",
     "airbrushed_or_plastic_skin",
     "model_photoshoot_posing",
-    "anime_or_cartoon_rendering"
+    "anime_or_cartoon_rendering",
+    "glamour_makeup",
+    "model_or_movie_star_good_looks",
+    "perfect_symmetry"
   ]
 }

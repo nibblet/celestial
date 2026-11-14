@@ -13,12 +13,12 @@
   "identity": {
     "height_build": "tall_and_slender_with_squared_shoulders_and_a_long_neck",
     "heritage": "mixed_ghanaian_and_ethiopian",
-    "skin": "warm_brown_skin",
-    "face": "long_narrow_face_with_sharp_angular_cheekbones_a_fine_straight_nose_and_a_mouth_that_rarely_softens",
+    "skin": "warm_brown_skin_bare_and_unmade_with_dark_circles_under_the_eyes_from_lost_sleep",
+    "face": "long_narrow_face_with_sharp_angular_cheekbones_a_slightly_crooked_nose_from_an_old_break_and_a_mouth_that_rarely_softens",
     "eyes": "dark_almond_shaped_eyes_with_heavy_lashes_usually_narrowed_in_assessment",
     "hair": "long_black_hair_pulled_back_tight_from_the_face_into_one_sleek_low_braid_down_her_back",
     "facial_hair": "none",
-    "distinguishing": "a_single_thin_gold_hoop_earring_and_a_field_worn_wristband_from_the_giza_dig"
+    "distinguishing": "a_faint_pale_scar_through_the_right_eyebrow_a_single_thin_gold_hoop_earring_and_a_field_worn_GIZA_wristband"
   },
   "shipboard_uniform": {
     "tier": "mission_coverall",
@@ -56,7 +56,8 @@
     "proposed_needs_author_approval": [
       "portrait not yet generated; identity fields follow the author's chosen 'sleek & angular' direction (2026-11-14)"
     ],
-    "rejected": "Old approved Supabase image (short curly auburn hair) rejected by the author 2026-11-14."
+    "rejected": "Old approved Supabase image (short curly auburn hair) rejected by the author 2026-11-14.",
+    "test_render_2026-11-14": "First OpenAI render: face, braid, hoop, wristband and wardrobe right, but the glare was too stern and the eye makeup too polished. Added a tired, assessing expression, no makeup, and imperfections (old nose break, eyebrow scar)."
   },
   "avoid": [
     "generic_stock_photo_face",
@@ -65,7 +66,11 @@
     "afro_or_loose_curls",
     "auburn_or_dyed_hair",
     "warm_smile",
-    "looking_under_38"
+    "looking_under_38",
+    "glaring_or_hostile_expression",
+    "eyeliner_or_mascara",
+    "glamour_makeup",
+    "model_like_symmetry"
   ],
-  "default_expression": "guarded_skeptical_composure_eyes_narrowed_arms_folded_when_framing_allows"
+  "default_expression": "tired_assessing_skepticism_weighing_what_she_sees_one_brow_slightly_raised_never_a_glare_or_hostile_stare"
 }
