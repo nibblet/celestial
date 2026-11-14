@@ -1,0 +1,30 @@
+{
+  "state": "mars_canopy",
+  "display_name": "Mars suit, helmet off under the filtered canopy or in the command shelter",
+  "_canon_basis": "CH01: Aven 'approached with her helmet off'; Thane 'helmet off, letting the dry Martian air tug gently at his hair under the filtered canopy'; Galen sets his helmet on the 'anchor mount beside the entry' of the command shelter.",
+  "wardrobe": {
+    "outer_layer": "woven_dust_resistant_technical_fabric_in_weathered_sand_gray_over_the_pressure_layers_with_worn_safety_orange_piping_and_rust_red_dust_ground_into_every_seam",
+    "structure": "full_pressure_suit_with_a_rigid_hard_upper_torso_shell_and_a_rear_entry_hatch_visible_on_the_back",
+    "joints": "sealed_metal_bearing_rings_at_the_shoulders_wrists_and_hips_softer_convolute_joints_at_elbows_and_knees",
+    "neck": "low_metal_neck_ring_where_the_helmet_locks",
+    "life_support": "backpack_unclipped_and_docked_or_hanging_open_at_the_rear_hatch",
+    "lower_legs": "darker_charcoal_dust_shedding_material_from_the_knee_down",
+    "boots": "heavy_treaded_boots",
+    "gloves": "thin_dexterous_pressure_gloves_locked_at_the_wrist_rings",
+    "chest": "chest_mounted_display_and_control_unit_and_comm_harness",
+    "insignia": "PROJECT_VALKYRIE_patch_on_the_left_chest_surname_tape_on_the_right_chest_role_tab_color_on_the_left_shoulder_us_flag_on_the_left_upper_arm_same_layout_as_the_coverall",
+    "helmet": "sleek_rounded_helmet_with_a_wide_clear_visor_that_shows_the_face_thin_heads_up_display_glints_and_a_retractable_gold_tinted_sun_visor_raised_OFF_carried_under_one_arm_or_clipped_at_the_hip",
+    "setting_rule": "only_inside_the_pressurized_filtered_canopy_over_the_shaft_or_inside_the_carbon_weave_and_polyglass_dome"
+  },
+  "palette": [
+    "sand_gray",
+    "rust_red_dust",
+    "worn_safety_orange_piping",
+    "charcoal_lower_legs"
+  ],
+  "avoid": [
+    "open_martian_sky_directly_overhead_with_no_canopy_or_dome",
+    "clean_white_nasa_style_suits",
+    "armor_plating_or_military_body_armor"
+  ]
+}

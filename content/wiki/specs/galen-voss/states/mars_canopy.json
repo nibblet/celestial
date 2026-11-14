@@ -1,0 +1,11 @@
+{
+  "state": "mars_canopy",
+  "reference_images": [
+    {
+      "path": "/visual-references/galen-voss-mars-canopy.png",
+      "role": "wardrobe",
+      "label": "Galen in his Mars suit, helmet off",
+      "instruction": "match his face, the sand-gray suit fabric, orange piping, harness and insignia; the backpack and neck ring may be added per the spec"
+    }
+  ]
+}
