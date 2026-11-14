@@ -10,7 +10,10 @@
   },
   "vein_network": {
     "intensity": 0.35,
-    "color_palette": ["pale_cyan", "warm_gold"],
+    "color_palette": [
+      "pale_cyan",
+      "warm_gold"
+    ],
     "pattern_mode": "partial_activation",
     "pulse_behavior": "irregular_node_pulsing",
     "visibility": "localized_channels"
@@ -23,5 +26,14 @@
   "spatial_effects": {
     "distortion": 0.05,
     "lensing": "subtle"
-  }
+  },
+  "reference_images": [
+    {
+      "path": "/visual-references/valkyrie-1/state-wake.png",
+      "role": "style",
+      "label": "Valkyrie-1 in the wake state",
+      "instruction": "match this hull state: pearl-silver hull with scattered points of pale cyan and warm gold blooming along the veins",
+      "inherit": false
+    }
+  ]
 }

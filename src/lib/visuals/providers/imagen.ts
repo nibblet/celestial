@@ -89,6 +89,8 @@ export const imagenProvider: VisualProvider = {
       imageSize: params.imageSize ?? DEFAULT_IMAGE_SIZE,
       thinkingLevel: params.thinkingLevel ?? DEFAULT_THINKING_LEVEL,
       seed: params.seed ?? null,
+      // Cache-bust token from force regenerate — not sent to the API.
+      ...(typeof params.reroll === "string" ? { reroll: params.reroll } : {}),
     };
   },
 

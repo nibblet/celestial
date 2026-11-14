@@ -10,7 +10,11 @@
   },
   "vein_network": {
     "intensity": 0.85,
-    "color_palette": ["violet", "amethyst", "soft_gold"],
+    "color_palette": [
+      "violet",
+      "amethyst",
+      "soft_gold"
+    ],
     "pattern_mode": "geometric_glyph",
     "pulse_behavior": "synchronized_patterned",
     "visibility": "surface_and_subdermal"
@@ -23,5 +27,14 @@
   "spatial_effects": {
     "distortion": 0.2,
     "lensing": "pattern_locked"
-  }
+  },
+  "reference_images": [
+    {
+      "path": "/visual-references/valkyrie-1/state-alignment.png",
+      "role": "style",
+      "label": "Valkyrie-1 in the alignment state",
+      "instruction": "match this hull state: pearl hull with violet-amethyst veins and soft gold highlights",
+      "inherit": false
+    }
+  ]
 }

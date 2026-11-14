@@ -8,7 +8,8 @@
     "helmet_handling": "often_carried_under_arm_or_clipped_at_hip_when_under_the_filtered_canopy",
     "gloves": "thin_dexterous_gloves_with_dust_in_the_finger_creases",
     "boots": "heavy_treaded_boots_sunk_ankle_deep_in_fine_regolith",
-    "kit": "chest_harness_with_comm_mic_and_wrist_slate"
+    "kit": "chest_harness_with_comm_mic_and_wrist_slate",
+    "insignia": "PROJECT_VALKYRIE_patch_on_the_suit's_left_chest_surname_tape_on_the_right_chest_role_tab_color_on_the_left_shoulder_us_flag_on_the_left_upper_arm_same_layout_as_the_coverall"
   },
   "palette": [
     "sand_gray",

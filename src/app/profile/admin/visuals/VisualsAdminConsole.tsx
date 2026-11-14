@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ReferenceImage } from "@/lib/visuals/specs/references";
 
 type PresetOption = { key: string; label: string; brief: string };
@@ -41,6 +41,11 @@ const IMAGE_PROVIDERS = [
   { key: "imagen", label: "Google Nano Banana 2.1 (text only)" },
 ] as const;
 
+const OPENAI_IMAGE_MODELS = [
+  { key: "gpt-image-2", label: "gpt-image-2" },
+  { key: "gpt-image-2.5-sunburst", label: "gpt-image-2.5-sunburst" },
+] as const;
+
 export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
   const [targetKind, setTargetKind] = useState<(typeof TARGET_KINDS)[number]>("entity");
   const [targetId, setTargetId] = useState("");
@@ -61,7 +66,15 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
   const [copied, setCopied] = useState(false);
   const [imageProvider, setImageProvider] =
     useState<(typeof IMAGE_PROVIDERS)[number]["key"]>("openai");
+  const [openaiModel, setOpenaiModel] =
+    useState<(typeof OPENAI_IMAGE_MODELS)[number]["key"]>("gpt-image-2.5-sunburst");
   const [attachRefs, setAttachRefs] = useState(true);
+  const [specRefs, setSpecRefs] = useState<ReferenceImage[]>([]);
+  const [specRefsStatus, setSpecRefsStatus] = useState<"idle" | "loading" | "ready">("idle");
+  const [startFrame, setStartFrame] = useState("");
+  const [videoModel, setVideoModel] = useState<"gen4.5" | "gen4_turbo">("gen4.5");
+  const [videoDuration, setVideoDuration] = useState(5);
+  const [motionText, setMotionText] = useState("");
   const [refFile, setRefFile] = useState<File | null>(null);
   const [refUploading, setRefUploading] = useState(false);
   const [refResult, setRefResult] = useState<{
@@ -69,6 +82,40 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
     visionExtracted: boolean;
     identity: Record<string, unknown> | null;
   } | null>(null);
+
+  useEffect(() => {
+    if (targetKind !== "entity" || !targetId.trim()) {
+      setSpecRefs([]);
+      setSpecRefsStatus("idle");
+      return;
+    }
+    const slug = targetId.trim();
+    const controller = new AbortController();
+    const timer = setTimeout(async () => {
+      setSpecRefsStatus("loading");
+      try {
+        const qs = new URLSearchParams({ targetId: slug });
+        if (view.trim()) qs.set("view", view.trim());
+        if (state.trim()) qs.set("state", state.trim());
+        const res = await fetch(`/api/visuals/references?${qs}`, {
+          signal: controller.signal,
+        });
+        const json = await res.json();
+        if (!res.ok) throw new Error(json.error ?? "Failed to load references");
+        setSpecRefs(json.referenceImages ?? []);
+        setSpecRefsStatus("ready");
+      } catch (err) {
+        if (controller.signal.aborted) return;
+        setSpecRefs([]);
+        setSpecRefsStatus("ready");
+        console.warn("[visuals] reference preview", err);
+      }
+    }, 250);
+    return () => {
+      controller.abort();
+      clearTimeout(timer);
+    };
+  }, [targetKind, targetId, view, state]);
 
   async function handleSynthesize() {
     setBusy(true);
@@ -122,18 +169,21 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
     }
   }
 
-  async function handleGenerate() {
+  async function handleGenerate(opts?: { force?: boolean }) {
     if (!promptResult) return;
     setBusy(true);
     setError(null);
     try {
       const params: Record<string, unknown> = {};
       if (imageProvider === "imagen") {
-        // Imagen takes a seed; OpenAI has no seed parameter.
+        // Nano Banana accepts seed in our normalizeParams cache key only.
         const seedNum = seed.trim() ? Number.parseInt(seed.trim(), 10) : NaN;
         if (Number.isFinite(seedNum)) params.seed = seedNum;
       }
-      const refs = promptResult.referenceImages ?? [];
+      if (imageProvider === "openai") {
+        params.model = openaiModel;
+      }
+      const refs = promptResult.referenceImages ?? specRefs;
       if (imageProvider === "openai" && attachRefs && refs.length > 0) {
         params.referenceImages = refs.map((r) => r.path);
       }
@@ -143,6 +193,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
         body: JSON.stringify({
           promptId: promptResult.promptId,
           provider: imageProvider,
+          force: !!opts?.force,
           ...(Object.keys(params).length > 0 ? { params } : {}),
         }),
       });
@@ -185,16 +236,30 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
     }
   }
 
+  // Start-frame choices: the still just generated (if any), then the
+  // spec's identity/resemblance portraits (approved looks).
+  const startFrameOptions: Array<{ value: string; label: string }> = [
+    ...(assetResult?.kind === "image"
+      ? [{ value: assetResult.url, label: "The still generated above" }]
+      : []),
+    ...(promptResult?.referenceImages ?? [])
+      .filter((r) => r.role === "identity" || r.role === "resemblance")
+      .map((r) => ({ value: r.path, label: r.label })),
+  ];
+  const effectiveStartFrame = startFrame || startFrameOptions[0]?.value || "";
+
   async function handleAnimate() {
-    if (!promptResult || !assetResult) return;
+    if (!promptResult || !effectiveStartFrame) return;
     setAnimating(true);
     setError(null);
     setVideoResult(null);
     try {
       const params: Record<string, unknown> = {
-        promptImageUrl: assetResult.url,
-        duration: 5,
+        promptImageUrl: effectiveStartFrame,
+        model: videoModel,
+        duration: videoDuration,
       };
+      if (motionText.trim()) params.motionText = motionText.trim();
       const seedNum = seed.trim() ? Number.parseInt(seed.trim(), 10) : NaN;
       if (Number.isFinite(seedNum)) params.seed = seedNum;
       const res = await fetch("/api/visuals/generate", {
@@ -368,7 +433,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
               className={inputCls}
             />
           </Field>
-          <Field label="Seed (optional, locks identity across re-rolls)" full>
+          <Field label="Seed (optional, locks identity across re-rolls)">
             <input
               type="number"
               value={seed}
@@ -377,7 +442,75 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
               className={inputCls}
             />
           </Field>
+          <Field label="Image generator">
+            <select
+              value={imageProvider}
+              onChange={(e) =>
+                setImageProvider(e.target.value as (typeof IMAGE_PROVIDERS)[number]["key"])
+              }
+              className={inputCls}
+            >
+              {IMAGE_PROVIDERS.map((p) => (
+                <option key={p.key} value={p.key}>
+                  {p.label}
+                </option>
+              ))}
+            </select>
+          </Field>
+          {imageProvider === "openai" && (
+            <Field label="OpenAI image model">
+              <select
+                value={openaiModel}
+                onChange={(e) =>
+                  setOpenaiModel(e.target.value as (typeof OPENAI_IMAGE_MODELS)[number]["key"])
+                }
+                className={inputCls}
+              >
+                {OPENAI_IMAGE_MODELS.map((m) => (
+                  <option key={m.key} value={m.key}>
+                    {m.label}
+                  </option>
+                ))}
+              </select>
+            </Field>
+          )}
         </div>
+
+        {targetKind === "entity" && targetId.trim() && (
+          <div className="mt-5 border-t border-[var(--color-border)] pt-4">
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <h3 className="type-meta text-ink">Spec reference photos</h3>
+              {imageProvider === "openai" && specRefs.length > 0 && (
+                <label className="flex items-center gap-1.5 text-xs text-ink-muted">
+                  <input
+                    type="checkbox"
+                    checked={attachRefs}
+                    onChange={(e) => setAttachRefs(e.target.checked)}
+                  />
+                  Attach on generate ({specRefs.length})
+                </label>
+              )}
+            </div>
+            {imageProvider === "openai" && !attachRefs && specRefs.length > 0 && (
+              <p className="mt-2 text-[11px] text-ink-muted">
+                Images won&apos;t be sent, but the prompt text still names them. To drop an item
+                entirely, remove it from the spec&apos;s reference_images.
+              </p>
+            )}
+            {specRefsStatus === "loading" && (
+              <p className="mt-2 text-xs text-ink-ghost">Loading references…</p>
+            )}
+            {specRefsStatus === "ready" && specRefs.length === 0 && (
+              <p className="mt-2 text-xs text-ink-ghost">
+                No <code>reference_images</code> in specs for <code>{targetId.trim()}</code>.
+              </p>
+            )}
+            {specRefs.length > 0 && (
+              <ReferenceThumbs refs={specRefs} />
+            )}
+          </div>
+        )}
+
         <button
           onClick={handleSynthesize}
           disabled={busy}
@@ -426,28 +559,10 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
             <div className="mt-4">
               <h3 className="type-meta text-ink">Attach these reference images</h3>
               <p className="mt-1 text-xs text-ink-muted">
-                From the spec. Attach them alongside the prompt in ChatGPT, Gemini or Grok, and use
-                the identity image as Runway&apos;s start frame.
+                From the spec. OpenAI can attach them automatically; or download for ChatGPT /
+                Gemini / Grok. Use the identity image as Runway&apos;s start frame.
               </p>
-              <ul className="mt-2 flex flex-wrap gap-3">
-                {promptResult.referenceImages!.map((ref) => (
-                  <li key={ref.path} className="w-36">
-                    <a href={ref.path} download title={`Download ${ref.label}`}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={ref.path}
-                        alt={ref.label}
-                        className="h-36 w-36 rounded-md border border-[var(--color-border)] object-cover"
-                      />
-                    </a>
-                    <div className="mt-1 text-[11px] font-semibold text-ink">{ref.label}</div>
-                    <div className="text-[11px] uppercase tracking-wide text-ink-ghost">{ref.role}</div>
-                    {ref.instruction && (
-                      <div className="text-[11px] text-ink-muted">{ref.instruction}</div>
-                    )}
-                  </li>
-                ))}
-              </ul>
+              <ReferenceThumbs refs={promptResult.referenceImages!} />
             </div>
           ) : (
             <p className="mt-3 text-xs text-ink-ghost">No reference images in this spec.</p>
@@ -459,41 +574,27 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
             </pre>
           </details>
           <div className="mt-4 flex flex-wrap items-center gap-3">
-            <select
-              value={imageProvider}
-              onChange={(e) =>
-                setImageProvider(e.target.value as (typeof IMAGE_PROVIDERS)[number]["key"])
-              }
-              className="rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-2 text-sm text-ink"
-              aria-label="Image generator"
-            >
-              {IMAGE_PROVIDERS.map((p) => (
-                <option key={p.key} value={p.key}>
-                  {p.label}
-                </option>
-              ))}
-            </select>
-            {imageProvider === "openai" && (promptResult.referenceImages?.length ?? 0) > 0 && (
-              <label className="flex items-center gap-1.5 text-xs text-ink-muted">
-                <input
-                  type="checkbox"
-                  checked={attachRefs}
-                  onChange={(e) => setAttachRefs(e.target.checked)}
-                />
-                Attach {promptResult.referenceImages!.length} reference image
-                {promptResult.referenceImages!.length === 1 ? "" : "s"}
-              </label>
-            )}
+            <span className="text-xs text-ink-muted">
+              Generator:{" "}
+              <strong className="text-ink">
+                {imageProvider === "openai" ? `OpenAI · ${openaiModel}` : "Nano Banana 2.1"}
+              </strong>
+              {imageProvider === "openai" &&
+              attachRefs &&
+              (promptResult.referenceImages?.length ?? 0) > 0
+                ? ` · attaching ${promptResult.referenceImages!.length} ref(s)`
+                : ""}
+            </span>
             {imageProvider === "openai" &&
               !attachRefs &&
               (promptResult.referenceImages?.length ?? 0) > 0 && (
-              <span className="text-[11px] text-ink-muted">
-                Images won&apos;t be sent, but the prompt text still names them. To drop an item
-                entirely, remove it from the spec&apos;s reference_images.
-              </span>
-            )}
+                <span className="text-[11px] text-ink-muted">
+                  Images won&apos;t be sent, but the prompt text still names them. To drop an item
+                  entirely, remove it from the spec&apos;s reference_images.
+                </span>
+              )}
             <button
-              onClick={handleGenerate}
+              onClick={() => handleGenerate()}
               disabled={busy}
               className="rounded-md bg-ocean px-4 py-2 text-sm font-semibold text-warm-white disabled:opacity-50"
             >
@@ -503,18 +604,37 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
                   ? "Generate with OpenAI"
                   : "Generate with Nano Banana"}
             </button>
+            <button
+              type="button"
+              onClick={() => handleGenerate({ force: true })}
+              disabled={busy}
+              className="rounded-md border border-[var(--color-border)] bg-warm-white-2 px-4 py-2 text-sm font-semibold text-ink disabled:opacity-50"
+              title="Ignore the asset cache and call the image provider again"
+            >
+              {busy ? "Working…" : "Regenerate (ignore cache)"}
+            </button>
           </div>
         </section>
       )}
 
       {assetResult && (
         <section className="rounded-xl border border-[var(--color-border)] bg-warm-white p-5">
-          <div className="mb-3 flex items-baseline justify-between gap-3">
+          <div className="mb-3 flex flex-wrap items-baseline justify-between gap-3">
             <h2 className="type-meta text-ink">3. Asset</h2>
-            <span className="type-meta text-ink-ghost">
-              {assetResult.cached ? "cached" : "fresh"} · {assetResult.kind}
-              {assetResult.approved ? " · approved" : ""}
-            </span>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="type-meta text-ink-ghost">
+                {assetResult.cached ? "cached" : "fresh"} · {assetResult.kind}
+                {assetResult.approved ? " · approved" : ""}
+              </span>
+              <button
+                type="button"
+                onClick={() => handleGenerate({ force: true })}
+                disabled={busy}
+                className="rounded-md border border-[var(--color-border)] px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-ink disabled:opacity-50"
+              >
+                Regenerate
+              </button>
+            </div>
           </div>
           {assetResult.kind === "image" ? (
             <img
@@ -546,18 +666,98 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
             </span>
           </div>
           <p className="mt-2 break-all text-xs text-ink-muted">{assetResult.url}</p>
-          <div className="mt-4 border-t border-[var(--color-border)] pt-4">
-            <button
-              onClick={handleAnimate}
-              disabled={animating}
-              className="rounded-md bg-ocean px-4 py-2 text-sm font-semibold text-warm-white disabled:opacity-50"
-            >
-              {animating ? "Animating (~60s)…" : "Animate with Runway Gen-4"}
-            </button>
-            <span className="ml-3 text-xs text-ink-muted">
-              Uses this still as the seed frame. For richer motion direction, re-synthesize with intent=motion_loop first.
-            </span>
-          </div>
+        </section>
+      )}
+
+      {promptResult && (
+        <section className="rounded-xl border border-[var(--color-border)] bg-warm-white p-5">
+          <h2 className="type-meta text-ink">4. Animate with Runway</h2>
+          <p className="mt-1 text-xs text-ink-muted">
+            Image-to-video from a start frame. Identity comes from the frame; the motion text below
+            (or the prompt&apos;s motion fields, if you synthesized with intent=motion_loop) drives
+            the movement.
+          </p>
+          {startFrameOptions.length === 0 ? (
+            <p className="mt-3 text-xs text-ink-ghost">
+              No start frame yet: generate a still above, or add an identity portrait to the spec.
+            </p>
+          ) : (
+            <div className="mt-3 grid gap-3 sm:grid-cols-[auto,1fr]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={effectiveStartFrame}
+                alt="Start frame"
+                className="h-40 w-32 rounded-md border border-[var(--color-border)] object-cover"
+              />
+              <div className="flex flex-col gap-2">
+                <label className="text-xs text-ink-muted">
+                  Start frame
+                  <select
+                    value={effectiveStartFrame}
+                    onChange={(e) => setStartFrame(e.target.value)}
+                    className="mt-1 block w-full rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1.5 text-sm text-ink"
+                  >
+                    {startFrameOptions.map((o) => (
+                      <option key={o.value} value={o.value}>
+                        {o.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <div className="flex flex-wrap gap-3">
+                  <label className="text-xs text-ink-muted">
+                    Model
+                    <select
+                      value={videoModel}
+                      onChange={(e) => {
+                        const m = e.target.value as "gen4.5" | "gen4_turbo";
+                        setVideoModel(m);
+                        if (m === "gen4_turbo" && videoDuration !== 10) setVideoDuration(5);
+                      }}
+                      className="mt-1 block rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1.5 text-sm text-ink"
+                    >
+                      <option value="gen4.5">Gen-4.5 (best, ~$0.12/s)</option>
+                      <option value="gen4_turbo">Gen-4 Turbo (fast, ~$0.05/s)</option>
+                    </select>
+                  </label>
+                  <label className="text-xs text-ink-muted">
+                    Seconds
+                    <select
+                      value={videoDuration}
+                      onChange={(e) => setVideoDuration(Number(e.target.value))}
+                      className="mt-1 block rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1.5 text-sm text-ink"
+                    >
+                      {(videoModel === "gen4_turbo" ? [5, 10] : [3, 5, 8, 10]).map((d) => (
+                        <option key={d} value={d}>
+                          {d}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+                <label className="text-xs text-ink-muted">
+                  Motion direction (optional, max ~1000 chars)
+                  <textarea
+                    value={motionText}
+                    onChange={(e) => setMotionText(e.target.value)}
+                    rows={3}
+                    maxLength={990}
+                    placeholder="e.g. Slow push-in. He breathes, eyes shifting slightly toward the stars off-frame; faint violet light drifts across the wall behind him. No cuts, no speech."
+                    className="mt-1 block w-full rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1.5 text-sm text-ink"
+                  />
+                </label>
+              </div>
+            </div>
+          )}
+          <button
+            onClick={handleAnimate}
+            disabled={animating || !effectiveStartFrame}
+            className="mt-4 rounded-md bg-ocean px-4 py-2 text-sm font-semibold text-warm-white disabled:opacity-50"
+          >
+            {animating
+              ? "Animating (~1–3 min)…"
+              : `Animate with ${videoModel === "gen4.5" ? "Gen-4.5" : "Gen-4 Turbo"}`}
+          </button>
         </section>
       )}
 
@@ -601,5 +801,29 @@ function Field({
       <span className="type-meta mb-1 block text-ink-ghost">{label}</span>
       {children}
     </label>
+  );
+}
+
+function ReferenceThumbs({ refs }: { refs: ReferenceImage[] }) {
+  return (
+    <ul className="mt-2 flex flex-wrap gap-3">
+      {refs.map((ref) => (
+        <li key={ref.path} className="w-36">
+          <a href={ref.path} download title={`Download ${ref.label}`}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={ref.path}
+              alt={ref.label}
+              className="h-36 w-36 rounded-md border border-[var(--color-border)] object-cover"
+            />
+          </a>
+          <div className="mt-1 text-[11px] font-semibold text-ink">{ref.label}</div>
+          <div className="text-[11px] uppercase tracking-wide text-ink-ghost">{ref.role}</div>
+          {ref.instruction && (
+            <div className="text-[11px] text-ink-muted">{ref.instruction}</div>
+          )}
+        </li>
+      ))}
+    </ul>
   );
 }

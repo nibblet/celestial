@@ -10,7 +10,9 @@
   },
   "vein_network": {
     "intensity": 0.1,
-    "color_palette": ["faint_cyan"],
+    "color_palette": [
+      "faint_cyan"
+    ],
     "pattern_mode": "minimal_tracery",
     "pulse_behavior": "slow_irregular",
     "visibility": "subdermal_barely_visible"
@@ -23,5 +25,14 @@
   "spatial_effects": {
     "distortion": 0.0,
     "lensing": false
-  }
+  },
+  "reference_images": [
+    {
+      "path": "/visual-references/valkyrie-1/state-dormant.png",
+      "role": "style",
+      "label": "Valkyrie-1 in the dormant state",
+      "instruction": "match this hull state: near-black pearl hull, veins almost dark, faint pale-cyan tracery",
+      "inherit": false
+    }
+  ]
 }
