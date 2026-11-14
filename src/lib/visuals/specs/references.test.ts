@@ -12,7 +12,7 @@ const patch = {
   label: "PROJECT VALKYRIE patch",
 };
 const portrait = {
-  path: "/visual-references/galen-voss-portrait-chatgpt.png",
+  path: "/visual-references/galen-voss-portrait.png",
   role: "identity",
   label: "Galen Voss identity portrait",
   instruction: "match face exactly",

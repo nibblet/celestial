@@ -9,7 +9,7 @@ This folder is the reference for anything we render: character portraits, ship s
 
 **Reference images** (`public/visual-references/`): images to attach alongside the prompt in ChatGPT, Gemini, Grok or Runway. Each spec declares its own in a `reference_images` array (`path`, `role`, `label`, `instruction`). The arrays inherit through `parent_entity`, views and states: `valkyrie-crew` attaches the patch to every crew member, and each character adds their identity portrait. The admin console shows them under every generated prompt, with **Copy prompt** and **Download all references** buttons, and the prompt names each reference so the generator knows to match it. To add one, put the file in `public/visual-references/` and add an entry to the right spec.
 - `project-valkyrie-patch.png` (SVG source alongside): the canonical mission patch, with three crescent arcs over a circle per CH01's "Three curves. A circle." Attach it to every shot that shows the uniform. `project-valkyrie-patch-v1-two-arcs.png` is the original ChatGPT crop, kept for its embroidery texture.
-- `galen-voss-portrait-chatgpt.png`: Galen's identity portrait and the uniform reference.
+- `galen-voss-portrait.png`: Galen's approved identity portrait, which also shows the full uniform. `galen-voss-portrait-v1-chatgpt.png` is the superseded first version.
 
 | File | What it is |
 |---|---|
