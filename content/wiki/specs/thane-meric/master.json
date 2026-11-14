@@ -1,0 +1,63 @@
+{
+  "entity": "thane-meric",
+  "parent_entity": "valkyrie-crew",
+  "world": "earth_2050",
+  "_canon_status": "draft_pending_author_review",
+  "display_name": "Thane Meric",
+  "role": "Legacy Interface Specialist; the 'living key'; Galen and Aven's grandson",
+  "age": {
+    "chronological": "early_30s",
+    "apparent": "early_30s",
+    "tell": "more curious than cautious, open and centered"
+  },
+  "identity": {
+    "height_build": "slightly_above_average_height_lean_and_wiry",
+    "skin": "fair_skin_that_flushes_easily_under_strain",
+    "face": "narrow_face_with_his_grandfather's_jaw_softened_by_his_grandmother's_features",
+    "eyes": "gray_eyes_like_galen's_wide_and_attentive",
+    "hair": "dark_auburn_brown_hair_slightly_overgrown_wavy_falling_across_the_forehead_moves_easily_in_air",
+    "facial_hair": "light_two_day_stubble",
+    "distinguishing": "family_resemblance_to_galen_and_aven_must_read_on_screen"
+  },
+  "signature_props": [
+    "scanner_slate_modified_after_the_first_vault",
+    "wrist_slate",
+    "field_kit_on_strap"
+  ],
+  "posture_and_gesture": [
+    "kneeling_palms_up_on_knees_eyes_half_closed",
+    "seated_cross_legged_spine_upright",
+    "open_palm_raised_in_offering_not_command",
+    "fingertips_hovering_centimeters_from_a_surface_not_touching"
+  ],
+  "expression_range": [
+    "wide_eyed_wonder",
+    "soft_gasp_and_stagger_under_resonance",
+    "trembling_hands",
+    "red_rimmed_frustration",
+    "calm_clear_eyed_defiance"
+  ],
+  "voice": "curious_lightly_self_deprecating_asks_more_than_he_states",
+  "_provenance": {
+    "canon": [
+      "age early 30s (dossier; CH01)",
+      "hair moves in the air under the canopy (CH01)",
+      "pale under strain, sweat on brow, red-rimmed eyes (CH08, CH12)",
+      "postures and gestures (CH01-CH17)",
+      "props (CH02-CH17)"
+    ],
+    "proposed_needs_author_approval": [
+      "height_build",
+      "skin",
+      "face",
+      "gray eyes",
+      "hair color and length",
+      "stubble",
+      "visible family resemblance"
+    ]
+  },
+  "avoid": [
+    "generic_stock_photo_face",
+    "celebrity_likeness"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "state": "vault_expedition",
+  "display_name": "Vault entry kit (Vault 002 on Mars, Ganymede vault)",
+  "_canon_basis": "CH04 visor down, slate on hip, field kit with strap; CH05 Aven medpack with resonance node, forearm interface; CH06 visor retracted.",
+  "wardrobe": {
+    "suit": "mars_surface_suit_with_helmet_visor_retracted_or_helmet_off_inside_the_vault",
+    "kit": "field_kit_satchel_on_strap_and_slate_holstered_at_hip",
+    "lighting_on_body": "small_chest_lamp_and_wrist_light_throwing_warm_pools_onto_vault_walls"
+  },
+  "avoid": [
+    "flashlights_mounted_on_rifles",
+    "tactical_combat_gear"
+  ]
+}

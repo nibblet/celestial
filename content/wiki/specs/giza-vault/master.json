@@ -1,0 +1,13 @@
+{
+  "entity": "giza-vault",
+  "world": "ancient_vault",
+  "_canon_status": "canon_grounded_from_prose",
+  "display_name": "Giza, Vault 001 (vision)",
+  "vision_look": "fine_pale_gold_sand_sunless_and_still_a_lone_figure_before_the_buried_chamber_beneath_the_great_pyramid_grains_curling_into_three_curves_and_one_circle",
+  "precursor_vision": "a_city_of_curved_towers_under_a_gold_veined_sky",
+  "avoid": [
+    "tourist_crowds",
+    "harsh_sun_and_blue_sky_in_the_vision",
+    "modern_cairo_skyline"
+  ]
+}

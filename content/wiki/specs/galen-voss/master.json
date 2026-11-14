@@ -1,0 +1,64 @@
+{
+  "entity": "galen-voss",
+  "parent_entity": "valkyrie-crew",
+  "world": "earth_2050",
+  "_canon_status": "draft_pending_author_review",
+  "display_name": "Commander Galen Voss",
+  "role": "Mission Commander, Valkyrie-1; former USAF pilot",
+  "age": {
+    "chronological": "about_82",
+    "apparent": "about_50_after_rejuvenation_therapy",
+    "tell": "a restored body carrying decades in the eyes, still and economical in movement"
+  },
+  "identity": {
+    "height_build": "tall_lean_and_upright_pilot_build_broad_but_not_bulky_shoulders",
+    "skin": "fair_weathered_skin_with_sun_creases_at_the_outer_eyes",
+    "face": "long_face_drawn_tight_strong_squared_jaw_often_clenched_deep_vertical_line_between_brows",
+    "eyes": "pale_gray_blue_eyes_clear_but_hollow",
+    "hair": "close_cropped_dark_brown_hair_with_steel_gray_at_the_temples",
+    "facial_hair": "clean_shaven",
+    "distinguishing": "small_pale_scar_through_the_left_eyebrow"
+  },
+  "signature_props": [
+    "slate_and_stylus",
+    "helmet_set_on_anchor_mount",
+    "phase_glass_hand_fragment_in_CH08"
+  ],
+  "posture_and_gesture": [
+    "arms_crossed_watching_nothing",
+    "one_hand_resting_on_the_viewport_for_orientation_not_balance",
+    "spine_straight_hands_clasped_when_seated",
+    "speaks_without_lifting_a_hand"
+  ],
+  "expression_range": [
+    "unreadable_stillness",
+    "slow_breath_before_speaking",
+    "eyes_closing_in_understanding",
+    "controlled_anger_voice_low_and_dangerous",
+    "composure_trembling_at_the_edges",
+    "shoulders_dropping_in_release"
+  ],
+  "voice": "low_measured_cadence_pauses_before_speaking_flight_and_naval_metaphors",
+  "_provenance": {
+    "canon": [
+      "age.chronological (CH01 'Chronologically in his eighties'; dossier 'rejuvenated from 82 to 50')",
+      "face drawn tight, tight jaw (CH07, CH12)",
+      "eyes clear but hollow (CH12)",
+      "posture and gestures (CH03-CH17)",
+      "props (CH01, CH04, CH08)",
+      "voice (dossier)"
+    ],
+    "proposed_needs_author_approval": [
+      "height_build",
+      "skin",
+      "eyes color (pale gray-blue)",
+      "hair",
+      "clean_shaven",
+      "eyebrow scar"
+    ]
+  },
+  "avoid": [
+    "generic_stock_photo_face",
+    "celebrity_likeness"
+  ]
+}

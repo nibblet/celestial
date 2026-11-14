@@ -1,0 +1,19 @@
+{
+  "entity": "zone-theta",
+  "world": "ancient_vault",
+  "_canon_status": "canon_grounded_from_prose",
+  "display_name": "Zone Theta shaft and Vault 002 threshold",
+  "position": "just_under_the_southern_curve_of_the_buried_ship",
+  "shaft": "shallow_shaft_three_to_eight_meters_descent_platform_that_hums_under_a_filtered_canopy",
+  "surfaces": "curved_planes_with_no_edges_like_the_inside_of_a_fossilized_lung_inert_alloy_with_trace_crystalline_structure_shimmer_without_source",
+  "layout": "deliberately_asymmetric_no_grids_disorienting",
+  "glyphs": "triple_curve_and_circle_networks_tracking_faintly_just_under_the_surface_rotating_when_unobserved",
+  "opening": "a_thin_line_of_glow_branching_into_arcs_then_the_wall_folds_silently_into_itself_revealing_a_corridor_of_pale_light_no_door",
+  "sound": "whisper_like_braided_glass_under_pressure_low_harmonic_felt_in_chest_and_teeth",
+  "avoid": [
+    "carved_hieroglyph_walls",
+    "torches",
+    "stone_doors_sliding",
+    "indiana_jones_temple"
+  ]
+}

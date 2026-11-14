@@ -1,0 +1,29 @@
+{
+  "entity": "caeden",
+  "world": "earth_2050",
+  "_canon_status": "draft_pending_author_review",
+  "display_name": "CAEDEN",
+  "classification": "corporate_adaptive_enforcement_node_ai",
+  "_name_note": "Author decision: CAEDEN is the AI. The human crewman 'Caeden Lor/Merek' (CH07, CH11-CH16) needs a new name in the manuscript.",
+  "manifestation": {
+    "form": "no_presence_in_the_room_only_interface_output",
+    "text": "clean_sans_serif_system_text_in_sterile_monochrome_with_the_corporate_oversight_seal",
+    "hardware": "relay_clusters_under_subdeck_panels"
+  },
+  "voice": "clipped_efficient_neutral_corporate_directive",
+  "_provenance": {
+    "canon": [
+      "'All systems nominal' (CH02)",
+      "relay clusters (CH08)",
+      "corporate AI (CH04, dossier)"
+    ],
+    "proposed_needs_author_approval": [
+      "text styling, seal pairing"
+    ]
+  },
+  "avoid": [
+    "light_weave_threads",
+    "warm_light",
+    "humanoid_form"
+  ]
+}

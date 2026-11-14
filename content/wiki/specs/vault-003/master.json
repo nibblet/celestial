@@ -1,0 +1,15 @@
+{
+  "entity": "vault-003",
+  "world": "alien_organic",
+  "_canon_status": "canon_grounded_from_prose",
+  "display_name": "Vault 003, Vault of the Veil (forms inside the ship, CH17)",
+  "transformation": "corridor_plating_and_straight_lines_dissolve_into_recursive_curves_and_seams_of_prismatic_light",
+  "walkway": "a_walkway_descending_in_a_triple_helix_around_a_central_hollow",
+  "veil": "a_translucent_veil_shimmering_with_pale_blue_energy_not_blocking_waiting",
+  "glyph": "a_fourth_glyph_whose_pattern_shifts_between_states_of_perception",
+  "avoid": [
+    "portal_swirl_cliche",
+    "lightning",
+    "red_energy"
+  ]
+}

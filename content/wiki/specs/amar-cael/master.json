@@ -1,0 +1,56 @@
+{
+  "entity": "amar-cael",
+  "parent_entity": "valkyrie-crew",
+  "world": "earth_2050",
+  "_canon_status": "draft_pending_author_review",
+  "display_name": "Director Amar Cael",
+  "role": "Corporate oversight director; Lena's former Giza project supervisor",
+  "age": {
+    "chronological": "late_50s",
+    "apparent": "late_50s",
+    "tell": "less glass tower, more iron core"
+  },
+  "identity": {
+    "height_build": "tall_and_spare",
+    "skin": "medium_brown_skin",
+    "face": "refined_lean_face_faint_tension_at_the_corners_of_the_mouth",
+    "eyes": "dark_eyes_that_flick_across_equipment_and_people",
+    "hair": "black_hair_going_silver_combed_back",
+    "facial_hair": "short_trimmed_silver_flecked_beard",
+    "distinguishing": "corporate_issue_suit_clean_lines_no_dust"
+  },
+  "wardrobe_overrides": {
+    "surface": "corporate_issue_surface_suit_clean_charcoal_with_minimal_branding",
+    "shipboard": "tailored_dark_jacket_over_a_high_collar"
+  },
+  "signature_props": [
+    "corporate_shuttle_ramp",
+    "slate"
+  ],
+  "posture_and_gesture": [
+    "short_nod",
+    "standing_in_the_center_waiting",
+    "fists_clenched_then_palms_opening"
+  ],
+  "expression_range": [
+    "small_smile_not_warm_but_real",
+    "shaken",
+    "sharp_inhale",
+    "cracking_voice"
+  ],
+  "voice": "clipped_corporate_reserve",
+  "_provenance": {
+    "canon": [
+      "'He looked older. Not aged-refined... corporate-issue suit... Less glass tower, more iron core' (CH06)",
+      "tension at mouth corners (CH06)",
+      "expressions (CH06, CH09)"
+    ],
+    "proposed_needs_author_approval": [
+      "build, skin, face, eyes, hair, beard, age, suit color"
+    ]
+  },
+  "avoid": [
+    "generic_stock_photo_face",
+    "celebrity_likeness"
+  ]
+}

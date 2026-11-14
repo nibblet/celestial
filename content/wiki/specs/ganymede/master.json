@@ -1,0 +1,12 @@
+{
+  "entity": "ganymede",
+  "world": "earth_2050",
+  "_canon_status": "canon_grounded_from_prose",
+  "display_name": "Ganymede and Jupiter from orbit",
+  "surface": "fractured_gleam_of_ice_ragged_vein_lit_ancient",
+  "sky": "jupiter_hanging_above_vast_and_indifferent_storm_bands_rimmed_in_silent_motion",
+  "avoid": [
+    "cartoon_saturated_jupiter",
+    "earth_like_clouds_on_ganymede"
+  ]
+}

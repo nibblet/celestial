@@ -1,0 +1,15 @@
+{
+  "view_type": "full_body_reference",
+  "camera": {
+    "framing": "full_body_head_to_boots",
+    "angle": "front_three_quarter",
+    "elevation": "chest_height",
+    "lens": "50mm",
+    "depth_of_field": "medium"
+  },
+  "lighting": {
+    "key": "even_soft_key",
+    "background": "plain_neutral_backdrop"
+  },
+  "pose": "relaxed_standing_in_the_character's_signature_posture"
+}
