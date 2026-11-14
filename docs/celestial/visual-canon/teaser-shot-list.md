@@ -1,7 +1,7 @@
 # Teaser shot list: "It's listening" (about 40 s)
 
 **Status:** draft. Generate only after the character portraits in `README.md` are approved.
-**Pipeline:** still (Imagen) → approve → Runway image-to-video, 10 s. Plan on 4–6 takes per shot.
+**Pipeline:** still (OpenAI GPT Image, references attached) → approve → Runway Gen-4.5 image-to-video, 5–10 s. Plan on 4–6 takes per shot.
 **Rule:** one moment and one camera move per shot. No lip-sync; the only spoken audio is narration over the picture.
 
 | # | Moment (first occurrence) | Target ID | View / State | Preset | Intent | Camera move | Key line (narration or on-screen text) |

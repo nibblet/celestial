@@ -31,5 +31,14 @@
     "bulky_apollo_era_suits",
     "mirror_gold_visor_hiding_the_face",
     "armor_plating_or_military_body_armor"
-  ]
+  ],
+  "reference_images": [
+    {
+      "path": "/visual-references/mars-surface-suit.png",
+      "role": "wardrobe",
+      "label": "Approved Mars surface suit (shown on Galen)",
+      "instruction": "match the suit design exactly: helmet, clear visor, raised gold sun visor, neck ring, chest unit, harness, fabric, orange piping and insignia layout; the face, name tape and role-tab color come from the wearer's own references, not from this image"
+    }
+  ],
+  "_reference_note": "Approved 2026-11-14. Its chest display text (SOL 0473, EXT TEMP) is generated and not canon; the book's Mars scenes are Mission Days 38-46."
 }
