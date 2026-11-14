@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { buildVisualCorpusContext } from "@/lib/visuals/corpus-context";
 import { synthesizeVisualPrompt } from "@/lib/visuals/synthesize-prompt";
+import { parseCast, type CastMember } from "@/lib/visuals/specs/cast";
 import { DEFAULT_STYLE_PRESET, STYLE_PRESETS } from "@/lib/visuals/style-presets";
 import type {
   StylePresetKey,
@@ -54,6 +55,7 @@ export async function POST(request: Request) {
     intent?: VisualIntent;
     view?: string;
     state?: string;
+    cast?: unknown;
   };
   try {
     body = await request.json();
@@ -84,6 +86,16 @@ export async function POST(request: Request) {
     );
   }
 
+  let cast: CastMember[];
+  try {
+    cast = parseCast(body.cast);
+  } catch (err) {
+    return Response.json(
+      { error: err instanceof Error ? err.message : "Invalid cast" },
+      { status: 400 },
+    );
+  }
+
   try {
     const target = {
       kind: targetKind,
@@ -99,6 +111,7 @@ export async function POST(request: Request) {
       intent,
       view: body.view?.trim() || undefined,
       state: body.state?.trim() || undefined,
+      cast,
       userId: auth.userId,
     });
     return Response.json({

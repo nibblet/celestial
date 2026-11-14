@@ -55,6 +55,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
   const [intent, setIntent] = useState<(typeof INTENTS)[number]>("establishing_shot");
   const [view, setView] = useState("");
   const [state, setState] = useState("");
+  const [castText, setCastText] = useState("");
   const [seed, setSeed] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -97,6 +98,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
         const qs = new URLSearchParams({ targetId: slug });
         if (view.trim()) qs.set("view", view.trim());
         if (state.trim()) qs.set("state", state.trim());
+        if (castText.trim()) qs.set("cast", castText.trim());
         const res = await fetch(`/api/visuals/references?${qs}`, {
           signal: controller.signal,
         });
@@ -115,7 +117,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
       controller.abort();
       clearTimeout(timer);
     };
-  }, [targetKind, targetId, view, state]);
+  }, [targetKind, targetId, view, state, castText]);
 
   async function handleSynthesize() {
     setBusy(true);
@@ -135,6 +137,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
           intent,
           view: view.trim() || undefined,
           state: state.trim() || undefined,
+          cast: castText.trim() || undefined,
         }),
       });
       const json = await res.json();
@@ -430,6 +433,14 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
               value={state}
               onChange={(e) => setState(e.target.value)}
               placeholder="e.g. dormant, active, alignment, harmonic_jump"
+              className={inputCls}
+            />
+          </Field>
+          <Field label="Characters in shot (optional: slug:state, comma-separated)">
+            <input
+              value={castText}
+              onChange={(e) => setCastText(e.target.value)}
+              placeholder="e.g. galen-voss:mars_surface, aven-voss:mars_surface"
               className={inputCls}
             />
           </Field>

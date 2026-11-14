@@ -8,7 +8,8 @@ import { fetchIdentityContinuity, renderIdentityContinuityForPrompt } from "./co
 import { getStylePreset } from "./style-presets";
 import { continuityHashFor, seedHashFor } from "./hash";
 import { composeEntitySpec, renderSpecForPrompt } from "./specs/loader";
-import type { ReferenceImage } from "./specs/references";
+import { mergeShotReferences, type ReferenceImage } from "./specs/references";
+import { castKey, type CastMember } from "./specs/cast";
 import type {
   StylePresetKey,
   VisualAspect,
@@ -22,7 +23,9 @@ import type {
  * Bump when the system prompt below changes. Combined with corpusVersion in
  * seedHashFor() so cached prompts auto-invalidate on prompt edits.
  */
-const SYNTH_PROMPT_VERSION = "v12";
+const SYNTH_PROMPT_VERSION = "v13";
+/** A view name with no spec file, so cast members skip their portrait camera. */
+const CAST_NO_VIEW = "__cast__";
 const SYNTH_MODEL = "claude-opus-5-5";
 
 const SYSTEM_PROMPT = `You are a Visual Director for the Celestial corpus.
@@ -126,6 +129,13 @@ When a "Visual Spec — CANON OVERRIDE" block appears in your input:
    reference, say to borrow only the family likeness it describes and keep
    the subject a distinct person. Still describe the
    subject in words; the references reinforce the text, they do not replace it.
+9. If "Cast member" blocks appear, the shot places those characters into the
+   target (usually a location). Name every cast member in the raw prompt,
+   position them as the Focus describes, and give each the identity and
+   wardrobe from their own block — never blend two characters' features.
+   Keep each one recognizable even when small in frame (hair, build, the
+   name on the suit). The target's spec still governs the setting. For a
+   cast shot the raw prompt may run to 300 words.
 
 If the subject is non-humanoid or environmental (an AI, a place, a ship's
 spirit), treat THE SETTING as the protagonist: load it with cinematic
@@ -205,6 +215,8 @@ export type SynthesizeVisualPromptInput = {
   view?: string;
   /** Optional state name for spec composition — e.g. 'alignment', 'dormant'. */
   state?: string;
+  /** Optional characters placed into the shot, each with a wardrobe state. */
+  cast?: CastMember[];
   userId?: string | null;
 };
 
@@ -235,11 +247,33 @@ export async function synthesizeVisualPrompt(
         })
       : null;
 
+  // Cast members: each composed from their own spec (with their wardrobe
+  // state, without their portrait-camera view) so the place's camera and
+  // setting still govern the shot.
+  const cast = input.cast ?? [];
+  const castSpecs = cast.map((member) => {
+    const spec = composeEntitySpec({
+      entitySlug: member.id,
+      view: CAST_NO_VIEW,
+      state: member.state,
+    });
+    if (!spec) throw new Error(`No visual spec for cast member "${member.id}"`);
+    return { member, spec };
+  });
+  const referenceImages = mergeShotReferences(
+    entitySpec?.referenceImages ?? [],
+    castSpecs.map((c) => c.spec.referenceImages),
+  );
+
   // Spec hash gets folded into seed_hash so cache invalidates whenever any
   // spec layer changes — same way corpusVersion + continuityHash work.
-  const specToken = entitySpec
-    ? `${entitySpec.hash}:${input.view ?? "three_quarter"}:${input.state ?? "_"}`
-    : "";
+  const specToken =
+    (entitySpec
+      ? `${entitySpec.hash}:${input.view ?? "three_quarter"}:${input.state ?? "_"}`
+      : "") +
+    (castSpecs.length
+      ? `|cast:${castKey(cast)}:${castSpecs.map((c) => c.spec.hash).join(".")}`
+      : "");
 
   const seedHash = seedHashFor({
     target: input.target,
@@ -266,7 +300,7 @@ export async function synthesizeVisualPrompt(
       promptId: existing.id as string,
       prompt: existing.prompt_json as VisualPrompt,
       cached: true,
-      referenceImages: entitySpec?.referenceImages ?? [],
+      referenceImages,
     };
   }
 
@@ -281,6 +315,13 @@ export async function synthesizeVisualPrompt(
   // and must dominate the visual director's attention. Corpus is used to
   // pick narrative beats; spec dictates form/material/palette.
   const specBlock = entitySpec ? renderSpecForPrompt(entitySpec) : "";
+  const castBlock = castSpecs
+    .map(
+      ({ member, spec }) =>
+        `# Cast member: ${member.id}${member.state ? ` (state: ${member.state})` : ""}\n` +
+        renderSpecForPrompt(spec),
+    )
+    .join("\n\n");
 
   const userMessage = [
     `Style preset: ${preset.label}`,
@@ -295,6 +336,8 @@ export async function synthesizeVisualPrompt(
     "",
     specBlock,
     specBlock ? "" : null,
+    castBlock,
+    castBlock ? "" : null,
     continuityBlock,
     continuityBlock ? "" : null,
     "Corpus passages:",
@@ -348,7 +391,7 @@ export async function synthesizeVisualPrompt(
       target_id: input.target.id,
       style_preset: input.stylePreset,
       seed_hash: seedHash,
-      prompt_json: prompt,
+      prompt_json: castSpecs.length ? { ...prompt, cast } : prompt,
       evidence_refs: input.context.evidence,
       synth_model: SYNTH_MODEL,
       synth_prompt_version: SYNTH_PROMPT_VERSION,
@@ -370,7 +413,7 @@ export async function synthesizeVisualPrompt(
         promptId: race.id as string,
         prompt: race.prompt_json as VisualPrompt,
         cached: true,
-        referenceImages: entitySpec?.referenceImages ?? [],
+        referenceImages,
       };
     }
     throw new Error(
@@ -382,7 +425,7 @@ export async function synthesizeVisualPrompt(
     promptId: inserted.id as string,
     prompt,
     cached: false,
-    referenceImages: entitySpec?.referenceImages ?? [],
+    referenceImages,
   };
 }
 
