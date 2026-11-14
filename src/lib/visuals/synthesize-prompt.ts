@@ -351,11 +351,24 @@ export async function synthesizeVisualPrompt(
 
   const response = await anthropic.messages.create({
     model: SYNTH_MODEL,
-    // Opus 5.5 adaptive thinking shares this budget; keep headroom for JSON output.
-    max_tokens: 4096,
+    // Opus 5.5 always thinks, and thinking tokens count toward max_tokens.
+    // Cast shots carry several full specs and think longer; at 2-4K the
+    // JSON was cut off ("did not return JSON"). 16K is the recommended
+    // non-streaming ceiling; effort is explicit (Opus 5.5 defaults to medium).
+    max_tokens: 16000,
+    output_config: { effort: "medium" },
     system: SYSTEM_PROMPT,
     messages: [{ role: "user", content: userMessage }],
   });
+
+  if (response.stop_reason === "max_tokens") {
+    throw new Error(
+      `Visual director ran out of tokens before finishing (${response.usage?.output_tokens ?? "?"} output tokens). Try a shorter Focus or fewer characters in the shot.`,
+    );
+  }
+  if (response.stop_reason === "refusal") {
+    throw new Error("Visual director declined this request (refusal). Rephrase the Focus and try again.");
+  }
 
   const latencyMs = Date.now() - startedAt;
   const textBlock = response.content.find((c) => c.type === "text");
@@ -444,6 +457,7 @@ function parseVisualPromptJson(
 ): VisualPrompt {
   const jsonMatch = text.match(/\{[\s\S]*\}/);
   if (!jsonMatch) {
+    console.error("[visuals] visual director output without JSON:", text.slice(0, 500));
     throw new Error("Visual director did not return JSON");
   }
   const parsed = JSON.parse(jsonMatch[0]) as Partial<{
