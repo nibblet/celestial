@@ -1,25 +1,35 @@
 {
   "state": "mars_surface",
-  "display_name": "Mars excavation surface wear (CH01-CH03, CH06)",
-  "_canon_basis": "CH01 suit knees caked in dust, visor HUD pings vitals, helmets removed under the filtered canopy; CH02 visor tinted against morning glare; CH03 breath fogging visor, suit audio feed, external mic.",
+  "display_name": "Mars surface suit, sealed (out on the dig: CH01-CH03, CH06)",
+  "_canon_basis": "CH01 suit knees caked in dust, visor HUD pings vitals; CH02 visor tinted against the morning glare; CH03 breath fogging the visor, suit audio feed, external mic. Mars air is ~0.6% of Earth's pressure, so outdoors the helmet is always sealed.",
+  "_design_basis": "2026-11-14 author direction: a believable 2050 descendant of the SpaceX Polaris Dawn EVA suit and NASA/Axiom AxEMU. Woven outer fabric is accurate; adds the hard upper torso, rear-entry hatch, bearing rings, neck ring, backpack and dust-shedding lower legs a Mars surface suit needs.",
   "wardrobe": {
-    "suit": "segmented_soft_shell_surface_suit_in_weathered_sand_gray_with_rust_red_dust_ground_into_knees_and_seams",
-    "helmet": "rounded_hard_helmet_with_retractable_tinted_visor_and_small_hud_glints",
-    "helmet_handling": "often_carried_under_arm_or_clipped_at_hip_when_under_the_filtered_canopy",
-    "gloves": "thin_dexterous_gloves_with_dust_in_the_finger_creases",
-    "boots": "heavy_treaded_boots_sunk_ankle_deep_in_fine_regolith",
-    "kit": "chest_harness_with_comm_mic_and_wrist_slate",
-    "insignia": "PROJECT_VALKYRIE_patch_on_the_suit's_left_chest_surname_tape_on_the_right_chest_role_tab_color_on_the_left_shoulder_us_flag_on_the_left_upper_arm_same_layout_as_the_coverall"
+    "outer_layer": "woven_dust_resistant_technical_fabric_in_weathered_sand_gray_over_the_pressure_layers_with_worn_safety_orange_piping_and_rust_red_dust_ground_into_every_seam",
+    "structure": "full_pressure_suit_with_a_rigid_hard_upper_torso_shell_and_a_rear_entry_hatch_visible_on_the_back",
+    "joints": "sealed_metal_bearing_rings_at_the_shoulders_wrists_and_hips_softer_convolute_joints_at_elbows_and_knees",
+    "neck": "low_metal_neck_ring_where_the_helmet_locks",
+    "life_support": "slim_contoured_backpack_integrated_with_the_rear_hatch_small_status_lights",
+    "lower_legs": "darker_charcoal_dust_shedding_material_from_the_knee_down",
+    "boots": "heavy_treaded_boots",
+    "gloves": "thin_dexterous_pressure_gloves_locked_at_the_wrist_rings",
+    "chest": "chest_mounted_display_and_control_unit_and_comm_harness",
+    "insignia": "PROJECT_VALKYRIE_patch_on_the_left_chest_surname_tape_on_the_right_chest_role_tab_color_on_the_left_shoulder_us_flag_on_the_left_upper_arm_same_layout_as_the_coverall",
+    "helmet": "sleek_rounded_helmet_with_a_wide_clear_visor_that_shows_the_face_thin_heads_up_display_glints_and_a_retractable_gold_tinted_sun_visor_raised_SEALED_on_the_neck_ring_face_clearly_visible_through_the_visor"
   },
   "palette": [
     "sand_gray",
     "rust_red_dust",
     "worn_safety_orange_piping",
-    "matte_black_fittings"
+    "charcoal_lower_legs",
+    "brushed_metal_rings"
   ],
   "avoid": [
+    "helmet_off_in_the_open_martian_air",
+    "no_backpack",
+    "flight_jacket_or_coverall_look",
     "clean_white_nasa_style_suits",
     "bulky_apollo_era_suits",
-    "mirror_gold_visors_hiding_faces"
+    "mirror_gold_visor_hiding_the_face",
+    "armor_plating_or_military_body_armor"
   ]
 }

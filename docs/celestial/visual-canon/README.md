@@ -46,6 +46,9 @@ This folder is the reference for anything we render: character portraits, ship s
    - **Role tab colors:** command muted gold (Galen); medical sage green (Aven); security oxblood (Marco); systems burnt orange (Jax); science slate blue (Lena, Evelyn, Thane); civilian advisor bone white (Jonah).
    - **Where it lives:** the shared parts are in `valkyrie-crew/states/shipboard.json`; each character's tier and tab are in `shipboard_uniform` in their `master.json`. Amar Cael is corporate, not crew, and keeps his own suit.
 7. **Galen's look is approved.** His identity reference is `public/visual-references/galen-voss-portrait.png`, generated in the app with OpenAI using the spec references. It shows the face, uniform, three-arc patch, and tab and flag placement exactly as specified. The look: blue-gray eyes, brown hair graying at the temples in a military cut, a sun-weathered face with deep forehead lines, a square jaw, and early-to-mid 50s apparent age. The older ChatGPT portrait (`galen-voss-portrait-v1-chatgpt.png`, two-arc patch) and the Supabase USAF reference are superseded.
+8. **Mars suits (2026-11-14):** a believable 2050 descendant of SpaceX's Polaris Dawn EVA suit and NASA/Axiom's AxEMU. It keeps a woven sand-gray outer fabric (real suits look like this) with orange piping and rust dust, and adds a hard upper torso, rear-entry hatch, slim backpack, sealed bearing rings, neck ring, dust-shedding charcoal lower legs, and a clear-visor HUD helmet that shows the face. The insignia layout matches the coverall. There are two states:
+   - `mars_surface`: helmet **sealed**, for anywhere under open Martian sky (the air is about 0.6% of Earth's pressure).
+   - `mars_canopy`: helmet **off**, backpack unclipped, only under the filtered canopy or inside the dome. This matches CH01's helmets-off scenes. Galen's canopy reference is `public/visual-references/galen-voss-mars-canopy.png`.
 
 ## What was added or changed
 
