@@ -43,7 +43,7 @@ export default async function AdminVisualsPage() {
       <h1 className="type-page-title mb-2">Visual Prompt Studio</h1>
       <p className="mb-8 max-w-prose font-[family-name:var(--font-lora)] text-sm text-ink-muted">
         Synthesize a structured visual prompt from the wiki corpus, then
-        generate an image with Imagen 4. Same target × style × corpus version
+        generate an image with Gemini Nano Banana 2.1 (Imagen successor). Same target × style × corpus version
         → same cached prompt; same prompt × provider × params → same cached
         image.
       </p>

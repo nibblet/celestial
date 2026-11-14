@@ -12,7 +12,7 @@ const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY || "",
 });
 
-const DRAFT_MODEL = "claude-sonnet-4-20250514";
+const DRAFT_MODEL = "claude-opus-5-5";
 
 export async function POST(request: Request) {
   const supabase = await createClient();

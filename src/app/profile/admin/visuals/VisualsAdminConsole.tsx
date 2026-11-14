@@ -38,7 +38,7 @@ const ASPECTS = ["16:9", "9:16", "1:1", "4:5", "3:2"] as const;
 const INTENTS = ["portrait", "establishing_shot", "scene_moment", "motion_loop"] as const;
 const IMAGE_PROVIDERS = [
   { key: "openai", label: "OpenAI GPT Image (attaches references)" },
-  { key: "imagen", label: "Google Imagen 4 (text only)" },
+  { key: "imagen", label: "Google Nano Banana 2.1 (text only)" },
 ] as const;
 
 export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
@@ -493,7 +493,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
                 ? "Working…"
                 : imageProvider === "openai"
                   ? "Generate with OpenAI"
-                  : "Generate with Imagen 4"}
+                  : "Generate with Nano Banana"}
             </button>
           </div>
         </section>

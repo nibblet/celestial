@@ -77,7 +77,7 @@ export function shouldRegenerateReflection(args: {
   return "generate";
 }
 
-export const REFLECTION_MODEL = "claude-sonnet-4-20250514";
+export const REFLECTION_MODEL = "claude-opus-5-5";
 const REFLECTION_MAX_TOKENS = 160;
 import { book } from "@/config/book";
 

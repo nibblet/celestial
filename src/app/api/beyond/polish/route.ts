@@ -13,7 +13,7 @@ const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY || "",
 });
 
-const MODEL = "claude-sonnet-4-20250514";
+const MODEL = "claude-opus-5-5";
 
 const SYSTEM_PROMPT = `You are a gentle editor helping polish a contributed story for this book companion archive. Preserve the author's voice: plain, warm, and direct unless the draft clearly wants something else. Your job:
 
