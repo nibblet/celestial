@@ -8,8 +8,8 @@ import type { GeneratedAsset, VisualProvider } from "./types";
 import { contentTypeForFile, resolveReferencePath } from "./openai-helpers";
 import {
   RUNWAY_DEFAULT_VIDEO_MODEL,
-  clampRunwayPrompt,
   runwayDurationFor,
+  withRestraint,
   toDataUri,
 } from "./runway-helpers";
 
@@ -106,10 +106,11 @@ export const runwayProvider: VisualProvider = {
 
     const body: Record<string, unknown> = {
       promptImage: await resolvePromptImage(promptImageUrl),
-      promptText:
+      promptText: withRestraint(
         typeof params.motionText === "string" && params.motionText.trim()
-          ? clampRunwayPrompt(params.motionText)
+          ? params.motionText
           : buildMotionPrompt(prompt),
+      ),
       model,
       ratio,
       duration,

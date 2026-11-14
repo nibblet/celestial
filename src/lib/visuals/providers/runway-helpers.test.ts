@@ -4,7 +4,9 @@ import assert from "node:assert/strict";
 import {
   RUNWAY_MAX_DATA_URI_BYTES,
   RUNWAY_MAX_PROMPT_CHARS,
+  RUNWAY_RESTRAINT_SUFFIX,
   clampRunwayPrompt,
+  withRestraint,
   runwayDurationFor,
   toDataUri,
 } from "./runway-helpers";
@@ -38,4 +40,14 @@ test("data URI encodes with the content type and enforces the 5MB cap", () => {
   assert.equal(uri, "data:image/png;base64,AQID");
   const tooBig = new Uint8Array(Math.ceil((RUNWAY_MAX_DATA_URI_BYTES * 3) / 4) + 10);
   assert.throws(() => toDataUri(tooBig, "image/png"), /too large/);
+});
+
+test("every Runway prompt ends with the restraint suffix and stays under the cap", () => {
+  const short = withRestraint("Slow push-in. He breathes.");
+  assert.ok(short.startsWith("Slow push-in. He breathes."));
+  assert.ok(short.endsWith(RUNWAY_RESTRAINT_SUFFIX));
+  const long = withRestraint("He looks toward the stars and breathes slowly. ".repeat(60));
+  assert.ok(long.length <= RUNWAY_MAX_PROMPT_CHARS);
+  assert.ok(long.endsWith(RUNWAY_RESTRAINT_SUFFIX));
+  assert.equal(withRestraint("   "), RUNWAY_RESTRAINT_SUFFIX);
 });

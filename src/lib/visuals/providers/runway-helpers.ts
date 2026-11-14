@@ -25,6 +25,28 @@ export function runwayDurationFor(model: string, requested: number): number {
 }
 
 /**
+ * Appended to every Runway prompt. Learned from the first Galen test
+ * (2026-11-14): Gen-4.5 opened his mouth despite "no speech" and turned a
+ * "faint" background drift into a strong purple-to-teal swing.
+ */
+export const RUNWAY_RESTRAINT_SUFFIX =
+  "Keep the face and identity exactly as in the start frame. Mouth stays closed and relaxed; no speaking or mouthing words. Background light stays dim and steady with only slow, subtle shimmer; no flares or color swings. Small, restrained movement.";
+
+/** Operator/synthesized motion text plus the restraint suffix, within the cap. */
+export function withRestraint(motion: string): string {
+  const base = motion.replace(/\s+/g, " ").trim();
+  const room = RUNWAY_MAX_PROMPT_CHARS - RUNWAY_RESTRAINT_SUFFIX.length - 1;
+  const head = base.length <= room ? base : clampTo(base, room);
+  return head ? `${head} ${RUNWAY_RESTRAINT_SUFFIX}` : RUNWAY_RESTRAINT_SUFFIX;
+}
+
+function clampTo(text: string, max: number): string {
+  const cut = text.slice(0, max);
+  const stop = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("; "));
+  return stop > max / 3 ? cut.slice(0, stop + 1) : cut;
+}
+
+/**
  * Trim free text to Runway's promptText limit, cutting at the last
  * sentence boundary when one is reasonably close to the cap.
  */
