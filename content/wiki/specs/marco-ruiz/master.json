@@ -2,22 +2,22 @@
   "entity": "marco-ruiz",
   "parent_entity": "valkyrie-crew",
   "world": "earth_2050",
-  "_canon_status": "draft_pending_author_review",
+  "_canon_status": "look_direction_chosen_by_author_2026-11-14_pending_portrait",
   "display_name": "Major Marco Ruiz",
   "role": "Security and Tactical Systems; retired U.S. Space Force",
   "age": {
     "chronological": "about_60",
-    "apparent": "about_60_not_rejuvenated",
+    "apparent": "about_60_never_rejuvenated_visibly_older_than_galen",
     "tell": "the lines of a soldier too old to pretend anymore"
   },
   "identity": {
     "height_build": "medium_height_thickset_broad_shouldered_and_solid",
     "skin": "medium_brown_skin_weathered",
-    "face": "heavy_brow_deep_set_lines_strong_nose_jaw_that_flexes_when_he_is_holding_something_back",
+    "face": "heavy_brow_deep_set_lines_and_weathered_jowls_a_strong_once_broken_nose_jaw_that_flexes_when_he_is_holding_something_back",
     "eyes": "dark_eyes_watchful",
     "hair": "gray_buzz_cut",
     "facial_hair": "clean_shaven_with_gray_shadow",
-    "distinguishing": "old_faded_scar_on_the_chin"
+    "distinguishing": "old_faded_scar_on_the_chin_and_a_name_tape_reading_RUIZ_on_the_right_chest"
   },
   "shipboard_uniform": {
     "tier": "mission_coverall",
@@ -52,11 +52,18 @@
       "postures and props (CH02-CH17)"
     ],
     "proposed_needs_author_approval": [
-      "build, skin, face, eyes, hair, scar, age 60, not rejuvenated"
-    ]
+      "portrait not yet generated; author chose the older direction 2026-11-14: ~60, never rejuvenated, gray buzz cut, clean-shaven"
+    ],
+    "rejected": "Old approved Supabase image (45-50, full salt-and-pepper beard) rejected 2026-11-14: too close to Galen's apparent age."
   },
   "avoid": [
     "generic_stock_photo_face",
-    "celebrity_likeness"
-  ]
+    "celebrity_likeness",
+    "beard_or_mustache",
+    "looking_under_55",
+    "hair_longer_than_a_buzz_cut",
+    "action_hero_physique",
+    "glaring_or_snarling"
+  ],
+  "default_expression": "watchful_unreadable_neutrality_a_man_assessing_the_exits_tired_not_hostile"
 }
