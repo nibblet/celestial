@@ -14,6 +14,18 @@
     "carved_hieroglyph_walls",
     "torches",
     "stone_doors_sliding",
-    "indiana_jones_temple"
-  ]
+    "indiana_jones_temple",
+    "carved_stone_or_hieroglyphs",
+    "temple_or_cave_look",
+    "glyphs_brightly_lit_before_the_wall_awakens"
+  ],
+  "reference_images": [
+    {
+      "path": "/visual-references/zone-theta-wall.png",
+      "role": "environment",
+      "label": "Approved Zone Theta vault wall",
+      "instruction": "match the wall's material and form exactly: curved organic planes with no edges, dark alloy with a faint crystalline sparkle, a network of circles and arcs like a star map just under the surface. Before the vault awakens the glyphs are only FAINT, not lit gold everywhere as here; the shaft is shallow (about eight meters) under the filtered canopy, not an open cathedral-scale pit"
+    }
+  ],
+  "_reference_note": "Approved 2026-11-14 for material and glyph network. Its glyph brightness and open-sky scale are not canon for the dormant wall."
 }
