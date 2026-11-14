@@ -2,7 +2,7 @@
   "entity": "thane-meric",
   "parent_entity": "valkyrie-crew",
   "world": "earth_2050",
-  "_canon_status": "draft_pending_author_review",
+  "_canon_status": "look_approved_by_author_2026-11-14",
   "display_name": "Thane Meric",
   "role": "Legacy Interface Specialist; the 'living key'; Galen and Aven's grandson",
   "age": {
@@ -15,7 +15,7 @@
     "skin": "fair_skin_with_a_light_scatter_of_freckles_that_flushes_easily_under_strain",
     "face": "narrow_open_face_softer_and_younger_than_galen's_smooth_brow_no_deep_lines",
     "eyes": "gray_blue_eyes_like_galen's_wide_and_attentive",
-    "hair": "dark_auburn_brown_hair_slightly_overgrown_wavy_falling_across_the_forehead_moves_easily_in_air",
+    "hair": "wavy_tousled_copper_auburn_brown_hair_falling_across_the_forehead",
     "facial_hair": "light_two_day_stubble_only",
     "distinguishing": "name_tape_reading_MERIC_on_the_right_chest_of_his_field_jacket"
   },
@@ -63,20 +63,27 @@
       "visible family resemblance"
     ],
     "family_references": "Galen and Aven's approved portraits attached as [resemblance] references (2026-11-14) so the grandson reads as family without copying either face.",
-    "test_render_2026-11-14": "First OpenAI render: resemblance, wardrobe and patch correct, but read late 30s, brooding, heavier stubble, and no name tape. Spec tightened on age, expression, stubble and name tape."
+    "test_render_2026-11-14": "First OpenAI render: resemblance, wardrobe and patch correct, but read late 30s, brooding, heavier stubble, and no name tape. Spec tightened on age, expression, stubble and name tape.",
+    "approved_portrait": "public/visual-references/thane-meric-portrait.png: second OpenAI render after the spec was tightened, author-approved 2026-11-14."
   },
   "reference_images": [
+    {
+      "path": "/visual-references/thane-meric-portrait.png",
+      "role": "identity",
+      "label": "Thane Meric approved portrait",
+      "instruction": "match his face, hair, freckles, eyes, age and open curious expression exactly"
+    },
     {
       "path": "/visual-references/galen-voss-portrait.png",
       "role": "resemblance",
       "label": "Galen Voss, his grandfather",
-      "instruction": "borrow only the gray-blue eyes and the line of the jaw and brow; Thane is about twenty years younger, lean, with wavy dark auburn-brown hair, and must be clearly his own person"
+      "instruction": "borrow only the gray-blue eyes and the line of the jaw and brow; secondary to his own approved portrait"
     },
     {
       "path": "/visual-references/aven-voss-portrait.png",
       "role": "resemblance",
       "label": "Aven Voss, his grandmother",
-      "instruction": "borrow only the warm reddish undertone in his hair and a light scatter of freckles; do not copy her face"
+      "instruction": "borrow only the warm reddish undertone in his hair and a light scatter of freckles; secondary to his own approved portrait"
     }
   ],
   "avoid": [

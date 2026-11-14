@@ -10,6 +10,7 @@ This folder is the reference for anything we render: character portraits, ship s
 **Reference images** (`public/visual-references/`): images to attach alongside the prompt in ChatGPT, Gemini, Grok or Runway. Each spec declares its own in a `reference_images` array (`path`, `role`, `label`, `instruction`). The arrays inherit through `parent_entity`, views and states: `valkyrie-crew` attaches the patch to every crew member, and each character adds their identity portrait. The admin console shows them under every generated prompt, with **Copy prompt** and **Download all references** buttons, and the prompt names each reference so the generator knows to match it. To add one, put the file in `public/visual-references/` and add an entry to the right spec.
 - `project-valkyrie-patch.png` (SVG source alongside): the canonical mission patch, with three crescent arcs over a circle per CH01's "Three curves. A circle." Attach it to every shot that shows the uniform. `project-valkyrie-patch-v1-two-arcs.png` is the original ChatGPT crop, kept for its embroidery texture.
 - `aven-voss-portrait.png`: Aven's approved identity portrait.
+- `thane-meric-portrait.png`: Thane's approved identity portrait.
 - `galen-voss-portrait.png`: Galen's approved identity portrait, which also shows the full uniform. `galen-voss-portrait-v1-chatgpt.png` is the superseded first version.
 
 | File | What it is |
@@ -76,7 +77,7 @@ Each character's `master.json` has a `_provenance` block that separates canon fi
 |---|---|---|
 | Galen Voss ✅ approved | early-to-mid 50s (**chronologically early 80s, rejuvenated**) | from the reference portrait: tall, lean pilot build; sun-weathered ruddy skin; **drawn face, tight jaw**, square jaw and deep forehead lines; blue-gray eyes (**"clear but hollow"**); brown military cut graying at the temples; clean-shaven |
 | Aven Voss ✅ approved | ~50 (**rejuvenated**) | from `public/visual-references/aven-voss-portrait.png`: medium, athletic build; fair, heavily freckled skin; green-hazel eyes; **red-blonde (copper) hair tied back** in a loose low knot with loose strands; **silver constellation medallion**, shown at the open collar; coverall with a sage-green medical tab |
-| Thane Meric | **early 30s** | lean, wiry; dark auburn-brown wavy hair falling over the forehead; Galen's gray eyes; light stubble; a family resemblance to both grandparents that reads on screen |
+| Thane Meric ✅ approved | **early 30s** | from `public/visual-references/thane-meric-portrait.png`: lean; wavy, tousled copper auburn-brown hair; Galen's gray-blue eyes; freckles from Aven; light stubble; open, curious expression; civilian field jacket over a charcoal henley, MERIC name tape, slate-blue science tab. Generated with both grandparents attached as resemblance references |
 | Lena Osei | mid-40s | tall, slender; deep brown skin; high cheekbones; natural hair in tight braids bound at the nape; small gold studs; **arms folded** as her signature pose |
 | Jax Reyes | late 30s | wiry; light olive-tan skin; messy black hair, short sides; uneven stubble; burn marks and grime on his fingers |
 | Marco Ruiz | ~60, not rejuvenated (**"too old to pretend"**) | thickset, broad; medium brown skin; heavy brow; gray buzz cut; old chin scar |
