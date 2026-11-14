@@ -42,8 +42,9 @@ export default async function AdminVisualsPage() {
       </Link>
       <h1 className="type-page-title mb-2">Visual Prompt Studio</h1>
       <p className="mb-8 max-w-prose font-[family-name:var(--font-lora)] text-sm text-ink-muted">
-        Synthesize a structured visual prompt from the wiki corpus, then
-        generate an image with Gemini Nano Banana 2.1 (Imagen successor). Same target × style × corpus version
+        Synthesize a structured visual prompt from the wiki corpus, preview
+        spec reference photos, then generate with OpenAI GPT Image (can attach
+        references) or Google Nano Banana. Same target × style × corpus version
         → same cached prompt; same prompt × provider × params → same cached
         image.
       </p>

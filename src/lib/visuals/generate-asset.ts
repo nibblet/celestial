@@ -16,6 +16,12 @@ export type GenerateAssetInput = {
   provider: VisualProviderName;
   providerModel?: string;
   params?: Record<string, unknown>;
+  /**
+   * Skip the asset cache and create a new render. A unique `reroll` token is
+   * folded into provider_params_hash so the unique cache key allows a second
+   * row for the same prompt × provider × model.
+   */
+  force?: boolean;
   userId?: string | null;
 };
 
@@ -37,33 +43,38 @@ export async function getOrGenerateAsset(
   const normalizedParams = provider.normalizeParams({
     ...(input.params ?? {}),
     model: providerModel,
+    // Cache-bust only — providers ignore unknown keys.
+    ...(input.force ? { reroll: crypto.randomUUID() } : {}),
   });
   const paramsHash = providerParamsHash(normalizedParams);
 
   const admin = createAdminClient();
 
   // Cache lookup: same prompt + provider + model + params → same row.
-  const { data: existing } = await admin
-    .from("cel_visual_assets")
-    .select(
-      "id, asset_kind, storage_path, width, height, duration_sec",
-    )
-    .eq("prompt_id", input.promptId)
-    .eq("provider", input.provider)
-    .eq("provider_model", providerModel)
-    .eq("provider_params_hash", paramsHash)
-    .maybeSingle();
+  // Skipped when force=true (reroll already makes the hash unique).
+  if (!input.force) {
+    const { data: existing } = await admin
+      .from("cel_visual_assets")
+      .select(
+        "id, asset_kind, storage_path, width, height, duration_sec",
+      )
+      .eq("prompt_id", input.promptId)
+      .eq("provider", input.provider)
+      .eq("provider_model", providerModel)
+      .eq("provider_params_hash", paramsHash)
+      .maybeSingle();
 
-  if (existing) {
-    return {
-      assetId: existing.id as string,
-      url: publicUrlFor(existing.storage_path as string),
-      kind: existing.asset_kind as "image" | "video",
-      cached: true,
-      width: (existing.width as number | null) ?? null,
-      height: (existing.height as number | null) ?? null,
-      durationSec: (existing.duration_sec as number | null) ?? null,
-    };
+    if (existing) {
+      return {
+        assetId: existing.id as string,
+        url: publicUrlFor(existing.storage_path as string),
+        kind: existing.asset_kind as "image" | "video",
+        cached: true,
+        width: (existing.width as number | null) ?? null,
+        height: (existing.height as number | null) ?? null,
+        durationSec: (existing.duration_sec as number | null) ?? null,
+      };
+    }
   }
 
   // Generate.

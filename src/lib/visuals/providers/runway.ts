@@ -82,6 +82,7 @@ export const runwayProvider: VisualProvider = {
       // promptImageUrl is part of the cache key — same prompt + same seed
       // image + same model + same params should serve the cached video.
       promptImageUrl: params.promptImageUrl ?? null,
+      ...(typeof params.reroll === "string" ? { reroll: params.reroll } : {}),
     };
   },
 
