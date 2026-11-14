@@ -7,6 +7,8 @@ This folder is the reference for anything we render: character portraits, ship s
 
 ## Files
 
+`crew-lineup.png` shows all eight approved crew portraits side by side.
+
 **Reference images** (`public/visual-references/`): images to attach alongside the prompt in ChatGPT, Gemini, Grok or Runway. Each spec declares its own in a `reference_images` array (`path`, `role`, `label`, `instruction`). The arrays inherit through `parent_entity`, views and states: `valkyrie-crew` attaches the patch to every crew member, and each character adds their identity portrait. The admin console shows them under every generated prompt, with **Copy prompt** and **Download all references** buttons, and the prompt names each reference so the generator knows to match it. To add one, put the file in `public/visual-references/` and add an entry to the right spec.
 - `project-valkyrie-patch.png` (SVG source alongside): the canonical mission patch, with three crescent arcs over a circle per CH01's "Three curves. A circle." Attach it to every shot that shows the uniform. `project-valkyrie-patch-v1-two-arcs.png` is the original ChatGPT crop, kept for its embroidery texture.
 - `aven-voss-portrait.png`: Aven's approved identity portrait.
@@ -15,6 +17,7 @@ This folder is the reference for anything we render: character portraits, ship s
 - `evelyn-tran-portrait.png`: Evelyn's approved identity portrait.
 - `marco-ruiz-portrait.png`: Marco's approved identity portrait.
 - `jax-reyes-portrait.png`: Jax's approved identity portrait.
+- `jonah-revas-portrait.png`: Jonah's approved identity portrait.
 - `galen-voss-portrait.png`: Galen's approved identity portrait, which also shows the full uniform. `galen-voss-portrait-v1-chatgpt.png` is the superseded first version.
 
 | File | What it is |
@@ -86,7 +89,7 @@ Each character's `master.json` has a `_provenance` block that separates canon fi
 | Jax Reyes ✅ approved | late 30s | from `public/visual-references/jax-reyes-portrait.png`: wiry; light olive-tan skin; messy spiky black hair; uneven stubble; crooked sarcastic half-smirk; tool grime and burn marks on his hands; mission coverall with sleeves pushed up, a burnt-orange systems tab and REYES name tape |
 | Marco Ruiz ✅ approved | ~60, **never rejuvenated** ("too old to pretend") | from `public/visual-references/marco-ruiz-portrait.png`: thickset and broad; weathered medium-brown skin; heavy brow; gray buzz cut; clean-shaven with gray stubble; watchful, unreadable expression; mission coverall with an oxblood security tab and RUIZ name tape. (His left-sleeve flag set the crew standard) |
 | Evelyn Tran ✅ approved | late 20s–early 30s (**young**) | from `public/visual-references/evelyn-tran-portrait.png`: petite; naturally striking (deliberately the attractive one, per the author); light freckles; **thin rectangular metal glasses**; black hair in a loose messy bun with a stylus through it; knowing half-smile; civilian field jacket over a black turtleneck, TRAN name tape, slate-blue science tab |
-| Jonah Revas | ~45, actually mid-50s (**"calm older than his face"**) | light olive skin; short dark curly hair and a neat beard, both flecked with gray; loose linen-like overshirt; **cold tea mug** |
+| Jonah Revas ✅ approved | looks ~45, actually mid-50s (**"calm older than his face"**) | from `public/visual-references/jonah-revas-portrait.png`: medium build; light olive skin; dark curls mostly silver at the temples; full, neatly trimmed gray beard; still, inward, listening expression; civilian field jacket over an undyed linen shirt, REVAS name tape, bone-white advisor tab. Deliberately distinct from Jax |
 | Amar Cael | late 50s (**"refined… less glass tower, more iron core"**) | tall, spare; medium brown skin; black-to-silver hair combed back; trimmed beard; **corporate-issue suit** |
 | Rhea Solari | late 50s (**"trim lines, eyes too sharp to soften"**) | pale; ice-gray eyes; silver-white hair in a tight low chignon; high-collared slate-gray uniform with the **Sovereign Ethics Bureau seal** |
 

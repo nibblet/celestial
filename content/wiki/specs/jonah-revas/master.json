@@ -2,7 +2,7 @@
   "entity": "jonah-revas",
   "parent_entity": "valkyrie-crew",
   "world": "earth_2050",
-  "_canon_status": "draft_pending_author_review",
+  "_canon_status": "look_approved_by_author_2026-11-14",
   "display_name": "Dr. Jonah Revas",
   "role": "Theological scholar and cultural analyst",
   "age": {
@@ -51,12 +51,19 @@
       "sketch of the Nine (CH09 log)",
       "postures and expressions (CH02-CH17)"
     ],
-    "proposed_needs_author_approval": [
-      "build, skin, face, eyes, hair, beard, overshirt, age"
-    ],
+    "proposed_needs_author_approval": [],
     "test_render_2026-11-14": "First OpenAI render read too close to Jax (olive skin, dark hair, beard, same wry half-smirk and head tilt). Differentiated by silhouette and manner: mostly gray curls worn longer, a full rounded gray beard, a softer build, and a gentle listening expression.",
-    "test_render_2_2026-11-14": "Second render: distinct from Jax but overcorrected (heavyset, jolly, looked older than his manner). Third pass keeps the gray curls and full gray beard, returns to a medium build and a still, inward listening expression, and sets the apparent age to ~45."
+    "test_render_2_2026-11-14": "Second render: distinct from Jax but overcorrected (heavyset, jolly, looked older than his manner). Third pass keeps the gray curls and full gray beard, returns to a medium build and a still, inward listening expression, and sets the apparent age to ~45.",
+    "approved_portrait": "public/visual-references/jonah-revas-portrait.png: third OpenAI render ('meet in the middle'), author-approved 2026-11-14."
   },
+  "reference_images": [
+    {
+      "path": "/visual-references/jonah-revas-portrait.png",
+      "role": "identity",
+      "label": "Jonah Revas approved portrait",
+      "instruction": "match his face, gray curls, gray beard, age, build and still, listening expression exactly"
+    }
+  ],
   "avoid": [
     "generic_stock_photo_face",
     "celebrity_likeness",
