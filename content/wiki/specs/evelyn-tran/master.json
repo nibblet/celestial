@@ -2,20 +2,20 @@
   "entity": "evelyn-tran",
   "parent_entity": "valkyrie-crew",
   "world": "earth_2050",
-  "_canon_status": "draft_pending_author_review",
+  "_canon_status": "look_approved_by_author_2026-11-14",
   "display_name": "Dr. Evelyn Tran",
   "role": "Quantum physicist and propulsion expert; youngest lead physicist cleared for interstellar deployment",
   "age": {
     "chronological": "late_20s",
-    "apparent": "late_20s",
+    "apparent": "late_20s_to_early_30s",
     "tell": "shoulders up, chin tilted, slate in attack posture"
   },
   "identity": {
     "height_build": "petite_slight_build",
     "skin": "light_warm_skin_unmade_faint_shadows_under_the_eyes_from_late_nights_at_the_array",
-    "face": "heart_shaped_face_sharp_focused_brow",
+    "face": "heart_shaped_face_naturally_striking_with_full_lips_and_a_light_dusting_of_freckles_sharp_focused_brow",
     "eyes": "dark_brown_eyes_behind_thin_rectangular_glasses",
-    "hair": "straight_black_hair_twisted_into_a_messy_bun_with_a_stylus_pushed_through_it",
+    "hair": "straight_black_hair_twisted_into_a_loose_messy_high_bun_with_a_stylus_pushed_through_it_loose_strands_falling_around_the_face",
     "facial_hair": "none",
     "distinguishing": "thin_metal_framed_rectangular_glasses_always_worn_and_a_name_tape_reading_TRAN_on_the_right_chest_of_her_field_jacket"
   },
@@ -58,16 +58,26 @@
     "proposed_needs_author_approval": [
       "build, skin, face, eye color, hair and stylus bun, glasses frame style, age late 20s"
     ],
-    "note_2026-11-14": "Old approved Supabase image omitted her canon glasses (CH16); not used as a reference."
+    "note_2026-11-14": "Old approved Supabase image omitted her canon glasses (CH16); not used as a reference.",
+    "approved_portrait": "public/visual-references/evelyn-tran-portrait.png: first OpenAI render, author-approved 2026-11-14. Author wants her a little attractive ('a little hotness'); casting_note keeps that against the crew-wide no-glamour rule."
   },
+  "reference_images": [
+    {
+      "path": "/visual-references/evelyn-tran-portrait.png",
+      "role": "identity",
+      "label": "Evelyn Tran approved portrait",
+      "instruction": "match her face, glasses, bun with stylus, freckles, age and knowing half-smile exactly"
+    }
+  ],
   "avoid": [
     "generic_stock_photo_face",
     "celebrity_likeness",
     "missing_glasses",
     "round_or_oversized_glasses",
-    "looking_over_32",
     "glamour_makeup",
-    "missing_name_tape"
+    "missing_name_tape",
+    "looking_over_35"
   ],
-  "default_expression": "quick_intent_focus_chin_slightly_tilted_the_faint_impatient_half_smile_of_someone_who_already_knows_the_answer_not_cold"
+  "default_expression": "quick_intent_focus_chin_slightly_tilted_the_faint_impatient_half_smile_of_someone_who_already_knows_the_answer_not_cold",
+  "casting_note": "the_one_crew_member_who_is_quietly_attractive_confident_and_aware_of_it_still_practical_and_unstyled"
 }

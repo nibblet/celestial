@@ -12,6 +12,7 @@ This folder is the reference for anything we render: character portraits, ship s
 - `aven-voss-portrait.png`: Aven's approved identity portrait.
 - `thane-meric-portrait.png`: Thane's approved identity portrait.
 - `lena-osei-portrait.png`: Lena's approved identity portrait.
+- `evelyn-tran-portrait.png`: Evelyn's approved identity portrait.
 - `galen-voss-portrait.png`: Galen's approved identity portrait, which also shows the full uniform. `galen-voss-portrait-v1-chatgpt.png` is the superseded first version.
 
 | File | What it is |
@@ -82,7 +83,7 @@ Each character's `master.json` has a `_provenance` block that separates canon fi
 | Lena Osei ✅ approved | mid-40s | from `public/visual-references/lena-osei-portrait.png`: mixed Ghanaian–Ethiopian heritage; tall and slender; warm brown skin, no makeup, tired eyes; long narrow angular face; dark almond eyes; long black hair in one low braid; thin gold hoop; GIZA wristband; tired, assessing skepticism (not a glare); mission coverall with a slate-blue science tab |
 | Jax Reyes | late 30s | wiry; light olive-tan skin; messy black hair, short sides; uneven stubble; burn marks and grime on his fingers |
 | Marco Ruiz | ~60, not rejuvenated (**"too old to pretend"**) | thickset, broad; medium brown skin; heavy brow; gray buzz cut; old chin scar |
-| Evelyn Tran | late 20s (**young**) | petite; black hair in a messy bun with a stylus through it; **glasses** (thin rectangular frames); **chin tilted, slate in "attack posture"** |
+| Evelyn Tran ✅ approved | late 20s–early 30s (**young**) | from `public/visual-references/evelyn-tran-portrait.png`: petite; naturally striking (deliberately the attractive one, per the author); light freckles; **thin rectangular metal glasses**; black hair in a loose messy bun with a stylus through it; knowing half-smile; civilian field jacket over a black turtleneck, TRAN name tape, slate-blue science tab |
 | Jonah Revas | ~45, actually mid-50s (**"calm older than his face"**) | light olive skin; short dark curly hair and a neat beard, both flecked with gray; loose linen-like overshirt; **cold tea mug** |
 | Amar Cael | late 50s (**"refined… less glass tower, more iron core"**) | tall, spare; medium brown skin; black-to-silver hair combed back; trimmed beard; **corporate-issue suit** |
 | Rhea Solari | late 50s (**"trim lines, eyes too sharp to soften"**) | pale; ice-gray eyes; silver-white hair in a tight low chignon; high-collared slate-gray uniform with the **Sovereign Ethics Bureau seal** |
