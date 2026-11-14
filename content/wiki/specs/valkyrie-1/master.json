@@ -70,6 +70,13 @@
   },
   "reference_images": [
     {
+      "path": "/visual-references/valkyrie-1/hero-photographic.png",
+      "role": "identity",
+      "label": "Valkyrie-1 approved photographic hero (in orbit over Mars)",
+      "instruction": "match this realism exactly: hard raking sunlight, most of the hull in deep shadow, faint violet light inside the skin, physically real surface; this is how the ship looks on camera",
+      "inherit": false
+    },
+    {
       "path": "/visual-references/valkyrie-1/three-quarter.png",
       "role": "identity",
       "label": "Valkyrie-1 hull, three-quarter hero view",
@@ -101,5 +108,6 @@
     "oversaturated_purple",
     "glowing_outline_around_the_silhouette",
     "video_game_or_cartoon_look"
-  ]
+  ],
+  "_hero_note": "2026-11-14: approved photographic hero replaces the concept art as the primary look. Concept-art renders remain for shape and vein layout only."
 }
