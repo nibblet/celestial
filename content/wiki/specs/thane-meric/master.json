@@ -12,9 +12,9 @@
   },
   "identity": {
     "height_build": "slightly_above_average_height_lean_and_wiry",
-    "skin": "fair_skin_that_flushes_easily_under_strain",
+    "skin": "fair_skin_with_a_light_scatter_of_freckles_that_flushes_easily_under_strain",
     "face": "narrow_face_with_his_grandfather's_jaw_softened_by_his_grandmother's_features",
-    "eyes": "gray_eyes_like_galen's_wide_and_attentive",
+    "eyes": "gray_blue_eyes_like_galen's_wide_and_attentive",
     "hair": "dark_auburn_brown_hair_slightly_overgrown_wavy_falling_across_the_forehead_moves_easily_in_air",
     "facial_hair": "light_two_day_stubble",
     "distinguishing": "family_resemblance_to_galen_and_aven_must_read_on_screen"
@@ -61,10 +61,28 @@
       "hair color and length",
       "stubble",
       "visible family resemblance"
-    ]
+    ],
+    "family_references": "Galen and Aven's approved portraits attached as [resemblance] references (2026-11-14) so the grandson reads as family without copying either face."
   },
+  "reference_images": [
+    {
+      "path": "/visual-references/galen-voss-portrait.png",
+      "role": "resemblance",
+      "label": "Galen Voss, his grandfather",
+      "instruction": "borrow only the gray-blue eyes and the line of the jaw and brow; Thane is about twenty years younger, lean, with wavy dark auburn-brown hair, and must be clearly his own person"
+    },
+    {
+      "path": "/visual-references/aven-voss-portrait.png",
+      "role": "resemblance",
+      "label": "Aven Voss, his grandmother",
+      "instruction": "borrow only the warm reddish undertone in his hair and a light scatter of freckles; do not copy her face"
+    }
+  ],
   "avoid": [
     "generic_stock_photo_face",
-    "celebrity_likeness"
+    "celebrity_likeness",
+    "looking_under_25",
+    "identical_to_galen",
+    "beard"
   ]
 }

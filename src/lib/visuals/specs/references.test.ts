@@ -42,6 +42,20 @@ test("a later layer overrides an inherited entry with the same path", () => {
   assert.equal(refs[0].instruction, "render as embroidery");
 });
 
+test("resemblance references sort after identity and before insignia", () => {
+  const grandparent = {
+    path: "/visual-references/aven-voss-portrait.png",
+    role: "resemblance",
+    label: "Aven Voss (grandmother)",
+  };
+  const refs = collectReferenceImages([
+    { name: "parent", data: { reference_images: [patch] } },
+    { name: "master", data: { reference_images: [grandparent, portrait] } },
+  ]);
+  assert.deepEqual(refs.map((r) => r.role), ["identity", "resemblance", "insignia"]);
+  assert.match(renderReferenceImagesForPrompt(refs), /family likeness only/);
+});
+
 test("drops invalid entries and non-array values", () => {
   const refs = collectReferenceImages([
     { name: "a", data: { reference_images: "nope" } },

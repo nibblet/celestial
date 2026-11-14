@@ -22,7 +22,7 @@ import type {
  * Bump when the system prompt below changes. Combined with corpusVersion in
  * seedHashFor() so cached prompts auto-invalidate on prompt edits.
  */
-const SYNTH_PROMPT_VERSION = "v11";
+const SYNTH_PROMPT_VERSION = "v12";
 const SYNTH_MODEL = "claude-opus-5-5";
 
 const SYSTEM_PROMPT = `You are a Visual Director for the Celestial corpus.
@@ -122,7 +122,9 @@ When a "Visual Spec — CANON OVERRIDE" block appears in your input:
    to the generation. Begin the raw prompt with one sentence naming each by
    its label and role and saying to match it exactly (e.g. "Match the
    attached identity portrait of Galen Voss for his face and the attached
-   PROJECT VALKYRIE patch for the chest insignia."). Still describe the
+   PROJECT VALKYRIE patch for the chest insignia."). For a [resemblance]
+   reference, say to borrow only the family likeness it describes and keep
+   the subject a distinct person. Still describe the
    subject in words; the references reinforce the text, they do not replace it.
 
 If the subject is non-humanoid or environmental (an AI, a place, a ship's

@@ -16,6 +16,8 @@
 
 export type ReferenceImageRole =
   | "identity"
+  /** A relative's portrait: borrow family likeness, never copy the face. */
+  | "resemblance"
   | "insignia"
   | "wardrobe"
   | "prop"
@@ -32,6 +34,7 @@ export type ReferenceImage = {
 
 const ROLES: ReadonlySet<string> = new Set([
   "identity",
+  "resemblance",
   "insignia",
   "wardrobe",
   "prop",
@@ -42,11 +45,12 @@ const ROLES: ReadonlySet<string> = new Set([
 /** Display / attachment order: who they are first, then what they wear. */
 const ROLE_ORDER: Record<ReferenceImageRole, number> = {
   identity: 0,
-  insignia: 1,
-  wardrobe: 2,
-  prop: 3,
-  environment: 4,
-  style: 5,
+  resemblance: 1,
+  insignia: 2,
+  wardrobe: 3,
+  prop: 4,
+  environment: 5,
+  style: 6,
 };
 
 export const REFERENCE_IMAGES_KEY = "reference_images";
@@ -110,7 +114,8 @@ export function renderReferenceImagesForPrompt(refs: ReferenceImage[]): string {
   if (refs.length === 0) return "";
   const lines = [
     "## reference images (attached to the generation by the operator)",
-    "  The raw prompt MUST name each of these and tell the generator to match it.",
+    "  The raw prompt MUST name each of these and tell the generator how to use it, following its instruction.",
+    "  [resemblance] images are relatives: borrow family likeness only, the subject must remain a distinct person.",
   ];
   refs.forEach((r, i) => {
     lines.push(
