@@ -14,6 +14,7 @@ This folder is the reference for anything we render: character portraits, ship s
 - `lena-osei-portrait.png`: Lena's approved identity portrait.
 - `evelyn-tran-portrait.png`: Evelyn's approved identity portrait.
 - `marco-ruiz-portrait.png`: Marco's approved identity portrait.
+- `jax-reyes-portrait.png`: Jax's approved identity portrait.
 - `galen-voss-portrait.png`: Galen's approved identity portrait, which also shows the full uniform. `galen-voss-portrait-v1-chatgpt.png` is the superseded first version.
 
 | File | What it is |
@@ -82,7 +83,7 @@ Each character's `master.json` has a `_provenance` block that separates canon fi
 | Aven Voss ✅ approved | ~50 (**rejuvenated**) | from `public/visual-references/aven-voss-portrait.png`: medium, athletic build; fair, heavily freckled skin; green-hazel eyes; **red-blonde (copper) hair tied back** in a loose low knot with loose strands; **silver constellation medallion**, shown at the open collar; coverall with a sage-green medical tab |
 | Thane Meric ✅ approved | **early 30s** | from `public/visual-references/thane-meric-portrait.png`: lean; wavy, tousled copper auburn-brown hair; Galen's gray-blue eyes; freckles from Aven; light stubble; open, curious expression; civilian field jacket over a charcoal henley, MERIC name tape, slate-blue science tab. Generated with both grandparents attached as resemblance references |
 | Lena Osei ✅ approved | mid-40s | from `public/visual-references/lena-osei-portrait.png`: mixed Ghanaian–Ethiopian heritage; tall and slender; warm brown skin, no makeup, tired eyes; long narrow angular face; dark almond eyes; long black hair in one low braid; thin gold hoop; GIZA wristband; tired, assessing skepticism (not a glare); mission coverall with a slate-blue science tab |
-| Jax Reyes | late 30s | wiry; light olive-tan skin; messy black hair, short sides; uneven stubble; burn marks and grime on his fingers |
+| Jax Reyes ✅ approved | late 30s | from `public/visual-references/jax-reyes-portrait.png`: wiry; light olive-tan skin; messy spiky black hair; uneven stubble; crooked sarcastic half-smirk; tool grime and burn marks on his hands; mission coverall with sleeves pushed up, a burnt-orange systems tab and REYES name tape |
 | Marco Ruiz ✅ approved | ~60, **never rejuvenated** ("too old to pretend") | from `public/visual-references/marco-ruiz-portrait.png`: thickset and broad; weathered medium-brown skin; heavy brow; gray buzz cut; clean-shaven with gray stubble; watchful, unreadable expression; mission coverall with an oxblood security tab and RUIZ name tape. (His left-sleeve flag set the crew standard) |
 | Evelyn Tran ✅ approved | late 20s–early 30s (**young**) | from `public/visual-references/evelyn-tran-portrait.png`: petite; naturally striking (deliberately the attractive one, per the author); light freckles; **thin rectangular metal glasses**; black hair in a loose messy bun with a stylus through it; knowing half-smile; civilian field jacket over a black turtleneck, TRAN name tape, slate-blue science tab |
 | Jonah Revas | ~45, actually mid-50s (**"calm older than his face"**) | light olive skin; short dark curly hair and a neat beard, both flecked with gray; loose linen-like overshirt; **cold tea mug** |

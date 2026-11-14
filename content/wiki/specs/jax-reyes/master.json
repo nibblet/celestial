@@ -2,7 +2,7 @@
   "entity": "jax-reyes",
   "parent_entity": "valkyrie-crew",
   "world": "earth_2050",
-  "_canon_status": "draft_pending_author_review",
+  "_canon_status": "look_approved_by_author_2026-11-14",
   "display_name": "Jaxon 'Jax' Reyes",
   "role": "Systems hacker and engineer",
   "age": {
@@ -15,9 +15,9 @@
     "skin": "light_olive_tan_skin",
     "face": "angular_face_quick_crooked_half_smile_tired_eyes",
     "eyes": "dark_brown_eyes",
-    "hair": "messy_black_hair_short_on_the_sides_longer_on_top",
+    "hair": "messy_spiky_black_hair_short_on_the_sides_longer_and_tousled_on_top",
     "facial_hair": "uneven_stubble",
-    "distinguishing": "burn_marks_and_small_cuts_on_fingers_tool_grime_under_nails"
+    "distinguishing": "burn_marks_and_small_cuts_on_fingers_tool_grime_under_nails_and_a_name_tape_reading_REYES_on_the_right_chest"
   },
   "shipboard_uniform": {
     "tier": "mission_coverall",
@@ -50,12 +50,20 @@
       "props (CH03, CH08, CH12)",
       "postures and expressions (CH03-CH12)"
     ],
-    "proposed_needs_author_approval": [
-      "everything physical: build, skin, face, eyes, hair, stubble, hand marks, age"
-    ]
+    "proposed_needs_author_approval": [],
+    "approved_portrait": "public/visual-references/jax-reyes-portrait.png: first OpenAI render, author-approved 2026-11-14."
   },
+  "reference_images": [
+    {
+      "path": "/visual-references/jax-reyes-portrait.png",
+      "role": "identity",
+      "label": "Jax Reyes approved portrait",
+      "instruction": "match his face, messy black hair, stubble, age and crooked half-smirk exactly"
+    }
+  ],
   "avoid": [
     "generic_stock_photo_face",
     "celebrity_likeness"
-  ]
+  ],
+  "default_expression": "crooked_sarcastic_half_smirk_tired_eyes_humor_as_armor"
 }
