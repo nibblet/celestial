@@ -13,7 +13,7 @@
     "gloves": "thin_dexterous_pressure_gloves_locked_at_the_wrist_rings",
     "chest": "chest_mounted_display_and_control_unit_still_worn_and_lit",
     "insignia": "PROJECT_VALKYRIE_patch_on_the_left_chest_surname_tape_on_the_right_chest_role_tab_color_on_the_left_shoulder_us_flag_on_the_left_upper_arm_same_layout_as_the_coverall",
-    "helmet": "sleek_rounded_helmet_with_a_wide_clear_visor_that_shows_the_face_thin_heads_up_display_glints_and_a_retractable_gold_tinted_sun_visor_raised_OFF_carried_under_one_arm_or_clipped_at_the_hip",
+    "helmet": "rounded_HARD_SHELL_helmet_sand_gray_matching_the_suit_with_a_wide_clear_FACE_VISOR_set_into_the_front_of_the_shell_thin_heads_up_display_glints_a_retractable_gold_tinted_sun_visor_raised_above_it_small_side_lights_and_a_side_camera_pod_OFF_carried_under_one_arm_or_clipped_at_the_hip",
     "setting_rule": "only_inside_the_pressurized_filtered_canopy_over_the_shaft_or_inside_the_carbon_weave_and_polyglass_dome"
   },
   "palette": [
@@ -29,7 +29,10 @@
     "flight_jacket_with_harness_look",
     "missing_neck_ring",
     "missing_chest_display_unit",
-    "soft_jacket_collar_instead_of_a_neck_ring"
+    "soft_jacket_collar_instead_of_a_neck_ring",
+    "clear_bubble_dome_or_fishbowl_helmet",
+    "all_glass_helmet",
+    "helmet_without_a_hard_shell"
   ],
   "reference_images": [
     {
@@ -45,5 +48,6 @@
       "instruction": "match how the suit looks with the helmet off: exposed empty neck ring, lit chest unit, backpack on, helmet carried at the side, filtered canopy overhead; face and name come from the wearer's own references"
     }
   ],
-  "_note": "2026-11-14: mars-canopy-suit.png approved as the helmet-off reference. The pre-redesign canopy render was removed."
+  "_note": "2026-11-14: mars-canopy-suit.png approved as the helmet-off reference. The pre-redesign canopy render was removed.",
+  "_helmet_note": "Helmet locked 2026-11-14 to the approved suit reference (mars-surface-suit.png): a hard shell with a face visor, not a bubble dome. The bubble domes in the first cast trench shot are not canon."
 }
