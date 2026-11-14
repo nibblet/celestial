@@ -53,14 +53,14 @@
     ],
     "proposed_needs_author_approval": [],
     "rejected": "Old approved Supabase image (45-50, full salt-and-pepper beard) rejected 2026-11-14: too close to Galen's apparent age.",
-    "approved_portrait": "public/visual-references/marco-ruiz-portrait.png: first OpenAI render, author-approved 2026-11-14. Known deviations: flag on the left sleeve (spec: right), faint patch logo echoed in the background."
+    "approved_portrait": "public/visual-references/marco-ruiz-portrait.png: first OpenAI render, author-approved 2026-11-14. His flag on the left sleeve became the crew standard (NASA/Air Force flight-suit convention). Known deviation: faint patch logo echoed in the background."
   },
   "reference_images": [
     {
       "path": "/visual-references/marco-ruiz-portrait.png",
       "role": "identity",
       "label": "Marco Ruiz approved portrait",
-      "instruction": "match his face, buzz cut, age, build and watchful expression exactly; the U.S. flag belongs on the RIGHT sleeve, not the left as in this image"
+      "instruction": "match his face, buzz cut, age, build, watchful expression and uniform exactly"
     }
   ],
   "avoid": [
