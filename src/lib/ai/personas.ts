@@ -47,12 +47,13 @@ export type PersonaDefinition = {
   /** Short display label used by the Synthesizer when listing sub-agents. */
   label: string;
   model: string;
+  /** Unused by Opus 5.5 API calls (sampling params are rejected). Kept for prompt tone notes. */
   temperature: number;
   maxTokens: number;
   buildSystemPrompt: (args: PersonaPromptArgs) => string;
 };
 
-const DEFAULT_MODEL = "claude-sonnet-4-20250514";
+const DEFAULT_MODEL = "claude-opus-5-5";
 
 export const PERSONAS: Record<PersonaKey, PersonaDefinition> = {
   celestial_narrator: {

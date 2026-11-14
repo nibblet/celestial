@@ -15,7 +15,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
  * portrait). Wardrobe / environment / composition are preset-specific and
  * the synthesizer is instructed to treat them as inspiration only.
  */
-const VISION_MODEL = "claude-sonnet-4-20250514";
+const VISION_MODEL = "claude-opus-5-5";
 
 const VISION_SYSTEM_PROMPT = `You are a continuity supervisor. You are looking at a single rendered
 frame and your job is to extract a precise, structured description so a
@@ -128,8 +128,7 @@ async function runVisionExtraction(
 
   const response = await anthropic.messages.create({
     model: VISION_MODEL,
-    max_tokens: 1500,
-    temperature: 0.2,
+    max_tokens: 4096,
     system: VISION_SYSTEM_PROMPT,
     messages: [
       {

@@ -23,7 +23,7 @@ import type {
  * seedHashFor() so cached prompts auto-invalidate on prompt edits.
  */
 const SYNTH_PROMPT_VERSION = "v11";
-const SYNTH_MODEL = "claude-sonnet-4-20250514";
+const SYNTH_MODEL = "claude-opus-5-5";
 
 const SYSTEM_PROMPT = `You are a Visual Director for the Celestial corpus.
 
@@ -306,8 +306,8 @@ export async function synthesizeVisualPrompt(
 
   const response = await anthropic.messages.create({
     model: SYNTH_MODEL,
-    max_tokens: 2048,
-    temperature: 0.4,
+    // Opus 5.5 adaptive thinking shares this budget; keep headroom for JSON output.
+    max_tokens: 4096,
     system: SYSTEM_PROMPT,
     messages: [{ role: "user", content: userMessage }],
   });

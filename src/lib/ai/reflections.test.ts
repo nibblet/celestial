@@ -121,7 +121,7 @@ test("cache hit returns cached text without calling generate() or logging", asyn
     kind: "session_wrap",
     targetId: null,
     inputSignature: "sig-hit",
-    model: "claude-sonnet-4-20250514",
+    model: "claude-opus-5-5",
     contextType: "beyond",
     contextId: "ctx-1",
     generate: async () => {
@@ -162,7 +162,7 @@ test("cache miss (no row) generates, logs, and inserts, returning generated=true
     kind: "session_wrap",
     targetId: null,
     inputSignature: "sig-new",
-    model: "claude-sonnet-4-20250514",
+    model: "claude-opus-5-5",
     contextType: "beyond",
     contextId: "ctx-1",
     generate: async () => {
@@ -214,7 +214,7 @@ test("cache miss (signature mismatch) triggers update path, not insert", async (
     kind: "session_wrap",
     targetId: null,
     inputSignature: "sig-new",
-    model: "claude-sonnet-4-20250514",
+    model: "claude-opus-5-5",
     contextType: "beyond",
     generate: async () => ({ text: "New wrap.", inputTokens: 80, outputTokens: 40 }),
   });
@@ -254,7 +254,7 @@ test("DB read error is swallowed; generator runs and output is returned", async 
     kind: "session_wrap",
     targetId: null,
     inputSignature: "sig-any",
-    model: "claude-sonnet-4-20250514",
+    model: "claude-opus-5-5",
     contextType: "beyond",
     generate: async () => ({ text: "Graceful fallback." }),
   });
@@ -279,7 +279,7 @@ test("targetId non-null filters with .eq, not .is", async () => {
     kind: "draft_digest",
     targetId: "draft-42",
     inputSignature: "sig-d",
-    model: "claude-sonnet-4-20250514",
+    model: "claude-opus-5-5",
     contextType: "beyond",
     generate: async () => ({ text: "unused" }),
   });

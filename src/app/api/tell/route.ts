@@ -15,7 +15,7 @@ const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY || "",
 });
 
-const TELL_MODEL = "claude-sonnet-4-20250514";
+const TELL_MODEL = "claude-opus-5-5";
 
 type StorySessionRow = {
   id: string;

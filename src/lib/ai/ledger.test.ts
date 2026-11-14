@@ -7,16 +7,16 @@ test("estimateCostUsd returns null for unknown model", () => {
 });
 
 test("estimateCostUsd returns null when tokens are missing", () => {
-  assert.equal(estimateCostUsd("claude-sonnet-4-20250514", null, 500), null);
-  assert.equal(estimateCostUsd("claude-sonnet-4-20250514", 500, null), null);
-  assert.equal(estimateCostUsd("claude-sonnet-4-20250514", undefined, undefined), null);
+  assert.equal(estimateCostUsd("claude-opus-5-5", null, 500), null);
+  assert.equal(estimateCostUsd("claude-opus-5-5", 500, null), null);
+  assert.equal(estimateCostUsd("claude-opus-5-5", undefined, undefined), null);
 });
 
-test("estimateCostUsd computes USD using per-1K rates for sonnet-4", () => {
-  const got = estimateCostUsd("claude-sonnet-4-20250514", 1000, 500);
+test("estimateCostUsd computes USD using per-1K rates for opus-5-5", () => {
+  const got = estimateCostUsd("claude-opus-5-5", 1000, 500);
   assert.ok(got !== null);
-  // 1K in @ $0.003 + 0.5K out @ $0.015 = 0.003 + 0.0075 = 0.0105
-  assert.ok(Math.abs((got as number) - 0.0105) < 1e-9);
+  // 1K in @ $0.004 + 0.5K out @ $0.02 = 0.004 + 0.01 = 0.014
+  assert.ok(Math.abs((got as number) - 0.014) < 1e-9);
 });
 
 test("estimateCostUsd computes USD for haiku-3-5 correctly", () => {
@@ -27,7 +27,7 @@ test("estimateCostUsd computes USD for haiku-3-5 correctly", () => {
 });
 
 test("estimateCostUsd handles zero tokens as $0", () => {
-  const got = estimateCostUsd("claude-sonnet-4-20250514", 0, 0);
+  const got = estimateCostUsd("claude-opus-5-5", 0, 0);
   assert.equal(got, 0);
 });
 
@@ -78,7 +78,7 @@ test("logAiCall inserts into sb_ai_interactions and returns the row id", async (
     persona: "narrator",
     contextType: "ask",
     contextId: "conv-xyz",
-    model: "claude-sonnet-4-20250514",
+    model: "claude-opus-5-5",
     inputTokens: 1000,
     outputTokens: 500,
     latencyMs: 842,
@@ -93,13 +93,13 @@ test("logAiCall inserts into sb_ai_interactions and returns the row id", async (
   assert.equal(row.persona, "narrator");
   assert.equal(row.context_type, "ask");
   assert.equal(row.context_id, "conv-xyz");
-  assert.equal(row.model, "claude-sonnet-4-20250514");
+  assert.equal(row.model, "claude-opus-5-5");
   assert.equal(row.input_tokens, 1000);
   assert.equal(row.output_tokens, 500);
   assert.equal(row.latency_ms, 842);
-  // Cost is auto-derived when omitted: 1K*$0.003 + 0.5K*$0.015 = $0.0105
+  // Cost is auto-derived when omitted: 1K*$0.004 + 0.5K*$0.02 = $0.014
   assert.ok(typeof row.cost_usd === "number");
-  assert.ok(Math.abs((row.cost_usd as number) - 0.0105) < 1e-9);
+  assert.ok(Math.abs((row.cost_usd as number) - 0.014) < 1e-9);
   assert.equal(row.status, "ok");
   assert.deepEqual(row.meta, {});
 });
@@ -145,7 +145,7 @@ test("logAiCall records error status with message", async () => {
     {
       persona: "narrator",
       contextType: "ask",
-      model: "claude-sonnet-4-20250514",
+      model: "claude-opus-5-5",
       status: "error",
       errorMessage: "upstream timeout",
     }
@@ -164,7 +164,7 @@ test("logAiCall swallows insert errors and returns null", async () => {
   const id = await logAiCall(client as any, {
     persona: "narrator",
     contextType: "ask",
-    model: "claude-sonnet-4-20250514",
+    model: "claude-opus-5-5",
   });
   assert.equal(id, null);
 });
@@ -177,7 +177,7 @@ test("logAiCall swallows unexpected throws and returns null", async () => {
   const id = await logAiCall(client as any, {
     persona: "narrator",
     contextType: "ask",
-    model: "claude-sonnet-4-20250514",
+    model: "claude-opus-5-5",
   });
   assert.equal(id, null);
 });

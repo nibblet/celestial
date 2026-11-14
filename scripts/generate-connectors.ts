@@ -97,7 +97,7 @@ Rules:
 - Output only the 2 sentences — no labels, no quotes, no explanation`;
 
   const message = await anthropic.messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: "claude-opus-5-5",
     max_tokens: 120,
     messages: [{ role: "user", content: prompt }],
   });
