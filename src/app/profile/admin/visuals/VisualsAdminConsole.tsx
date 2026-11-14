@@ -484,6 +484,14 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
                 {promptResult.referenceImages!.length === 1 ? "" : "s"}
               </label>
             )}
+            {imageProvider === "openai" &&
+              !attachRefs &&
+              (promptResult.referenceImages?.length ?? 0) > 0 && (
+              <span className="text-[11px] text-ink-muted">
+                Images won&apos;t be sent, but the prompt text still names them. To drop an item
+                entirely, remove it from the spec&apos;s reference_images.
+              </span>
+            )}
             <button
               onClick={handleGenerate}
               disabled={busy}

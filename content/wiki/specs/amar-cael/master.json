@@ -1,6 +1,5 @@
 {
   "entity": "amar-cael",
-  "parent_entity": "valkyrie-crew",
   "world": "earth_2050",
   "_canon_status": "look_direction_chosen_by_author_2026-11-14_pending_portrait",
   "display_name": "Director Amar Cael",
@@ -16,11 +15,11 @@
     "face": "lean_refined_clean_lined_face_sharp_cheekbones_faint_tension_at_the_corners_of_the_mouth_slightly_worn_at_the_edges",
     "eyes": "dark_eyes_that_flick_across_equipment_and_people",
     "hair": "black_hair_silver_at_the_temples_combed_straight_back_precisely",
-    "facial_hair": "clean_shaven_close_shave",
+    "facial_hair": "clean_shaven_close_shave_no_beard_no_mustache_no_stubble",
     "distinguishing": "the_only_person_whose_clothes_look_expensive"
   },
   "wardrobe_overrides": {
-    "default": "tailored_charcoal_corporate_issue_suit_clean_lines_dark_open_collar_shirt_no_tie_no_logos",
+    "default": "tailored_charcoal_corporate_issue_suit_clean_lines_white_or_dark_shirt_worn_OPEN_at_the_collar_NO_TIE_bare_lapels_no_patches_no_pins_no_logos",
     "surface": "corporate_issue_surface_suit_in_clean_charcoal_and_graphite_precise_seams_almost_no_dust"
   },
   "signature_props": [
@@ -47,7 +46,8 @@
     ],
     "proposed_needs_author_approval": [
       "portrait not yet generated; author approved the clean-shaven corporate direction 2026-11-14 to separate him from Jonah and Marco"
-    ]
+    ],
+    "test_render_2026-11-14": "First render failed: Valkyrie patch on the lapel (inherited reference text), a gray beard, and a tie. Parent removed; clean-shaven and open collar made explicit."
   },
   "avoid": [
     "generic_stock_photo_face",
@@ -58,8 +58,17 @@
     "olive_coverall",
     "name_tape",
     "visible_corporate_logo",
-    "resembling_jonah_revas_or_marco_ruiz"
+    "resembling_jonah_revas_or_marco_ruiz",
+    "necktie",
+    "patches_or_badges_on_the_suit",
+    "goatee",
+    "salt_and_pepper_beard"
   ],
-  "_uniform_note": "Not Project VALKYRIE crew: do not use the shipboard state; he keeps the corporate suit in wardrobe_overrides.",
-  "default_expression": "a_small_smile_not_warm_but_real_eyes_measuring_the_room_controlled"
+  "default_expression": "a_small_smile_not_warm_but_real_eyes_measuring_the_room_controlled",
+  "_inheritance_note": "Deliberately NOT a child of valkyrie-crew (2026-11-14): inheriting it pulled the PROJECT VALKYRIE patch reference into his prompt. He is corporate, not mission crew.",
+  "realism": {
+    "register": "prestige_science_fiction_drama",
+    "skin": "real_pores_and_texture_no_beauty_filter",
+    "grooming": "immaculate_but_tired_corporate_polish_slightly_worn_at_the_edges"
+  }
 }
