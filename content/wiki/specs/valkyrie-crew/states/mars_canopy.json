@@ -37,7 +37,13 @@
       "role": "wardrobe",
       "label": "Approved Mars surface suit (shown on Galen, helmet sealed)",
       "instruction": "this is the SAME suit with only the helmet removed and carried: keep the metal neck ring, hard torso shell, chest display unit, harness, backpack, fabric, orange piping and insignia exactly; the face and name come from the wearer's own references"
+    },
+    {
+      "path": "/visual-references/mars-canopy-suit.png",
+      "role": "wardrobe",
+      "label": "Approved helmet-off configuration under the canopy (shown on Galen)",
+      "instruction": "match how the suit looks with the helmet off: exposed empty neck ring, lit chest unit, backpack on, helmet carried at the side, filtered canopy overhead; face and name come from the wearer's own references"
     }
   ],
-  "_note": "2026-11-14: the earlier helmet-off render (galen-voss-mars-canopy.png) predates the suit redesign and pulled renders back to the old flight-jacket look; retired as a reference."
+  "_note": "2026-11-14: mars-canopy-suit.png approved as the helmet-off reference. The pre-redesign canopy render was removed."
 }
