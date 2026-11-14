@@ -8,6 +8,9 @@ import {
   clampRunwayPrompt,
   withRestraint,
   runwayDurationFor,
+  runwayRatioFor,
+  klingReferencePreamble,
+  isKlingO3,
   toDataUri,
 } from "./runway-helpers";
 
@@ -50,4 +53,29 @@ test("every Runway prompt ends with the restraint suffix and stays under the cap
   assert.ok(long.length <= RUNWAY_MAX_PROMPT_CHARS);
   assert.ok(long.endsWith(RUNWAY_RESTRAINT_SUFFIX));
   assert.equal(withRestraint("   "), RUNWAY_RESTRAINT_SUFFIX);
+});
+
+test("Kling O3: durations 3-15, tier-specific ratios", () => {
+  assert.ok(isKlingO3("klingO3_pro") && !isKlingO3("gen4.5"));
+  assert.equal(runwayDurationFor("klingO3_standard", 2), 3);
+  assert.equal(runwayDurationFor("klingO3_pro", 15), 15);
+  assert.equal(runwayDurationFor("klingO3_pro", 40), 15);
+  assert.equal(runwayRatioFor("klingO3_pro", "16:9"), "1920:1080");
+  assert.equal(runwayRatioFor("klingO3_standard", "16:9"), "1280:720");
+  assert.equal(runwayRatioFor("klingO3_standard", "9:16"), "720:1280");
+  assert.equal(runwayRatioFor("klingO3_pro", "4:5"), "1440:1440");
+  assert.equal(runwayRatioFor("gen4.5", "4:5"), "832:1104");
+});
+
+test("Kling preamble names the start frame then each reference in order", () => {
+  const text = klingReferencePreamble(["Galen Voss approved portrait", "Aven Voss approved portrait"]);
+  assert.match(text, /^<<<image_1>>> is the start frame/);
+  assert.match(text, /<<<image_2>>> is Galen Voss approved portrait/);
+  assert.match(text, /<<<image_3>>> is Aven Voss approved portrait/);
+});
+
+test("restraint suffix forbids orbiting and revealing new faces", () => {
+  assert.match(RUNWAY_RESTRAINT_SUFFIX, /no orbiting/);
+  assert.match(RUNWAY_RESTRAINT_SUFFIX, /no new faces are revealed/);
+  assert.ok(withRestraint("x".repeat(3000), 2400).length <= 2400);
 });

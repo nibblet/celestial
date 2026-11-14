@@ -14,7 +14,8 @@
     "chest": "chest_mounted_display_and_control_unit_still_worn_and_lit",
     "insignia": "PROJECT_VALKYRIE_patch_on_the_left_chest_surname_tape_on_the_right_chest_role_tab_color_on_the_left_shoulder_us_flag_on_the_left_upper_arm_same_layout_as_the_coverall",
     "helmet": "rounded_HARD_SHELL_helmet_sand_gray_matching_the_suit_with_a_wide_clear_FACE_VISOR_set_into_the_front_of_the_shell_thin_heads_up_display_glints_a_retractable_gold_tinted_sun_visor_raised_above_it_small_side_lights_and_a_side_camera_pod_OFF_carried_under_one_arm_or_clipped_at_the_hip",
-    "setting_rule": "only_inside_the_pressurized_filtered_canopy_over_the_shaft_or_inside_the_carbon_weave_and_polyglass_dome"
+    "setting_rule": "only_inside_the_pressurized_filtered_canopy_over_the_shaft_or_inside_the_carbon_weave_and_polyglass_dome",
+    "hair_in_helmet": "long_hair_tied_back_or_up_comm_cap_may_be_pushed_back_once_the_helmet_is_off"
   },
   "palette": [
     "sand_gray",

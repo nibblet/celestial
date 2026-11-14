@@ -14,7 +14,8 @@
     "gloves": "thin_dexterous_pressure_gloves_locked_at_the_wrist_rings",
     "chest": "chest_mounted_display_and_control_unit_and_comm_harness",
     "insignia": "PROJECT_VALKYRIE_patch_on_the_left_chest_surname_tape_on_the_right_chest_role_tab_color_on_the_left_shoulder_us_flag_on_the_left_upper_arm_same_layout_as_the_coverall",
-    "helmet": "rounded_HARD_SHELL_helmet_sand_gray_matching_the_suit_with_a_wide_clear_FACE_VISOR_set_into_the_front_of_the_shell_thin_heads_up_display_glints_a_retractable_gold_tinted_sun_visor_raised_above_it_small_side_lights_and_a_side_camera_pod_SEALED_on_the_neck_ring_face_clearly_visible_through_the_visor"
+    "helmet": "rounded_HARD_SHELL_helmet_sand_gray_matching_the_suit_with_a_wide_clear_FACE_VISOR_set_into_the_front_of_the_shell_thin_heads_up_display_glints_a_retractable_gold_tinted_sun_visor_raised_above_it_small_side_lights_and_a_side_camera_pod_SEALED_on_the_neck_ring_face_clearly_visible_through_the_visor",
+    "hair_in_helmet": "long_hair_pinned_up_flat_under_a_thin_fabric_comm_cap_worn_inside_the_helmet_no_hair_ever_outside_a_sealed_helmet"
   },
   "palette": [
     "sand_gray",
@@ -33,7 +34,9 @@
     "armor_plating_or_military_body_armor",
     "clear_bubble_dome_or_fishbowl_helmet",
     "all_glass_helmet",
-    "helmet_without_a_hard_shell"
+    "helmet_without_a_hard_shell",
+    "hair_or_ponytail_outside_the_helmet",
+    "ponytail_through_the_helmet"
   ],
   "reference_images": [
     {
