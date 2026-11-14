@@ -132,7 +132,7 @@ export async function gatherSessionWrapInputs(
 
 // ── Prompt ─────────────────────────────────────────────────────────
 
-const WRAP_MODEL = "claude-sonnet-4-20250514";
+const WRAP_MODEL = "claude-opus-5-5";
 const WRAP_MAX_TOKENS = 260;
 const WRAP_TIMEOUT_MS = 5000;
 

@@ -1,9 +1,11 @@
 import { imagenProvider } from "./imagen";
+import { openaiProvider } from "./openai";
 import { runwayProvider } from "./runway";
 import type { VisualProvider, VisualProviderName } from "./types";
 
 export const PROVIDERS: Partial<Record<VisualProviderName, VisualProvider>> = {
   imagen: imagenProvider,
+  openai: openaiProvider,
   runway: runwayProvider,
 };
 

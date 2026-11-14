@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 // Runway video generation polls 30-90s; allow up to 5 minutes total.
 export const maxDuration = 300;
 
-const VALID_PROVIDERS: VisualProviderName[] = ["imagen", "runway"];
+const VALID_PROVIDERS: VisualProviderName[] = ["imagen", "openai", "runway"];
 
 async function requireKeith() {
   const supabase = await createClient();

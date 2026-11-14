@@ -7,6 +7,22 @@ This folder is the reference for anything we render: character portraits, ship s
 
 ## Files
 
+`crew-lineup.png` shows all ten approved character portraits side by side: the eight crew, then Rhea Solari and Amar Cael.
+
+**Reference images** (`public/visual-references/`): images to attach alongside the prompt in ChatGPT, Gemini, Grok or Runway. Each spec declares its own in a `reference_images` array (`path`, `role`, `label`, `instruction`). The arrays inherit through `parent_entity`, views and states: `valkyrie-crew` attaches the patch to every crew member, and each character adds their identity portrait. The admin console shows them under every generated prompt, with **Copy prompt** and **Download all references** buttons, and the prompt names each reference so the generator knows to match it. To add one, put the file in `public/visual-references/` and add an entry to the right spec.
+- `project-valkyrie-patch.png` (SVG source alongside): the canonical mission patch, with three crescent arcs over a circle per CH01's "Three curves. A circle." Attach it to every shot that shows the uniform. `project-valkyrie-patch-v1-two-arcs.png` is the original ChatGPT crop, kept for its embroidery texture.
+- `aven-voss-portrait.png`: Aven's approved identity portrait.
+- `thane-meric-portrait.png`: Thane's approved identity portrait.
+- `lena-osei-portrait.png`: Lena's approved identity portrait.
+- `evelyn-tran-portrait.png`: Evelyn's approved identity portrait.
+- `marco-ruiz-portrait.png`: Marco's approved identity portrait.
+- `jax-reyes-portrait.png`: Jax's approved identity portrait.
+- `jonah-revas-portrait.png`: Jonah's approved identity portrait.
+- `rhea-solari-portrait.png`: Rhea's approved identity portrait.
+- `amar-cael-portrait.png`: Amar's approved identity portrait.
+- `sovereign-ethics-bureau-seal.png` (SVG alongside): the Bureau seal, an octagon with a level balance beam over an inverted triangle, silver on graphite. Used on Rhea's collar and as the watermark behind her transmissions.
+- `galen-voss-portrait.png`: Galen's approved identity portrait, which also shows the full uniform. `galen-voss-portrait-v1-chatgpt.png` is the superseded first version.
+
 | File | What it is |
 |---|---|
 | `evidence-characters.md` | Every appearance, gesture and gear line for the human cast, quoted with chapter refs, plus contradictions and gaps |
@@ -20,6 +36,14 @@ This folder is the reference for anything we render: character portraits, ship s
 2. **CAEDEN is the AI.** The human crewman "Caeden Lor" (CH11) / "Caeden Merek" (CH13) needs a new name in the manuscript.
 3. **The Rigel Ascendant's captain is Captain Rhea Solari.** "Colonel Riva Doss" in CH07, CH10 and CH11 should be renamed.
 4. **Valkyrie-1 interiors: the specs win over the prose.** No consoles, screens, railings or window frames on screen. Prose lines that describe consoles and so on are listed under "Manuscript fixes" so you can revise them when convenient.
+5. **All images will be regenerated** with the latest models. Old approved images are used only as references for adjusting the looks.
+6. **Uniforms: two tiers, plus a role tab.** Project VALKYRIE is jointly funded by the U.S. and a corporation, and CH12 names three civilians aboard.
+   - **Mission crew** (Galen, Aven, Marco, Jax, Lena) wear a flight-suit-cut coverall.
+   - **Civilians** (Jonah, Evelyn, Thane) wear a field jacket in the same fabric over their own clothes.
+   - **Shared details:** weathered dark olive-charcoal ripstop over a charcoal tee; the round **PROJECT VALKYRIE** patch on the wearer's left chest (`public/visual-references/project-valkyrie-patch.png`); a faded olive-gray name tape on the right chest; a plain colored role tab on the left shoulder strap; a small U.S. flag and blank sponsor tab on the **left** sleeve, the NASA/Air Force flight-suit convention; no service-branch or rank insignia.
+   - **Role tab colors:** command muted gold (Galen); medical sage green (Aven); security oxblood (Marco); systems burnt orange (Jax); science slate blue (Lena, Evelyn, Thane); civilian advisor bone white (Jonah).
+   - **Where it lives:** the shared parts are in `valkyrie-crew/states/shipboard.json`; each character's tier and tab are in `shipboard_uniform` in their `master.json`. Amar Cael is corporate, not crew, and keeps his own suit.
+7. **Galen's look is approved.** His identity reference is `public/visual-references/galen-voss-portrait.png`, generated in the app with OpenAI using the spec references. It shows the face, uniform, three-arc patch, and tab and flag placement exactly as specified. The look: blue-gray eyes, brown hair graying at the temples in a military cut, a sun-weathered face with deep forehead lines, a square jaw, and early-to-mid 50s apparent age. The older ChatGPT portrait (`galen-voss-portrait-v1-chatgpt.png`, two-arc patch) and the Supabase USAF reference are superseded.
 
 ## What was added or changed
 
@@ -61,18 +85,18 @@ Each character's `master.json` has a `_provenance` block that separates canon fi
 
 | Character | Apparent age | Proposed look (the canon parts are in **bold**) |
 |---|---|---|
-| Galen Voss | ~50 (**chronologically early 80s, rejuvenated**) | tall, lean pilot build; fair weathered skin; **drawn face, tight jaw**; pale gray-blue eyes (**"clear but hollow"**); close-cropped dark hair, steel-gray at the temples; clean-shaven; small scar through the left eyebrow |
-| Aven Voss | ~50 (**rejuvenated**) | medium height, athletic; fair freckled skin; green-hazel eyes; **red-blonde hair tied back** (shoulder length, low knot); **silver constellation medallion under the suit collar** |
-| Thane Meric | **early 30s** | lean, wiry; dark auburn-brown wavy hair falling over the forehead; Galen's gray eyes; light stubble; a family resemblance to both grandparents that reads on screen |
-| Lena Osei | mid-40s | tall, slender; deep brown skin; high cheekbones; natural hair in tight braids bound at the nape; small gold studs; **arms folded** as her signature pose |
-| Jax Reyes | late 30s | wiry; light olive-tan skin; messy black hair, short sides; uneven stubble; burn marks and grime on his fingers |
-| Marco Ruiz | ~60, not rejuvenated (**"too old to pretend"**) | thickset, broad; medium brown skin; heavy brow; gray buzz cut; old chin scar |
-| Evelyn Tran | late 20s (**young**) | petite; black hair in a messy bun with a stylus through it; **glasses** (thin rectangular frames); **chin tilted, slate in "attack posture"** |
-| Jonah Revas | ~45, actually mid-50s (**"calm older than his face"**) | light olive skin; short dark curly hair and a neat beard, both flecked with gray; loose linen-like overshirt; **cold tea mug** |
-| Amar Cael | late 50s (**"refined… less glass tower, more iron core"**) | tall, spare; medium brown skin; black-to-silver hair combed back; trimmed beard; **corporate-issue suit** |
-| Rhea Solari | late 50s (**"trim lines, eyes too sharp to soften"**) | pale; ice-gray eyes; silver-white hair in a tight low chignon; high-collared slate-gray uniform with the **Sovereign Ethics Bureau seal** |
+| Galen Voss ✅ approved | early-to-mid 50s (**chronologically early 80s, rejuvenated**) | from the reference portrait: tall, lean pilot build; sun-weathered ruddy skin; **drawn face, tight jaw**, square jaw and deep forehead lines; blue-gray eyes (**"clear but hollow"**); brown military cut graying at the temples; clean-shaven |
+| Aven Voss ✅ approved | ~50 (**rejuvenated**) | from `public/visual-references/aven-voss-portrait.png`: medium, athletic build; fair, heavily freckled skin; green-hazel eyes; **red-blonde (copper) hair tied back** in a loose low knot with loose strands; **silver constellation medallion**, shown at the open collar; coverall with a sage-green medical tab |
+| Thane Meric ✅ approved | **early 30s** | from `public/visual-references/thane-meric-portrait.png`: lean; wavy, tousled copper auburn-brown hair; Galen's gray-blue eyes; freckles from Aven; light stubble; open, curious expression; civilian field jacket over a charcoal henley, MERIC name tape, slate-blue science tab. Generated with both grandparents attached as resemblance references |
+| Lena Osei ✅ approved | mid-40s | from `public/visual-references/lena-osei-portrait.png`: mixed Ghanaian–Ethiopian heritage; tall and slender; warm brown skin, no makeup, tired eyes; long narrow angular face; dark almond eyes; long black hair in one low braid; thin gold hoop; GIZA wristband; tired, assessing skepticism (not a glare); mission coverall with a slate-blue science tab |
+| Jax Reyes ✅ approved | late 30s | from `public/visual-references/jax-reyes-portrait.png`: wiry; light olive-tan skin; messy spiky black hair; uneven stubble; crooked sarcastic half-smirk; tool grime and burn marks on his hands; mission coverall with sleeves pushed up, a burnt-orange systems tab and REYES name tape |
+| Marco Ruiz ✅ approved | ~60, **never rejuvenated** ("too old to pretend") | from `public/visual-references/marco-ruiz-portrait.png`: thickset and broad; weathered medium-brown skin; heavy brow; gray buzz cut; clean-shaven with gray stubble; watchful, unreadable expression; mission coverall with an oxblood security tab and RUIZ name tape. (His left-sleeve flag set the crew standard) |
+| Evelyn Tran ✅ approved | late 20s–early 30s (**young**) | from `public/visual-references/evelyn-tran-portrait.png`: petite; naturally striking (deliberately the attractive one, per the author); light freckles; **thin rectangular metal glasses**; black hair in a loose messy bun with a stylus through it; knowing half-smile; civilian field jacket over a black turtleneck, TRAN name tape, slate-blue science tab |
+| Jonah Revas ✅ approved | looks ~45, actually mid-50s (**"calm older than his face"**) | from `public/visual-references/jonah-revas-portrait.png`: medium build; light olive skin; dark curls mostly silver at the temples; full, neatly trimmed gray beard; still, inward, listening expression; civilian field jacket over an undyed linen shirt, REVAS name tape, bone-white advisor tab. Deliberately distinct from Jax |
+| Amar Cael ✅ approved | late 50s (**"refined… less glass tower, more iron core"**) | from `public/visual-references/amar-cael-portrait.png`: lean, refined face; **clean-shaven**; black hair silvering at the temples, combed back; controlled half-smile, "not warm, but real"; tailored charcoal **corporate-issue suit**, white shirt open at the collar, no tie, no patch. Not part of the crew spec |
+| Rhea Solari ✅ approved | late 50s (**"trim lines, eyes too sharp to soften"**) | from `public/visual-references/rhea-solari-portrait.png`: pale; ice-gray eyes; silver hair in a tight low knot; never smiling; high-collared slate-gray Bureau tunic with the **Sovereign Ethics Bureau seal** pin on the collar and two silver cuff bars; the seal as a faint watermark behind her |
 
-Also review: the `shipboard` wardrobe (charcoal and slate layers, triple-curve mission patch) and the whole `rigel-ascendant` exterior (a hard-edged graphite modular cruiser, built as the visual opposite of Valkyrie).
+Also review: the whole `rigel-ascendant` exterior (a hard-edged graphite modular cruiser, built as the visual opposite of Valkyrie).
 
 **Order of work after approval:** generate each `three_quarter` portrait first and approve the best one. Its seed and the vision fingerprint become the identity anchor that every later still and video reuses. This is what keeps a face the same across clips.
 

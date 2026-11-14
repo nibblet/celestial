@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import type { ReferenceImage } from "@/lib/visuals/specs/references";
 
 type PresetOption = { key: string; label: string; brief: string };
 
@@ -19,6 +20,7 @@ type PromptResponse = {
     raw: string;
   };
   cached: boolean;
+  referenceImages?: ReferenceImage[];
   evidence: Array<{ kind: string; title: string; score: number; slug?: string; storyId?: string }>;
   corpusVersion: string;
 };
@@ -34,6 +36,10 @@ type AssetResponse = {
 const TARGET_KINDS = ["entity", "story", "scene", "freeform"] as const;
 const ASPECTS = ["16:9", "9:16", "1:1", "4:5", "3:2"] as const;
 const INTENTS = ["portrait", "establishing_shot", "scene_moment", "motion_loop"] as const;
+const IMAGE_PROVIDERS = [
+  { key: "openai", label: "OpenAI GPT Image (attaches references)" },
+  { key: "imagen", label: "Google Nano Banana 2.1 (text only)" },
+] as const;
 
 export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
   const [targetKind, setTargetKind] = useState<(typeof TARGET_KINDS)[number]>("entity");
@@ -52,6 +58,10 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
   const [approving, setApproving] = useState(false);
   const [animating, setAnimating] = useState(false);
   const [videoResult, setVideoResult] = useState<AssetResponse | null>(null);
+  const [copied, setCopied] = useState(false);
+  const [imageProvider, setImageProvider] =
+    useState<(typeof IMAGE_PROVIDERS)[number]["key"]>("openai");
+  const [attachRefs, setAttachRefs] = useState(true);
   const [refFile, setRefFile] = useState<File | null>(null);
   const [refUploading, setRefUploading] = useState(false);
   const [refResult, setRefResult] = useState<{
@@ -90,20 +100,49 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
     }
   }
 
+  async function handleCopyPrompt() {
+    if (!promptResult) return;
+    try {
+      await navigator.clipboard.writeText(promptResult.prompt.raw);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setError("Couldn't copy to the clipboard. Select the prompt text and copy it manually.");
+    }
+  }
+
+  function handleDownloadReferences() {
+    for (const ref of promptResult?.referenceImages ?? []) {
+      const a = document.createElement("a");
+      a.href = ref.path;
+      a.download = ref.path.split("/").pop() ?? "reference.png";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+  }
+
   async function handleGenerate() {
     if (!promptResult) return;
     setBusy(true);
     setError(null);
     try {
       const params: Record<string, unknown> = {};
-      const seedNum = seed.trim() ? Number.parseInt(seed.trim(), 10) : NaN;
-      if (Number.isFinite(seedNum)) params.seed = seedNum;
+      if (imageProvider === "imagen") {
+        // Imagen takes a seed; OpenAI has no seed parameter.
+        const seedNum = seed.trim() ? Number.parseInt(seed.trim(), 10) : NaN;
+        if (Number.isFinite(seedNum)) params.seed = seedNum;
+      }
+      const refs = promptResult.referenceImages ?? [];
+      if (imageProvider === "openai" && attachRefs && refs.length > 0) {
+        params.referenceImages = refs.map((r) => r.path);
+      }
       const res = await fetch("/api/visuals/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           promptId: promptResult.promptId,
-          provider: "imagen",
+          provider: imageProvider,
           ...(Object.keys(params).length > 0 ? { params } : {}),
         }),
       });
@@ -365,19 +404,106 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
           <pre className="whitespace-pre-wrap rounded-md bg-warm-white-2 p-3 text-xs text-ink">
             {promptResult.prompt.raw}
           </pre>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={handleCopyPrompt}
+              className="rounded-md border border-[var(--color-border)] px-3 py-1.5 text-xs font-semibold text-ink"
+            >
+              {copied ? "Copied ✓" : "Copy prompt"}
+            </button>
+            {(promptResult.referenceImages?.length ?? 0) > 0 && (
+              <button
+                type="button"
+                onClick={handleDownloadReferences}
+                className="rounded-md border border-[var(--color-border)] px-3 py-1.5 text-xs font-semibold text-ink"
+              >
+                Download all references ({promptResult.referenceImages!.length})
+              </button>
+            )}
+          </div>
+          {(promptResult.referenceImages?.length ?? 0) > 0 ? (
+            <div className="mt-4">
+              <h3 className="type-meta text-ink">Attach these reference images</h3>
+              <p className="mt-1 text-xs text-ink-muted">
+                From the spec. Attach them alongside the prompt in ChatGPT, Gemini or Grok, and use
+                the identity image as Runway&apos;s start frame.
+              </p>
+              <ul className="mt-2 flex flex-wrap gap-3">
+                {promptResult.referenceImages!.map((ref) => (
+                  <li key={ref.path} className="w-36">
+                    <a href={ref.path} download title={`Download ${ref.label}`}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={ref.path}
+                        alt={ref.label}
+                        className="h-36 w-36 rounded-md border border-[var(--color-border)] object-cover"
+                      />
+                    </a>
+                    <div className="mt-1 text-[11px] font-semibold text-ink">{ref.label}</div>
+                    <div className="text-[11px] uppercase tracking-wide text-ink-ghost">{ref.role}</div>
+                    {ref.instruction && (
+                      <div className="text-[11px] text-ink-muted">{ref.instruction}</div>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <p className="mt-3 text-xs text-ink-ghost">No reference images in this spec.</p>
+          )}
           <details className="mt-3">
             <summary className="cursor-pointer text-xs text-ink-muted">Structured fields + evidence</summary>
             <pre className="mt-2 whitespace-pre-wrap rounded-md bg-warm-white-2 p-3 text-[11px] text-ink-muted">
               {JSON.stringify({ prompt: promptResult.prompt, evidence: promptResult.evidence }, null, 2)}
             </pre>
           </details>
-          <button
-            onClick={handleGenerate}
-            disabled={busy}
-            className="mt-4 rounded-md bg-ocean px-4 py-2 text-sm font-semibold text-warm-white disabled:opacity-50"
-          >
-            {busy ? "Working…" : "Generate with Imagen 4"}
-          </button>
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <select
+              value={imageProvider}
+              onChange={(e) =>
+                setImageProvider(e.target.value as (typeof IMAGE_PROVIDERS)[number]["key"])
+              }
+              className="rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-2 text-sm text-ink"
+              aria-label="Image generator"
+            >
+              {IMAGE_PROVIDERS.map((p) => (
+                <option key={p.key} value={p.key}>
+                  {p.label}
+                </option>
+              ))}
+            </select>
+            {imageProvider === "openai" && (promptResult.referenceImages?.length ?? 0) > 0 && (
+              <label className="flex items-center gap-1.5 text-xs text-ink-muted">
+                <input
+                  type="checkbox"
+                  checked={attachRefs}
+                  onChange={(e) => setAttachRefs(e.target.checked)}
+                />
+                Attach {promptResult.referenceImages!.length} reference image
+                {promptResult.referenceImages!.length === 1 ? "" : "s"}
+              </label>
+            )}
+            {imageProvider === "openai" &&
+              !attachRefs &&
+              (promptResult.referenceImages?.length ?? 0) > 0 && (
+              <span className="text-[11px] text-ink-muted">
+                Images won&apos;t be sent, but the prompt text still names them. To drop an item
+                entirely, remove it from the spec&apos;s reference_images.
+              </span>
+            )}
+            <button
+              onClick={handleGenerate}
+              disabled={busy}
+              className="rounded-md bg-ocean px-4 py-2 text-sm font-semibold text-warm-white disabled:opacity-50"
+            >
+              {busy
+                ? "Working…"
+                : imageProvider === "openai"
+                  ? "Generate with OpenAI"
+                  : "Generate with Nano Banana"}
+            </button>
+          </div>
         </section>
       )}
 

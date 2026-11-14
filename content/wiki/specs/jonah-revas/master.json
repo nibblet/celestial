@@ -2,22 +2,29 @@
   "entity": "jonah-revas",
   "parent_entity": "valkyrie-crew",
   "world": "earth_2050",
-  "_canon_status": "draft_pending_author_review",
+  "_canon_status": "look_approved_by_author_2026-11-14",
   "display_name": "Dr. Jonah Revas",
   "role": "Theological scholar and cultural analyst",
   "age": {
     "chronological": "mid_50s",
-    "apparent": "about_45",
+    "apparent": "about_45_his_face_younger_than_his_calm_manner",
     "tell": "a calm that feels older than his face"
   },
   "identity": {
-    "height_build": "medium_height_soft_shouldered_unhurried",
+    "height_build": "medium_height_and_medium_build_neither_heavy_nor_wiry",
     "skin": "light_olive_skin",
-    "face": "open_gentle_face_younger_than_his_manner",
-    "eyes": "dark_brown_eyes_steady_and_unhurried",
-    "hair": "short_dark_curly_hair_flecked_with_gray",
-    "facial_hair": "neat_short_beard_flecked_with_gray",
-    "distinguishing": "loose_layered_linen_like_overshirt_over_his_shipboard_wear"
+    "face": "open_composed_face_defined_but_not_gaunt_younger_than_his_manner_few_lines",
+    "eyes": "warm_dark_brown_eyes_soft_and_slightly_crinkled_at_the_corners",
+    "hair": "gray_flecked_dark_curls_mostly_silver_at_the_temples_worn_medium_length_over_the_ears",
+    "facial_hair": "full_neatly_trimmed_beard_mostly_gray",
+    "distinguishing": "loose_undyed_linen_shirt_collar_open_under_his_field_jacket_and_a_name_tape_reading_REVAS"
+  },
+  "shipboard_uniform": {
+    "tier": "civilian_field_jacket",
+    "garment": "hip_length_field_jacket_in_the_uniform_fabric_open_at_the_front",
+    "department": "civilian_advisor",
+    "role_tab_color": "bone_white",
+    "worn": "over_a_loose_undyed_linen_like_shirt"
   },
   "signature_props": [
     "mug_of_tea_gone_cold",
@@ -44,12 +51,29 @@
       "sketch of the Nine (CH09 log)",
       "postures and expressions (CH02-CH17)"
     ],
-    "proposed_needs_author_approval": [
-      "build, skin, face, eyes, hair, beard, overshirt, age"
-    ]
+    "proposed_needs_author_approval": [],
+    "test_render_2026-11-14": "First OpenAI render read too close to Jax (olive skin, dark hair, beard, same wry half-smirk and head tilt). Differentiated by silhouette and manner: mostly gray curls worn longer, a full rounded gray beard, a softer build, and a gentle listening expression.",
+    "test_render_2_2026-11-14": "Second render: distinct from Jax but overcorrected (heavyset, jolly, looked older than his manner). Third pass keeps the gray curls and full gray beard, returns to a medium build and a still, inward listening expression, and sets the apparent age to ~45.",
+    "approved_portrait": "public/visual-references/jonah-revas-portrait.png: third OpenAI render ('meet in the middle'), author-approved 2026-11-14."
   },
+  "reference_images": [
+    {
+      "path": "/visual-references/jonah-revas-portrait.png",
+      "role": "identity",
+      "label": "Jonah Revas approved portrait",
+      "instruction": "match his face, gray curls, gray beard, age, build and still, listening expression exactly"
+    }
+  ],
   "avoid": [
     "generic_stock_photo_face",
-    "celebrity_likeness"
-  ]
+    "celebrity_likeness",
+    "smirk_or_wry_half_smile",
+    "patchy_stubble",
+    "wiry_build",
+    "resembling_jax_reyes",
+    "grinning_or_jolly",
+    "heavyset_or_round_face",
+    "looking_over_55"
+  ],
+  "default_expression": "still_inward_listening_calm_eyes_soft_but_focused_mouth_at_rest_not_smiling_a_man_who_waits_for_the_room_to_speak"
 }

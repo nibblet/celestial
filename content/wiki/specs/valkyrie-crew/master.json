@@ -9,7 +9,9 @@
     "skin": "real_pores_and_texture_no_beauty_filter",
     "faces": "lived_in_asymmetry_fine_lines_appropriate_to_apparent_age",
     "wardrobe": "worn_and_used_scuffed_dust_in_seams",
-    "performance": "restrained_naturalistic_micro_expressions"
+    "performance": "restrained_naturalistic_micro_expressions",
+    "casting": "ordinary_characterful_faces_like_a_working_expedition_crew_not_a_cast_photo_real_asymmetry_imperfect_teeth_and_skin",
+    "grooming": "no_makeup_months_into_a_dig_hair_practical_not_styled"
   },
   "world_rules": {
     "year": "2050",
@@ -22,6 +24,14 @@
     "wrist_slate_on_left_forearm",
     "scan_wand"
   ],
+  "reference_images": [
+    {
+      "path": "/visual-references/project-valkyrie-patch.png",
+      "role": "insignia",
+      "label": "PROJECT VALKYRIE mission patch",
+      "instruction": "match the design exactly (three crescent arcs over a circle, PROJECT / VALKYRIE on the rim) and render it as embroidered tan thread on a navy patch, on the wearer's left chest"
+    }
+  ],
   "avoid": [
     "visible_cybernetic_implants_or_prosthetics",
     "glowing_tattoos_or_face_markings",
@@ -30,6 +40,11 @@
     "rank_pips_or_military_dress_medals",
     "airbrushed_or_plastic_skin",
     "model_photoshoot_posing",
-    "anime_or_cartoon_rendering"
+    "anime_or_cartoon_rendering",
+    "glamour_makeup",
+    "model_or_movie_star_good_looks",
+    "perfect_symmetry",
+    "mission_patch_logo_repeated_in_the_background_or_on_walls",
+    "us_flag_on_the_right_sleeve"
   ]
 }

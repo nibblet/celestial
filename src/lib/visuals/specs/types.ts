@@ -22,6 +22,8 @@
  * spec-derived ones.
  */
 
+import type { ReferenceImage } from "./references";
+
 export type SpecLayer = Record<string, unknown>;
 
 export type ComposedSpec = {
@@ -33,6 +35,9 @@ export type ComposedSpec = {
   merged: SpecLayer;
   /** Concatenated avoid arrays from every layer that supplied one. */
   avoid: string[];
+  /** Reference images declared by any layer (see ./references.ts). Not
+   *  part of `merged`; surfaced to the operator and future providers. */
+  referenceImages: ReferenceImage[];
   /** Stable hash over the composed spec — used in seed_hash so cache
    *  invalidates when the spec changes. */
   hash: string;

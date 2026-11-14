@@ -1,24 +1,41 @@
 {
   "state": "shipboard",
-  "display_name": "Shipboard wear aboard Valkyrie-1",
-  "_canon_basis": "No uniform is described in prose (CH17 'Not in uniform' implies one exists). Proposed so crew read as one team without military dress.",
-  "wardrobe": {
-    "base": "fitted_long_sleeve_thermal_layer_in_charcoal_or_slate",
-    "outer": "unstructured_soft_jacket_or_vest_with_mission_patch_on_left_shoulder",
-    "mission_patch": "small_embroidered_patch_triple_curve_and_circle_on_dark_field",
-    "trousers": "utility_trousers_with_thigh_pockets",
+  "display_name": "Project VALKYRIE shipboard uniform",
+  "_canon_basis": "Author decision 2026-11-14: two-tier system. Mission personnel wear a flight-suit-cut coverall; the civilians Marco names in CH12 (Jonah, Evelyn, Thane) wear a field jacket of the same fabric over their own clothes. Project VALKYRIE is joint U.S. and corporate funded (faction dossier, 2049), so a U.S. flag and an unbranded sponsor tab appear, but no service-branch insignia. Each character's master.json sets their tier and role-tab color.",
+  "_role_tab_legend": {
+    "command": "muted_gold",
+    "medical": "muted_sage_green",
+    "security": "muted_oxblood",
+    "systems": "muted_burnt_orange",
+    "science": "muted_slate_blue",
+    "civilian_advisor": "bone_white"
+  },
+  "uniform_system": {
+    "fabric": "weathered_dark_olive_charcoal_ripstop_dusty_and_field_worn_soft_at_seams_elbows_and_knees",
+    "mission_patch": "round_embroidered_patch_on_the_wearer's_LEFT_chest_dark_navy_field_with_a_thin_tan_border_THREE_stacked_tan_crescent_arcs_tapering_to_points_rising_like_wings_over_one_solid_tan_circle_PROJECT_arched_across_the_top_and_VALKYRIE_arched_across_the_bottom_in_tan_thread",
+    "name_tape": "faded_olive_gray_rectangular_name_tape_on_the_wearer's_RIGHT_chest_surname_only_in_pale_stitched_capitals",
+    "shoulder": "small_us_flag_on_the_wearer's_LEFT_upper_sleeve_with_a_blank_sponsor_tab_beneath_it_as_on_nasa_and_air_force_flight_suits",
+    "role_tab": "plain_solid_colored_rectangular_tab_on_the_wearer's_left_shoulder_strap_above_the_flag_no_symbols_no_chevrons",
     "footwear": "soft_soled_deck_boots",
-    "wrist": "wrist_slate_always_worn"
+    "wrist": "wrist_slate_on_the_left_forearm",
+    "undershirt": "plain_dark_charcoal_crew_neck_tee_visible_at_the_open_collar"
   },
   "palette": [
-    "charcoal",
-    "slate_blue_gray",
-    "muted_bone",
-    "single_accent_of_worn_ochre"
+    "weathered_olive_charcoal",
+    "dark_navy",
+    "tan_thread"
   ],
   "avoid": [
+    "usaf_or_any_service_branch_patches",
+    "rank_insignia_or_wings_badges",
+    "legible_corporate_logos",
     "bright_primary_color_uniforms",
     "capes_or_sashes",
-    "armor_plating"
-  ]
+    "armor_plating",
+    "rank_chevrons_or_stripes",
+    "patch_and_name_tape_on_swapped_sides",
+    "two_arc_or_wave_logo_variants",
+    "wifi_symbol_look"
+  ],
+  "_patch_note": "Canonical patch: public/visual-references/project-valkyrie-patch.png (SVG source alongside). Three arcs per author 2026-11-14, matching 'Three curves. A circle.' (CH01); style from the ChatGPT render (v1, two arcs, kept as project-valkyrie-patch-v1-two-arcs.png). Attach the PNG as a reference in every generation that shows the uniform."
 }

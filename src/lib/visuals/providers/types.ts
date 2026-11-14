@@ -8,7 +8,7 @@ export type GeneratedAsset = {
   durationSec?: number;
 };
 
-export type VisualProviderName = "imagen" | "runway" | "flux" | "ideogram" | "veo" | "kling";
+export type VisualProviderName = "imagen" | "openai" | "runway" | "flux" | "ideogram" | "veo" | "kling";
 
 export interface VisualProvider {
   name: VisualProviderName;

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720">
+<defs>
+<linearGradient id="silver" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="720" y2="720"><stop offset="0" stop-color="#eef1f4"/><stop offset=".5" stop-color="#b9c0c8"/><stop offset="1" stop-color="#dfe3e8"/></linearGradient>
+<path id="top" d="M 98,360 A 262 262 0 0 1 622,360"/>
+<path id="bot" d="M 74,360 A 286 286 0 0 0 646,360"/>
+</defs>
+<rect width="720" height="720" fill="#2a2e33"/>
+<polygon points="672.3,489.3 489.3,672.3 230.7,672.3 47.7,489.3 47.7,230.7 230.7,47.7 489.3,47.7 672.3,230.7" fill="#1b1e22" stroke="url(#silver)" stroke-width="8"/>
+<polygon points="655.6,482.5 482.5,655.6 237.5,655.6 64.4,482.5 64.4,237.5 237.5,64.4 482.5,64.4 655.6,237.5" fill="none" stroke="#9aa2ab" stroke-width="2"/>
+<circle cx="360" cy="360" r="212" fill="none" stroke="url(#silver)" stroke-width="3"/>
+<polygon points="230.1,300.0 489.9,300.0 360.0,525.0" fill="none" stroke="url(#silver)" stroke-width="10" stroke-linejoin="miter"/>
+<line x1="360" y1="210" x2="360" y2="530" stroke="url(#silver)" stroke-width="10"/>
+<line x1="185" y1="300" x2="535" y2="300" stroke="url(#silver)" stroke-width="10"/>
+<rect x="165" y="290" width="20" height="20" fill="url(#silver)"/>
+<rect x="535" y="290" width="20" height="20" fill="url(#silver)"/>
+<rect x="349" y="199" width="22" height="22" transform="rotate(45 360 210)" fill="url(#silver)"/>
+<text font-family="DejaVu Sans, Arial" font-size="40" font-weight="700" letter-spacing="12" fill="url(#silver)"><textPath href="#top" startOffset="50%" text-anchor="middle">SOVEREIGN ETHICS</textPath></text>
+<text font-family="DejaVu Sans, Arial" font-size="40" font-weight="700" letter-spacing="14" fill="url(#silver)"><textPath href="#bot" startOffset="50%" text-anchor="middle" dy="-8">BUREAU</textPath></text>
+</svg>

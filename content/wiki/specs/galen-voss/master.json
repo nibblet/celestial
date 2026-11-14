@@ -2,22 +2,28 @@
   "entity": "galen-voss",
   "parent_entity": "valkyrie-crew",
   "world": "earth_2050",
-  "_canon_status": "draft_pending_author_review",
+  "_canon_status": "look_approved_by_author_2026-11-14",
   "display_name": "Commander Galen Voss",
-  "role": "Mission Commander, Valkyrie-1; former USAF pilot",
+  "role": "Mission Commander, Valkyrie-1; former pilot",
   "age": {
     "chronological": "about_82",
-    "apparent": "about_50_after_rejuvenation_therapy",
+    "apparent": "early_to_mid_50s_after_rejuvenation_therapy",
     "tell": "a restored body carrying decades in the eyes, still and economical in movement"
   },
   "identity": {
     "height_build": "tall_lean_and_upright_pilot_build_broad_but_not_bulky_shoulders",
-    "skin": "fair_weathered_skin_with_sun_creases_at_the_outer_eyes",
-    "face": "long_face_drawn_tight_strong_squared_jaw_often_clenched_deep_vertical_line_between_brows",
-    "eyes": "pale_gray_blue_eyes_clear_but_hollow",
-    "hair": "close_cropped_dark_brown_hair_with_steel_gray_at_the_temples",
+    "skin": "fair_sun_weathered_skin_with_a_ruddy_tan_and_deep_creases_at_the_outer_eyes",
+    "face": "squared_face_with_a_strong_square_jaw_deep_horizontal_forehead_lines_firm_unsmiling_mouth_drawn_tight",
+    "eyes": "blue_gray_eyes_clear_but_hollow_steady_direct_gaze",
+    "hair": "short_military_cut_brown_hair_graying_at_the_temples_and_sides",
     "facial_hair": "clean_shaven",
-    "distinguishing": "small_pale_scar_through_the_left_eyebrow"
+    "distinguishing": "stern_stillness_the_face_of_a_career_pilot"
+  },
+  "shipboard_uniform": {
+    "tier": "mission_coverall",
+    "garment": "one_piece_flight_suit_cut_coverall_front_zip_chest_and_thigh_pockets",
+    "department": "command",
+    "role_tab_color": "muted_gold"
   },
   "signature_props": [
     "slate_and_stylus",
@@ -48,17 +54,29 @@
       "props (CH01, CH04, CH08)",
       "voice (dossier)"
     ],
-    "proposed_needs_author_approval": [
-      "height_build",
-      "skin",
-      "eyes color (pale gray-blue)",
-      "hair",
-      "clean_shaven",
-      "eyebrow scar"
-    ]
+    "approved_reference": "Supabase cel_visual_assets manual_upload visuals/reference/galen-voss/984879c1-7e9f-4a39-83f1-b782910a6dc4.png (author approved 2026-11-14). Face, hair, eyes and skin are taken from it. Its USAF flight suit is NOT canon: use the Project VALKYRIE coverall. The red mark on his cheek in that image is not part of the look.",
+    "changed_from_draft": [
+      "eyes pale gray-blue -> blue-gray (matches reference)",
+      "hair dark brown with steel gray -> brown graying at temples and sides, military cut",
+      "eyebrow scar dropped (not in reference)",
+      "apparent age ~50 -> early-to-mid 50s"
+    ],
+    "test_renders_2026-11-14": "Two external renders from the app's prompt both held the face. Preferred apparent age is the square-patch render (early-to-mid 50s); the round-patch render read closer to 60.",
+    "approved_portrait": "public/visual-references/galen-voss-portrait.png: generated in the app with OpenAI GPT Image using the spec references, author-approved 2026-11-14. Face, uniform, three-arc patch and tab/flag placement all correct. Earlier ChatGPT portrait kept as galen-voss-portrait-v1-chatgpt.png (two-arc patch, superseded).",
+    "flag_note": "Galen's approved portrait shows the flag on his right sleeve; the crew standard is now the left sleeve (2026-11-14). His identity reference governs his face, not the flag side."
   },
+  "reference_images": [
+    {
+      "path": "/visual-references/galen-voss-portrait.png",
+      "role": "identity",
+      "label": "Galen Voss approved portrait",
+      "instruction": "match his face, hair, eyes, age and uniform exactly"
+    }
+  ],
   "avoid": [
     "generic_stock_photo_face",
-    "celebrity_likeness"
+    "celebrity_likeness",
+    "looking_over_60",
+    "heavy_jowls"
   ]
 }

@@ -105,6 +105,7 @@ export async function POST(request: Request) {
       promptId: result.promptId,
       prompt: result.prompt,
       cached: result.cached,
+      referenceImages: result.referenceImages,
       evidence: context.evidence,
       corpusVersion: context.corpusVersion,
     });

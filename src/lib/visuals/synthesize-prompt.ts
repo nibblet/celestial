@@ -8,6 +8,7 @@ import { fetchIdentityContinuity, renderIdentityContinuityForPrompt } from "./co
 import { getStylePreset } from "./style-presets";
 import { continuityHashFor, seedHashFor } from "./hash";
 import { composeEntitySpec, renderSpecForPrompt } from "./specs/loader";
+import type { ReferenceImage } from "./specs/references";
 import type {
   StylePresetKey,
   VisualAspect,
@@ -21,8 +22,8 @@ import type {
  * Bump when the system prompt below changes. Combined with corpusVersion in
  * seedHashFor() so cached prompts auto-invalidate on prompt edits.
  */
-const SYNTH_PROMPT_VERSION = "v10";
-const SYNTH_MODEL = "claude-sonnet-4-20250514";
+const SYNTH_PROMPT_VERSION = "v12";
+const SYNTH_MODEL = "claude-opus-5-5";
 
 const SYSTEM_PROMPT = `You are a Visual Director for the Celestial corpus.
 
@@ -117,6 +118,14 @@ When a "Visual Spec — CANON OVERRIDE" block appears in your input:
    "subdermal_emission"), translate to natural language IN THE RAW PROMPT
    ("violet-amethyst", "subdermal emission") but keep the snake_case
    tokens in identity_anchors so they remain stable cache keys.
+8. If the spec lists "reference images", the operator attaches those images
+   to the generation. Begin the raw prompt with one sentence naming each by
+   its label and role and saying to match it exactly (e.g. "Match the
+   attached identity portrait of Galen Voss for his face and the attached
+   PROJECT VALKYRIE patch for the chest insignia."). For a [resemblance]
+   reference, say to borrow only the family likeness it describes and keep
+   the subject a distinct person. Still describe the
+   subject in words; the references reinforce the text, they do not replace it.
 
 If the subject is non-humanoid or environmental (an AI, a place, a ship's
 spirit), treat THE SETTING as the protagonist: load it with cinematic
@@ -203,6 +212,9 @@ export type SynthesizeVisualPromptResult = {
   promptId: string;
   prompt: VisualPrompt;
   cached: boolean;
+  /** Images to attach alongside `prompt.raw`, from the entity's spec layers.
+   *  Always recomputed from disk, so cached prompts still return them. */
+  referenceImages: ReferenceImage[];
 };
 
 export async function synthesizeVisualPrompt(
@@ -254,6 +266,7 @@ export async function synthesizeVisualPrompt(
       promptId: existing.id as string,
       prompt: existing.prompt_json as VisualPrompt,
       cached: true,
+      referenceImages: entitySpec?.referenceImages ?? [],
     };
   }
 
@@ -295,8 +308,8 @@ export async function synthesizeVisualPrompt(
 
   const response = await anthropic.messages.create({
     model: SYNTH_MODEL,
-    max_tokens: 2048,
-    temperature: 0.4,
+    // Opus 5.5 adaptive thinking shares this budget; keep headroom for JSON output.
+    max_tokens: 4096,
     system: SYSTEM_PROMPT,
     messages: [{ role: "user", content: userMessage }],
   });
@@ -357,6 +370,7 @@ export async function synthesizeVisualPrompt(
         promptId: race.id as string,
         prompt: race.prompt_json as VisualPrompt,
         cached: true,
+        referenceImages: entitySpec?.referenceImages ?? [],
       };
     }
     throw new Error(
@@ -364,7 +378,12 @@ export async function synthesizeVisualPrompt(
     );
   }
 
-  return { promptId: inserted.id as string, prompt, cached: false };
+  return {
+    promptId: inserted.id as string,
+    prompt,
+    cached: false,
+    referenceImages: entitySpec?.referenceImages ?? [],
+  };
 }
 
 /**

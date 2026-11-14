@@ -382,10 +382,10 @@ async function* singlePath(
   const systemPrompt = persona.buildSystemPrompt(promptArgs);
 
   const startedAt = Date.now();
+  // Opus 5.5 rejects temperature/top_p/top_k — omit sampling params.
   const stream = anthropic.messages.stream({
     model: persona.model,
     max_tokens: persona.maxTokens,
-    temperature: persona.temperature,
     system: systemPrompt,
     messages,
   });
@@ -502,7 +502,6 @@ async function* multiPath(
   const stream = anthropic.messages.stream({
     model: synthesizer.model,
     max_tokens: synthesizer.maxTokens,
-    temperature: synthesizer.temperature,
     system: synthesizerPrompt,
     messages: synthMessages,
   });
@@ -576,7 +575,6 @@ async function callPerspective(args: {
     const result = await args.anthropic.messages.create({
       model: persona.model,
       max_tokens: persona.maxTokens,
-      temperature: persona.temperature,
       system: args.systemPrompt,
       messages: args.messages,
     });

@@ -1,7 +1,7 @@
 {
   "entity": "rhea-solari",
   "world": "earth_2050",
-  "_canon_status": "draft_pending_author_review",
+  "_canon_status": "look_approved_by_author_2026-11-14",
   "display_name": "Captain Rhea Solari",
   "role": "Commanding officer, CNV Rigel Ascendant; Sovereign Ethics Bureau; once Galen's psychological advisor during early Valkyrie vetting",
   "_name_note": "Author decision: canon name is Captain Rhea Solari. Prose 'Colonel Riva Doss' (CH07, CH10, CH11) should be revised to match.",
@@ -20,15 +20,16 @@
     "distinguishing": "never_smiles_on_screen"
   },
   "wardrobe": {
-    "uniform": "high_collared_slate_gray_command_uniform_severe_tailoring",
-    "insignia": "small_sovereign_ethics_bureau_seal_at_the_collar",
+    "uniform": "severely_tailored_high_collared_slate_gray_bureau_command_tunic_closed_to_the_throat_no_pockets_on_the_chest",
+    "insignia": "small_silver_sovereign_ethics_bureau_seal_pin_on_the_left_collar_octagonal_with_a_level_balance_beam_over_an_inverted_triangle",
+    "rank": "two_thin_silver_bars_at_the_cuff_only",
     "palette": [
       "slate_gray",
       "graphite",
-      "cold_white_piping"
+      "cold_silver"
     ]
   },
-  "signature_setting": "standing_against_a_slate_gray_command_backdrop_with_the_sovereign_ethics_bureau_seal_hovering_faintly_behind_her_like_a_watermark",
+  "signature_setting": "standing_against_a_slate_gray_command_backdrop_with_the_bureau_seal_hovering_faintly_behind_her_like_a_watermark_cold_even_light",
   "transmission_look": "pre_recorded_message_static_heavy_white_flare_then_resolve",
   "expression_range": [
     "clinical_finality",
@@ -44,12 +45,35 @@
     ],
     "proposed_needs_author_approval": [
       "skin, face, eye color, hair, age, uniform cut and color, collar seal"
-    ]
+    ],
+    "rejected": "Old approved Supabase images (mid-30s, dark brown ponytail) rejected 2026-11-14 in favor of the late-50s silver-haired draft.",
+    "seal": "public/visual-references/sovereign-ethics-bureau-seal.png (SVG alongside), designed 2026-11-14 from canon: 'the oversight seal-cold, sharp, bloodless' (CH02) and SOVRIN's angular white geometry (CH12). Deliberate opposite of the Valkyrie patch.",
+    "approved_portrait": "public/visual-references/rhea-solari-portrait.png: first OpenAI render, author-approved 2026-11-14. Collar pin, cuff bars and backdrop watermark all landed. Its warm desk lamp is not canon for transmissions."
   },
+  "reference_images": [
+    {
+      "path": "/visual-references/rhea-solari-portrait.png",
+      "role": "identity",
+      "label": "Rhea Solari approved portrait",
+      "instruction": "match her face, silver hair, ice-gray eyes, age, tunic, collar pin and cuff bars exactly; for transmission scenes use cold, even light, not the warm desk lamp in this image"
+    },
+    {
+      "path": "/visual-references/sovereign-ethics-bureau-seal.png",
+      "role": "insignia",
+      "label": "Sovereign Ethics Bureau seal",
+      "instruction": "match this design exactly as a small silver pin on her left collar, and as a faint watermark on the slate-gray wall behind her"
+    }
+  ],
   "avoid": [
     "warm_smile",
     "decorative_medals",
     "villain_costume_or_cape",
-    "red_lighting"
-  ]
+    "red_lighting",
+    "project_valkyrie_patch",
+    "olive_coverall",
+    "dark_brown_hair",
+    "looking_under_50",
+    "military_medals_or_ribbons"
+  ],
+  "default_expression": "clinical_composure_eyes_too_sharp_to_soften_mouth_set_never_smiling_not_snarling"
 }

@@ -44,7 +44,7 @@ test("shouldRegenerate returns 'use-cache' when inputs unchanged", () => {
     reflectionText: "Sample",
     generatedAt: new Date("2026-04-17T12:00:00Z"),
     inputSignature: computeInputSignature(inputs),
-    modelSlug: "claude-sonnet-4-20250514",
+    modelSlug: "claude-opus-5-5",
   };
   const got = shouldRegenerateReflection({
     inputs,
@@ -60,7 +60,7 @@ test("shouldRegenerate returns 'use-cache' when cooldown not elapsed even if inp
     reflectionText: "Sample",
     generatedAt: new Date("2026-04-18T00:00:00Z"),
     inputSignature: computeInputSignature(oldInputs),
-    modelSlug: "claude-sonnet-4-20250514",
+    modelSlug: "claude-opus-5-5",
   };
   const got = shouldRegenerateReflection({
     inputs: { readCount: 6, savedCount: 1, askedCount: 0 },
@@ -76,7 +76,7 @@ test("shouldRegenerate returns 'generate' when +3 reads and cooldown elapsed", (
     reflectionText: "Sample",
     generatedAt: new Date("2026-04-17T00:00:00Z"),
     inputSignature: computeInputSignature(oldInputs),
-    modelSlug: "claude-sonnet-4-20250514",
+    modelSlug: "claude-opus-5-5",
   };
   const got = shouldRegenerateReflection({
     inputs: { readCount: 6, savedCount: 1, askedCount: 0 },
@@ -92,7 +92,7 @@ test("shouldRegenerate returns 'generate' when +1 saved passage and cooldown ela
     reflectionText: "Sample",
     generatedAt: new Date("2026-04-17T00:00:00Z"),
     inputSignature: computeInputSignature(oldInputs),
-    modelSlug: "claude-sonnet-4-20250514",
+    modelSlug: "claude-opus-5-5",
   };
   const got = shouldRegenerateReflection({
     inputs: { readCount: 3, savedCount: 2, askedCount: 0 },
@@ -108,7 +108,7 @@ test("shouldRegenerate returns 'use-cache' for tiny read growth below threshold"
     reflectionText: "Sample",
     generatedAt: new Date("2026-04-17T00:00:00Z"),
     inputSignature: computeInputSignature(oldInputs),
-    modelSlug: "claude-sonnet-4-20250514",
+    modelSlug: "claude-opus-5-5",
   };
   const got = shouldRegenerateReflection({
     inputs: { readCount: 4, savedCount: 1, askedCount: 0 },
