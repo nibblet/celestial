@@ -6,7 +6,72 @@ export const RUNWAY_DEFAULT_VIDEO_MODEL = "gen4.5";
 
 /** Models offered in the console. gen4_turbo is cheaper/faster, gen4.5 is
  *  Runway's best image-to-video model (per docs.dev.runwayml.com, 2026). */
-export const RUNWAY_VIDEO_MODELS = ["gen4.5", "gen4_turbo"] as const;
+export const RUNWAY_VIDEO_MODELS = [
+  "gen4.5",
+  "gen4_turbo",
+  "klingO3_standard",
+  "klingO3_pro",
+] as const;
+
+/**
+ * Kling O3 on Runway's API accepts reference images alongside the start
+ * frame (up to 7 images in total) and names them in the prompt as
+ * <<<image_1>>>, <<<image_2>>>… in request order: the first frame, then
+ * the references. Per dev.runwayml.com/learn/kling-o3-api (2026-11).
+ */
+export function isKlingO3(model: string): boolean {
+  return model.startsWith("klingO3");
+}
+
+/** Start frame + references must total 7 or fewer. */
+export const KLING_MAX_REFERENCES = 6;
+
+/** Kling O3 accepts a longer promptText (2–2,500 chars). */
+export const KLING_MAX_PROMPT_CHARS = 2400;
+
+/**
+ * Output ratio per model. Gen-4 takes our aspect sizes directly; Kling O3
+ * only takes landscape, portrait or square at a fixed size per tier.
+ */
+export function runwayRatioFor(model: string, aspect: string): string {
+  if (isKlingO3(model)) {
+    const pro = model.includes("pro");
+    const land = pro ? "1920:1080" : "1280:720";
+    const port = pro ? "1080:1920" : "720:1280";
+    const square = pro ? "1440:1440" : "960:960";
+    if (aspect === "16:9" || aspect === "3:2") return land;
+    if (aspect === "9:16") return port;
+    return square; // 1:1 and 4:5
+  }
+  switch (aspect) {
+    case "16:9":
+      return "1280:720";
+    case "9:16":
+      return "720:1280";
+    case "1:1":
+      return "960:960";
+    case "4:5":
+      return "832:1104";
+    case "3:2":
+      return "1104:832";
+    default:
+      return "1280:720";
+  }
+}
+
+/**
+ * Opening lines for a Kling O3 prompt that tell the model what each
+ * attached image is, using its <<<image_N>>> tokens.
+ */
+export function klingReferencePreamble(labels: string[]): string {
+  const lines = ["<<<image_1>>> is the start frame; continue it exactly."];
+  labels.forEach((label, i) => {
+    lines.push(
+      `<<<image_${i + 2}>>> is ${label}: if this person's face becomes visible, it must be this face.`,
+    );
+  });
+  return lines.join(" ");
+}
 
 /** Runway caps an encoded data URI at 5MB. */
 export const RUNWAY_MAX_DATA_URI_BYTES = 5 * 1024 * 1024;
@@ -21,6 +86,7 @@ export const RUNWAY_MAX_PROMPT_CHARS = 990;
 export function runwayDurationFor(model: string, requested: number): number {
   const n = Number.isFinite(requested) ? Math.round(requested) : 5;
   if (model.startsWith("gen4_turbo")) return n >= 8 ? 10 : 5;
+  if (isKlingO3(model)) return Math.min(15, Math.max(3, n));
   return Math.min(10, Math.max(2, n));
 }
 
@@ -30,12 +96,12 @@ export function runwayDurationFor(model: string, requested: number): number {
  * "faint" background drift into a strong purple-to-teal swing.
  */
 export const RUNWAY_RESTRAINT_SUFFIX =
-  "Keep the face and identity exactly as in the start frame. Mouth stays closed and relaxed; no speaking or mouthing words. Background light stays dim and steady with only slow, subtle shimmer; no flares or color swings. Small, restrained movement.";
+  "Keep every face and identity exactly as in the start frame. Camera makes only the move described: no orbiting or swinging around the subjects, and people keep facing the way they face in the start frame unless told to turn, so no new faces are revealed. Mouths stay closed; no speaking. Light stays steady: no sun flares, blooms or color swings. Small, restrained movement.";
 
 /** Operator/synthesized motion text plus the restraint suffix, within the cap. */
-export function withRestraint(motion: string): string {
+export function withRestraint(motion: string, maxChars: number = RUNWAY_MAX_PROMPT_CHARS): string {
   const base = motion.replace(/\s+/g, " ").trim();
-  const room = RUNWAY_MAX_PROMPT_CHARS - RUNWAY_RESTRAINT_SUFFIX.length - 1;
+  const room = maxChars - RUNWAY_RESTRAINT_SUFFIX.length - 1;
   const head = base.length <= room ? base : clampTo(base, room);
   return head ? `${head} ${RUNWAY_RESTRAINT_SUFFIX}` : RUNWAY_RESTRAINT_SUFFIX;
 }

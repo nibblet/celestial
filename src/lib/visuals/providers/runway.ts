@@ -3,11 +3,16 @@ import "server-only";
 import * as fs from "fs/promises";
 import * as path from "path";
 
-import type { VisualPrompt, VisualAspect } from "../types";
+import type { VisualPrompt } from "../types";
 import type { GeneratedAsset, VisualProvider } from "./types";
 import { contentTypeForFile, resolveReferencePath } from "./openai-helpers";
 import {
+  KLING_MAX_PROMPT_CHARS,
+  KLING_MAX_REFERENCES,
   RUNWAY_DEFAULT_VIDEO_MODEL,
+  isKlingO3,
+  klingReferencePreamble,
+  runwayRatioFor,
   runwayDurationFor,
   withRestraint,
   toDataUri,
@@ -42,23 +47,6 @@ const BASE_URL = "https://api.dev.runwayml.com/v1";
 const POLL_INTERVAL_MS = 4000;
 const POLL_TIMEOUT_MS = 6 * 60 * 1000; // 6 minutes
 
-function aspectToRunwayRatio(aspect: VisualAspect): string {
-  switch (aspect) {
-    case "16:9":
-      return "1280:720";
-    case "9:16":
-      return "720:1280";
-    case "1:1":
-      return "960:960";
-    case "4:5":
-      return "832:1104";
-    case "3:2":
-      return "1104:832";
-    default:
-      return "1280:720";
-  }
-}
-
 export const runwayProvider: VisualProvider = {
   name: "runway",
   kind: "video",
@@ -82,6 +70,9 @@ export const runwayProvider: VisualProvider = {
       // promptImageUrl is part of the cache key — same prompt + same seed
       // image + same model + same params should serve the cached video.
       promptImageUrl: params.promptImageUrl ?? null,
+      // Kling O3 only: character portraits sent alongside the start frame,
+      // so a face revealed mid-shot is the right face. Part of the cache key.
+      references: isKlingO3(model) ? normalizeReferences(params.references) : [],
       ...(typeof params.reroll === "string" ? { reroll: params.reroll } : {}),
     };
   },
@@ -102,20 +93,44 @@ export const runwayProvider: VisualProvider = {
 
     const model = (params.model as string) || defaultModel();
     const duration = runwayDurationFor(model, Number(params.duration ?? 5));
-    const ratio = (params.ratio as string) ?? aspectToRunwayRatio(prompt.aspect);
+    const ratio = (params.ratio as string) || runwayRatioFor(model, prompt.aspect);
+    const motion =
+      typeof params.motionText === "string" && params.motionText.trim()
+        ? params.motionText
+        : buildMotionPrompt(prompt);
 
-    const body: Record<string, unknown> = {
-      promptImage: await resolvePromptImage(promptImageUrl),
-      promptText: withRestraint(
-        typeof params.motionText === "string" && params.motionText.trim()
-          ? params.motionText
-          : buildMotionPrompt(prompt),
-      ),
-      model,
-      ratio,
-      duration,
-      ...(params.seed != null ? { seed: params.seed } : {}),
-    };
+    let body: Record<string, unknown>;
+    if (isKlingO3(model)) {
+      const refs = normalizeReferences(params.references);
+      const preamble = klingReferencePreamble(refs.map((r) => r.label));
+      body = {
+        model,
+        promptImage: [{ uri: await resolvePromptImage(promptImageUrl), position: "first" }],
+        ...(refs.length
+          ? {
+              references: await Promise.all(
+                refs.map(async (r) => ({ uri: await resolvePromptImage(r.path) })),
+              ),
+            }
+          : {}),
+        promptText: withRestraint(
+          `${preamble} ${motion}`,
+          KLING_MAX_PROMPT_CHARS,
+        ),
+        ratio,
+        duration,
+        audio: false,
+      };
+    } else {
+      body = {
+        promptImage: await resolvePromptImage(promptImageUrl),
+        promptText: withRestraint(motion),
+        model,
+        ratio,
+        duration,
+        ...(params.seed != null ? { seed: params.seed } : {}),
+      };
+    }
 
     const createRes = await fetch(`${BASE_URL}/image_to_video`, {
       method: "POST",
@@ -245,4 +260,22 @@ async function pollUntilReady(taskId: string, apiKey: string): Promise<string> {
     // PENDING / RUNNING / THROTTLED — keep polling.
   }
   throw new Error(`Runway task ${taskId} timed out after ${POLL_TIMEOUT_MS}ms`);
+}
+
+type VideoReference = { path: string; label: string };
+
+/** Validate {path,label}[] from params; cap so start frame + refs <= 7. */
+function normalizeReferences(raw: unknown): VideoReference[] {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .filter(
+      (r): r is VideoReference =>
+        !!r &&
+        typeof r === "object" &&
+        typeof (r as VideoReference).path === "string" &&
+        typeof (r as VideoReference).label === "string",
+    )
+    .map((r) => ({ path: r.path.trim(), label: r.label.trim().slice(0, 80) }))
+    .filter((r) => r.path && r.label)
+    .slice(0, KLING_MAX_REFERENCES);
 }

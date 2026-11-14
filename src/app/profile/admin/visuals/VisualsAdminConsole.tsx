@@ -36,6 +36,25 @@ type AssetResponse = {
 const TARGET_KINDS = ["entity", "story", "scene", "freeform"] as const;
 const ASPECTS = ["16:9", "9:16", "1:1", "4:5", "3:2"] as const;
 const INTENTS = ["portrait", "establishing_shot", "scene_moment", "motion_loop"] as const;
+type VideoModel = "gen4.5" | "gen4_turbo" | "klingO3_standard" | "klingO3_pro";
+const VIDEO_MODELS: Array<{ key: VideoModel; label: string; short: string; durations: number[] }> = [
+  { key: "gen4.5", label: "Gen-4.5 (best, ~$0.12/s)", short: "Gen-4.5", durations: [3, 5, 8, 10] },
+  { key: "gen4_turbo", label: "Gen-4 Turbo (fast, ~$0.05/s)", short: "Gen-4 Turbo", durations: [5, 10] },
+  {
+    key: "klingO3_standard",
+    label: "Kling O3 Standard + face refs (720p, ~$0.13/s)",
+    short: "Kling O3",
+    durations: [3, 5, 8, 10, 15],
+  },
+  {
+    key: "klingO3_pro",
+    label: "Kling O3 Pro + face refs (1080p, ~$0.17/s)",
+    short: "Kling O3 Pro",
+    durations: [3, 5, 8, 10, 15],
+  },
+];
+const isKling = (m: VideoModel) => m.startsWith("klingO3");
+
 const IMAGE_PROVIDERS = [
   { key: "openai", label: "OpenAI GPT Image (attaches references)" },
   { key: "imagen", label: "Google Nano Banana 2.1 (text only)" },
@@ -73,7 +92,8 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
   const [specRefs, setSpecRefs] = useState<ReferenceImage[]>([]);
   const [specRefsStatus, setSpecRefsStatus] = useState<"idle" | "loading" | "ready">("idle");
   const [startFrame, setStartFrame] = useState("");
-  const [videoModel, setVideoModel] = useState<"gen4.5" | "gen4_turbo">("gen4.5");
+  const [videoModel, setVideoModel] = useState<VideoModel>("gen4.5");
+  const [sendFaceRefs, setSendFaceRefs] = useState(true);
   const [videoDuration, setVideoDuration] = useState(5);
   const [motionText, setMotionText] = useState("");
   const [refFile, setRefFile] = useState<File | null>(null);
@@ -250,6 +270,11 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
       .map((r) => ({ value: r.path, label: r.label })),
   ];
   const effectiveStartFrame = startFrame || startFrameOptions[0]?.value || "";
+  // Kling O3 can carry identity portraits next to the start frame so a face
+  // revealed mid-shot stays on-model (start frame + up to 6 refs).
+  const faceRefs = (promptResult?.referenceImages ?? [])
+    .filter((r) => r.role === "identity" && r.path !== effectiveStartFrame)
+    .slice(0, 6);
 
   async function handleAnimate() {
     if (!promptResult || !effectiveStartFrame) return;
@@ -263,6 +288,9 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
         duration: videoDuration,
       };
       if (motionText.trim()) params.motionText = motionText.trim();
+      if (isKling(videoModel) && sendFaceRefs && faceRefs.length > 0) {
+        params.references = faceRefs.map((r) => ({ path: r.path, label: r.label }));
+      }
       const seedNum = seed.trim() ? Number.parseInt(seed.trim(), 10) : NaN;
       if (Number.isFinite(seedNum)) params.seed = seedNum;
       const res = await fetch("/api/visuals/generate", {
@@ -721,14 +749,18 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
                     <select
                       value={videoModel}
                       onChange={(e) => {
-                        const m = e.target.value as "gen4.5" | "gen4_turbo";
+                        const m = e.target.value as VideoModel;
                         setVideoModel(m);
-                        if (m === "gen4_turbo" && videoDuration !== 10) setVideoDuration(5);
+                        const allowed = VIDEO_MODELS.find((v) => v.key === m)!.durations;
+                        if (!allowed.includes(videoDuration)) setVideoDuration(5);
                       }}
                       className="mt-1 block rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1.5 text-sm text-ink"
                     >
-                      <option value="gen4.5">Gen-4.5 (best, ~$0.12/s)</option>
-                      <option value="gen4_turbo">Gen-4 Turbo (fast, ~$0.05/s)</option>
+                      {VIDEO_MODELS.map((v) => (
+                        <option key={v.key} value={v.key}>
+                          {v.label}
+                        </option>
+                      ))}
                     </select>
                   </label>
                   <label className="text-xs text-ink-muted">
@@ -738,7 +770,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
                       onChange={(e) => setVideoDuration(Number(e.target.value))}
                       className="mt-1 block rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1.5 text-sm text-ink"
                     >
-                      {(videoModel === "gen4_turbo" ? [5, 10] : [3, 5, 8, 10]).map((d) => (
+                      {VIDEO_MODELS.find((v) => v.key === videoModel)!.durations.map((d) => (
                         <option key={d} value={d}>
                           {d}
                         </option>
@@ -746,6 +778,19 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
                     </select>
                   </label>
                 </div>
+                {isKling(videoModel) && (
+                  <label className="flex items-center gap-1.5 text-xs text-ink-muted">
+                    <input
+                      type="checkbox"
+                      checked={sendFaceRefs}
+                      onChange={(e) => setSendFaceRefs(e.target.checked)}
+                      disabled={faceRefs.length === 0}
+                    />
+                    {faceRefs.length > 0
+                      ? `Send ${faceRefs.length} character portrait${faceRefs.length === 1 ? "" : "s"} as face references (${faceRefs.map((r) => r.label).join(", ")})`
+                      : "No character portraits in this prompt's references (add Characters in shot)"}
+                  </label>
+                )}
                 <label className="text-xs text-ink-muted">
                   Motion direction (optional, max ~1000 chars)
                   <textarea
@@ -767,7 +812,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
           >
             {animating
               ? "Animating (~1–3 min)…"
-              : `Animate with ${videoModel === "gen4.5" ? "Gen-4.5" : "Gen-4 Turbo"}`}
+              : `Animate with ${VIDEO_MODELS.find((v) => v.key === videoModel)!.short}`}
           </button>
         </section>
       )}
