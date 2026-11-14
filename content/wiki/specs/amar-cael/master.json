@@ -1,7 +1,7 @@
 {
   "entity": "amar-cael",
   "world": "earth_2050",
-  "_canon_status": "look_direction_chosen_by_author_2026-11-14_pending_portrait",
+  "_canon_status": "look_approved_by_author_2026-11-14",
   "display_name": "Director Amar Cael",
   "role": "Corporate oversight director; Lena's former Giza project supervisor",
   "age": {
@@ -44,11 +44,18 @@
       "tension at mouth corners (CH06)",
       "expressions (CH06, CH09)"
     ],
-    "proposed_needs_author_approval": [
-      "portrait not yet generated; author approved the clean-shaven corporate direction 2026-11-14 to separate him from Jonah and Marco"
-    ],
-    "test_render_2026-11-14": "First render failed: Valkyrie patch on the lapel (inherited reference text), a gray beard, and a tie. Parent removed; clean-shaven and open collar made explicit."
+    "proposed_needs_author_approval": [],
+    "test_render_2026-11-14": "First render failed: Valkyrie patch on the lapel (inherited reference text), a gray beard, and a tie. Parent removed; clean-shaven and open collar made explicit.",
+    "approved_portrait": "public/visual-references/amar-cael-portrait.png: second OpenAI render after detaching him from valkyrie-crew, author-approved 2026-11-14."
   },
+  "reference_images": [
+    {
+      "path": "/visual-references/amar-cael-portrait.png",
+      "role": "identity",
+      "label": "Amar Cael approved portrait",
+      "instruction": "match his face, clean shave, combed-back silvering hair, age, open-collar shirt, charcoal suit and controlled half-smile exactly"
+    }
+  ],
   "avoid": [
     "generic_stock_photo_face",
     "celebrity_likeness",

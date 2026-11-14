@@ -7,7 +7,7 @@ This folder is the reference for anything we render: character portraits, ship s
 
 ## Files
 
-`crew-lineup.png` shows all eight approved crew portraits side by side.
+`crew-lineup.png` shows all ten approved character portraits side by side: the eight crew, then Rhea Solari and Amar Cael.
 
 **Reference images** (`public/visual-references/`): images to attach alongside the prompt in ChatGPT, Gemini, Grok or Runway. Each spec declares its own in a `reference_images` array (`path`, `role`, `label`, `instruction`). The arrays inherit through `parent_entity`, views and states: `valkyrie-crew` attaches the patch to every crew member, and each character adds their identity portrait. The admin console shows them under every generated prompt, with **Copy prompt** and **Download all references** buttons, and the prompt names each reference so the generator knows to match it. To add one, put the file in `public/visual-references/` and add an entry to the right spec.
 - `project-valkyrie-patch.png` (SVG source alongside): the canonical mission patch, with three crescent arcs over a circle per CH01's "Three curves. A circle." Attach it to every shot that shows the uniform. `project-valkyrie-patch-v1-two-arcs.png` is the original ChatGPT crop, kept for its embroidery texture.
@@ -19,6 +19,7 @@ This folder is the reference for anything we render: character portraits, ship s
 - `jax-reyes-portrait.png`: Jax's approved identity portrait.
 - `jonah-revas-portrait.png`: Jonah's approved identity portrait.
 - `rhea-solari-portrait.png`: Rhea's approved identity portrait.
+- `amar-cael-portrait.png`: Amar's approved identity portrait.
 - `sovereign-ethics-bureau-seal.png` (SVG alongside): the Bureau seal, an octagon with a level balance beam over an inverted triangle, silver on graphite. Used on Rhea's collar and as the watermark behind her transmissions.
 - `galen-voss-portrait.png`: Galen's approved identity portrait, which also shows the full uniform. `galen-voss-portrait-v1-chatgpt.png` is the superseded first version.
 
@@ -92,7 +93,7 @@ Each character's `master.json` has a `_provenance` block that separates canon fi
 | Marco Ruiz ✅ approved | ~60, **never rejuvenated** ("too old to pretend") | from `public/visual-references/marco-ruiz-portrait.png`: thickset and broad; weathered medium-brown skin; heavy brow; gray buzz cut; clean-shaven with gray stubble; watchful, unreadable expression; mission coverall with an oxblood security tab and RUIZ name tape. (His left-sleeve flag set the crew standard) |
 | Evelyn Tran ✅ approved | late 20s–early 30s (**young**) | from `public/visual-references/evelyn-tran-portrait.png`: petite; naturally striking (deliberately the attractive one, per the author); light freckles; **thin rectangular metal glasses**; black hair in a loose messy bun with a stylus through it; knowing half-smile; civilian field jacket over a black turtleneck, TRAN name tape, slate-blue science tab |
 | Jonah Revas ✅ approved | looks ~45, actually mid-50s (**"calm older than his face"**) | from `public/visual-references/jonah-revas-portrait.png`: medium build; light olive skin; dark curls mostly silver at the temples; full, neatly trimmed gray beard; still, inward, listening expression; civilian field jacket over an undyed linen shirt, REVAS name tape, bone-white advisor tab. Deliberately distinct from Jax |
-| Amar Cael (direction chosen, portrait pending) | late 50s (**"refined… less glass tower, more iron core"**) | tall, spare; medium brown skin; lean, refined face; **clean-shaven**; black hair silver at the temples, combed back; small smile "not warm, but real"; tailored charcoal **corporate-issue suit**, open-collar shirt, no logos, no Valkyrie patch |
+| Amar Cael ✅ approved | late 50s (**"refined… less glass tower, more iron core"**) | from `public/visual-references/amar-cael-portrait.png`: lean, refined face; **clean-shaven**; black hair silvering at the temples, combed back; controlled half-smile, "not warm, but real"; tailored charcoal **corporate-issue suit**, white shirt open at the collar, no tie, no patch. Not part of the crew spec |
 | Rhea Solari ✅ approved | late 50s (**"trim lines, eyes too sharp to soften"**) | from `public/visual-references/rhea-solari-portrait.png`: pale; ice-gray eyes; silver hair in a tight low knot; never smiling; high-collared slate-gray Bureau tunic with the **Sovereign Ethics Bureau seal** pin on the collar and two silver cuff bars; the seal as a faint watermark behind her |
 
 Also review: the whole `rigel-ascendant` exterior (a hard-edged graphite modular cruiser, built as the visual opposite of Valkyrie).
