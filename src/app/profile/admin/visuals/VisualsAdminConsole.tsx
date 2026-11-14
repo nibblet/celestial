@@ -94,6 +94,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
   const [startFrame, setStartFrame] = useState("");
   const [videoModel, setVideoModel] = useState<VideoModel>("gen4.5");
   const [sendFaceRefs, setSendFaceRefs] = useState(true);
+  const [spectacle, setSpectacle] = useState(false);
   const [videoDuration, setVideoDuration] = useState(5);
   const [motionText, setMotionText] = useState("");
   const [refFile, setRefFile] = useState<File | null>(null);
@@ -288,6 +289,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
         duration: videoDuration,
       };
       if (motionText.trim()) params.motionText = motionText.trim();
+      if (spectacle) params.restraint = false;
       if (isKling(videoModel) && sendFaceRefs && faceRefs.length > 0) {
         params.references = faceRefs.map((r) => ({ path: r.path, label: r.label }));
       }
@@ -778,6 +780,14 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
                     </select>
                   </label>
                 </div>
+                <label className="flex items-center gap-1.5 text-xs text-ink-muted">
+                  <input
+                    type="checkbox"
+                    checked={spectacle}
+                    onChange={(e) => setSpectacle(e.target.checked)}
+                  />
+                  Spectacle shot: skip the restraint line (jumps, transformations, big light changes)
+                </label>
                 {isKling(videoModel) && (
                   <label className="flex items-center gap-1.5 text-xs text-ink-muted">
                     <input

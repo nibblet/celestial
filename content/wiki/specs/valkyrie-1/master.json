@@ -70,18 +70,44 @@
   },
   "reference_images": [
     {
+      "path": "/visual-references/valkyrie-1/hero-photographic.png",
+      "role": "identity",
+      "label": "Valkyrie-1 approved photographic hero (in orbit over Mars)",
+      "instruction": "match this realism exactly: hard raking sunlight, most of the hull in deep shadow, faint violet light inside the skin, physically real surface; this is how the ship looks on camera",
+      "inherit": false
+    },
+    {
       "path": "/visual-references/valkyrie-1/three-quarter.png",
       "role": "identity",
       "label": "Valkyrie-1 hull, three-quarter hero view",
-      "instruction": "match the stingray-leaf silhouette, swept-forward profile, seamless pearl hull and subdermal vein pattern exactly",
+      "instruction": "match the stingray-leaf silhouette, swept-forward profile, seamless pearl hull and subdermal vein pattern exactly; these are CONCEPT ART: copy only the shape, silhouette and vein layout, NOT their evenly lit, neon, illustrated rendering style",
       "inherit": false
     },
     {
       "path": "/visual-references/valkyrie-1/orthogonal.png",
       "role": "identity",
       "label": "Valkyrie-1 top, side and front views",
-      "instruction": "use for the true shape and proportions from any angle",
+      "instruction": "use for the true shape and proportions from any angle; these are CONCEPT ART: copy only the shape, silhouette and vein layout, NOT their evenly lit, neon, illustrated rendering style",
       "inherit": false
     }
-  ]
+  ],
+  "photographic_realism": {
+    "rule": "render as a real photographed object at enormous scale, not concept art",
+    "lighting": "one hard sun as key light raking across the hull; most of the hull falls into deep shadow; no even studio lighting",
+    "veins": "resonance veins are faint and SUBDERMAL, light seen through translucent skin, visible mainly on the shadow side; never bright neon lines drawn on the surface",
+    "palette": "muted and desaturated: pearl-charcoal and silver with restrained violet; deep blacks",
+    "material": "physically based surface with micro-texture, faint scratches, soft specular sheen like glass held under water",
+    "scale": "atmospheric depth, tiny surface detail, and size relative to the planet that make it read as hundreds of meters long",
+    "camera": "real lens behavior: slight halation, natural falloff, no glowing outline around the silhouette",
+    "canon": "shimmered faintly, not light exactly but the suggestion of it, as if it remembered illumination (CH01)"
+  },
+  "avoid": [
+    "concept_art_or_illustration_rendering",
+    "neon_glowing_lines_across_the_whole_hull",
+    "evenly_lit_product_shot",
+    "oversaturated_purple",
+    "glowing_outline_around_the_silhouette",
+    "video_game_or_cartoon_look"
+  ],
+  "_hero_note": "2026-11-14: approved photographic hero replaces the concept art as the primary look. Concept-art renders remain for shape and vein layout only."
 }

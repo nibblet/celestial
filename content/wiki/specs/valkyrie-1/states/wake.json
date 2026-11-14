@@ -32,7 +32,7 @@
       "path": "/visual-references/valkyrie-1/state-wake.png",
       "role": "style",
       "label": "Valkyrie-1 in the wake state",
-      "instruction": "match this hull state: pearl-silver hull with scattered points of pale cyan and warm gold blooming along the veins",
+      "instruction": "match this hull state: pearl-silver hull with scattered points of pale cyan and warm gold blooming along the veins; this is concept art: take the glow color and intensity relationship only, rendered photographically and mostly in shadow",
       "inherit": false
     }
   ]

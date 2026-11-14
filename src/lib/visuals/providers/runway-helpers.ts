@@ -120,10 +120,13 @@ function clampTo(text: string, max: number): string {
  * Trim free text to Runway's promptText limit, cutting at the last
  * sentence boundary when one is reasonably close to the cap.
  */
-export function clampRunwayPrompt(text: string): string {
+export function clampRunwayPrompt(
+  text: string,
+  maxChars: number = RUNWAY_MAX_PROMPT_CHARS,
+): string {
   const clean = text.replace(/\s+/g, " ").trim();
-  if (clean.length <= RUNWAY_MAX_PROMPT_CHARS) return clean;
-  const cut = clean.slice(0, RUNWAY_MAX_PROMPT_CHARS);
+  if (clean.length <= maxChars) return clean;
+  const cut = clean.slice(0, maxChars);
   const stop = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("; "));
   return stop > 200 ? cut.slice(0, stop + 1) : cut;
 }

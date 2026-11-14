@@ -33,7 +33,7 @@
       "path": "/visual-references/valkyrie-1/state-alignment.png",
       "role": "style",
       "label": "Valkyrie-1 in the alignment state",
-      "instruction": "match this hull state: pearl hull with violet-amethyst veins and soft gold highlights",
+      "instruction": "match this hull state: pearl hull with violet-amethyst veins and soft gold highlights; this is concept art: take the glow color and intensity relationship only, rendered photographically and mostly in shadow",
       "inherit": false
     }
   ]

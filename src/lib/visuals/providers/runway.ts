@@ -13,6 +13,7 @@ import {
   isKlingO3,
   klingReferencePreamble,
   runwayRatioFor,
+  clampRunwayPrompt,
   runwayDurationFor,
   withRestraint,
   toDataUri,
@@ -73,6 +74,8 @@ export const runwayProvider: VisualProvider = {
       // Kling O3 only: character portraits sent alongside the start frame,
       // so a face revealed mid-shot is the right face. Part of the cache key.
       references: isKlingO3(model) ? normalizeReferences(params.references) : [],
+      // false = spectacle shot: skip the restraint line (jumps, transformations).
+      restraint: params.restraint === false ? false : true,
       ...(typeof params.reroll === "string" ? { reroll: params.reroll } : {}),
     };
   },
@@ -113,10 +116,10 @@ export const runwayProvider: VisualProvider = {
               ),
             }
           : {}),
-        promptText: withRestraint(
-          `${preamble} ${motion}`,
-          KLING_MAX_PROMPT_CHARS,
-        ),
+        promptText:
+          params.restraint === false
+            ? clampRunwayPrompt(`${preamble} ${motion}`, KLING_MAX_PROMPT_CHARS)
+            : withRestraint(`${preamble} ${motion}`, KLING_MAX_PROMPT_CHARS),
         ratio,
         duration,
         audio: false,
@@ -124,7 +127,8 @@ export const runwayProvider: VisualProvider = {
     } else {
       body = {
         promptImage: await resolvePromptImage(promptImageUrl),
-        promptText: withRestraint(motion),
+        promptText:
+          params.restraint === false ? clampRunwayPrompt(motion) : withRestraint(motion),
         model,
         ratio,
         duration,
