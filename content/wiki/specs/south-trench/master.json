@@ -16,16 +16,18 @@
   "the_hull_in_the_trench": {
     "look": "seamless_silver_curve_of_valkyrie_1_in_shadowed_curvature_gleaming_like_glass_held_under_water",
     "behavior": "responds_to_the_low_sun_not_reflection_but_response_dust_settles_on_it_in_patterns_like_writing_constellations_or_wings",
-    "color_glow": "none_in_daylight_only_a_faint_shimmer"
+    "color_glow": "none_in_daylight_only_a_faint_shimmer",
+    "exposure": "only_the_upper_curve_uncovered_so_far_one_long_seamless_arc_rising_from_the_red_dust_most_of_the_ship_still_buried_its_full_shape_not_visible",
+    "canon": "what_they'd_uncovered_so_far_resembled_no_human_spacecraft_the_silver_curve_of_the_hull_seemed_to_exhale_as_the_dust_rolled_back_CH01"
   },
   "human_activity": [
-    "survey_drones_blinking_through_loops",
-    "mechanical_arms_extracting_sediment_in_deliberate_arcs",
+    "a_few_survey_drones_blinking_through_slow_loops",
+    "two_or_three_mechanical_arms_extracting_sediment_in_deliberate_arcs",
     "mesh_tarps_and_support_struts",
     "filtered_canopy_over_the_shaft",
-    "low_spectrum_floodlights_at_dusk",
-    "central_trench_platform",
-    "scan_wands_and_slates"
+    "low_spectrum_floodlights_dimmed_at_dawn",
+    "the_half_buried_carbon_weave_command_shelter_dome",
+    "only_a_handful_of_people_on_site"
   ],
   "light": {
     "dawn": "low_sun_breaking_over_the_crater_rim_through_morning_haze_long_shadows",
@@ -37,7 +39,12 @@
     "flat_midday_light",
     "clean_dustless_site",
     "green_or_earth_like_sky",
-    "glowing_colored_veins_on_the_hull_in_daylight"
+    "glowing_colored_veins_on_the_hull_in_daylight",
+    "legible_corporate_logos_brand_names_or_signage_text",
+    "corporate_towers_or_branded_buildings",
+    "fleet_of_heavy_excavators_or_mining_megastructures",
+    "crowded_busy_construction_site",
+    "ship_fully_excavated_or_whole_silhouette_exposed"
   ],
   "reference_images": [
     {
@@ -52,5 +59,11 @@
       "label": "Valkyrie-1 shape",
       "instruction": "use only to keep the curvature of the exposed hull section consistent with the real ship"
     }
-  ]
+  ],
+  "mood": {
+    "tone": "reverence_not_industry",
+    "canon": "it_should've_felt_like_progress_instead_it_felt_like_reverence_CH01",
+    "activity_level": "quiet_and_still_slow_deliberate_movement_long_pauses"
+  },
+  "_revision_2026-11-14": "After the first cast establishing shot: removed invented branding (a 'HEXON' tower), limited exposure to the upper curve per CH01, and quieted the site to match 'it felt like reverence'."
 }
