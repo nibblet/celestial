@@ -18,6 +18,7 @@ This folder is the reference for anything we render: character portraits, ship s
 - `marco-ruiz-portrait.png`: Marco's approved identity portrait.
 - `jax-reyes-portrait.png`: Jax's approved identity portrait.
 - `jonah-revas-portrait.png`: Jonah's approved identity portrait.
+- `rhea-solari-portrait.png`: Rhea's approved identity portrait.
 - `sovereign-ethics-bureau-seal.png` (SVG alongside): the Bureau seal, an octagon with a level balance beam over an inverted triangle, silver on graphite. Used on Rhea's collar and as the watermark behind her transmissions.
 - `galen-voss-portrait.png`: Galen's approved identity portrait, which also shows the full uniform. `galen-voss-portrait-v1-chatgpt.png` is the superseded first version.
 
@@ -92,7 +93,7 @@ Each character's `master.json` has a `_provenance` block that separates canon fi
 | Evelyn Tran ✅ approved | late 20s–early 30s (**young**) | from `public/visual-references/evelyn-tran-portrait.png`: petite; naturally striking (deliberately the attractive one, per the author); light freckles; **thin rectangular metal glasses**; black hair in a loose messy bun with a stylus through it; knowing half-smile; civilian field jacket over a black turtleneck, TRAN name tape, slate-blue science tab |
 | Jonah Revas ✅ approved | looks ~45, actually mid-50s (**"calm older than his face"**) | from `public/visual-references/jonah-revas-portrait.png`: medium build; light olive skin; dark curls mostly silver at the temples; full, neatly trimmed gray beard; still, inward, listening expression; civilian field jacket over an undyed linen shirt, REVAS name tape, bone-white advisor tab. Deliberately distinct from Jax |
 | Amar Cael | late 50s (**"refined… less glass tower, more iron core"**) | tall, spare; medium brown skin; black-to-silver hair combed back; trimmed beard; **corporate-issue suit** |
-| Rhea Solari | late 50s (**"trim lines, eyes too sharp to soften"**) | pale; ice-gray eyes; silver-white hair in a tight low chignon; high-collared slate-gray uniform with the **Sovereign Ethics Bureau seal** |
+| Rhea Solari ✅ approved | late 50s (**"trim lines, eyes too sharp to soften"**) | from `public/visual-references/rhea-solari-portrait.png`: pale; ice-gray eyes; silver hair in a tight low knot; never smiling; high-collared slate-gray Bureau tunic with the **Sovereign Ethics Bureau seal** pin on the collar and two silver cuff bars; the seal as a faint watermark behind her |
 
 Also review: the whole `rigel-ascendant` exterior (a hard-edged graphite modular cruiser, built as the visual opposite of Valkyrie).
 
