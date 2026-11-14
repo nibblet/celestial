@@ -7,16 +7,16 @@
   "role": "Theological scholar and cultural analyst",
   "age": {
     "chronological": "mid_50s",
-    "apparent": "about_45",
+    "apparent": "about_45_his_face_younger_than_his_calm_manner",
     "tell": "a calm that feels older than his face"
   },
   "identity": {
-    "height_build": "medium_height_soft_and_heavier_set_rounded_shoulders_unhurried",
+    "height_build": "medium_height_and_medium_build_neither_heavy_nor_wiry",
     "skin": "light_olive_skin",
-    "face": "broad_open_gentle_face_fuller_cheeks_younger_than_his_manner",
+    "face": "open_composed_face_defined_but_not_gaunt_younger_than_his_manner_few_lines",
     "eyes": "warm_dark_brown_eyes_soft_and_slightly_crinkled_at_the_corners",
-    "hair": "mostly_silver_gray_curls_worn_longer_and_soft_over_the_ears_reading_gray_at_a_glance",
-    "facial_hair": "full_rounded_beard_mostly_gray_neatly_kept",
+    "hair": "gray_flecked_dark_curls_mostly_silver_at_the_temples_worn_medium_length_over_the_ears",
+    "facial_hair": "full_neatly_trimmed_beard_mostly_gray",
     "distinguishing": "loose_undyed_linen_shirt_collar_open_under_his_field_jacket_and_a_name_tape_reading_REVAS"
   },
   "shipboard_uniform": {
@@ -54,16 +54,19 @@
     "proposed_needs_author_approval": [
       "build, skin, face, eyes, hair, beard, overshirt, age"
     ],
-    "test_render_2026-11-14": "First OpenAI render read too close to Jax (olive skin, dark hair, beard, same wry half-smirk and head tilt). Differentiated by silhouette and manner: mostly gray curls worn longer, a full rounded gray beard, a softer build, and a gentle listening expression."
+    "test_render_2026-11-14": "First OpenAI render read too close to Jax (olive skin, dark hair, beard, same wry half-smirk and head tilt). Differentiated by silhouette and manner: mostly gray curls worn longer, a full rounded gray beard, a softer build, and a gentle listening expression.",
+    "test_render_2_2026-11-14": "Second render: distinct from Jax but overcorrected (heavyset, jolly, looked older than his manner). Third pass keeps the gray curls and full gray beard, returns to a medium build and a still, inward listening expression, and sets the apparent age to ~45."
   },
   "avoid": [
     "generic_stock_photo_face",
     "celebrity_likeness",
     "smirk_or_wry_half_smile",
-    "black_hair",
     "patchy_stubble",
     "wiry_build",
-    "resembling_jax_reyes"
+    "resembling_jax_reyes",
+    "grinning_or_jolly",
+    "heavyset_or_round_face",
+    "looking_over_55"
   ],
-  "default_expression": "gentle_unhurried_calm_soft_eyes_the_faintest_smile_as_if_listening_never_a_smirk"
+  "default_expression": "still_inward_listening_calm_eyes_soft_but_focused_mouth_at_rest_not_smiling_a_man_who_waits_for_the_room_to_speak"
 }
