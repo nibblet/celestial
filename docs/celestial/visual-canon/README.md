@@ -7,7 +7,7 @@ This folder is the reference for anything we render: character portraits, ship s
 
 ## Files
 
-**Reference images** (`references/`): attach these as image references in ChatGPT, Gemini, Grok or Runway, in addition to the prompt.
+**Reference images** (`public/visual-references/`): images to attach alongside the prompt in ChatGPT, Gemini, Grok or Runway. Each spec declares its own in a `reference_images` array (`path`, `role`, `label`, `instruction`). The arrays inherit through `parent_entity`, views and states: `valkyrie-crew` attaches the patch to every crew member, and each character adds their identity portrait. The admin console shows them under every generated prompt, with **Copy prompt** and **Download all references** buttons, and the prompt names each reference so the generator knows to match it. To add one, put the file in `public/visual-references/` and add an entry to the right spec.
 - `project-valkyrie-patch.png` (SVG source alongside): the canonical mission patch, with three crescent arcs over a circle per CH01's "Three curves. A circle." Attach it to every shot that shows the uniform. `project-valkyrie-patch-v1-two-arcs.png` is the original ChatGPT crop, kept for its embroidery texture.
 - `galen-voss-portrait-chatgpt.png`: Galen's identity portrait and the uniform reference.
 
@@ -28,10 +28,10 @@ This folder is the reference for anything we render: character portraits, ship s
 6. **Uniforms: two tiers, plus a role tab.** Project VALKYRIE is jointly funded by the U.S. and a corporation, and CH12 names three civilians aboard.
    - **Mission crew** (Galen, Aven, Marco, Jax, Lena) wear a flight-suit-cut coverall.
    - **Civilians** (Jonah, Evelyn, Thane) wear a field jacket in the same fabric over their own clothes.
-   - **Shared details:** weathered dark olive-charcoal ripstop over a charcoal tee; the round **PROJECT VALKYRIE** patch on the wearer's left chest (`references/project-valkyrie-patch.png`); a faded olive-gray name tape on the right chest; a plain colored role tab on the left shoulder strap; a small U.S. flag and blank sponsor tab on the right sleeve; no service-branch or rank insignia.
+   - **Shared details:** weathered dark olive-charcoal ripstop over a charcoal tee; the round **PROJECT VALKYRIE** patch on the wearer's left chest (`public/visual-references/project-valkyrie-patch.png`); a faded olive-gray name tape on the right chest; a plain colored role tab on the left shoulder strap; a small U.S. flag and blank sponsor tab on the right sleeve; no service-branch or rank insignia.
    - **Role tab colors:** command muted gold (Galen); medical sage green (Aven); security oxblood (Marco); systems burnt orange (Jax); science slate blue (Lena, Evelyn, Thane); civilian advisor bone white (Jonah).
    - **Where it lives:** the shared parts are in `valkyrie-crew/states/shipboard.json`; each character's tier and tab are in `shipboard_uniform` in their `master.json`. Amar Cael is corporate, not crew, and keeps his own suit.
-7. **Galen's look is approved.** The identity reference is now the ChatGPT portrait at `references/galen-voss-portrait-chatgpt.png`, which also defines the uniform and the patch. Its patch is the superseded two-arc v1, so use the patch reference for the insignia. It follows the older Supabase reference: blue-gray eyes, brown hair graying at the temples in a military cut, a sun-weathered face with deep forehead lines, a square jaw, and early-to-mid 50s apparent age. That image's USAF flight suit is **not** canon.
+7. **Galen's look is approved.** The identity reference is now the ChatGPT portrait at `public/visual-references/galen-voss-portrait-chatgpt.png`, which also defines the uniform and the patch. Its patch is the superseded two-arc v1, so use the patch reference for the insignia. It follows the older Supabase reference: blue-gray eyes, brown hair graying at the temples in a military cut, a sun-weathered face with deep forehead lines, a square jaw, and early-to-mid 50s apparent age. That image's USAF flight suit is **not** canon.
 
 ## What was added or changed
 

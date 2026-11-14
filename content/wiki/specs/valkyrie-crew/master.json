@@ -22,6 +22,14 @@
     "wrist_slate_on_left_forearm",
     "scan_wand"
   ],
+  "reference_images": [
+    {
+      "path": "/visual-references/project-valkyrie-patch.png",
+      "role": "insignia",
+      "label": "PROJECT VALKYRIE mission patch",
+      "instruction": "match the design exactly (three crescent arcs over a circle, PROJECT / VALKYRIE on the rim) and render it as embroidered tan thread on a navy patch, on the wearer's left chest"
+    }
+  ],
   "avoid": [
     "visible_cybernetic_implants_or_prosthetics",
     "glowing_tattoos_or_face_markings",

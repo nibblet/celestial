@@ -9,6 +9,11 @@ import type {
   SpecCompositionRequest,
   SpecLayer,
 } from "./types";
+import {
+  REFERENCE_IMAGES_KEY,
+  collectReferenceImages,
+  renderReferenceImagesForPrompt,
+} from "./references";
 
 const SPECS_ROOT = path.join(process.cwd(), "content/wiki/specs");
 const DEFAULT_VIEW = "three_quarter";
@@ -75,6 +80,9 @@ export function composeEntitySpec(
       // author-review annotations — kept in the JSON for provenance but
       // never transcribed into the prompt.
       if (isAnnotationKey(key)) continue;
+      // Reference images are collected separately (they concatenate across
+      // layers instead of overriding) and rendered as their own block.
+      if (key === REFERENCE_IMAGES_KEY) continue;
       merged[key] = value;
     }
   }
@@ -93,6 +101,7 @@ export function composeEntitySpec(
     layers: layers.map((l) => ({ name: l.name, path: l.path })),
     merged,
     avoid: dedupedAvoid,
+    referenceImages: collectReferenceImages(layers),
     hash: hashSpec(layers.map((l) => l.data), dedupedAvoid),
   };
 }
@@ -246,6 +255,11 @@ export function renderSpecForPrompt(spec: ComposedSpec): string {
     if (key === "avoid") continue;
     lines.push(`## ${key}`);
     lines.push(...renderValue(value, "  "));
+    lines.push("");
+  }
+  const refBlock = renderReferenceImagesForPrompt(spec.referenceImages);
+  if (refBlock) {
+    lines.push(refBlock);
     lines.push("");
   }
   if (spec.avoid.length > 0) {

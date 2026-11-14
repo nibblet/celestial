@@ -37,9 +37,5 @@
     "two_arc_or_wave_logo_variants",
     "wifi_symbol_look"
   ],
-  "_patch_note": "Canonical patch: docs/celestial/visual-canon/references/project-valkyrie-patch.png (SVG source alongside). Three arcs per author 2026-11-14, matching 'Three curves. A circle.' (CH01); style from the ChatGPT render (v1, two arcs, kept as project-valkyrie-patch-v1-two-arcs.png). Attach the PNG as a reference in every generation that shows the uniform.",
-  "_references": [
-    "docs/celestial/visual-canon/references/project-valkyrie-patch.png",
-    "docs/celestial/visual-canon/references/galen-voss-portrait-chatgpt.png"
-  ]
+  "_patch_note": "Canonical patch: public/visual-references/project-valkyrie-patch.png (SVG source alongside). Three arcs per author 2026-11-14, matching 'Three curves. A circle.' (CH01); style from the ChatGPT render (v1, two arcs, kept as project-valkyrie-patch-v1-two-arcs.png). Attach the PNG as a reference in every generation that shows the uniform."
 }
