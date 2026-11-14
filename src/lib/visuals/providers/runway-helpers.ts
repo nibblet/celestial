@@ -18,6 +18,10 @@ export const RUNWAY_VIDEO_MODELS = [
  * frame (up to 7 images in total) and names them in the prompt as
  * <<<image_1>>>, <<<image_2>>>… in request order: the first frame, then
  * the references. Per dev.runwayml.com/learn/kling-o3-api (2026-11).
+ *
+ * EXPERIMENTAL: in the first test (2026-11-14, Standard, trench shot) the
+ * revealed face did not match the attached portrait and the suit drifted.
+ * Prefer cutting to a close-up whose start frame already shows the face.
  */
 export function isKlingO3(model: string): boolean {
   return model.startsWith("klingO3");
@@ -96,7 +100,7 @@ export function runwayDurationFor(model: string, requested: number): number {
  * "faint" background drift into a strong purple-to-teal swing.
  */
 export const RUNWAY_RESTRAINT_SUFFIX =
-  "Keep every face and identity exactly as in the start frame. Camera makes only the move described: no orbiting or swinging around the subjects, and people keep facing the way they face in the start frame unless told to turn, so no new faces are revealed. Mouths stay closed; no speaking. Light stays steady: no sun flares, blooms or color swings. Small, restrained movement.";
+  "Keep every face and identity exactly as in the start frame. Camera makes only the move described: no orbiting or swinging around the subjects, and people keep facing the way they face in the start frame unless told to turn, so no new faces are revealed. Suits, helmets, hair and costumes stay exactly as in the start frame. Mouths stay closed; no speaking. Light stays steady: no sun flares, blooms or color swings. Small, restrained movement.";
 
 /** Operator/synthesized motion text plus the restraint suffix, within the cap. */
 export function withRestraint(motion: string, maxChars: number = RUNWAY_MAX_PROMPT_CHARS): string {

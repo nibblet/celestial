@@ -42,13 +42,13 @@ const VIDEO_MODELS: Array<{ key: VideoModel; label: string; short: string; durat
   { key: "gen4_turbo", label: "Gen-4 Turbo (fast, ~$0.05/s)", short: "Gen-4 Turbo", durations: [5, 10] },
   {
     key: "klingO3_standard",
-    label: "Kling O3 Standard + face refs (720p, ~$0.13/s)",
+    label: "Kling O3 Standard + face refs, experimental (720p, ~$0.13/s)",
     short: "Kling O3",
     durations: [3, 5, 8, 10, 15],
   },
   {
     key: "klingO3_pro",
-    label: "Kling O3 Pro + face refs (1080p, ~$0.17/s)",
+    label: "Kling O3 Pro + face refs, experimental (1080p, ~$0.17/s)",
     short: "Kling O3 Pro",
     durations: [3, 5, 8, 10, 15],
   },
