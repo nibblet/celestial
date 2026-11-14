@@ -1,0 +1,59 @@
+{
+  "entity": "evelyn-tran",
+  "parent_entity": "valkyrie-crew",
+  "world": "earth_2050",
+  "_canon_status": "draft_pending_author_review",
+  "display_name": "Dr. Evelyn Tran",
+  "role": "Quantum physicist and propulsion expert; youngest lead physicist cleared for interstellar deployment",
+  "age": {
+    "chronological": "late_20s",
+    "apparent": "late_20s",
+    "tell": "shoulders up, chin tilted, slate in attack posture"
+  },
+  "identity": {
+    "height_build": "petite_slight_build",
+    "skin": "light_warm_skin",
+    "face": "heart_shaped_face_sharp_focused_brow",
+    "eyes": "dark_brown_eyes_behind_thin_rectangular_glasses",
+    "hair": "straight_black_hair_twisted_into_a_messy_bun_with_a_stylus_pushed_through_it",
+    "facial_hair": "none",
+    "distinguishing": "thin_metal_framed_rectangular_glasses_she_takes_off_to_rub_her_eyes"
+  },
+  "signature_props": [
+    "data_slate_always_in_hand",
+    "modified_field_array_built_from_obsolete_mining_tech",
+    "glasses",
+    "stylus"
+  ],
+  "posture_and_gesture": [
+    "chin_tilted_shoulders_up_slate_held_like_a_shield",
+    "crouched_calibrating_equipment",
+    "knees_tucked_into_a_chair",
+    "both_palms_flat_on_the_resonance_field"
+  ],
+  "expression_range": [
+    "raised_eyebrow",
+    "impatient_scoff",
+    "startled_jerk_back",
+    "trembling_hands_burning_eyes",
+    "exhausted_glasses_off_eye_rub",
+    "final_serene_stillness"
+  ],
+  "voice": "sharp_impatient_fast_technical",
+  "_provenance": {
+    "canon": [
+      "glasses (CH16)",
+      "'shoulders up, chin tilted, data slate in attack posture' (CH02)",
+      "young (dossier)",
+      "glyph light on cheekbones (CH11)",
+      "props and expressions (CH02-CH17)"
+    ],
+    "proposed_needs_author_approval": [
+      "build, skin, face, eye color, hair and stylus bun, glasses frame style, age late 20s"
+    ]
+  },
+  "avoid": [
+    "generic_stock_photo_face",
+    "celebrity_likeness"
+  ]
+}

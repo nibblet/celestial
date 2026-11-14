@@ -1,0 +1,24 @@
+{
+  "state": "shipboard",
+  "display_name": "Shipboard wear aboard Valkyrie-1",
+  "_canon_basis": "No uniform is described in prose (CH17 'Not in uniform' implies one exists). Proposed so crew read as one team without military dress.",
+  "wardrobe": {
+    "base": "fitted_long_sleeve_thermal_layer_in_charcoal_or_slate",
+    "outer": "unstructured_soft_jacket_or_vest_with_mission_patch_on_left_shoulder",
+    "mission_patch": "small_embroidered_patch_triple_curve_and_circle_on_dark_field",
+    "trousers": "utility_trousers_with_thigh_pockets",
+    "footwear": "soft_soled_deck_boots",
+    "wrist": "wrist_slate_always_worn"
+  },
+  "palette": [
+    "charcoal",
+    "slate_blue_gray",
+    "muted_bone",
+    "single_accent_of_worn_ochre"
+  ],
+  "avoid": [
+    "bright_primary_color_uniforms",
+    "capes_or_sashes",
+    "armor_plating"
+  ]
+}

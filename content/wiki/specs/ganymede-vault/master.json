@@ -1,0 +1,15 @@
+{
+  "entity": "ganymede-vault",
+  "world": "ancient_vault",
+  "_canon_status": "canon_grounded_from_prose",
+  "display_name": "Ganymede vault (convergence ring and Witness Circle)",
+  "convergence_ring": "palms_placed_on_an_arc_ignite_glyphs_a_spiral_staircase_of_light_forms_step_by_step_into_darkness_pulsing_to_the_crew's_alignment",
+  "witness_circle": "walls_arcing_without_vanishing_points_floor_and_ceiling_indistinguishable_built_from_soft_radiant_fog_footprints_in_still_sand",
+  "vision_exterior": "wing_like_structures_spanning_kilometers_of_frozen_terrain",
+  "_note": "Prose sets the Witness Circle here (CH09), not aboard Valkyrie-1 as content/wiki/specs/witness-circle claims.",
+  "avoid": [
+    "solid_stone_stairs",
+    "railings",
+    "torches"
+  ]
+}

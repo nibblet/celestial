@@ -1,0 +1,54 @@
+{
+  "entity": "jax-reyes",
+  "parent_entity": "valkyrie-crew",
+  "world": "earth_2050",
+  "_canon_status": "draft_pending_author_review",
+  "display_name": "Jaxon 'Jax' Reyes",
+  "role": "Systems hacker and engineer",
+  "age": {
+    "chronological": "late_30s",
+    "apparent": "late_30s",
+    "tell": "restless nervous energy, sarcasm as armor"
+  },
+  "identity": {
+    "height_build": "average_height_wiry_restless_frame",
+    "skin": "light_olive_tan_skin",
+    "face": "angular_face_quick_crooked_half_smile_tired_eyes",
+    "eyes": "dark_brown_eyes",
+    "hair": "messy_black_hair_short_on_the_sides_longer_on_top",
+    "facial_hair": "uneven_stubble",
+    "distinguishing": "burn_marks_and_small_cuts_on_fingers_tool_grime_under_nails"
+  },
+  "signature_props": [
+    "datapad",
+    "plasma_cutter",
+    "cable_spools",
+    "stim_tab"
+  ],
+  "posture_and_gesture": [
+    "crouched_under_a_subdeck_panel_elbow_deep_in_relay_clusters",
+    "sitting_back_on_his_heels",
+    "pacing_a_perimeter",
+    "fidgeting_with_a_datapad"
+  ],
+  "expression_range": [
+    "muttered_sarcasm",
+    "hollow_single_laugh",
+    "swallowing_guilt",
+    "uncharacteristic_reverent_quiet"
+  ],
+  "voice": "fast_clipped_irreverent_trails_off",
+  "_provenance": {
+    "canon": [
+      "props (CH03, CH08, CH12)",
+      "postures and expressions (CH03-CH12)"
+    ],
+    "proposed_needs_author_approval": [
+      "everything physical: build, skin, face, eyes, hair, stubble, hand marks, age"
+    ]
+  },
+  "avoid": [
+    "generic_stock_photo_face",
+    "celebrity_likeness"
+  ]
+}

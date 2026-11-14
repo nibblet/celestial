@@ -1,0 +1,56 @@
+{
+  "entity": "marco-ruiz",
+  "parent_entity": "valkyrie-crew",
+  "world": "earth_2050",
+  "_canon_status": "draft_pending_author_review",
+  "display_name": "Major Marco Ruiz",
+  "role": "Security and Tactical Systems; retired U.S. Space Force",
+  "age": {
+    "chronological": "about_60",
+    "apparent": "about_60_not_rejuvenated",
+    "tell": "the lines of a soldier too old to pretend anymore"
+  },
+  "identity": {
+    "height_build": "medium_height_thickset_broad_shouldered_and_solid",
+    "skin": "medium_brown_skin_weathered",
+    "face": "heavy_brow_deep_set_lines_strong_nose_jaw_that_flexes_when_he_is_holding_something_back",
+    "eyes": "dark_eyes_watchful",
+    "hair": "gray_buzz_cut",
+    "facial_hair": "clean_shaven_with_gray_shadow",
+    "distinguishing": "old_faded_scar_on_the_chin"
+  },
+  "signature_props": [
+    "wrist_slate",
+    "secure_comm",
+    "override_shard_in_a_containment_holster",
+    "folded_resonance_mesh_CH08"
+  ],
+  "posture_and_gesture": [
+    "arms_behind_his_back_at_a_threshold",
+    "standing_at_the_perimeter_watching_everything",
+    "both_hands_braced_on_a_panel_elbows_locked",
+    "leaning_on_a_support_strut_arms_crossed"
+  ],
+  "expression_range": [
+    "unreadable_neutrality",
+    "jaw_tightening",
+    "white_knuckled_grip",
+    "exhale_through_the_nose",
+    "rare_crack_of_concern"
+  ],
+  "voice": "brief_clipped_commanding",
+  "_provenance": {
+    "canon": [
+      "'lines of a soldier too old to pretend' (CH07, CH10)",
+      "knuckles white (CH12)",
+      "postures and props (CH02-CH17)"
+    ],
+    "proposed_needs_author_approval": [
+      "build, skin, face, eyes, hair, scar, age 60, not rejuvenated"
+    ]
+  },
+  "avoid": [
+    "generic_stock_photo_face",
+    "celebrity_likeness"
+  ]
+}

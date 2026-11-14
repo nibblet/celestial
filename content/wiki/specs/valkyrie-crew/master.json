@@ -1,0 +1,35 @@
+{
+  "entity": "valkyrie-crew",
+  "world": "earth_2050",
+  "_classification": "shared_human_crew_layer",
+  "_canon_status": "draft_pending_author_review",
+  "_purpose": "Shared rules inherited by every human character spec via parent_entity. Holds realism rules, world rules and the wardrobe states (mars_surface, shipboard, vault_expedition, prep_bay_kit).",
+  "realism": {
+    "register": "prestige_science_fiction_drama",
+    "skin": "real_pores_and_texture_no_beauty_filter",
+    "faces": "lived_in_asymmetry_fine_lines_appropriate_to_apparent_age",
+    "wardrobe": "worn_and_used_scuffed_dust_in_seams",
+    "performance": "restrained_naturalistic_micro_expressions"
+  },
+  "world_rules": {
+    "year": "2050",
+    "rejuvenation": "rejuvenated_characters_look_decades_younger_than_their_chronological_age_but_carry_it_in_the_eyes_and_posture",
+    "cybernetics": "none_human_enhancement_is_ethically_rejected_in_this_world",
+    "uniforms": "functional_expedition_wear_not_military_dress_uniforms"
+  },
+  "shared_props": [
+    "handheld_slate_with_stylus",
+    "wrist_slate_on_left_forearm",
+    "scan_wand"
+  ],
+  "avoid": [
+    "visible_cybernetic_implants_or_prosthetics",
+    "glowing_tattoos_or_face_markings",
+    "spandex_superhero_suits",
+    "star_trek_style_colored_uniform_tunics",
+    "rank_pips_or_military_dress_medals",
+    "airbrushed_or_plastic_skin",
+    "model_photoshoot_posing",
+    "anime_or_cartoon_rendering"
+  ]
+}

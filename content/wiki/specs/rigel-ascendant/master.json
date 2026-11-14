@@ -1,0 +1,57 @@
+{
+  "entity": "rigel-ascendant",
+  "world": "earth_2050",
+  "_canon_status": "draft_pending_author_review",
+  "display_name": "CNV Rigel Ascendant",
+  "classification": "modular_inhibitor_class_containment_cruiser",
+  "_provenance": {
+    "canon": [
+      "class, mission, 'vessel of certainty', holds orbit silent and precise (CH07-CH17)",
+      "290 m, crew 42, twin helium-3 fusion wells (wiki only)"
+    ],
+    "proposed_needs_author_approval": [
+      "entire exterior and interior look; the prose describes none of it"
+    ]
+  },
+  "scale": {
+    "length_m": 290,
+    "crew": 42
+  },
+  "silhouette": {
+    "primary_shape": "long_rigid_spine_with_stacked_rectangular_modules",
+    "profile": "hard_edged_symmetrical_wedge_bow",
+    "symmetry": "strict_bilateral",
+    "read": "a_vessel_of_certainty_everything_the_valkyrie_is_not"
+  },
+  "hull": {
+    "material": "matte_graphite_composite_plates_with_brushed_steel_module_frames",
+    "paneling": "visible_precise_panel_lines_and_hex_bolt_hardpoints",
+    "markings": "white_hull_number_CNV_014_A_and_the_sovereign_ethics_bureau_seal_near_the_bow",
+    "wear": "micrometeorite_pitting_clean_but_used"
+  },
+  "systems_visible": {
+    "propulsion": "twin_aft_fusion_drive_bells_with_faint_blue_white_glow",
+    "inhibitor_array": "ring_of_dish_like_quantum_dampener_emitters_around_the_midsection",
+    "sensors": "long_wave_phase_triangulation_antenna_booms"
+  },
+  "lighting": {
+    "running_lights": "cold_white_strobes",
+    "windows": "thin_slits_of_cool_white_light"
+  },
+  "interior_bridge": {
+    "look": "slate_gray_command_space_rectangular_consoles_hard_shadows_cool_white_light",
+    "backdrop": "slate_gray_wall_with_the_bureau_seal_projected_faintly"
+  },
+  "mood": {
+    "tone": "cold_precise_unhurried",
+    "impression": "containment_manifest"
+  },
+  "avoid": [
+    "organic_curves",
+    "bio_crystalline_surfaces",
+    "subdermal_veins",
+    "star_destroyer_shape",
+    "rust_or_pirate_salvage_look",
+    "warm_gold_light"
+  ]
+}

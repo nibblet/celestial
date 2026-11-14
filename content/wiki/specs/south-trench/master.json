@@ -1,0 +1,42 @@
+{
+  "entity": "south-trench",
+  "world": "earth_2050",
+  "_canon_status": "canon_grounded_from_prose",
+  "display_name": "South Trench / Excavation Field, Mars",
+  "classification": "industrial_dig_site_around_a_half_buried_alien_hull",
+  "terrain": {
+    "ground": "fine_red_regolith_that_takes_boots_ankle_deep_and_crunches",
+    "features": [
+      "crater_rim_on_the_horizon",
+      "ridge_where_the_hull_disappears_under_dust",
+      "trench_sloping_down_toward_zone_theta"
+    ],
+    "dust": "red_dust_dragged_in_long_ribboned_currents_settling_on_everything_low_lazy_spirals_when_the_wind_drops"
+  },
+  "the_hull_in_the_trench": {
+    "look": "seamless_silver_curve_of_valkyrie_1_in_shadowed_curvature_gleaming_like_glass_held_under_water",
+    "behavior": "responds_to_the_low_sun_not_reflection_but_response_dust_settles_on_it_in_patterns_like_writing_constellations_or_wings",
+    "color_glow": "none_in_daylight_only_a_faint_shimmer"
+  },
+  "human_activity": [
+    "survey_drones_blinking_through_loops",
+    "mechanical_arms_extracting_sediment_in_deliberate_arcs",
+    "mesh_tarps_and_support_struts",
+    "filtered_canopy_over_the_shaft",
+    "low_spectrum_floodlights_at_dusk",
+    "central_trench_platform",
+    "scan_wands_and_slates"
+  ],
+  "light": {
+    "dawn": "low_sun_breaking_over_the_crater_rim_through_morning_haze_long_shadows",
+    "dusk": "martian_twilight_then_dimmed_low_spectrum_floodlights",
+    "special": "red_light_at_the_landing_site_CH06"
+  },
+  "sound": "wind_that_whispers_not_howls_regolith_crunch_deep_silence",
+  "avoid": [
+    "flat_midday_light",
+    "clean_dustless_site",
+    "green_or_earth_like_sky",
+    "glowing_colored_veins_on_the_hull_in_daylight"
+  ]
+}

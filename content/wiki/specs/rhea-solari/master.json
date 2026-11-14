@@ -1,0 +1,55 @@
+{
+  "entity": "rhea-solari",
+  "world": "earth_2050",
+  "_canon_status": "draft_pending_author_review",
+  "display_name": "Captain Rhea Solari",
+  "role": "Commanding officer, CNV Rigel Ascendant; Sovereign Ethics Bureau; once Galen's psychological advisor during early Valkyrie vetting",
+  "_name_note": "Author decision: canon name is Captain Rhea Solari. Prose 'Colonel Riva Doss' (CH07, CH10, CH11) should be revised to match.",
+  "age": {
+    "chronological": "late_50s",
+    "apparent": "late_50s",
+    "tell": "aged the way orbital command officers do: trim lines, eyes too sharp to soften"
+  },
+  "identity": {
+    "height_build": "tall_trim_upright",
+    "skin": "pale_skin_cool_undertone",
+    "face": "narrow_composed_face_fine_precise_lines_unsmiling_mouth",
+    "eyes": "ice_gray_eyes_too_sharp_to_soften",
+    "hair": "silver_white_hair_in_a_tight_low_chignon",
+    "facial_hair": "none",
+    "distinguishing": "never_smiles_on_screen"
+  },
+  "wardrobe": {
+    "uniform": "high_collared_slate_gray_command_uniform_severe_tailoring",
+    "insignia": "small_sovereign_ethics_bureau_seal_at_the_collar",
+    "palette": [
+      "slate_gray",
+      "graphite",
+      "cold_white_piping"
+    ]
+  },
+  "signature_setting": "standing_against_a_slate_gray_command_backdrop_with_the_sovereign_ethics_bureau_seal_hovering_faintly_behind_her_like_a_watermark",
+  "transmission_look": "pre_recorded_message_static_heavy_white_flare_then_resolve",
+  "expression_range": [
+    "clinical_finality",
+    "pause_for_breath_not_kindness",
+    "cold_emphasis"
+  ],
+  "voice": "controlled_held_back_just_enough_to_never_seem_angry",
+  "_provenance": {
+    "canon": [
+      "backdrop, seal, 'Trim lines, eyes too sharp to soften, voice held back' (CH07/CH11)",
+      "cold, principled, unsmiling (CH07, CH10)",
+      "role (dossier)"
+    ],
+    "proposed_needs_author_approval": [
+      "skin, face, eye color, hair, age, uniform cut and color, collar seal"
+    ]
+  },
+  "avoid": [
+    "warm_smile",
+    "decorative_medals",
+    "villain_costume_or_cape",
+    "red_lighting"
+  ]
+}

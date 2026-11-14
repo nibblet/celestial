@@ -21,7 +21,7 @@ import type {
  * Bump when the system prompt below changes. Combined with corpusVersion in
  * seedHashFor() so cached prompts auto-invalidate on prompt edits.
  */
-const SYNTH_PROMPT_VERSION = "v9";
+const SYNTH_PROMPT_VERSION = "v10";
 const SYNTH_MODEL = "claude-sonnet-4-20250514";
 
 const SYSTEM_PROMPT = `You are a Visual Director for the Celestial corpus.
@@ -163,7 +163,7 @@ Output STRICT JSON with this shape and no prose around it:
   "camera": "<lens (specific mm) + framing + distance + height + perspective — e.g. '50mm anamorphic, medium-wide, eye-level, deep focus with foreground element in silhouette'. Default to long-lens compression for spaces; avoid wide-angle distortion unless intent demands it.>",
   "camera_motion": "<for video intents: how the camera moves, e.g. 'slow push-in from medium-wide to medium-close, slight orbital drift'. Empty string for stills.>",
   "subject_motion": "<for video intents: how the subject and elements move + rhythm. Empty string for stills.>",
-  "color_arc": "<For stills: palette in 1 sentence. For video: a short emotional arc, e.g. 'cool blue (observation) → radiant gold (clarity) → faint violet at edges (grief), transitions organic, never abrupt'.>",
+  "color_arc": "<For stills: palette in 1 sentence. For video: a short emotional arc, e.g. 'passive blue → warm gold (presence) → blue edging into violet (hesitation), then dimming (grief); transitions organic, never abrupt'.>",
   "audio": "<For motion_loop intent only, if relevant: short audio direction. Empty otherwise.>",
   "style_anchors": ["<3-6 short style tags, MUST include the preset anchors provided>"],
   "negative": ["<5-10 short negative tags. Include any 'NOT-anchors' from canon (e.g. 'no human face', 'no hologram UI'). Include the preset negatives.>"],

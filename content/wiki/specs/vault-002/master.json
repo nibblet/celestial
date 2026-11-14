@@ -1,0 +1,21 @@
+{
+  "entity": "vault-002",
+  "world": "ancient_vault",
+  "_canon_status": "canon_grounded_from_prose",
+  "display_name": "Vault 002, Vault of First Light (Mars, beneath Valkyrie-1)",
+  "walls": "layered_texture_that_absorbs_light_like_listening_skin_slow_shimmer_that_reads_as_a_pulse",
+  "geometry": "corridor_wide_enough_for_three_curving_inward_into_alcoves_floor_sloping_three_degrees_ceiling_twelve_feet",
+  "temperature_feel": "faintly_warm_like_breath",
+  "palette": [
+    "amber",
+    "gold",
+    "golden_red",
+    "pale_light"
+  ],
+  "avoid": [
+    "right_angle_rooms",
+    "machinery",
+    "skulls_or_tomb_props",
+    "cyan_sci_fi_glow"
+  ]
+}

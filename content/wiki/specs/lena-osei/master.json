@@ -1,0 +1,57 @@
+{
+  "entity": "lena-osei",
+  "parent_entity": "valkyrie-crew",
+  "world": "earth_2050",
+  "_canon_status": "draft_pending_author_review",
+  "display_name": "Dr. Lena Osei",
+  "role": "Exoarchaeologist and archaeolinguist; former Giza excavation team",
+  "age": {
+    "chronological": "mid_40s",
+    "apparent": "mid_40s",
+    "tell": "guarded precision, trusts only what can be measured"
+  },
+  "identity": {
+    "height_build": "tall_and_slender_with_squared_shoulders",
+    "skin": "deep_brown_skin",
+    "face": "high_cheekbones_sharp_angular_features_a_mouth_that_rarely_softens",
+    "eyes": "dark_brown_eyes_usually_narrowed",
+    "hair": "natural_hair_in_tight_braids_pulled_back_and_bound_at_the_nape",
+    "facial_hair": "none",
+    "distinguishing": "small_gold_stud_earrings_and_a_field_worn_wristband_from_the_giza_dig"
+  },
+  "signature_props": [
+    "scan_wand",
+    "wrist_display",
+    "biosuit_scanner_with_lens",
+    "slate_with_dark_screen"
+  ],
+  "posture_and_gesture": [
+    "arms_folded_tight_across_her_chest_signature_pose",
+    "hunched_over_a_scan_table",
+    "pacing",
+    "hand_flat_on_a_bulkhead_eyes_half_closed"
+  ],
+  "expression_range": [
+    "narrowed_skeptical_eyes",
+    "flat_clipped_retort",
+    "thin_tired_smile",
+    "reserve_cracking_into_a_whisper",
+    "private_upward_gaze_and_smile_CH17"
+  ],
+  "voice": "dry_precise_skeptical",
+  "_provenance": {
+    "canon": [
+      "arms folded (CH06, CH07, CH09, CH10, CH12)",
+      "visor retracted, eyes narrow (CH06)",
+      "props (CH03, CH06, CH14)",
+      "expressions (CH02-CH17)"
+    ],
+    "proposed_needs_author_approval": [
+      "everything physical: height_build, skin, face, eyes, hair, earrings, wristband, age mid-40s"
+    ]
+  },
+  "avoid": [
+    "generic_stock_photo_face",
+    "celebrity_likeness"
+  ]
+}

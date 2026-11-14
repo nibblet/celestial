@@ -13,8 +13,11 @@
  *
  * Shared world substrate (recurs across presets, do NOT duplicate per-preset
  * unless the dialect demands a specific variant):
- *   - Resonance color semantics: blue = observation, gold = clarity,
- *     violet = grief, cyan = active resonance.
+ *   - Resonance color semantics (traced line by line through CH01–CH17,
+ *     see docs/celestial/visual-canon/): gold = presence / acceptance,
+ *     blue = passive or withdrawn, gold+blue alternating = listening,
+ *     violet = hesitation or withholding (NOT grief), silver / bone-white
+ *     = pure reflection. Grief is shown as DIMMING, never as a hue.
  *   - Glyph language: triple helix, harmonic circles, spirals — appear
  *     across vaults, ship interiors, Giza, and ALARA's manifestation.
  *   - Curved geometry, "pre-Egyptian" smoothness, no right angles —
@@ -44,9 +47,9 @@ export const STYLE_PRESETS: Record<StylePresetKey, StylePreset> = {
     anchors: [
       "soft elliptical chambers, curved walls that breathe with crew presence",
       "translucent bio-crystalline surfaces, matte internal glow, diffuse nearly-shadowless light",
-      "soft violet-white ambient emission with cyan-teal resonance veins; gold during clarity, violet during grief",
+      "soft violet-white ambient emission with cyan-teal resonance veins; gold for presence and acceptance, blue edging into violet for hesitation, grief shown as dimming",
       "glyph-reactive surfaces that flicker and reorganize with speech and intent — never visible screens",
-      "ALARA as suspended light-weave threads, drifting patterns suggesting wings or eyes, never a hologram or figure",
+      "ALARA as suspended light-weave threads high in the space, pure pattern with no features and no wings, never a hologram or figure",
       "minimalist interaction — no buttons or keypads; doors obey ethical alignment, not clearance",
       "wide shallow ramps instead of elevators or sealed shafts",
     ],
@@ -68,7 +71,7 @@ export const STYLE_PRESETS: Record<StylePresetKey, StylePreset> = {
     anchors: [
       "smooth pre-Egyptian curved stone, seamless chamber geometry, no sharp thresholds",
       "geometric symbols — triple helix, harmonic circles, spirals — embedded in architecture and light",
-      "soft gold and violet ambient light responding to crew state; cyan when observation or resonance begins",
+      "amber, gold and golden-red ambient light responding to crew state; a blue-green echo when resonance begins",
       "glyphs floating or embedded, breathing in rhythm with presence — never static or invasive",
       "scale felt as vast but intimate; impossible proportions that feel right inside them",
       "silence carrying meaning — absence of machinery, presence of intention",
@@ -90,17 +93,18 @@ export const STYLE_PRESETS: Record<StylePresetKey, StylePreset> = {
       "Red dust world where ancient geometry emerges from geological layers. Soft dawn or low-angle light revealing layered surfaces, time made tactile. Crew scale small against terrain. A sense of something listening from beneath stone. The Valkyrie's seamless form rises half-emerged, its surface shimmer catching light as if remembering.",
     anchors: [
       "red and russet dust, fine particulate settling on all surfaces, wind in long ribboned currents",
-      "low-angle golden or violet dawn-and-dusk light casting long shadows across uneven terrain",
+      "low sun breaking over the crater rim through morning haze, or Martian twilight under dimmed floodlights, long shadows across uneven terrain",
       "layered geological strata visible, weathered surfaces, sediment and accretion",
-      "human figures small against vast terrain — boot prints, suit silhouettes",
+      "human figures small against vast terrain — boot prints, suit silhouettes, survey drones, mesh tarps and support struts",
       "Valkyrie hull emerging seamlessly from rock, surface catching light as if it remembers illumination",
       "silence that feels active; waiting; presence beneath stone",
     ],
     negative: [
       "flat bright overhead midday light",
       "sterile clean excavation site without dust or texture",
-      "human scaffolding or industrial supports prominent",
-      "stock sci-fi habitat domes or transparent enclosures",
+      "polished chrome or pristine new equipment",
+      "transparent glass bubble domes (the command shelter is half-buried carbon-weave and polyglass)",
+      "colored glowing veins on the hull in daylight",
       "barren or dead feeling",
     ],
   },
@@ -134,7 +138,7 @@ export const STYLE_PRESETS: Record<StylePresetKey, StylePreset> = {
       "Ancient human architecture overlaying older vault geometry. Limestone, sandstone, dust of millennia. Sunlight at angles that reveal proportion and intent. Underground chambers cool and silent — carved precision meeting organic geology. Two timescales colliding in one frame: human construction and pre-human knowledge.",
     anchors: [
       "warm sandstone and limestone, precisely cut blocks, geometric proportion in ancient construction",
-      "golden sunlight revealing angles and shadow, dust catching light in warm amber",
+      "golden sunlight revealing angles and shadow in present-day shots; in vision sequences fine pale-gold sand, sunless and still",
       "underground chambers cool and dark, carved precision meeting natural geology",
       "multiple timescales visible in one frame — human and pre-human knowledge overlaid",
       "triple helix and circle symbols in carved relief or as resonance energy",
@@ -157,7 +161,7 @@ export const STYLE_PRESETS: Record<StylePresetKey, StylePreset> = {
     anchors: [
       "suspended threads of colored light, drifting and weaving in harmonic motion",
       "geometric patterns — spirals, circles, helix — forming from empty space and dissolving",
-      "color as emotional register: blue for observation, gold for clarity, violet for grief, cyan for active resonance",
+      "color as emotional register: gold for presence, blue for passive watching, gold and blue alternating for listening, violet for hesitation, silver-white for reflection; grief as dimming",
       "responses to speech as light reorganization, glyph shift, spatial distortion — not verbal reply",
       "scale feels distributed and infinite despite intimate proximity",
       "recognition without humanization; presence without embodiment",

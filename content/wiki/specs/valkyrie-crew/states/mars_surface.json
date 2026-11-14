@@ -1,0 +1,24 @@
+{
+  "state": "mars_surface",
+  "display_name": "Mars excavation surface wear (CH01-CH03, CH06)",
+  "_canon_basis": "CH01 suit knees caked in dust, visor HUD pings vitals, helmets removed under the filtered canopy; CH02 visor tinted against morning glare; CH03 breath fogging visor, suit audio feed, external mic.",
+  "wardrobe": {
+    "suit": "segmented_soft_shell_surface_suit_in_weathered_sand_gray_with_rust_red_dust_ground_into_knees_and_seams",
+    "helmet": "rounded_hard_helmet_with_retractable_tinted_visor_and_small_hud_glints",
+    "helmet_handling": "often_carried_under_arm_or_clipped_at_hip_when_under_the_filtered_canopy",
+    "gloves": "thin_dexterous_gloves_with_dust_in_the_finger_creases",
+    "boots": "heavy_treaded_boots_sunk_ankle_deep_in_fine_regolith",
+    "kit": "chest_harness_with_comm_mic_and_wrist_slate"
+  },
+  "palette": [
+    "sand_gray",
+    "rust_red_dust",
+    "worn_safety_orange_piping",
+    "matte_black_fittings"
+  ],
+  "avoid": [
+    "clean_white_nasa_style_suits",
+    "bulky_apollo_era_suits",
+    "mirror_gold_visors_hiding_faces"
+  ]
+}

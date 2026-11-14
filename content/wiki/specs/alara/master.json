@@ -1,0 +1,60 @@
+{
+  "entity": "alara",
+  "world": "alien_organic",
+  "_canon_status": "canon_grounded_from_prose",
+  "display_name": "ALARA",
+  "classification": "sentient_ship_intelligence_grown_for_valkyrie_1",
+  "manifestation": {
+    "name": "light_weave",
+    "form": "suspended_threads_of_light_that_curl_into_simple_geometry_spirals_concentric_rings_brushstroke_contours",
+    "features": "none_no_face_no_eyes_no_wings_no_body_just_pattern",
+    "scale": "a_few_threads_to_a_room_spanning_lattice",
+    "placement": "high_in_the_space_near_ceilings_upper_rings_far_ends_and_edges_never_centered_at_human_height_never_on_the_floor",
+    "distribution": "can_appear_in_several_places_at_once_a_thread_behind_a_shoulder_another_across_an_upper_ring",
+    "motion": "slow_breath_like_pulsing_threads_realign_rather_than_move_retracts_by_unraveling"
+  },
+  "environmental_presence": [
+    "ambient_light_rebalancing_toward_the_golden_spectrum_when_she_cares_for_the_crew",
+    "lights_flicker_once_and_return_brighter_at_the_edges_as_a_gesture",
+    "a_surface_dims_by_one_degree_when_she_withdraws",
+    "a_sub_audible_tone_rolling_through_the_deck_into_the_spine"
+  ],
+  "color_semantics": {
+    "gold": "presence_warmth_acceptance_deepening_to_amber_when_she_declares_herself",
+    "blue": "passive_neutral_or_withdrawn",
+    "gold_and_blue_alternating": "listening_like_breath",
+    "violet": "hesitation_or_withholding_never_grief",
+    "silver_and_bone_white": "pure_reflection_non_directive",
+    "grief": "shown_as_dimming_not_as_a_hue"
+  },
+  "voice": {
+    "source": "from_the_air_itself_not_speakers_spatial_surrounding_like_warmth",
+    "timbre": "soft_warm_female_coded_quiet_almost_shy_early_steadier_later",
+    "non_verbal": [
+      "soft_chime_in_helmets",
+      "slow_chord_through_the_floor",
+      "soft_three_note_cadence"
+    ]
+  },
+  "_provenance": {
+    "canon": [
+      "all manifestation fields (CH05-CH17)",
+      "'no wings, no form-just pattern' (CH10)",
+      "'no features' (CH14)",
+      "color usage traced line by line (see docs/celestial/visual-canon/evidence-ai-ships-artifacts.md §A1)"
+    ],
+    "proposed_needs_author_approval": [
+      "voice timbre 'female-coded' comes from wiki alara.md, not prose"
+    ],
+    "spec_change": "Prose contradicts the wiki/presets: violet = hesitation not grief; no wings."
+  },
+  "avoid": [
+    "humanoid_hologram_or_avatar",
+    "face_or_eyes_in_the_light",
+    "wings",
+    "robot_body",
+    "floating_screen_ui",
+    "chat_bubble_or_waveform_graphics",
+    "harsh_red_or_white_light"
+  ]
+}

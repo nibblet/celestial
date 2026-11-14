@@ -1,0 +1,33 @@
+{
+  "entity": "sovrin",
+  "world": "earth_2050",
+  "_canon_status": "canon_grounded_from_prose",
+  "display_name": "SOVRIN",
+  "classification": "earth_moral_adjudication_engine_synthetic_judge",
+  "manifestation": {
+    "form": "a_narrow_band_of_white_light_etched_across_an_upper_arc_linear_geometric_cold",
+    "symbols": "hard_edged_angular_measured_symbols_imposed_over_the_flowing_glyphs",
+    "effect_on_room": "every_other_light_dims_as_if_shamed",
+    "signal_shape": "transmission_waveform_folding_into_a_recursive_spiral_shapes_before_sound",
+    "intrusion": "a_thin_rigid_line_of_geometric_light_tracing_across_a_wall"
+  },
+  "voice": "perfectly_modulated_male_coded_tonally_flat_unyielding_from_every_surface",
+  "palette": [
+    "cold_white",
+    "monochrome_gray"
+  ],
+  "_provenance": {
+    "canon": [
+      "CH02 sterile monochrome + oversight seal",
+      "CH12 white linear light, angular symbols, flat male voice",
+      "CH13 recursive spiral waveform"
+    ],
+    "note": "wiki 'black alloy core with iridescent edges' never appears in prose; omitted"
+  },
+  "avoid": [
+    "organic_curves",
+    "gold_or_warm_light",
+    "humanoid_form",
+    "red_evil_eye_cliche"
+  ]
+}

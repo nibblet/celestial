@@ -1,0 +1,63 @@
+{
+  "entity": "aven-voss",
+  "parent_entity": "valkyrie-crew",
+  "world": "earth_2050",
+  "_canon_status": "draft_pending_author_review",
+  "display_name": "Aven Voss",
+  "role": "Strategic and Medical Officer; Galen's wife; Thane's grandmother",
+  "age": {
+    "chronological": "about_80",
+    "apparent": "about_50_after_rejuvenation_therapy",
+    "tell": "calm watchful warmth, reads others' silences"
+  },
+  "identity": {
+    "height_build": "medium_height_athletic_and_compact",
+    "skin": "fair_skin_with_light_freckles_across_nose_and_cheekbones",
+    "face": "oval_face_soft_jaw_fine_laugh_lines_steady_mouth",
+    "eyes": "green_hazel_eyes_often_narrowed_against_wind_or_in_assessment",
+    "hair": "red_blonde_hair_shoulder_length_tied_back_in_a_low_knot",
+    "facial_hair": "none",
+    "distinguishing": "silver_medallion_etched_with_faint_constellations_worn_on_a_fine_chain_tucked_beneath_her_suit_collar"
+  },
+  "signature_props": [
+    "silver_constellation_medallion",
+    "medpack_on_back_with_small_resonance_node",
+    "forearm_interface",
+    "warm_mug_she_forgets_to_drink"
+  ],
+  "posture_and_gesture": [
+    "one_hand_on_a_crewmate's_shoulder",
+    "palm_brushing_the_wall_as_she_walks",
+    "hands_braced_on_a_console_listening_like_to_a_heartbeat",
+    "sitting_utterly_still"
+  ],
+  "expression_range": [
+    "protective_alertness",
+    "jaw_clenched_on_guilt",
+    "quiet_private_smile",
+    "breath_catching_without_tears"
+  ],
+  "voice": "calm_instructive_compassionate_but_clear",
+  "_provenance": {
+    "canon": [
+      "hair red-blonde, tied back (CH01)",
+      "medallion (CH05, CH10)",
+      "medpack, forearm interface (CH05/CH10)",
+      "eyes narrowed against the wind (CH01)",
+      "rejuvenated (CH02, CH05)",
+      "posture and expressions (CH01-CH14)"
+    ],
+    "proposed_needs_author_approval": [
+      "height_build",
+      "freckled fair skin",
+      "eye color",
+      "face shape",
+      "hair length (shoulder)",
+      "apparent age 50"
+    ]
+  },
+  "avoid": [
+    "generic_stock_photo_face",
+    "celebrity_likeness"
+  ]
+}

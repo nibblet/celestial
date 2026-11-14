@@ -1,0 +1,13 @@
+{
+  "view_type": "profile_reference",
+  "camera": {
+    "framing": "head_and_shoulders",
+    "angle": "true_profile_right",
+    "elevation": "eye_level",
+    "lens": "85mm"
+  },
+  "lighting": {
+    "key": "rim_light_from_behind",
+    "background": "plain_dark_neutral_backdrop"
+  }
+}

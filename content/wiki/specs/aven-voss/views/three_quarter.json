@@ -1,0 +1,17 @@
+{
+  "view_type": "identity_portrait",
+  "_purpose": "Default view. The identity anchor: generate and approve this first, then reuse its seed for every other shot.",
+  "camera": {
+    "framing": "head_and_shoulders",
+    "angle": "three_quarter_left",
+    "elevation": "eye_level",
+    "lens": "85mm",
+    "depth_of_field": "shallow"
+  },
+  "lighting": {
+    "key": "soft_window_key_from_camera_left",
+    "fill": "low",
+    "background": "plain_dark_neutral_backdrop"
+  },
+  "expression": "neutral_resting_face_characteristic_of_the_character"
+}

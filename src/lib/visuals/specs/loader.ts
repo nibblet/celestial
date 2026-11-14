@@ -71,6 +71,10 @@ export function composeEntitySpec(
       }
       // parent_entity is metadata; don't inject into merged spec.
       if (key === "parent_entity") continue;
+      // Underscore-prefixed keys (_canon_status, _canon_basis, _notes) are
+      // author-review annotations — kept in the JSON for provenance but
+      // never transcribed into the prompt.
+      if (isAnnotationKey(key)) continue;
       merged[key] = value;
     }
   }
@@ -202,6 +206,10 @@ function collectLayers(
   }
 }
 
+export function isAnnotationKey(key: string): boolean {
+  return key.startsWith("_");
+}
+
 function readJson(filePath: string): SpecLayer {
   try {
     const text = fs.readFileSync(filePath, "utf-8");
@@ -260,6 +268,7 @@ function renderValue(value: unknown, indent: string): string[] {
   if (typeof value === "object") {
     const out: string[] = [];
     for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+      if (isAnnotationKey(k)) continue;
       if (
         typeof v === "string" ||
         typeof v === "number" ||

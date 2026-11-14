@@ -1,0 +1,55 @@
+{
+  "entity": "jonah-revas",
+  "parent_entity": "valkyrie-crew",
+  "world": "earth_2050",
+  "_canon_status": "draft_pending_author_review",
+  "display_name": "Dr. Jonah Revas",
+  "role": "Theological scholar and cultural analyst",
+  "age": {
+    "chronological": "mid_50s",
+    "apparent": "about_45",
+    "tell": "a calm that feels older than his face"
+  },
+  "identity": {
+    "height_build": "medium_height_soft_shouldered_unhurried",
+    "skin": "light_olive_skin",
+    "face": "open_gentle_face_younger_than_his_manner",
+    "eyes": "dark_brown_eyes_steady_and_unhurried",
+    "hair": "short_dark_curly_hair_flecked_with_gray",
+    "facial_hair": "neat_short_beard_flecked_with_gray",
+    "distinguishing": "loose_layered_linen_like_overshirt_over_his_shipboard_wear"
+  },
+  "signature_props": [
+    "mug_of_tea_gone_cold",
+    "hand_drawn_sketchbook_of_the_nine_archetypes"
+  ],
+  "posture_and_gesture": [
+    "leaning_in_a_doorway_arms_folded",
+    "seated_cross_legged_palms_open_on_knees",
+    "hands_clasped_in_front",
+    "slow_head_tilt"
+  ],
+  "expression_range": [
+    "infuriating_calm",
+    "faint_smile",
+    "breath_hitching_in_awe",
+    "falling_to_his_knees",
+    "weeping_from_relief_CH17"
+  ],
+  "voice": "soft_low_rhythmic_like_parables_unfolding",
+  "_provenance": {
+    "canon": [
+      "'calm that felt older than his face' (CH03)",
+      "cold tea mug (CH03)",
+      "sketch of the Nine (CH09 log)",
+      "postures and expressions (CH02-CH17)"
+    ],
+    "proposed_needs_author_approval": [
+      "build, skin, face, eyes, hair, beard, overshirt, age"
+    ]
+  },
+  "avoid": [
+    "generic_stock_photo_face",
+    "celebrity_likeness"
+  ]
+}

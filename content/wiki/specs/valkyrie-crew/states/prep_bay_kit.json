@@ -1,0 +1,16 @@
+{
+  "state": "prep_bay_kit",
+  "display_name": "ALARA-curated loadout (CH08 prep bay)",
+  "_canon_basis": "CH08: 'Witnesses are shaped by what they carry.' Weapons replaced by resonance objects: Galen's glyph-inscribed volume and hand-shaped phase-glass fragment, Marco's folded resonance mesh beside a deconstructed pulse rifle with no ammunition, Aven's geologic sampler retrofitted for bioresonance.",
+  "props": {
+    "phase_glass_fragment": "palm_sized_translucent_glass_shard_shaped_like_an_open_hand_with_microscopic_etched_lines",
+    "sealed_volume": "small_dark_book_object_inscribed_with_curving_martian_glyphwork_that_pulses_faintly_when_touched",
+    "resonance_mesh": "folded_sheet_of_fine_metallic_mesh_that_pulses_softly_with_the_holders_heartbeat",
+    "data_crystal": "finger_length_crystal_etched_with_a_single_glyph"
+  },
+  "avoid": [
+    "loaded_weapons",
+    "ammunition",
+    "grenades"
+  ]
+}

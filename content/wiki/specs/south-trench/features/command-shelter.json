@@ -1,0 +1,14 @@
+{
+  "feature": "command_shelter",
+  "look": "reinforced_dome_of_carbon_weave_and_polyglass_half_buried_in_red_grit",
+  "interior": [
+    "air_recyclers_humming",
+    "bank_of_display_panels_on_the_far_wall",
+    "center_console",
+    "small_port_window_onto_the_excavation_field",
+    "anchor_mount_for_helmets_by_the_entry",
+    "brushed_steel_lab_with_active_scan_table",
+    "heat_panel"
+  ],
+  "sound": "dome_creaks_in_the_wind_but_holds"
+}
