@@ -2,7 +2,7 @@
   "entity": "lena-osei",
   "parent_entity": "valkyrie-crew",
   "world": "earth_2050",
-  "_canon_status": "draft_pending_author_review",
+  "_canon_status": "look_direction_chosen_by_author_2026-11-14_pending_portrait",
   "display_name": "Dr. Lena Osei",
   "role": "Exoarchaeologist and archaeolinguist; former Giza excavation team",
   "age": {
@@ -11,13 +11,14 @@
     "tell": "guarded precision, trusts only what can be measured"
   },
   "identity": {
-    "height_build": "tall_and_slender_with_squared_shoulders",
-    "skin": "deep_brown_skin",
-    "face": "high_cheekbones_sharp_angular_features_a_mouth_that_rarely_softens",
-    "eyes": "dark_brown_eyes_usually_narrowed",
-    "hair": "natural_hair_in_tight_braids_pulled_back_and_bound_at_the_nape",
+    "height_build": "tall_and_slender_with_squared_shoulders_and_a_long_neck",
+    "heritage": "mixed_ghanaian_and_ethiopian",
+    "skin": "warm_brown_skin",
+    "face": "long_narrow_face_with_sharp_angular_cheekbones_a_fine_straight_nose_and_a_mouth_that_rarely_softens",
+    "eyes": "dark_almond_shaped_eyes_with_heavy_lashes_usually_narrowed_in_assessment",
+    "hair": "long_black_hair_pulled_back_tight_from_the_face_into_one_sleek_low_braid_down_her_back",
     "facial_hair": "none",
-    "distinguishing": "small_gold_stud_earrings_and_a_field_worn_wristband_from_the_giza_dig"
+    "distinguishing": "a_single_thin_gold_hoop_earring_and_a_field_worn_wristband_from_the_giza_dig"
   },
   "shipboard_uniform": {
     "tier": "mission_coverall",
@@ -53,11 +54,18 @@
       "expressions (CH02-CH17)"
     ],
     "proposed_needs_author_approval": [
-      "everything physical: height_build, skin, face, eyes, hair, earrings, wristband, age mid-40s"
-    ]
+      "portrait not yet generated; identity fields follow the author's chosen 'sleek & angular' direction (2026-11-14)"
+    ],
+    "rejected": "Old approved Supabase image (short curly auburn hair) rejected by the author 2026-11-14."
   },
   "avoid": [
     "generic_stock_photo_face",
-    "celebrity_likeness"
-  ]
+    "celebrity_likeness",
+    "short_curly_hair",
+    "afro_or_loose_curls",
+    "auburn_or_dyed_hair",
+    "warm_smile",
+    "looking_under_38"
+  ],
+  "default_expression": "guarded_skeptical_composure_eyes_narrowed_arms_folded_when_framing_allows"
 }
