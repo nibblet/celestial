@@ -39,6 +39,7 @@ export async function POST(request: Request) {
     provider?: VisualProviderName;
     providerModel?: string;
     params?: Record<string, unknown>;
+    force?: boolean;
   };
   try {
     body = await request.json();
@@ -71,6 +72,7 @@ export async function POST(request: Request) {
       provider,
       providerModel: body.providerModel,
       params: body.params,
+      force: !!body.force,
       userId: auth.userId,
     });
     return Response.json(result);

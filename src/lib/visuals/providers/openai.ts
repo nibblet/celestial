@@ -58,6 +58,8 @@ export const openaiProvider: VisualProvider = {
       size: params.size ?? null,
       quality: params.quality ?? "high",
       referenceImages: refs,
+      // Cache-bust token from force regenerate — not sent to the API.
+      ...(typeof params.reroll === "string" ? { reroll: params.reroll } : {}),
     };
   },
 
