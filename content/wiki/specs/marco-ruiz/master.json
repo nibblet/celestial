@@ -2,7 +2,7 @@
   "entity": "marco-ruiz",
   "parent_entity": "valkyrie-crew",
   "world": "earth_2050",
-  "_canon_status": "look_direction_chosen_by_author_2026-11-14_pending_portrait",
+  "_canon_status": "look_approved_by_author_2026-11-14",
   "display_name": "Major Marco Ruiz",
   "role": "Security and Tactical Systems; retired U.S. Space Force",
   "age": {
@@ -51,11 +51,18 @@
       "knuckles white (CH12)",
       "postures and props (CH02-CH17)"
     ],
-    "proposed_needs_author_approval": [
-      "portrait not yet generated; author chose the older direction 2026-11-14: ~60, never rejuvenated, gray buzz cut, clean-shaven"
-    ],
-    "rejected": "Old approved Supabase image (45-50, full salt-and-pepper beard) rejected 2026-11-14: too close to Galen's apparent age."
+    "proposed_needs_author_approval": [],
+    "rejected": "Old approved Supabase image (45-50, full salt-and-pepper beard) rejected 2026-11-14: too close to Galen's apparent age.",
+    "approved_portrait": "public/visual-references/marco-ruiz-portrait.png: first OpenAI render, author-approved 2026-11-14. Known deviations: flag on the left sleeve (spec: right), faint patch logo echoed in the background."
   },
+  "reference_images": [
+    {
+      "path": "/visual-references/marco-ruiz-portrait.png",
+      "role": "identity",
+      "label": "Marco Ruiz approved portrait",
+      "instruction": "match his face, buzz cut, age, build and watchful expression exactly; the U.S. flag belongs on the RIGHT sleeve, not the left as in this image"
+    }
+  ],
   "avoid": [
     "generic_stock_photo_face",
     "celebrity_likeness",
