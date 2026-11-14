@@ -126,6 +126,11 @@ export const runwayProvider: VisualProvider = {
     });
     if (!createRes.ok) {
       const errText = await createRes.text();
+      if (/not have enough credits/i.test(errText)) {
+        throw new Error(
+          "Runway API account is out of credits. Add credits in the Runway developer portal (dev.runwayml.com → Billing); Runway app subscription credits don't cover the API.",
+        );
+      }
       throw new Error(
         `Runway create failed (${createRes.status}): ${errText.slice(0, 500)}`,
       );
