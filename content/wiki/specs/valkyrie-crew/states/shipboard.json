@@ -12,7 +12,7 @@
   },
   "uniform_system": {
     "fabric": "weathered_dark_olive_charcoal_ripstop_dusty_and_field_worn_soft_at_seams_elbows_and_knees",
-    "mission_patch": "round_embroidered_patch_on_the_wearer's_LEFT_chest_dark_navy_field_with_a_thin_tan_border_two_stacked_tan_crescent_arcs_rising_like_wings_over_one_solid_tan_circle_PROJECT_arched_across_the_top_and_VALKYRIE_arched_across_the_bottom_in_tan_thread",
+    "mission_patch": "round_embroidered_patch_on_the_wearer's_LEFT_chest_dark_navy_field_with_a_thin_tan_border_THREE_stacked_tan_crescent_arcs_tapering_to_points_rising_like_wings_over_one_solid_tan_circle_PROJECT_arched_across_the_top_and_VALKYRIE_arched_across_the_bottom_in_tan_thread",
     "name_tape": "faded_olive_gray_rectangular_name_tape_on_the_wearer's_RIGHT_chest_surname_only_in_pale_stitched_capitals",
     "shoulder": "small_us_flag_on_the_RIGHT_upper_sleeve_with_a_blank_sponsor_tab_beneath_it",
     "role_tab": "plain_solid_colored_rectangular_tab_on_the_wearer's_left_shoulder_strap_no_symbols_no_chevrons",
@@ -34,9 +34,10 @@
     "armor_plating",
     "rank_chevrons_or_stripes",
     "patch_and_name_tape_on_swapped_sides",
-    "two_curve_or_wave_logo_variants"
+    "two_arc_or_wave_logo_variants",
+    "wifi_symbol_look"
   ],
-  "_patch_note": "Canonical patch chosen by the author 2026-11-14 from a ChatGPT render: docs/celestial/visual-canon/references/project-valkyrie-patch.png. Attach that image as a reference in every generation that shows the uniform. Book canon reads 'Three curves. A circle.' (CH01); this design shows two arcs. Author to confirm or ask for a three-arc revision.",
+  "_patch_note": "Canonical patch: docs/celestial/visual-canon/references/project-valkyrie-patch.png (SVG source alongside). Three arcs per author 2026-11-14, matching 'Three curves. A circle.' (CH01); style from the ChatGPT render (v1, two arcs, kept as project-valkyrie-patch-v1-two-arcs.png). Attach the PNG as a reference in every generation that shows the uniform.",
   "_references": [
     "docs/celestial/visual-canon/references/project-valkyrie-patch.png",
     "docs/celestial/visual-canon/references/galen-voss-portrait-chatgpt.png"

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720">
+<defs>
+<filter id="tex" x="0" y="0" width="100%" height="100%">
+ <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="7" result="n"/>
+ <feColorMatrix in="n" type="saturate" values="0" result="g"/>
+ <feComponentTransfer in="g" result="g2"><feFuncA type="linear" slope="0.10"/></feComponentTransfer>
+ <feComposite in="g2" in2="SourceGraphic" operator="in" result="t"/>
+ <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="t"/></feMerge>
+</filter>
+<linearGradient id="thread" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cbb99b"/><stop offset="1" stop-color="#a99579"/></linearGradient>
+<path id="top" d="M 105,360 A 255 255 0 0 1 615,360"/>
+<path id="bot" d="M 60,360 A 300 300 0 0 0 660,360"/>
+<mask id="m0"><rect width="720" height="720" fill="black"/>
+<circle cx="360" cy="450" r="92" fill="white"/><circle cx="360" cy="484" r="94" fill="black"/></mask><mask id="m1"><rect width="720" height="720" fill="black"/>
+<circle cx="360" cy="450" r="146" fill="white"/><circle cx="360" cy="488" r="148" fill="black"/></mask><mask id="m2"><rect width="720" height="720" fill="black"/>
+<circle cx="360" cy="450" r="202" fill="white"/><circle cx="360" cy="492" r="204" fill="black"/></mask>
+</defs>
+<rect width="720" height="720" fill="#3a3d31"/>
+<g filter="url(#tex)">
+<circle cx="360" cy="360" r="340" fill="#111832"/>
+<circle cx="360" cy="360" r="338" fill="none" stroke="#b5a285" stroke-width="9"/>
+<circle cx="360" cy="360" r="322" fill="none" stroke="#10141f" stroke-width="5"/>
+<rect width="720" height="720" fill="url(#thread)" mask="url(#m0)"/><rect width="720" height="720" fill="url(#thread)" mask="url(#m1)"/><rect width="720" height="720" fill="url(#thread)" mask="url(#m2)"/>
+<circle cx="360" cy="456" r="50" fill="url(#thread)"/>
+<text font-family="DejaVu Sans, Arial, sans-serif" font-size="62" font-weight="600" letter-spacing="9" fill="#c2b093"><textPath href="#top" startOffset="50%" text-anchor="middle">PROJECT</textPath></text>
+<text font-family="DejaVu Sans, Arial, sans-serif" font-size="62" font-weight="600" letter-spacing="9" fill="#c2b093"><textPath href="#bot" startOffset="50%" text-anchor="middle" dy="-14">VALKYRIE</textPath></text>
+</g></svg>
