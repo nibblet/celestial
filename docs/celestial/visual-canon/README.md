@@ -11,6 +11,7 @@ This folder is the reference for anything we render: character portraits, ship s
 - `project-valkyrie-patch.png` (SVG source alongside): the canonical mission patch, with three crescent arcs over a circle per CH01's "Three curves. A circle." Attach it to every shot that shows the uniform. `project-valkyrie-patch-v1-two-arcs.png` is the original ChatGPT crop, kept for its embroidery texture.
 - `aven-voss-portrait.png`: Aven's approved identity portrait.
 - `thane-meric-portrait.png`: Thane's approved identity portrait.
+- `lena-osei-portrait.png`: Lena's approved identity portrait.
 - `galen-voss-portrait.png`: Galen's approved identity portrait, which also shows the full uniform. `galen-voss-portrait-v1-chatgpt.png` is the superseded first version.
 
 | File | What it is |
@@ -78,7 +79,7 @@ Each character's `master.json` has a `_provenance` block that separates canon fi
 | Galen Voss ✅ approved | early-to-mid 50s (**chronologically early 80s, rejuvenated**) | from the reference portrait: tall, lean pilot build; sun-weathered ruddy skin; **drawn face, tight jaw**, square jaw and deep forehead lines; blue-gray eyes (**"clear but hollow"**); brown military cut graying at the temples; clean-shaven |
 | Aven Voss ✅ approved | ~50 (**rejuvenated**) | from `public/visual-references/aven-voss-portrait.png`: medium, athletic build; fair, heavily freckled skin; green-hazel eyes; **red-blonde (copper) hair tied back** in a loose low knot with loose strands; **silver constellation medallion**, shown at the open collar; coverall with a sage-green medical tab |
 | Thane Meric ✅ approved | **early 30s** | from `public/visual-references/thane-meric-portrait.png`: lean; wavy, tousled copper auburn-brown hair; Galen's gray-blue eyes; freckles from Aven; light stubble; open, curious expression; civilian field jacket over a charcoal henley, MERIC name tape, slate-blue science tab. Generated with both grandparents attached as resemblance references |
-| Lena Osei (direction chosen, portrait pending) | mid-40s | sleek & angular: mixed Ghanaian–Ethiopian heritage; tall and slender; warm brown skin; long narrow face with sharp cheekbones; dark almond eyes with heavy lashes; long black hair in one sleek low braid; thin gold hoop; **arms folded**; mission coverall with a slate-blue science tab. The old short-curly-auburn image is rejected |
+| Lena Osei ✅ approved | mid-40s | from `public/visual-references/lena-osei-portrait.png`: mixed Ghanaian–Ethiopian heritage; tall and slender; warm brown skin, no makeup, tired eyes; long narrow angular face; dark almond eyes; long black hair in one low braid; thin gold hoop; GIZA wristband; tired, assessing skepticism (not a glare); mission coverall with a slate-blue science tab |
 | Jax Reyes | late 30s | wiry; light olive-tan skin; messy black hair, short sides; uneven stubble; burn marks and grime on his fingers |
 | Marco Ruiz | ~60, not rejuvenated (**"too old to pretend"**) | thickset, broad; medium brown skin; heavy brow; gray buzz cut; old chin scar |
 | Evelyn Tran | late 20s (**young**) | petite; black hair in a messy bun with a stylus through it; **glasses** (thin rectangular frames); **chin tilted, slate in "attack posture"** |

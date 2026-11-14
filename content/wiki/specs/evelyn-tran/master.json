@@ -12,12 +12,12 @@
   },
   "identity": {
     "height_build": "petite_slight_build",
-    "skin": "light_warm_skin",
+    "skin": "light_warm_skin_unmade_faint_shadows_under_the_eyes_from_late_nights_at_the_array",
     "face": "heart_shaped_face_sharp_focused_brow",
     "eyes": "dark_brown_eyes_behind_thin_rectangular_glasses",
     "hair": "straight_black_hair_twisted_into_a_messy_bun_with_a_stylus_pushed_through_it",
     "facial_hair": "none",
-    "distinguishing": "thin_metal_framed_rectangular_glasses_she_takes_off_to_rub_her_eyes"
+    "distinguishing": "thin_metal_framed_rectangular_glasses_always_worn_and_a_name_tape_reading_TRAN_on_the_right_chest_of_her_field_jacket"
   },
   "shipboard_uniform": {
     "tier": "civilian_field_jacket",
@@ -57,10 +57,17 @@
     ],
     "proposed_needs_author_approval": [
       "build, skin, face, eye color, hair and stylus bun, glasses frame style, age late 20s"
-    ]
+    ],
+    "note_2026-11-14": "Old approved Supabase image omitted her canon glasses (CH16); not used as a reference."
   },
   "avoid": [
     "generic_stock_photo_face",
-    "celebrity_likeness"
-  ]
+    "celebrity_likeness",
+    "missing_glasses",
+    "round_or_oversized_glasses",
+    "looking_over_32",
+    "glamour_makeup",
+    "missing_name_tape"
+  ],
+  "default_expression": "quick_intent_focus_chin_slightly_tilted_the_faint_impatient_half_smile_of_someone_who_already_knows_the_answer_not_cold"
 }
