@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 
 import {
   collectReferenceImages,
+  mergeShotReferences,
   renderReferenceImagesForPrompt,
 } from "./references";
 
@@ -101,4 +102,26 @@ test("inherit:false references apply to their own entity only", () => {
     { name: "master", data: { reference_images: [patch] } },
   ]);
   assert.deepEqual(child.map((r) => r.path), [patch.path]);
+});
+
+test("shot references: cast faces first, then place, then wardrobe; no resemblance; deduped", () => {
+  const ref = (path: string, role: string, label = path) =>
+    ({ path, role, label }) as Parameters<typeof mergeShotReferences>[0][number];
+  const place = [ref("/p/hull.png", "style")];
+  const galen = [ref("/p/galen.png", "identity"), ref("/p/patch.png", "insignia"), ref("/p/suit.png", "wardrobe")];
+  const thane = [
+    ref("/p/thane.png", "identity"),
+    ref("/p/galen.png", "resemblance"),
+    ref("/p/patch.png", "insignia"),
+    ref("/p/suit.png", "wardrobe"),
+  ];
+  const out = mergeShotReferences(place, [galen, thane]);
+  assert.deepEqual(out.map((r) => r.path), [
+    "/p/galen.png",
+    "/p/thane.png",
+    "/p/hull.png",
+    "/p/patch.png",
+    "/p/suit.png",
+  ]);
+  assert.equal(out.find((r) => r.path === "/p/galen.png")!.role, "identity");
 });

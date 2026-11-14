@@ -1,6 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { composeEntitySpec } from "@/lib/visuals/specs/loader";
+import { parseCast } from "@/lib/visuals/specs/cast";
+import { mergeShotReferences } from "@/lib/visuals/specs/references";
 
 export const dynamic = "force-dynamic";
 
@@ -23,7 +25,7 @@ async function requireKeith() {
 }
 
 /**
- * GET /api/visuals/references?targetId=galen-voss&view=&state=
+ * GET /api/visuals/references?targetId=galen-voss&view=&state=&cast=
  *
  * Returns spec-declared reference images for an entity so the admin console
  * can preview them before synthesizing a prompt.
@@ -43,10 +45,25 @@ export async function GET(request: Request) {
     return Response.json({ error: "targetId required" }, { status: 400 });
   }
 
+  let cast;
+  try {
+    cast = parseCast(url.searchParams.get("cast") ?? "");
+  } catch (err) {
+    return Response.json(
+      { error: err instanceof Error ? err.message : "Invalid cast" },
+      { status: 400 },
+    );
+  }
+
   const spec = composeEntitySpec({ entitySlug: targetId, view, state });
+  const castRefs = cast.map(
+    (m) => composeEntitySpec({ entitySlug: m.id, view: "__cast__", state: m.state })?.referenceImages ?? [],
+  );
   return Response.json({
     targetId,
-    referenceImages: spec?.referenceImages ?? [],
+    referenceImages: cast.length
+      ? mergeShotReferences(spec?.referenceImages ?? [], castRefs)
+      : (spec?.referenceImages ?? []),
     hasSpec: !!spec,
   });
 }

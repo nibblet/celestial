@@ -139,3 +139,35 @@ export function renderReferenceImagesForPrompt(refs: ReferenceImage[]): string {
   });
   return lines.join("\n");
 }
+
+/** OpenAI's image edits endpoint accepts at most 16 input images. */
+export const MAX_SHOT_REFERENCES = 16;
+
+/**
+ * Merge references for a shot that places cast members into a target.
+ * Order: each cast member's identity portrait first (so faces win), then
+ * the target's own references, then cast wardrobe/insignia/props.
+ * Resemblance references are dropped: in a multi-person shot a relative's
+ * portrait is more likely to be mistaken for another cast member.
+ * De-duplicated by path (first occurrence wins) and capped at 16.
+ */
+export function mergeShotReferences(
+  targetRefs: ReferenceImage[],
+  castRefs: ReferenceImage[][],
+): ReferenceImage[] {
+  const ordered: ReferenceImage[] = [
+    ...castRefs.flatMap((refs) => refs.filter((r) => r.role === "identity")),
+    ...targetRefs,
+    ...castRefs.flatMap((refs) =>
+      refs.filter((r) => r.role !== "identity" && r.role !== "resemblance"),
+    ),
+  ];
+  const seen = new Set<string>();
+  const out: ReferenceImage[] = [];
+  for (const r of ordered) {
+    if (seen.has(r.path)) continue;
+    seen.add(r.path);
+    out.push(r);
+  }
+  return out.slice(0, MAX_SHOT_REFERENCES);
+}
