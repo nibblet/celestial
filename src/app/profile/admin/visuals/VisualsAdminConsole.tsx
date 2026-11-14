@@ -62,6 +62,10 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
   const [imageProvider, setImageProvider] =
     useState<(typeof IMAGE_PROVIDERS)[number]["key"]>("openai");
   const [attachRefs, setAttachRefs] = useState(true);
+  const [startFrame, setStartFrame] = useState("");
+  const [videoModel, setVideoModel] = useState<"gen4.5" | "gen4_turbo">("gen4.5");
+  const [videoDuration, setVideoDuration] = useState(5);
+  const [motionText, setMotionText] = useState("");
   const [refFile, setRefFile] = useState<File | null>(null);
   const [refUploading, setRefUploading] = useState(false);
   const [refResult, setRefResult] = useState<{
@@ -185,16 +189,30 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
     }
   }
 
+  // Start-frame choices: the still just generated (if any), then the
+  // spec's identity/resemblance portraits (approved looks).
+  const startFrameOptions: Array<{ value: string; label: string }> = [
+    ...(assetResult?.kind === "image"
+      ? [{ value: assetResult.url, label: "The still generated above" }]
+      : []),
+    ...(promptResult?.referenceImages ?? [])
+      .filter((r) => r.role === "identity" || r.role === "resemblance")
+      .map((r) => ({ value: r.path, label: r.label })),
+  ];
+  const effectiveStartFrame = startFrame || startFrameOptions[0]?.value || "";
+
   async function handleAnimate() {
-    if (!promptResult || !assetResult) return;
+    if (!promptResult || !effectiveStartFrame) return;
     setAnimating(true);
     setError(null);
     setVideoResult(null);
     try {
       const params: Record<string, unknown> = {
-        promptImageUrl: assetResult.url,
-        duration: 5,
+        promptImageUrl: effectiveStartFrame,
+        model: videoModel,
+        duration: videoDuration,
       };
+      if (motionText.trim()) params.motionText = motionText.trim();
       const seedNum = seed.trim() ? Number.parseInt(seed.trim(), 10) : NaN;
       if (Number.isFinite(seedNum)) params.seed = seedNum;
       const res = await fetch("/api/visuals/generate", {
@@ -546,18 +564,98 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
             </span>
           </div>
           <p className="mt-2 break-all text-xs text-ink-muted">{assetResult.url}</p>
-          <div className="mt-4 border-t border-[var(--color-border)] pt-4">
-            <button
-              onClick={handleAnimate}
-              disabled={animating}
-              className="rounded-md bg-ocean px-4 py-2 text-sm font-semibold text-warm-white disabled:opacity-50"
-            >
-              {animating ? "Animating (~60s)…" : "Animate with Runway Gen-4"}
-            </button>
-            <span className="ml-3 text-xs text-ink-muted">
-              Uses this still as the seed frame. For richer motion direction, re-synthesize with intent=motion_loop first.
-            </span>
-          </div>
+        </section>
+      )}
+
+      {promptResult && (
+        <section className="rounded-xl border border-[var(--color-border)] bg-warm-white p-5">
+          <h2 className="type-meta text-ink">4. Animate with Runway</h2>
+          <p className="mt-1 text-xs text-ink-muted">
+            Image-to-video from a start frame. Identity comes from the frame; the motion text below
+            (or the prompt&apos;s motion fields, if you synthesized with intent=motion_loop) drives
+            the movement.
+          </p>
+          {startFrameOptions.length === 0 ? (
+            <p className="mt-3 text-xs text-ink-ghost">
+              No start frame yet: generate a still above, or add an identity portrait to the spec.
+            </p>
+          ) : (
+            <div className="mt-3 grid gap-3 sm:grid-cols-[auto,1fr]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={effectiveStartFrame}
+                alt="Start frame"
+                className="h-40 w-32 rounded-md border border-[var(--color-border)] object-cover"
+              />
+              <div className="flex flex-col gap-2">
+                <label className="text-xs text-ink-muted">
+                  Start frame
+                  <select
+                    value={effectiveStartFrame}
+                    onChange={(e) => setStartFrame(e.target.value)}
+                    className="mt-1 block w-full rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1.5 text-sm text-ink"
+                  >
+                    {startFrameOptions.map((o) => (
+                      <option key={o.value} value={o.value}>
+                        {o.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <div className="flex flex-wrap gap-3">
+                  <label className="text-xs text-ink-muted">
+                    Model
+                    <select
+                      value={videoModel}
+                      onChange={(e) => {
+                        const m = e.target.value as "gen4.5" | "gen4_turbo";
+                        setVideoModel(m);
+                        if (m === "gen4_turbo" && videoDuration !== 10) setVideoDuration(5);
+                      }}
+                      className="mt-1 block rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1.5 text-sm text-ink"
+                    >
+                      <option value="gen4.5">Gen-4.5 (best, ~$0.12/s)</option>
+                      <option value="gen4_turbo">Gen-4 Turbo (fast, ~$0.05/s)</option>
+                    </select>
+                  </label>
+                  <label className="text-xs text-ink-muted">
+                    Seconds
+                    <select
+                      value={videoDuration}
+                      onChange={(e) => setVideoDuration(Number(e.target.value))}
+                      className="mt-1 block rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1.5 text-sm text-ink"
+                    >
+                      {(videoModel === "gen4_turbo" ? [5, 10] : [3, 5, 8, 10]).map((d) => (
+                        <option key={d} value={d}>
+                          {d}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+                <label className="text-xs text-ink-muted">
+                  Motion direction (optional, max ~1000 chars)
+                  <textarea
+                    value={motionText}
+                    onChange={(e) => setMotionText(e.target.value)}
+                    rows={3}
+                    maxLength={990}
+                    placeholder="e.g. Slow push-in. He breathes, eyes shifting slightly toward the stars off-frame; faint violet light drifts across the wall behind him. No cuts, no speech."
+                    className="mt-1 block w-full rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1.5 text-sm text-ink"
+                  />
+                </label>
+              </div>
+            </div>
+          )}
+          <button
+            onClick={handleAnimate}
+            disabled={animating || !effectiveStartFrame}
+            className="mt-4 rounded-md bg-ocean px-4 py-2 text-sm font-semibold text-warm-white disabled:opacity-50"
+          >
+            {animating
+              ? "Animating (~1–3 min)…"
+              : `Animate with ${videoModel === "gen4.5" ? "Gen-4.5" : "Gen-4 Turbo"}`}
+          </button>
         </section>
       )}
 

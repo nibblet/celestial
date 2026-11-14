@@ -1,27 +1,42 @@
 import "server-only";
 
+import * as fs from "fs/promises";
+import * as path from "path";
+
 import type { VisualPrompt, VisualAspect } from "../types";
 import type { GeneratedAsset, VisualProvider } from "./types";
+import { contentTypeForFile, resolveReferencePath } from "./openai-helpers";
+import {
+  RUNWAY_DEFAULT_VIDEO_MODEL,
+  clampRunwayPrompt,
+  runwayDurationFor,
+  toDataUri,
+} from "./runway-helpers";
 
 /**
- * Runway Gen-4 Turbo provider — image-to-video.
+ * Runway image-to-video provider (Gen-4.5 by default; Gen-4 Turbo optional).
  *
  * Runway is asynchronous: POST creates a task, then we poll until status
  * is SUCCEEDED. The provider blocks until the task completes (typical
  * 30-90s for a 5-10s clip) so the existing sync generate() interface holds.
  *
  * Required `params`:
- *   promptImageUrl  — public URL of the seed image. We pass the URL of the
- *                     approved still for the same entity, so the rendered
- *                     identity stays locked into the video.
+ *   promptImageUrl  — the start frame: a Supabase public URL (a generated
+ *                     still) or a /visual-references/... path (an approved
+ *                     portrait, sent inline as a data URI because Runway
+ *                     can't reach localhost). Identity carries from it.
  *
  * Optional:
- *   model           — defaults to 'gen4_turbo'
- *   duration        — 5 or 10 seconds (Runway constraint)
+ *   model           — defaults to RUNWAY_VIDEO_MODEL or 'gen4.5'
+ *   duration        — gen4.5: 2–10s; gen4_turbo: 5 or 10s (snapped)
+ *   motionText      — optional operator motion direction, overrides the
+ *                     synthesized motion fields
  *   ratio           — pixel ratio: '1280:720' | '720:1280' | '1104:832' | ...
  *   seed            — integer for reproducibility
  */
-const DEFAULT_MODEL = "gen4_turbo";
+function defaultModel(): string {
+  return process.env.RUNWAY_VIDEO_MODEL?.trim() || RUNWAY_DEFAULT_VIDEO_MODEL;
+}
 const RUNWAY_VERSION = "2024-11-06";
 const BASE_URL = "https://api.dev.runwayml.com/v1";
 const POLL_INTERVAL_MS = 4000;
@@ -47,12 +62,21 @@ function aspectToRunwayRatio(aspect: VisualAspect): string {
 export const runwayProvider: VisualProvider = {
   name: "runway",
   kind: "video",
-  defaultModel: DEFAULT_MODEL,
+  get defaultModel() {
+    return defaultModel();
+  },
 
   normalizeParams(params) {
+    const model = (params.model as string | undefined) ?? defaultModel();
     return {
-      model: params.model ?? DEFAULT_MODEL,
-      duration: params.duration ?? 5,
+      model,
+      duration: runwayDurationFor(model, Number(params.duration ?? 5)),
+      // Optional operator-written motion direction; overrides the motion
+      // text derived from the synthesized prompt. Part of the cache key.
+      motionText:
+        typeof params.motionText === "string" && params.motionText.trim()
+          ? params.motionText.trim()
+          : null,
       ratio: params.ratio ?? null,
       seed: params.seed ?? null,
       // promptImageUrl is part of the cache key — same prompt + same seed
@@ -75,13 +99,16 @@ export const runwayProvider: VisualProvider = {
       );
     }
 
-    const model = (params.model as string) ?? DEFAULT_MODEL;
-    const duration = (params.duration as number) ?? 5;
+    const model = (params.model as string) || defaultModel();
+    const duration = runwayDurationFor(model, Number(params.duration ?? 5));
     const ratio = (params.ratio as string) ?? aspectToRunwayRatio(prompt.aspect);
 
     const body: Record<string, unknown> = {
-      promptImage: promptImageUrl,
-      promptText: buildMotionPrompt(prompt),
+      promptImage: await resolvePromptImage(promptImageUrl),
+      promptText:
+        typeof params.motionText === "string" && params.motionText.trim()
+          ? clampRunwayPrompt(params.motionText)
+          : buildMotionPrompt(prompt),
       model,
       ratio,
       duration,
@@ -161,6 +188,23 @@ function buildMotionPrompt(prompt: VisualPrompt): string {
   const truncated = text.slice(0, RUNWAY_MAX);
   const lastStop = Math.max(truncated.lastIndexOf(". "), truncated.lastIndexOf("; "));
   return lastStop > 200 ? truncated.slice(0, lastStop + 1) : truncated;
+}
+
+/**
+ * Runway fetches promptImage itself, so it must be a public HTTPS URL or a
+ * data URI. Approved reference portraits live in /public/visual-references
+ * and are served from the operator's localhost, which Runway can't reach —
+ * send those inline as a data URI. Supabase public URLs pass through.
+ */
+async function resolvePromptImage(ref: string): Promise<string> {
+  if (ref.startsWith("data:")) return ref;
+  const resolved = resolveReferencePath(ref, {
+    publicDir: path.join(process.cwd(), "public"),
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
+  });
+  if (resolved.kind === "remote") return resolved.url;
+  const bytes = await fs.readFile(resolved.filePath);
+  return toDataUri(bytes, contentTypeForFile(resolved.fileName));
 }
 
 async function pollUntilReady(taskId: string, apiKey: string): Promise<string> {
