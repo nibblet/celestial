@@ -61,7 +61,8 @@
       "eyebrow scar dropped (not in reference)",
       "apparent age ~50 -> early-to-mid 50s"
     ],
-    "test_renders_2026-11-14": "Two external renders from the app's prompt both held the face. Preferred apparent age is the square-patch render (early-to-mid 50s); the round-patch render read closer to 60."
+    "test_renders_2026-11-14": "Two external renders from the app's prompt both held the face. Preferred apparent age is the square-patch render (early-to-mid 50s); the round-patch render read closer to 60.",
+    "approved_portrait": "docs/celestial/visual-canon/references/galen-voss-portrait-chatgpt.png (ChatGPT, author-approved 2026-11-14). Use as the identity reference image for every Galen still and video."
   },
   "avoid": [
     "generic_stock_photo_face",

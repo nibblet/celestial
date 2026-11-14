@@ -11,18 +11,19 @@
     "civilian_advisor": "bone_white"
   },
   "uniform_system": {
-    "fabric": "matte_ripstop_in_muted_olive_slate_worn_soft_at_elbows_and_knees",
-    "mission_patch": "round_embroidered_patch_on_the_wearer's_LEFT_chest_dark_navy_field_three_nested_curved_arcs_sweeping_outward_like_wings_around_one_small_solid_circle_words_PROJECT_VALKYRIE_around_the_rim",
-    "name_tape": "rectangular_dark_navy_name_tape_on_the_wearer's_RIGHT_chest_surname_only_in_pale_thread",
-    "shoulder": "small_us_flag_on_the_left_shoulder_and_a_blank_sponsor_tab_beneath_it",
-    "role_tab": "plain_solid_colored_rectangular_tab_on_the_wearer's_right_shoulder_no_symbols_no_chevrons",
+    "fabric": "weathered_dark_olive_charcoal_ripstop_dusty_and_field_worn_soft_at_seams_elbows_and_knees",
+    "mission_patch": "round_embroidered_patch_on_the_wearer's_LEFT_chest_dark_navy_field_with_a_thin_tan_border_two_stacked_tan_crescent_arcs_rising_like_wings_over_one_solid_tan_circle_PROJECT_arched_across_the_top_and_VALKYRIE_arched_across_the_bottom_in_tan_thread",
+    "name_tape": "faded_olive_gray_rectangular_name_tape_on_the_wearer's_RIGHT_chest_surname_only_in_pale_stitched_capitals",
+    "shoulder": "small_us_flag_on_the_RIGHT_upper_sleeve_with_a_blank_sponsor_tab_beneath_it",
+    "role_tab": "plain_solid_colored_rectangular_tab_on_the_wearer's_left_shoulder_strap_no_symbols_no_chevrons",
     "footwear": "soft_soled_deck_boots",
-    "wrist": "wrist_slate_on_the_left_forearm"
+    "wrist": "wrist_slate_on_the_left_forearm",
+    "undershirt": "plain_dark_charcoal_crew_neck_tee_visible_at_the_open_collar"
   },
   "palette": [
-    "muted_olive_slate",
+    "weathered_olive_charcoal",
     "dark_navy",
-    "pale_thread"
+    "tan_thread"
   ],
   "avoid": [
     "usaf_or_any_service_branch_patches",
@@ -35,5 +36,9 @@
     "patch_and_name_tape_on_swapped_sides",
     "two_curve_or_wave_logo_variants"
   ],
-  "_patch_note": "Patch drifts between generators (2026-11-14 test: square two-curve patch vs round wave patch). Canon basis: 'Three curves. A circle. Something like wings.' (CH01). For video consistency, supply a single patch artwork as a reference image."
+  "_patch_note": "Canonical patch chosen by the author 2026-11-14 from a ChatGPT render: docs/celestial/visual-canon/references/project-valkyrie-patch.png. Attach that image as a reference in every generation that shows the uniform. Book canon reads 'Three curves. A circle.' (CH01); this design shows two arcs. Author to confirm or ask for a three-arc revision.",
+  "_references": [
+    "docs/celestial/visual-canon/references/project-valkyrie-patch.png",
+    "docs/celestial/visual-canon/references/galen-voss-portrait-chatgpt.png"
+  ]
 }
