@@ -22,6 +22,7 @@ This folder is the reference for anything we render: character portraits, ship s
 - `amar-cael-portrait.png`: Amar's approved identity portrait.
 - `valkyrie-1/hero-photographic.png`: the approved **photographic** hero of the ship, the primary look. Hard raking sun, most of the hull in shadow, faint violet light inside the skin. The concept-art renders below are for shape only.
 - `valkyrie-1/`: the ship. `three-quarter.png` and `orthogonal.png` (hull shape) are attached to every shot of `valkyrie-1`. `state-*.png` (dormant, wake, active, alignment, harmonic-jump, cropped from the `public/images` state renders, caption removed) are attached when that state is chosen. These use `"inherit": false`, so interior specs that inherit from `valkyrie-1` don't receive hull images. The south trench spec attaches the dormant and orthogonal renders so the buried hull matches.
+- `zone-theta-wall.png`: the approved Zone Theta vault wall (material and glyph network), attached to `zone-theta`. Glyphs stay faint until the wall awakens.
 - `command-dome.png`: the Command Dome interior render, attached to `command-dome`.
 - `sovereign-ethics-bureau-seal.png` (SVG alongside): the Bureau seal, an octagon with a level balance beam over an inverted triangle, silver on graphite. Used on Rhea's collar and as the watermark behind her transmissions.
 - `galen-voss-portrait.png`: Galen's approved identity portrait, which also shows the full uniform. `galen-voss-portrait-v1-chatgpt.png` is the superseded first version.
