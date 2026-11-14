@@ -62,14 +62,14 @@
       "apparent age ~50 -> early-to-mid 50s"
     ],
     "test_renders_2026-11-14": "Two external renders from the app's prompt both held the face. Preferred apparent age is the square-patch render (early-to-mid 50s); the round-patch render read closer to 60.",
-    "approved_portrait": "public/visual-references/galen-voss-portrait-chatgpt.png (ChatGPT, author-approved 2026-11-14). Use as the identity reference image for every Galen still and video. Its patch shows the superseded two-arc v1; use the three-arc patch reference for the insignia."
+    "approved_portrait": "public/visual-references/galen-voss-portrait.png: generated in the app with OpenAI GPT Image using the spec references, author-approved 2026-11-14. Face, uniform, three-arc patch and tab/flag placement all correct. Earlier ChatGPT portrait kept as galen-voss-portrait-v1-chatgpt.png (two-arc patch, superseded)."
   },
   "reference_images": [
     {
-      "path": "/visual-references/galen-voss-portrait-chatgpt.png",
+      "path": "/visual-references/galen-voss-portrait.png",
       "role": "identity",
       "label": "Galen Voss approved portrait",
-      "instruction": "match his face, hair, eyes and age exactly; ignore the two-arc patch in this image and use the patch reference instead"
+      "instruction": "match his face, hair, eyes, age and uniform exactly"
     }
   ],
   "avoid": [
