@@ -2,7 +2,7 @@
   "entity": "aven-voss",
   "parent_entity": "valkyrie-crew",
   "world": "earth_2050",
-  "_canon_status": "draft_pending_author_review",
+  "_canon_status": "look_approved_by_author_2026-11-14",
   "display_name": "Aven Voss",
   "role": "Strategic and Medical Officer; Galen's wife; Thane's grandmother",
   "age": {
@@ -12,12 +12,12 @@
   },
   "identity": {
     "height_build": "medium_height_athletic_and_compact",
-    "skin": "fair_skin_with_light_freckles_across_nose_and_cheekbones",
-    "face": "oval_face_soft_jaw_fine_laugh_lines_steady_mouth",
-    "eyes": "green_hazel_eyes_often_narrowed_against_wind_or_in_assessment",
-    "hair": "red_blonde_hair_shoulder_length_tied_back_in_a_low_knot",
+    "skin": "fair_skin_densely_freckled_across_nose_cheeks_and_forehead_fine_lines_at_the_eyes",
+    "face": "oval_face_defined_cheekbones_soft_jaw_composed_closed_mouth_with_a_hint_of_warmth",
+    "eyes": "green_hazel_eyes_watchful_and_assessing",
+    "hair": "copper_red_blonde_hair_shoulder_length_loosely_tied_back_in_a_low_knot_with_loose_strands_framing_the_face",
     "facial_hair": "none",
-    "distinguishing": "silver_medallion_etched_with_faint_constellations_worn_on_a_fine_chain_tucked_beneath_her_suit_collar"
+    "distinguishing": "silver_medallion_etched_with_constellations_on_a_fine_chain_at_the_open_collar"
   },
   "shipboard_uniform": {
     "tier": "mission_coverall",
@@ -53,17 +53,21 @@
       "rejuvenated (CH02, CH05)",
       "posture and expressions (CH01-CH14)"
     ],
-    "proposed_needs_author_approval": [
-      "height_build",
-      "freckled fair skin",
-      "eye color",
-      "face shape",
-      "hair length (shoulder)",
-      "apparent age 50"
-    ]
+    "approved_portrait": "public/visual-references/aven-voss-portrait.png: OpenAI GPT Image via the app with spec references, author-approved 2026-11-14. Nano Banana comparison rejected (no reference support yet: wrong patch design and placement).",
+    "note": "CH05 says the medallion is worn 'tucked beneath her suit collar'; the approved portrait shows it at the open collar. Kept visible as an identity marker; tuck it in for scenes where that matters."
   },
+  "reference_images": [
+    {
+      "path": "/visual-references/aven-voss-portrait.png",
+      "role": "identity",
+      "label": "Aven Voss approved portrait",
+      "instruction": "match her face, freckles, hair, eyes, age, medallion and uniform exactly"
+    }
+  ],
   "avoid": [
     "generic_stock_photo_face",
-    "celebrity_likeness"
+    "celebrity_likeness",
+    "looking_under_40",
+    "bright_orange_dyed_hair"
   ]
 }
