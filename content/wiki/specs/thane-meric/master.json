@@ -7,17 +7,17 @@
   "role": "Legacy Interface Specialist; the 'living key'; Galen and Aven's grandson",
   "age": {
     "chronological": "early_30s",
-    "apparent": "early_30s",
+    "apparent": "early_30s_youthful_and_unweathered",
     "tell": "more curious than cautious, open and centered"
   },
   "identity": {
     "height_build": "slightly_above_average_height_lean_and_wiry",
     "skin": "fair_skin_with_a_light_scatter_of_freckles_that_flushes_easily_under_strain",
-    "face": "narrow_face_with_his_grandfather's_jaw_softened_by_his_grandmother's_features",
+    "face": "narrow_open_face_softer_and_younger_than_galen's_smooth_brow_no_deep_lines",
     "eyes": "gray_blue_eyes_like_galen's_wide_and_attentive",
     "hair": "dark_auburn_brown_hair_slightly_overgrown_wavy_falling_across_the_forehead_moves_easily_in_air",
-    "facial_hair": "light_two_day_stubble",
-    "distinguishing": "family_resemblance_to_galen_and_aven_must_read_on_screen"
+    "facial_hair": "light_two_day_stubble_only",
+    "distinguishing": "name_tape_reading_MERIC_on_the_right_chest_of_his_field_jacket"
   },
   "shipboard_uniform": {
     "tier": "civilian_field_jacket",
@@ -62,7 +62,8 @@
       "stubble",
       "visible family resemblance"
     ],
-    "family_references": "Galen and Aven's approved portraits attached as [resemblance] references (2026-11-14) so the grandson reads as family without copying either face."
+    "family_references": "Galen and Aven's approved portraits attached as [resemblance] references (2026-11-14) so the grandson reads as family without copying either face.",
+    "test_render_2026-11-14": "First OpenAI render: resemblance, wardrobe and patch correct, but read late 30s, brooding, heavier stubble, and no name tape. Spec tightened on age, expression, stubble and name tape."
   },
   "reference_images": [
     {
@@ -83,6 +84,11 @@
     "celebrity_likeness",
     "looking_under_25",
     "identical_to_galen",
-    "beard"
-  ]
+    "beard",
+    "brooding_or_hard_stare",
+    "looking_over_35",
+    "heavy_stubble",
+    "missing_name_tape"
+  ],
+  "default_expression": "open_curious_attentive_lips_slightly_parted_as_if_about_to_ask_something_never_a_hard_stare"
 }
