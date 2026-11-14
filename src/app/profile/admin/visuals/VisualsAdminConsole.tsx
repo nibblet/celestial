@@ -36,6 +36,10 @@ type AssetResponse = {
 const TARGET_KINDS = ["entity", "story", "scene", "freeform"] as const;
 const ASPECTS = ["16:9", "9:16", "1:1", "4:5", "3:2"] as const;
 const INTENTS = ["portrait", "establishing_shot", "scene_moment", "motion_loop"] as const;
+const IMAGE_PROVIDERS = [
+  { key: "openai", label: "OpenAI GPT Image (attaches references)" },
+  { key: "imagen", label: "Google Imagen 4 (text only)" },
+] as const;
 
 export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
   const [targetKind, setTargetKind] = useState<(typeof TARGET_KINDS)[number]>("entity");
@@ -55,6 +59,9 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
   const [animating, setAnimating] = useState(false);
   const [videoResult, setVideoResult] = useState<AssetResponse | null>(null);
   const [copied, setCopied] = useState(false);
+  const [imageProvider, setImageProvider] =
+    useState<(typeof IMAGE_PROVIDERS)[number]["key"]>("openai");
+  const [attachRefs, setAttachRefs] = useState(true);
   const [refFile, setRefFile] = useState<File | null>(null);
   const [refUploading, setRefUploading] = useState(false);
   const [refResult, setRefResult] = useState<{
@@ -121,14 +128,21 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
     setError(null);
     try {
       const params: Record<string, unknown> = {};
-      const seedNum = seed.trim() ? Number.parseInt(seed.trim(), 10) : NaN;
-      if (Number.isFinite(seedNum)) params.seed = seedNum;
+      if (imageProvider === "imagen") {
+        // Imagen takes a seed; OpenAI has no seed parameter.
+        const seedNum = seed.trim() ? Number.parseInt(seed.trim(), 10) : NaN;
+        if (Number.isFinite(seedNum)) params.seed = seedNum;
+      }
+      const refs = promptResult.referenceImages ?? [];
+      if (imageProvider === "openai" && attachRefs && refs.length > 0) {
+        params.referenceImages = refs.map((r) => r.path);
+      }
       const res = await fetch("/api/visuals/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           promptId: promptResult.promptId,
-          provider: "imagen",
+          provider: imageProvider,
           ...(Object.keys(params).length > 0 ? { params } : {}),
         }),
       });
@@ -444,13 +458,44 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
               {JSON.stringify({ prompt: promptResult.prompt, evidence: promptResult.evidence }, null, 2)}
             </pre>
           </details>
-          <button
-            onClick={handleGenerate}
-            disabled={busy}
-            className="mt-4 rounded-md bg-ocean px-4 py-2 text-sm font-semibold text-warm-white disabled:opacity-50"
-          >
-            {busy ? "Working…" : "Generate with Imagen 4"}
-          </button>
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <select
+              value={imageProvider}
+              onChange={(e) =>
+                setImageProvider(e.target.value as (typeof IMAGE_PROVIDERS)[number]["key"])
+              }
+              className="rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-2 text-sm text-ink"
+              aria-label="Image generator"
+            >
+              {IMAGE_PROVIDERS.map((p) => (
+                <option key={p.key} value={p.key}>
+                  {p.label}
+                </option>
+              ))}
+            </select>
+            {imageProvider === "openai" && (promptResult.referenceImages?.length ?? 0) > 0 && (
+              <label className="flex items-center gap-1.5 text-xs text-ink-muted">
+                <input
+                  type="checkbox"
+                  checked={attachRefs}
+                  onChange={(e) => setAttachRefs(e.target.checked)}
+                />
+                Attach {promptResult.referenceImages!.length} reference image
+                {promptResult.referenceImages!.length === 1 ? "" : "s"}
+              </label>
+            )}
+            <button
+              onClick={handleGenerate}
+              disabled={busy}
+              className="rounded-md bg-ocean px-4 py-2 text-sm font-semibold text-warm-white disabled:opacity-50"
+            >
+              {busy
+                ? "Working…"
+                : imageProvider === "openai"
+                  ? "Generate with OpenAI"
+                  : "Generate with Imagen 4"}
+            </button>
+          </div>
         </section>
       )}
 
