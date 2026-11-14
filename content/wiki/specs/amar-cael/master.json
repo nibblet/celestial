@@ -2,7 +2,7 @@
   "entity": "amar-cael",
   "parent_entity": "valkyrie-crew",
   "world": "earth_2050",
-  "_canon_status": "draft_pending_author_review",
+  "_canon_status": "look_direction_chosen_by_author_2026-11-14_pending_portrait",
   "display_name": "Director Amar Cael",
   "role": "Corporate oversight director; Lena's former Giza project supervisor",
   "age": {
@@ -13,15 +13,15 @@
   "identity": {
     "height_build": "tall_and_spare",
     "skin": "medium_brown_skin",
-    "face": "refined_lean_face_faint_tension_at_the_corners_of_the_mouth",
+    "face": "lean_refined_clean_lined_face_sharp_cheekbones_faint_tension_at_the_corners_of_the_mouth_slightly_worn_at_the_edges",
     "eyes": "dark_eyes_that_flick_across_equipment_and_people",
-    "hair": "black_hair_going_silver_combed_back",
-    "facial_hair": "short_trimmed_silver_flecked_beard",
-    "distinguishing": "corporate_issue_suit_clean_lines_no_dust"
+    "hair": "black_hair_silver_at_the_temples_combed_straight_back_precisely",
+    "facial_hair": "clean_shaven_close_shave",
+    "distinguishing": "the_only_person_whose_clothes_look_expensive"
   },
   "wardrobe_overrides": {
-    "surface": "corporate_issue_surface_suit_clean_charcoal_with_minimal_branding",
-    "shipboard": "tailored_dark_jacket_over_a_high_collar"
+    "default": "tailored_charcoal_corporate_issue_suit_clean_lines_dark_open_collar_shirt_no_tie_no_logos",
+    "surface": "corporate_issue_surface_suit_in_clean_charcoal_and_graphite_precise_seams_almost_no_dust"
   },
   "signature_props": [
     "corporate_shuttle_ramp",
@@ -46,12 +46,20 @@
       "expressions (CH06, CH09)"
     ],
     "proposed_needs_author_approval": [
-      "build, skin, face, eyes, hair, beard, age, suit color"
+      "portrait not yet generated; author approved the clean-shaven corporate direction 2026-11-14 to separate him from Jonah and Marco"
     ]
   },
   "avoid": [
     "generic_stock_photo_face",
-    "celebrity_likeness"
+    "celebrity_likeness",
+    "beard_or_mustache",
+    "stubble",
+    "project_valkyrie_patch",
+    "olive_coverall",
+    "name_tape",
+    "visible_corporate_logo",
+    "resembling_jonah_revas_or_marco_ruiz"
   ],
-  "_uniform_note": "Not Project VALKYRIE crew: do not use the shipboard state; he keeps the corporate suit in wardrobe_overrides."
+  "_uniform_note": "Not Project VALKYRIE crew: do not use the shipboard state; he keeps the corporate suit in wardrobe_overrides.",
+  "default_expression": "a_small_smile_not_warm_but_real_eyes_measuring_the_room_controlled"
 }
