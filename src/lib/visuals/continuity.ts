@@ -23,11 +23,18 @@ export async function fetchIdentityContinuity(
 
   const { data: prompts } = await admin
     .from("cel_visual_prompts")
-    .select("id")
+    .select("id, prompt_json")
     .eq("target_kind", "entity")
     .eq("target_id", target.id);
 
-  const promptIds = (prompts ?? []).map((r) => r.id as string);
+  // Shots that placed characters into this target ("Characters in shot")
+  // must not define the target's identity: an approved Thane-in-the-trench
+  // still would otherwise make "a man with auburn hair" the South Trench's
+  // locked identity and put him into every later trench prompt. Cast
+  // members get their identity from their own specs and portraits.
+  const promptIds = (prompts ?? [])
+    .filter((r) => !hasCast(r.prompt_json))
+    .map((r) => r.id as string);
   if (promptIds.length === 0) return null;
 
   const { data: assets } = await admin
@@ -41,6 +48,12 @@ export async function fetchIdentityContinuity(
 
   const description = assets?.[0]?.vision_description as VisualVisionDescription | undefined;
   return description?.identity ?? null;
+}
+
+function hasCast(promptJson: unknown): boolean {
+  if (!promptJson || typeof promptJson !== "object") return false;
+  const cast = (promptJson as { cast?: unknown }).cast;
+  return Array.isArray(cast) && cast.length > 0;
 }
 
 export function renderIdentityContinuityForPrompt(
