@@ -38,5 +38,19 @@
     "clean_dustless_site",
     "green_or_earth_like_sky",
     "glowing_colored_veins_on_the_hull_in_daylight"
+  ],
+  "reference_images": [
+    {
+      "path": "/visual-references/valkyrie-1/state-dormant.png",
+      "role": "style",
+      "label": "Valkyrie-1 hull, dormant",
+      "instruction": "this is the buried ship: show only part of its seamless upper curve emerging from red dust in the trench, pearl-dark and unlit, with no glowing veins in daylight; match the surface and curvature, not the whole silhouette in space"
+    },
+    {
+      "path": "/visual-references/valkyrie-1/orthogonal.png",
+      "role": "style",
+      "label": "Valkyrie-1 shape",
+      "instruction": "use only to keep the curvature of the exposed hull section consistent with the real ship"
+    }
   ]
 }

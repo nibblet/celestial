@@ -19,7 +19,8 @@ const SPECS_ROOT = path.join(process.cwd(), "content/wiki/specs");
 const DEFAULT_VIEW = "three_quarter";
 const MAX_INHERITANCE_DEPTH = 6;
 
-type RawLayer = { name: string; path: string; data: SpecLayer };
+/** `inherited` is true for layers pulled in from a parent_entity. */
+type RawLayer = { name: string; path: string; data: SpecLayer; inherited: boolean };
 
 /**
  * Load and compose all spec layers for an entity, including inherited
@@ -158,6 +159,7 @@ function collectLayers(
   // 1. master
   if (master) {
     out.push({
+      inherited: depth > 0,
       name: depth === 0 ? "master" : `${request.entitySlug}:master`,
       path: masterPath,
       data: master,
@@ -174,6 +176,7 @@ function collectLayers(
     for (const file of featureFiles) {
       const featurePath = path.join(featuresDir, file);
       out.push({
+        inherited: depth > 0,
         name:
           depth === 0
             ? `feature:${path.basename(file, ".json")}`
@@ -190,6 +193,7 @@ function collectLayers(
     const viewPath = path.join(dir, "views", `${viewName}.json`);
     if (fs.existsSync(viewPath)) {
       out.push({
+        inherited: depth > 0,
         name: `view:${viewName}`,
         path: viewPath,
         data: readJson(viewPath),
@@ -204,6 +208,7 @@ function collectLayers(
     const statePath = path.join(dir, "states", `${request.state}.json`);
     if (fs.existsSync(statePath)) {
       out.push({
+        inherited: depth > 0,
         name:
           depth === 0
             ? `state:${request.state}`

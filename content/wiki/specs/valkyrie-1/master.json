@@ -25,8 +25,16 @@
     "elasticity_visual": "skin_like_tension_over_frame"
   },
   "color_palette": {
-    "hull": ["pearl_silver", "muted_lilac", "soft_taupe"],
-    "emission": ["violet", "amethyst", "warm_gold"],
+    "hull": [
+      "pearl_silver",
+      "muted_lilac",
+      "soft_taupe"
+    ],
+    "emission": [
+      "violet",
+      "amethyst",
+      "warm_gold"
+    ],
     "accents": "minimal"
   },
   "propulsion": {
@@ -59,5 +67,21 @@
       "knife_like_fins",
       "star_destroyer_shapes"
     ]
-  }
+  },
+  "reference_images": [
+    {
+      "path": "/visual-references/valkyrie-1/three-quarter.png",
+      "role": "identity",
+      "label": "Valkyrie-1 hull, three-quarter hero view",
+      "instruction": "match the stingray-leaf silhouette, swept-forward profile, seamless pearl hull and subdermal vein pattern exactly",
+      "inherit": false
+    },
+    {
+      "path": "/visual-references/valkyrie-1/orthogonal.png",
+      "role": "identity",
+      "label": "Valkyrie-1 top, side and front views",
+      "instruction": "use for the true shape and proportions from any angle",
+      "inherit": false
+    }
+  ]
 }

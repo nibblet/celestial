@@ -66,5 +66,13 @@
     "ladders_or_railings_with_grating",
     "industrial_panel_seams",
     "sharp_corners_or_geometric_walls"
+  ],
+  "reference_images": [
+    {
+      "path": "/visual-references/command-dome.png",
+      "role": "environment",
+      "label": "Command Dome reference render",
+      "instruction": "match the elliptical chamber, curved arches, central glyph light and violet palette; keep it free of consoles and screens"
+    }
   ]
 }

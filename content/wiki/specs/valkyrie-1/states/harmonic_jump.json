@@ -10,7 +10,9 @@
   },
   "vein_network": {
     "intensity": 1.0,
-    "color_palette": ["silver_white_iridescent"],
+    "color_palette": [
+      "silver_white_iridescent"
+    ],
     "pattern_mode": "fully_bloomed",
     "pulse_behavior": "continuous_wave",
     "visibility": "fully_externalized"
@@ -24,5 +26,14 @@
     "distortion": 0.9,
     "lensing": "intense_field_warp",
     "phase_state": "partial_desynchronization"
-  }
+  },
+  "reference_images": [
+    {
+      "path": "/visual-references/valkyrie-1/state-harmonic-jump.png",
+      "role": "style",
+      "label": "Valkyrie-1 in the harmonic jump state",
+      "instruction": "match this hull state: hull turning translucent silver-white, veins blazing, space lensing around the edges",
+      "inherit": false
+    }
+  ]
 }

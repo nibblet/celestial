@@ -20,6 +20,8 @@ This folder is the reference for anything we render: character portraits, ship s
 - `jonah-revas-portrait.png`: Jonah's approved identity portrait.
 - `rhea-solari-portrait.png`: Rhea's approved identity portrait.
 - `amar-cael-portrait.png`: Amar's approved identity portrait.
+- `valkyrie-1/`: the ship. `three-quarter.png` and `orthogonal.png` (hull shape) are attached to every shot of `valkyrie-1`. `state-*.png` (dormant, wake, active, alignment, harmonic-jump, cropped from the `public/images` state renders, caption removed) are attached when that state is chosen. These use `"inherit": false`, so interior specs that inherit from `valkyrie-1` don't receive hull images. The south trench spec attaches the dormant and orthogonal renders so the buried hull matches.
+- `command-dome.png`: the Command Dome interior render, attached to `command-dome`.
 - `sovereign-ethics-bureau-seal.png` (SVG alongside): the Bureau seal, an octagon with a level balance beam over an inverted triangle, silver on graphite. Used on Rhea's collar and as the watermark behind her transmissions.
 - `galen-voss-portrait.png`: Galen's approved identity portrait, which also shows the full uniform. `galen-voss-portrait-v1-chatgpt.png` is the superseded first version.
 
@@ -102,7 +104,7 @@ Also review: the whole `rigel-ascendant` exterior (a hard-edged graphite modular
 
 ## Still open (smaller decisions)
 
-- **Hull vein color:** the Valkyrie-1 specs disagree with each other. `master.json` and `resonance_veins.json` say violet / amethyst, while `states/*.json` say cyan / teal. The prose gives the hull no glow color at all ("shimmered faintly… as if it remembered illumination"). Pick one.
+- **Hull vein color (RESOLVED 2026-11-14):** the existing state renders settle it. Violet-amethyst is the baseline and alignment look; cyan-teal is the *active* state; dormant is dark pearl with faint cyan; wake adds gold. The specs were never really inconsistent: each state has its own color. Old note: the Valkyrie-1 specs disagree with each other. `master.json` and `resonance_veins.json` say violet / amethyst, while `states/*.json` say cyan / teal. The prose gives the hull no glow color at all ("shimmered faintly… as if it remembered illumination"). Pick one.
 - **Dormant / wake states** add colored vein blooms that CH01 doesn't show. Keep them for drama, or remove them for fidelity?
 - **Witness Circle:** `specs/witness-circle` puts it aboard Valkyrie-1, but CH09 puts it inside the Ganymede vault. A `ganymede-vault` spec now covers the CH09 version.
 - **Ganymede vault number:** the prose never numbers it. The wiki puts Vault 003 near Ganymede, while CH17 grows Vault 003 inside the ship.

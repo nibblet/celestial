@@ -86,3 +86,19 @@ test("prompt block lists each reference with its instruction", () => {
   assert.match(text, /2\. \[insignia\] PROJECT VALKYRIE patch/);
   assert.equal(renderReferenceImagesForPrompt([]), "");
 });
+
+test("inherit:false references apply to their own entity only", () => {
+  const hull = {
+    path: "/visual-references/valkyrie-1/three-quarter.png",
+    role: "identity",
+    label: "Valkyrie-1 hull",
+    inherit: false,
+  };
+  const own = collectReferenceImages([{ name: "master", data: { reference_images: [hull] } }]);
+  assert.equal(own.length, 1);
+  const child = collectReferenceImages([
+    { name: "valkyrie-1:master", data: { reference_images: [hull] }, inherited: true },
+    { name: "master", data: { reference_images: [patch] } },
+  ]);
+  assert.deepEqual(child.map((r) => r.path), [patch.path]);
+});

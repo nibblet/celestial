@@ -32,6 +32,13 @@ export type ReferenceImage = {
   instruction?: string;
 };
 
+/*
+ * Spec-file entries may also carry `"inherit": false`: the reference then
+ * applies only when its own entity is the subject, not to children that
+ * inherit the layer via parent_entity. Valkyrie-1's hull renders use this
+ * so interior specs (command-dome, sensorium…) don't receive exterior shots.
+ */
+
 const ROLES: ReadonlySet<string> = new Set([
   "identity",
   "resemblance",
@@ -62,7 +69,7 @@ export const REFERENCE_IMAGES_KEY = "reference_images";
  * child layer can override the label or instruction of an inherited one.
  */
 export function collectReferenceImages(
-  layers: Array<{ name: string; data: Record<string, unknown> }>,
+  layers: Array<{ name: string; data: Record<string, unknown>; inherited?: boolean }>,
 ): ReferenceImage[] {
   const byPath = new Map<string, ReferenceImage>();
   for (const layer of layers) {
@@ -73,6 +80,14 @@ export function collectReferenceImages(
       continue;
     }
     for (const entry of raw) {
+      if (
+        layer.inherited &&
+        entry &&
+        typeof entry === "object" &&
+        (entry as Record<string, unknown>).inherit === false
+      ) {
+        continue;
+      }
       const ref = parseReferenceImage(entry);
       if (!ref) {
         console.warn(`[visuals/specs] ${layer.name}: invalid reference_images entry`, entry);
