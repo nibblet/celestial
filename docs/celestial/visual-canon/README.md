@@ -18,6 +18,7 @@ This folder is the reference for anything we render: character portraits, ship s
 - `marco-ruiz-portrait.png`: Marco's approved identity portrait.
 - `jax-reyes-portrait.png`: Jax's approved identity portrait.
 - `jonah-revas-portrait.png`: Jonah's approved identity portrait.
+- `sovereign-ethics-bureau-seal.png` (SVG alongside): the Bureau seal, an octagon with a level balance beam over an inverted triangle, silver on graphite. Used on Rhea's collar and as the watermark behind her transmissions.
 - `galen-voss-portrait.png`: Galen's approved identity portrait, which also shows the full uniform. `galen-voss-portrait-v1-chatgpt.png` is the superseded first version.
 
 | File | What it is |
