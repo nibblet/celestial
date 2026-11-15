@@ -1,11 +1,19 @@
 # Celestial Heritage, Book I: Minimum Path to Publication
 
-**Status:** draft for author decisions. **Created:** 2026-11-15.
-**Proposed fixes preview:** the fixed copy and its diff are listed in §2. They were built in the session scratchpad and are not committed.
-**Source of truth:** `1-17c_Celestial_Heritage_-_Novel.md` (the author's working copy, 61,132 words).
-`202504212222-celestial-heritage.docx` (2025-04-21) is an older pandoc export. It holds the
-**Acknowledgments** and **About the Author**, which the working copy lacks. Neither file is in this
-repo. No manuscript text has been changed.
+**Status:** decisions captured; manuscript fixes applied; copyedit next. **Updated:** 2026-11-15.
+**Master text:** `Celestial_Heritage_-_FINAL.md` / `_FINAL_6x9.docx` (55,465 words), built from the author's working copy
+with the approved fixes in §2. Copyedit rules: `copyedit-style-sheet.md`. Manuscript files are not committed to this repo.
+
+### Where things stand (next steps, in order)
+
+1. **Copyedit** `Celestial_Heritage_-_FINAL.md` using a separate prompt and `copyedit-style-sheet.md`.
+2. **Re-import into Reedsy once**, from the copyedited text. Use the version with logs in Word's **Quote** style; Reedsy's first import
+   dropped the log indentation. Test it with `Reedsy-import-TEST_chapter1.docx` in a scratch book first.
+3. In Reedsy: subtitle/series line, copyright page text (§7), Acknowledgments **before** About the Author, and an
+   "Also in the series: *Echo Span*" page.
+4. Create the KDP paperback title to get the free ISBN, then add it to the copyright page.
+5. **Export at 6 × 9.** The first export (2026-11-15) was 5 × 8 ("STANDARD", 294 pp). Then send the page count to the cover session.
+6. Upload to KDP: interior PDF, cover PDF, EPUB plus the ebook cover. Order a proof.
 
 Companion docs: `publishing-and-launch-plan.md` (the full plan) and `visual-canon/README.md`
 (the original 12 fixes).
@@ -204,7 +212,7 @@ continue?" also appear in CH17 S4. Keep them as a deliberate echo, or vary one o
 |---|---|
 | Title | Celestial Heritage |
 | Subtitle | *(none, or "A Novel")* |
-| Series | **[decision]**, e.g. "The Celestial Heritage Saga", Book 1 |
+| Series | **The Celestial Heritage Saga**, Book 1 (Book 2: *Echo Span*) |
 | Author | Paul Cobb (no AI contributor on KDP) |
 | Edition | 1 |
 | Publisher / imprint | Leave blank (KDP free ISBN shows "Independently published") |
@@ -270,13 +278,13 @@ The planned art is **2:3 at 1024 × 1536**. That aspect ratio is right, but the 
 >
 > When a ship judges its crew by integrity instead of rank, Galen must decide what kind of commander he really is—and whether humanity has earned the inheritance it just woke up.
 >
-> ***Celestial Heritage* is the first book in a series about first contact, conscious machines, and the moral cost of being chosen.**
+> ***Celestial Heritage* is Book I of The Celestial Heritage Saga, a series about first contact, conscious machines, and the moral cost of being chosen.**
 
 (~230 words, about 1,350 characters. Bold the first line on KDP with `<b>…</b>`. Spoiler check: nothing past roughly CH11 is revealed.)
 
 **Author bio (draft, from the .docx's About the Author)**
 
-> Paul Cobb is a retired U.S. Air Force officer, real-estate entrepreneur, and lifelong reader of science fiction. He lives in Louisville, Kentucky. *Celestial Heritage* is his debut novel—a book that began as an experiment in writing alongside AI and became a story about what it means for any intelligence to be worthy of trust. Follow the Celestial universe at **[website]**.
+> Paul Cobb is a retired U.S. Air Force officer, real-estate entrepreneur, and lifelong reader of science fiction. He lives in Louisville, Kentucky. *Celestial Heritage* is his debut novel—a book that began as an experiment in writing alongside AI and became a story about what it means for any intelligence to be worthy of trust.
 
 ---
 
@@ -290,8 +298,44 @@ The planned art is **2:3 at 1024 × 1536**. That aspect ratio is right, but the 
 | Log dates (D4) | Delete the "Date / Ship Time" field | **Delete** |
 | Fixes applied to manuscript | Preview first | **Approved and applied (2026-11-15)**: final manuscript is 55,465 words, 17 chapters |
 | Typesetting | Atticus / Vellum / DIY | **Reedsy Studio**: import the final .docx and export a 6×9 print PDF plus EPUB. Reedsy's exported page count sets the spine width. |
-| Series name | — | open |
-| Trim | 6 × 9, cream | **6 × 9** (paper: cream recommended) |
-| Copyedit | Professional proofread after the fixes | open |
-| Acknowledgments placement | Back matter (the preview puts it there) | open |
-| Author website for the bio | — | open (placeholder removed from the preview) |
+| Series name | — | **The Celestial Heritage Saga** (Book II: *Echo Span*, in progress) |
+| Trim / paper | 6 × 9, cream | **6 × 9, cream** |
+| Copyedit | Professional proofread after the fixes | **Separate AI copyedit prompt** with `copyedit-style-sheet.md`. A human proofread of the printed proof is still advised. |
+| Acknowledgments placement | Back matter | **Back matter**, before About the Author (Reedsy's first export had them reversed) |
+| Author website for the bio | — | **None**; the bio has no URL line |
+
+---
+
+## 7. Copyright page text (for Reedsy's copyright page)
+
+> **Celestial Heritage**
+> The Celestial Heritage Saga, Book I
+>
+> Copyright © 2026 by Paul Cobb. All rights reserved.
+> No part of this publication may be reproduced, stored, or transmitted in any form or by any means without written permission from the author, except for brief quotations in reviews.
+>
+> This is a work of fiction. Names, characters, places, and incidents are products of the author's imagination or are used fictitiously. Any resemblance to actual persons, living or dead, or to actual events is coincidental.
+>
+> Portions of this novel were drafted with generative AI tools, then selected, arranged, and revised by the author.
+>
+> ISBN: [KDP-assigned paperback ISBN]
+> First edition, 2026
+
+Reedsy's own line ("This book was professionally typeset on Reedsy") is optional. Remove it if Reedsy allows.
+
+## 8. Reedsy export check (first export, 2026-11-15)
+
+| Check | Result |
+|---|---|
+| Trim | **5 × 8 in** ("STANDARD"), not 6 × 9: **re-export** |
+| Pages | 294 at 5 × 8. Expect ~220–235 at 6 × 9. |
+| Fonts | Merriweather / Lato / Kurinto, all embedded ✓ |
+| Text vs final manuscript | identical (body text compared word for word) ✓ |
+| Chapters / contents | 17 chapters, auto-numbered, contents page ✓ |
+| Logs | **quote indentation lost**; logs read like narration (fix via the Quote-style re-import, or apply Quote in Reedsy's editor) |
+| Back matter | About the Author comes before Acknowledgments: **swap** |
+| Copyright page | Reedsy default: no fiction disclaimer, AI statement, series line or ISBN (use §7) |
+| EPUB | 20 sections plus contents ✓. No cover image inside (OK: KDP takes the ebook cover separately) |
+
+**Spine estimate for the cover session (provisional until the 6 × 9 export):** cream, 228 pp × 0.0025 = **0.57 in**, giving a full wrap of
+**12.82 × 9.25 in = 3846 × 2775 px @ 300 dpi**. Recompute with KDP's calculator using the real page count.
