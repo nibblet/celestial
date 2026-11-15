@@ -1,5 +1,14 @@
 {
   "view_type": "domed_chamber",
   "composition": "circular_chamber_whose_domed_ceiling_bears_a_network_of_glowing_spiral_veins_with_a_triple_curve_emerging_on_the_far_wall",
-  "_source": "CH04 S2"
+  "_source": "CH04 S2",
+  "reference_images": [
+    {
+      "path": "/visual-references/vault-002-domed-chamber.png",
+      "role": "environment",
+      "label": "Approved Vault 002 domed chamber",
+      "instruction": "match the domed ceiling's glowing spiral veins, the dark crystalline organic walls, and the round chamber with reflective floor rings; the three-curve glyph on the far wall is FAINT and doorway-sized, barely lit, not a giant glowing emblem as in this image; no panels, screens or machinery on any wall"
+    }
+  ],
+  "far_wall_glyph": "a_spiral_of_three_curved_lines_and_a_circle_faint_and_familiar_about_the_size_of_a_doorway_barely_lit_until_something_awakens_it_CH04"
 }
