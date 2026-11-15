@@ -1108,6 +1108,11 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
               ? "Animating (~1–3 min)…"
               : `Animate with ${VIDEO_MODELS.find((v) => v.key === videoModel)!.short}`}
           </button>
+          {error && (
+            <p className="mt-3 whitespace-pre-wrap break-words rounded-md border border-red-300 bg-red-50 p-3 text-xs text-red-800">
+              {error}
+            </p>
+          )}
         </section>
       )}
 
