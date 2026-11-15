@@ -1,6 +1,7 @@
 # Celestial Heritage, Book I: Minimum Path to Publication
 
 **Status:** draft for author decisions. **Created:** 2026-11-15.
+**Proposed fixes preview:** the fixed copy and its diff are listed in §2. They were built in the session scratchpad and are not committed.
 **Source of truth:** `1-17c_Celestial_Heritage_-_Novel.md` (the author's working copy, 61,132 words).
 `202504212222-celestial-heritage.docx` (2025-04-21) is an older pandoc export. It holds the
 **Acknowledgments** and **About the Author**, which the working copy lacks. Neither file is in this
@@ -13,31 +14,30 @@ Companion docs: `publishing-and-launch-plan.md` (the full plan) and `visual-cano
 
 ## 1. Decision: what to do now and what can wait
 
-### Recommendation: own ISBNs and wide distribution, a smaller launch, everything else later
+### DECIDED (2026-11-15): Amazon-only for now (KDP free ISBN, KDP Select)
 
-The plan's choices that are **cheap now and expensive to undo later**: own ISBNs, no KDP Select, and an
-IngramSpark listing. The plan's choices that **cost time and money but can wait** without harm: the
-LLC, hardcover, audiobook, the app, the landing page and a 50–100 person launch team.
+This departs from `publishing-and-launch-plan.md`, which recommends wide distribution with Bowker ISBNs. The author chose the
+$0 start. Everything else in that plan (LLC, hardcover, audio, app, landing page, launch team) is deferred.
 
 | # | Step | When | Cost |
 |---|---|---|---|
-| 1 | Fix the must-fix manuscript items (§2), then do one full read-through | **Now** | your time |
+| 1 | Approve the proposed manuscript fixes (§2), then do one full read-through of the fixed file | **Now** | your time |
 | 2 | Hire a professional copyedit/proofread, *or* at minimum get 3–5 beta readers | **Now** | ~$500–1,200 for ~55k words / free |
-| 3 | Choose the imprint name (it goes on Bowker, the copyright page and the spine) | **Now** | $0 (a DBA filing may be required in your state) |
-| 4 | Buy 10 Bowker ISBNs under the imprint name | **Now** | $295 |
-| 5 | Typeset the 6×9 paperback PDF and build the EPUB (§3) | **Now** | $0–250 (DIY / Atticus / Vellum) |
-| 6 | Final cover: full wrap plus ebook (§4, the separate cover session) | **Now** | — |
-| 7 | KDP: ebook (Select **off**) + paperback, each with your own ISBN | **Launch** | $0 |
-| 8 | IngramSpark: same paperback PDF, same ISBN, 55% discount / returns per plan | **Launch** | $0 setup (fees removed); 1.875% market-access fee |
-| 9 | Draft2Digital: ebook wide (Apple, Kobo, B&N, OverDrive) | **Launch, or within 30 days** | $0 (D2D takes ~10% of list price) |
-| 10 | Order and approve a printed proof from each printer | **Launch** | ~$5–10 each + shipping |
-| 11 | Register the copyright (human-authored portions, AI portions disclaimed) | **Within 3 months of launch** | $45–65 |
-| — | LLC, hardcover, audiobook, landing page/QR codes, app, launch team, Book II ISBNs | **Later** | per plan |
+| 3 | Typeset the 6×9 paperback PDF and build the EPUB (§3) | **Now** | $0–250 (DIY / Atticus / Vellum) |
+| 4 | Final cover: KDP paperback wrap plus ebook (§4, the separate cover session) | **Now** | — |
+| 5 | KDP ebook: **enroll in KDP Select** (90-day term, auto-renews; **turn auto-renew off** if you may go wide) | **Launch** | $0 |
+| 6 | KDP paperback: **free KDP ISBN**. Imprint shows "Independently published". | **Launch** | $0 |
+| 7 | Order and approve a printed proof | **Launch** | ~$5–10 + shipping |
+| 8 | Optional: KDP Expanded Distribution (lists the paperback in Ingram's catalog at a lower royalty) | **Launch** | $0 |
+| 9 | Register the copyright (human-authored portions, AI portions disclaimed) | **Within 3 months of launch** | $45–65 |
+| — | Bowker ISBNs, IngramSpark, Draft2Digital, hardcover, LLC, audio, app, QR codes | **Later** | per plan |
 
-A hardcover can be added later on the same listing using a reserved ISBN, and reviews carry across formats.
-QR codes in the book should wait until the landing-page URL is final, because every QR change means a print revision.
+**What stays reversible:** the ebook has no ISBN on Kindle, so it can go wide whenever a Select term ends. The
+**paperback's** KDP ISBN can't move. Going wide in print later means a new ISBN and a new paperback edition, and
+the old one must be unpublished. Amazon usually links reviews across editions of the same work, but that isn't guaranteed.
+Don't put QR codes in the book until the landing-page URL is final.
 
-### What an Amazon-only start (KDP free ISBN plus KDP Select) would cost you
+### What the Amazon-only start costs you compared with the plan (why the plan recommends against it)
 
 | | Amazon-only | Recommended minimum |
 |---|---|---|
@@ -49,8 +49,8 @@ QR codes in the book should wait until the landing-page URL is final, because ev
 | Upside you'd give up | Kindle Unlimited page reads (~$1 per full read of a ~250-page book) and Select promotions | — |
 
 **Bottom line:** going Amazon-only saves about $300. It locks the print edition to Amazon and conflicts with the plan's
-"book is the funnel, app is the margin" strategy. If KU tempts you, use your own ISBN for
-the paperback and put only the ebook in Select for one 90-day term. You can leave after the term ends.
+"book is the funnel, app is the margin" strategy. A middle option, if you reconsider before upload: use your own ISBN for the
+paperback only and keep the ebook in Select. That keeps the print edition portable for $295.
 
 ### AI disclosure (applies on every platform)
 
@@ -95,8 +95,9 @@ scenes that also appear later. In each case below, the location evidence picks w
 | B1 | CH05 S2 "Divided Attention" ↔ CH08 S4 "Echo Window" | 711 w | **CH08** | CH05 S2 | It opens "since the jump began… The Ganymede signal had changed". The jump to Ganymede happens in CH08. |
 | B2 | CH05 S3 "The Memory Chamber" ↔ CH10 S2 "The Corridor That Rewrites Itself" | 815 w (100%) | **CH10** | CH05 S3 | The scene title matches CH10. Its paired log is Day 77, which is CH10's day. |
 | B3 | CH05 log VLK-M001-CH05-B ↔ CH10 log -A | 113 w | **CH10** | CH05 log B | Same log, Day 77 |
-| B4 | CH05 log "VLK-M015-**CH10**-A" (Day 112) | — | move to CH10 or cut | — | The log is labeled CH10 but sits in CH05 |
-| B5 | CH05 S1 "Within the Threshold" ↔ CH09 S4 "Descent Map" | 406 w | **CH05** | the shared 406 w inside CH09 S4 | First look at the vault interior; CH09 keeps its ~545 unique words. *Needs your read.* |
+| B4 | CH05 log "VLK-M015-**CH10**-A" (Day 112) | — | **keep in CH05** | — | Its content ("Initial alignment detected… Subject: Evelyn Tran") is an early beat. Rename the ID to VLK-M015-CH05-E; its Day 112 date goes away under D4. |
+| B5 | CH05 S1 "Within the Threshold" ↔ CH09 S4 "Descent Map" | 406 w | **CH09** | CH05 S1 | CH09 S4 is the original. It cites "Vault 1" and the Nine Archetypes from CH09 S2. CH05 S1 copies its opening with Thane/Jonah swapped in for Evelyn/Thane. |
+| B5b | CH09 S4, lines 3692–3705 | — | the blockquoted revision | the older lines it replaced | An unfinished edit: the revised lines (as `>` quotes) sit beside the originals, so three sentences print twice. Merge into one passage. |
 | B6 | CH06 log -CH06-C (Amar) ↔ CH11 log -A1 (Evelyn) | 228 w | **CH11** | CH06 log C | Its summary says "following Directive 14", which is issued in CH11 |
 | B7 | CH07 S2 "Shadow Orders" ↔ CH16 S2 "Tether Compression" | 379 w | **CH16** | CH07 S2 | Caeden's tether activates after Evelyn finds the seed (CH11) |
 | B8 | CH07 S3 "Echoes From the Ice" ↔ CH10 S5 "Earth's Arrival Vector" | 727 w | **CH10** | all of CH07 S3 (lines 2654–2797) | Rigel detected with a 72-hour ETA, and the CH10 log also says 72 hours. Thane's Ganymede vision (CH07 lines 2764–2774) already appears in CH06 S2 (line 2040), so nothing is lost. |
@@ -104,7 +105,9 @@ scenes that also appear later. In each case below, the location evidence picks w
 | B10 | CH07 log -A733-CH07-B ("Ganymede node") | — | — | cut, or move to CH09 | Ganymede before the jump |
 | B11 | CH07 S5 "The Vote" ↔ CH13 S3 "Mirror at the Gate" | 221 w | **CH13** | CH07 S5's opening (Ganymede ice, Jupiter, "Rigel Ascendant had arrived", the mirror-reflection passage) | Replace it with a short Mars-side opening (draft below). Keep the vote, "Proceed" and the jump, which lead straight into CH08's "+00:04:51 since Departure Vector Initiated". |
 
-Result: CH05 ≈ 2,600 words, CH07 ≈ 2,000 words, the book ≈ 55,500 words, still 17 chapters.
+Result (verified on the preview file): CH05 keeps Response Protocol, The First Conversation and 2 logs; CH07 keeps The Signal and
+the Silence, The Vote, log X, the Whisper Log and log E. Scenes are renumbered. The book is **55,465 words**, still 17 chapters,
+with zero 12-word passages repeated across chapters.
 
 **Draft replacement opening for CH07 Scene 5** (replaces everything from "The Observation Deck had been cleared…"
 through "It just reflected."):
@@ -131,7 +134,7 @@ continue?" also appear in CH17 S4. Keep them as a deliberate echo, or vary one o
 | # | Change | Where (count) |
 |---|---|---|
 | C1 | Colonel Riva Doss → **Captain Rhea Solari** ("Riva" → "Rhea", "Doss" → "Solari") | CH10 (2), CH11 (12). CH07's copies are cut under B9. |
-| C2 | Human "Caeden Lor" / "Caeden Merek" → **[new name, your decision]**. Keep the AI "CAEDEN" unchanged. | CH11 (18), CH12 (2), CH13 (6), CH14 (1), CH16 (9) |
+| C2 | Human "Caeden Lor" / "Caeden Merek" → **Ilan Merek** (decided), later references "Ilan". Keep the AI "CAEDEN" unchanged. | CH11 (18), CH12 (2), CH13 (6), CH14 (1), CH16 (9) |
 | C3 | "the youngest member of the crew" → "the most junior member of the crew" (Thane is the youngest) | CH11 line 4557 |
 | C4 | Marco **"Silex" → "Ruiz"**: "Cmdr. Marco Silex" → "Maj. Marco Ruiz"; "Commander Silex" → "Major Ruiz" (×2); "You're a commander, Silex." → "You're an officer, Ruiz." | CH13 lines 5287, 5320, 5369, 5517 |
 | C5 | Evelyn **"Sayre" → "Tran"** ("Dr. Evelyn Sayre" ×3, "Evelyn Sayre" ×1) | CH14 lines 5648, 5858; CH16 lines 6477, 6557 |
@@ -192,8 +195,8 @@ continue?" also appear in CH17 S4. Keep them as a deliberate echo, or vary one o
 - KDP paperback full wrap = 0.125 + 6 + spine + 6 + 0.125 in wide × 9.25 in tall
   → at 220 pp **12.80 × 9.25 in = 3840 × 2775 px @ 300 dpi**.
 - Spine text is allowed above 79 pages. Keep it ≥ 0.0625 in from each spine edge.
-- **Always regenerate from the official templates** (KDP Cover Calculator; IngramSpark Cover Template Generator, which
-  needs the ISBN) once the page count is final. The two printers' spines differ slightly, so make **two cover PDFs**.
+- **Always regenerate from KDP's Cover Calculator/template** once the page count is final. (If IngramSpark is added later, it
+  needs its own template and its own cover PDF, because the spines differ slightly.)
 
 **Metadata (KDP setup screens)**
 
@@ -204,13 +207,13 @@ continue?" also appear in CH17 S4. Keep them as a deliberate echo, or vary one o
 | Series | **[decision]**, e.g. "The Celestial Heritage Saga", Book 1 |
 | Author | Paul Cobb (no AI contributor on KDP) |
 | Edition | 1 |
-| Publisher / imprint | **[decision]** |
+| Publisher / imprint | Leave blank (KDP free ISBN shows "Independently published") |
 | Description | §5 below (KDP limit 4,000 characters; simple HTML allowed) |
 | Publishing rights | I own the copyright |
 | Primary audience | Adult; no sexually explicit content |
 | Categories (up to 3) | Science Fiction › **First Contact**; Science Fiction › **Space Exploration**; Literature & Fiction › **Metaphysical & Visionary** |
 | AI content | Text: AI-generated, Yes. Cover: Yes if the art is AI-generated. |
-| KDP Select | **No** |
+| KDP Select | **Yes, ebook only** (decided). Turn off auto-renew if you may go wide. |
 | Prices | Ebook $4.99 (70% royalty band), paperback $14.99. At ~220 pp KDP's print cost ≈ $1.00 + 220 × $0.012 = **$3.64**, so the paperback royalty is ≈ 60% × $14.99 − $3.64 = **~$5.35**. Consider $13.99 for a ~55k-word book. |
 
 **Keywords (7 slots, ≤ 50 characters each; no author names or brands)**
@@ -241,7 +244,8 @@ The planned art is **2:3 at 1024 × 1536**. That aspect ratio is right, but the 
 - Back cover needs room for the description (~150 words) and a **barcode box 2 × 1.2 in, bottom right**,
   ≥ 0.25 in from the trim. KDP adds the barcode if you leave the box empty; IngramSpark's template places it.
 - KDP: PDF, 300 dpi, fonts embedded/outlined. RGB is accepted.
-- IngramSpark: **PDF/X-1a or PDF/X-3/X-4, CMYK, total ink ≤ 240%**, 300 dpi, built on **their** template.
+- IngramSpark (later, not needed for Amazon-only): **PDF/X-1a or PDF/X-3/X-4, CMYK, total ink ≤ 240%**, 300 dpi, built on **their** template.
+  Keep a layered master so a CMYK version can be exported later.
 - Hardcover (later): case-laminate wraps add a hinge and a wrap margin, so use each printer's hardcover template.
 
 **Ebook cover**
@@ -278,13 +282,15 @@ The planned art is **2:3 at 1024 × 1536**. That aspect ratio is right, but the 
 
 ## 6. Decisions to capture
 
-| Decision | Recommendation | Your call |
+| Decision | Recommendation | Decided |
 |---|---|---|
-| Distribution | Own ISBNs, KDP (no Select) + IngramSpark + D2D | |
-| Imprint name | — | |
-| Series name | — | |
-| Human Caeden's new name | e.g. Ilan Merek / Soren Merek / Tobias Merek (keeps the CH13 surname) | |
-| Duplicate-scene plan (B1–B11) | As in the table | |
-| Log dates (D4) | Delete the "Date / Ship Time" field | |
-| Trim | 6 × 9, cream | |
-| Copyedit | Professional proofread after the fixes | |
+| Distribution | Own ISBNs, KDP (no Select) + IngramSpark + D2D | **Amazon-only for now: KDP free ISBN, ebook in Select** (2026-11-15) |
+| Human Caeden's new name | Ilan / Soren / Tobias Merek | **Ilan Merek** |
+| Duplicate-scene plan (B1–B11) | As in the table | **Cut per the table** |
+| Log dates (D4) | Delete the "Date / Ship Time" field | **Delete** |
+| Fixes applied to manuscript | Preview first | **Pending your review of the preview file** |
+| Series name | — | open |
+| Trim | 6 × 9, cream | open |
+| Copyedit | Professional proofread after the fixes | open |
+| Acknowledgments placement | Back matter (the preview puts it there) | open |
+| Author website for the bio | — | open (placeholder removed from the preview) |
