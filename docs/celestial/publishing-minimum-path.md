@@ -15,7 +15,7 @@ with the approved fixes in §2. Copyedit rules: `copyedit-style-sheet.md`. Manus
    paragraphs, so blank lines can't separate logs, and a Word "Quote" style doesn't survive import (tested 2026-11-15).
 4. Reedsy front and back matter: series line, copyright text (§7), Acknowledgments before About the Author, and optionally an *Echo Span* page.
 5. Create the KDP paperback title to get the free ISBN, then add it to the copyright page.
-6. Export at **Trade (6″ × 9″)**, not "Reedsy Standard (5″ × 8″)". Send the page count to the cover session.
+6. ✓ Exported at Trade 6 × 9: **248 pages** (see §10). Cover wrap: **12.87 × 9.25 in, spine 0.62 in**.
 7. Upload to KDP and order a proof.
 
 Companion docs: `publishing-and-launch-plan.md` (the full plan) and `visual-canon/README.md`
@@ -354,3 +354,34 @@ Art: 1024 × 1536 px. The Valkyrie-1 hull is half-buried in dust, with a lone su
   (dusty plain and horizon) by outpainting, or use a matching dark-sky plate for the back, where the description and barcode go.
 - ? The three-arc glyph from the cover brief isn't visible, though the hull grooves echo it. Add it as a small mark if it's meant to be there.
 - KDP: answer **Yes** to "AI-generated images" for the cover.
+
+## 10. FINAL interior preflight: Reedsy TRADE export (2026-11-15 23:41)
+
+File to upload to KDP: **`celestial-heritage-TRADE-PRINT-READY.pdf`**
+
+| Check | Result |
+|---|---|
+| Trim | **6 × 9 in** on all pages ✓ |
+| Pages | **248** (blank pages: p. 6 before Chapter 1, p. 248 at the end; both fine) |
+| Fonts | Merriweather + Lato, all embedded and subset ✓ |
+| Margins (measured) | inside 0.75″, outside 0.56″, top 0.55″, bottom 0.50″. KDP minimums for 151–300 pp: 0.5″ / 0.25″ ✓ |
+| Manuscript fixes | none of the old problems remain (AI notes, fisheries text, Silex/Sayre/Riva/Doss/Caeden, date fields, CH14 pronouns); CH03 log IDs fixed ✓ |
+| Copyedit | applied, with deliberate rewrites: CH07 "The Vote" ending, CH17 ending/echo, CH10 Lena line, a closing Ilan Merek beat, and the in-chapter duplicate in CH17 removed ✓ |
+| Duplicates | none left except log *Summary* lines that restate the log's first sentence (CH01-B, CH02-D): optional |
+| Logs | 64 of 65 in Quote style ✓. **Whisper Log (CH07, p. 77) still needs Quote.** |
+| Back matter | About the Author (p. 239) comes **before** Acknowledgments: swap if you want the conventional order |
+| Copyright page | still Reedsy's default: no fiction disclaimer, AI statement, series line or ISBN. None is required by KDP; §7 text recommended. |
+| EPUB | not in this export. **Re-export the EPUB from the final Reedsy book**, because the earlier EPUB predates the copyedit. |
+
+### Cover dimensions (KDP paperback, cream paper, 248 pages)
+
+- Spine: 248 × 0.0025 = **0.62 in**. Spine text is allowed; keep it ≥ 0.0625″ from each fold.
+- Full wrap with bleed: 0.125 + 6 + 0.62 + 6 + 0.125 = **12.87 × 9.25 in = 3861 × 2775 px @ 300 dpi**
+- Front panel incl. bleed: 6.125 × 9.25 in = 1838 × 2775 px. Back: the same. Barcode box 2 × 1.2 in, bottom right of the back, ≥ 0.25″ from the trim.
+- Confirm with KDP's cover calculator/template (248 pages, cream, 6 × 9) before final export.
+- Ebook cover: 1600 × 2560 px JPEG.
+
+### Price check at 248 pages (KDP US, black ink)
+
+Print cost ≈ $1.00 + 248 × $0.012 = **$3.98**.
+At $14.99: royalty ≈ 60% × 14.99 − 3.98 = **$5.02**. At $13.99: **$4.42**. Expanded Distribution (40%) at $14.99: **$2.02**.
