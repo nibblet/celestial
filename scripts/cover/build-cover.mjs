@@ -120,13 +120,13 @@ const jobs = [
     file: "front-cover.png",
     w: 1800,
     h: 2700,
-    layout: { glyphSize: 440, glyphTop: 250, titleTop: 640, titleSize: 230, track: 0.06, authorTop: 1180, authorSize: 86 },
+    layout: { glyphSize: 380, glyphTop: 140, titleTop: 450, titleSize: 215, track: 0.06, authorTop: 2440, authorSize: 84 },
   },
   {
     file: "end-card-9x16.png",
     w: 1080,
     h: 1920,
-    layout: { glyphSize: 270, glyphTop: 290, titleTop: 520, titleSize: 132, track: 0.06, authorTop: 830, authorSize: 50 },
+    layout: { glyphSize: 250, glyphTop: 170, titleTop: 380, titleSize: 128, track: 0.06, authorTop: 1545, authorSize: 50 },
   },
 ];
 for (const job of jobs) {

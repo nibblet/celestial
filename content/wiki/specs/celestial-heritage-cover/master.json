@@ -43,6 +43,13 @@
   ],
   "reference_images": [
     {
+      "path": "/visual-references/celestial-heritage-cover-art.png",
+      "role": "environment",
+      "label": "Approved Book I cover art (2026-11-15)",
+      "instruction": "the approved cover composition: dusk sky over the upper third, the ship's curve rising from blowing red dust on the right, the lone suited figure on the dark ridge at lower left; use it for variations and re-crops",
+      "inherit": false
+    },
+    {
       "path": "/visual-references/valkyrie-1/hero-photographic.png",
       "role": "identity",
       "label": "Valkyrie-1 approved photographic hero",
