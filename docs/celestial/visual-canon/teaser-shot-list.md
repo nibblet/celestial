@@ -12,7 +12,7 @@
 | 4 | CH03 S4, the wall folds open at dusk | `zone-theta` | — | `vault_threshold` | scene_moment | slow dolly in; light branches across the wall, then it folds into a pale corridor | "There was no door." |
 | 5 | CH04 S1, "the light followed him in" | `vault-002` | view `domed_chamber` | `vault_threshold` | establishing_shot | over Galen's shoulder as he crosses; a thread of light trails in after him | "And the light followed him in." |
 | 6 | CH05 S5, ALARA arrives | `alara` | state `present` | `noncorporeal_presence` | motion_loop | static; golden threads curl into the triple curve near the ceiling, deepening to amber | "I have always been aware. But not always awake." |
-| 7 | CH07 S5, Observation Deck over Ganymede | `observation-deck` | — | `valkyrie_shipboard` | scene_moment | slow pull back from Galen's silhouette against Jupiter and the ice | "Proceed." |
+| 7 | CH07 S5, Observation Deck over Ganymede | `observation-deck` (view `edge_of_the_dome`, state `over_ganymede`, cast `galen-voss`) | — | `valkyrie_shipboard` | scene_moment | slow pull back from Galen's silhouette against Jupiter and the ice | "Proceed." |
 | 8 | CH08 S3, the jump | `valkyrie-1` | state `harmonic_jump` | `mythic_scale` | motion_loop | wide exterior; the ship unfolds, lengthens and collapses, and a faint glint rings out | "Valkyrie didn't accelerate. She unfolded." |
 
 Title card: **CELESTIAL**, cut on the glint at the end of shot 8.
