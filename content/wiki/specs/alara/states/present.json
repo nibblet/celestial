@@ -9,11 +9,19 @@
   "mode": "in_the_air",
   "reference_images": [
     {
+      "path": "/visual-references/alara-lab-in-the-air.png",
+      "role": "identity",
+      "label": "ALARA present, keyframe pair (approved): spiral in the lab air",
+      "instruction": "match how her light appears: a soft golden spiral hanging in the air where it catches haze, with faint rays falling through it; the walls are quiet. The room itself (crystal shelves, leaf-shaped door, work tables) only applies when the shot is set in this lab",
+      "inherit": false
+    },
+    {
       "path": "/visual-references/alara-present-in-the-air.png",
       "role": "identity",
       "label": "ALARA present (approved): light in the air",
       "instruction": "match how she appears: golden light visible only where it catches haze and suspended dust, bending into a slow spiral high in the room; nothing solid; the room around her stays dim",
       "inherit": false
     }
-  ]
+  ],
+  "_keyframe_pair": "alara-lab-in-the-walls.png (listening) and alara-lab-in-the-air.png (present) are the same room and camera; animate one into the other with Kling O3 start/end frames (clip 2026-11-15, 8s)."
 }
