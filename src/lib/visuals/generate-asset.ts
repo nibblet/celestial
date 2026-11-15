@@ -39,7 +39,13 @@ export async function getOrGenerateAsset(
   input: GenerateAssetInput,
 ): Promise<GenerateAssetResult> {
   const provider = getProvider(input.provider);
-  const providerModel = input.providerModel ?? provider.defaultModel;
+  // The console sends its model choice as params.model (Kling O3, gpt-image
+  // variants). Without this it was overwritten by the provider default.
+  const requestedModel =
+    typeof input.params?.model === "string" && input.params.model.trim()
+      ? input.params.model.trim()
+      : undefined;
+  const providerModel = input.providerModel ?? requestedModel ?? provider.defaultModel;
   const normalizedParams = provider.normalizeParams({
     ...(input.params ?? {}),
     model: providerModel,
