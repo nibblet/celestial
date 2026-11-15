@@ -288,9 +288,10 @@ The planned art is **2:3 at 1024 × 1536**. That aspect ratio is right, but the 
 | Human Caeden's new name | Ilan / Soren / Tobias Merek | **Ilan Merek** |
 | Duplicate-scene plan (B1–B11) | As in the table | **Cut per the table** |
 | Log dates (D4) | Delete the "Date / Ship Time" field | **Delete** |
-| Fixes applied to manuscript | Preview first | **Pending your review of the preview file** |
+| Fixes applied to manuscript | Preview first | **Approved and applied (2026-11-15)**: final manuscript is 55,465 words, 17 chapters |
+| Typesetting | Atticus / Vellum / DIY | **Reedsy Studio**: import the final .docx and export a 6×9 print PDF plus EPUB. Reedsy's exported page count sets the spine width. |
 | Series name | — | open |
-| Trim | 6 × 9, cream | open |
+| Trim | 6 × 9, cream | **6 × 9** (paper: cream recommended) |
 | Copyedit | Professional proofread after the fixes | open |
 | Acknowledgments placement | Back matter (the preview puts it there) | open |
 | Author website for the bio | — | open (placeholder removed from the preview) |
