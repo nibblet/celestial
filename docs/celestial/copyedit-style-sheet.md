@@ -1,6 +1,9 @@
 # Celestial Heritage, Book I: Copyedit Style Sheet
 
-**Input:** `Celestial_Heritage_-_FINAL.md` (55,465 words, 17 chapters, all structural fixes approved 2026-11-15).
+**Input:** `Celestial_Heritage_-_FINAL_v2.md` (55,465 words, 17 chapters, all structural fixes approved 2026-11-15).
+v2 matches the author's Reedsy copy: chapter headings are titles only (Reedsy numbers them) and scene headings carry no
+"Scene N:" prefix. The CH03 logs formerly labeled CH02-F/G are now **VLK-M001-CH03-B / -CH03-B1**.
+**Reedsy is now the master copy.** Edits are applied there by hand, so the copyedit must return a **change list**, not a rewritten file.
 **Series:** The Celestial Heritage Saga, Book I. (Book II, *Echo Span*, is in progress.)
 Hand this sheet to the copyedit prompt together with the manuscript.
 
@@ -17,8 +20,11 @@ with this sheet. Make light line edits only where a sentence is broken.
 - remove or reorder the log field labels (Author / Log Type / Location / Privacy Level / Summary / Main Body / Entry / Attachments)
 - reintroduce "Date / Ship Time" lines (deliberately removed)
 
-**Return:** the full corrected manuscript in the same markdown structure, plus a change list of anything beyond
-mechanical fixes, with chapter and quote.
+**Return:** a change list, grouped by chapter in reading order. Each entry gives the exact original text (enough to find it with
+Reedsy's search, about 6–15 words), the corrected text, and a type (typo / grammar / punctuation / consistency / flag).
+Put mechanical fixes first in each chapter and "flag" items last. Don't return the whole manuscript.
+
+Don't touch mission-log IDs or log field labels (they're formatted as Quote blocks in Reedsy).
 
 ## Typography
 

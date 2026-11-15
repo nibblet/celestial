@@ -4,16 +4,19 @@
 **Master text:** `Celestial_Heritage_-_FINAL.md` / `_FINAL_6x9.docx` (55,465 words), built from the author's working copy
 with the approved fixes in §2. Copyedit rules: `copyedit-style-sheet.md`. Manuscript files are not committed to this repo.
 
-### Where things stand (next steps, in order)
+### Where things stand (next steps, in order) - updated after the Reedsy test
 
-1. **Copyedit** `Celestial_Heritage_-_FINAL.md` using a separate prompt and `copyedit-style-sheet.md`.
-2. **Re-import into Reedsy once**, from the copyedited text. Use the version with logs in Word's **Quote** style; Reedsy's first import
-   dropped the log indentation. Test it with `Reedsy-import-TEST_chapter1.docx` in a scratch book first.
-3. In Reedsy: subtitle/series line, copyright page text (§7), Acknowledgments **before** About the Author, and an
-   "Also in the series: *Echo Span*" page.
-4. Create the KDP paperback title to get the free ISBN, then add it to the copyright page.
-5. **Export at 6 × 9.** The first export (2026-11-15) was 5 × 8 ("STANDARD", 294 pp). Then send the page count to the cover session.
-6. Upload to KDP: interior PDF, cover PDF, EPUB plus the ebook cover. Order a proof.
+**Reedsy is the master copy now.** The author removed chapter numbers and "Scene N:" labels there.
+`Celestial_Heritage_-_FINAL_v2.md` mirrors that, plus the CH03 log-ID fix (CH02-F/G → CH03-B/B1).
+
+1. **Copyedit** `FINAL_v2.md` with `copyedit-style-sheet.md`. It returns a **change list**; apply the changes in Reedsy.
+2. In Reedsy, relabel the two CH03 logs (VLK-M001-CH02-F → CH03-B, CH02-G → CH03-B1).
+3. **Logs:** apply Reedsy's **Quote** to all 65 log blocks using `Mission-log-Quote-checklist.md`. Reedsy strips empty
+   paragraphs, so blank lines can't separate logs, and a Word "Quote" style doesn't survive import (tested 2026-11-15).
+4. Reedsy front and back matter: series line, copyright text (§7), Acknowledgments before About the Author, and optionally an *Echo Span* page.
+5. Create the KDP paperback title to get the free ISBN, then add it to the copyright page.
+6. Export at **Trade (6″ × 9″)**, not "Reedsy Standard (5″ × 8″)". Send the page count to the cover session.
+7. Upload to KDP and order a proof.
 
 Companion docs: `publishing-and-launch-plan.md` (the full plan) and `visual-canon/README.md`
 (the original 12 fixes).
@@ -339,3 +342,15 @@ Reedsy's own line ("This book was professionally typeset on Reedsy") is optional
 
 **Spine estimate for the cover session (provisional until the 6 × 9 export):** cream, 228 pp × 0.0025 = **0.57 in**, giving a full wrap of
 **12.82 × 9.25 in = 3846 × 2775 px @ 300 dpi**. Recompute with KDP's calculator using the real page count.
+
+## 9. Cover art check (2026-11-15)
+
+Art: 1024 × 1536 px. The Valkyrie-1 hull is half-buried in dust, with a lone suited figure in the lower left and dark sky across the top third.
+
+- ✓ Composition fits 6 × 9: the figure and hull sit inside the 0.25″ safe zone. The sky has room for the title and the dark foreground for the author name.
+- ✓ It survives the 1:1.6 ebook crop and reads at Amazon thumbnail size (160 px wide). The title will need large type to stay legible there.
+- ✗ **Resolution:** at 6 × 9 it's only ~166 dpi. Upscale ×2 or more with an AI upscaler, to at least 2048 × 3072, before layout.
+- ✗ **Full wrap:** this is front art only. The spine (~0.57″) and back (6″) need art too. Extend the image to the **left**
+  (dusty plain and horizon) by outpainting, or use a matching dark-sky plate for the back, where the description and barcode go.
+- ? The three-arc glyph from the cover brief isn't visible, though the hull grooves echo it. Add it as a small mark if it's meant to be there.
+- KDP: answer **Yes** to "AI-generated images" for the cover.
