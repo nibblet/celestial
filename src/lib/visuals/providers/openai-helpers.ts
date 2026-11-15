@@ -35,6 +35,8 @@ export function openAiSizeFor(aspect: VisualAspect, model: string): string {
         return "1024x1280";
       case "3:2":
         return "1536x1024";
+      case "2:3":
+        return "1024x1536";
       case "1:1":
       default:
         return "1024x1024";
@@ -46,6 +48,7 @@ export function openAiSizeFor(aspect: VisualAspect, model: string): string {
       return "1536x1024";
     case "9:16":
     case "4:5":
+    case "2:3":
       return "1024x1536";
     case "1:1":
     default:

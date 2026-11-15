@@ -35,6 +35,8 @@ function aspectToImageRatio(aspect: VisualAspect): string {
       return "4:5";
     case "3:2":
       return "3:2";
+    case "2:3":
+      return "2:3";
     default:
       return "1:1";
   }

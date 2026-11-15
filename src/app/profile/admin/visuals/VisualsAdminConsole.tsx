@@ -52,7 +52,7 @@ type RecentItem = {
 const STORAGE_KEY = "celestial.visualsStudio.v1";
 
 const TARGET_KINDS = ["entity", "story", "scene", "freeform"] as const;
-const ASPECTS = ["16:9", "9:16", "1:1", "4:5", "3:2"] as const;
+const ASPECTS = ["16:9", "9:16", "1:1", "4:5", "3:2", "2:3"] as const; // 2:3 = book cover
 const INTENTS = ["portrait", "establishing_shot", "scene_moment", "motion_loop"] as const;
 type VideoModel = "gen4.5" | "gen4_turbo" | "klingO3_standard" | "klingO3_pro";
 const VIDEO_MODELS: Array<{ key: VideoModel; label: string; short: string; durations: number[] }> = [

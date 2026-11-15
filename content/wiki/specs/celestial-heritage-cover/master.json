@@ -1,0 +1,66 @@
+{
+  "entity": "celestial-heritage-cover",
+  "display_name": "Celestial Heritage, Book I cover art",
+  "world": "earth_2050",
+  "_canon_status": "composition_spec",
+  "_provenance": {
+    "source": "the original cover (lone figure on a ridge, the ship half-buried in red dust, a glyph in the dusk sky, title stacked in the upper half), rebuilt on the approved canon: the photographic Valkyrie-1, the south trench (CH01) and Galen in the approved surface suit",
+    "text_and_glyph": "the title, author name and the three-arc glyph are NOT generated. They are set over the art afterwards (scripts/cover), so the sky must stay empty",
+    "aspect": "generate at 2:3 (1024x1536); the 9:16 end card is cropped from the same art",
+    "parent": "not inherited from south-trench on purpose: its dig-site machinery, shelter and shuttle don't belong on the cover"
+  },
+  "composition": {
+    "layout": "tall_portrait_book_cover_the_upper_45_percent_is_open_empty_sky_for_the_title_the_lower_55_percent_holds_the_ship_and_the_figure",
+    "sky": "deep_martian_dusk_gradient_from_near_black_navy_at_the_top_through_dusty_violet_to_a_thin_band_of_rust_and_pale_gold_haze_on_the_horizon_a_few_faint_stars_high_up_otherwise_empty",
+    "ship": "the_seamless_upper_curve_of_valkyrie_1_rising_out_of_red_dust_on_the_right_two_thirds_of_the_frame_massive_and_low_most_of_the_ship_still_buried_its_full_shape_not_visible",
+    "ship_light": "dark_pearl_silver_hull_catching_the_last_horizon_light_along_its_top_edge_one_single_thin_thread_of_pale_light_running_beneath_the_skin_along_an_existing_curve",
+    "figure": "one_small_lone_figure_in_a_mars_surface_suit_standing_on_a_dark_ridge_in_the_lower_left_seen_from_behind_looking_at_the_ship_rim_lit_by_the_horizon_about_one_twelfth_of_the_frame_height",
+    "dust": "long_low_ribbons_of_red_dust_blowing_across_the_trench_and_drifting_off_the_hull",
+    "ground": "rust_red_regolith_and_dark_ridges_in_the_foreground_falling_into_shadow_at_the_bottom_edge",
+    "scale_read": "the_figure_is_tiny_and_the_ship_is_enormous"
+  },
+  "terrain": {
+    "ground": "fine_red_regolith_and_dark_ridges",
+    "horizon": "crater_rim_low_on_the_horizon",
+    "canon": "the_silver_curve_of_the_hull_seemed_to_exhale_as_the_dust_rolled_back_CH01"
+  },
+  "lighting": {
+    "key": "low_dusk_glow_from_the_horizon_behind_the_ship",
+    "mood": "quiet_awe_lonely_ancient_not_threatening"
+  },
+  "style": "photographic_cinematic_still_shot_on_a_large_format_camera_natural_film_grain_not_illustration",
+  "avoid": [
+    "any_text_letters_title_or_logo",
+    "glyphs_symbols_or_shapes_in_the_sky",
+    "triangle_or_triquetra_knot",
+    "teal_or_cyan_glowing_veins_across_the_hull",
+    "excavation_machinery_tarps_drones_or_floodlights",
+    "more_than_one_person",
+    "a_face_visible",
+    "the_whole_ship_silhouette_exposed",
+    "painterly_or_concept_art_look",
+    "busy_detail_in_the_upper_sky"
+  ],
+  "reference_images": [
+    {
+      "path": "/visual-references/valkyrie-1/hero-photographic.png",
+      "role": "identity",
+      "label": "Valkyrie-1 approved photographic hero",
+      "instruction": "match the real hull: seamless pearl-silver crystalline skin, organic curvature, photographic realism; show only its upper curve emerging from the dust",
+      "inherit": false
+    },
+    {
+      "path": "/visual-references/valkyrie-1/state-dormant.png",
+      "role": "style",
+      "label": "Valkyrie-1 hull, dormant",
+      "instruction": "surface and curvature of the buried hull: pearl-dark and nearly unlit; ignore the whole-ship silhouette"
+    },
+    {
+      "path": "/visual-references/mars-surface-suit.png",
+      "role": "wardrobe",
+      "label": "Approved Mars surface suit",
+      "instruction": "the small figure wears this suit, helmet on, seen from behind",
+      "inherit": false
+    }
+  ]
+}

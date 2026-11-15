@@ -25,7 +25,7 @@ export type VisualIntent =
   | "scene_moment"
   | "motion_loop";
 
-export type VisualAspect = "16:9" | "9:16" | "1:1" | "4:5" | "3:2";
+export type VisualAspect = "16:9" | "9:16" | "1:1" | "4:5" | "3:2" | "2:3";
 
 export type StylePresetKey =
   | "valkyrie_shipboard"

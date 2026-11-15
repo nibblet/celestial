@@ -44,7 +44,7 @@ export function runwayRatioFor(model: string, aspect: string): string {
     const port = pro ? "1080:1920" : "720:1280";
     const square = pro ? "1440:1440" : "960:960";
     if (aspect === "16:9" || aspect === "3:2") return land;
-    if (aspect === "9:16") return port;
+    if (aspect === "9:16" || aspect === "2:3") return port;
     return square; // 1:1 and 4:5
   }
   switch (aspect) {
@@ -58,6 +58,8 @@ export function runwayRatioFor(model: string, aspect: string): string {
       return "832:1104";
     case "3:2":
       return "1104:832";
+    case "2:3":
+      return "832:1104";
     default:
       return "1280:720";
   }
