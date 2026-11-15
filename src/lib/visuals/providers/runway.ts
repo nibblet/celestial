@@ -173,8 +173,12 @@ export const runwayProvider: VisualProvider = {
           "Runway API account is out of credits. Add credits in the Runway developer portal (dev.runwayml.com → Billing); Runway app subscription credits don't cover the API.",
         );
       }
+      const shape = JSON.stringify(body, (_k, v) =>
+        typeof v === "string" && v.startsWith("data:") ? `${v.slice(0, 30)}…(${v.length} chars)` : v,
+      ).slice(0, 1500);
+      console.error("[runway] rejected request body:", shape);
       throw new Error(
-        `Runway create failed (${createRes.status}): ${errText.slice(0, 3000)}`,
+        `Runway create failed (${createRes.status}) for ${model}: ${errText.slice(0, 3000)}\n\nRequest: ${shape}`,
       );
     }
     const created = (await createRes.json()) as { id?: string };
