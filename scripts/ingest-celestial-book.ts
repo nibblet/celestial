@@ -55,6 +55,8 @@ interface ChapterMissionLogSegment {
   summary: string;
   mainBody: string;
   attachments: string[];
+  /** Untitled prose that followed the log's attachments before the next heading. */
+  trailingProse: string[];
 }
 
 type ChapterSegment = ChapterSceneSegment | ChapterMissionLogSegment;
@@ -149,7 +151,26 @@ function htmlToLines(html: string): string[] {
     .filter(Boolean);
 }
 
-function parseMissionLogBody(body: string): Omit<ChapterMissionLogSegment, "kind" | "chapterId" | "logId" | "body"> {
+/**
+ * Scene headings appear as "Scene N: Title" in early chapters and as
+ * "Scene N — Title" / "Scene N – Title" / "Scene N -- Title" later on.
+ * htmlToLines() folds en/em dashes to "-", but match them here too so the
+ * regex is correct on raw text as well.
+ */
+const SCENE_HEADING_RE = /^Scene\s+(\d+)\s*(?::|-{1,2}|[\u2013\u2014])\s*(.+)$/i;
+const MISSION_HEADING_RE = /^MISSION LOG\s+(.+)$/i;
+
+/**
+ * An attachment entry is a short label ("ECI Drift Map (past 24hr)"), not a
+ * sentence. Anything that reads like prose ends the attachments list.
+ */
+function looksLikeAttachmentItem(line: string): boolean {
+  if (line.length > 160) return false;
+  if (line.split(/\s+/).length > 20) return false;
+  return !/[.!?\u2026]["\u201d\u2019)]?$/.test(line);
+}
+
+function parseMissionLogBody(body: string): Omit<ChapterMissionLogSegment, "kind" | "chapterId" | "logId" | "body" | "trailingProse"> {
   const compact = body.replace(/\s+/g, " ").trim();
   const get = (label: string, nextLabels: string[]): string => {
     const next = nextLabels.length > 0 ? `(?=${nextLabels.join("|")}|$)` : "$";
@@ -226,6 +247,8 @@ function parseChapterFromLines(chapterNumber: number, lines: string[]): ParsedCh
 
   let currentLogId = "";
   let missionBuffer: string[] = [];
+  let trailingBuffer: string[] = [];
+  let attachmentsState: "none" | "open" | "closed" = "none";
   let mode: "none" | "scene" | "mission" = "none";
 
   const flushScene = () => {
@@ -251,13 +274,16 @@ function parseChapterFromLines(chapterNumber: number, lines: string[]): ParsedCh
         logId: currentLogId,
         body,
         ...parsed,
+        trailingProse: trailingBuffer,
       });
     }
     missionBuffer = [];
+    trailingBuffer = [];
+    attachmentsState = "none";
   };
 
   for (const line of lines) {
-    const sceneMatch = line.match(/^Scene\s+(\d+):\s*(.+)$/i);
+    const sceneMatch = line.match(SCENE_HEADING_RE);
     if (sceneMatch) {
       if (mode === "scene") flushScene();
       if (mode === "mission") flushMission();
@@ -267,7 +293,7 @@ function parseChapterFromLines(chapterNumber: number, lines: string[]): ParsedCh
       continue;
     }
 
-    const missionMatch = line.match(/^MISSION LOG\s+(.+)$/i);
+    const missionMatch = line.match(MISSION_HEADING_RE);
     if (missionMatch) {
       if (mode === "scene") flushScene();
       if (mode === "mission") flushMission();
@@ -281,7 +307,22 @@ function parseChapterFromLines(chapterNumber: number, lines: string[]): ParsedCh
     }
 
     if (mode === "scene") sceneBuffer.push(line);
-    else if (mode === "mission") missionBuffer.push(line);
+    else if (mode === "mission") {
+      // Attachments run from the "Attachments:" line until the first line that
+      // is not an attachment label (or the next heading, handled above). Prose
+      // after that must not be folded into the attachments field.
+      if (attachmentsState === "closed") {
+        trailingBuffer.push(line);
+      } else if (/^Attachments:/i.test(line)) {
+        attachmentsState = "open";
+        missionBuffer.push(line);
+      } else if (attachmentsState === "open" && !looksLikeAttachmentItem(line)) {
+        attachmentsState = "closed";
+        trailingBuffer.push(line);
+      } else {
+        missionBuffer.push(line);
+      }
+    }
   }
 
   if (mode === "scene") flushScene();
@@ -320,6 +361,9 @@ function buildStoryMarkdown(chapter: ParsedChapter): string {
         : "Attachments: —",
       ""
     );
+    if (segment.trailingProse.length > 0) {
+      fullTextParts.push(segment.trailingProse.join("\n\n"), "");
+    }
   }
 
   const lines: string[] = [
