@@ -12,6 +12,7 @@ import {
   RUNWAY_DEFAULT_VIDEO_MODEL,
   isKlingO3,
   klingReferencePreamble,
+  supportsEndFrame,
   runwayRatioFor,
   clampRunwayPrompt,
   runwayDurationFor,
@@ -74,6 +75,11 @@ export const runwayProvider: VisualProvider = {
       // Kling O3 only: character portraits sent alongside the start frame,
       // so a face revealed mid-shot is the right face. Part of the cache key.
       references: isKlingO3(model) ? normalizeReferences(params.references) : [],
+      // Optional last frame: the clip animates from promptImageUrl to this.
+      endFrameUrl:
+        typeof params.endFrameUrl === "string" && params.endFrameUrl.trim()
+          ? params.endFrameUrl.trim()
+          : null,
       // false = spectacle shot: skip the restraint line (jumps, transformations).
       restraint: params.restraint === false ? false : true,
       ...(typeof params.reroll === "string" ? { reroll: params.reroll } : {}),
@@ -97,6 +103,15 @@ export const runwayProvider: VisualProvider = {
     const model = (params.model as string) || defaultModel();
     const duration = runwayDurationFor(model, Number(params.duration ?? 5));
     const ratio = (params.ratio as string) || runwayRatioFor(model, prompt.aspect);
+    const endFrameUrl =
+      typeof params.endFrameUrl === "string" && params.endFrameUrl ? params.endFrameUrl : null;
+    if (endFrameUrl && !supportsEndFrame(model)) {
+      throw new Error(`${model} doesn't take an end frame; use Gen-4.5 or Kling O3.`);
+    }
+    const firstAndLast = async () => [
+      { uri: await resolvePromptImage(promptImageUrl), position: "first" },
+      ...(endFrameUrl ? [{ uri: await resolvePromptImage(endFrameUrl), position: "last" }] : []),
+    ];
     const motion =
       typeof params.motionText === "string" && params.motionText.trim()
         ? params.motionText
@@ -104,11 +119,17 @@ export const runwayProvider: VisualProvider = {
 
     let body: Record<string, unknown>;
     if (isKlingO3(model)) {
-      const refs = normalizeReferences(params.references);
-      const preamble = klingReferencePreamble(refs.map((r) => r.label));
+      const refs = normalizeReferences(params.references).slice(
+        0,
+        endFrameUrl ? KLING_MAX_REFERENCES - 1 : KLING_MAX_REFERENCES,
+      );
+      const preamble = klingReferencePreamble(
+        refs.map((r) => r.label),
+        Boolean(endFrameUrl),
+      );
       body = {
         model,
-        promptImage: [{ uri: await resolvePromptImage(promptImageUrl), position: "first" }],
+        promptImage: await firstAndLast(),
         ...(refs.length
           ? {
               references: await Promise.all(
@@ -126,7 +147,7 @@ export const runwayProvider: VisualProvider = {
       };
     } else {
       body = {
-        promptImage: await resolvePromptImage(promptImageUrl),
+        promptImage: endFrameUrl ? await firstAndLast() : await resolvePromptImage(promptImageUrl),
         promptText:
           params.restraint === false ? clampRunwayPrompt(motion) : withRestraint(motion),
         model,

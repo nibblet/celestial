@@ -18,6 +18,9 @@ export type ReferenceImageRole =
   | "identity"
   /** A relative's portrait: borrow family likeness, never copy the face. */
   | "resemblance"
+  /** A previous still of this shot: same room, camera and framing; change
+   *  only what the Focus asks (keyframe pairs, variations). */
+  | "keyframe"
   | "insignia"
   | "wardrobe"
   | "prop"
@@ -42,6 +45,7 @@ export type ReferenceImage = {
 const ROLES: ReadonlySet<string> = new Set([
   "identity",
   "resemblance",
+  "keyframe",
   "insignia",
   "wardrobe",
   "prop",
@@ -52,12 +56,13 @@ const ROLES: ReadonlySet<string> = new Set([
 /** Display / attachment order: who they are first, then what they wear. */
 const ROLE_ORDER: Record<ReferenceImageRole, number> = {
   identity: 0,
-  resemblance: 1,
-  insignia: 2,
-  wardrobe: 3,
-  prop: 4,
-  environment: 5,
-  style: 6,
+  keyframe: 1,
+  resemblance: 2,
+  insignia: 3,
+  wardrobe: 4,
+  prop: 5,
+  environment: 6,
+  style: 7,
 };
 
 export const REFERENCE_IMAGES_KEY = "reference_images";
@@ -131,6 +136,7 @@ export function renderReferenceImagesForPrompt(refs: ReferenceImage[]): string {
     "## reference images (attached to the generation by the operator)",
     "  The raw prompt MUST name each of these and tell the generator how to use it, following its instruction.",
     "  [resemblance] images are relatives: borrow family likeness only, the subject must remain a distinct person.",
+    "  [keyframe] images are an earlier still of THIS shot: keep the same room, architecture, camera position, lens and framing exactly; change only what the Focus describes.",
   ];
   refs.forEach((r, i) => {
     lines.push(
@@ -170,4 +176,57 @@ export function mergeShotReferences(
     out.push(r);
   }
   return out.slice(0, MAX_SHOT_REFERENCES);
+}
+
+/** Most operator-added references per prompt ("Use as reference"). */
+export const MAX_EXTRA_REFERENCES = 4;
+
+/**
+ * Add operator-chosen references (e.g. a still to use as a keyframe) to a
+ * spec-derived list. Extras go right after identity portraits so they
+ * dominate composition; duplicates by path are dropped; capped at 16.
+ */
+export function withExtraReferences(
+  refs: ReferenceImage[],
+  extras: ReferenceImage[],
+): ReferenceImage[] {
+  const identities = refs.filter((r) => r.role === "identity");
+  const rest = refs.filter((r) => r.role !== "identity");
+  const seen = new Set<string>();
+  const out: ReferenceImage[] = [];
+  for (const r of [...identities, ...extras.slice(0, MAX_EXTRA_REFERENCES), ...rest]) {
+    if (seen.has(r.path)) continue;
+    seen.add(r.path);
+    out.push(r);
+  }
+  return out.slice(0, MAX_SHOT_REFERENCES);
+}
+
+/**
+ * Validate operator-supplied extra references from a request body:
+ * [{path, label?, instruction?}] -> keyframe references. Path checks
+ * (allowed hosts / folders) happen where the file is fetched.
+ */
+export function parseExtraReferences(raw: unknown): ReferenceImage[] {
+  if (raw === undefined || raw === null) return [];
+  if (!Array.isArray(raw)) throw new Error("extraReferences must be an array");
+  if (raw.length > MAX_EXTRA_REFERENCES) {
+    throw new Error(`At most ${MAX_EXTRA_REFERENCES} extra reference images`);
+  }
+  return raw.map((entry, i) => {
+    const e = (entry ?? {}) as Record<string, unknown>;
+    const path = typeof e.path === "string" ? e.path.trim() : "";
+    if (!path.startsWith("/visual-references/") && !/^https:\/\//.test(path)) {
+      throw new Error(`Extra reference ${i + 1} must be an https URL or /visual-references/ path`);
+    }
+    const label =
+      typeof e.label === "string" && e.label.trim()
+        ? e.label.trim().slice(0, 80)
+        : `Keyframe reference ${i + 1}`;
+    const instruction =
+      typeof e.instruction === "string" && e.instruction.trim()
+        ? e.instruction.trim().slice(0, 300)
+        : "same room, architecture, camera position, lens and framing as this image; change only what the Focus describes";
+    return { path, role: "keyframe" as const, label, instruction };
+  });
 }

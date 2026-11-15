@@ -8,7 +8,12 @@ import { fetchIdentityContinuity, renderIdentityContinuityForPrompt } from "./co
 import { getStylePreset } from "./style-presets";
 import { continuityHashFor, seedHashFor } from "./hash";
 import { composeEntitySpec, renderSpecForPrompt } from "./specs/loader";
-import { mergeShotReferences, type ReferenceImage } from "./specs/references";
+import {
+  mergeShotReferences,
+  renderReferenceImagesForPrompt,
+  withExtraReferences,
+  type ReferenceImage,
+} from "./specs/references";
 import { castKey, type CastMember } from "./specs/cast";
 import type {
   StylePresetKey,
@@ -23,7 +28,7 @@ import type {
  * Bump when the system prompt below changes. Combined with corpusVersion in
  * seedHashFor() so cached prompts auto-invalidate on prompt edits.
  */
-const SYNTH_PROMPT_VERSION = "v13";
+const SYNTH_PROMPT_VERSION = "v14";
 /** A view name with no spec file, so cast members skip their portrait camera. */
 const CAST_NO_VIEW = "__cast__";
 const SYNTH_MODEL = "claude-opus-5-5";
@@ -127,7 +132,10 @@ When a "Visual Spec — CANON OVERRIDE" block appears in your input:
    attached identity portrait of Galen Voss for his face and the attached
    PROJECT VALKYRIE patch for the chest insignia."). For a [resemblance]
    reference, say to borrow only the family likeness it describes and keep
-   the subject a distinct person. Still describe the
+   the subject a distinct person. For a [keyframe] reference (an earlier
+   still of this same shot), say to keep the same room, architecture,
+   camera position, lens and framing exactly and change only what the
+   Focus describes. Still describe the
    subject in words; the references reinforce the text, they do not replace it.
 9. If "Cast member" blocks appear, the shot places those characters into the
    target (usually a location). Name every cast member in the raw prompt,
@@ -217,6 +225,8 @@ export type SynthesizeVisualPromptInput = {
   state?: string;
   /** Optional characters placed into the shot, each with a wardrobe state. */
   cast?: CastMember[];
+  /** Operator-chosen images ("Use as reference"), e.g. a keyframe partner. */
+  extraReferences?: ReferenceImage[];
   userId?: string | null;
 };
 
@@ -260,9 +270,13 @@ export async function synthesizeVisualPrompt(
     if (!spec) throw new Error(`No visual spec for cast member "${member.id}"`);
     return { member, spec };
   });
-  const referenceImages = mergeShotReferences(
-    entitySpec?.referenceImages ?? [],
-    castSpecs.map((c) => c.spec.referenceImages),
+  const extraReferences = input.extraReferences ?? [];
+  const referenceImages = withExtraReferences(
+    mergeShotReferences(
+      entitySpec?.referenceImages ?? [],
+      castSpecs.map((c) => c.spec.referenceImages),
+    ),
+    extraReferences,
   );
 
   // Spec hash gets folded into seed_hash so cache invalidates whenever any
@@ -273,7 +287,8 @@ export async function synthesizeVisualPrompt(
       : "") +
     (castSpecs.length
       ? `|cast:${castKey(cast)}:${castSpecs.map((c) => c.spec.hash).join(".")}`
-      : "");
+      : "") +
+    (extraReferences.length ? `|extra:${extraReferences.map((r) => r.path).join(",")}` : "");
 
   const seedHash = seedHashFor({
     target: input.target,
@@ -338,6 +353,12 @@ export async function synthesizeVisualPrompt(
     specBlock ? "" : null,
     castBlock,
     castBlock ? "" : null,
+    extraReferences.length
+      ? renderReferenceImagesForPrompt(extraReferences).replace(
+          "## reference images",
+          "## additional reference images",
+        )
+      : "",
     continuityBlock,
     continuityBlock ? "" : null,
     "Corpus passages:",

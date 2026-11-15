@@ -75,6 +75,11 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
   const [view, setView] = useState("");
   const [state, setState] = useState("");
   const [castText, setCastText] = useState("");
+  // Operator-picked reference images (e.g. keyframe partners), sent with
+  // the next prompt so the generator keeps the same room and framing.
+  const [extraRefs, setExtraRefs] = useState<Array<{ path: string; label: string }>>([]);
+  const [extraRefUrl, setExtraRefUrl] = useState("");
+  const [endFrame, setEndFrame] = useState("");
   const [seed, setSeed] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -159,6 +164,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
           view: view.trim() || undefined,
           state: state.trim() || undefined,
           cast: castText.trim() || undefined,
+          extraReferences: extraRefs.length ? extraRefs : undefined,
         }),
       });
       const json = await res.json();
@@ -270,7 +276,13 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
       .filter((r) => r.role === "identity" || r.role === "resemblance")
       .map((r) => ({ value: r.path, label: r.label })),
   ];
+  for (const r of extraRefs) {
+    if (!startFrameOptions.some((o) => o.value === r.path)) {
+      startFrameOptions.push({ value: r.path, label: r.label });
+    }
+  }
   const effectiveStartFrame = startFrame || startFrameOptions[0]?.value || "";
+  const endFrameAllowed = videoModel !== "gen4_turbo";
   // Kling O3 can carry identity portraits next to the start frame so a face
   // revealed mid-shot stays on-model (start frame + up to 6 refs).
   const faceRefs = (promptResult?.referenceImages ?? [])
@@ -290,6 +302,9 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
       };
       if (motionText.trim()) params.motionText = motionText.trim();
       if (spectacle) params.restraint = false;
+      if (endFrame && endFrameAllowed && endFrame !== effectiveStartFrame) {
+        params.endFrameUrl = endFrame;
+      }
       if (isKling(videoModel) && sendFaceRefs && faceRefs.length > 0) {
         params.references = faceRefs.map((r) => ({ path: r.path, label: r.label }));
       }
@@ -473,6 +488,53 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
               placeholder="e.g. galen-voss:mars_surface, aven-voss:mars_surface"
               className={inputCls}
             />
+          </Field>
+          <Field label="Extra reference images (keyframes: same room and camera, change only what Focus says)">
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-2">
+                <input
+                  value={extraRefUrl}
+                  onChange={(e) => setExtraRefUrl(e.target.value)}
+                  placeholder="Paste an image URL, or use the button under a generated still"
+                  className={inputCls}
+                />
+                <button
+                  type="button"
+                  disabled={!extraRefUrl.trim() || extraRefs.length >= 4}
+                  onClick={() => {
+                    const path = extraRefUrl.trim();
+                    setExtraRefs((refs) =>
+                      refs.some((r) => r.path === path)
+                        ? refs
+                        : [...refs, { path, label: `Keyframe ${refs.length + 1}` }],
+                    );
+                    setExtraRefUrl("");
+                  }}
+                  className="rounded-md border border-[var(--color-border)] px-3 text-xs font-semibold text-ink disabled:opacity-50"
+                >
+                  Add
+                </button>
+              </div>
+              {extraRefs.length > 0 && (
+                <ul className="flex flex-wrap gap-2">
+                  {extraRefs.map((r) => (
+                    <li key={r.path} className="flex items-center gap-1.5 rounded-md border border-[var(--color-border)] p-1 pr-2">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={r.path} alt={r.label} className="h-10 w-14 rounded object-cover" />
+                      <span className="text-[11px] text-ink">{r.label}</span>
+                      <button
+                        type="button"
+                        aria-label={`Remove ${r.label}`}
+                        onClick={() => setExtraRefs((refs) => refs.filter((x) => x.path !== r.path))}
+                        className="text-xs text-ink-muted hover:text-ink"
+                      >
+                        ✕
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </Field>
           <Field label="Seed (optional, locks identity across re-rolls)">
             <input
@@ -687,6 +749,23 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
             <video src={assetResult.url} controls className="w-full rounded-md" />
           )}
           <div className="mt-3 flex flex-wrap items-center gap-3">
+            {assetResult.kind === "image" && (
+              <button
+                type="button"
+                onClick={() =>
+                  setExtraRefs((refs) =>
+                    refs.some((r) => r.path === assetResult.url)
+                      ? refs
+                      : [...refs, { path: assetResult.url, label: `Keyframe ${refs.length + 1}` }].slice(0, 4),
+                  )
+                }
+                className="rounded-md border border-[var(--color-border)] bg-warm-white-2 px-4 py-2 text-sm font-semibold text-ink hover:border-clay"
+              >
+                {extraRefs.some((r) => r.path === assetResult.url)
+                  ? "✓ Added as reference"
+                  : "Use as reference for the next prompt"}
+              </button>
+            )}
             <button
               onClick={handleApprove}
               disabled={approving}
@@ -743,6 +822,24 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
                         {o.label}
                       </option>
                     ))}
+                  </select>
+                </label>
+                <label className="text-xs text-ink-muted">
+                  End frame (optional; the clip animates from start to end)
+                  <select
+                    value={endFrameAllowed ? endFrame : ""}
+                    disabled={!endFrameAllowed}
+                    onChange={(e) => setEndFrame(e.target.value)}
+                    className="mt-1 block w-full rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1.5 text-sm text-ink disabled:opacity-50"
+                  >
+                    <option value="">{endFrameAllowed ? "None" : "Not supported by Gen-4 Turbo"}</option>
+                    {startFrameOptions
+                      .filter((o) => o.value !== effectiveStartFrame)
+                      .map((o) => (
+                        <option key={o.value} value={o.value}>
+                          {o.label}
+                        </option>
+                      ))}
                   </select>
                 </label>
                 <div className="flex flex-wrap gap-3">
