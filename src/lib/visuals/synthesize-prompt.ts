@@ -425,7 +425,13 @@ export async function synthesizeVisualPrompt(
       target_id: input.target.id,
       style_preset: input.stylePreset,
       seed_hash: seedHash,
-      prompt_json: castSpecs.length ? { ...prompt, cast } : prompt,
+      // References are saved with the prompt so the studio can reopen a
+      // past generation (Recent generations) with its faces and keyframes.
+      prompt_json: {
+        ...prompt,
+        ...(castSpecs.length ? { cast } : {}),
+        ...(referenceImages.length ? { _referenceImages: referenceImages } : {}),
+      },
       evidence_refs: input.context.evidence,
       synth_model: SYNTH_MODEL,
       synth_prompt_version: SYNTH_PROMPT_VERSION,
