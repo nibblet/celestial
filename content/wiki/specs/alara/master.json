@@ -11,7 +11,12 @@
     "scale": "a_few_threads_to_a_room_spanning_lattice",
     "placement": "high_in_the_space_near_ceilings_upper_rings_far_ends_and_edges_never_centered_at_human_height_never_on_the_floor",
     "distribution": "can_appear_in_several_places_at_once_a_thread_behind_a_shoulder_another_across_an_upper_ring",
-    "motion": "slow_breath_like_pulsing_threads_realign_rather_than_move_retracts_by_unraveling"
+    "motion": "slow_breath_like_pulsing_threads_realign_rather_than_move_retracts_by_unraveling",
+    "modes": {
+      "in_the_skin": "her resting and listening mode: thin veins of light awaken BENEATH the translucent walls and ceiling and run in slow branching curves, gathering toward an upper corner into a spiral under the surface; the ship itself is her body and nothing floats in the air",
+      "in_the_air": "when she chooses to be present: she is visible only where light catches the air, golden beams appearing in faint haze and suspended dust and bending into curving paths that form a slow spiral high in the room; nothing solid, only illuminated air"
+    },
+    "approved_look_2026_11_14": "author chose in_the_skin and in_the_air; rejected literal floating threads, particle murmurations and water caustics as too much"
   },
   "environmental_presence": [
     "ambient_light_rebalancing_toward_the_golden_spectrum_when_she_cares_for_the_crew",
@@ -55,6 +60,10 @@
     "robot_body",
     "floating_screen_ui",
     "chat_bubble_or_waveform_graphics",
-    "harsh_red_or_white_light"
+    "harsh_red_or_white_light",
+    "solid_glowing_threads_or_neon_lines_floating_in_mid_air",
+    "particle_swarm_or_sparkle_storm",
+    "water_caustic_patterns",
+    "hologram_or_projected_graphic"
   ]
 }
