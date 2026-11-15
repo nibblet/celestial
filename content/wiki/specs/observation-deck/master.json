@@ -1,7 +1,9 @@
 {
   "entity": "observation-deck",
   "parent_entity": "valkyrie-1",
-  "aliases": ["The Eye"],
+  "aliases": [
+    "The Eye"
+  ],
   "display_name": "Observation Deck (The Eye), Valkyrie-1, Deck 3",
   "_canon_status": "canon_grounded_from_prose_with_proposed_fill",
   "_provenance": {
@@ -57,5 +59,14 @@
     "industrial_railings_or_grated_floors",
     "bridge_or_cockpit_aesthetic",
     "bright_interior_lighting"
+  ],
+  "reference_images": [
+    {
+      "path": "/visual-references/observation-deck.png",
+      "role": "environment",
+      "label": "Approved Observation Deck (CH07, over Ganymede)",
+      "instruction": "match the room: the seamless dome sweeping down to the deck with its curved pearl-silver edges, the thin warm observation line at hip height, the dark polished reflective floor and the low dark dais; people in this image are not part of the room, place only the cast the shot asks for. The sky changes with the state",
+      "inherit": false
+    }
   ]
 }
