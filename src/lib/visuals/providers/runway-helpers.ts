@@ -83,11 +83,11 @@ export function klingReferencePreamble(labels: string[], hasEndFrame = false): s
 
 /**
  * End frames (promptImage position "last") are documented for Kling O3 on
- * Runway's API. Gen-4.5 is allowed so Runway's response can confirm it;
- * Gen-4 Turbo takes a first frame only.
+ * Runway's API. Gen-4.5 rejects a promptImage array (400, "expected
+ * string", 2026-11-15), and Gen-4 Turbo takes a first frame only.
  */
 export function supportsEndFrame(model: string): boolean {
-  return isKlingO3(model) || model.startsWith("gen4.5");
+  return isKlingO3(model);
 }
 
 /** Runway caps an encoded data URI at 5MB. */

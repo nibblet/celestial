@@ -106,7 +106,7 @@ export const runwayProvider: VisualProvider = {
     const endFrameUrl =
       typeof params.endFrameUrl === "string" && params.endFrameUrl ? params.endFrameUrl : null;
     if (endFrameUrl && !supportsEndFrame(model)) {
-      throw new Error(`${model} doesn't take an end frame; use Gen-4.5 or Kling O3.`);
+      throw new Error(`${model} doesn't take an end frame; use Kling O3.`);
     }
     const firstAndLast = async () => [
       { uri: await resolvePromptImage(promptImageUrl), position: "first" },
@@ -174,7 +174,7 @@ export const runwayProvider: VisualProvider = {
         );
       }
       throw new Error(
-        `Runway create failed (${createRes.status}): ${errText.slice(0, 500)}`,
+        `Runway create failed (${createRes.status}): ${errText.slice(0, 3000)}`,
       );
     }
     const created = (await createRes.json()) as { id?: string };

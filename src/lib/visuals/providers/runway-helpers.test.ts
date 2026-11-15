@@ -81,9 +81,9 @@ test("restraint suffix forbids orbiting and revealing new faces", () => {
   assert.ok(withRestraint("x".repeat(3000), 2400).length <= 2400);
 });
 
-test("end frames: Kling O3 and Gen-4.5 yes, Gen-4 Turbo no; preamble shifts reference tokens", () => {
-  assert.ok(supportsEndFrame("klingO3_pro") && supportsEndFrame("gen4.5"));
-  assert.ok(!supportsEndFrame("gen4_turbo"));
+test("end frames: Kling O3 only; preamble shifts reference tokens", () => {
+  assert.ok(supportsEndFrame("klingO3_pro") && supportsEndFrame("klingO3_standard"));
+  assert.ok(!supportsEndFrame("gen4.5") && !supportsEndFrame("gen4_turbo"));
   const text = klingReferencePreamble(["Galen Voss approved portrait"], true);
   assert.match(text, /<<<image_2>>> is the end frame/);
   assert.match(text, /<<<image_3>>> is Galen Voss approved portrait/);

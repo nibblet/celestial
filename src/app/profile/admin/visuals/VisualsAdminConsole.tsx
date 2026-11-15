@@ -405,7 +405,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
     }
   }
   const effectiveStartFrame = startFrame || startFrameOptions[0]?.value || "";
-  const endFrameAllowed = videoModel !== "gen4_turbo";
+  const endFrameAllowed = isKling(videoModel); // Gen-4.5 / Turbo take a start frame only
   // Kling O3 can carry identity portraits next to the start frame so a face
   // revealed mid-shot stays on-model (start frame + up to 6 refs).
   const faceRefs = (promptResult?.referenceImages ?? [])
@@ -1019,7 +1019,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
                     onChange={(e) => setEndFrame(e.target.value)}
                     className="mt-1 block w-full rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1.5 text-sm text-ink disabled:opacity-50"
                   >
-                    <option value="">{endFrameAllowed ? "None" : "Not supported by Gen-4 Turbo"}</option>
+                    <option value="">{endFrameAllowed ? "None" : "Kling O3 only"}</option>
                     {startFrameOptions
                       .filter((o) => o.value !== effectiveStartFrame)
                       .map((o) => (
