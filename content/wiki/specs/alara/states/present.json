@@ -5,5 +5,15 @@
     "amber"
   ],
   "behavior": "golden_threads_curl_into_simple_geometry_gold_deepening_toward_amber",
-  "intensity": "moderate"
+  "intensity": "moderate",
+  "mode": "in_the_air",
+  "reference_images": [
+    {
+      "path": "/visual-references/alara-present-in-the-air.png",
+      "role": "identity",
+      "label": "ALARA present (approved): light in the air",
+      "instruction": "match how she appears: golden light visible only where it catches haze and suspended dust, bending into a slow spiral high in the room; nothing solid; the room around her stays dim",
+      "inherit": false
+    }
+  ]
 }

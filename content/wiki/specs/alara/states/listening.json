@@ -5,5 +5,15 @@
     "soft_blue"
   ],
   "behavior": "gold_and_blue_threads_pulsing_in_tandem_like_breath",
-  "intensity": "low_to_moderate"
+  "intensity": "low_to_moderate",
+  "mode": "in_the_skin",
+  "reference_images": [
+    {
+      "path": "/visual-references/alara-in-the-skin.png",
+      "role": "identity",
+      "label": "ALARA listening (approved): light in the ship's skin",
+      "instruction": "match how she appears: thin veins of golden light beneath the translucent walls and ceiling, branching and gathering into a spiral under the surface; nothing floats in the air",
+      "inherit": false
+    }
+  ]
 }
