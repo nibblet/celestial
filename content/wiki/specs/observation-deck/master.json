@@ -2,25 +2,60 @@
   "entity": "observation-deck",
   "parent_entity": "valkyrie-1",
   "aliases": ["The Eye"],
+  "display_name": "Observation Deck (The Eye), Valkyrie-1, Deck 3",
+  "_canon_status": "canon_grounded_from_prose_with_proposed_fill",
+  "_provenance": {
+    "canon": [
+      "full celestial dome for quiet reflection; ALARA mostly silent here (wiki, series bible)",
+      "a transparent surface you can touch and see your reflection in: 'one hand resting against the viewport', 'his gaze drift toward the reflection in the glass' (CH07 S5)",
+      "a far edge and an 'observation line' where the dome meets the deck (CH07 S5, CH14 S2)",
+      "'The floor beneath him was warm' (CH13 S3)",
+      "a central console that nobody uses: 'No one sat at the central console', 'No console was active' (CH14 S2, CH16 S4)",
+      "room for the whole crew to gather; Jonah stands in the center (CH07 S5, CH14 S2)",
+      "Deck 3, entered from the central corridor through a doorway frame (CH14 S2)"
+    ],
+    "proposed": [
+      "materials and the low central dais, matched to the command dome and the ship's organic crystalline language",
+      "the observation line as a thin warm seam of light at hip height"
+    ],
+    "conflicts": [
+      "prose says 'viewport', 'window' and 'port'; the spec keeps one seamless transparent dome with no frames or mullions (specs win). The glass still reflects and can be touched",
+      "prose places the deck 'aft' once (CH07 S3); the wiki says 'forward'. Not visible from inside, so left open",
+      "the old violet 'emotional pulse' is replaced by the corrected color semantics: gold = presence, violet = hesitation, grief = dimming"
+    ]
+  },
   "classification": "celestial_observation_dome",
   "ring": "inner_ring",
-  "purpose": "vast forward dome with full celestial exposure, designed for quiet reflection",
+  "purpose": "vast dome with full celestial exposure, designed for quiet reflection and for the whole crew to gather",
   "spatial_character": {
-    "geometry": "full_celestial_dome_with_no_visible_floor_horizon_break",
-    "scale": "vast_open_silent",
-    "behavior": "emotional_echoes_from_crew_create_brief_color_pulses_or_starlight_shifts",
-    "alara_presence": "silent_unless_alignment_breaks"
+    "geometry": "one_seamless_transparent_dome_sweeping_down_to_meet_a_shallow_circular_deck_at_hip_height",
+    "observation_line": "a_thin_continuous_seam_of_warm_light_where_the_dome_meets_the_deck_rim",
+    "deck": "dark_polished_crystalline_floor_slightly_dished_toward_the_center_warm_underfoot_faintly_reflecting_the_sky",
+    "center": "a_low_dark_sculpted_dais_dormant_and_unlit_the_central_console_nobody_uses",
+    "entrance": "a_single_soft_arched_doorway_from_the_central_corridor",
+    "scale": "vast_open_silent_people_look_small_against_the_sky",
+    "behavior": "brief_shifts_in_starlight_or_a_faint_shimmer_in_the_resonance_field_when_the_crew_is_aligned"
+  },
+  "materials": {
+    "dome": "flawless_transparent_crystal_with_a_faint_pearl_sheen_and_soft_reflections_of_the_room",
+    "structure": "pearl_silver_organic_crystalline_alloy_continuous_with_the_hull_no_panels_or_seams",
+    "deck": "dark_polished_crystalline_surface"
   },
   "lighting": {
-    "default_state": "near_dark_with_unmediated_starfield_dominance",
-    "color_temperature_emphasis": "starlight_only_with_occasional_violet_emotional_pulse",
-    "atmosphere": "cathedral_quiet_observatory_silence"
+    "default_state": "near_dark_the_sky_is_the_main_light",
+    "sources": "starlight_and_reflected_planet_light_plus_the_faint_warm_observation_line",
+    "color": "cool_starlight_with_warm_cream_and_ochre_from_jupiter_when_it_is_in_view",
+    "atmosphere": "cathedral_quiet_observatory_silence",
+    "people": "lit_mostly_from_the_sky_so_they_read_as_silhouettes_or_rim_lit_figures"
   },
   "avoid": [
-    "viewport_window_frames",
+    "viewport_window_frames_or_mullions",
+    "panel_seams_or_struts_across_the_glass",
     "telescope_or_instrument_clusters",
-    "navigation_consoles",
+    "screens_holograms_or_lit_consoles",
     "seating_in_rows",
-    "industrial_observation_deck_railings"
+    "industrial_railings_or_grated_floors",
+    "bridge_or_cockpit_aesthetic",
+    "bright_interior_lighting"
   ]
 }

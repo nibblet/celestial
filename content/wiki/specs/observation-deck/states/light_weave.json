@@ -1,0 +1,8 @@
+{
+  "state": "light_weave",
+  "_source": "CH07 S5, CH13 S3, CH14, CH16",
+  "presence": "alara_present_as_a_faint_golden_light_weave_in_the_upper_atmosphere_of_the_dome_light_only_where_it_catches_haze_no_form",
+  "behavior": "the_dome_seems_to_flex_inward_very_slightly_old_constellations_bend_inward",
+  "palette": ["warm_gold", "starlight_white"],
+  "avoid": ["wings_or_figure_shapes", "particle_swarms", "solid_light_objects"]
+}
