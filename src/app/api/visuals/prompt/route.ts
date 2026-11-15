@@ -3,6 +3,8 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { buildVisualCorpusContext } from "@/lib/visuals/corpus-context";
 import { synthesizeVisualPrompt } from "@/lib/visuals/synthesize-prompt";
 import { parseCast, type CastMember } from "@/lib/visuals/specs/cast";
+import { parseExtraReferences } from "@/lib/visuals/specs/references";
+import type { ReferenceImage } from "@/lib/visuals/specs/references";
 import { DEFAULT_STYLE_PRESET, STYLE_PRESETS } from "@/lib/visuals/style-presets";
 import type {
   StylePresetKey,
@@ -56,6 +58,7 @@ export async function POST(request: Request) {
     view?: string;
     state?: string;
     cast?: unknown;
+    extraReferences?: unknown;
   };
   try {
     body = await request.json();
@@ -87,8 +90,10 @@ export async function POST(request: Request) {
   }
 
   let cast: CastMember[];
+  let extraReferences: ReferenceImage[];
   try {
     cast = parseCast(body.cast);
+    extraReferences = parseExtraReferences(body.extraReferences);
   } catch (err) {
     return Response.json(
       { error: err instanceof Error ? err.message : "Invalid cast" },
@@ -112,6 +117,7 @@ export async function POST(request: Request) {
       view: body.view?.trim() || undefined,
       state: body.state?.trim() || undefined,
       cast,
+      extraReferences,
       userId: auth.userId,
     });
     return Response.json({

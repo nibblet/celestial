@@ -67,14 +67,27 @@ export function runwayRatioFor(model: string, aspect: string): string {
  * Opening lines for a Kling O3 prompt that tell the model what each
  * attached image is, using its <<<image_N>>> tokens.
  */
-export function klingReferencePreamble(labels: string[]): string {
+export function klingReferencePreamble(labels: string[], hasEndFrame = false): string {
   const lines = ["<<<image_1>>> is the start frame; continue it exactly."];
+  if (hasEndFrame) {
+    lines.push("<<<image_2>>> is the end frame; the clip must arrive exactly at it.");
+  }
+  const offset = hasEndFrame ? 3 : 2;
   labels.forEach((label, i) => {
     lines.push(
-      `<<<image_${i + 2}>>> is ${label}: if this person's face becomes visible, it must be this face.`,
+      `<<<image_${i + offset}>>> is ${label}: if this person's face becomes visible, it must be this face.`,
     );
   });
   return lines.join(" ");
+}
+
+/**
+ * End frames (promptImage position "last") are documented for Kling O3 on
+ * Runway's API. Gen-4.5 rejects a promptImage array (400, "expected
+ * string", 2026-11-15), and Gen-4 Turbo takes a first frame only.
+ */
+export function supportsEndFrame(model: string): boolean {
+  return isKlingO3(model);
 }
 
 /** Runway caps an encoded data URI at 5MB. */

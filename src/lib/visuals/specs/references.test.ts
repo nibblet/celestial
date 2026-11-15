@@ -4,7 +4,9 @@ import assert from "node:assert/strict";
 import {
   collectReferenceImages,
   mergeShotReferences,
+  parseExtraReferences,
   renderReferenceImagesForPrompt,
+  withExtraReferences,
 } from "./references";
 
 const patch = {
@@ -124,4 +126,25 @@ test("shot references: cast faces first, then place, then wardrobe; no resemblan
     "/p/suit.png",
   ]);
   assert.equal(out.find((r) => r.path === "/p/galen.png")!.role, "identity");
+});
+
+test("extra references: parsed as keyframes, placed after identities, deduped, capped", () => {
+  const extras = parseExtraReferences([
+    { path: "https://example.supabase.co/storage/v1/object/public/a.png" },
+    { path: "/visual-references/alara-in-the-skin.png", label: "Lab keyframe" },
+  ]);
+  assert.equal(extras[0].role, "keyframe");
+  assert.equal(extras[0].label, "Keyframe reference 1");
+  assert.match(extras[0].instruction!, /camera position/);
+  assert.equal(extras[1].label, "Lab keyframe");
+  assert.deepEqual(parseExtraReferences(undefined), []);
+  assert.throws(() => parseExtraReferences("x"), /array/);
+  assert.throws(() => parseExtraReferences([{ path: "/etc/passwd" }]), /https URL/);
+  assert.throws(() => parseExtraReferences([{ path: "http://x/a.png" }]), /https URL/);
+  assert.throws(() => parseExtraReferences(Array(5).fill({ path: "https://x/a.png" })), /At most 4/);
+
+  const refs = collectReferenceImages([{ name: "m", data: { reference_images: [portrait, patch] } }]);
+  const out = withExtraReferences(refs, [...extras, { ...extras[0] }]);
+  assert.deepEqual(out.map((r) => r.role), ["identity", "keyframe", "keyframe", "insignia"]);
+  assert.match(renderReferenceImagesForPrompt(out), /\[keyframe\] images are an earlier still/);
 });

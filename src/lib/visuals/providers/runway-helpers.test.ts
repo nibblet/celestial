@@ -11,6 +11,7 @@ import {
   runwayRatioFor,
   klingReferencePreamble,
   isKlingO3,
+  supportsEndFrame,
   toDataUri,
 } from "./runway-helpers";
 
@@ -78,4 +79,12 @@ test("restraint suffix forbids orbiting and revealing new faces", () => {
   assert.match(RUNWAY_RESTRAINT_SUFFIX, /no orbiting/);
   assert.match(RUNWAY_RESTRAINT_SUFFIX, /no new faces are revealed/);
   assert.ok(withRestraint("x".repeat(3000), 2400).length <= 2400);
+});
+
+test("end frames: Kling O3 only; preamble shifts reference tokens", () => {
+  assert.ok(supportsEndFrame("klingO3_pro") && supportsEndFrame("klingO3_standard"));
+  assert.ok(!supportsEndFrame("gen4.5") && !supportsEndFrame("gen4_turbo"));
+  const text = klingReferencePreamble(["Galen Voss approved portrait"], true);
+  assert.match(text, /<<<image_2>>> is the end frame/);
+  assert.match(text, /<<<image_3>>> is Galen Voss approved portrait/);
 });

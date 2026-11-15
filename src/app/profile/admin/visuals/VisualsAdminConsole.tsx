@@ -33,6 +33,24 @@ type AssetResponse = {
   approved?: boolean;
 };
 
+type RecentItem = {
+  assetId: string;
+  promptId: string;
+  kind: "image" | "video";
+  url: string;
+  approved: boolean;
+  provider: string;
+  providerModel: string;
+  createdAt: string;
+  targetKind: string;
+  targetId: string | null;
+  prompt: PromptResponse["prompt"];
+  referenceImages: ReferenceImage[];
+};
+
+/** Studio state survives navigating away (per browser). */
+const STORAGE_KEY = "celestial.visualsStudio.v1";
+
 const TARGET_KINDS = ["entity", "story", "scene", "freeform"] as const;
 const ASPECTS = ["16:9", "9:16", "1:1", "4:5", "3:2"] as const;
 const INTENTS = ["portrait", "establishing_shot", "scene_moment", "motion_loop"] as const;
@@ -75,6 +93,11 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
   const [view, setView] = useState("");
   const [state, setState] = useState("");
   const [castText, setCastText] = useState("");
+  // Operator-picked reference images (e.g. keyframe partners), sent with
+  // the next prompt so the generator keeps the same room and framing.
+  const [extraRefs, setExtraRefs] = useState<Array<{ path: string; label: string }>>([]);
+  const [extraRefUrl, setExtraRefUrl] = useState("");
+  const [endFrame, setEndFrame] = useState("");
   const [seed, setSeed] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -104,6 +127,110 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
     visionExtracted: boolean;
     identity: Record<string, unknown> | null;
   } | null>(null);
+
+  const [recent, setRecent] = useState<RecentItem[]>([]);
+  const [recentStatus, setRecentStatus] = useState<"idle" | "loading" | "error">("idle");
+  const [restored, setRestored] = useState(false);
+
+  async function loadRecent() {
+    setRecentStatus("loading");
+    try {
+      const res = await fetch("/api/visuals/recent?limit=24", { cache: "no-store" });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error ?? "Failed");
+      setRecent(json.items ?? []);
+      setRecentStatus("idle");
+    } catch {
+      setRecentStatus("error");
+    }
+  }
+
+  // Restore the last session's studio state once, after mount.
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const v = JSON.parse(raw) as Record<string, unknown>;
+        const str = (k: string) => (typeof v[k] === "string" ? (v[k] as string) : undefined);
+        if (str("targetKind")) setTargetKind(str("targetKind") as (typeof TARGET_KINDS)[number]);
+        if (str("targetId") !== undefined) setTargetId(str("targetId")!);
+        if (str("focus") !== undefined) setFocus(str("focus")!);
+        if (str("stylePreset")) setStylePreset(str("stylePreset")!);
+        if (str("aspect")) setAspect(str("aspect") as (typeof ASPECTS)[number]);
+        if (str("intent")) setIntent(str("intent") as (typeof INTENTS)[number]);
+        if (str("view") !== undefined) setView(str("view")!);
+        if (str("state") !== undefined) setState(str("state")!);
+        if (str("castText") !== undefined) setCastText(str("castText")!);
+        if (str("startFrame") !== undefined) setStartFrame(str("startFrame")!);
+        if (str("endFrame") !== undefined) setEndFrame(str("endFrame")!);
+        if (str("motionText") !== undefined) setMotionText(str("motionText")!);
+        if (str("videoModel")) setVideoModel(str("videoModel") as VideoModel);
+        if (typeof v.videoDuration === "number") setVideoDuration(v.videoDuration);
+        if (typeof v.spectacle === "boolean") setSpectacle(v.spectacle);
+        if (Array.isArray(v.extraRefs)) setExtraRefs(v.extraRefs as typeof extraRefs);
+        if (v.promptResult) setPromptResult(v.promptResult as PromptResponse);
+        if (v.assetResult) setAssetResult(v.assetResult as AssetResponse);
+        if (v.videoResult) setVideoResult(v.videoResult as AssetResponse);
+      }
+    } catch {
+      // Corrupt or blocked storage: start fresh.
+    }
+    setRestored(true);
+    void loadRecent();
+  }, []);
+
+  useEffect(() => {
+    if (!restored) return;
+    try {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          targetKind, targetId, focus, stylePreset, aspect, intent, view, state, castText,
+          startFrame, endFrame, motionText, videoModel, videoDuration, spectacle, extraRefs,
+          promptResult, assetResult, videoResult,
+        }),
+      );
+    } catch {
+      // Storage full or blocked; the Recent strip still has everything.
+    }
+  }, [
+    restored, targetKind, targetId, focus, stylePreset, aspect, intent, view, state, castText,
+    startFrame, endFrame, motionText, videoModel, videoDuration, spectacle, extraRefs,
+    promptResult, assetResult, videoResult,
+  ]);
+
+  function openRecent(item: RecentItem) {
+    setError(null);
+    setPromptResult({
+      promptId: item.promptId,
+      prompt: item.prompt,
+      cached: true,
+      referenceImages: item.referenceImages,
+      evidence: [],
+      corpusVersion: "",
+    });
+    if (TARGET_KINDS.includes(item.targetKind as (typeof TARGET_KINDS)[number])) {
+      setTargetKind(item.targetKind as (typeof TARGET_KINDS)[number]);
+    }
+    setTargetId(item.targetId ?? "");
+    const asset = { assetId: item.assetId, url: item.url, kind: item.kind, cached: true, approved: item.approved };
+    if (item.kind === "image") {
+      setAssetResult(asset);
+      setVideoResult(null);
+      setStartFrame(item.url);
+    } else {
+      setVideoResult(asset);
+    }
+    setEndFrame("");
+  }
+
+  function addExtraRef(path: string) {
+    setExtraRefs((refs) =>
+      refs.some((r) => r.path === path) || refs.length >= 4
+        ? refs
+        : [...refs, { path, label: `Keyframe ${refs.length + 1}` }],
+    );
+  }
 
   useEffect(() => {
     if (targetKind !== "entity" || !targetId.trim()) {
@@ -159,6 +286,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
           view: view.trim() || undefined,
           state: state.trim() || undefined,
           cast: castText.trim() || undefined,
+          extraReferences: extraRefs.length ? extraRefs : undefined,
         }),
       });
       const json = await res.json();
@@ -224,6 +352,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Generation failed");
       setAssetResult(json);
+      void loadRecent();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Generation failed");
     } finally {
@@ -270,7 +399,13 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
       .filter((r) => r.role === "identity" || r.role === "resemblance")
       .map((r) => ({ value: r.path, label: r.label })),
   ];
+  for (const r of extraRefs) {
+    if (!startFrameOptions.some((o) => o.value === r.path)) {
+      startFrameOptions.push({ value: r.path, label: r.label });
+    }
+  }
   const effectiveStartFrame = startFrame || startFrameOptions[0]?.value || "";
+  const endFrameAllowed = isKling(videoModel); // Gen-4.5 / Turbo take a start frame only
   // Kling O3 can carry identity portraits next to the start frame so a face
   // revealed mid-shot stays on-model (start frame + up to 6 refs).
   const faceRefs = (promptResult?.referenceImages ?? [])
@@ -290,6 +425,9 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
       };
       if (motionText.trim()) params.motionText = motionText.trim();
       if (spectacle) params.restraint = false;
+      if (endFrame && endFrameAllowed && endFrame !== effectiveStartFrame) {
+        params.endFrameUrl = endFrame;
+      }
       if (isKling(videoModel) && sendFaceRefs && faceRefs.length > 0) {
         params.references = faceRefs.map((r) => ({ path: r.path, label: r.label }));
       }
@@ -307,6 +445,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Runway generation failed");
       setVideoResult(json);
+      void loadRecent();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Runway generation failed");
     } finally {
@@ -337,6 +476,75 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
 
   return (
     <div className="space-y-6">
+      <section className="rounded-xl border border-[var(--color-border)] bg-warm-white p-5">
+        <div className="mb-2 flex items-baseline justify-between gap-3">
+          <h2 className="type-meta text-ink">Recent generations</h2>
+          <button
+            type="button"
+            onClick={() => void loadRecent()}
+            className="text-xs text-ink-muted hover:text-ink"
+          >
+            {recentStatus === "loading" ? "Loading…" : "Refresh"}
+          </button>
+        </div>
+        <p className="mb-3 max-w-prose text-xs text-ink-muted">
+          Every still and clip is saved. <strong>Open</strong> loads one back into the studio
+          (its prompt, so you can animate or approve it); <strong>+ Ref</strong> adds a still to the
+          extra references, where it also becomes a start or end frame option.
+        </p>
+        {recentStatus === "error" && (
+          <p className="text-xs text-red-700">Couldn&apos;t load recent generations.</p>
+        )}
+        {recent.length > 0 && (
+          <ul className="flex gap-3 overflow-x-auto pb-2">
+            {recent.map((item) => {
+              const isOpen =
+                item.assetId === assetResult?.assetId || item.assetId === videoResult?.assetId;
+              const isRef = extraRefs.some((r) => r.path === item.url);
+              return (
+                <li
+                  key={item.assetId}
+                  className={`w-40 shrink-0 rounded-md border p-1.5 ${isOpen ? "border-clay" : "border-[var(--color-border)]"}`}
+                >
+                  {item.kind === "image" ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={item.url} alt="" className="h-24 w-full rounded object-cover" />
+                  ) : (
+                    <video src={item.url} muted preload="metadata" className="h-24 w-full rounded object-cover" />
+                  )}
+                  <div className="mt-1 truncate text-[11px] font-semibold text-ink" title={item.targetId ?? item.targetKind}>
+                    {item.targetId ?? item.targetKind}
+                    {item.approved ? " ✓" : ""}
+                  </div>
+                  <div className="text-[10px] text-ink-ghost">
+                    {item.kind} · {new Date(item.createdAt).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}
+                  </div>
+                  <div className="mt-1 flex gap-1">
+                    <button
+                      type="button"
+                      onClick={() => openRecent(item)}
+                      className="flex-1 rounded border border-[var(--color-border)] px-1 py-0.5 text-[11px] font-semibold text-ink hover:border-clay"
+                    >
+                      Open
+                    </button>
+                    {item.kind === "image" && (
+                      <button
+                        type="button"
+                        disabled={isRef || extraRefs.length >= 4}
+                        onClick={() => addExtraRef(item.url)}
+                        className="flex-1 rounded border border-[var(--color-border)] px-1 py-0.5 text-[11px] font-semibold text-ink hover:border-clay disabled:opacity-50"
+                      >
+                        {isRef ? "✓ Ref" : "+ Ref"}
+                      </button>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </section>
+
       <section className="rounded-xl border border-[var(--color-border)] bg-warm-white p-5">
         <h2 className="type-meta mb-2 text-ink">0. Identity reference (optional)</h2>
         <p className="mb-4 max-w-prose text-xs text-ink-muted">
@@ -473,6 +681,53 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
               placeholder="e.g. galen-voss:mars_surface, aven-voss:mars_surface"
               className={inputCls}
             />
+          </Field>
+          <Field label="Extra reference images (keyframes: same room and camera, change only what Focus says)">
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-2">
+                <input
+                  value={extraRefUrl}
+                  onChange={(e) => setExtraRefUrl(e.target.value)}
+                  placeholder="Paste an image URL, or use the button under a generated still"
+                  className={inputCls}
+                />
+                <button
+                  type="button"
+                  disabled={!extraRefUrl.trim() || extraRefs.length >= 4}
+                  onClick={() => {
+                    const path = extraRefUrl.trim();
+                    setExtraRefs((refs) =>
+                      refs.some((r) => r.path === path)
+                        ? refs
+                        : [...refs, { path, label: `Keyframe ${refs.length + 1}` }],
+                    );
+                    setExtraRefUrl("");
+                  }}
+                  className="rounded-md border border-[var(--color-border)] px-3 text-xs font-semibold text-ink disabled:opacity-50"
+                >
+                  Add
+                </button>
+              </div>
+              {extraRefs.length > 0 && (
+                <ul className="flex flex-wrap gap-2">
+                  {extraRefs.map((r) => (
+                    <li key={r.path} className="flex items-center gap-1.5 rounded-md border border-[var(--color-border)] p-1 pr-2">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={r.path} alt={r.label} className="h-10 w-14 rounded object-cover" />
+                      <span className="text-[11px] text-ink">{r.label}</span>
+                      <button
+                        type="button"
+                        aria-label={`Remove ${r.label}`}
+                        onClick={() => setExtraRefs((refs) => refs.filter((x) => x.path !== r.path))}
+                        className="text-xs text-ink-muted hover:text-ink"
+                      >
+                        ✕
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </Field>
           <Field label="Seed (optional, locks identity across re-rolls)">
             <input
@@ -687,6 +942,17 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
             <video src={assetResult.url} controls className="w-full rounded-md" />
           )}
           <div className="mt-3 flex flex-wrap items-center gap-3">
+            {assetResult.kind === "image" && (
+              <button
+                type="button"
+                onClick={() => addExtraRef(assetResult.url)}
+                className="rounded-md border border-[var(--color-border)] bg-warm-white-2 px-4 py-2 text-sm font-semibold text-ink hover:border-clay"
+              >
+                {extraRefs.some((r) => r.path === assetResult.url)
+                  ? "✓ Added as reference"
+                  : "Use as reference for the next prompt"}
+              </button>
+            )}
             <button
               onClick={handleApprove}
               disabled={approving}
@@ -743,6 +1009,24 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
                         {o.label}
                       </option>
                     ))}
+                  </select>
+                </label>
+                <label className="text-xs text-ink-muted">
+                  End frame (optional; the clip animates from start to end)
+                  <select
+                    value={endFrameAllowed ? endFrame : ""}
+                    disabled={!endFrameAllowed}
+                    onChange={(e) => setEndFrame(e.target.value)}
+                    className="mt-1 block w-full rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1.5 text-sm text-ink disabled:opacity-50"
+                  >
+                    <option value="">{endFrameAllowed ? "None" : "Kling O3 only"}</option>
+                    {startFrameOptions
+                      .filter((o) => o.value !== effectiveStartFrame)
+                      .map((o) => (
+                        <option key={o.value} value={o.value}>
+                          {o.label}
+                        </option>
+                      ))}
                   </select>
                 </label>
                 <div className="flex flex-wrap gap-3">
@@ -824,6 +1108,11 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
               ? "Animating (~1–3 min)…"
               : `Animate with ${VIDEO_MODELS.find((v) => v.key === videoModel)!.short}`}
           </button>
+          {error && (
+            <p className="mt-3 whitespace-pre-wrap break-words rounded-md border border-red-300 bg-red-50 p-3 text-xs text-red-800">
+              {error}
+            </p>
+          )}
         </section>
       )}
 

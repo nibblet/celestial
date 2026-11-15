@@ -9,11 +9,19 @@
   "mode": "in_the_skin",
   "reference_images": [
     {
+      "path": "/visual-references/alara-lab-in-the-walls.png",
+      "role": "identity",
+      "label": "ALARA listening, keyframe pair (approved): veins in the lab walls",
+      "instruction": "match how her light appears: thin golden veins inside the wall and ceiling surfaces, following their curves and gathering into a spiral; the air is clear. The room itself (crystal shelves, leaf-shaped door, work tables) only applies when the shot is set in this lab",
+      "inherit": false
+    },
+    {
       "path": "/visual-references/alara-in-the-skin.png",
       "role": "identity",
       "label": "ALARA listening (approved): light in the ship's skin",
       "instruction": "match how she appears: thin veins of golden light beneath the translucent walls and ceiling, branching and gathering into a spiral under the surface; nothing floats in the air",
       "inherit": false
     }
-  ]
+  ],
+  "_keyframe_pair": "alara-lab-in-the-walls.png (listening) and alara-lab-in-the-air.png (present) are the same room and camera; animate one into the other with Kling O3 start/end frames (clip 2026-11-15, 8s)."
 }
