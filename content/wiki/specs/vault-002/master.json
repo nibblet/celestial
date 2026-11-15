@@ -16,6 +16,9 @@
     "right_angle_rooms",
     "machinery",
     "skulls_or_tomb_props",
-    "cyan_sci_fi_glow"
+    "cyan_sci_fi_glow",
+    "wall_panels_screens_or_machinery",
+    "giant_glowing_logo_or_emblem",
+    "industrial_sci_fi_corridor"
   ]
 }
