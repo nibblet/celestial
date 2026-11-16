@@ -44,7 +44,7 @@ export default async function ProfileFavoritesPage() {
             href="/stories"
             className="type-ui mt-3 inline-block text-sm text-clay hover:text-clay-mid"
           >
-            Browse stories &rarr;
+            Browse chapters &rarr;
           </Link>
         </div>
       )}

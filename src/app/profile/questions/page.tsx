@@ -12,7 +12,7 @@ import type {
 export const metadata: Metadata = {
   title: "My questions",
   description:
-    "Questions you've asked about Keith's stories and the answers you've received.",
+    "Questions you've sent to the author and the answers you've received.",
 };
 
 type QuestionRow = {
@@ -90,8 +90,8 @@ export default async function ProfileQuestionsPage() {
 
       <h1 className="type-page-title mb-2">My questions</h1>
       <p className="mb-8 font-[family-name:var(--font-lora)] text-base leading-relaxed text-ink-muted">
-        Questions you&apos;ve asked about Keith&apos;s stories, and the
-        answers that come back from the library.
+        Questions you&apos;ve sent to the author, and the answers that
+        come back.
       </p>
 
       {rows.length === 0 && (
@@ -100,8 +100,7 @@ export default async function ProfileQuestionsPage() {
             You haven&apos;t asked any questions yet.
           </p>
           <p className="font-[family-name:var(--font-lora)] text-sm text-ink-muted">
-            At the bottom of any chapter you can ask a question about
-            Keith&apos;s stories — it will show up here when an answer is ready.
+            Answers from the author will show up here.
           </p>
         </div>
       )}
@@ -168,7 +167,7 @@ export default async function ProfileQuestionsPage() {
               {chapterAnswer && !primaryAnswer && (
                 <div className="rounded-lg border border-clay-border bg-gold-pale/40 p-4">
                   <p className="type-meta mb-2 text-clay">
-                    Keith turned this into a story
+                    The author turned this into a story
                   </p>
                   <p className="font-[family-name:var(--font-lora)] text-sm text-ink-muted">
                     Your question inspired a new chapter. It&apos;ll appear in

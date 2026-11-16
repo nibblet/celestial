@@ -26,7 +26,10 @@ export default function LoginPage() {
       setError(error.message);
       setLoading(false);
     } else {
-      window.location.href = "/";
+      const next = new URLSearchParams(window.location.search).get("next");
+      // Only follow same-site paths.
+      window.location.href =
+        next && next.startsWith("/") && !next.startsWith("//") ? next : "/";
     }
   }
 
@@ -36,12 +39,14 @@ export default function LoginPage() {
         <div className="mb-8 text-center">
           <h1 className="type-page-title text-3xl">{book.title}</h1>
           <h2 className="type-page-title mt-1 text-3xl">Sign in</h2>
-          <p className="type-ui mt-3 text-ink-muted">{book.tagline}</p>
+          <p className="type-ui mt-3 text-ink-muted">
+            Pick up where you left off.
+          </p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">
           {error && (
-            <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+            <div className="notice-error rounded-lg p-3 text-sm">
               {error}
             </div>
           )}
@@ -60,7 +65,8 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
               className="type-ui w-full rounded-lg border border-[var(--color-border)] bg-warm-white px-3 py-2 text-ink"
-              placeholder="you@family.com"
+              placeholder="you@example.com"
+              autoComplete="email"
             />
           </div>
 
@@ -79,6 +85,7 @@ export default function LoginPage() {
               required
               className="type-ui w-full rounded-lg border border-[var(--color-border)] bg-warm-white px-3 py-2 text-ink"
               placeholder="Your password"
+              autoComplete="current-password"
             />
           </div>
 
@@ -91,7 +98,13 @@ export default function LoginPage() {
           </button>
 
           <p className="type-ui text-center text-sm text-ink-muted">
-            New here?{" "}
+            <Link
+              href="/"
+              className="text-ink-muted underline-offset-2 hover:underline"
+            >
+              Back to the book
+            </Link>
+            {" · "}New here?{" "}
             <Link
               href="/signup"
               className="text-burgundy underline-offset-2 hover:underline"

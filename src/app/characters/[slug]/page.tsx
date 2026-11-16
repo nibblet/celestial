@@ -9,6 +9,8 @@ import { PersonMediaPanel } from "@/components/people/PersonMediaPanel";
 import { TIER_SHORT_LABEL } from "@/lib/wiki/people-tiers";
 import { getReaderProgress, isStoryUnlocked } from "@/lib/progress/reader-progress";
 import { EntityLoreCard } from "@/components/entities/EntityLoreCard";
+import { CodexLocked, getCodexLock } from "@/components/entities/CodexGate";
+import { getLastChapterNumber } from "@/lib/progress/reader-progress";
 import { EntityDossier } from "@/components/entities/EntityDossier";
 import { CanonDossierCard } from "@/components/entities/CanonDossierCard";
 import { extractAuthoredBody, renderWikilinks } from "@/lib/wiki/authored-body";
@@ -38,6 +40,9 @@ export default async function CharacterDetailPage({
   const person = getPersonBySlug(slug);
   if (!person) notFound();
 
+  const lock = await getCodexLock("characters", slug);
+  if (lock) return <CodexLocked progress={lock} />;
+
   const supabase = await createClient();
   const { data: dbPerson } = await supabase
     .from("sb_people")
@@ -47,14 +52,18 @@ export default async function CharacterDetailPage({
 
   const { isAuthorSpecialAccess } = await getAuthenticatedProfileContext();
   const progress = await getReaderProgress();
-  const arc = getCharacterArcBySlug(slug);
+  // The arc ledger spans the whole book — only offer it to finished readers.
+  const bookFinished =
+    progress.showAllContent ||
+    progress.currentChapterNumber >= getLastChapterNumber();
+  const arc = bookFinished ? getCharacterArcBySlug(slug) : null;
   const visuals = await listEntityVisuals(slug);
 
   const refCount =
     person.memoirStoryIds.length + person.interviewStoryIds.length;
 
   const memoirHeading =
-    person.wikiSource === "characters" ? "Appearances" : "Memoir stories";
+    person.wikiSource === "characters" ? "Appearances" : "Chapters";
   const interviewHeading =
     person.wikiSource === "characters"
       ? "Additional appearances"
@@ -143,7 +152,7 @@ export default async function CharacterDetailPage({
                   Draft
                 </span>
                 <span className="type-meta normal-case tracking-normal text-ink-ghost">
-                  AI-generated from memoir &amp; interview passages
+                  Drafted by AI from the chapters
                   {person.aiDraftGeneratedAt ? ` · ${person.aiDraftGeneratedAt}` : ""}{" "}
                   · awaiting author review
                 </span>

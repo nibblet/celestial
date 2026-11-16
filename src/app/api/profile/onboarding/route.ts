@@ -37,14 +37,30 @@ export async function POST(request: Request) {
     return Response.json({ ok: true, replay: true });
   }
 
-  const { error } = await supabase
-    .from("sb_profiles")
-    .update({
-      has_onboarded: true,
-      onboarded_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    })
-    .eq("id", user.id);
+  // Update, then insert if there was no row: nothing creates a cel_profiles
+  // row at sign-up, so a new reader's first visit here is what creates it.
+  // (Not an upsert — readers have no UPDATE grant on `id`, which a merging
+  // upsert would need.)
+  const now = new Date().toISOString();
+  const displayName =
+    typeof user.user_metadata?.display_name === "string"
+      ? user.user_metadata.display_name.trim()
+      : "";
+  const flags = { has_onboarded: true, onboarded_at: now, updated_at: now };
+
+  const { data: updated, error: updateError } = await supabase
+    .from("cel_profiles")
+    .update(flags)
+    .eq("id", user.id)
+    .select("id");
+  let error = updateError;
+  if (!error && (updated ?? []).length === 0) {
+    ({ error } = await supabase.from("cel_profiles").insert({
+      id: user.id,
+      ...(displayName ? { display_name: displayName } : {}),
+      ...flags,
+    }));
+  }
 
   if (error) {
     return Response.json({ error: error.message }, { status: 500 });

@@ -3,7 +3,6 @@
 import { Suspense, useState, useRef, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { useAgeMode } from "@/hooks/useAgeMode";
-import type { AgeMode } from "@/types";
 import { book } from "@/config/book";
 import Link from "next/link";
 import ReactMarkdown, { type Components } from "react-markdown";
@@ -12,18 +11,15 @@ import type {
   AskReaderMode,
 } from "@/lib/ai/ask-evidence";
 
-const ASK_MODE_STORAGE_KEY = "celestial_ask_mode";
+/** Readers get one answer mode; the Deep/Fast switch was implementation detail. */
+const ASK_MODE: AskReaderMode = "deep";
 
-function readStoredAskMode(): AskReaderMode {
-  if (typeof window === "undefined") return "deep";
-  try {
-    const v = window.localStorage.getItem(ASK_MODE_STORAGE_KEY);
-    if (v === "fast" || v === "deep") return v;
-  } catch {
-    /* ignore */
-  }
-  return "deep";
-}
+type AskContext = {
+  wholeBook: boolean;
+  through: number;
+  throughTitle: string | null;
+  suggestions: string[];
+};
 
 const ASSISTANT_MARKDOWN_COMPONENTS: Components = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -125,7 +121,7 @@ function AskSourcesDisclosure({
           </ul>
         </div>
         {evidence.responseSuperseded ? (
-          <div className="rounded-md border border-amber-200 bg-amber-50 px-2 py-1.5 text-amber-950">
+          <div className="notice-warn rounded-md px-2 py-1.5">
             This reply was replaced by a safe fallback after verification flagged
             broken or policy-breaking citations.
           </div>
@@ -141,7 +137,7 @@ function AskSourcesDisclosure({
                   key={`${issue.code}-${idx}`}
                   className={
                     issue.severity === "error"
-                      ? "text-red-800"
+                      ? "text-[#f6c7bd]"
                       : "text-ink-muted"
                   }
                 >
@@ -175,27 +171,6 @@ function AskSourcesDisclosure({
     </details>
   );
 }
-
-const SUGGESTIONS_BY_AGE_MODE: Record<AgeMode, string[]> = {
-  young_reader: [
-    "Who is the main character when the story starts?",
-    "What is the first world or place we see?",
-    "What is a small detail that makes the setting feel real?",
-    "What are the 'rules' of this world so far?",
-  ],
-  teen: [
-    "What is the main character trying to achieve early on?",
-    "What is the central conflict in the opening act?",
-    "How does the book foreshadow later events?",
-    "What would you read next if you want the same tone?",
-  ],
-  adult: [
-    "What themes is the book setting up in the early chapters?",
-    "How does the narrative voice treat reliability and knowledge?",
-    "What craft choices make a scene feel vivid here?",
-    "What are the most important ideas the story returns to?",
-  ],
-};
 
 export default function AskPage() {
   return (
@@ -249,9 +224,8 @@ function AskPageContent() {
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
-  const [askMode, setAskMode] = useState<AskReaderMode>(() =>
-    readStoredAskMode(),
-  );
+  const askMode = ASK_MODE;
+  const [askContext, setAskContext] = useState<AskContext | null>(null);
   const [loading, setLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -279,12 +253,19 @@ function AskPageContent() {
   }, [messages]);
 
   useEffect(() => {
-    try {
-      window.localStorage.setItem(ASK_MODE_STORAGE_KEY, askMode);
-    } catch {
-      /* ignore */
-    }
-  }, [askMode]);
+    let cancelled = false;
+    fetch("/api/ask/context")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: AskContext | null) => {
+        if (!cancelled && data) setAskContext(data);
+      })
+      .catch(() => {
+        /* the boundary line is informative; Ask still works without it */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     if (!highlightIdFromUrl) {
@@ -563,8 +544,8 @@ function AskPageContent() {
     preloadFiredRef.current = true;
     const prompt =
       ageMode === "young_reader"
-        ? `I really liked this part from your story:\n\n"${effectivePreloadPassage}"\n\nCan you tell me more about it?`
-        : `I saved this passage from one of your stories:\n\n"${effectivePreloadPassage}"\n\nCan you tell me more about what you were thinking or feeling in this moment?`;
+        ? `I really liked this part:\n\n"${effectivePreloadPassage}"\n\nCan you tell me more about it?`
+        : `I saved this passage:\n\n"${effectivePreloadPassage}"\n\nWhat is going on in this moment, and why does it matter to the story so far?`;
     void sendMessage(prompt);
   }, [
     highlightHydration,
@@ -581,53 +562,24 @@ function AskPageContent() {
           <div>
             <h1 className="type-page-title text-2xl">Ask about {book.title}</h1>
             <p className="type-ui mt-1 text-ink-ghost">
-              Ask questions about {book.title}. You&apos;ll get answers grounded
-              in the story material in this companion.
-              {journeySlug && !storySlug && (
-                <span className="text-clay">
+              {askContext === null
+                ? "Answers stop at your bookmark."
+                : askContext.wholeBook
+                ? "Answering from the whole book."
+                : askContext.through === 0
+                ? "You haven't finished a chapter yet, so answers stay spoiler-free."
+                : `Answering through ${askContext.throughTitle ?? `chapter ${askContext.through}`}. Nothing later is revealed.`}
+              {askContext && !askContext.wholeBook && (
+                <>
                   {" "}
-                  &middot; Journey: {journeySlug.replace(/-/g, " ")}
-                </span>
+                  <Link
+                    href="/welcome?replay=1"
+                    className="text-burgundy underline underline-offset-2"
+                  >
+                    Move my bookmark
+                  </Link>
+                </>
               )}
-            </p>
-          </div>
-          <div
-            className="flex shrink-0 flex-col gap-1 sm:items-end"
-            role="group"
-            aria-label="Answer mode"
-          >
-            <span className="type-meta text-[10px] uppercase tracking-wide text-ink-ghost">
-              Mode
-            </span>
-            <div className="inline-flex rounded-lg border border-[var(--color-border)] bg-warm-white-2 p-0.5">
-              <button
-                type="button"
-                onClick={() => setAskMode("deep")}
-                aria-pressed={askMode === "deep"}
-                className={`type-ui rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
-                  askMode === "deep"
-                    ? "bg-clay text-warm-white"
-                    : "text-ink-muted hover:text-ink"
-                }`}
-              >
-                Deep
-              </button>
-              <button
-                type="button"
-                onClick={() => setAskMode("fast")}
-                aria-pressed={askMode === "fast"}
-                className={`type-ui rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
-                  askMode === "fast"
-                    ? "bg-clay text-warm-white"
-                    : "text-ink-muted hover:text-ink"
-                }`}
-              >
-                Fast
-              </button>
-            </div>
-            <p className="max-w-[14rem] text-[10px] leading-snug text-ink-ghost sm:text-right">
-              Deep uses the full router (may run multiple perspectives). Fast is
-              one quick pass—best for lookups.
             </p>
           </div>
         </div>
@@ -635,9 +587,9 @@ function AskPageContent() {
 
       {storySlug && (
         <div className="border-b border-[var(--color-border)] bg-gold-pale/30 py-3">
-          <p className="type-meta text-ink">Story context</p>
+          <p className="type-meta text-ink">Chapter</p>
           <p className="mt-1 font-[family-name:var(--font-lora)] text-sm text-ink">
-            You&apos;re chatting with the archive in the context of:{" "}
+            Asking about:{" "}
             <Link
               href={`/stories/${encodeURIComponent(storySlug)}`}
               className="font-medium text-clay underline underline-offset-2 hover:text-clay-mid"
@@ -676,7 +628,7 @@ function AskPageContent() {
               What would you like to know about {book.title}?
             </p>
             <div className="flex flex-wrap justify-center gap-2">
-              {SUGGESTIONS_BY_AGE_MODE[ageMode].map((suggestion) => (
+              {(askContext?.suggestions ?? []).map((suggestion) => (
                 <button
                   key={suggestion}
                   type="button"
@@ -732,13 +684,13 @@ function AskPageContent() {
         ))}
 
         {error && (
-          <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+          <div className="notice-error rounded-lg p-3 text-sm">
             {error}
             <Link
-              href="/themes"
-              className="mt-1 block text-xs text-red-900 underline"
+              href="/stories"
+              className="mt-1 block text-xs underline"
             >
-              Browse stories by topic instead
+              Back to the chapters
             </Link>
           </div>
         )}

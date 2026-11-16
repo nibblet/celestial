@@ -4,20 +4,21 @@ import { book } from "@/config/book";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AgeModeSwitcher } from "@/components/layout/AgeModeSwitcher";
 import { ProfileNavLink } from "@/components/layout/ProfileNavLink";
 import { useProfileNotificationBadge } from "@/hooks/useProfileNotificationBadge";
 
 const primaryNavItems = [
-  { href: "/stories", label: "Chapters" },
-  { href: "/arcs", label: "Explore" },
+  { href: "/stories", label: "Read" },
+  { href: "/codex", label: "Codex" },
   { href: "/ask", label: "Ask" },
 ] as const;
 
 function isNavActive(pathname: string, href: string): boolean {
-  if (href === "/stories") return pathname.startsWith("/stories");
-  if (href === "/arcs") {
+  if (href === "/stories")
+    return pathname.startsWith("/stories") || pathname.startsWith("/mission-logs");
+  if (href === "/codex") {
     return (
+      pathname.startsWith("/codex") ||
       pathname.startsWith("/journeys") ||
       pathname.startsWith("/arcs") ||
       pathname.startsWith("/themes") ||
@@ -28,8 +29,7 @@ function isNavActive(pathname: string, href: string): boolean {
       pathname.startsWith("/vaults") ||
       pathname.startsWith("/locations") ||
       pathname.startsWith("/factions") ||
-      pathname.startsWith("/rules") ||
-      pathname.startsWith("/mission-logs")
+      pathname.startsWith("/rules")
     );
   }
   if (href === "/ask") return pathname === "/ask" || pathname.startsWith("/ask/");
@@ -74,7 +74,7 @@ function MobileNavIcon({
           />
         </svg>
       );
-    case "/arcs":
+    case "/codex":
       return (
         <svg
           className={`h-5 w-5 ${c}`}
@@ -119,9 +119,9 @@ function MobileNavIcon({
   }
 }
 
-export function Nav() {
+export function Nav({ signedIn }: { signedIn: boolean }) {
   const pathname = usePathname();
-  const profileBadge = useProfileNotificationBadge();
+  const profileBadge = useProfileNotificationBadge(signedIn);
   const isHome = pathname === "/";
   const [navSolid, setNavSolid] = useState(!isHome);
 
@@ -175,8 +175,16 @@ export function Nav() {
             })}
           </ul>
           <div className="flex shrink-0 items-center gap-2 border-l border-[var(--color-border)] pl-4">
-            <AgeModeSwitcher variant="compact" />
-            <ProfileNavLink badge={profileBadge} />
+            {signedIn ? (
+              <ProfileNavLink badge={profileBadge} />
+            ) : (
+              <Link
+                href="/login"
+                className="type-ui inline-flex min-h-9 items-center rounded-full border border-[var(--color-border)] px-3 text-[0.8125rem] text-ink no-underline transition-colors hover:border-clay-border"
+              >
+                Sign in
+              </Link>
+            )}
           </div>
         </div>
       </nav>

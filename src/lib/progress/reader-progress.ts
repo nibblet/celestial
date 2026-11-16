@@ -31,10 +31,15 @@ function getChapterStoryIds(): string[] {
     .map((story) => story.storyId);
 }
 
-export function getCompanionDefaultChapterNumber(): number {
+/** Highest published chapter number (the end of the book as shipped). */
+export function getLastChapterNumber(): number {
   return maxChapterFromStoryIds(getChapterStoryIds());
 }
 
+/**
+ * Lore gate: content tagged to a chapter is visible once the reader has
+ * finished that chapter. `currentChapterNumber` is the last chapter finished.
+ */
 export function isStoryUnlocked(
   storyId: string,
   progress: ReaderProgress
@@ -45,6 +50,34 @@ export function isStoryUnlocked(
   return chapterNum <= progress.currentChapterNumber;
 }
 
+/**
+ * Reading gate: a reader can always open the chapter after the last one they
+ * finished, so the next chapter is never locked.
+ */
+export function canOpenChapter(
+  storyId: string,
+  progress: ReaderProgress
+): boolean {
+  if (progress.showAllContent) return true;
+  const chapterNum = chapterNumberFromStoryId(storyId);
+  if (chapterNum === null) return true;
+  return chapterNum <= progress.currentChapterNumber + 1;
+}
+
+/** The chapter the reader should open next (capped at the last chapter). */
+export function nextChapterId(progress: ReaderProgress): string {
+  const last = getLastChapterNumber();
+  const next = Math.min(progress.currentChapterNumber + 1, Math.max(last, 1));
+  return chapterIdForNumber(next);
+}
+
+/**
+ * The reader's real place in the book. Signed-in readers: the highest chapter
+ * marked read (or the guest cookie carried over from before sign-up). Guests:
+ * the cookie alone. Nobody is floored at the latest chapter — spoiler gates
+ * depend on this number being true. Re-reader mode (`showAllContent`) is the
+ * way to open the whole book.
+ */
 export async function getReaderProgress(): Promise<ReaderProgress> {
   const supabase = await createClient();
   const {
@@ -53,17 +86,17 @@ export async function getReaderProgress(): Promise<ReaderProgress> {
 
   const cookieStore = await cookies();
   const cookieChapter = cookieStore.get(READER_CHAPTER_COOKIE)?.value || "CH00";
-  const cookieChapterNum = chapterNumberFromStoryId(cookieChapter) ?? 0;
-  // Product direction shift: Celestial is now a companion-first app.
-  // Default progression should expose the full published story set.
-  const defaultChapterNum = getCompanionDefaultChapterNumber();
-  const defaultReadStoryIds = getChapterStoryIds();
+  const lastChapter = getLastChapterNumber();
+  const cookieChapterNum = Math.min(
+    chapterNumberFromStoryId(cookieChapter) ?? 0,
+    lastChapter
+  );
 
   if (!user) {
     return {
-      readStoryIds: defaultReadStoryIds,
-      currentChapter: chapterIdForNumber(Math.max(cookieChapterNum, defaultChapterNum)),
-      currentChapterNumber: Math.max(cookieChapterNum, defaultChapterNum),
+      readStoryIds: [],
+      currentChapter: chapterIdForNumber(cookieChapterNum),
+      currentChapterNumber: cookieChapterNum,
       showAllContent: false,
     };
   }
@@ -77,11 +110,11 @@ export async function getReaderProgress(): Promise<ReaderProgress> {
       .maybeSingle(),
   ]);
 
-  const readStoryIdsFromDb = (reads ?? []).map((row) => row.story_id);
-  const readStoryIds =
-    readStoryIdsFromDb.length > 0 ? readStoryIdsFromDb : defaultReadStoryIds;
-  const maxFromReads = maxChapterFromStoryIds(readStoryIds);
-  const currentChapterNumber = Math.max(maxFromReads, cookieChapterNum, defaultChapterNum);
+  const readStoryIds = (reads ?? []).map((row) => row.story_id);
+  const currentChapterNumber = Math.min(
+    Math.max(maxChapterFromStoryIds(readStoryIds), cookieChapterNum),
+    lastChapter
+  );
   return {
     readStoryIds,
     currentChapter: chapterIdForNumber(currentChapterNumber),

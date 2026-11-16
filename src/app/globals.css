@@ -683,3 +683,18 @@ main {
 .hover\:bg-clay.hover\:text-warm-white:hover {
   color: var(--color-ink) !important;
 }
+
+/* Dark-theme status panels (replace light Tailwind red/amber boxes). */
+.notice-error {
+  border: 1px solid rgba(240, 128, 112, 0.42);
+  background: rgba(150, 46, 36, 0.2);
+  color: #f6c7bd;
+}
+.notice-error a {
+  color: #fbe1db;
+}
+.notice-warn {
+  border: 1px solid rgba(233, 180, 92, 0.4);
+  background: rgba(150, 104, 28, 0.2);
+  color: #f1d9a8;
+}

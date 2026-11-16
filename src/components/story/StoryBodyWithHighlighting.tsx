@@ -170,7 +170,7 @@ export function StoryBodyWithHighlighting({
                 type="button"
                 onClick={reportError}
                 disabled={isBusy}
-                className="whitespace-nowrap rounded px-2 py-0.5 text-[11px] font-medium text-ink-ghost transition-colors hover:bg-red-50 hover:text-red-600 disabled:opacity-40"
+                className="whitespace-nowrap rounded px-2 py-0.5 text-[11px] font-medium text-ink-ghost transition-colors hover:bg-[rgba(150,46,36,0.25)] hover:text-[#f6c7bd] disabled:opacity-40"
               >
                 {status === "reporting" ? "Reporting\u2026" : "⚠ Report error"}
               </button>

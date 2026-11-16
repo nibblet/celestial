@@ -21,8 +21,8 @@ export function ProfileUtilityIcons({ isAdmin }: Props) {
     <div className="absolute right-4 top-4 z-20 flex items-center gap-1 md:right-6 md:top-6">
       <Link
         href="/welcome?replay=1"
-        aria-label="Take the tour again"
-        title="Take the tour again"
+        aria-label="Move your bookmark"
+        title="Move your bookmark"
         className={ICON_BTN}
       >
         <svg

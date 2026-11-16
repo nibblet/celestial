@@ -3,6 +3,7 @@ import { enrichLegacyStorySource } from "@/lib/wiki/taxonomy";
 import { getCanonicalStories } from "@/lib/wiki/corpus";
 import { createClient } from "@/lib/supabase/server";
 import { StoriesPageClient } from "./StoriesPageClient";
+import { book } from "@/config/book";
 import { getReaderProgress } from "@/lib/progress/reader-progress";
 
 export default async function StoriesPage() {
@@ -44,6 +45,8 @@ export default async function StoriesPage() {
       readStoryIds={readStoryIds}
       currentChapterNumber={progress.currentChapterNumber}
       showAllContent={progress.showAllContent}
+      signedIn={Boolean(user)}
+      freeChapterIds={book.freeChapterIds}
     />
   );
 }

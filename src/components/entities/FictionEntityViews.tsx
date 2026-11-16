@@ -13,6 +13,16 @@ import { StoryMarkdown } from "@/components/story/StoryMarkdown";
 import { listEntityVisuals } from "@/lib/visuals/list-entity-assets";
 import { EntityVisualsGallery } from "@/components/visuals/EntityVisualsGallery";
 import { getAuthenticatedProfileContext } from "@/lib/auth/profile-context";
+import { CodexLocked, getCodexLock } from "@/components/entities/CodexGate";
+import type { CodexKind } from "@/lib/wiki/codex";
+
+const ENTITY_TYPE_TO_CODEX_KIND: Record<string, CodexKind> = {
+  fiction_characters: "characters",
+  fiction_artifacts: "artifacts",
+  fiction_locations: "locations",
+  fiction_factions: "factions",
+  fiction_vaults: "vaults",
+};
 
 function AuthoredBody({
   raw,
@@ -225,6 +235,12 @@ export async function FictionEntityDetailPage({
   heading: string;
   basePath: string;
 }) {
+  const lock = await getCodexLock(
+    ENTITY_TYPE_TO_CODEX_KIND[entity.entityType] ?? "characters",
+    entity.slug
+  );
+  if (lock) return <CodexLocked progress={lock} />;
+
   const supersetResolved = entity.lore?.superset
     ? resolveWikiSlug(entity.lore.superset.slug)
     : null;
@@ -237,7 +253,7 @@ export async function FictionEntityDetailPage({
         href={basePath}
         className="type-ui mb-4 inline-block text-ink-ghost no-underline transition-colors hover:text-ocean"
       >
-        &larr; All {heading.toLowerCase()}
+        &larr; {heading}
       </Link>
       <h1 className="type-page-title mb-2">{entity.name}</h1>
       {entity.entityType === "fiction_locations" && supersetResolved && (

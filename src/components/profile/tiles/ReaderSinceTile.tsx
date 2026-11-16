@@ -53,7 +53,7 @@ export function ReaderSinceTile({
         {formatMonthYear(firstReadAt)}
       </p>
       <p className="mt-2 font-[family-name:var(--font-inter)] text-xs text-[rgba(242,238,228,0.62)]">
-        {readCount} {readCount === 1 ? "story" : "stories"} · most recent{" "}
+        {readCount} {readCount === 1 ? "chapter" : "chapters"} · most recent{" "}
         {formatRelative(mostRecentReadAt)}
       </p>
     </section>
