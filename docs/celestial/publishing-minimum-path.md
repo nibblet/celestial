@@ -1,6 +1,6 @@
 # Celestial Heritage, Book I: Minimum Path to Publication
 
-**Status:** decisions captured; manuscript fixes applied; copyedit next. **Updated:** 2026-11-15.
+**Status:** ✅ **PUBLISHED SETUP COMPLETE (2026-11-16): KDP paperback + Kindle ebook done. Hardcover not planned for now.** Earlier status: decisions captured; manuscript fixes applied; copyedit next. **Updated:** 2026-11-15.
 **Master text:** `Celestial_Heritage_-_FINAL.md` / `_FINAL_6x9.docx` (55,465 words), built from the author's working copy
 with the approved fixes in §2. Copyedit rules: `copyedit-style-sheet.md`. Manuscript files are not committed to this repo.
 
@@ -431,3 +431,10 @@ separate **hardcover** template for the case-laminate wrap (it adds hinge and wr
 - Kindle cover: `Celestial_Heritage_-_Kindle_Cover_1600x2560.jpg`.
 - Rebuild: `python3 docs/celestial/production/build_cover.py <front art> <fonts dir> <out.pdf> <preview.jpg> <page count> docs/celestial/production/back-cover-copy.txt`
   (fonts: Cinzel, EB Garamond, EB Garamond Italic, all OFL, from Google Fonts). The hardcover needs KDP's hardcover template (hinge and wrap), not this script as-is.
+
+## 14. Completed (2026-11-16)
+
+- ✅ KDP paperback (6 × 9, cream, 246 pp, free KDP ISBN) and Kindle ebook (KDP Select) set up by the author.
+- ⏸ Hardcover: not needed at this time. If revisited, it needs its own free ISBN and a cover built on KDP's hardcover template.
+- Next (optional, from `publishing-and-launch-plan.md`): approve the printed proof, ask early readers for reviews, register the copyright
+  (within 3 months), claim the Amazon Author Central page, and decide whether to leave Select after the first 90-day term (auto-renew).
