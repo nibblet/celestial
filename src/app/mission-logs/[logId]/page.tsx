@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getMissionLogInventory } from "@/lib/wiki/parser";
-import { getReaderProgress, isStoryUnlocked } from "@/lib/progress/reader-progress";
+import { canOpenChapter, getReaderProgress } from "@/lib/progress/reader-progress";
 
 export default async function MissionLogDetailPage({
   params,
@@ -15,7 +15,8 @@ export default async function MissionLogDetailPage({
   const row = inventory.missionLogs.find((item) => item.logId === decoded);
   if (!row) notFound();
   const progress = await getReaderProgress();
-  if (!isStoryUnlocked(row.chapterId, progress)) notFound();
+  // A log is readable alongside the chapter it belongs to.
+  if (!canOpenChapter(row.chapterId, progress)) notFound();
 
   return (
     <div className="mx-auto max-w-content px-[var(--page-padding-x)] py-6 md:py-10">

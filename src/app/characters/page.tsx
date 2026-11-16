@@ -38,16 +38,11 @@ export default function CharactersPage() {
       <div className="mx-auto max-w-content">
         <h1 className="type-page-title mb-2">Characters</h1>
         <p className="type-ui mb-6 text-ink-muted">
-          People and roles that appear across the companion material—real names
-          from documentary sources plus fiction characters defined under{" "}
-          <code className="rounded bg-warm-white px-1 py-0.5 text-[0.85em]">
-            content/wiki/characters/
-          </code>
-          . Grouped by how strongly they surface in the text; open any card for
-          story references.
+          The people of the story, grouped by how central they are. Each page
+          only shows what you&apos;ve read so far.
         </p>
 
-        <p className="type-meta mb-8 text-ink-ghost">{people.length} entries</p>
+        <p className="type-meta mb-8 text-ink-ghost">{people.length} characters</p>
 
         <div className="space-y-10">
           {PEOPLE_INDEX_SECTION_ORDER.map((tier) => {
@@ -112,7 +107,7 @@ function CharacterNameGrid({ people }: { people: WikiPerson[] }) {
               {p.name}
             </span>
             <span className="type-meta shrink-0 normal-case tracking-normal text-ink-ghost">
-              {storyCount(p)} {storyCount(p) === 1 ? "story" : "stories"}
+              {storyCount(p)} {storyCount(p) === 1 ? "chapter" : "chapters"}
             </span>
           </Link>
         </li>

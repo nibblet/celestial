@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { RuleDetailPage } from "@/components/entities/FictionEntityViews";
 import { getRuleBySlug } from "@/lib/wiki/parser";
+import { CodexLocked, getCodexLock } from "@/components/entities/CodexGate";
 
 export default async function RuleDetail({
   params,
@@ -10,5 +11,7 @@ export default async function RuleDetail({
   const { slug } = await params;
   const rule = getRuleBySlug(slug);
   if (!rule) notFound();
+  const lock = await getCodexLock("rules", slug);
+  if (lock) return <CodexLocked progress={lock} />;
   return <RuleDetailPage rule={rule} />;
 }

@@ -52,7 +52,7 @@ export function ProfileReflectionHero({
 
       <div className="relative z-10 mx-auto max-w-wide px-[var(--page-padding-x)] pb-16 pt-20 text-center md:pb-20 md:pt-24">
         <p className="type-era-label mb-4 text-[rgba(242,238,228,0.65)]">
-          Your corner of the storybook
+          Your reading
         </p>
         <h1 className="mb-8 font-[family-name:var(--font-playfair)] text-[clamp(2.25rem,5vw,4rem)] font-bold leading-[1.08] tracking-tight text-[#f2eee4]">
           {displayName}

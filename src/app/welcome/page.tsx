@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getAuthenticatedProfileContext } from "@/lib/auth/profile-context";
-import { ageModeFromAge } from "@/lib/utils/age-mode";
-import type { AgeMode } from "@/types";
-import { OnboardingStepper } from "./OnboardingStepper";
+import { getCanonicalStories } from "@/lib/wiki/corpus";
+import { getReaderProgress } from "@/lib/progress/reader-progress";
+import { chapterNumberFromStoryId } from "@/lib/wiki/story-ids";
+import { book } from "@/config/book";
+import { BookmarkSetup } from "./BookmarkSetup";
 
 export const metadata: Metadata = {
-  title: "Welcome",
-  description: "A quick tour of the Keith Cobb Storybook.",
+  title: "Where are you in the book?",
+  description: `Set your place in ${book.title} so the companion never spoils what you have not read.`,
 };
 
 type WelcomePageProps = {
@@ -22,23 +24,32 @@ export default async function WelcomePage({ searchParams }: WelcomePageProps) {
   const params = await searchParams;
   const replay = params.replay === "1";
 
-  const ageMode: AgeMode =
-    profile?.age_mode ??
-    (profile?.age ? ageModeFromAge(profile.age) : "adult");
-
   const displayName =
     (profile?.display_name?.trim() ||
       (typeof user.user_metadata?.display_name === "string"
         ? user.user_metadata.display_name
         : null) ||
-      user.email?.split("@")[0] ||
       "").trim();
 
+  const [stories, progress] = await Promise.all([
+    getCanonicalStories(),
+    getReaderProgress(),
+  ]);
+  const chapters = stories
+    .map((s) => ({
+      number: chapterNumberFromStoryId(s.storyId),
+      title: s.title,
+    }))
+    .filter((c): c is { number: number; title: string } => c.number !== null)
+    .sort((a, b) => a.number - b.number);
+
   return (
-    <OnboardingStepper
-      ageMode={ageMode}
+    <BookmarkSetup
+      chapters={chapters}
       displayName={displayName}
       replay={replay}
+      initialFinishedThrough={progress.currentChapterNumber}
+      initialShowAll={progress.showAllContent}
     />
   );
 }

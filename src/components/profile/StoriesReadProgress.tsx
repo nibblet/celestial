@@ -42,7 +42,7 @@ export function StoriesReadProgress({ readCount, totalStories }: Props) {
         </div>
         {showYoungCelebration && (
           <p className="mt-3 font-[family-name:var(--font-lora)] text-sm leading-snug text-[rgba(242,238,228,0.92)]">
-            You read ALL of Grandpa&apos;s stories! 🎉
+            You finished the whole book!
           </p>
         )}
         {showStandardComplete && (

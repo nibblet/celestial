@@ -64,7 +64,7 @@ export default async function ProfileHighlightsPage() {
       </Link>
       <h1 className="type-page-title mb-2">My Passages</h1>
       <p className="mb-8 font-[family-name:var(--font-lora)] text-base leading-relaxed text-ink-muted">
-        Paragraphs you&apos;ve saved from Keith&apos;s stories.
+        Passages you&apos;ve saved while reading.
       </p>
 
       {highlights.length === 0 && (
@@ -78,7 +78,7 @@ export default async function ProfileHighlightsPage() {
             href="/stories"
             className="type-ui mt-3 inline-block text-sm text-clay hover:text-clay-mid"
           >
-            Browse stories &rarr;
+            Browse chapters &rarr;
           </Link>
         </div>
       )}

@@ -1,9 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { book } from "@/config/book";
 
-export function HomeHero() {
+type HomeHeroProps = {
+  primaryHref: string;
+  primaryLabel: string;
+  /** e.g. the title of the chapter the button opens. */
+  primaryDetail: string | null;
+  showSignIn: boolean;
+};
+
+export function HomeHero({
+  primaryHref,
+  primaryLabel,
+  primaryDetail,
+  showSignIn,
+}: HomeHeroProps) {
   const [parallaxY, setParallaxY] = useState(0);
   const [reduceMotion, setReduceMotion] = useState(false);
 
@@ -49,7 +63,9 @@ export function HomeHero() {
 
       <div className="relative z-10 mx-auto max-w-wide px-[var(--page-padding-x)] pb-16 pt-20 text-center md:pb-20 md:pt-24">
         <p className="type-era-label mb-4 text-[rgba(242,238,228,0.65)]">
-          Interactive companion
+          {book.author.startsWith("[")
+            ? "A science-fiction novel"
+            : `A science-fiction novel by ${book.author}`}
         </p>
         <h1 className="mb-5 font-[family-name:var(--font-playfair)] text-[clamp(3rem,6vw,5.5rem)] font-bold leading-[1.05] tracking-tight text-[#f2eee4]">
           {book.title}
@@ -57,15 +73,29 @@ export function HomeHero() {
         <p className="type-body mx-auto mb-10 max-w-[520px] text-pretty italic !text-[rgba(242,238,228,0.65)]">
           {book.tagline}
         </p>
+        <div className="flex flex-col items-center gap-3">
+          <Link
+            href={primaryHref}
+            className="type-ui inline-flex min-h-[48px] items-center justify-center rounded-full bg-clay px-8 text-base font-medium text-warm-white no-underline transition-colors hover:bg-clay-mid"
+          >
+            {primaryLabel}
+          </Link>
+          {primaryDetail && (
+            <p className="type-meta normal-case tracking-normal text-[rgba(242,238,228,0.6)]">
+              {primaryDetail}
+            </p>
+          )}
+          {showSignIn && (
+            <Link
+              href="/login"
+              className="type-ui text-sm text-[rgba(242,238,228,0.7)] underline underline-offset-2"
+            >
+              Already reading? Sign in
+            </Link>
+          )}
+        </div>
       </div>
 
-      <div
-        className="hero-scroll-cue type-meta absolute bottom-8 left-1/2 flex flex-col items-center gap-2 text-[rgba(242,238,228,0.45)]"
-        aria-hidden
-      >
-        <span>Scroll</span>
-        <span className="text-lg leading-none">↓</span>
-      </div>
     </section>
   );
 }

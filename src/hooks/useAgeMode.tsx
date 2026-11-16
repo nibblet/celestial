@@ -5,17 +5,12 @@ import {
   useContext,
   useState,
   useCallback,
-  useEffect,
   type ReactNode,
 } from "react";
 import type { AgeMode } from "@/types";
 import { createClient } from "@/lib/supabase/client";
 
 const AGE_MODE_STORAGE_KEY = "celestial_age_mode";
-
-function isValidAgeMode(v: string | null): v is AgeMode {
-  return v === "young_reader" || v === "teen" || v === "adult";
-}
 
 interface AgeModeContextValue {
   ageMode: AgeMode;
@@ -35,15 +30,6 @@ export function AgeModeProvider({
   children: ReactNode;
 }) {
   const [ageMode, setAgeModeState] = useState<AgeMode>(initialMode);
-
-  useEffect(() => {
-    const supabase = createClient();
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (user) return;
-      const raw = localStorage.getItem(AGE_MODE_STORAGE_KEY);
-      if (isValidAgeMode(raw)) setAgeModeState(raw);
-    });
-  }, []);
 
   const setAgeMode = useCallback(async (mode: AgeMode) => {
     setAgeModeState(mode);

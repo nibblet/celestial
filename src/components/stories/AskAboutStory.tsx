@@ -137,7 +137,7 @@ export function AskAboutStory({ storyId }: { storyId: string }) {
         disabled={status === "sending"}
       />
       {errorMessage && (
-        <div className="mb-3 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+        <div className="mb-3 notice-error rounded-lg p-3 text-sm">
           {errorMessage}
         </div>
       )}
