@@ -1,5 +1,8 @@
 /**
- * Phase 3 ingest:
+ * Phase 3 ingest (EPUB). Superseded for chapters by
+ * scripts/ingest-celestial-manuscript.ts, which reads the final copyedited
+ * manuscript; do not regenerate chapters from the EPUB any more.
+ *
  * - Parse the source EPUB into chapter scene/mission-log segments
  * - Generate CH## wiki story pages under content/wiki/stories
  * - Emit a machine-readable mission-log inventory JSON

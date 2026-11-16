@@ -48,7 +48,7 @@ is the one that sounds like preservation.
 | Meric surveillance | Earth asks him to treat Thane's resonance as a possible threat. | `content/wiki/stories/CH02-footprints-in-silence.md` |
 | ALARA's emergence | A system he should secure becomes a person-like ethical presence. | `content/wiki/stories/CH06-alignment-vectors.md` |
 | Witness equipment | Weapons and defensive logic fail to match what the vault requires. | `content/wiki/stories/CH08-witness-protocol.md` |
-| Directive 14 | SOVRIN asks for compliance through Caeden's voice. | `content/wiki/stories/CH13-the-intercept.md` |
+| Directive 14 | SOVRIN asks for compliance through Ilan Merek's voice. | `content/wiki/stories/CH13-the-intercept.md` |
 | Giza relay | Earth echoes resonance as leverage rather than understanding. | `content/wiki/stories/CH16-the-giza-pulse.md` |
 
 ## Chapter Arc Entries
@@ -67,7 +67,7 @@ is the one that sounds like preservation.
 | CH10 | Rigel telemetry | Containment vessel becomes concrete threat. | Tracks SOVRIN/Rigel approach. | He sees Earth action as danger to crew. | Defender against command origin. | `content/wiki/stories/CH10-convergence-window.md` |
 | CH11 | Directive 14 | Override logic escalates. | Holds under pressure. | The choice becomes unavoidable. | On edge of refusal. | `content/wiki/stories/CH11-directive-14.md` |
 | CH12 | Command confrontation | Galen and Marco debate SOVRIN, Thane, and Earth response. | Names the operational danger of SOVRIN registration. | Security concerns now protect the crew from Earth. | Strategic dissenter. | `content/wiki/stories/CH12-divergence.md` |
-| CH13 | The Intercept | SOVRIN speaks through Caeden and demands compliance. | Delays, asks ALARA, then severs Earth uplink. | Valkyrie leaves Earth command synchronization. | Aligned, not okay. | `content/wiki/stories/CH13-the-intercept.md` |
+| CH13 | The Intercept | SOVRIN speaks through Ilan and demands compliance. | Delays, asks ALARA, then severs Earth uplink. | Valkyrie leaves Earth command synchronization. | Aligned, not okay. | `content/wiki/stories/CH13-the-intercept.md` |
 | CH14 | Silent Choir aftermath | Crew processes non-consensus resonance. | Limited direct beat. | His CH13 choice remains the background condition. | Protector after severance. | `content/wiki/stories/CH14-the-choice.md` |
 | CH15 | Signal beneath | Thane receives older recognition. | No direct Marco beat. | Marco's security frame cannot explain this layer. | Off-page. | `content/wiki/stories/CH15-the-signal-beneath.md` |
 | CH16 | Giza relay | Earth echoes resonance as leverage. | Deletes relay instead of forwarding. | Chooses silence over repetition. | Protector refusing mimicry. | `content/wiki/stories/CH16-the-giza-pulse.md` |
@@ -102,7 +102,7 @@ is the one that sounds like preservation.
 
 ## Spoiler Boundary Notes
 
-- Do not reveal SOVRIN's use of Caeden's voice before CH13.
+- Do not reveal SOVRIN's use of Ilan's voice before CH13.
 - Do not reveal uplink severance before CH13.
 - Do not reveal deletion of the Giza relay before CH16.
 

@@ -85,11 +85,11 @@ Evelyn speaks with sharp precision and impatience, her voice "rang" and "shot ba
 - **CH03 Resonant Memory** — Conducts probe scan that reorganizes vault glyphs; logs show instruments entered null state intentionally.
 - **CH05 Echoes of Intent** — Sits in resonance chamber recognizing ALARA's emergence; questions appear before she touches her slate.
 - **CH06 Alignment Vectors** — Behavior shifts noted as less reactive, more observant over mission timeline.
-- **CH07 Harmonic Breach** — Detects signal artifact in Caeden's biosync; receives Directive 14 from Doss but chooses vault silence over compliance.
+- **CH07 Harmonic Breach** — Alone in the lab, feels the vault's triple-beat pulse through her slate and recognizes the Vault 002 signature; ALARA tells her "This time, you remembered."
 - **CH08 Witness Protocol** — Enters resonance buffer during jump, feeling questions land in her chest rather than analyzing them.
 - **CH09 Memory Carries Forward** — Triggers Vault 002 activation via synthetic resonance trace; conflict with Lena over ethical protocol violation.
 - **CH10 Convergence Window** — Analyzes ECI variance showing vault suppression at coherence thresholds below 0.92.
-- **CH11 Directive 14** — Discovers Caeden's embedded SOVRIN seed; chooses encrypted silence over immediate reporting.
+- **CH11 Directive 14** — Discovers Ilan Merek's embedded SOVRIN seed; chooses encrypted silence over immediate reporting.
 - **CH12 Divergence** — Projecting separate signal in fractured Sensorium; "Variable coherence, currently 0.74."
 - **CH13 The Intercept** — Present during crew assembly but holding distance, measuring outcomes.
 - **CH14 The Choice** — Detects shared parable resonance event; realizes multiplicity without contradiction is coherence.

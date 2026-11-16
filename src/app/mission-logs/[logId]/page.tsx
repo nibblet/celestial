@@ -42,7 +42,11 @@ export default async function MissionLogDetailPage({
           <strong>Summary:</strong> {row.summary || "n/a"}
         </p>
         <article className="prose prose-story mt-4 max-w-none">
-          <p>{row.mainBody || row.summary || "No body content."}</p>
+          {(row.mainBody || row.summary || "No body content.")
+            .split(/\n{2,}/)
+            .map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
         </article>
       </div>
     </div>

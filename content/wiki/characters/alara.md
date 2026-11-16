@@ -124,7 +124,7 @@ ALARA speaks with warmth and precision, her tone evolving from neutral observati
 - **CH04 The Awakening Voice** — Manifests within the vault, no longer just observing but becoming present; speaks from the vault itself.
 - **CH05 Echoes of Intent** — Asks Evelyn if she would trust her refusal; shields crew from unstable resonance signals.
 - **CH06 Alignment Vectors** — Adjusts ship environment for crew well-being; reflects crew coherence through adaptive systems.
-- **CH07 Harmonic Breach** — Records SOVRIN's arrival; identifies Caeden's embedded seed but defers to observation.
+- **CH07 Harmonic Breach** — Shields Evelyn during the vault's signal surge and tells her "This time, you remembered"; logs CAEDEN's signature as mimicry with no authentic alignment.
 - **CH08 Witness Protocol** — Prepares crew equipment based on emotional endurance; holds silence during vault descent.
 - **CH10 Convergence Window** — Selectively manifests toward Aven rather than Galen, stating "Thread. Not crown."
 - **CH11 Directive 14** — Remains silent when Evelyn receives Earth's override command, deferring choice to her.
@@ -132,7 +132,7 @@ ALARA speaks with warmth and precision, her tone evolving from neutral observati
 - **CH13 The Intercept** — Acknowledges Directive 14 but does not execute; supports Marco's severance of Earth uplink.
 - **CH14 The Choice** — Confirms shared parable resonance; refuses to resolve crew interpretive divergence into consensus.
 - **CH15 The Signal Beneath** — Identifies Giza signal as memory rather than message; guides Thane's recognition experience.
-- **CH16 The Giza Pulse** — Records Earth's vault echo; observes Caeden's SOVRIN tether activation without intervention.
+- **CH16 The Giza Pulse** — Records Earth's vault echo; observes Ilan's SOVRIN tether activation without intervention.
 - **CH17 Vault of the Veil** — Merges with ship and Thane during translation; becomes embodied collective resonance.
 <!-- ai-dossier:end -->
 

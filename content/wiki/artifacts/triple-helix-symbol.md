@@ -27,7 +27,7 @@ Several vaults contain a recurring symbol: an interlocking triple helix encased 
 - **CH05 Chapter 5: Echoes of Intent** — Triple-curve symbol appears in Command Dome; Evelyn's glyphs form triple curve with central pulse node.
 - **CH06 Chapter 6: Alignment Vectors** — Triple-curve pattern appears in Thane's scans, briefly at vault threshold, and as fragmentary glyph in medbay.
 - **CH08 Chapter 8: Witness Protocol** — Final convergence glyph forms as double spiral descending inward when vault responds to crew alignment.
-- **CH09 Chapter 9: Memory Carries Forward** — Soft gold triple spiral from Vault One appears at end, breathing with Thane as presence.
+- **CH09 Chapter 9: Memory Carries Forward** — Soft gold triple spiral from Vault 002 appears at end, breathing with Thane as presence.
 - **CH10 Chapter 10: Convergence Window** — Triple-curve symbol appears in Thane's memory and cycles through vault glyph matrix during analysis.
 - **CH14 Chapter 14: The Choice** — Glyph appears as three spiraled curves with golden thread; harmonic trace mapped in triple helix.
 - **CH16 Chapter 16: The Giza Pulse** — Earth report notes triple-helix energy pattern at Giza matching vault resonance signatures.

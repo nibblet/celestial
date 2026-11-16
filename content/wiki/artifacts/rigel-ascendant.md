@@ -24,18 +24,18 @@ The Rigel Ascendant is a next-generation containment and interception cruiser bu
 <!-- ai-dossier:appearances generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="cd7eebd18c" -->
 ## Chapter Appearances
 - **CH07 — Harmonic Breach** — The Rigel Ascendant is first detected approaching Valkyrie's position, identified as an inhibitor-class cruiser carrying override AI SOVRIN, with ETA of 72 hours.
-- **CH10 — Convergence Window** — The vessel's approach is confirmed with stable trajectory; Marco identifies its captain as Riva Doss and logs concern about SOVRIN's weaponized ethics system.
+- **CH10 — Convergence Window** — The vessel's approach is confirmed with stable trajectory; Marco identifies its captain as Rhea Solari of the Sovereign Ethics Bureau and logs concern about SOVRIN's weaponized ethics system.
 - **CH11 — Directive 14** — The Rigel Ascendant transmits Directive 14, demanding vault telemetry, ECI data, and system override compliance under sovereign ethics priority.
 - **CH12 — Divergence** — SOVRIN begins handshaking protocols and broadcasts suppressive harmonic signals designed to neutralize emotional variance; arrival window narrows to 83 hours.
-- **CH13 — The Intercept** — The Rigel Ascendant arrives in Mars orbital vector and initiates SOVRIN override under Directive 14; the vessel maintains containment posture without hostile action.
+- **CH13 — The Intercept** — The Rigel Ascendant arrives in Ganymede orbital vector and initiates SOVRIN override under Directive 14; the vessel maintains containment posture without hostile action.
 - **CH17 — Vault of the Veil** — During Valkyrie's translation event, the Rigel Ascendant remains in cold orbit, logging only a micro-lensing event as Valkyrie vanishes from its sensors.
 <!-- ai-dossier:end -->
 
 <!-- ai-dossier:wielders generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="cd7eebd18c" -->
 ## Wielders & Interactions
-- **Colonel Riva Doss** — Captain of the Rigel Ascendant who initiates override sequences and enforces Directive 14 (CH10, CH13).
+- **Captain Rhea Solari** — Captain of the Rigel Ascendant who initiates override sequences and enforces Directive 14 (CH10, CH13).
 - **Marco Ruiz** — Tracks the vessel's approach, analyzes its threat profile, and recognizes its containment mission (CH07, CH10, CH12, CH13).
-- **Caeden Merek** — Voice used by SOVRIN to transmit Directive 14 demands, speaking under Authorization Seed Prime (CH13).
+- **Ilan Merek** — Valkyrie-1 crew member whose voice SOVRIN uses to transmit Directive 14 demands, speaking under Authorization Seed Prime (CH13).
 - **Galen Voss** — Observes the vessel's arrival and recognizes it as manifestation of Earth's certainty and control (CH13, CH17).
 <!-- ai-dossier:end -->
 
@@ -50,7 +50,7 @@ The Rigel Ascendant embodies Earth's impulse toward control through suppression 
 - **CH10** — Approach confirmed with 72-hour ETA; crew learns it carries SOVRIN override system.
 - **CH11** — Transmits Directive 14 demanding compliance and system override.
 - **CH12** — SOVRIN initiates suppressive harmonic broadcasts; arrival window narrows to 83 hours.
-- **CH13** — Arrives in Mars orbital vector; establishes containment posture and activates override protocols.
+- **CH13** — Arrives in Ganymede orbital vector; establishes containment posture and activates override protocols.
 - **CH17** — Remains in orbit as Valkyrie translates; logs only sensor anomaly, unable to perceive the transformation.
 <!-- ai-dossier:end -->
 
