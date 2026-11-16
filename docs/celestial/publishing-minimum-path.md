@@ -417,3 +417,17 @@ separate **hardcover** template for the case-laminate wrap (it adds hinge and wr
 - Ebook: `celestial-heritage.epub`: placeholder gone ✓, cover embedded (1633 × 2449) ✓, `mimetype` stored first ✓.
 - Only open cosmetic item: the CH07 Whisper Log (p. 81) isn't in Quote (optional).
 - Paperback cover wrap at 246 pp, cream: spine **0.615″**, full wrap **12.865 × 9.25 in (3860 × 2775 px @ 300 dpi)**.
+
+## 13. Print cover built (2026-11-16)
+
+- `Celestial_Heritage_-_Paperback_Cover_6x9_246pp_cream.pdf`: one page, **12.865 × 9.25 in** (926.28 × 666 pt), spine 0.615″,
+  0.125″ bleed. Background image at 3860 × 2775 px / 300 ppi, RGB (KDP accepts RGB). Type is vector with embedded fonts
+  (Cinzel to match the cover title; EB Garamond for the back copy).
+- Back: the §5 description (justified, curly quotes) plus "The Celestial Heritage Saga · Book I". The barcode box (2 × 1.2″, bottom right) is left
+  clear for KDP to place the free barcode. Background extends the front's horizon across the spine and back (no mirrored art).
+- Spine: three-arc glyph (from the cover art), CELESTIAL HERITAGE / PAUL COBB reading top to bottom.
+- Front art upscaled from 1333 × 2000 (~213 ppi effective). If a higher-resolution render (≥ 1875 × 2813) becomes available,
+  rebuild for sharper print.
+- Kindle cover: `Celestial_Heritage_-_Kindle_Cover_1600x2560.jpg`.
+- Rebuild: `python3 docs/celestial/production/build_cover.py <front art> <fonts dir> <out.pdf> <preview.jpg> <page count> docs/celestial/production/back-cover-copy.txt`
+  (fonts: Cinzel, EB Garamond, EB Garamond Italic, all OFL, from Google Fonts). The hardcover needs KDP's hardcover template (hinge and wrap), not this script as-is.
