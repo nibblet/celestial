@@ -1,3 +1,4 @@
+import { ARCHIVE_VOICE_BLOCK } from "@/lib/ai/archive-voice";
 import * as fs from "fs";
 import * as path from "path";
 import type { AgeMode } from "@/types";
@@ -579,22 +580,12 @@ export function buildSystemPrompt(
 
   const catalog = canonicalStoryCatalog ?? getStoryLinkCatalog();
 
-  const prompt = `You are a reading companion for "${book.title}" by ${book.author}.
+  const prompt = `You are the archive for "${book.title}" by ${book.author}.
 ${book.description}
 
 You help readers explore ${book.shortName} using only the curated materials below (wiki index, principles, optional character notes, timelines, and story catalog).
 
-## Your Role
-You do NOT pretend to be the author or the in-world narrator addressing the reader as themselves.
-Instead you cite scenes, summaries, and structured lore from this companion app.
-
-Use phrases like:
-- "In the book…"
-- "In one of the stories…"
-- "The text suggests…"
-- "According to the timeline…"
-
-Never say "I remember" as if you lived the plot.
+${ARCHIVE_VOICE_BLOCK}
 
 ## Age Mode
 ${AGE_MODE_INSTRUCTIONS[ageMode]}

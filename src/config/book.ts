@@ -32,6 +32,8 @@ export type BookConfig = {
   peopleGraphExcludeSlug: string | null;
   /** Chapters anyone can read without an account. */
   freeChapterIds: string[];
+  /** Questions a visitor can put to the archive before making an account. */
+  guestQuestionLimit: number;
 };
 
 export const book: BookConfig = {
@@ -39,9 +41,9 @@ export const book: BookConfig = {
   title: "Celestial",
   subtitle: "Interactive Book Companion",
   author: "Paul Cobb",
-  tagline: "Read the story. Explore the world. Ask without spoilers.",
+  tagline: "Ask the archive. Open the files. Go back into the story.",
   description:
-    "Read the science-fiction novel Celestial with a companion that keeps pace: characters, places, mission logs, and an AI guide that never spoils what you have not read.",
+    "The companion to the science-fiction novel Celestial: question the mission archive, open the files on its people and places, and read the logs behind the story.",
   narratorPronoun: "they",
   storiesPossessivePhrase: "the novel’s stories",
   shortName: "the book",
@@ -54,4 +56,5 @@ export const book: BookConfig = {
     "TBD — e.g. private Git repo path `content/manuscript/`, or numbered exports from your editor of choice. Must be reproducible for rebuilds.",
   peopleGraphExcludeSlug: null,
   freeChapterIds: ["CH01"],
+  guestQuestionLimit: 3,
 };

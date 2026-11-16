@@ -7,10 +7,11 @@ import { useEffect, useState } from "react";
 import { ProfileNavLink } from "@/components/layout/ProfileNavLink";
 import { useProfileNotificationBadge } from "@/hooks/useProfileNotificationBadge";
 
-const primaryNavItems = [
-  { href: "/stories", label: "Read" },
-  { href: "/codex", label: "Codex" },
-  { href: "/ask", label: "Ask" },
+const allNavItems = [
+  { href: "/", label: "Ask", signedInOnly: false },
+  { href: "/threads", label: "Threads", signedInOnly: true },
+  { href: "/codex", label: "Archive", signedInOnly: false },
+  { href: "/stories", label: "Read", signedInOnly: false },
 ] as const;
 
 function isNavActive(pathname: string, href: string): boolean {
@@ -32,7 +33,8 @@ function isNavActive(pathname: string, href: string): boolean {
       pathname.startsWith("/rules")
     );
   }
-  if (href === "/ask") return pathname === "/ask" || pathname.startsWith("/ask/");
+  if (href === "/") return pathname === "/" || pathname.startsWith("/ask");
+  if (href === "/threads") return pathname.startsWith("/threads");
   return false;
 }
 
@@ -40,7 +42,7 @@ function MobileNavIcon({
   name,
   active,
 }: {
-  name: (typeof primaryNavItems)[number]["href"];
+  name: (typeof allNavItems)[number]["href"];
   active: boolean;
 }) {
   const c = active ? "text-burgundy" : "text-ink-muted";
@@ -97,7 +99,18 @@ function MobileNavIcon({
           />
         </svg>
       );
-    case "/ask":
+    case "/threads":
+      return (
+        <svg className={`h-5 w-5 ${c}`} viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path
+            d="M7 3h10a1 1 0 0 1 1 1v17l-6-4-6 4V4a1 1 0 0 1 1-1z"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+    case "/":
       return (
         <svg
           className={`h-5 w-5 ${c}`}
@@ -122,7 +135,11 @@ function MobileNavIcon({
 export function Nav({ signedIn }: { signedIn: boolean }) {
   const pathname = usePathname();
   const profileBadge = useProfileNotificationBadge(signedIn);
-  const isHome = pathname === "/";
+  // The home screen is the conversation, so the bar is always solid.
+  const isHome = false;
+  const primaryNavItems = allNavItems.filter(
+    (item) => signedIn || !item.signedInOnly
+  );
   const [navSolid, setNavSolid] = useState(!isHome);
 
   useEffect(() => {
@@ -200,7 +217,7 @@ export function Nav({ signedIn }: { signedIn: boolean }) {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`flex flex-col items-center gap-0.5 px-1 py-1 text-[0.6875rem] font-medium tracking-wide ${
+                  className={`flex min-h-11 min-w-14 flex-col items-center justify-center gap-0.5 px-1 py-1 text-[0.6875rem] font-medium tracking-wide ${
                     active ? "text-burgundy" : "text-ink-muted"
                   }`}
                 >

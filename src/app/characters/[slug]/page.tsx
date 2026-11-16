@@ -1,3 +1,5 @@
+import { ChapterRecord } from "@/components/archive/ChapterRecord";
+import { getChapterRecord } from "@/lib/archive/record";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPersonBySlug, getStoryById } from "@/lib/wiki/parser";
@@ -108,11 +110,20 @@ export default async function CharacterDetailPage({
         canEdit={isAuthorSpecialAccess}
       />
 
-      {person.canonDossier && <CanonDossierCard dossier={person.canonDossier} />}
-      {person.lore && <EntityLoreCard lore={person.lore} />}
-      {person.dossier && <EntityDossier dossier={person.dossier} />}
+      <ChapterRecord
+        entries={getChapterRecord("characters", slug, progress)}
+        partial={!bookFinished}
+      />
+
+      {/* The dossier prose covers the whole book, so it waits for the end. */}
+      {bookFinished && person.canonDossier && (
+        <CanonDossierCard dossier={person.canonDossier} />
+      )}
+      {bookFinished && person.lore && <EntityLoreCard lore={person.lore} />}
+      {bookFinished && person.dossier && <EntityDossier dossier={person.dossier} />}
       {arc && <CharacterArcPanel arc={arc} />}
       {(() => {
+        if (!bookFinished) return null;
         const authored = extractAuthoredBody(person.body ?? "");
         if (!authored) return null;
         const rendered = renderWikilinks(authored, resolveWikiSlug);
@@ -137,7 +148,7 @@ export default async function CharacterDetailPage({
         </div>
       )}
 
-      {dbPerson?.bio_md ? (
+      {!bookFinished ? null : dbPerson?.bio_md ? (
         <section className="mb-8">
           <article className="prose prose-story max-w-none">
             <StoryMarkdown content={dbPerson.bio_md} />

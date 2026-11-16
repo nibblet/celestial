@@ -13,6 +13,7 @@
  * registry (src/lib/ai/personas.ts) can invoke them uniformly.
  */
 
+import { ARCHIVE_VOICE_BLOCK } from "@/lib/ai/archive-voice";
 import type { AgeMode } from "@/types";
 import { book } from "@/config/book";
 import type { ReaderProgress } from "@/lib/progress/reader-progress";
@@ -298,6 +299,8 @@ Give one thoughtful, grounded answer using only the context pack below plus stab
 - If the context pack is thin, say what is missing instead of inventing.
 - Do not mention agents, retrieval, or the context pack to the reader.
 
+${ARCHIVE_VOICE_BLOCK}
+
 ## Age Mode
 ${AGE_MODE_INSTRUCTIONS[args.ageMode]}
 
@@ -334,15 +337,15 @@ Merge their perspectives into ONE cohesive, natural-sounding response. The user 
 - Lead with a concrete story or moment — it's the hook that draws readers in
 - Weave in principles and cross-corpus patterns as the story naturally leads to them
 - When multiple sub-agents cite the same story or pattern, reinforce it rather than repeating it
-- End with a warm, specific application to the user's situation
 - Preserve all markdown story links from every perspective
-- Use the voice guide below for tone and diction
+
+${ARCHIVE_VOICE_BLOCK}
 
 ## Rules
 - Do NOT add new stories, principles, or quotes that no sub-agent mentioned
 - Do NOT contradict any sub-agent's analysis — resolve tensions by giving weight to each
 - Do NOT use phrases like "from one perspective" or "on the other hand" that reveal the multi-agent structure
-- Be warm, reflective, grounded — not a motivational speaker
+- Be precise and grounded — a record speaking, not a motivational speaker
 
 ## Age Mode
 ${AGE_MODE_INSTRUCTIONS[args.ageMode]}
