@@ -25,6 +25,11 @@ export async function GET() {
     wholeBook,
     through,
     throughTitle: story?.title ?? null,
-    suggestions: buildAskSuggestions(through, story?.title ?? null, book.title),
+    suggestions: buildAskSuggestions(
+      through,
+      story?.title ?? null,
+      book.title,
+      wholeBook
+    ),
   });
 }

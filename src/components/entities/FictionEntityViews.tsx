@@ -15,6 +15,12 @@ import { EntityVisualsGallery } from "@/components/visuals/EntityVisualsGallery"
 import { getAuthenticatedProfileContext } from "@/lib/auth/profile-context";
 import { CodexLocked, getCodexLock } from "@/components/entities/CodexGate";
 import type { CodexKind } from "@/lib/wiki/codex";
+import { ChapterRecord } from "@/components/archive/ChapterRecord";
+import { getChapterRecord } from "@/lib/archive/record";
+import {
+  getLastChapterNumber,
+  getReaderProgress,
+} from "@/lib/progress/reader-progress";
 
 const ENTITY_TYPE_TO_CODEX_KIND: Record<string, CodexKind> = {
   fiction_characters: "characters",
@@ -246,6 +252,11 @@ export async function FictionEntityDetailPage({
     : null;
   const visuals = await listEntityVisuals(entity.slug);
   const { isAuthorSpecialAccess } = await getAuthenticatedProfileContext();
+  const progress = await getReaderProgress();
+  const bookFinished =
+    progress.showAllContent ||
+    progress.currentChapterNumber >= getLastChapterNumber();
+  const codexKind = ENTITY_TYPE_TO_CODEX_KIND[entity.entityType] ?? "characters";
 
   return (
     <div className="mx-auto max-w-content px-[var(--page-padding-x)] py-6 md:py-10">
@@ -269,9 +280,16 @@ export async function FictionEntityDetailPage({
         entityName={entity.name}
         canEdit={isAuthorSpecialAccess}
       />
-      {entity.canonDossier && <CanonDossierCard dossier={entity.canonDossier} />}
-      <AuthoredBody raw={entity.body} preserveAiDossier />
-      {entity.lore && <EntityLoreCard lore={entity.lore} />}
+      <ChapterRecord
+        entries={getChapterRecord(codexKind, entity.slug, progress)}
+        partial={!bookFinished}
+      />
+      {/* The dossier prose covers the whole book, so it waits for the end. */}
+      {bookFinished && entity.canonDossier && (
+        <CanonDossierCard dossier={entity.canonDossier} />
+      )}
+      {bookFinished && <AuthoredBody raw={entity.body} preserveAiDossier />}
+      {bookFinished && entity.lore && <EntityLoreCard lore={entity.lore} />}
       {entity.note && <p className="type-ui mb-4 text-ink-muted">{entity.note}</p>}
       {entity.memoirStoryIds.length > 0 && (
         <section className="mb-6">

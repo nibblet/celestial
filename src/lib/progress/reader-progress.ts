@@ -4,6 +4,8 @@ import { chapterNumberFromStoryId } from "@/lib/wiki/story-ids";
 import { storiesData } from "@/lib/wiki/static-data";
 
 export const READER_CHAPTER_COOKIE = "celestial_ch";
+/** Guests who ask for spoiler-safe reading carry this cookie set to "safe". */
+export const READER_MODE_COOKIE = "celestial_mode";
 
 export interface ReaderProgress {
   readStoryIds: string[];
@@ -75,8 +77,11 @@ export function nextChapterId(progress: ReaderProgress): string {
  * The reader's real place in the book. Signed-in readers: the highest chapter
  * marked read (or the guest cookie carried over from before sign-up). Guests:
  * the cookie alone. Nobody is floored at the latest chapter — spoiler gates
- * depend on this number being true. Re-reader mode (`showAllContent`) is the
- * way to open the whole book.
+ * depend on this number being true.
+ *
+ * Most readers arrive having finished the book, so the whole book is open
+ * (`showAllContent`) unless the reader chose spoiler-safe reading: a profile
+ * with `show_all_content` false, or the guest mode cookie.
  */
 export async function getReaderProgress(): Promise<ReaderProgress> {
   const supabase = await createClient();
@@ -97,7 +102,7 @@ export async function getReaderProgress(): Promise<ReaderProgress> {
       readStoryIds: [],
       currentChapter: chapterIdForNumber(cookieChapterNum),
       currentChapterNumber: cookieChapterNum,
-      showAllContent: false,
+      showAllContent: cookieStore.get(READER_MODE_COOKIE)?.value !== "safe",
     };
   }
 
@@ -119,6 +124,7 @@ export async function getReaderProgress(): Promise<ReaderProgress> {
     readStoryIds,
     currentChapter: chapterIdForNumber(currentChapterNumber),
     currentChapterNumber,
-    showAllContent: Boolean(profile?.show_all_content),
+    // No profile row yet means no choice made: the whole book is open.
+    showAllContent: profile ? Boolean(profile.show_all_content) : true,
   };
 }

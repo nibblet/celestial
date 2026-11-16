@@ -1,0 +1,44 @@
+{
+  "_note": "Opening prompts the archive leads with on the home screen. Only entries with approved: true are ever shown to readers. afterChapter is the last chapter a reader must have finished before the prompt is safe to show (spoiler-safe readers only).",
+  "prompts": [
+    {
+      "id": "galen-machines-listen",
+      "approved": true,
+      "afterChapter": 17,
+      "label": "Recovered · field note · G. Voss",
+      "quote": "Machines are not meant to rule. They are meant to listen until someone worthy speaks.",
+      "question": "Do you think he still believed it by the end?",
+      "file": {
+        "href": "/characters/galen-voss",
+        "label": "Open Galen’s file"
+      },
+      "followUp": "Where does Galen's field note about machines listening until someone worthy speaks fit in his story?"
+    },
+    {
+      "id": "galen-rooms-we-dont-use",
+      "approved": false,
+      "afterChapter": 17,
+      "label": "Recovered · remark · G. Voss",
+      "quote": "There are rooms we don’t use. Halls that lead nowhere. Feels like we were never meant to come alone.",
+      "question": "Who do you think the ship was built to carry?",
+      "file": {
+        "href": "/artifacts/valkyrie-1",
+        "label": "Open the Valkyrie-1 file"
+      },
+      "followUp": "What do the records say about the unused rooms aboard Valkyrie-1 and who the ship was built for?"
+    },
+    {
+      "id": "galen-its-listening",
+      "approved": false,
+      "afterChapter": 17,
+      "label": "Recovered · remark · G. Voss",
+      "quote": "We didn’t build it. We barely deserve to walk through it. But it’s listening.",
+      "question": "What was it listening for?",
+      "file": {
+        "href": "/artifacts/valkyrie-1",
+        "label": "Open the Valkyrie-1 file"
+      },
+      "followUp": "What was Valkyrie-1 listening for, according to the records?"
+    }
+  ]
+}

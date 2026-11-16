@@ -5,6 +5,13 @@ import { checkRateLimit } from "@/lib/rate-limit";
 import type { AgeMode } from "@/types";
 import type { AskReaderMode } from "@/lib/ai/ask-evidence";
 import { getReaderProgress } from "@/lib/progress/reader-progress";
+import { cookies, headers } from "next/headers";
+import { book } from "@/config/book";
+import {
+  GUEST_ASK_COOKIE,
+  guestQuestionsUsed,
+  sanitizeGuestHistory,
+} from "@/lib/ai/guest-ask";
 import {
   verifyAskAnswer,
   ASK_VERIFICATION_FALLBACK_MESSAGE,
@@ -40,24 +47,48 @@ async function postAsk(request: Request) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // Guests get a few questions before an account is needed. Nothing of
+  // theirs is stored: the page sends the short history back each time.
+  let guestUsed = 0;
   if (!user) {
-    return Response.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
-  const rateLimit = checkRateLimit(user.id, 20, 60_000);
-  if (!rateLimit.allowed) {
-    return Response.json(
-      {
-        error:
-          "Too many questions! Take a breath and try again in a moment.",
-      },
-      {
-        status: 429,
-        headers: {
-          "Retry-After": String(Math.ceil(rateLimit.retryAfterMs / 1000)),
+    const cookieStore = await cookies();
+    guestUsed = guestQuestionsUsed(cookieStore.get(GUEST_ASK_COOKIE)?.value);
+    if (guestUsed >= book.guestQuestionLimit) {
+      return Response.json(
+        {
+          code: "guest_limit",
+          error: "Create a free account to keep asking the archive.",
         },
-      }
-    );
+        { status: 403 }
+      );
+    }
+    const ip =
+      (await headers()).get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      "unknown";
+    if (!checkRateLimit(`guest:${ip}`, 12, 60 * 60_000).allowed) {
+      return Response.json(
+        {
+          code: "guest_limit",
+          error: "Create a free account to keep asking the archive.",
+        },
+        { status: 403 }
+      );
+    }
+  } else {
+    const rateLimit = checkRateLimit(user.id, 20, 60_000);
+    if (!rateLimit.allowed) {
+      return Response.json(
+        {
+          error: "Too many questions at once. Try again in a moment.",
+        },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": String(Math.ceil(rateLimit.retryAfterMs / 1000)),
+          },
+        }
+      );
+    }
   }
 
   const body = await request.json();
@@ -69,7 +100,10 @@ async function postAsk(request: Request) {
     ageMode = "adult",
     highlightId,
     askMode,
+    history: guestHistory,
   } = body as {
+    /** Guests only: the conversation so far, since nothing is stored. */
+    history?: unknown;
     message: string;
     conversationId?: string;
     storySlug?: string;
@@ -86,7 +120,16 @@ async function postAsk(request: Request) {
   }
 
   // Get or create conversation
-  let convId = conversationId;
+  let convId: string | undefined = user ? conversationId : undefined;
+  let userMessageId: string | null = null;
+  let messages: { role: "user" | "assistant"; content: string }[];
+
+  if (!user) {
+    messages = [
+      ...sanitizeGuestHistory(guestHistory),
+      { role: "user", content: message },
+    ];
+  } else {
   if (!convId) {
     const { data: conv, error: convInsertError } = await supabase
       .from("cel_conversations")
@@ -132,7 +175,7 @@ async function postAsk(request: Request) {
     );
   }
 
-  const userMessageId = savedUserMsg.id;
+  userMessageId = savedUserMsg.id;
 
   // Load conversation history
   const { data: history } = await supabase
@@ -143,12 +186,11 @@ async function postAsk(request: Request) {
     .limit(20);
 
   // Build messages for Claude
-  const messages: { role: "user" | "assistant"; content: string }[] = (
-    history || []
-  ).map((m) => ({
+  messages = (history || []).map((m) => ({
     role: m.role as "user" | "assistant",
     content: m.content,
   }));
+  }
 
   // Orchestrate response (simple or deep path based on question type)
   const readerProgress = await getReaderProgress();
@@ -158,8 +200,8 @@ async function postAsk(request: Request) {
   const { stream: textStream, buildEvidence } = await orchestrateAsk({
     anthropic,
     supabase,
-    userId: user.id,
-    conversationId: convId,
+    userId: user?.id ?? null,
+    conversationId: convId ?? null,
     message,
     messages,
     ageMode: ageMode as AgeMode,
@@ -205,6 +247,7 @@ async function postAsk(request: Request) {
           evidence = { ...evidence, verification };
         }
 
+        if (user) {
         // Save assistant response (retry without evidence if DB not migrated)
         let insertAssistant = await supabase.from("cel_messages").insert({
           conversation_id: convId,
@@ -241,13 +284,22 @@ async function postAsk(request: Request) {
             .eq("id", highlightId)
             .eq("user_id", user.id);
         }
+        }
 
         controller.enqueue(
           encoder.encode(
             `data: ${JSON.stringify({
               done: true,
-              conversationId: convId,
+              conversationId: convId ?? null,
               evidence,
+              ...(user
+                ? {}
+                : {
+                    guestRemaining: Math.max(
+                      0,
+                      book.guestQuestionLimit - guestUsed - 1
+                    ),
+                  }),
               ...(verification.shouldBlock
                 ? { replacementContent: ASK_VERIFICATION_FALLBACK_MESSAGE }
                 : {}),
@@ -256,7 +308,7 @@ async function postAsk(request: Request) {
         );
         controller.close();
       } catch (err) {
-        if (!fullResponse) {
+        if (!fullResponse && userMessageId) {
           await supabase.from("cel_messages").delete().eq("id", userMessageId);
         }
         const errorMessage =
@@ -273,6 +325,11 @@ async function postAsk(request: Request) {
 
   return new Response(readable, {
     headers: {
+      ...(user
+        ? {}
+        : {
+            "Set-Cookie": `${GUEST_ASK_COOKIE}=${guestUsed + 1}; Path=/; Max-Age=${60 * 60 * 24 * 30}; SameSite=Lax; HttpOnly`,
+          }),
       "Content-Type": "text/event-stream",
       "Cache-Control": "no-cache",
       Connection: "keep-alive",

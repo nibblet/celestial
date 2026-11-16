@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import {
   READER_CHAPTER_COOKIE,
+  READER_MODE_COOKIE,
   getReaderProgress,
 } from "@/lib/progress/reader-progress";
 import { chapterNumberFromStoryId } from "@/lib/wiki/story-ids";
@@ -139,6 +140,14 @@ export async function PUT(request: Request) {
         .from("cel_profiles")
         .update({ show_all_content: body.showAllContent })
         .eq("id", user.id);
+    } else {
+      // Guests keep the choice in a cookie; absent means the whole book.
+      cookieStore.set(READER_MODE_COOKIE, body.showAllContent ? "open" : "safe", {
+        path: "/",
+        httpOnly: false,
+        sameSite: "lax",
+        maxAge: 60 * 60 * 24 * 365,
+      });
     }
   }
 

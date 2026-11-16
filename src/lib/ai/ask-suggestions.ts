@@ -18,8 +18,19 @@ function label(slug: string): string {
 export function buildAskSuggestions(
   finishedThrough: number,
   chapterTitle: string | null,
-  bookTitle: string
+  bookTitle: string,
+  /** Finished readers get whole-book questions, not "so far" ones. */
+  wholeBook = false
 ): string[] {
+  if (wholeBook) {
+    const tags = getChapterTags(`CH${String(finishedThrough).padStart(2, "0")}`);
+    const out = [`What does the ending of ${bookTitle} leave unresolved?`];
+    const lead = tags?.characters.find((c) => c.presence === "lead");
+    if (lead) out.push(`How does ${label(lead.slug)} change over the book?`);
+    if (tags?.rules[0]) out.push(`How does ${label(tags.rules[0].slug)} work?`);
+    out.push("What do the vaults want from the crew?");
+    return out;
+  }
   if (finishedThrough <= 0) {
     return [
       `What is ${bookTitle} about, without spoilers?`,
