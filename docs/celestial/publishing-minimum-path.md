@@ -385,3 +385,26 @@ File to upload to KDP: **`celestial-heritage-TRADE-PRINT-READY.pdf`**
 
 Print cost ≈ $1.00 + 248 × $0.012 = **$3.98**.
 At $14.99: royalty ≈ 60% × 14.99 − 3.98 = **$5.02**. At $13.99: **$4.42**. Expanded Distribution (40%) at $14.99: **$2.02**.
+
+## 11. Formats and the 2026-11-16 export
+
+**Formats (recommended):** launch **ebook + paperback together**. Add the **hardcover** once the paperback proof is approved
+and the hardcover cover wrap exists. That's free on KDP, uses its own free ISBN and the same interior PDF (KDP's previewer
+will flag any margin issue), and Amazon links all formats on one product page.
+
+| Format | List price | KDP print cost (246 pp) | Royalty / copy |
+|---|---|---|---|
+| Kindle ebook (KDP Select) | $4.99 | — | ~$3.40 (70%, minus small delivery fee) + KU page reads |
+| Paperback, cream, 6 × 9 | $14.99 | $1.00 + 246 × $0.012 = **$3.95** | **~$5.04** |
+| Hardcover (case laminate), 6 × 9 | $24.99–26.99 | $5.65 + 246 × $0.012 = **$8.60** | **~$6.39–7.59** |
+
+**Fixes still needed in Reedsy (export of 2026-11-16, 246 pp):**
+1. Copyright page: delete the **"ISBN: [KDP-assigned paperback ISBN]"** placeholder line. An ISBN inside isn't required, and one interior
+   serves both paperback and hardcover, which have different ISBNs. Remove the duplicate "Copyright © 2026 by Paul Cobb" and
+   "First edition" lines too (Reedsy adds its own).
+2. Whisper Log (CH07, p. 81): still not in Quote.
+3. Then re-export **both** the PDF and the EPUB (the EPUB has the same placeholder).
+
+Already correct: Acknowledgments now come before About the Author, and the EPUB contains the cover (1633 × 2449).
+**Spine at 246 pp:** 0.615 in, giving a paperback wrap of **12.865 × 9.25 in (3860 × 2775 px)**. Re-check after the re-export, and use KDP's
+separate **hardcover** template for the case-laminate wrap (it adds hinge and wrap margins).
