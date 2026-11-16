@@ -408,3 +408,12 @@ will flag any margin issue), and Amazon links all formats on one product page.
 Already correct: Acknowledgments now come before About the Author, and the EPUB contains the cover (1633 × 2449).
 **Spine at 246 pp:** 0.615 in, giving a paperback wrap of **12.865 × 9.25 in (3860 × 2775 px)**. Re-check after the re-export, and use KDP's
 separate **hardcover** template for the case-laminate wrap (it adds hinge and wrap margins).
+
+## 12. READY TO UPLOAD: export of 2026-11-16 16:39
+
+- Interior: `celestial-heritage-TRADE-PRINT-READY.pdf`: 6 × 9, **246 pp**, fonts embedded, margins 0.75″ inside / 0.56″ outside / 0.55″ top / 0.50″ bottom ✓.
+  Copyright page clean (fiction disclaimer, AI statement, series line; no ISBN placeholder or duplicate lines) ✓. Acknowledgments come before About the Author ✓.
+  Body text is identical to the 2026-11-16 00:02 export ✓.
+- Ebook: `celestial-heritage.epub`: placeholder gone ✓, cover embedded (1633 × 2449) ✓, `mimetype` stored first ✓.
+- Only open cosmetic item: the CH07 Whisper Log (p. 81) isn't in Quote (optional).
+- Paperback cover wrap at 246 pp, cream: spine **0.615″**, full wrap **12.865 × 9.25 in (3860 × 2775 px @ 300 dpi)**.
