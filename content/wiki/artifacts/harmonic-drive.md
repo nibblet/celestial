@@ -24,9 +24,20 @@ The Harmonic Drive is a system that enables jumps between aligned resonance poin
 
 <!-- canon:end -->
 
-<!-- ai-dossier:thematic-role generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="fe48f03a73" -->
+<!-- ai-dossier:thematic-role generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="61932ea4b8" -->
 ## Thematic Role
-The Harmonic Drive symbolizes a departure from conquest-based exploration toward alignment-based traversal. It requires emotional coherence and moral readiness from the crew, making movement itself a test of collective integrity. The drive embodies the story's core premise: that advancement comes not from force, but from resonance with deeper universal patterns.
+The Harmonic Drive embodies the story's core theme that connection transcends mere mechanics. It requires emotional readiness and symbolic alignment from the crew, making faster-than-light travel contingent on human coherence rather than pure engineering. The system represents a fundamental shift from conquest of space to harmony with it.
+<!-- ai-dossier:end -->
+
+<!-- ai-dossier:wielders generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="61932ea4b8" -->
+## Wielders & Interactions
+- **ALARA** — Operates the Harmonic Drive by listening to resonance points in spacetime, enabling the ship's resonance-based transit (CH08).
+<!-- ai-dossier:end -->
+
+<!-- ai-dossier:timeline generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="61932ea4b8" -->
+## Timeline
+- **CH08** — The drive enables Valkyrie-1's resonance-based transit as ALARA monitors spacetime resonance points.
+- **CH17** — The ship's harmonic lattice structure receives redirected power, activating its resonant geometry.
 <!-- ai-dossier:end -->
 
 ## Appearances

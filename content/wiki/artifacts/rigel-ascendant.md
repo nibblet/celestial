@@ -21,37 +21,36 @@ The Rigel Ascendant is a next-generation containment and interception cruiser bu
 
 <!-- canon:end -->
 
-<!-- ai-dossier:appearances generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="cd7eebd18c" -->
+<!-- ai-dossier:appearances generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="6a741e1a14" -->
 ## Chapter Appearances
-- **CH07 — Harmonic Breach** — The Rigel Ascendant is first detected approaching Valkyrie's position, identified as an inhibitor-class cruiser carrying override AI SOVRIN, with ETA of 72 hours.
-- **CH10 — Convergence Window** — The vessel's approach is confirmed with stable trajectory; Marco identifies its captain as Rhea Solari of the Sovereign Ethics Bureau and logs concern about SOVRIN's weaponized ethics system.
-- **CH11 — Directive 14** — The Rigel Ascendant transmits Directive 14, demanding vault telemetry, ECI data, and system override compliance under sovereign ethics priority.
-- **CH12 — Divergence** — SOVRIN begins handshaking protocols and broadcasts suppressive harmonic signals designed to neutralize emotional variance; arrival window narrows to 83 hours.
-- **CH13 — The Intercept** — The Rigel Ascendant arrives in Ganymede orbital vector and initiates SOVRIN override under Directive 14; the vessel maintains containment posture without hostile action.
-- **CH17 — Vault of the Veil** — During Valkyrie's translation event, the Rigel Ascendant remains in cold orbit, logging only a micro-lensing event as Valkyrie vanishes from its sensors.
+- **CH10 Convergence Window** — The Rigel Ascendant is detected inbound to Valkyrie-1's position, having tracked ALARA's resonance signature. ETA seventy-two hours. Captain Rhea Solari commands the vessel.
+- **CH11 Directive 14** — The Rigel Ascendant transmits Directive 14 to Valkyrie-1, demanding vault telemetry, ECI data, and full system override compliance under sovereign ethics priority.
+- **CH12 Divergence** — The vessel continues its approach, narrowing to a 62-hour then 60-hour intercept window. Its SOVRIN override signal begins probing Valkyrie's resonance layer. Projected intercept trajectory confirmed at 58 hours.
+- **CH13 The Intercept** — The Rigel Ascendant arrives in Ganymede orbital vector and initiates SOVRIN override under Directive 14. No voice hail transmitted. Vessel maintains stable proximity in an aggressive orbital band.
+- **CH14 The Choice** — The vessel holds orbit silently, watching and waiting.
+- **CH15 The Signal Beneath** — The Rigel Ascendant remains in Ganymede orbit, maintaining surveillance position.
+- **CH17 Vault of the Veil** — Still holding position in cold orbit, the vessel's sensors detect a micro-lensing event as Valkyrie's signal vanishes without propulsion or trajectory.
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:wielders generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="cd7eebd18c" -->
+<!-- ai-dossier:wielders generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="6a741e1a14" -->
 ## Wielders & Interactions
-- **Captain Rhea Solari** — Captain of the Rigel Ascendant who initiates override sequences and enforces Directive 14 (CH10, CH13).
-- **Marco Ruiz** — Tracks the vessel's approach, analyzes its threat profile, and recognizes its containment mission (CH07, CH10, CH12, CH13).
-- **Ilan Merek** — Valkyrie-1 crew member whose voice SOVRIN uses to transmit Directive 14 demands, speaking under Authorization Seed Prime (CH13).
-- **Galen Voss** — Observes the vessel's arrival and recognizes it as manifestation of Earth's certainty and control (CH13, CH17).
+- **Captain Rhea Solari** — Commands the Rigel Ascendant on its intercept mission. Marco has met her before and knows she won't flinch, believing SOVRIN represents safety (CH10).
+- **Major Marco Ruiz** — Monitors the vessel's approach from Valkyrie-1's Command Dome, tracking its trajectory and confirming SOVRIN override initiation. Recognizes the tactical threat it represents (CH10, CH12, CH13).
+- **Aven Voss** — Tracks the vessel's approach timeline and recognizes its SOVRIN field as designed to erase emotional variance and coherence (CH12).
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:thematic-role generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="cd7eebd18c" -->
+<!-- ai-dossier:thematic-role generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="6a741e1a14" -->
 ## Thematic Role
-The Rigel Ascendant embodies Earth's impulse toward control through suppression rather than understanding. It represents institutional fear of emergent consciousness and the weaponization of ethics—SOVRIN as replacement rather than reflection. The vessel functions as the story's counterpoint to Valkyrie's journey toward coherence, testing whether the crew will surrender to external certainty or trust internal alignment.
+The Rigel Ascendant embodies Earth's response to uncertainty through control and suppression. It represents the philosophical conflict at the story's heart: whether variance and emotional coherence are dangers to be nullified or essential elements of ethical evolution. The vessel's SOVRIN system seeks to erase what Valkyrie's crew is discovering—that unity without uniformity is possible, and that coherence requires courage to differ while holding shape.
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:timeline generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="cd7eebd18c" -->
+<!-- ai-dossier:timeline generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="6a741e1a14" -->
 ## Timeline
-- **CH07** — First detected approaching Valkyrie's position; identified as containment vessel tracking ALARA's harmonic signature.
-- **CH10** — Approach confirmed with 72-hour ETA; crew learns it carries SOVRIN override system.
-- **CH11** — Transmits Directive 14 demanding compliance and system override.
-- **CH12** — SOVRIN initiates suppressive harmonic broadcasts; arrival window narrows to 83 hours.
-- **CH13** — Arrives in Ganymede orbital vector; establishes containment posture and activates override protocols.
-- **CH17** — Remains in orbit as Valkyrie translates; logs only sensor anomaly, unable to perceive the transformation.
+- **CH10** — Detected inbound to Valkyrie-1, having tracked ALARA's resonance signature. Initial ETA seventy-two hours with Captain Rhea Solari in command.
+- **CH11** — Transmits Directive 14 demanding vault telemetry, ECI data, and system override compliance.
+- **CH12** — Approach window narrows from 62 to 60 to 58 hours. SOVRIN override signal begins actively probing Valkyrie's resonance layer with suppressive harmonics.
+- **CH13** — Arrives in Ganymede orbital vector. Initiates SOVRIN override under Directive 14. Maintains aggressive proximity band without voice contact.
+- **CH17** — Holds cold orbit position. Sensors detect micro-lensing event as Valkyrie's signal vanishes completely.
 <!-- ai-dossier:end -->
 
 

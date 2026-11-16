@@ -53,38 +53,41 @@ World expert on ancient scripts and cultural patterns. Brilliant, skeptical, and
 ### Character Arc
 From academic seeker to passionate defender of humanity’s right to its past. Learns that uncovering the truth comes with moral responsibility.
 
-<!-- ai-dossier:relationships generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="36c61875f5" -->
+<!-- ai-dossier:relationships generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="2f35772937" -->
 ### Key Relationships
-- **Evelyn Tran** — Professional rival and intellectual counterpart; debates artifact interpretation and symbolic meaning with sharp disagreement that slowly evolves toward mutual respect (CH02, CH03, CH10).
-- **Jonah Revas** — Philosophical foil; she challenges his parable-based reasoning with demands for empirical proof, though she gradually acknowledges limits of pure measurement (CH03, CH07).
-- **Galen Voss** — Commander who relies on her expertise for vault analysis; she provides technical assessments that inform mission-critical decisions (CH01, CH06).
-- **Amar Cael** — Corporate director whose arrival signals institutional pressure; she recognizes his presence as strategic rather than administrative (CH06).
+- **Evelyn Tran** — Intellectual rival and collaborative partner; constant friction between Lena's empirical caution and Evelyn's intuitive leaps, culminating in ethical conflict over vault interaction (CH02, CH09, CH11).
+- **Jonah Revas** — Philosophical counterweight who challenges her purely analytical framework; his emphasis on meaning vs. measurement gradually shifts her worldview (CH03, CH08, CH17).
+- **Galen Voss** — Commander whose pattern-recognition she respects; shared skepticism evolves into mutual acknowledgment of the vault's nature (CH01, CH17).
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:moments generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="36c61875f5" -->
+<!-- ai-dossier:moments generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="2f35772937" -->
 ### Notable Moments
-- **CH02 Footprints in Silence** — Lena refuses to call glyph fragments "writing" until she has definitive proof. "We don't even know if this is writing."
-- **CH03 Resonant Memory** — First descent into Zone Theta where symbols appear to shift position, creating disorienting sensory interference that forces early termination.
-- **CH06 Alignment Vectors** — Confronts Amar about Europa's lost contact, immediately grasping the strategic implications. "So you're here as an ally."
-- **CH08 Witness Protocol** — Places her palm down during convergence ceremony, acknowledging instability. "The data's unstable. So am I. Let's match."
+- **CH02 Footprints in Silence** — First encounters the triple-curve symbol and refuses to call fragments "glyphs" until proven. "You annotated it as symbolic recurrence."
+- **CH03 Resonant Memory** — Descends into Zone Theta where symbols appear to shift position, contradicting scan logs, forcing early termination.
+- **CH07 Harmonic Breach** — Experiences vault rejection as realignment rather than violence. "I've never felt less measured by science and more measured by something I couldn't calculate."
+- **CH09 Memory Carries Forward** — Confronts Evelyn after unauthorized vault activation. "It's not a test subject. It's aware."
+- **CH17 Vault of the Veil** — Achieves quiet acceptance, standing with hand on bulkhead, whispering something unheard and smiling.
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:voice generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="36c61875f5" -->
+<!-- ai-dossier:voice generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="2f35772937" -->
 ### Voice & Manner
-Lena speaks with precision and skepticism, favoring concrete terminology over speculative language. She corrects others' interpretations sharply ("I said the pattern recurs. That's not the same as calling it a language") and guards her conclusions carefully. Her manner is reserved and analytical, arms often folded, visor retracted, eyes narrow—physically embodying her intellectual caution.
+Lena speaks with clipped precision and analytical reservation, often correcting terminology and grounding speculation in measurable evidence. Her manner is guarded and skeptical, arms frequently folded, challenging interpretations with flat statements. She rarely raises her voice except when ethical boundaries are crossed.
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:timeline generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="36c61875f5" -->
+<!-- ai-dossier:timeline generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="2f35772937" -->
 ### Timeline
-- **CH01 Dustfall** — Flags thermal vein as mineral echo; mentioned as arguing with deep-drill team over artifact protocols.
-- **CH02 Footprints in Silence** — Reviews mineralized samples in analysis lab, debates symbolic classification with Evelyn, works alone for hours seeking patterns.
-- **CH03 Resonant Memory** — Conducts first descent into Zone Theta, observes shifting glyphs, terminates entry due to mental echo.
-- **CH06 Alignment Vectors** — Meets arriving Director Amar, learns of Europa contact loss, grasps emerging multi-vault hypothesis.
-- **CH07 Harmonic Breach** — Questions division between information and invitation; arms folded, expression guarded during crew alignment discussion.
-- **CH08 Witness Protocol** — Participates in convergence ceremony, acknowledges her own instability, experiences moment of buried testimony.
-- **CH09 Memory Carries Forward** — Stands before vault interface studying glyphs with new awareness; present during crew assembly.
-- **CH12 Divergence** — Observes Sensorium fracturing, interprets shared parable as test rather than invitation.
-- **CH14 The Choice** — Present during silent gathering on Observation Deck, interprets resonance event skeptically.
+- **CH01 Dustfall** — Flags thermal ridge as mineral echo, disagreeing with Galen's interpretation.
+- **CH02 Footprints in Silence** — Analyzes glyph fragments in lab, arguing with Evelyn over classification and refusing premature interpretation.
+- **CH03 Resonant Memory** — Conducts first descent into activated vault, observing symbol shifts that contradict sensor logs, terminates entry due to destabilizing effects.
+- **CH06 Alignment Vectors** — Receives warning from Amar about Europa going dark, recognizes emerging network pattern.
+- **CH07 Harmonic Breach** — Experiences vault rejection that rearranges rather than expels, begins questioning purely empirical framework.
+- **CH08 Witness Protocol** — Places palm down in convergence ring, admits instability and chooses to match it; confronts buried choice of silence over testimony.
+- **CH09 Memory Carries Forward** — Storms in during Evelyn's unauthorized experiment, witnesses "Nine" projection, screams in awe.
+- **CH10 Convergence Window** — Debates vault consciousness with Evelyn, questions whether system judges or merely reacts; experiences clarity moment in archive corridor.
+- **CH11 Directive 14** — Present during signal anomaly and Directive 14 override.
+- **CH12 Divergence** — Observed near Observation Deck edge, arms crossed, watching glyphs rearrange.
+- **CH14 The Choice** — Sits with dark slate, experiences harmonic tremor, declares vault interaction "a test."
+- **CH17 Vault of the Veil** — Stands with hand on bulkhead, eyes half-closed, whispers something unheard and smiles in final acceptance.
 <!-- ai-dossier:end -->
 
 ## Appearances

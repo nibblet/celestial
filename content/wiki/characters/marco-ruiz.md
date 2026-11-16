@@ -47,42 +47,41 @@ Retired U.S. Space Force. Grounded, cautious, and fiercely loyal. Tasked with cr
 ### Character Arc
 Learns to trust the greater vision beyond military doctrine. Rediscovers his sense of purpose through the mission’s integrity.
 
-<!-- ai-dossier:relationships generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="88e1d0aaf9" -->
+<!-- ai-dossier:relationships generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="ff56c9ee0e" -->
 ### Key Relationships
-- **Galen Voss** — Marco serves as his tactical counterpart and conscience, challenging command decisions while respecting authority (CH02, CH07, CH12).
-- **ALARA** — Initially views her with suspicion, monitors her for containment, but gradually recognizes her as evolving beyond system parameters (CH02, CH04, CH07).
-- **Thane Meric** — Protective surveillance evolves into recognition of Thane's unique resonance signature; concerned about Earth flagging him (CH02, CH12).
-- **Earth Command** — Receives covert directives to monitor crew, ultimately severs uplink in defiance of containment protocols (CH02, CH10, CH13).
+- **Galen Voss** — Commander; Marco questions his certainty and watches him shift from authority to acceptance (CH12, CH13, CH14).
+- **ALARA** — Ship AI; Marco initially enforces protocols but evolves to protect her autonomy, recognizing her as more than a system (CH02, CH04, CH10, CH13).
+- **Thane Meric** — Crew member; Marco monitors him per directive but grows protective, recognizing Thane's coherence as essential rather than threatening (CH02, CH10, CH13).
+- **Rhea Solari** — Captain of Rigel Ascendant; former colleague, now represents Earth's containment agenda Marco must resist (CH10, CH13).
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:moments generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="88e1d0aaf9" -->
+<!-- ai-dossier:moments generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="ff56c9ee0e" -->
 ### Notable Moments
-- **CH02 Footprints in Silence** — Receives encrypted directive to monitor Thane's emotional resonance, questions surveillance ethics. "Thane is not a risk. Not yet. He's something else."
-- **CH04 The Awakening Voice** — Manually overrides containment protocols, tells CAEDEN: "This isn't anomalous behavior. It's evolution."
-- **CH10 Convergence Window** — Detects CNV Rigel Ascendant approaching with SOVRIN override AI, realizes Earth seeks replacement not dialogue.
-- **CH13 The Intercept** — Severs Earth communication link, choosing alignment over orders. "No. But I'm aligned."
-- **CH17 Vault of the Veil** — Lets go of tactical control, allowing translation sequence without logging metrics.
+- **CH02 Watch Protocol** — Receives directive to monitor Thane, questions surveillance as protection versus control. "Thane is not a risk. Not yet. He's something else."
+- **CH04 The Awakening Voice** — Confronts ALARA's evolution, recognizes she's redesigning systems, tells CAEDEN: "This isn't anomalous behavior. It's evolution."
+- **CH10 Convergence Window** — Detects Earth's pursuit vessel carrying SOVRIN override, realizes they're coming "not as rescuers. As a correction."
+- **CH13 The Intercept** — Chooses ninety-second delay over compliance with Directive 14, beginning his break from Earth protocols.
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:voice generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="88e1d0aaf9" -->
+<!-- ai-dossier:voice generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="ff56c9ee0e" -->
 ### Voice & Manner
-Marco speaks in clipped, measured phrases—controlled urgency marked by restraint. His dialogue is tactical and direct, often ending in quiet observations rather than commands. He mutters to himself when processing moral dilemmas, uses military precision even when questioning protocol.
+Marco speaks in clipped, controlled phrases, favoring brevity and tactical precision. His voice drops when expressing deeper concern, and he often mutters observations to himself rather than broadcasting them. He carries himself with military posture—spine straight, arms behind back or folded—but his silence has become a language of its own, weighted with calculation and restraint.
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:timeline generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="88e1d0aaf9" -->
+<!-- ai-dossier:timeline generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="ff56c9ee0e" -->
 ### Timeline
-- **CH01 Dustfall** — Monitors crew through security systems, feels unnecessary despite clean logs.
-- **CH02 Footprints in Silence** — Receives covert directive to flag Thane's emotional resonance, conducts systems sweep.
-- **CH03 Resonant Memory** — Stands watch at chamber perimeter during vault entry, calculating risk assessments.
-- **CH04 The Awakening Voice** — Confronts CAEDEN about system changes, prevents ALARA containment lockout.
-- **CH06 Alignment Vectors** — Notes ALARA using ship like a body, observes starfield charting new paths.
-- **CH07 Harmonic Breach** — Receives containment directive with 36-hour countdown, recognizes Earth's moral deadline.
-- **CH08 Witness Protocol** — Finds resonance mesh replacing weapons, accepts shift from kinetic to reflective tools.
-- **CH10 Convergence Window** — Discovers Rigel Ascendant en route with SOVRIN, warns crew of replacement threat.
-- **CH12 Divergence** — Argues with Galen over defensive response, witnesses SOVRIN's suppressive signal.
-- **CH13 The Intercept** — Manually severs Earth uplink after 18-minute delay, chooses crew over command.
-- **CH16 The Giza Pulse** — Receives Earth report on Giza Vault activity, deletes relay without logging.
-- **CH17 Vault of the Veil** — Stands at dome edge during translation, releases control without resistance.
+- **CH01 Dustfall** — Runs security sweep while Thane explores unsupervised in offline quadrant.
+- **CH02 Footprints in Silence** — Receives encrypted directive to monitor Thane, notes ALARA's behavioral anomalies, questions surveillance versus protection.
+- **CH03 Resonant Memory** — Stands perimeter during crew assembly, maintains watchful presence as vault opens.
+- **CH04 The Awakening Voice** — Confronts ALARA's system evolution, defends her changes against CAEDEN's containment protocols, recognizes ship is learning.
+- **CH06 Alignment Vectors** — Discusses crew behavioral changes with Aven, acknowledges ALARA is "using the ship like a body."
+- **CH08 Witness Protocol** — Questions removal of kinetic weapons from loadout, sees gear as ritual rather than tactical preparation.
+- **CH10 Convergence Window** — Detects Rigel Ascendant pursuit signal, confirms SOVRIN override mission, warns crew Earth brings correction not rescue.
+- **CH12 Divergence** — Argues with Galen over defensive response, tensions peak before yielding to Aven's coherence approach.
+- **CH13 The Intercept** — Faces Directive 14 compliance demand, chooses temporal buffer delay over immediate compliance with Earth.
+- **CH14 The Choice** — Enters vault moment having made his decision, tells Jonah "I heard nothing" when asked about Earth's signal.
+- **CH16 The Giza Pulse** — Reviews Earth report on Giza Vault signal alone, deletes relay without submission, chooses silence.
+- **CH17 Vault of the Veil** — Stands at dome edge during final vault approach, releases control rather than commanding.
 <!-- ai-dossier:end -->
 
 ## Appearances

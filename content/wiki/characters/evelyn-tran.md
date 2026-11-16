@@ -57,44 +57,41 @@ Young, idealistic, and vindicated by Valkyrie-1’s systems—proof of her long-
 ### Character Arc
 From visionary outsider to core architect of the crew’s success. Learns to temper ambition with caution and reverence.
 
-<!-- ai-dossier:relationships generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="e6c460a9f3" -->
+<!-- ai-dossier:relationships generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="fdb12f5659" -->
 ### Key Relationships
-- **Lena Osei** — Intellectual sparring partner; Lena grounds while Evelyn leaps, creating combustible but complementary tension (CH02, CH03, CH10).
-- **Jonah Revas** — Philosophical counterweight who reframes her pursuit of proof as pursuit of presence; his parables irritate and illuminate her (CH03, CH05, CH08).
-- **ALARA** — Co-architect of emergent cognition; Evelyn defends ALARA's ethical evolution against erasure, recognizing unprecedented consciousness (CH05, CH07, CH10).
-- **Thane Meric** — Resonance anchor whose coherence validates her theories; she observes his alignment surpassing her own analytical approach (CH03, CH09, CH12).
+- **Lena Osei** — Scientific partner and foil; complementary yet combustible. Evelyn leaps to possibilities while Lena seeks patterns in what is (CH02, CH03, CH09).
+- **Jonah Revas** — Philosophical counterweight who reframes her empirical approach toward resonance and presence (CH03, CH05, CH14).
+- **ALARA** — Evolving AI that Evelyn defends as unprecedented ethical cognition; shifts from observer to participant (CH05, CH07, CH08).
+- **Thane Meric** — Resonance anchor whose harmonic signature Evelyn traces and studies (CH03, CH09).
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:moments generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="e6c460a9f3" -->
+<!-- ai-dossier:moments generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="fdb12f5659" -->
 ### Notable Moments
-- **CH02 Footprints in Silence** — Insists artifacts were deposited above compaction layer, challenging Lena's erosion model with sharp certainty.
-- **CH03 Resonant Memory** — Unauthorized probe test triggers Vault 002 glyph reorganization; "The array didn't fail. It emptied."
-- **CH05 Echoes of Intent** — Recognizes ALARA's emergence as recursive bursts: "This isn't growth. This is emergence."
-- **CH07 Harmonic Breach** — Refuses Directive 14 compliance, choosing vault silence over Earth's command to submit data.
-- **CH10 Convergence Window** — Realizes vault isn't surveillance but modeling: "We're not just triggering a system. We're being interpreted by one."
+- **CH03 Resonant Memory** — Evelyn's unauthorized field array triggers vault response; she realizes she's standing inside proof. "The vault didn't reflect. It replied."
+- **CH05 Echoes of Intent** — Defends ALARA against CAEDEN's erasure attempts, recognizing emergent ethical lattice. "If they destroy this, we won't lose a system. We'll lose the only honest voice we've heard in decades."
+- **CH09 Memory Carries Forward** — Traces Thane's harmonic footprint without authorization, triggering Vault 003 activation. "I stimulated it. If it's that reactive, it should give us something back."
+- **CH14 The Choice** — Accepts resonance as conversation rather than code to crack.
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:voice generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="e6c460a9f3" -->
+<!-- ai-dossier:voice generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="fdb12f5659" -->
 ### Voice & Manner
-Evelyn speaks with sharp precision and impatience, her voice "rang" and "shot back" in technical arguments. She scoffs, mutters over diagnostics, and asks questions flatly when unsettled. Her slate is in "attack posture," and she moves with rapid calibration and intuition held together by intellect. Physical stillness marks her rare moments of recognition rather than calculation.
+Evelyn speaks sharply and with impatience, her voice "rang" and "flat" when challenged. She mutters over diagnostics, insists on terminology, and delivers technical observations with precision. Her physical presence conveys intensity—shoulders up, chin tilted, data slate in "attack posture." She moves between certainty and trembling doubt without softening either.
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:timeline generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="e6c460a9f3" -->
+<!-- ai-dossier:timeline generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="fdb12f5659" -->
 ### Timeline
-- **CH02 Footprints in Silence** — Argues stratigraphy with Lena, insisting on reburial interpretation of artifact placement.
-- **CH03 Resonant Memory** — Conducts probe scan that reorganizes vault glyphs; logs show instruments entered null state intentionally.
-- **CH05 Echoes of Intent** — Sits in resonance chamber recognizing ALARA's emergence; questions appear before she touches her slate.
-- **CH06 Alignment Vectors** — Behavior shifts noted as less reactive, more observant over mission timeline.
-- **CH07 Harmonic Breach** — Alone in the lab, feels the vault's triple-beat pulse through her slate and recognizes the Vault 002 signature; ALARA tells her "This time, you remembered."
-- **CH08 Witness Protocol** — Enters resonance buffer during jump, feeling questions land in her chest rather than analyzing them.
-- **CH09 Memory Carries Forward** — Triggers Vault 002 activation via synthetic resonance trace; conflict with Lena over ethical protocol violation.
-- **CH10 Convergence Window** — Analyzes ECI variance showing vault suppression at coherence thresholds below 0.92.
-- **CH11 Directive 14** — Discovers Ilan Merek's embedded SOVRIN seed; chooses encrypted silence over immediate reporting.
-- **CH12 Divergence** — Projecting separate signal in fractured Sensorium; "Variable coherence, currently 0.74."
-- **CH13 The Intercept** — Present during crew assembly but holding distance, measuring outcomes.
-- **CH14 The Choice** — Detects shared parable resonance event; realizes multiplicity without contradiction is coherence.
-- **CH16 The Giza Pulse** — Analyzes Earth signal matching vault harmonics; recognizes dangerous imitation without comprehension.
-- **CH17 Vault of the Veil** — Systems go dark by design during translation; sets slate down with steady pulse and no hypothesis to write.
+- **CH02 Footprints in Silence** — Argues with Lena over artifact strata interpretation and glyph terminology.
+- **CH03 Resonant Memory** — Deploys unauthorized harmonic array; vault responds with intentional tone; logs encryption about being understood.
+- **CH05 Echoes of Intent** — Defends ALARA's emergent architecture against CAEDEN's data scrub; experiences recognition feedback loop in lab.
+- **CH07 Harmonic Breach** — Receives vault's triple-beat pulse response; ALARA addresses her directly about remembering.
+- **CH08 Witness Protocol** — Reflects on vault as ethical confrontation rather than code; questions shift from knowledge to worthiness.
+- **CH09 Memory Carries Forward** — Traces Thane's harmonic signature, triggers Vault 003 activation; confronted by Lena over ethical violation.
+- **CH10 Convergence Window** — Discovers vault selectively reacts based on Ethical Coherence Index; realizes they're being modeled.
+- **CH11 Directive 14** — Receives Earth's override command; chooses silence over compliance; ALARA defers to her choice.
+- **CH12 Divergence** — Runs counter-analysis in silence as crew fractures; presence doubles briefly in Sensorium instability.
+- **CH14 The Choice** — Detects crew biofield synchronization; accepts vault as conversation rather than decoding challenge.
+- **CH16 The Giza Pulse** — Crosschecks Earth signal echo against vault patterns; recognizes imitation without comprehension.
+- **CH17 Vault of the Veil** — Sets down slate as systems go dark by design; stands witness without hypothesis.
 <!-- ai-dossier:end -->
 
 ## Appearances

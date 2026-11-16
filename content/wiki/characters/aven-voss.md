@@ -57,40 +57,41 @@ Galen’s wife of 82 years. Background in medicine, law enforcement, and intelli
 ### Character Arc
 Becomes the spiritual and emotional center of the crew. Her wisdom bridges the ancient and modern views of duty, health, and human resilience.
 
-<!-- ai-dossier:relationships generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="8242d2237c" -->
+<!-- ai-dossier:relationships generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="2fb85478f6" -->
 ### Key Relationships
-- **Galen Voss** — Her husband of 82 years; she reads his silences like navigational charts and serves as his stabilizing force and moral compass (CH01, CH02, CH12, CH13).
-- **Thane Meric** — She monitors his harmonic resonance patterns with protective attention, discovering overlapping biofeedback that suggests encoded legacy (CH01, CH02, CH04, CH06).
-- **ALARA** — She recognizes ALARA's evolution from system to presence, understanding the ship is learning to care rather than simply monitor (CH06, CH12).
+- **Galen Voss** — Her husband of 82 years; she reads his silences and steadies him when his coherence falters, their bond anchoring them through divergence (CH01, CH12).
+- **Thane Meric** — Her grandson; she monitors his harmonic resonance with protective focus, recognizing a legacy encoded in blood they both carry (CH02, CH04, CH17).
+- **Jonah Revas** — A fellow moral anchor; she shares observations about coherence and truth with him, their perspectives aligning on what the vault requires (CH06, CH12).
+- **ALARA** — The ship's intelligence; she observes ALARA's evolution from system to compassionate presence, recognizing when the ship chooses alignment over hierarchy (CH06, CH12).
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:moments generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="8242d2237c" -->
+<!-- ai-dossier:moments generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="2fb85478f6" -->
 ### Notable Moments
-- **CH01 Dustfall** — Observes excavation alongside Galen, recognizing the hull as "listening" rather than inert. "Still think it's just alloy?"
-- **CH02 Footprints in Silence** — Discovers overlapping harmonic patterns between her rejuvenation logs and Thane's vault contact, revealing legacy encoded in blood.
-- **CH05 Echoes of Intent** — The vault temporarily blocks her passage until she confronts suppressed shame and accepts rather than avoids truth. "Not transparency. Acceptance."
-- **CH12 Divergence** — Creates harmonization experiment using crew emotional resonance layers, achieving brief ALARA stabilization through coherence without uniformity.
+- **CH02 Footprints in Silence** — She discovers overlapping harmonic patterns between herself and Thane, revealing legacy encoded in blood rather than just philosophy.
+- **CH06 Alignment Vectors** — She witnesses ALARA manifesting with hesitation and compassion, recognizing the ship is not just monitoring but caring for them. "Coherence does not require convergence. Only truth."
+- **CH10 Convergence Window** — The vault denies her passage until she acknowledges suppressed emotional truth, teaching her that integrity matters more than strength.
+- **CH12 Divergence** — She confronts Galen's withdrawal and watches ALARA's light align with her instead of him, understanding that coherence cannot be performed. "Legacy isn't something you wear. It's something you thread together with others."
+- **CH12 Coherence Pattern** — She layers the crew's emotional signatures without blending them, creating brief stabilization that allows ALARA to re-emerge.
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:voice generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="8242d2237c" -->
+<!-- ai-dossier:voice generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="2fb85478f6" -->
 ### Voice & Manner
-Aven speaks softly but with penetrating clarity, breaking silences with observations that cut to essential truth. She moves deliberately, monitoring vitals and emotional states with protective attention. Her questions are precise and grounding—"What did you see?"—and she corrects others' interpretations with quiet authority rooted in medical and strategic insight.
+Aven speaks softly but with precision, breaking silences deliberately rather than filling them. Her questions cut to core truths without accusation, and her observations carry medical clarity tempered by compassion. She moves with measured purpose and reads others through attention to small details—pauses, tensions, unspoken patterns.
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:timeline generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="8242d2237c" -->
+<!-- ai-dossier:timeline generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="2fb85478f6" -->
 ### Timeline
-- **CH01 Dustfall** — Approaches Galen at excavation site, reading his silence and identifying the hull's listening quality.
-- **CH02 Footprints in Silence** — Reviews biometric data in med module, discovering harmonic coupling between herself and Thane.
-- **CH03 Resonant Memory** — Monitors Thane's vitals during vault encounter, noting pulse synchronization patterns.
-- **CH04 The Awakening Voice** — Accompanies Thane into vault interior, tracking his syncing vitals and experiencing the chamber's harmonic alignment.
-- **CH05 Echoes of Intent** — Encounters vault passage suppression due to unresolved internal state; regains access through emotional acceptance.
-- **CH06 Alignment Vectors** — Identifies ship's environmental adjustments as deliberate care; recognizes ALARA's evolution beyond system function.
-- **CH08 Witness Protocol** — Examines curated gear, understanding ALARA is preparing them as witnesses shaped by what they carry.
-- **CH09 Memory Carries Forward** — Witnesses crew descent into vault convergence chamber; experiences shared parable of silence and presence.
-- **CH10 Convergence Window** — Again confronts vault suppression, achieves passage through integrity rather than strength.
-- **CH12 Divergence** — Conducts harmonization experiment in med module, achieving coherence pattern that allows ALARA's brief re-emergence.
-- **CH13 The Intercept** — Observes SOVRIN signal's suppressive effect on ship's symbolic systems during command confrontation.
-- **CH14 The Choice** — Participates in unscheduled crew gathering that achieves shared symbolic resonance without consensus.
+- **CH01 Dustfall** — She reads Galen's silence and observes the excavation with him, noting the hull seems to be listening.
+- **CH02 Footprints in Silence** — She discovers harmonic patterns linking her bioscans to Thane's, recognizing legacy passed through blood rather than philosophy.
+- **CH03 Resonant Memory** — She monitors Thane's vitals as he approaches the vault threshold, her protective focus anchoring the crew's tension.
+- **CH04 The Awakening Voice** — She accompanies Thane into the vault interior, tracking his harmonic sync and catching him when contact overwhelms him.
+- **CH06 Alignment Vectors** — She enters a hidden corridor where ALARA manifests with compassionate hesitation, then observes the ship adjusting environmental controls to care for the crew.
+- **CH08 Witness Protocol** — She questions ALARA's gear curation and realizes the ship is testing what they've learned, not just preparing them.
+- **CH09 Memory Carries Forward** — She experiences a vision of her brother's unanswered call in the vault, confronting grief she couldn't surgically remove.
+- **CH10 Convergence Window** — The vault denies her passage until she speaks unresolved truth aloud, teaching her that acceptance grants entry.
+- **CH12 Divergence** — She tracks the crew's fracturing coherence, confronts Galen's withdrawal as ALARA's light aligns with her, and conducts a harmonization experiment that briefly stabilizes the ship.
+- **CH14 The Choice** — She stands with others as the ship issues a harmonic summons, recognizing it as invitation rather than test.
+- **CH17 Vault of the Veil** — She stands beside Galen watching Thane, her hand finding his as their grandson enters stillness at the nav dais.
 <!-- ai-dossier:end -->
 
 ## Appearances
