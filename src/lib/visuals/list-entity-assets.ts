@@ -17,7 +17,8 @@ export type EntityVisualAsset = {
 };
 
 /**
- * Fetch every approved or reference-uploaded asset for an entity slug.
+ * Fetch every approved or reference-uploaded asset for an entity slug,
+ * including approved shots where the entity is in the cast.
  *
  * Sort order:
  *   1. Reference uploads first (canonical identity source).
@@ -37,7 +38,16 @@ export async function listEntityVisuals(
     .eq("target_kind", "entity")
     .eq("target_id", entitySlug);
 
-  const promptRows = prompts ?? [];
+  // Shots this entity appears in as cast ("Characters in shot"), e.g. Thane
+  // in the trench and Zone Theta clips, so they show on his page too.
+  const { data: castPrompts } = await admin
+    .from("cel_visual_prompts")
+    .select("id, style_preset")
+    .contains("prompt_json->cast", JSON.stringify([{ id: entitySlug }]));
+
+  const promptRows = [...(prompts ?? []), ...(castPrompts ?? [])].filter(
+    (row, i, all) => all.findIndex((r) => r.id === row.id) === i,
+  );
   if (promptRows.length === 0) return [];
 
   const promptIdToPreset = new Map<string, string>(
