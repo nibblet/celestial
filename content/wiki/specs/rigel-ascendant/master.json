@@ -1,7 +1,7 @@
 {
   "entity": "rigel-ascendant",
   "world": "earth_2050",
-  "_canon_status": "draft_pending_author_review",
+  "_canon_status": "look_approved_by_author_2026-11-17",
   "display_name": "CNV Rigel Ascendant",
   "classification": "modular_inhibitor_class_containment_cruiser",
   "_provenance": {
@@ -10,29 +10,35 @@
       "290 m, crew 42, twin helium-3 fusion wells (wiki only)"
     ],
     "proposed_needs_author_approval": [
-      "entire exterior and interior look; the prose describes none of it"
-    ]
+      "interior look; the prose describes none of it"
+    ],
+    "author_direction_2026-11-17": "Angular, Earth lineage, in the hard-science register of contemporary TV space opera warships: tower layout along the thrust axis, faceted armor, radiators, thruster clusters. First render stood the ship upright as a tower; the author asked for it horizontal.",
+    "approved_render": "public/visual-references/rigel-ascendant.png: second OpenAI render (horizontal, whole hull), author-approved 2026-11-17. rigel-ascendant-bow-detail.png is the first render, kept for close detail of the bow."
   },
   "scale": {
     "length_m": 290,
     "crew": 42
   },
   "silhouette": {
-    "primary_shape": "long_rigid_spine_with_stacked_rectangular_modules",
-    "profile": "hard_edged_symmetrical_wedge_bow",
+    "primary_shape": "a_long_narrow_hull_built_along_its_thrust_axis_blunt_wedge_bow_at_one_end_twin_drive_cones_at_the_other_about_six_times_longer_than_it_is_wide",
+    "profile": "faceted_and_angular:_flat_armor_planes_meeting_at_hard_chamfered_edges_a_blunt_wedge_bow_no_curves_anywhere",
+    "modules": "slab_sided_hull_sections_bolted_around_a_central_spine_with_recessed_gaps_between_them_showing_truss_and_tankage",
     "symmetry": "strict_bilateral",
-    "read": "a_vessel_of_certainty_everything_the_valkyrie_is_not"
+    "read": "a_vessel_of_certainty_earth_built_hard_science_warship_everything_the_valkyrie_is_not",
+    "orientation_in_frame": "always_shown_lying_horizontal_across_the_frame_like_a_naval_ship_in_profile_bow_toward_one_side_drive_toward_the_other_never_standing_upright_like_a_tower"
   },
   "hull": {
-    "material": "matte_graphite_composite_plates_with_brushed_steel_module_frames",
-    "paneling": "visible_precise_panel_lines_and_hex_bolt_hardpoints",
-    "markings": "white_hull_number_CNV_014_A_and_the_sovereign_ethics_bureau_seal_near_the_bow",
-    "wear": "micrometeorite_pitting_clean_but_used"
+    "material": "matte_gunmetal_and_graphite_armor_plate_over_a_steel_frame",
+    "paneling": "large_flat_armor_panels_with_visible_seams_access_hatches_handholds_and_hex_bolt_hardpoints",
+    "markings": "white_stenciled_hull_number_CNV_014_A_thin_hazard_striping_at_hatches_and_one_small_sovereign_ethics_bureau_seal_near_the_bow",
+    "wear": "micrometeorite_pitting_heat_discoloration_near_the_drive_clean_but_used"
   },
   "systems_visible": {
-    "propulsion": "twin_aft_fusion_drive_bells_with_faint_blue_white_glow",
-    "inhibitor_array": "ring_of_dish_like_quantum_dampener_emitters_around_the_midsection",
-    "sensors": "long_wave_phase_triangulation_antenna_booms"
+    "propulsion": "twin_fusion_drive_cones_at_the_stern_dark_and_idle_while_holding_orbit_with_a_faint_blue_white_glow",
+    "maneuvering": "boxy_reaction_control_thruster_clusters_at_the_corners",
+    "radiators": "flat_rectangular_heat_radiator_panels_folded_out_from_the_aft_third_glowing_dull_orange_at_their_roots_only",
+    "inhibitor_array": "a_ring_of_flat_faceted_quantum_dampener_emitter_panels_around_the_midsection",
+    "sensors": "long_wave_phase_triangulation_antenna_booms_and_small_dish_clusters_near_the_bow"
   },
   "lighting": {
     "running_lights": "cold_white_strobes",
@@ -46,12 +52,41 @@
     "tone": "cold_precise_unhurried",
     "impression": "containment_manifest"
   },
+  "reference_images": [
+    {
+      "path": "/visual-references/rigel-ascendant.png",
+      "role": "identity",
+      "label": "Rigel Ascendant approved exterior (whole hull, horizontal)",
+      "instruction": "match this ship exactly: long horizontal hull, faceted gunmetal bow block with hull number and seal, slab modules along the spine, midsection emitter ring, radiator panels on the aft third, twin drive cones",
+      "inherit": false
+    },
+    {
+      "path": "/visual-references/rigel-ascendant-bow-detail.png",
+      "role": "identity",
+      "label": "Rigel Ascendant bow and midsection close detail",
+      "instruction": "close detail of the same ship's bow block, modules and markings; use for surface detail only, not for pose or framing",
+      "inherit": false
+    },
+    {
+      "path": "/visual-references/sovereign-ethics-bureau-seal.png",
+      "role": "insignia",
+      "label": "Sovereign Ethics Bureau seal",
+      "instruction": "one small painted marking near the bow, silver-white on the dark hull; do not enlarge it or repeat it"
+    }
+  ],
   "avoid": [
     "organic_curves",
     "bio_crystalline_surfaces",
     "subdermal_veins",
     "star_destroyer_shape",
     "rust_or_pirate_salvage_look",
-    "warm_gold_light"
+    "warm_gold_light",
+    "aerodynamic_wings_or_fins",
+    "sleek_or_rounded_hull",
+    "glowing_neon_trim",
+    "saucer_or_disc_sections",
+    "visible_weapon_fire",
+    "ship_standing_vertical_or_upright_in_frame",
+    "hull_cropped_by_the_frame"
   ]
 }
