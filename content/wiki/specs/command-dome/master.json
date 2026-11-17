@@ -26,10 +26,10 @@
     "interface_visibility": "latent_until_engaged"
   },
   "lighting": {
-    "source": "ambient_subsurface_emission",
-    "color": "soft_violet_with_neutral_white_blend",
-    "behavior": "slow_responsive_pulsing",
-    "shadow": "diffuse_nearly_shadowless"
+    "source": "the_room's_own_low_ambient_light_from_inside_the_wall_panels_and_one_thin_warm_line_at_the_base_of_the_walls",
+    "color": "soft_violet_and_pearl_with_a_little_warm_white",
+    "alara": "not_visible:_no_golden_veins_no_spiral_no_light_in_the_air_the_ceiling_is_plain_and_quiet",
+    "shadow": "dim_calm_most_of_the_ceiling_in_shadow"
   },
   "navigation_system": {
     "controller": "ALARA",
@@ -69,10 +69,16 @@
   ],
   "reference_images": [
     {
-      "path": "/visual-references/command-dome.png",
+      "path": "/visual-references/command-dome-interior.png",
       "role": "environment",
-      "label": "Command Dome reference render",
-      "instruction": "match the elliptical chamber, curved arches, central glyph light and violet palette; keep it free of consoles and screens"
+      "label": "Approved Command Dome (ALARA not glowing)",
+      "instruction": "this is the room: pale pearl ribbed arches, leaf-shaped petal door, violet crystalline wall panels, wide plain domed ceiling, dark polished floor, thin warm line at the base of the walls; keep it free of consoles and screens. ALARA's light is added only when the shot asks for her",
+      "inherit": false
     }
-  ]
+  ],
+  "_canon_status": "look_approved_by_author_2026-11-17",
+  "_provenance": {
+    "author_direction_2026-11-17": "The Command Dome is the room in the approved ALARA stills, with ALARA not glowing. The older concept render (public/visual-references/command-dome.png: windows, planets, floating crystal) is no longer this room's reference; SOVRIN, Resonant Core and Harmonic Drive were made from it.",
+    "approved_render": "public/visual-references/command-dome-interior.png: first OpenAI render made from the ALARA lab still with her light out, author-approved 2026-11-17."
+  }
 }

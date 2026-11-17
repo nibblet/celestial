@@ -2,22 +2,68 @@
   "entity": "witness-circle",
   "parent_entity": "valkyrie-1",
   "classification": "parable_reception_chamber",
-  "purpose": "site where the crew gathers to witness fragmented parables, e.g. 'The Inheritance' (CH09)",
+  "purpose": "the one room built for a single act: the whole crew sits in a ring and witnesses what the vaults show them (the parable 'The Inheritance', CH09)",
   "spatial_character": {
-    "geometry": "circular_chamber_with_concentric_floor_recesses_for_seated_crew",
-    "behavior": "central_air_above_circle_can_carry_parable_voice_or_vault_echo_imagery",
+    "geometry": "perfectly_circular_chamber_under_a_low_shallow_dome_the_only_truly_round_room_on_the_ship",
+    "the_ring": "nine_low_seats_grown_from_the_floor_in_an_evenly_spaced_ring_all_facing_the_center_each_a_smooth_scooped_recess_with_a_low_curved_back_in_the_ship's_pearl_shell",
+    "the_empty_place": "eight_seats_have_a_faint_warm_line_of_light_at_their_base_the_ninth_is_unlit_and_stays_empty",
+    "the_well": "at_the_exact_center_a_shallow_round_basin_set_into_the_floor_its_surface_black_and_mirror_still",
+    "what_is_witnessed": "a_sphere_of_pale_gold_light_the_size_of_a_person_gathers_in_the_air_above_the_well_and_is_reflected_in_it_this_is_where_parables_appear",
+    "ceiling": "concentric_rings_in_the_dome_directly_above_the_well_closed_no_window",
+    "floor": "dark_polished_floor_with_fine_inlaid_lines_running_from_each_seat_to_the_well_and_a_thin_layer_of_luminous_haze_lying_low_over_it",
     "atmosphere": "ritual_quiet_ancestral_listening_posture"
   },
   "lighting": {
-    "default_state": "low_warm_amber_at_perimeter_dark_at_center",
-    "active_state": "central_circle_brightens_with_violet_or_gold_glyph_forms_during_parable_reception",
-    "color_temperature_emphasis": "warm_amber_with_violet_event_pulses"
+    "source": "the_pale_gold_sphere_above_the_well_and_the_faint_lines_at_the_seats",
+    "color": "pale_gold_at_the_center_falling_to_dim_violet_pearl_at_the_walls",
+    "shadow": "the_backs_of_the_seats_and_the_outer_wall_fall_into_darkness"
   },
+  "_provenance": {
+    "canon": [
+      "crew gathers to witness 'The Inheritance' (parable catalog, CH09)",
+      "'A sphere of pale gold began to form in the air... nine forms... The ninth... was absent.' (CH09 S2)",
+      "'a soft, radiant fog that held its light like breath' (CH09 S5)"
+    ],
+    "proposed_needs_author_approval": [
+      "nine seats with one left empty, the central well, the inlaid lines"
+    ],
+    "author_direction_2026-11-17": "More unique, with a clear purpose, while keeping the ship's architecture. Kept aboard Valkyrie-1 (CH09 also places a witnessing in the Ganymede vault; that is the ganymede-vault spec).",
+    "approved_render": "public/visual-references/witness-circle.png: first OpenAI render, author-approved 2026-11-17."
+  },
+  "reference_images": [
+    {
+      "path": "/visual-references/witness-circle.png",
+      "role": "environment",
+      "label": "Approved Witness Circle",
+      "instruction": "match this room exactly: nine low seats in a ring facing a still black basin, the pale gold sphere above it, inlaid lines from each seat, concentric rings in the dome",
+      "inherit": false
+    },
+    {
+      "path": "/visual-references/alara-lab-in-the-walls.png",
+      "role": "environment",
+      "label": "Valkyrie-1 interior architecture (from the approved ALARA lab still)",
+      "instruction": "same ship, different room: match the architecture and realism only (pale pearl ribbed arches, leaf-shaped petal door, translucent crystalline wall panels with faint violet inside, dark polished floor, low warm light). The golden veins and spiral are ALARA, not the room: leave them out. Do not copy the lab's shelves, crystals, bottles or tables"
+    },
+    {
+      "path": "/visual-references/observation-deck.png",
+      "role": "environment",
+      "label": "Approved Observation Deck",
+      "instruction": "same ship: match the materials only (pearl-silver shell edges with fine violet veins inside, dark reflective floor, thin warm line of light). No window, no planets, no person"
+    }
+  ],
   "avoid": [
     "auditorium_seating",
     "stage_or_podium",
     "religious_iconography",
     "candles_or_obvious_ritual_props",
-    "industrial_meeting_room_aesthetic"
-  ]
+    "industrial_meeting_room_aesthetic",
+    "people",
+    "windows_or_planets",
+    "alara_golden_veins_or_spiral",
+    "humanoid_figures_in_the_light",
+    "more_or_fewer_than_nine_seats",
+    "table_in_the_center",
+    "throne_or_single_raised_seat"
+  ],
+  "_canon_status": "look_approved_by_author_2026-11-17"
 }
