@@ -97,8 +97,7 @@ test("partner models: 1080p ratios, durations and request features", () => {
   assert.equal(runwayRatioFor("seedance2_5", "16:9"), "1920:1080");
   assert.equal(runwayRatioFor("seedance2_5", "4:5"), "1248:1664");
   assert.equal(runwayRatioFor("kling_4", "16:9"), "auto_1080p");
-  assert.equal(runwayDurationFor("veo3.1", 5), 6);
-  assert.equal(runwayDurationFor("veo3.1", 3), 4);
+  assert.equal(runwayDurationFor("veo3.1", 5), 8); // 1080p is 8 s only
   assert.equal(runwayDurationFor("veo3.1", 10), 8);
   assert.equal(runwayDurationFor("seedance2_5", 40), 30);
   assert.equal(runwayDurationFor("kling_4", 2), 3);

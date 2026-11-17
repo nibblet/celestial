@@ -166,7 +166,8 @@ export const RUNWAY_MAX_PROMPT_CHARS = 990;
 export function runwayDurationFor(model: string, requested: number): number {
   const n = Number.isFinite(requested) ? Math.round(requested) : 5;
   if (model.startsWith("gen4_turbo")) return n >= 8 ? 10 : 5;
-  if (model === "veo3.1") return n <= 4 ? 4 : n <= 6 ? 6 : 8;
+  // Runway: "1080p resolution only supports 8 second videos" (2026-11-17).
+  if (model === "veo3.1") return 8;
   if (model === "seedance2_5") return Math.min(30, Math.max(4, n));
   if (model === "kling_4") return Math.min(30, Math.max(3, n));
   if (isKlingO3(model)) return Math.min(15, Math.max(3, n));

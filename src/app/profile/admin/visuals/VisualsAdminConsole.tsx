@@ -78,10 +78,10 @@ const VIDEO_MODELS: Array<{ key: VideoModel; label: string; short: string; durat
     durations: [3, 5, 8, 10, 15],
   },
   // Other labs' models through the same Runway key. All 1080p, start + end frames.
-  { key: "veo3.1", label: "Veo 3.1 (Google): photoreal, 1080p, end frame", short: "Veo 3.1", durations: [4, 6, 8] },
+  { key: "veo3.1", label: "Veo 3.1 (Google): photoreal, 1080p, 8 s, end frame", short: "Veo 3.1", durations: [8] },
   {
     key: "seedance2_5",
-    label: "Seedance 2.5 (ByteDance): top-ranked i2v, 1080p, end frame",
+    label: "Seedance 2.5 (ByteDance): 1080p, end frame; may refuse photoreal faces",
     short: "Seedance 2.5",
     durations: [4, 5, 6, 8, 10, 15],
   },
