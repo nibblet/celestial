@@ -6,8 +6,38 @@ import type { CodexEntry, CodexKind } from "@/lib/wiki/codex";
 
 type KindFilter = CodexKind | "all";
 
+/** A square image, or the entry's initial when it has none (or it fails). */
+function Thumb({ src, name }: { src?: string; name: string }) {
+  const [failed, setFailed] = useState(false);
+  if (src && !failed) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element -- already resized by storage
+      <img
+        src={src}
+        alt=""
+        width={48}
+        height={48}
+        loading="lazy"
+        decoding="async"
+        onError={() => setFailed(true)}
+        className="h-12 w-12 shrink-0 rounded-md object-cover"
+      />
+    );
+  }
+  return (
+    <span
+      aria-hidden="true"
+      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-[var(--color-border)] font-[family-name:var(--font-playfair)] text-lg text-ink-ghost"
+    >
+      {name.replace(/^the\s+/i, "").charAt(0).toUpperCase()}
+    </span>
+  );
+}
+
 export function CodexClient({
   entries,
+  thumbnails,
+  isAuthor,
   hiddenCount,
   kinds,
   initialKind,
@@ -16,6 +46,10 @@ export function CodexClient({
   showAllContent,
 }: {
   entries: CodexEntry[];
+  /** Entity slug → image URL, for entries that have an approved image. */
+  thumbnails: Record<string, string>;
+  /** The author also gets a filter for entries still missing an image. */
+  isAuthor: boolean;
   hiddenCount: number;
   kinds: { kind: CodexKind; label: string; singular: string }[];
   initialKind: KindFilter;
@@ -25,6 +59,8 @@ export function CodexClient({
 }) {
   const [kind, setKind] = useState<KindFilter>(initialKind);
   const [search, setSearch] = useState("");
+  const [missingOnly, setMissingOnly] = useState(false);
+  const missingCount = entries.filter((e) => !thumbnails[e.slug]).length;
 
   const counts = useMemo(() => {
     const out = new Map<CodexKind, number>();
@@ -40,7 +76,8 @@ export function CodexClient({
   const filtered = entries.filter(
     (e) =>
       (kind === "all" || e.kind === kind) &&
-      (!q || e.name.toLowerCase().includes(q))
+      (!q || e.name.toLowerCase().includes(q)) &&
+      (!missingOnly || !thumbnails[e.slug])
   );
 
   const wholeBook = showAllContent || currentChapterNumber >= lastChapterNumber;
@@ -123,6 +160,16 @@ export function CodexClient({
                     {k.label} · {counts.get(k.kind)}
                   </button>
                 ))}
+              {isAuthor && missingCount > 0 && (
+                <button
+                  type="button"
+                  aria-pressed={missingOnly}
+                  onClick={() => setMissingOnly((v) => !v)}
+                  className={chip(missingOnly)}
+                >
+                  No image · {missingCount}
+                </button>
+              )}
             </div>
           </div>
 
@@ -136,14 +183,17 @@ export function CodexClient({
                 <li key={`${e.kind}:${e.slug}`}>
                   <Link
                     href={e.href}
-                    className="sci-panel sci-card-link group flex items-baseline justify-between gap-3 px-3 py-2.5 no-underline"
+                    className="sci-panel sci-card-link group flex items-center gap-3 px-2.5 py-2 no-underline"
                   >
-                    <span className="min-w-0 font-[family-name:var(--font-playfair)] text-base text-ink transition-colors group-hover:text-burgundy">
-                      {e.name}
-                    </span>
-                    <span className="type-meta shrink-0 normal-case tracking-normal text-ink-ghost">
-                      {singular.get(e.kind)}
-                      {e.firstChapter !== null ? ` · ch. ${e.firstChapter}` : ""}
+                    <Thumb src={thumbnails[e.slug]} name={e.name} />
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate font-[family-name:var(--font-playfair)] text-base text-ink transition-colors group-hover:text-burgundy">
+                        {e.name}
+                      </span>
+                      <span className="type-meta block normal-case tracking-normal text-ink-ghost">
+                        {singular.get(e.kind)}
+                        {e.firstChapter !== null ? ` · ch. ${e.firstChapter}` : ""}
+                      </span>
                     </span>
                   </Link>
                 </li>
