@@ -1,0 +1,71 @@
+{
+  "entity": "harmonic-drive",
+  "parent_entity": "valkyrie-1",
+  "_canon_status": "look_approved_by_author_2026-11-17",
+  "display_name": "Harmonic Drive",
+  "classification": "resonance_based_translation_drive_no_visible_propulsion",
+  "location": {
+    "placement": "aft_of_the_resonant_core_along_the_ship's_centerline",
+    "access": "a_narrow_walkway_ramp_along_one_side"
+  },
+  "form": {
+    "chamber": "a_long_tapering_hollow_like_the_inside_of_a_seashell_grown_not_built",
+    "structure": "a_series_of_large_curved_ribs_forming_nested_rings_that_get_smaller_toward_the_far_end_each_ring_turned_slightly_from_the_last_so_together_they_trace_a_slow_spiral",
+    "center": "the_axis_through_the_rings_is_empty_air:_nothing_spins_nothing_burns",
+    "tuning": "bands_of_light_inside_each_ring_stand_in_evenly_spaced_bright_and_dark_intervals_like_a_plucked_string_held_still",
+    "floor": "dark_polished_reflective_floor_that_mirrors_the_rings"
+  },
+  "materials": {
+    "shell": "seamless_pearl_silver_and_dark_pearl_bio_crystalline_shell_semi_translucent_at_the_ring_edges",
+    "hard_edges": "none",
+    "machinery": "none_visible_no_engine_no_nozzles_no_exhaust"
+  },
+  "lighting": {
+    "source": "only_light_inside_the_ring_surfaces",
+    "color": "violet_amethyst_in_the_near_rings_shifting_to_warm_gold_in_the_smallest_farthest_ring",
+    "behavior": "idle_and_tuning:_steady_standing_bands_the_far_end_falls_to_darkness"
+  },
+  "_provenance": {
+    "canon": [
+      "no visible propulsion; shifts presence rather than velocity; slow-curve; jumps need alignment (series bible, technical brief)",
+      "jump light runs 'soft blues, then white, then an iridescent gold' (CH07, CH17)"
+    ],
+    "proposed_needs_author_approval": [
+      "the whole look: the prose never shows the drive as hardware. Built from the Command Dome and Observation Deck (author direction 2026-11-17)"
+    ],
+    "approved_render": "public/visual-references/harmonic-drive.png: first OpenAI render, author-approved 2026-11-17. "
+  },
+  "reference_images": [
+    {
+      "path": "/visual-references/harmonic-drive.png",
+      "role": "environment",
+      "label": "Approved Harmonic Drive",
+      "instruction": "match this room exactly: nested rings receding down a tapering chamber in a slow spiral, violet near and gold at the far end, dark polished inlaid floor, no machinery",
+      "inherit": false
+    },
+    {
+      "path": "/visual-references/command-dome.png",
+      "role": "environment",
+      "label": "Command Dome reference render",
+      "instruction": "same ship, different room: match only the architecture language (flowing curved ribs and arches, seamless dark pearl shell, violet light inside the surface, inlaid circular floor geometry). Do not copy the windows, planets, seats or the floating crystal"
+    },
+    {
+      "path": "/visual-references/observation-deck.png",
+      "role": "environment",
+      "label": "Approved Observation Deck",
+      "instruction": "same ship, different room: match only the materials and realism (pearl-silver translucent shell edges with fine violet veins inside, dark polished reflective floor, thin warm gold line of light, photographic rendering). No window, no planets, no person"
+    }
+  ],
+  "avoid": [
+    "rocket_engine_nozzles_or_exhaust",
+    "spinning_turbine_or_reactor",
+    "warp_core_column",
+    "machinery_pipes_or_cables",
+    "consoles_or_screens",
+    "windows_or_planets",
+    "people",
+    "industrial_panel_seams",
+    "cyan_neon",
+    "lightning_or_plasma_arcs"
+  ]
+}

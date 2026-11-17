@@ -1,0 +1,91 @@
+{
+  "entity": "elira-voss",
+  "world": "earth_2050",
+  "_canon_status": "look_approved_by_author_2026-11-17",
+  "display_name": "Elira Voss",
+  "role": "Galen and Aven's daughter; Thane Meric's mother, who raised him; left on Earth when the mission launched",
+  "age": {
+    "chronological": "mid_to_late_50s",
+    "apparent": "mid_50s_natural_never_rejuvenated",
+    "tell": "her father's daughter in the face; soft, expectant, wounded"
+  },
+  "identity": {
+    "height_build": "tall_like_her_father_lean_square_shoulders",
+    "skin": "light_olive_skin_that_tans_rather_than_freckles_only_a_few_faint_freckles_on_the_nose_fine_lines_at_the_eyes_and_between_the_brows",
+    "face": "her_father's_face_in_a_woman:_long_face_square_jaw_straight_strong_nose_straight_level_brows_wide_mouth_with_thin_lips",
+    "eyes": "pale_blue_gray_eyes_like_her_father's_deep_set_tired_and_direct",
+    "hair": "straight_dark_brown_hair_heavily_streaked_with_gray_cut_blunt_at_the_jaw_parted_at_the_side_one_side_tucked_behind_the_ear",
+    "facial_hair": "none",
+    "distinguishing": "takes_after_galen_not_aven:_dark_hair_not_red_no_curls_no_heavy_freckles;_no_makeup_no_jewelry_no_uniform"
+  },
+  "wardrobe": {
+    "default": "dark_green_wool_overshirt_worn_open_over_a_plain_off_white_crew_neck_tee_plain_civilian_clothes_slightly_worn",
+    "insignia": "none_no_patches_no_name_tape_no_pins",
+    "palette": [
+      "dark_green",
+      "off_white",
+      "warm_gray"
+    ]
+  },
+  "signature_setting": "at_home_on_earth_in_the_evening_by_a_window_a_message_slate_face_down_on_the_table_beside_her",
+  "posture_and_gesture": [
+    "shoulders_square_hands_out_of_frame",
+    "looking_straight_into_the_camera_as_if_recording_a_message"
+  ],
+  "expression_range": [
+    "soft_expectant_waiting",
+    "wounded_but_composed",
+    "guarded_warmth"
+  ],
+  "voice": "soft_expectant_wounded",
+  "_provenance": {
+    "canon": [
+      "Thane's mother, who raised him (dossier)",
+      "Aven's daughter; 'soft, expectant, wounded'; her last message unanswered (CH05/CH10)",
+      "left out of the mission (CH05/CH10)",
+      "argued with Thane the day before launch (CH08)"
+    ],
+    "proposed_needs_author_approval": [
+      "everything physical: the book never describes her",
+      "age and no rejuvenation (inferred: Thane is early 30s, her parents are in their 80s; rejuvenation is rare)",
+      "hair, eyes, skin and face follow her father (Galen), deliberately not her mother",
+      "civilian wardrobe and home setting"
+    ],
+    "family_references": "Galen's approved portrait is attached as a [resemblance] reference, secondary to her own.",
+    "test_render_2026-11-17": "First render rejected by the author: with Aven's portrait attached and copper hair in the spec it came out as Aven again. Aven and Thane references removed; look rebuilt around Galen (dark straight hair, olive skin, square jaw).",
+    "approved_portrait": "public/visual-references/elira-voss-portrait.png: second OpenAI render, author-approved 2026-11-17."
+  },
+  "reference_images": [
+    {
+      "path": "/visual-references/elira-voss-portrait.png",
+      "role": "identity",
+      "label": "Elira Voss approved portrait",
+      "instruction": "match her face, jaw-length gray-streaked dark brown hair, pale blue-gray eyes, age and composed expression exactly"
+    },
+    {
+      "path": "/visual-references/galen-voss-portrait.png",
+      "role": "resemblance",
+      "label": "Galen Voss, her father",
+      "instruction": "her father: borrow only the pale blue-gray eyes, level brows and square jaw; secondary to her own approved portrait"
+    }
+  ],
+  "avoid": [
+    "generic_stock_photo_face",
+    "celebrity_likeness",
+    "looking_under_45",
+    "glamour_makeup",
+    "tears_or_crying",
+    "project_valkyrie_patch",
+    "olive_coverall_or_flight_suit",
+    "name_tape",
+    "spacecraft_interior",
+    "red_copper_or_auburn_hair",
+    "curly_or_wavy_hair",
+    "heavy_freckles",
+    "resembling_aven_voss",
+    "masculine_face_or_a_copy_of_galen",
+    "hair_tied_back_or_in_a_bun",
+    "cardigan"
+  ],
+  "default_expression": "soft_expectant_and_a_little_wounded_composed_mouth_closed_looking_straight_into_the_lens_never_crying"
+}

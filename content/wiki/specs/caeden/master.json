@@ -1,29 +1,48 @@
 {
   "entity": "caeden",
   "world": "earth_2050",
-  "_canon_status": "draft_pending_author_review",
+  "_canon_status": "look_approved_by_author_2026-11-17",
   "display_name": "CAEDEN",
   "classification": "corporate_adaptive_enforcement_node_ai",
   "_name_note": "Author decision: CAEDEN is the AI. Resolved in the final (v3) manuscript: the human crewman is now Ilan Merek (CH11-CH17).",
   "manifestation": {
-    "form": "no_presence_in_the_room_only_interface_output",
-    "text": "clean_sans_serif_system_text_in_sterile_monochrome_with_the_corporate_oversight_seal",
-    "hardware": "relay_clusters_under_subdeck_panels"
+    "form": "no_body_and_no_screen:_only_its_hardware_and_a_faint_glow_inside_it",
+    "hardware": "relay_clusters_under_subdeck_panels",
+    "_seal_note": "The draft paired the text with a 'corporate oversight seal'. No corporate seal has been designed (the Sovereign Ethics Bureau seal is SOVRIN's and Rhea's), so it is left out until the author decides.",
+    "glow": "a_faint_cold_blue_white_glow_seeping_from_inside_the_modules_through_vent_slots_seams_and_fiber_ends_brighter_in_one_module_than_the_rest_uneven_like_something_idling_that_has_only_just_started_to_notice",
+    "_text_note": "Author 2026-11-17: no words on screen. CAEDEN is just equipment, with some glow as if it is an early stage of an aware AI. Its text output (CH02) and mirror (CH08) are for scenes, not its portrait."
   },
   "voice": "clipped_efficient_neutral_corporate_directive",
+  "signature_setting": "an_earth_built_relay_cluster_retrofitted_into_a_recess_under_a_lifted_subdeck_panel_aboard_valkyrie_1_matte_gray_modules_and_fiber_bundles_against_the_ship's_pearl_charcoal_organic_deck_with_one_small_flat_monochrome_interface_panel",
   "_provenance": {
     "canon": [
       "'All systems nominal' (CH02)",
       "relay clusters (CH08)",
-      "corporate AI (CH04, dossier)"
+      "corporate AI (CH04, dossier)",
+      "text pings in capitals (CH02)",
+      "flat featureless mirror, sublight from the panel, display dims but not completely (CH08)"
     ],
-    "proposed_needs_author_approval": [
-      "text styling, seal pairing"
-    ]
+    "proposed_needs_author_approval": [],
+    "approved_render": "public/visual-references/caeden-relay-cluster.png: third OpenAI render, author-approved 2026-11-17. Earlier renders showed 'ALL SYSTEMS NOMINAL' on a panel; the author asked for equipment and glow only."
   },
+  "reference_images": [
+    {
+      "path": "/visual-references/caeden-relay-cluster.png",
+      "role": "prop",
+      "label": "CAEDEN approved relay cluster",
+      "instruction": "match the matte gray Earth-built modules, braided fiber bundles and the faint cold blue-white glow from inside them; no screens or text"
+    }
+  ],
   "avoid": [
     "light_weave_threads",
     "warm_light",
-    "humanoid_form"
+    "humanoid_form",
+    "corporate_logo_or_seal",
+    "robot_or_camera_eye",
+    "readable_text_or_words",
+    "screens_or_displays",
+    "status_led_rows_or_blinking_indicator_lights",
+    "bright_neon_glow",
+    "light_beams_or_lens_flare"
   ]
 }
