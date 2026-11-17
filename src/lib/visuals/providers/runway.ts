@@ -7,12 +7,11 @@ import type { VisualPrompt } from "../types";
 import type { GeneratedAsset, VisualProvider } from "./types";
 import { contentTypeForFile, resolveReferencePath } from "./openai-helpers";
 import {
-  KLING_MAX_PROMPT_CHARS,
-  KLING_MAX_REFERENCES,
+  REALISM_NEGATIVE_PROMPT,
   RUNWAY_DEFAULT_VIDEO_MODEL,
   isKlingO3,
   klingReferencePreamble,
-  supportsEndFrame,
+  runwayModelCaps,
   runwayRatioFor,
   clampRunwayPrompt,
   runwayDurationFor,
@@ -74,7 +73,7 @@ export const runwayProvider: VisualProvider = {
       promptImageUrl: params.promptImageUrl ?? null,
       // Kling O3 only: character portraits sent alongside the start frame,
       // so a face revealed mid-shot is the right face. Part of the cache key.
-      references: isKlingO3(model) ? normalizeReferences(params.references) : [],
+      references: runwayModelCaps(model).maxReferences ? normalizeReferences(params.references) : [],
       // Optional last frame: the clip animates from promptImageUrl to this.
       endFrameUrl:
         typeof params.endFrameUrl === "string" && params.endFrameUrl.trim()
@@ -105,8 +104,9 @@ export const runwayProvider: VisualProvider = {
     const ratio = (params.ratio as string) || runwayRatioFor(model, prompt.aspect);
     const endFrameUrl =
       typeof params.endFrameUrl === "string" && params.endFrameUrl ? params.endFrameUrl : null;
-    if (endFrameUrl && !supportsEndFrame(model)) {
-      throw new Error(`${model} doesn't take an end frame; use Kling O3.`);
+    const caps = runwayModelCaps(model);
+    if (endFrameUrl && !caps.endFrame) {
+      throw new Error(`${model} doesn't take an end frame; use Kling, Veo 3.1 or Seedance 2.5.`);
     }
     const firstAndLast = async () => [
       { uri: await resolvePromptImage(promptImageUrl), position: "first" },
@@ -117,45 +117,31 @@ export const runwayProvider: VisualProvider = {
         ? params.motionText
         : buildMotionPrompt(prompt);
 
-    let body: Record<string, unknown>;
-    if (isKlingO3(model)) {
-      const refs = normalizeReferences(params.references).slice(
-        0,
-        endFrameUrl ? KLING_MAX_REFERENCES - 1 : KLING_MAX_REFERENCES,
-      );
-      const preamble = klingReferencePreamble(
-        refs.map((r) => r.label),
-        Boolean(endFrameUrl),
-      );
-      body = {
-        model,
-        promptImage: await firstAndLast(),
-        ...(refs.length
-          ? {
-              references: await Promise.all(
-                refs.map(async (r) => ({ uri: await resolvePromptImage(r.path) })),
-              ),
-            }
-          : {}),
-        promptText:
-          params.restraint === false
-            ? clampRunwayPrompt(`${preamble} ${motion}`, KLING_MAX_PROMPT_CHARS)
-            : withRestraint(`${preamble} ${motion}`, KLING_MAX_PROMPT_CHARS),
-        ratio,
-        duration,
-        audio: false,
-      };
-    } else {
-      body = {
-        promptImage: endFrameUrl ? await firstAndLast() : await resolvePromptImage(promptImageUrl),
-        promptText:
-          params.restraint === false ? clampRunwayPrompt(motion) : withRestraint(motion),
-        model,
-        ratio,
-        duration,
-        ...(params.seed != null ? { seed: params.seed } : {}),
-      };
-    }
+    // Kling O3 counts the end frame against its 7-image budget.
+    const refLimit = isKlingO3(model) && endFrameUrl ? caps.maxReferences - 1 : caps.maxReferences;
+    const refs = normalizeReferences(params.references).slice(0, Math.max(0, refLimit));
+    const text = isKlingO3(model)
+      ? `${klingReferencePreamble(refs.map((r) => r.label), Boolean(endFrameUrl))} ${motion}`
+      : motion;
+    const negative = [REALISM_NEGATIVE_PROMPT, ...(prompt.negative ?? [])].join(", ").slice(0, 1000);
+
+    const body: Record<string, unknown> = {
+      model,
+      promptImage:
+        endFrameUrl || isKlingO3(model) ? await firstAndLast() : await resolvePromptImage(promptImageUrl),
+      promptText:
+        params.restraint === false
+          ? clampRunwayPrompt(text, caps.maxPrompt)
+          : withRestraint(text, caps.maxPrompt),
+      ratio,
+      duration,
+      ...(refs.length
+        ? { references: await Promise.all(refs.map(async (r) => ({ uri: await resolvePromptImage(r.path) }))) }
+        : {}),
+      ...(caps.audioField ? { audio: false } : {}),
+      ...(caps.seed && params.seed != null ? { seed: params.seed } : {}),
+      ...(caps.negativePrompt ? { negativePrompt: negative } : {}),
+    };
 
     const createRes = await fetch(`${BASE_URL}/image_to_video`, {
       method: "POST",
@@ -306,5 +292,5 @@ function normalizeReferences(raw: unknown): VideoReference[] {
     )
     .map((r) => ({ path: r.path.trim(), label: r.label.trim().slice(0, 80) }))
     .filter((r) => r.path && r.label)
-    .slice(0, KLING_MAX_REFERENCES);
+    .slice(0, 8);
 }

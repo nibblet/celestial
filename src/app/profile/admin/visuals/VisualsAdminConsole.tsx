@@ -54,7 +54,14 @@ const STORAGE_KEY = "celestial.visualsStudio.v1";
 const TARGET_KINDS = ["entity", "story", "scene", "freeform"] as const;
 const ASPECTS = ["16:9", "9:16", "1:1", "4:5", "3:2", "2:3"] as const; // 2:3 = book cover
 const INTENTS = ["portrait", "establishing_shot", "scene_moment", "motion_loop"] as const;
-type VideoModel = "gen4.5" | "gen4_turbo" | "klingO3_standard" | "klingO3_pro";
+type VideoModel =
+  | "gen4.5"
+  | "gen4_turbo"
+  | "klingO3_standard"
+  | "klingO3_pro"
+  | "veo3.1"
+  | "seedance2_5"
+  | "kling_4";
 const VIDEO_MODELS: Array<{ key: VideoModel; label: string; short: string; durations: number[] }> = [
   { key: "gen4.5", label: "Gen-4.5 (best, ~$0.12/s)", short: "Gen-4.5", durations: [3, 5, 8, 10] },
   { key: "gen4_turbo", label: "Gen-4 Turbo (fast, ~$0.05/s)", short: "Gen-4 Turbo", durations: [5, 10] },
@@ -70,8 +77,25 @@ const VIDEO_MODELS: Array<{ key: VideoModel; label: string; short: string; durat
     short: "Kling O3 Pro",
     durations: [3, 5, 8, 10, 15],
   },
+  // Other labs' models through the same Runway key. All 1080p, start + end frames.
+  { key: "veo3.1", label: "Veo 3.1 (Google): photoreal, 1080p, end frame", short: "Veo 3.1", durations: [4, 6, 8] },
+  {
+    key: "seedance2_5",
+    label: "Seedance 2.5 (ByteDance): top-ranked i2v, 1080p, end frame",
+    short: "Seedance 2.5",
+    durations: [4, 5, 6, 8, 10, 15],
+  },
+  {
+    key: "kling_4",
+    label: "Kling 4: people in motion, 1080p, face refs, end frame",
+    short: "Kling 4",
+    durations: [3, 5, 8, 10, 15],
+  },
 ];
-const isKling = (m: VideoModel) => m.startsWith("klingO3");
+/** Models that take character portraits as references. */
+const isKling = (m: VideoModel) => m.startsWith("klingO3") || m === "kling_4";
+/** Models that take an end frame (Gen-4 models take a start frame only). */
+const takesEndFrame = (m: VideoModel) => !m.startsWith("gen4");
 
 const IMAGE_PROVIDERS = [
   { key: "openai", label: "OpenAI GPT Image (attaches references)" },
@@ -405,7 +429,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
     }
   }
   const effectiveStartFrame = startFrame || startFrameOptions[0]?.value || "";
-  const endFrameAllowed = isKling(videoModel); // Gen-4.5 / Turbo take a start frame only
+  const endFrameAllowed = takesEndFrame(videoModel);
   // Kling O3 can carry identity portraits next to the start frame so a face
   // revealed mid-shot stays on-model (start frame + up to 6 refs).
   const faceRefs = (promptResult?.referenceImages ?? [])
@@ -1019,7 +1043,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
                     onChange={(e) => setEndFrame(e.target.value)}
                     className="mt-1 block w-full rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1.5 text-sm text-ink disabled:opacity-50"
                   >
-                    <option value="">{endFrameAllowed ? "None" : "Kling O3 only"}</option>
+                    <option value="">{endFrameAllowed ? "None" : "Not on Gen-4 models"}</option>
                     {startFrameOptions
                       .filter((o) => o.value !== effectiveStartFrame)
                       .map((o) => (
