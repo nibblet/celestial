@@ -1,0 +1,44 @@
+{
+  "entity": "earth",
+  "world": "earth_2050",
+  "_canon_status": "look_approved_by_author_2026-11-17",
+  "display_name": "Earth from orbit, 2050",
+  "view": "the_planet_from_high_orbit_filling_most_of_the_frame_seen_across_the_line_between_night_and_day",
+  "night_side": "continents_traced_in_dense_fine_webs_of_city_light_joined_by_thin_bright_lines_along_coasts_and_corridors_connected_everywhere_with_no_single_centre",
+  "day_side": "a_thin_crescent_of_blue_ocean_and_white_cloud_the_air_a_little_hazy_and_tired",
+  "orbit": "a_faint_broken_ring_of_tiny_glints_from_satellites_and_stations_close_above_the_atmosphere_no_single_craft_readable",
+  "mood": "fractured_but_stable_busy_and_beautiful_and_a_little_lonely",
+  "palette": [
+    "deep_blue_black",
+    "cool_white",
+    "amber_city_light",
+    "thin_pale_blue_limb"
+  ],
+  "_provenance": {
+    "canon": [
+      "Earth in 2050: fractured but stable, resources stretched, connected but not centered (series bible)"
+    ],
+    "proposed_needs_author_approval": [
+      "everything visual: the book never describes Earth from outside"
+    ],
+    "approved_render": "public/visual-references/earth.png: first OpenAI render, author-approved 2026-11-17."
+  },
+  "reference_images": [
+    {
+      "path": "/visual-references/earth.png",
+      "role": "environment",
+      "label": "Earth from orbit approved view",
+      "instruction": "match the night-side Earth traced in webs of amber city light, the thin day-side crescent and the faint ring of orbital glints",
+      "inherit": false
+    }
+  ],
+  "avoid": [
+    "glowing_vault_markers_or_beams_on_the_surface",
+    "hero_spacecraft_in_the_foreground",
+    "the_moon_as_the_subject",
+    "apocalyptic_ruin_fires_or_dead_oceans",
+    "cartoon_saturated_blue_marble",
+    "borders_labels_or_grid_overlays",
+    "whole_disc_centred_like_a_logo"
+  ]
+}
