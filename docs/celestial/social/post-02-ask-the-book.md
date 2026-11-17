@@ -53,3 +53,21 @@ Send the recordings as they are; I'll crop, speed-ramp and match the framing.
 - Speed-ramp scrolls so they match your phrasing. The Ask answer plays at real speed through line 3, so the streaming shows.
 - Score: a softer variant of post 1's (drone, no wind), ducked under your voice, with ALARA's three bell notes on "who ALARA is".
 - End card: `docs/celestial/cover/celestial-heritage-end-card-9x16.png`.
+
+## Narration takes (recorded 2026-11-15, `Gerardia Ln 7.m4a`)
+
+Segment numbers refer to `scripts/social/post2-narration-transcript.json`; times are seconds in the original file.
+
+| Line | Use segment | Time | Note |
+|---|---|---|---|
+| Hook | 1 | 6.46–8.06 | the tightest of three |
+| 1 | 5+6 | 20.52–24.46 | take 1 hitches after "When I finished" |
+| 2 | 9 | 34.00–38.94 | one continuous read |
+| 3 | 11 | 49.28–55.62 | |
+| 4 | 13 | 63.54–66.86 | |
+| 5 | 14 | 69.12–73.48 | take 2 drops the final "it" |
+| 6 | 16 | 80.54–85.02 | |
+
+## App reorganized (2026-11-17)
+
+The app now has a bottom tab bar: **Ask · Threads · Archive · Read**. Ask opens on the "Celestial Archive": a recovered field note (for example a G. Voss quote), a question, three suggested replies ("Answer the archive", "Show me where this comes from", "Open Galen's file"), an "Ask the archive…" box, and a "Whole book open" toggle. The screen-recording list above predates this layout; re-map it to the new screens, keeping the narration.
