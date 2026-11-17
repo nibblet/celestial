@@ -1,7 +1,7 @@
 {
   "entity": "sovrin",
   "world": "earth_2050",
-  "_canon_status": "canon_grounded_from_prose",
+  "_canon_status": "look_approved_by_author_2026-11-17",
   "display_name": "SOVRIN",
   "classification": "earth_moral_adjudication_engine_synthetic_judge",
   "manifestation": {
@@ -16,14 +16,31 @@
     "cold_white",
     "monochrome_gray"
   ],
+  "signature_setting": "inside_the_command_dome_of_valkyrie_1_the_ship's_own_violet_and_gold_glow_frozen_and_dimmed_while_the_cold_white_band_cuts_across_the_upper_arc_and_hard_angular_symbols_sit_on_the_central_ring",
   "_provenance": {
     "canon": [
       "CH02 sterile monochrome + oversight seal",
       "CH12 white linear light, angular symbols, flat male voice",
-      "CH13 recursive spiral waveform"
+      "CH13 recursive spiral waveform",
+      "signature_setting is the CH12 S4 Command Dome manifestation"
     ],
-    "note": "wiki 'black alloy core with iridescent edges' never appears in prose; omitted"
+    "note": "wiki 'black alloy core with iridescent edges' never appears in prose; omitted",
+    "approved_render": "public/visual-references/sovrin-command-dome.png: second OpenAI render, author-approved 2026-11-17. The dome's own lights are out; the white band of angular symbols is the only light."
   },
+  "reference_images": [
+    {
+      "path": "/visual-references/sovrin-command-dome.png",
+      "role": "environment",
+      "label": "SOVRIN approved manifestation in the Command Dome",
+      "instruction": "match the narrow cold-white band and its straight-stroke angular symbols, and how every other light in the room is out"
+    },
+    {
+      "path": "/visual-references/command-dome.png",
+      "role": "environment",
+      "label": "Command Dome reference render",
+      "instruction": "the room SOVRIN intrudes on: match the elliptical chamber and curved arches, but dim its violet glow; the white band and angular symbols are the only bright things in frame"
+    }
+  ],
   "avoid": [
     "organic_curves",
     "gold_or_warm_light",
