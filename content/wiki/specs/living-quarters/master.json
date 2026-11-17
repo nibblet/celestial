@@ -15,11 +15,41 @@
     "color_temperature_emphasis": "warm_pearl_gold_with_individualized_undertone",
     "atmosphere": "intimate_attuned_personally_resonant"
   },
+  "_provenance": {
+    "approved_render": "public/visual-references/living-quarters.png: first OpenAI render, author-approved 2026-11-17."
+  },
+  "reference_images": [
+    {
+      "path": "/visual-references/living-quarters.png",
+      "role": "environment",
+      "label": "Approved Living Quarters",
+      "instruction": "match this room: small rounded room, sleeping alcove set into the curved wall, low shelf, leaf-shaped door, low warm light",
+      "inherit": false
+    },
+    {
+      "path": "/visual-references/alara-lab-in-the-walls.png",
+      "role": "environment",
+      "label": "Valkyrie-1 interior architecture (from the approved ALARA lab still)",
+      "instruction": "same ship, different room: match the architecture and realism only (pale pearl ribbed arches, leaf-shaped petal door, translucent crystalline wall panels with faint violet inside, dark polished floor, low warm light). The golden veins and spiral are ALARA, not the room: leave them out. Do not copy the lab's shelves, crystals, bottles or tables"
+    },
+    {
+      "path": "/visual-references/observation-deck.png",
+      "role": "environment",
+      "label": "Approved Observation Deck",
+      "instruction": "same ship: match the materials only (pearl-silver shell edges with fine violet veins inside, dark reflective floor, thin warm line of light). No window, no planets, no person"
+    }
+  ],
   "avoid": [
     "bunk_bed_arrangement",
     "rectangular_room_shape",
     "visible_storage_compartments",
     "spacecraft_crew_quarters_aesthetic",
-    "metal_walls"
-  ]
+    "metal_walls",
+    "alara_golden_veins_or_spiral",
+    "people",
+    "windows_or_planets",
+    "ornate_or_spectacular_lighting"
+  ],
+  "_canon_status": "look_approved_by_author_2026-11-17",
+  "register": "plain_and_nondescript:_an_ordinary_room_of_this_ship_with_very_little_in_it_nothing_dramatic_no_light_show"
 }
