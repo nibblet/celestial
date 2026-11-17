@@ -11,7 +11,50 @@ export const RUNWAY_VIDEO_MODELS = [
   "gen4_turbo",
   "klingO3_standard",
   "klingO3_pro",
+  // Other labs' models served through Runway's API (same key, same endpoint).
+  "veo3.1",
+  "seedance2_5",
+  "kling_4",
 ] as const;
+
+/**
+ * What each model's image_to_video request accepts (Runway OpenAPI spec,
+ * 2026-11). Used to shape the request body and the console's controls.
+ */
+export type RunwayModelCaps = {
+  /** promptText cap (chars, with headroom). */
+  maxPrompt: number;
+  /** promptImage may be [{first},{last}]. */
+  endFrame: boolean;
+  /** Extra reference images (faces, wardrobe), excluding keyframes. */
+  maxReferences: number;
+  /** Request takes `audio` (we always send false). */
+  audioField: boolean;
+  seed: boolean;
+  /** Request takes `negativePrompt`. */
+  negativePrompt: boolean;
+};
+
+export function runwayModelCaps(model: string): RunwayModelCaps {
+  if (isKlingO3(model)) {
+    return { maxPrompt: KLING_MAX_PROMPT_CHARS, endFrame: true, maxReferences: KLING_MAX_REFERENCES, audioField: true, seed: false, negativePrompt: false };
+  }
+  if (model === "veo3.1") {
+    return { maxPrompt: 990, endFrame: true, maxReferences: 0, audioField: true, seed: true, negativePrompt: true };
+  }
+  if (model === "seedance2_5") {
+    return { maxPrompt: KLING_MAX_PROMPT_CHARS, endFrame: true, maxReferences: 0, audioField: true, seed: true, negativePrompt: false };
+  }
+  if (model === "kling_4") {
+    // Up to 10 images in total, keyframes included.
+    return { maxPrompt: KLING_MAX_PROMPT_CHARS, endFrame: true, maxReferences: 8, audioField: false, seed: false, negativePrompt: false };
+  }
+  return { maxPrompt: RUNWAY_MAX_PROMPT_CHARS, endFrame: false, maxReferences: 0, audioField: false, seed: true, negativePrompt: false };
+}
+
+/** Default negative prompt for models that take one (Veo). */
+export const REALISM_NEGATIVE_PROMPT =
+  "CGI, 3D render, video game, cartoon, illustration, plastic skin, waxy faces, oversaturated colors, glowing outlines, lens flares, morphing faces, extra people, text, watermark";
 
 /**
  * Kling O3 on Runway's API accepts reference images alongside the start
@@ -38,6 +81,24 @@ export const KLING_MAX_PROMPT_CHARS = 2400;
  * only takes landscape, portrait or square at a fixed size per tier.
  */
 export function runwayRatioFor(model: string, aspect: string): string {
+  const portrait = aspect === "9:16" || aspect === "4:5" || aspect === "2:3";
+  if (model === "veo3.1") return portrait ? "1080:1920" : "1920:1080";
+  if (model === "kling_4") return "auto_1080p"; // follows the start frame's framing
+  if (model === "seedance2_5") {
+    switch (aspect) {
+      case "9:16":
+        return "1080:1920";
+      case "1:1":
+        return "1440:1440";
+      case "4:5":
+      case "2:3":
+        return "1248:1664";
+      case "3:2":
+        return "1664:1248";
+      default:
+        return "1920:1080";
+    }
+  }
   if (isKlingO3(model)) {
     const pro = model.includes("pro");
     const land = pro ? "1920:1080" : "1280:720";
@@ -89,7 +150,7 @@ export function klingReferencePreamble(labels: string[], hasEndFrame = false): s
  * string", 2026-11-15), and Gen-4 Turbo takes a first frame only.
  */
 export function supportsEndFrame(model: string): boolean {
-  return isKlingO3(model);
+  return runwayModelCaps(model).endFrame;
 }
 
 /** Runway caps an encoded data URI at 5MB. */
@@ -105,6 +166,10 @@ export const RUNWAY_MAX_PROMPT_CHARS = 990;
 export function runwayDurationFor(model: string, requested: number): number {
   const n = Number.isFinite(requested) ? Math.round(requested) : 5;
   if (model.startsWith("gen4_turbo")) return n >= 8 ? 10 : 5;
+  // Runway: "1080p resolution only supports 8 second videos" (2026-11-17).
+  if (model === "veo3.1") return 8;
+  if (model === "seedance2_5") return Math.min(30, Math.max(4, n));
+  if (model === "kling_4") return Math.min(30, Math.max(3, n));
   if (isKlingO3(model)) return Math.min(15, Math.max(3, n));
   return Math.min(10, Math.max(2, n));
 }

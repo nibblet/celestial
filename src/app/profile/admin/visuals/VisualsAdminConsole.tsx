@@ -54,7 +54,14 @@ const STORAGE_KEY = "celestial.visualsStudio.v1";
 const TARGET_KINDS = ["entity", "story", "scene", "freeform"] as const;
 const ASPECTS = ["16:9", "9:16", "1:1", "4:5", "3:2", "2:3"] as const; // 2:3 = book cover
 const INTENTS = ["portrait", "establishing_shot", "scene_moment", "motion_loop"] as const;
-type VideoModel = "gen4.5" | "gen4_turbo" | "klingO3_standard" | "klingO3_pro";
+type VideoModel =
+  | "gen4.5"
+  | "gen4_turbo"
+  | "klingO3_standard"
+  | "klingO3_pro"
+  | "veo3.1"
+  | "seedance2_5"
+  | "kling_4";
 const VIDEO_MODELS: Array<{ key: VideoModel; label: string; short: string; durations: number[] }> = [
   { key: "gen4.5", label: "Gen-4.5 (best, ~$0.12/s)", short: "Gen-4.5", durations: [3, 5, 8, 10] },
   { key: "gen4_turbo", label: "Gen-4 Turbo (fast, ~$0.05/s)", short: "Gen-4 Turbo", durations: [5, 10] },
@@ -70,12 +77,29 @@ const VIDEO_MODELS: Array<{ key: VideoModel; label: string; short: string; durat
     short: "Kling O3 Pro",
     durations: [3, 5, 8, 10, 15],
   },
+  // Other labs' models through the same Runway key. All 1080p, start + end frames.
+  { key: "veo3.1", label: "Veo 3.1 (Google): photoreal, 1080p, 8 s, end frame", short: "Veo 3.1", durations: [8] },
+  {
+    key: "seedance2_5",
+    label: "Seedance 2.5 (ByteDance): 1080p, end frame; may refuse photoreal faces",
+    short: "Seedance 2.5",
+    durations: [4, 5, 6, 8, 10, 15],
+  },
+  {
+    key: "kling_4",
+    label: "Kling 4: people in motion, 1080p, face refs, end frame",
+    short: "Kling 4",
+    durations: [3, 5, 8, 10, 15],
+  },
 ];
-const isKling = (m: VideoModel) => m.startsWith("klingO3");
+/** Models that take character portraits as references. */
+const isKling = (m: VideoModel) => m.startsWith("klingO3") || m === "kling_4";
+/** Models that take an end frame (Gen-4 models take a start frame only). */
+const takesEndFrame = (m: VideoModel) => !m.startsWith("gen4");
 
 const IMAGE_PROVIDERS = [
   { key: "openai", label: "OpenAI GPT Image (attaches references)" },
-  { key: "imagen", label: "Google Nano Banana 2.1 (text only)" },
+  { key: "imagen", label: "Google Nano Banana 2.1 (attaches references)" },
 ] as const;
 
 const OPENAI_IMAGE_MODELS = [
@@ -131,11 +155,16 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
   const [recent, setRecent] = useState<RecentItem[]>([]);
   const [recentStatus, setRecentStatus] = useState<"idle" | "loading" | "error">("idle");
   const [restored, setRestored] = useState(false);
+  const [recentLimit, setRecentLimit] = useState(24);
+  const [recentKind, setRecentKind] = useState<"all" | "image" | "video">("all");
+  const [recentQuery, setRecentQuery] = useState("");
 
-  async function loadRecent() {
+  async function loadRecent(limit = recentLimit, kind = recentKind) {
     setRecentStatus("loading");
     try {
-      const res = await fetch("/api/visuals/recent?limit=24", { cache: "no-store" });
+      const qs = new URLSearchParams({ limit: String(limit) });
+      if (kind !== "all") qs.set("kind", kind);
+      const res = await fetch(`/api/visuals/recent?${qs}`, { cache: "no-store" });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Failed");
       setRecent(json.items ?? []);
@@ -177,6 +206,8 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
     }
     setRestored(true);
     void loadRecent();
+    // Runs once on mount; later loads are triggered by the controls.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -336,7 +367,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
         params.model = openaiModel;
       }
       const refs = promptResult.referenceImages ?? specRefs;
-      if (imageProvider === "openai" && attachRefs && refs.length > 0) {
+      if (attachRefs && refs.length > 0) {
         params.referenceImages = refs.map((r) => r.path);
       }
       const res = await fetch("/api/visuals/generate", {
@@ -405,7 +436,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
     }
   }
   const effectiveStartFrame = startFrame || startFrameOptions[0]?.value || "";
-  const endFrameAllowed = isKling(videoModel); // Gen-4.5 / Turbo take a start frame only
+  const endFrameAllowed = takesEndFrame(videoModel);
   // Kling O3 can carry identity portraits next to the start frame so a face
   // revealed mid-shot stays on-model (start frame + up to 6 refs).
   const faceRefs = (promptResult?.referenceImages ?? [])
@@ -474,6 +505,13 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
     }
   }
 
+  const q = recentQuery.trim().toLowerCase();
+  const filteredRecent = q
+    ? recent.filter((item) =>
+        [item.targetId ?? "", item.targetKind, JSON.stringify(item.prompt)].join(" ").toLowerCase().includes(q),
+      )
+    : recent;
+
   return (
     <div className="space-y-6">
       <section className="rounded-xl border border-[var(--color-border)] bg-warm-white p-5">
@@ -492,12 +530,43 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
           (its prompt, so you can animate or approve it); <strong>+ Ref</strong> adds a still to the
           extra references, where it also becomes a start or end frame option.
         </p>
+        <div className="mb-3 flex flex-wrap items-center gap-2">
+          <input
+            value={recentQuery}
+            onChange={(e) => {
+              setRecentQuery(e.target.value);
+              // Searching looks through everything, not just the newest few.
+              if (e.target.value.trim() && recentLimit < 200) {
+                setRecentLimit(200);
+                void loadRecent(200);
+              }
+            }}
+            placeholder="Search: target, character or prompt words (e.g. thane, hull)"
+            className="min-w-[16rem] flex-1 rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1 text-xs text-ink"
+          />
+          <select
+            value={recentKind}
+            onChange={(e) => {
+              const k = e.target.value as typeof recentKind;
+              setRecentKind(k);
+              void loadRecent(recentLimit, k);
+            }}
+            className="rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1 text-xs text-ink"
+          >
+            <option value="all">Stills and clips</option>
+            <option value="image">Stills only</option>
+            <option value="video">Clips only</option>
+          </select>
+        </div>
         {recentStatus === "error" && (
           <p className="text-xs text-red-700">Couldn&apos;t load recent generations.</p>
         )}
-        {recent.length > 0 && (
+        {recentQuery.trim() && filteredRecent.length === 0 && recentStatus !== "loading" && (
+          <p className="text-xs text-ink-muted">Nothing matches &ldquo;{recentQuery.trim()}&rdquo;.</p>
+        )}
+        {filteredRecent.length > 0 && (
           <ul className="flex gap-3 overflow-x-auto pb-2">
-            {recent.map((item) => {
+            {filteredRecent.map((item) => {
               const isOpen =
                 item.assetId === assetResult?.assetId || item.assetId === videoResult?.assetId;
               const isRef = extraRefs.some((r) => r.path === item.url);
@@ -542,6 +611,19 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
               );
             })}
           </ul>
+        )}
+        {!recentQuery.trim() && recent.length >= recentLimit && recentLimit < 200 && (
+          <button
+            type="button"
+            onClick={() => {
+              const next = Math.min(200, recentLimit + 24);
+              setRecentLimit(next);
+              void loadRecent(next);
+            }}
+            className="mt-1 text-xs font-semibold text-ink-muted hover:text-ink"
+          >
+            Show older generations →
+          </button>
         )}
       </section>
 
@@ -776,7 +858,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
           <div className="mt-5 border-t border-[var(--color-border)] pt-4">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <h3 className="type-meta text-ink">Spec reference photos</h3>
-              {imageProvider === "openai" && specRefs.length > 0 && (
+              {specRefs.length > 0 && (
                 <label className="flex items-center gap-1.5 text-xs text-ink-muted">
                   <input
                     type="checkbox"
@@ -787,7 +869,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
                 </label>
               )}
             </div>
-            {imageProvider === "openai" && !attachRefs && specRefs.length > 0 && (
+            {!attachRefs && specRefs.length > 0 && (
               <p className="mt-2 text-[11px] text-ink-muted">
                 Images won&apos;t be sent, but the prompt text still names them. To drop an item
                 entirely, remove it from the spec&apos;s reference_images.
@@ -875,8 +957,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
               <strong className="text-ink">
                 {imageProvider === "openai" ? `OpenAI · ${openaiModel}` : "Nano Banana 2.1"}
               </strong>
-              {imageProvider === "openai" &&
-              attachRefs &&
+              {attachRefs &&
               (promptResult.referenceImages?.length ?? 0) > 0
                 ? ` · attaching ${promptResult.referenceImages!.length} ref(s)`
                 : ""}
@@ -1019,7 +1100,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
                     onChange={(e) => setEndFrame(e.target.value)}
                     className="mt-1 block w-full rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1.5 text-sm text-ink disabled:opacity-50"
                   >
-                    <option value="">{endFrameAllowed ? "None" : "Kling O3 only"}</option>
+                    <option value="">{endFrameAllowed ? "None" : "Not on Gen-4 models"}</option>
                     {startFrameOptions
                       .filter((o) => o.value !== effectiveStartFrame)
                       .map((o) => (

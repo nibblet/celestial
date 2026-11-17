@@ -221,6 +221,29 @@ export const STYLE_PRESETS: Record<StylePresetKey, StylePreset> = {
       "studio or artificial backdrop",
     ],
   },
+
+  photoreal_documentary: {
+    key: "photoreal_documentary",
+    label: "Photoreal Documentary (live action)",
+    brief:
+      "A real photograph, not a render: as if a stills photographer embedded with the crew shot this on a cinema camera with available light. Muted, true-to-life color; nothing glows unless the scene has a light source. Real skin with pores, sweat, stubble and dust; hair flattened or messy from helmets; asymmetric faces; worn, creased, stained gear. On Mars the light is dimmer and butterscotch-gray with cool shadows, not golden. Imperfect framing is fine. Leave out every word that means 'epic' or 'cinematic'.",
+    anchors: [
+      "documentary photograph taken on a cinema camera, 35mm lens, natural available light only",
+      "muted, true-to-life color with real dynamic range: shadows hold detail, highlights roll off softly",
+      "unretouched skin: visible pores, fine lines, sweat sheen, uneven tone, dust caught in stubble and eyebrows",
+      "hair messy, damp or helmet-flattened, never styled; faces slightly asymmetric",
+      "gear worn and lived-in: creases, scuffs, grime in seams, frayed straps",
+      "fine natural film grain; slight lens softness toward the edges; focus falls off gradually",
+    ],
+    negative: [
+      "CGI, 3D render, digital painting, concept art, video game look",
+      "glossy, plastic or waxy skin; airbrushed or beauty-retouched faces",
+      "perfectly styled hair, model-like symmetric faces",
+      "teal-and-orange grade, heavy golden-hour glow, rim-light halos",
+      "oversharpened edges, HDR look, oversaturated color",
+      "epic, dramatic or heroic posing",
+    ],
+  },
 };
 
 export function getStylePreset(key: StylePresetKey): StylePreset {

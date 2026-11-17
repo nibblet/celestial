@@ -25,7 +25,7 @@ export async function GET(request: Request) {
   }
 
   const url = new URL(request.url);
-  const limit = Math.min(60, Math.max(1, Number(url.searchParams.get("limit")) || 24));
+  const limit = Math.min(200, Math.max(1, Number(url.searchParams.get("limit")) || 24));
   const kind = url.searchParams.get("kind");
 
   let query = admin

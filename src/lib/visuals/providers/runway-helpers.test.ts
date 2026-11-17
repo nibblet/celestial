@@ -12,6 +12,7 @@ import {
   klingReferencePreamble,
   isKlingO3,
   supportsEndFrame,
+  runwayModelCaps,
   toDataUri,
 } from "./runway-helpers";
 
@@ -81,10 +82,26 @@ test("restraint suffix forbids orbiting and revealing new faces", () => {
   assert.ok(withRestraint("x".repeat(3000), 2400).length <= 2400);
 });
 
-test("end frames: Kling O3 only; preamble shifts reference tokens", () => {
+test("end frames: Kling O3, Veo, Seedance, Kling 4; not Gen-4; preamble shifts reference tokens", () => {
   assert.ok(supportsEndFrame("klingO3_pro") && supportsEndFrame("klingO3_standard"));
+  assert.ok(supportsEndFrame("veo3.1") && supportsEndFrame("seedance2_5") && supportsEndFrame("kling_4"));
   assert.ok(!supportsEndFrame("gen4.5") && !supportsEndFrame("gen4_turbo"));
   const text = klingReferencePreamble(["Galen Voss approved portrait"], true);
   assert.match(text, /<<<image_2>>> is the end frame/);
   assert.match(text, /<<<image_3>>> is Galen Voss approved portrait/);
+});
+
+test("partner models: 1080p ratios, durations and request features", () => {
+  assert.equal(runwayRatioFor("veo3.1", "16:9"), "1920:1080");
+  assert.equal(runwayRatioFor("veo3.1", "9:16"), "1080:1920");
+  assert.equal(runwayRatioFor("seedance2_5", "16:9"), "1920:1080");
+  assert.equal(runwayRatioFor("seedance2_5", "4:5"), "1248:1664");
+  assert.equal(runwayRatioFor("kling_4", "16:9"), "auto_1080p");
+  assert.equal(runwayDurationFor("veo3.1", 5), 8); // 1080p is 8 s only
+  assert.equal(runwayDurationFor("veo3.1", 10), 8);
+  assert.equal(runwayDurationFor("seedance2_5", 40), 30);
+  assert.equal(runwayDurationFor("kling_4", 2), 3);
+  assert.ok(runwayModelCaps("veo3.1").negativePrompt && !runwayModelCaps("kling_4").audioField);
+  assert.equal(runwayModelCaps("kling_4").maxReferences, 8);
+  assert.equal(runwayModelCaps("gen4.5").endFrame, false);
 });
