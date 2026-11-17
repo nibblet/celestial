@@ -46,7 +46,9 @@ export function runwayModelCaps(model: string): RunwayModelCaps {
     return { maxPrompt: KLING_MAX_PROMPT_CHARS, endFrame: true, maxReferences: 0, audioField: true, seed: true, negativePrompt: false };
   }
   if (model === "kling_4") {
-    // Up to 10 images in total, keyframes included.
+    // Up to 10 images in total, keyframes included. Send portraits only:
+    // given a whole-scene image (the ship in space) it cut to it mid-clip
+    // (2026-11-17 rise test).
     return { maxPrompt: KLING_MAX_PROMPT_CHARS, endFrame: true, maxReferences: 8, audioField: false, seed: false, negativePrompt: false };
   }
   return { maxPrompt: RUNWAY_MAX_PROMPT_CHARS, endFrame: false, maxReferences: 0, audioField: false, seed: true, negativePrompt: false };

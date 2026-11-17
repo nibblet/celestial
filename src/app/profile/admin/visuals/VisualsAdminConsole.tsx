@@ -87,7 +87,7 @@ const VIDEO_MODELS: Array<{ key: VideoModel; label: string; short: string; durat
   },
   {
     key: "kling_4",
-    label: "Kling 4: people in motion, 1080p, face refs, end frame",
+    label: "Kling 4: people and steady motion, 1080p, end frame; face refs only (it may cut to other references)",
     short: "Kling 4",
     durations: [3, 5, 8, 10, 15],
   },
