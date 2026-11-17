@@ -9,6 +9,8 @@ import {
   getLastChapterNumber,
   getReaderProgress,
 } from "@/lib/progress/reader-progress";
+import { getAuthenticatedProfileContext } from "@/lib/auth/profile-context";
+import { listEntityThumbnails } from "@/lib/visuals/list-entity-thumbnails";
 import { CodexClient } from "./CodexClient";
 
 export const metadata: Metadata = {
@@ -21,10 +23,13 @@ export default async function CodexPage({
 }: {
   searchParams: Promise<{ type?: string }>;
 }) {
-  const [{ type }, progress] = await Promise.all([
-    searchParams,
-    getReaderProgress(),
-  ]);
+  const [{ type }, progress, thumbnails, { isAuthorSpecialAccess }] =
+    await Promise.all([
+      searchParams,
+      getReaderProgress(),
+      listEntityThumbnails(),
+      getAuthenticatedProfileContext(),
+    ]);
   const all = getCodexEntries();
   const visible = all
     .filter((e) => isCodexEntryVisible(e, progress))
@@ -36,6 +41,8 @@ export default async function CodexPage({
   return (
     <CodexClient
       entries={visible}
+      thumbnails={thumbnails}
+      isAuthor={isAuthorSpecialAccess}
       hiddenCount={all.length - visible.length}
       kinds={CODEX_KINDS}
       initialKind={initialKind}
