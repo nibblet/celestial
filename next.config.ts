@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // src/proxy.ts buffers request bodies (default 10MB, then truncates).
+    // The studio's "Add to a page gallery" uploads 1080p clips of 15MB+.
+    proxyClientMaxBodySize: "100mb",
+  },
   async redirects() {
     // Sections inherited from the memoir app that have no content for this
     // book. Temporary redirects so they can come back without cache trouble.
