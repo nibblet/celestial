@@ -16,7 +16,7 @@ import type {
 export const dynamic = "force-dynamic";
 
 const VALID_TARGET_KINDS: VisualTargetKind[] = ["entity", "story", "scene", "freeform"];
-const VALID_ASPECTS: VisualAspect[] = ["16:9", "9:16", "1:1", "4:5", "3:2"];
+const VALID_ASPECTS: VisualAspect[] = ["16:9", "9:16", "1:1", "4:5", "3:2", "2:3"];
 const VALID_INTENTS: VisualIntent[] = [
   "portrait",
   "establishing_shot",
