@@ -152,6 +152,41 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
     identity: Record<string, unknown> | null;
   } | null>(null);
 
+  const [importFiles, setImportFiles] = useState<File[]>([]);
+  const [importTarget, setImportTarget] = useState("");
+  const [importPreset, setImportPreset] = useState("photoreal_documentary");
+  const [importStatus, setImportStatus] = useState<string | null>(null);
+  const [importing, setImporting] = useState(false);
+
+  async function handleImport() {
+    const slug = (importTarget || targetId).trim();
+    if (!slug || importFiles.length === 0) return;
+    setImporting(true);
+    setImportStatus(null);
+    const done: string[] = [];
+    try {
+      for (const file of importFiles) {
+        const fd = new FormData();
+        fd.set("targetId", slug);
+        fd.set("stylePreset", importPreset);
+        fd.set("file", file);
+        const res = await fetch("/api/visuals/import", { method: "POST", body: fd });
+        const json = await res.json();
+        if (!res.ok) throw new Error(`${file.name}: ${json.error ?? "import failed"}`);
+        done.push(file.name);
+      }
+      setImportStatus(`Added ${done.length} to ${slug}'s page gallery.`);
+      setImportFiles([]);
+      void loadRecent();
+    } catch (err) {
+      setImportStatus(
+        `${done.length ? `Added ${done.join(", ")}. ` : ""}${err instanceof Error ? err.message : "Import failed"}`,
+      );
+    } finally {
+      setImporting(false);
+    }
+  }
+
   const [recent, setRecent] = useState<RecentItem[]>([]);
   const [recentStatus, setRecentStatus] = useState<"idle" | "loading" | "error">("idle");
   const [restored, setRestored] = useState(false);
@@ -625,6 +660,56 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
             Show older generations →
           </button>
         )}
+      </section>
+
+      <section className="rounded-xl border border-[var(--color-border)] bg-warm-white p-5">
+        <h2 className="type-meta mb-2 text-ink">Add to a page gallery</h2>
+        <p className="mb-3 max-w-prose text-xs text-ink-muted">
+          Stills or clips made outside the studio (Runway app, a cloud session, another tool) go
+          straight onto a character or place page as approved gallery items. This doesn&apos;t
+          change the entity&apos;s identity reference.
+        </p>
+        <div className="flex flex-wrap items-end gap-3">
+          <label className="text-xs text-ink-muted">
+            Entity slug
+            <input
+              value={importTarget}
+              onChange={(e) => setImportTarget(e.target.value)}
+              placeholder={targetId || "e.g. thane-meric"}
+              className="mt-1 block w-48 rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1.5 text-sm text-ink"
+            />
+          </label>
+          <label className="text-xs text-ink-muted">
+            Gallery label (style)
+            <select
+              value={importPreset}
+              onChange={(e) => setImportPreset(e.target.value)}
+              className="mt-1 block rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1.5 text-sm text-ink"
+            >
+              {presets.map((p) => (
+                <option key={p.key} value={p.key}>
+                  {p.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <input
+            type="file"
+            multiple
+            accept="image/png,image/jpeg,image/webp,video/mp4,video/quicktime,video/webm"
+            onChange={(e) => setImportFiles(Array.from(e.target.files ?? []))}
+            className="text-xs text-ink"
+          />
+          <button
+            type="button"
+            onClick={handleImport}
+            disabled={importing || importFiles.length === 0 || !(importTarget || targetId).trim()}
+            className="rounded-md bg-clay px-4 py-2 text-sm font-semibold text-warm-white disabled:opacity-50"
+          >
+            {importing ? "Uploading…" : `Add ${importFiles.length || ""} to gallery`}
+          </button>
+        </div>
+        {importStatus && <p className="mt-2 text-xs text-ink">{importStatus}</p>}
       </section>
 
       <section className="rounded-xl border border-[var(--color-border)] bg-warm-white p-5">
