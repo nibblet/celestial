@@ -20,6 +20,9 @@ This folder is the reference for anything we render: character portraits, ship s
 - `jonah-revas-portrait.png`: Jonah's approved identity portrait.
 - `rhea-solari-portrait.png`: Rhea's approved identity portrait.
 - `amar-cael-portrait.png`: Amar's approved identity portrait.
+- `elira-voss-portrait.png`: Elira's approved identity portrait (2026-11-17).
+- `sovrin-command-dome.png`: SOVRIN's approved manifestation (2026-11-17, CH12). The Command Dome with its own lights out; one narrow band of cold white light with straight-stroke angular symbols across the upper arc. Attached to `sovrin`.
+- `caeden-relay-cluster.png`: CAEDEN's approved look (2026-11-17). Earth-built relay modules bolted into a hollow under a peeled-up section of the ship's shell, with a faint cold blue-white glow inside them. No screens or words. Attached to `caeden`.
 - `valkyrie-1/hero-photographic.png`: the approved **photographic** hero of the ship, the primary look. Hard raking sun, most of the hull in shadow, faint violet light inside the skin. The concept-art renders below are for shape only.
 - `valkyrie-1/`: the ship. `three-quarter.png` and `orthogonal.png` (hull shape) are attached to every shot of `valkyrie-1`. `state-*.png` (dormant, wake, active, alignment, harmonic-jump, cropped from the `public/images` state renders, caption removed) are attached when that state is chosen. These use `"inherit": false`, so interior specs that inherit from `valkyrie-1` don't receive hull images. The south trench spec attaches the dormant and orthogonal renders so the buried hull matches.
 - `zone-theta-wall.png`: the approved Zone Theta vault wall (material and glyph network), attached to `zone-theta`. Glyphs stay faint until the wall awakens.
@@ -65,9 +68,10 @@ This folder is the reference for anything we render: character portraits, ship s
 | `valkyrie-crew` | shared parent for the crew | master + states `mars_surface`, `shipboard`, `vault_expedition`, `prep_bay_kit` | draft, needs review (no wardrobe in the prose) |
 | `galen-voss`, `aven-voss`, `thane-meric`, `lena-osei`, `jax-reyes`, `marco-ruiz`, `evelyn-tran`, `jonah-revas`, `amar-cael` | characters | master + views `three_quarter` (identity portrait, the default), `full_body`, `profile` | draft, needs review |
 | `rhea-solari` | character (Rigel captain) | master | draft, needs review |
+| `elira-voss` | character (on Earth, not crew) | master + view `three_quarter` | look approved 2026-11-17 |
 | `alara` | AI | master + states `listening`, `present`, `hesitation`, `reflection`, `mourning`, `translation` | grounded in the prose |
-| `sovrin` | AI | master | grounded in the prose |
-| `caeden` | AI | master | draft, needs review (thin canon) |
+| `sovrin` | AI | master | look approved 2026-11-17 |
+| `caeden` | AI | master | look approved 2026-11-17 (equipment and glow, no text) |
 | `rigel-ascendant` | ship | master | **fully proposed**: the prose describes no exterior at all |
 | `south-trench` | Mars dig site | master + features `command-shelter`, `corporate-shuttle` | grounded in the prose |
 | `zone-theta` | shaft / vault threshold | master | grounded in the prose |
@@ -106,6 +110,7 @@ Each character's `master.json` has a `_provenance` block that separates canon fi
 | Jonah Revas ✅ approved | looks ~45, actually mid-50s (**"calm older than his face"**) | from `public/visual-references/jonah-revas-portrait.png`: medium build; light olive skin; dark curls mostly silver at the temples; full, neatly trimmed gray beard; still, inward, listening expression; civilian field jacket over an undyed linen shirt, REVAS name tape, bone-white advisor tab. Deliberately distinct from Jax |
 | Amar Cael ✅ approved | late 50s (**"refined… less glass tower, more iron core"**) | from `public/visual-references/amar-cael-portrait.png`: lean, refined face; **clean-shaven**; black hair silvering at the temples, combed back; controlled half-smile, "not warm, but real"; tailored charcoal **corporate-issue suit**, white shirt open at the collar, no tie, no patch. Not part of the crew spec |
 | Rhea Solari ✅ approved | late 50s (**"trim lines, eyes too sharp to soften"**) | from `public/visual-references/rhea-solari-portrait.png`: pale; ice-gray eyes; silver hair in a tight low knot; never smiling; high-collared slate-gray Bureau tunic with the **Sovereign Ethics Bureau seal** pin on the collar and two silver cuff bars; the seal as a faint watermark behind her |
+| Elira Voss ✅ approved (2026-11-17) | mid-50s, never rejuvenated (**never described in the book; "soft, expectant, wounded"**) | from `public/visual-references/elira-voss-portrait.png`: takes after Galen, not Aven; tall and lean; light olive skin; pale blue-gray eyes; level brows and a square jaw; straight dark brown hair streaked with gray, cut at the jaw; dark green overshirt over an off-white tee; no uniform or patch. A first render with Aven's portrait attached came out as Aven and was rejected |
 
 Also review: the whole `rigel-ascendant` exterior (a hard-edged graphite modular cruiser, built as the visual opposite of Valkyrie).
 
