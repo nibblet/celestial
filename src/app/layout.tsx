@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Lora, Inter } from "next/font/google";
 import "./globals.css";
+import "./starfield.css";
 import { createClient } from "@/lib/supabase/server";
 import { Nav } from "@/components/layout/Nav";
 import { Header } from "@/components/layout/Header";
@@ -56,6 +57,11 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col antialiased">
         <AgeModeProvider initialMode="adult">
           <BodyModeSync />
+          <div className="starfield" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
           <a href="#main-content" className="skip-link">
             Skip to main content
           </a>
