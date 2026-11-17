@@ -11,7 +11,7 @@ export function ThemesTile({ themes, className = "" }: Props) {
     return (
       <GhostTile
         label="Themes you return to"
-        body="Themes will start to emerge after you read a few stories."
+        body="Themes will start to emerge after you read a few chapters."
         className={className}
       />
     );

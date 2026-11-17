@@ -16,8 +16,6 @@ import { StoryMarkdown } from "@/components/story/StoryMarkdown";
 import { StoryBodyWithHighlighting } from "@/components/story/StoryBodyWithHighlighting";
 import { StoryDetailsDisclosure } from "@/components/story/StoryDetailsDisclosure";
 import { StoryTOC, type StoryTOCSection } from "@/components/story/StoryTOC";
-import { AskAboutStory } from "@/components/stories/AskAboutStory";
-import { AnsweredQuestionsList } from "@/components/stories/AnsweredQuestionsList";
 import { StorySceneJump } from "@/components/story/StorySceneJump";
 import { enrichLegacyStorySource } from "@/lib/wiki/taxonomy";
 import { getChapterTags } from "@/lib/wiki/chapter-tags";
@@ -25,7 +23,15 @@ import { extractSceneSectionsFromChapterBody } from "@/lib/wiki/markdown-heading
 import { getSceneSectionsForChapter } from "@/lib/wiki/scenes-db";
 import { lifeStageToEraAccent } from "@/lib/design/era";
 import { createClient } from "@/lib/supabase/server";
-import { getReaderProgress, isStoryUnlocked } from "@/lib/progress/reader-progress";
+import {
+  canOpenChapter,
+  getLastChapterNumber,
+  getReaderProgress,
+  nextChapterId,
+} from "@/lib/progress/reader-progress";
+import { chapterNumberFromStoryId } from "@/lib/wiki/story-ids";
+import { isFreeChapter } from "@/lib/auth/public-paths";
+import { CODEX_KINDS, getCodexEntriesIntroducedIn } from "@/lib/wiki/codex";
 
 export default async function StoryDetailPage({
   params,
@@ -37,7 +43,7 @@ export default async function StoryDetailPage({
 
   if (!story) notFound();
   const progress = await getReaderProgress();
-  const unlocked = isStoryUnlocked(storyId, progress);
+  const unlocked = canOpenChapter(storyId, progress);
 
   if (!unlocked) {
     return (
@@ -46,17 +52,28 @@ export default async function StoryDetailPage({
           href="/stories"
           className="type-ui mb-4 inline-block text-ink-ghost no-underline transition-colors hover:text-ocean"
         >
-          &larr; Chapter Library
+          &larr; All chapters
         </Link>
         <div className="rounded-xl border border-[var(--color-border)] bg-warm-white p-6">
-          <h1 className="type-story-title blur-[2px]">{story.title}</h1>
+          <h1 className="type-story-title">{story.title}</h1>
           <p className="mt-3 text-sm text-ink-muted">
-            This chapter is locked until you reach it in your reading progress.
+            You haven&apos;t reached this chapter yet. It opens when you finish
+            the one before it.
           </p>
-          <p className="mt-3 text-sm text-ink-muted">
-            Use the chapter library card action to mark it read and unlock this
-            page.
-          </p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <Link
+              href={`/stories/${nextChapterId(progress)}`}
+              className="rounded-lg bg-clay px-4 py-2.5 text-sm font-medium text-warm-white no-underline transition-colors hover:bg-clay-mid"
+            >
+              Go to my next chapter
+            </Link>
+            <Link
+              href="/welcome?replay=1"
+              className="rounded-lg border border-[var(--color-border)] px-4 py-2.5 text-sm font-medium text-ink no-underline transition-colors hover:border-clay-border"
+            >
+              I&apos;m further along — move my bookmark
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -105,22 +122,49 @@ export default async function StoryDetailPage({
     initialRead = !!readRow;
   }
 
-  const tocSections: StoryTOCSection[] = [{ id: "story-body", label: "Story" }];
+  const tocSections: StoryTOCSection[] = [{ id: "story-body", label: "Chapter" }];
   if (story.principles.length > 0)
-    tocSections.push({ id: "shows", label: "What This Story Shows" });
-  if (story.heuristics.length > 0)
-    tocSections.push({ id: "thinking-about", label: "If You're Thinking About" });
+    tocSections.push({ id: "shows", label: "What this chapter shows" });
   if (story.quotes.length > 0)
     tocSections.push({ id: "quotes", label: "Key Quotes" });
-  if (story.relatedStoryIds.length > 0)
-    tocSections.push({ id: "related", label: "Related Stories" });
-  tocSections.push({ id: "ask", label: "Ask About This Story" });
+  // Never surface a chapter the reader has not reached, even as a link title.
+  const relatedIds = story.relatedStoryIds.filter((relId) =>
+    canOpenChapter(relId, progress)
+  );
+  if (relatedIds.length > 0)
+    tocSections.push({ id: "related", label: "Related chapters" });
   const relatedStories = await Promise.all(
-    story.relatedStoryIds.map(async (relId) => ({
+    relatedIds.map(async (relId) => ({
       relId,
       story: (await getCanonicalStoryById(relId)) || getStoryById(relId),
     }))
   );
+  const chapterNumber = chapterNumberFromStoryId(storyId);
+  const lastChapter = getLastChapterNumber();
+  const prevId =
+    chapterNumber !== null && chapterNumber > 1
+      ? `CH${String(chapterNumber - 1).padStart(2, "0")}`
+      : null;
+  const nextId =
+    chapterNumber !== null && chapterNumber < lastChapter
+      ? `CH${String(chapterNumber + 1).padStart(2, "0")}`
+      : null;
+  const [prevStory, nextStory] = await Promise.all([
+    prevId ? getCanonicalStoryById(prevId) : null,
+    nextId ? getCanonicalStoryById(nextId) : null,
+  ]);
+  const nextNeedsAccount = Boolean(nextId) && !user && !isFreeChapter(nextId!);
+  const isLastChapter = chapterNumber !== null && chapterNumber >= lastChapter;
+
+  // "Who you met": codex entries this chapter introduces. Shown after the
+  // text, so it never runs ahead of what the reader has just read.
+  const introduced =
+    chapterNumber !== null ? getCodexEntriesIntroducedIn(chapterNumber) : [];
+  const introducedByKind = CODEX_KINDS.map((k) => ({
+    ...k,
+    entries: introduced.filter((e) => e.kind === k.kind),
+  })).filter((k) => k.entries.length > 0);
+
   const inventory = getMissionLogInventory();
   const missionLogs = inventory
     ? inventory.missionLogs.filter((row) => row.chapterId === storyId)
@@ -129,7 +173,6 @@ export default async function StoryDetailPage({
   return (
     <>
       <ReadingProgressBar />
-      <ReadTracker storyId={storyId} />
       <div className="mx-auto max-w-6xl px-[var(--page-padding-x)] py-6 md:py-10">
         <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_14rem] lg:gap-10">
           <div className="min-w-0 max-w-story">
@@ -137,7 +180,7 @@ export default async function StoryDetailPage({
               href="/stories"
               className="type-ui mb-4 inline-block text-ink-ghost no-underline transition-colors hover:text-ocean"
             >
-              &larr; Chapter Library
+              &larr; All chapters
             </Link>
 
             <div className={`mb-3 border-l-4 pl-4 ${era.accentBorder}`}>
@@ -196,6 +239,7 @@ export default async function StoryDetailPage({
                   <StoryMarkdown content={linkedFullText} />
                 </article>
               )}
+              <ReadTracker storyId={storyId} />
             </div>
 
             {story.principles.length > 0 && (
@@ -204,7 +248,7 @@ export default async function StoryDetailPage({
                 className="mb-4 scroll-mt-20 rounded-xl border border-[var(--color-border)] bg-warm-white p-5"
               >
                 <h2 className="type-meta mb-3 text-ink">
-                  What This Story Shows
+                  What this chapter shows
                 </h2>
                 <ul className="space-y-2">
                   {story.principles.map((p, i) => (
@@ -214,28 +258,6 @@ export default async function StoryDetailPage({
                     >
                       <span className="mt-0.5 text-clay">&#9679;</span>
                       {p}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {story.heuristics.length > 0 && (
-              <div
-                id="thinking-about"
-                className="mb-4 scroll-mt-20 rounded-xl border border-[var(--color-border)] bg-warm-white p-5"
-              >
-                <h2 className="type-meta mb-3 text-ink">
-                  If You&apos;re Thinking About...
-                </h2>
-                <ul className="space-y-2">
-                  {story.heuristics.map((h, i) => (
-                    <li
-                      key={i}
-                      className="flex gap-2 font-[family-name:var(--font-lora)] text-sm text-ink-muted"
-                    >
-                      <span className="mt-0.5 text-clay">&#9679;</span>
-                      {h}
                     </li>
                   ))}
                 </ul>
@@ -258,9 +280,9 @@ export default async function StoryDetailPage({
               </div>
             )}
 
-            {story.relatedStoryIds.length > 0 && (
+            {relatedIds.length > 0 && (
               <div id="related" className="mb-6 scroll-mt-20">
-                <h2 className="type-meta mb-3 text-ink">Related Stories</h2>
+                <h2 className="type-meta mb-3 text-ink">Related chapters</h2>
                 <div className="space-y-2">
                   {relatedStories.map(({ relId, story: rel }) => {
                     if (!rel) return null;
@@ -283,9 +305,60 @@ export default async function StoryDetailPage({
               </div>
             )}
 
+            {introducedByKind.length > 0 && (
+              <section
+                id="new-in-chapter"
+                aria-labelledby="new-in-chapter-heading"
+                className="sci-panel mb-6 scroll-mt-20 p-5"
+              >
+                <h2
+                  id="new-in-chapter-heading"
+                  className="type-meta mb-1 text-ink"
+                >
+                  New in this chapter
+                </h2>
+                <p className="mb-4 text-sm text-ink-muted">
+                  {user
+                    ? "Now in your codex."
+                    : "With a free account, these open in your codex as you read."}
+                </p>
+                <dl className="space-y-3">
+                  {introducedByKind.map((group) => (
+                    <div key={group.kind}>
+                      <dt className="type-meta mb-1.5 text-ink-ghost">
+                        {group.label}
+                      </dt>
+                      <dd className="flex flex-wrap gap-2">
+                        {group.entries.map((e) =>
+                          user ? (
+                            <Link
+                              key={e.slug}
+                              href={e.href}
+                              className="sci-chip bg-warm-white px-2.5 py-1 text-sm text-ink no-underline ring-1 ring-[var(--color-border)] transition-colors hover:ring-clay-border"
+                            >
+                              {e.name}
+                            </Link>
+                          ) : (
+                            <span
+                              key={e.slug}
+                              className="sci-chip bg-warm-white px-2.5 py-1 text-sm text-ink-muted ring-1 ring-[var(--color-border)]"
+                            >
+                              {e.name}
+                            </span>
+                          )
+                        )}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </section>
+            )}
+
             {missionLogs.length > 0 && (
               <div className="mb-6">
-                <h2 className="type-meta mb-3 text-ink">Mission Logs</h2>
+                <h2 className="type-meta mb-3 text-ink">
+                  Mission logs from this chapter
+                </h2>
                 <div className="space-y-2">
                   {missionLogs.map((log) => (
                     <Link
@@ -294,10 +367,11 @@ export default async function StoryDetailPage({
                       className="block rounded-lg border border-[var(--color-border)] bg-warm-white p-3 transition-colors hover:border-clay-border"
                     >
                       <span className="type-ui block text-ink">
-                        {log.logId}
+                        {log.summary || log.logId}
                       </span>
                       <span className="mt-0.5 line-clamp-1 font-[family-name:var(--font-lora)] text-xs text-ink-muted">
-                        {log.summary}
+                        {[log.author, log.logType].filter(Boolean).join(" · ") ||
+                          log.logId}
                       </span>
                     </Link>
                   ))}
@@ -305,29 +379,84 @@ export default async function StoryDetailPage({
               </div>
             )}
 
-            <AnsweredQuestionsList storyId={storyId} />
-
-            <div id="ask" className="scroll-mt-20">
-              <AskAboutStory storyId={storyId} />
-            </div>
-
-            <div className="mt-8 flex flex-col gap-3 border-t border-[var(--color-divider)] pt-6 sm:flex-row sm:items-start">
-              <div className="flex min-w-0 flex-1 flex-col gap-1">
+            <nav
+              aria-label="Chapter navigation"
+              className="mt-8 border-t border-[var(--color-divider)] pt-6"
+            >
+              {nextId && nextStory && !nextNeedsAccount && (
                 <Link
-                  href={`/ask?story=${storyId}`}
-                  className="rounded-lg bg-clay py-2.5 text-center text-sm font-medium text-warm-white transition-colors hover:bg-clay-mid"
+                  href={`/stories/${nextId}`}
+                  className="sci-panel sci-card-link group mb-3 block p-5 no-underline"
                 >
-                  Chat about this story (AI)
+                  <span className="type-meta block text-ink-ghost">
+                    Next chapter
+                  </span>
+                  <span className="type-story-title mt-1 block text-xl transition-colors group-hover:text-burgundy">
+                    {nextStory.title} &rarr;
+                  </span>
+                </Link>
+              )}
+              {nextNeedsAccount && (
+                <div className="sci-panel mb-3 p-5">
+                  <span className="type-meta block text-ink-ghost">
+                    Keep reading
+                  </span>
+                  <p className="mt-1 font-[family-name:var(--font-lora)] text-base text-ink">
+                    The rest of the book is free with an account, which also
+                    keeps your place and unlocks the companion as you read.
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    <Link
+                      href="/signup"
+                      className="rounded-lg bg-clay px-4 py-2.5 text-sm font-medium text-warm-white no-underline transition-colors hover:bg-clay-mid"
+                    >
+                      Create a free account
+                    </Link>
+                    <Link
+                      href={`/login?next=${encodeURIComponent(`/stories/${nextId}`)}`}
+                      className="rounded-lg border border-[var(--color-border)] px-4 py-2.5 text-sm font-medium text-ink no-underline transition-colors hover:border-clay-border"
+                    >
+                      Sign in
+                    </Link>
+                  </div>
+                </div>
+              )}
+              {isLastChapter && (
+                <div className="sci-panel mb-3 p-5">
+                  <span className="type-meta block text-ink-ghost">
+                    End of the book
+                  </span>
+                  <p className="mt-1 font-[family-name:var(--font-lora)] text-base text-ink">
+                    You&apos;ve reached the last chapter. The whole companion
+                    is open to you now.
+                  </p>
+                </div>
+              )}
+              <div className="flex flex-col gap-3 sm:flex-row">
+                {prevId && prevStory && (
+                  <Link
+                    href={`/stories/${prevId}`}
+                    className="flex-1 rounded-lg border border-[var(--color-border)] bg-warm-white px-4 py-2.5 text-sm font-medium text-ink no-underline transition-colors hover:border-clay-border"
+                  >
+                    &larr; {prevStory.title}
+                  </Link>
+                )}
+                {user && (
+                  <Link
+                    href={`/ask?story=${storyId}`}
+                    className="flex-1 rounded-lg border border-[var(--color-border)] bg-warm-white px-4 py-2.5 text-center text-sm font-medium text-ink no-underline transition-colors hover:border-clay-border"
+                  >
+                    Ask about this chapter
+                  </Link>
+                )}
+                <Link
+                  href="/stories"
+                  className="flex-1 rounded-lg border border-[var(--color-border)] bg-warm-white px-4 py-2.5 text-center text-sm font-medium text-ink no-underline transition-colors hover:border-clay-border"
+                >
+                  All chapters
                 </Link>
               </div>
-              <Link
-                href="/stories"
-                className="flex-1 rounded-lg border border-[var(--color-border)] bg-warm-white py-2.5 text-center text-sm font-medium text-ink transition-colors hover:border-clay-border sm:max-w-[12rem] sm:self-center"
-              >
-                <span className="sm:hidden">More chapters</span>
-                <span className="hidden sm:inline">Browse more chapters</span>
-              </Link>
-            </div>
+            </nav>
           </div>
 
           <StoryTOC sections={tocSections} sceneSections={sceneSections} />

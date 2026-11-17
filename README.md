@@ -24,6 +24,7 @@ Fork migration from the memoir reference app. This repo is the **fiction compani
 
 - `npm run dev` — Next.js dev server.
 - `npm test` — Node test runner (wiki/parser and prompt tests).
+- `npm run ingest:manuscript` — **Canonical chapter source.** Regenerates `content/wiki/stories/CH##-*.md`, `content/raw/mission_logs_inventory.json` and `content/wiki/mission-logs/index.md` from the final manuscript export at `celestial_original/Celestial_Heritage_-_FINAL_v3_app.md` (gitignored; pass another path as an argument). Afterwards run `npm run ingest:scenes` and re-run the chapter tagging / dossier enrichment scripts so derived data follows the new text.
 - `npm run ingest:book` — Runs `brain_lab` entity extraction + wiki compile and refreshes the review queue. EPUB chapter/mission regeneration is **opt-in**: `REGENERATE_CHAPTERS_FROM_EPUB=1 npm run ingest:book` (deletes existing `CH##-*.md` story files first).
 - `npm run build` — Runs `prebuild` first (`ingest:lore` + static data regeneration), then Next build.
 - `npm run compile:wiki` — Wiki compiler (expects `content/wiki` when you add markdown again).

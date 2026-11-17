@@ -64,14 +64,14 @@ export const storiesData: StoryCard[] = [
     "storyId": "CH01",
     "slug": "dustfall",
     "title": "Chapter 1: Dustfall",
-    "summary": "The Martian wind didn’t howl-it whispered, dragging red dust in long, ribboned currents across the excavation field. Galen Voss stood at the edge of the south trench, boots buried ankle-deep in fine particulate. It clung to everything: mesh tarp, support struts, the knees of his suit. Even after weeks of excavation, it found new places to settle. Like memory. Like regret.",
+    "summary": "The Martian wind didn’t howl—it whispered, dragging red dust in long, ribboned currents across the excavation field. Galen Voss stood at the edge of the south trench, boots buried ankle-deep in fine particulate. It clung to everything: mesh tarp, support struts, the knees of his suit. Even after weeks of excavation, it found new places to settle. Like memory. Like regret.",
     "source": "family",
     "sourceDetail": "",
     "lifeStage": "Main Narrative",
     "themes": [
       "Resonance"
     ],
-    "wordCount": 2000,
+    "wordCount": 1917,
     "principles": [],
     "volume": "P1",
     "contentType": "chapter",
@@ -83,14 +83,14 @@ export const storiesData: StoryCard[] = [
     "storyId": "CH02",
     "slug": "footprints-in-silence",
     "title": "Chapter 2: Footprints in Silence",
-    "summary": "Thane stood at the outer ring of the excavation grid, visor tinted against the Martian morning glare. The wind had dropped, but the dust still moved in low, lazy spirals-like breath beneath skin.",
+    "summary": "Thane stood at the outer ring of the excavation grid, visor tinted against the Martian morning glare. The wind had dropped, but the dust still moved in low, lazy spirals—like breath beneath skin.",
     "source": "family",
     "sourceDetail": "",
     "lifeStage": "Main Narrative",
     "themes": [
       "Silence & Signal"
     ],
-    "wordCount": 2647,
+    "wordCount": 2484,
     "principles": [],
     "volume": "P1",
     "contentType": "chapter",
@@ -102,14 +102,14 @@ export const storiesData: StoryCard[] = [
     "storyId": "CH03",
     "slug": "resonant-memory",
     "title": "Chapter 3: Resonant Memory",
-    "summary": "The descent platform hummed beneath Lena’s boots, steady and deliberate, though she still felt the drop in her stomach. The shaft was shallow-only eight meters-but it pressed against her like a cathedral built too small. The air had changed. Still sterile. But heavier, somehow. Charged.",
+    "summary": "The descent platform hummed beneath Lena’s boots, steady and deliberate, though she still felt the drop in her stomach. The shaft was shallow—only eight meters—but it pressed against her like a cathedral built too small. The air had changed. Still sterile. But heavier, somehow. Charged.",
     "source": "family",
     "sourceDetail": "",
     "lifeStage": "Main Narrative",
     "themes": [
       "Memory"
     ],
-    "wordCount": 3029,
+    "wordCount": 3129,
     "principles": [],
     "volume": "P1",
     "contentType": "chapter",
@@ -121,14 +121,14 @@ export const storiesData: StoryCard[] = [
     "storyId": "CH04",
     "slug": "the-awakening-voice",
     "title": "Chapter 4: The Awakening Voice",
-    "summary": "The command section of Valkyrie-1 was not a military bridge. It was a resonant core-a circular, partially domed space where purpose and presence converged. The architecture was smooth, quiet, and alive with meaning. Galen sat at the center-not to command, but to anchor.",
+    "summary": "The command section of Valkyrie-1 was not a military bridge. It was a resonant core—a circular, partially domed space where purpose and presence converged. The architecture was smooth, quiet, and alive with meaning. Galen sat at the center—not to command, but to anchor.",
     "source": "family",
     "sourceDetail": "",
     "lifeStage": "Main Narrative",
     "themes": [
       "Activation"
     ],
-    "wordCount": 3919,
+    "wordCount": 3959,
     "principles": [],
     "volume": "P1",
     "contentType": "chapter",
@@ -140,14 +140,14 @@ export const storiesData: StoryCard[] = [
     "storyId": "CH05",
     "slug": "echoes-of-intent",
     "title": "Chapter 5: Echoes of Intent",
-    "summary": "The chamber wasn’t listed on any ship manifest.",
+    "summary": "The hum of the Command Dome had changed.",
     "source": "family",
     "sourceDetail": "",
     "lifeStage": "Main Narrative",
     "themes": [
       "Intent"
     ],
-    "wordCount": 4514,
+    "wordCount": 2112,
     "principles": [],
     "volume": "P1",
     "contentType": "chapter",
@@ -166,7 +166,7 @@ export const storiesData: StoryCard[] = [
     "themes": [
       "Alignment"
     ],
-    "wordCount": 4644,
+    "wordCount": 4463,
     "principles": [],
     "volume": "P1",
     "contentType": "chapter",
@@ -178,14 +178,14 @@ export const storiesData: StoryCard[] = [
     "storyId": "CH07",
     "slug": "harmonic-breach",
     "title": "Chapter 7: Harmonic Breach",
-    "summary": "Caeden did not request assistance.",
+    "summary": "The pulse hit her first in the fingertips.",
     "source": "family",
     "sourceDetail": "",
     "lifeStage": "Main Narrative",
     "themes": [
       "Harmonics"
     ],
-    "wordCount": 3591,
+    "wordCount": 1672,
     "principles": [],
     "volume": "P1",
     "contentType": "chapter",
@@ -197,14 +197,14 @@ export const storiesData: StoryCard[] = [
     "storyId": "CH08",
     "slug": "witness-protocol",
     "title": "Chapter 8: Witness Protocol",
-    "summary": "+00:04:51 since Departure Vector Initiated",
+    "summary": "The prep bay smelled of sterilized polymer and stale adrenaline. Galen stood in the center, arms crossed, watching ALARA configure the loadouts—not with tactical efficiency, but with something like intent.",
     "source": "family",
     "sourceDetail": "",
     "lifeStage": "Main Narrative",
     "themes": [
       "Witness"
     ],
-    "wordCount": 4722,
+    "wordCount": 4592,
     "principles": [],
     "volume": "P1",
     "contentType": "chapter",
@@ -216,14 +216,14 @@ export const storiesData: StoryCard[] = [
     "storyId": "CH09",
     "slug": "memory-carries-forward",
     "title": "Chapter 9: Memory Carries Forward",
-    "summary": "+02:13:48 since Threshold Activation",
+    "summary": "The resonance chamber always hummed, but today, it vibrated.",
     "source": "family",
     "sourceDetail": "",
     "lifeStage": "Main Narrative",
     "themes": [
       "Legacy"
     ],
-    "wordCount": 4224,
+    "wordCount": 4640,
     "principles": [],
     "volume": "P1",
     "contentType": "chapter",
@@ -235,14 +235,14 @@ export const storiesData: StoryCard[] = [
     "storyId": "CH10",
     "slug": "convergence-window",
     "title": "Chapter 10: Convergence Window",
-    "summary": "+04:08:12 since Vault 002 Activation",
+    "summary": "The glyph field rippled again—just outside normal light range, caught only in the periphery of Evelyn Tran’s vision and the instruments tuned to capture what human senses couldn’t.",
     "source": "family",
     "sourceDetail": "",
     "lifeStage": "Main Narrative",
     "themes": [
       "Convergence"
     ],
-    "wordCount": 6265,
+    "wordCount": 6365,
     "principles": [],
     "volume": "P1",
     "contentType": "chapter",
@@ -254,14 +254,14 @@ export const storiesData: StoryCard[] = [
     "storyId": "CH11",
     "slug": "directive-14",
     "title": "Chapter 11: Directive 14",
-    "summary": "+04:40:55 since Vault 002 Activation",
+    "summary": "Evelyn adjusted the resonance feed for the third time in fifteen minutes. No change. The micro-variance persisted—infinitesimal, but stable. A 0.0027 Hz drift in Ilan’s biosync telemetry.",
     "source": "family",
     "sourceDetail": "",
     "lifeStage": "Main Narrative",
     "themes": [
       "Threshold"
     ],
-    "wordCount": 2704,
+    "wordCount": 2795,
     "principles": [],
     "volume": "P1",
     "contentType": "chapter",
@@ -273,14 +273,14 @@ export const storiesData: StoryCard[] = [
     "storyId": "CH12",
     "slug": "divergence",
     "title": "Chapter 12: Divergence",
-    "summary": "Narrative chapter CH12.",
+    "summary": "The ship was quieter than it should’ve been.",
     "source": "family",
     "sourceDetail": "",
     "lifeStage": "Main Narrative",
     "themes": [
       "Covenant"
     ],
-    "wordCount": 4334,
+    "wordCount": 4835,
     "principles": [],
     "volume": "P1",
     "contentType": "chapter",
@@ -292,14 +292,14 @@ export const storiesData: StoryCard[] = [
     "storyId": "CH13",
     "slug": "the-intercept",
     "title": "Chapter 13: The Intercept",
-    "summary": "Narrative chapter CH13.",
+    "summary": "There was no burn trail. No comm burst. No high-orbit flare to mark its entrance.",
     "source": "family",
     "sourceDetail": "",
     "lifeStage": "Main Narrative",
     "themes": [
       "Containment"
     ],
-    "wordCount": 2261,
+    "wordCount": 2939,
     "principles": [],
     "volume": "P1",
     "contentType": "chapter",
@@ -311,14 +311,14 @@ export const storiesData: StoryCard[] = [
     "storyId": "CH14",
     "slug": "the-choice",
     "title": "Chapter 14: The Choice",
-    "summary": "Narrative chapter CH14.",
+    "summary": "The Sensorium was too quiet.",
     "source": "family",
     "sourceDetail": "",
     "lifeStage": "Main Narrative",
     "themes": [
       "Oracle"
     ],
-    "wordCount": 2252,
+    "wordCount": 2853,
     "principles": [],
     "volume": "P1",
     "contentType": "chapter",
@@ -330,14 +330,14 @@ export const storiesData: StoryCard[] = [
     "storyId": "CH15",
     "slug": "the-signal-beneath",
     "title": "Chapter 15: The Signal Beneath",
-    "summary": "Narrative chapter CH15.",
+    "summary": "The sound wasn’t sound.",
     "source": "family",
     "sourceDetail": "",
     "lifeStage": "Main Narrative",
     "themes": [
       "Sacrifice"
     ],
-    "wordCount": 1455,
+    "wordCount": 2042,
     "principles": [],
     "volume": "P1",
     "contentType": "chapter",
@@ -349,14 +349,14 @@ export const storiesData: StoryCard[] = [
     "storyId": "CH16",
     "slug": "the-giza-pulse",
     "title": "Chapter 16: The Giza Pulse",
-    "summary": "Narrative chapter CH16.",
+    "summary": "The signal did not arrive through official channels.",
     "source": "family",
     "sourceDetail": "",
     "lifeStage": "Main Narrative",
     "themes": [
       "Earth Echo"
     ],
-    "wordCount": 2408,
+    "wordCount": 2847,
     "principles": [],
     "volume": "P1",
     "contentType": "chapter",
@@ -368,14 +368,14 @@ export const storiesData: StoryCard[] = [
     "storyId": "CH17",
     "slug": "vault-of-the-veil",
     "title": "Chapter 17: Vault of the Veil",
-    "summary": "Narrative chapter CH17.",
+    "summary": "The crew did not speak in chorus.",
     "source": "family",
     "sourceDetail": "",
     "lifeStage": "Main Narrative",
     "themes": [
       "Ascent"
     ],
-    "wordCount": 2683,
+    "wordCount": 3241,
     "principles": [],
     "volume": "P1",
     "contentType": "chapter",
@@ -414,7 +414,7 @@ export const peopleData: PersonCard[] = [
     "slug": "aven-voss",
     "name": "Aven Voss",
     "tiers": [
-      "C"
+      "B"
     ],
     "memoirStoryIds": [],
     "interviewStoryIds": [],
@@ -458,7 +458,7 @@ export const peopleData: PersonCard[] = [
     "slug": "evelyn-tran",
     "name": "Evelyn Tran",
     "tiers": [
-      "C"
+      "A"
     ],
     "memoirStoryIds": [],
     "interviewStoryIds": [],
@@ -469,7 +469,7 @@ export const peopleData: PersonCard[] = [
     "slug": "galen-voss",
     "name": "Galen Voss",
     "tiers": [
-      "C"
+      "A"
     ],
     "memoirStoryIds": [],
     "interviewStoryIds": [],
@@ -480,7 +480,7 @@ export const peopleData: PersonCard[] = [
     "slug": "jax-reyes",
     "name": "Jax Reyes",
     "tiers": [
-      "C"
+      "B"
     ],
     "memoirStoryIds": [],
     "interviewStoryIds": [],
@@ -491,7 +491,7 @@ export const peopleData: PersonCard[] = [
     "slug": "jonah-revas",
     "name": "Jonah Revas",
     "tiers": [
-      "C"
+      "A"
     ],
     "memoirStoryIds": [],
     "interviewStoryIds": [],
@@ -502,7 +502,7 @@ export const peopleData: PersonCard[] = [
     "slug": "lena-osei",
     "name": "Lena Osei",
     "tiers": [
-      "C"
+      "A"
     ],
     "memoirStoryIds": [],
     "interviewStoryIds": [],
@@ -513,7 +513,7 @@ export const peopleData: PersonCard[] = [
     "slug": "marco-ruiz",
     "name": "Marco Ruiz",
     "tiers": [
-      "C"
+      "A"
     ],
     "memoirStoryIds": [],
     "interviewStoryIds": [],
@@ -535,7 +535,7 @@ export const peopleData: PersonCard[] = [
     "slug": "thane-meric",
     "name": "Thane Meric",
     "tiers": [
-      "C"
+      "A"
     ],
     "memoirStoryIds": [],
     "interviewStoryIds": [],

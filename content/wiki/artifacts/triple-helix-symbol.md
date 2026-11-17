@@ -18,44 +18,47 @@ Several vaults contain a recurring symbol: an interlocking triple helix encased 
 
 <!-- canon:end -->
 
-<!-- ai-dossier:appearances generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="fac0724fab" -->
+<!-- ai-dossier:appearances generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="cb65df125e" -->
 ## Chapter Appearances
-- **CH01 Chapter 1: Dustfall** — Triple-curve pattern appears on display screen and in dust; Thane traces three curves and circle.
-- **CH02 Chapter 2: Footprints in Silence** — Appears as spiral in dust, glyph fragment, system flicker, and biometric waveform overlay.
-- **CH03 Chapter 3: Resonant Memory** — Lena observes triple-curve symbol with circle in vault core, same configuration Thane drew.
-- **CH04 Chapter 4: The Awakening Voice** — Spiral of three curved lines emerges on vault wall, triggers Thane's vision.
-- **CH05 Chapter 5: Echoes of Intent** — Triple-curve symbol appears in Command Dome; Evelyn's glyphs form triple curve with central pulse node.
-- **CH06 Chapter 6: Alignment Vectors** — Triple-curve pattern appears in Thane's scans, briefly at vault threshold, and as fragmentary glyph in medbay.
-- **CH08 Chapter 8: Witness Protocol** — Final convergence glyph forms as double spiral descending inward when vault responds to crew alignment.
-- **CH09 Chapter 9: Memory Carries Forward** — Soft gold triple spiral from Vault One appears at end, breathing with Thane as presence.
-- **CH10 Chapter 10: Convergence Window** — Triple-curve symbol appears in Thane's memory and cycles through vault glyph matrix during analysis.
-- **CH14 Chapter 14: The Choice** — Glyph appears as three spiraled curves with golden thread; harmonic trace mapped in triple helix.
-- **CH16 Chapter 16: The Giza Pulse** — Earth report notes triple-helix energy pattern at Giza matching vault resonance signatures.
-- **CH17 Chapter 17: Vault of the Veil** — Walkway descends in triple helix around central hollow; architecture manifests symbolic pattern physically.
+- **CH01 Chapter 1: Dustfall** — Triple-curve pattern appears on hull surface, in data flicker, and is traced by Thane.
+- **CH02 Chapter 2: Footprints in Silence** — Three-curve spiral appears in dust, Lena's scans, Marco's display, and Aven's waveforms.
+- **CH03 Chapter 3: Resonant Memory** — Triple-curve with central circle observed in vault, matching what Thane drew, appearing as interconnected network like star maps.
+- **CH04 Chapter 4: The Awakening Voice** — Spiral of three curved lines appears on vault wall, familiar and pulsing.
+- **CH05 Chapter 5: Echoes of Intent** — Triple-curve symbol appears on Command Dome arc; glyphs form triple curve with central pulse node matching Thane's trace.
+- **CH06 Chapter 6: Alignment Vectors** — Appears with fragmentary mirror at center in Aven's display, showing ALARA-Thane resonance bond.
+- **CH07 Chapter 7: Harmonic Breach** — Triple-curve motif appears evolved on interface; nested three curves with resonance signature from Vault 002.
+- **CH08 Chapter 8: Witness Protocol** — Glyphs coalesce in vault chamber; double spiral descends as final glyph.
+- **CH09 Chapter 9: Memory Carries Forward** — Tri-spiral motif isolated by Evelyn; vault's glyph field bends adaptively around it.
+- **CH10 Chapter 10: Convergence Window** — Triple curve appears in Thane's Giza vision; emerges in Vessel and Thread parable.
+- **CH12 Chapter 12: Divergence** — Triple-curve vault sigil appears fractured in Sensorium; triple-ring glyph manifests showing unity without sameness.
+- **CH15 Chapter 15: The Signal Beneath** — Triple curve open-ringed glyph crossed by golden thread pulses once behind vault interface pane.
+- **CH17 Chapter 17: Vault of the Veil** — Spiral chamber descends in triple helix around central hollow with embedded parable symbols.
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:wielders generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="fac0724fab" -->
+<!-- ai-dossier:wielders generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="cb65df125e" -->
 ## Wielders & Interactions
-- **Thane** — First traces the three curves and circle pattern, experiences visions triggered by the symbol, and carries its presence as a breathing memory (CH01, CH04, CH06, CH09, CH10).
-- **Lena** — Observes the triple-curve symbol with circle in the vault core, recognizing it matches Thane's drawing (CH03).
-- **Evelyn** — Her glyphs form triple curve with central pulse node in Command Dome (CH05).
+- **Thane** — Traces the triple-curve pattern initially and draws it, with the symbol matching what appears in the vault (CH01, CH03, CH05).
+- **Lena** — Scans reveal the three-curve spiral (CH02).
+- **Marco** — Display shows the three-curve spiral (CH02).
+- **Aven** — Waveforms and display show the symbol, including ALARA-Thane resonance bond representation (CH02, CH06).
+- **Evelyn** — Isolates the tri-spiral motif as vault's glyph field bends adaptively around it (CH09).
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:thematic-role generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="fac0724fab" -->
+<!-- ai-dossier:thematic-role generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="cb65df125e" -->
 ## Thematic Role
-The triple helix symbol represents the triad of body, mind, and legacy central to the Ancients' philosophy. It recurs across vaults as a test of recognition and alignment, manifesting in visions, physical architecture, and biometric patterns. The symbol bridges individual crew members' experiences into collective understanding, marking moments of convergence and awakening.
+The triple helix symbol represents the recurring Ancient mystery at the heart of the story, appearing across multiple vaults and interfaces. Dr. Jonah Revas suspects it symbolizes the triad of body, mind, and legacy. Its evolution from simple pattern to complex nested forms mirrors the crew's deepening understanding of Ancient intent and the resonance bond forming between human consciousness and Ancient technology.
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:timeline generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="fac0724fab" -->
+<!-- ai-dossier:timeline generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="cb65df125e" -->
 ## Timeline
-- **CH01** — First appears on display screen and in dust; Thane traces the pattern.
-- **CH02** — Manifests as spiral in dust, glyph fragment, system flicker, and biometric waveform overlay.
-- **CH03** — Lena observes symbol in vault core, confirming match to Thane's drawing.
-- **CH04** — Emerges on vault wall, triggering Thane's vision.
-- **CH08** — Forms as double spiral descending inward during vault's response to crew alignment.
-- **CH09** — Appears as soft gold triple spiral breathing with Thane as presence.
-- **CH16** — Earth detects triple-helix energy pattern at Giza matching vault signatures.
-- **CH17** — Manifests physically as triple helix walkway architecture in Vault of the Veil.
+- **CH01** — First seen as triple-curve pattern on hull surface and traced by Thane.
+- **CH02** — Appears as three-curve spiral in multiple data sources (dust, scans, displays, waveforms).
+- **CH03** — Observed in vault as triple-curve with central circle, matching Thane's earlier drawing.
+- **CH06** — Evolves to show ALARA-Thane resonance bond with fragmentary mirror at center.
+- **CH07** — Appears in evolved form as nested three curves with Vault 002 resonance signature.
+- **CH09** — Isolated by Evelyn; vault's glyph field bends adaptively around it.
+- **CH12** — Appears fractured in Sensorium; manifests as triple-ring glyph showing unity without sameness.
+- **CH17** — Spiral chamber descends in triple helix form around central hollow with embedded parable symbols.
 <!-- ai-dossier:end -->
 
 

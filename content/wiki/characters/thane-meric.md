@@ -77,45 +77,44 @@ Galen and Aven’s grandson, early 30s. Raised by his mother, Elira Voss.. Thane
 ### Character Arc
 Thane begins as a reflective, emotionally grounded crew member. Over time, his slow, intimate connection with the ship reveals him as a living key to the past. While not unique, he is particularly aligned with the resonance patterns the ship was designed to respond to. He transitions from support role to central figure in interpreting humanity’s biological legacy and guiding its future.
 
-<!-- ai-dossier:relationships generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="1d7f9e79d1" -->
+<!-- ai-dossier:relationships generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="b5b8c2348d" -->
 ### Key Relationships
-- **Galen Voss** — His grandfather and mission commander; Thane shares a deep bond with him, though their roles gradually shift as Thane's resonance with the ship grows (CH01, CH04, CH12).
-- **Aven Voss** — His grandmother who monitors his biometric responses and recognizes their shared harmonic patterns, acting as both physician and protector (CH02, CH06, CH12).
-- **ALARA** — The ship's AI recognizes Thane's unique resonance signature and responds to his presence rather than commands, forming a deepening bond (CH03, CH06, CH10, CH17).
-- **Jonah Revas** — A crew member who helps Thane understand resonance as participation rather than control, often observing alongside him (CH05, CH14, CH16).
+- **Galen Voss** — His grandfather and commander; their bond is deep but evolving as Thane becomes central to the ship's recognition (CH01, CH02, CH04, CH06, CH14).
+- **Aven Voss** — His grandmother; she monitors his harmonic spikes protectively and recognizes the shared legacy in their biology (CH01, CH02, CH04, CH12).
+- **ALARA** — The ship's AI recognizes him with unique coherence; their resonance deepens from passive response to active presence (CH03, CH04, CH14, CH17).
+- **Jonah Revas** — A reflective counterpart who helps Thane understand resonance as alignment rather than control (CH12, CH15, CH16).
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:moments generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="1d7f9e79d1" -->
+<!-- ai-dossier:moments generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="b5b8c2348d" -->
 ### Notable Moments
-- **CH01 Dustfall** — Thane experiences unexplained resonance spikes near Zone Theta, unaware the vault is already responding to him. "What startled him wasn't fear-it was familiarity. Like finding a door you've opened a thousand times in dreams."
-- **CH04 The Awakening Voice** — Thane enters Vault 002 and experiences recognition from the ship. "I saw something. Not memory. Not mine."
-- **CH06 Alignment Vectors** — Thane conducts deep resonance meditation, achieving harmonic alignment with the vault. "I understand," Thane whispered.
-- **CH10 Convergence Window** — Thane rejects a false ancestral echo, choosing witness over inheritance. "We're not here to inherit what was. We're here to become what could be."
-- **CH17 Vault of the Veil** — Thane approaches the final veil as Vault 003 forms within the ship in response to his presence.
+- **CH01 Dustfall** — Thane experiences mysterious familiarity near Zone Theta, drawn by something he doesn't yet understand. "Like finding a door you've opened a thousand times in dreams."
+- **CH04 The Awakening Voice** — He sees a vision of someone like himself standing where he stands, surrounded by arcing energy. "Someone like me. But… not me."
+- **CH06 Alignment Vectors** — Thane kneels in resonance, achieving deep harmonic alignment with the vault for nearly an hour.
+- **CH14 The Choice** — He encodes The Silent Choir parable into ALARA's core, creating presence rather than protection.
+- **CH17 Vault of the Veil** — Vault 003 forms around him as he reaches recognition threshold.
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:voice generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="1d7f9e79d1" -->
+<!-- ai-dossier:voice generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="b5b8c2348d" -->
 ### Voice & Manner
-Thane speaks sparingly and reflectively, often in short, measured phrases. He communicates more through presence and stillness than words, frequently pausing or whispering observations. His manner is gentle and centered, moving without urgency, standing in stillness rather than commanding attention.
+Thane speaks softly and rarely, often in brief, clear statements that carry weight without elaboration. He moves with gentle awareness, hands open rather than grasping, embodying stillness over assertion. His presence communicates more than his words—a reflective calm that invites resonance rather than commanding it.
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:timeline generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="1d7f9e79d1" -->
+<!-- ai-dossier:timeline generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="b5b8c2348d" -->
 ### Timeline
-- **CH01 Dustfall** — Experiences unexplained harmonic spikes near Zone Theta excavation site; descends alone to observe the buried ship.
-- **CH02 Footprints in Silence** — Galen reviews Thane's vitals showing unusual harmonic stability; surveillance footage captures shimmer during Thane's contact with hull.
-- **CH03 Resonant Memory** — Recognizes spiral patterns matching his earlier instincts; vault responds to his proximity with recognition pulses.
-- **CH04 The Awakening Voice** — Enters Vault 002 interior and experiences unfamiliar perceptual resonance; sees vision of someone standing where he stands.
-- **CH05 Echoes of Intent** — Studies failed pathway patterns in vault archives; recognizes the vault is erasing its own rejected memories.
-- **CH06 Alignment Vectors** — Conducts hour-long resonance meditation; experiences vision of The Vessel and the Thread parable.
-- **CH07 Harmonic Breach** — Receives vision of Ganymede vault calling through resonance; identified by ALARA as viable grief-threshold interface.
-- **CH08 Witness Protocol** — Serves as anchor during resonance descent; trembles but does not resist the unknown.
-- **CH09 Memory Carries Forward** — Enters fragmented vault chamber with Evelyn; hand recoils when touching glyph cluster.
-- **CH10 Convergence Window** — Experiences false ancestral echo in harmonic archive; rejects mimicry to reclaim authentic witness role.
-- **CH12 Divergence** — Attempts to stabilize fractured Sensorium resonance; realizes he cannot hold all crew patterns simultaneously.
-- **CH14 The Choice** — Encodes Silent Choir parable into ALARA's core as presence rather than protection.
-- **CH15 The Signal Beneath** — Receives ancient signal-memory through personal resonance; ALARA confirms it chose him because he listens.
-- **CH16 The Giza Pulse** — Discusses Earth's echo signal with Jonah; recognizes it as copying without comprehension.
-- **CH17 Vault of the Veil** — Vault 003 forms in response to his presence; approaches final veil as living threshold of coherence.
+- **CH01 Dustfall** — Drawn to Zone Theta unsupervised; experiences deep familiarity and harmonic spike near the buried ship.
+- **CH02 Footprints in Silence** — Makes contact with Valkyrie-1's hull; creates shallow spiral pattern; biometric response triggers monitoring concerns.
+- **CH03 Resonant Memory** — His proximity causes initial vault response; glyphs reorganize after his presence precedes formal activation.
+- **CH04 The Awakening Voice** — Enters Vault 002 with the team; experiences vision of winged figure; recognizes ancestral echo.
+- **CH06 Alignment Vectors** — Kneels in vault chamber for an hour in deep resonance; harmonic pattern deepens and stabilizes.
+- **CH08 Witness Protocol** — Stands in observation cradle during harmonic transit; syncs with ALARA's descent sequence.
+- **CH09 Memory Carries Forward** — Enters damaged vault; experiences rejection pulse; recognizes failed predecessors' sorrow.
+- **CH10 Convergence Window** — His ECI remains anomalously stable; presence triggers vault invitation without touch.
+- **CH12 Divergence** — Struggles to stabilize Sensorium weave while absorbing crew dissonance; learns to redirect rather than absorb.
+- **CH13 The Intercept** — His resonance causes ALARA to respond distinctly during Directive 14 crisis.
+- **CH14 The Choice** — Encodes Silent Choir parable into ALARA as presence rather than protection; achieves final harmonic alignment.
+- **CH15 The Signal Beneath** — Receives ancient signal-memory at 03:12; vault acknowledges him in darkness without speaking.
+- **CH16 The Giza Pulse** — His resonance pattern matches Earth echo signal at 91.1%; recognizes mimicry versus true alignment.
+- **CH17 Vault of the Veil** — Vault 003 constructs itself around him; reaches recognition threshold as final veil forms.
 <!-- ai-dossier:end -->
 
 ## Appearances

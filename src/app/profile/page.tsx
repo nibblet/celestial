@@ -30,7 +30,7 @@ function resolveDisplayName(
   if (fromMeta) return fromMeta;
   const local = email?.split("@")[0]?.trim();
   if (local) return local;
-  return "Family reader";
+  return "Reader";
 }
 
 export default async function ProfilePage() {

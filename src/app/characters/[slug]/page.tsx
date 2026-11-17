@@ -1,33 +1,25 @@
-import Link from "next/link";
+import { ChapterRecord } from "@/components/archive/ChapterRecord";
+import {
+  AskAboutFile,
+  AuthorProvenance,
+  FileLede,
+  FileRelationships,
+  LinkedFiles,
+} from "@/components/archive/FileSections";
+import { linkedFiles, relationshipRows } from "@/lib/archive/file-page";
+import { shortName, splitLede } from "@/lib/archive/file-summary";
+import { getChapterRecord } from "@/lib/archive/record";
 import { notFound } from "next/navigation";
-import { getPersonBySlug, getStoryById } from "@/lib/wiki/parser";
-import { StoryMarkdown } from "@/components/story/StoryMarkdown";
+import { getPersonBySlug } from "@/lib/wiki/parser";
 import { createClient } from "@/lib/supabase/server";
 import { getAuthenticatedProfileContext } from "@/lib/auth/profile-context";
 import { PersonEditDrawer } from "@/components/people/PersonEditDrawer";
 import { PersonMediaPanel } from "@/components/people/PersonMediaPanel";
-import { TIER_SHORT_LABEL } from "@/lib/wiki/people-tiers";
-import { getReaderProgress, isStoryUnlocked } from "@/lib/progress/reader-progress";
-import { EntityLoreCard } from "@/components/entities/EntityLoreCard";
-import { EntityDossier } from "@/components/entities/EntityDossier";
-import { CanonDossierCard } from "@/components/entities/CanonDossierCard";
-import { extractAuthoredBody, renderWikilinks } from "@/lib/wiki/authored-body";
-import { resolveWikiSlug } from "@/lib/wiki/slug-resolver";
-import { getCharacterArcBySlug } from "@/lib/wiki/character-arcs";
+import { getReaderProgress } from "@/lib/progress/reader-progress";
+import { CodexLocked, getCodexLock } from "@/components/entities/CodexGate";
+import { getLastChapterNumber } from "@/lib/progress/reader-progress";
 import { listEntityVisuals } from "@/lib/visuals/list-entity-assets";
 import { EntityVisualsGallery } from "@/components/visuals/EntityVisualsGallery";
-
-function excerpt(markdown: string): string {
-  return markdown
-    .replace(/^[-*]\s+/gm, "")
-    .replace(/\*\*/g, "")
-    .replace(/`/g, "")
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .find((line) => !line.startsWith(">"))
-    ?.slice(0, 220) ?? "";
-}
 
 export default async function CharacterDetailPage({
   params,
@@ -38,6 +30,9 @@ export default async function CharacterDetailPage({
   const person = getPersonBySlug(slug);
   if (!person) notFound();
 
+  const lock = await getCodexLock("characters", slug);
+  if (lock) return <CodexLocked progress={lock} />;
+
   const supabase = await createClient();
   const { data: dbPerson } = await supabase
     .from("sb_people")
@@ -47,30 +42,45 @@ export default async function CharacterDetailPage({
 
   const { isAuthorSpecialAccess } = await getAuthenticatedProfileContext();
   const progress = await getReaderProgress();
-  const arc = getCharacterArcBySlug(slug);
+  const bookFinished =
+    progress.showAllContent ||
+    progress.currentChapterNumber >= getLastChapterNumber();
   const visuals = await listEntityVisuals(slug);
 
-  const refCount =
-    person.memoirStoryIds.length + person.interviewStoryIds.length;
+  const name = dbPerson?.display_name || person.name;
+  const first = shortName(name, true);
+  const dossier = person.dossier;
 
-  const memoirHeading =
-    person.wikiSource === "characters" ? "Appearances" : "Memoir stories";
-  const interviewHeading =
-    person.wikiSource === "characters"
-      ? "Additional appearances"
-      : "Interview stories";
+  // The summary and relationship lines span the whole book, so a reader who
+  // is mid-book gets the role, the people already met and the record so far.
+  const { lede, rest } = bookFinished
+    ? splitLede(
+        dbPerson?.bio_md || dossier?.profile || person.canonDossier?.primaryProse
+      )
+    : { lede: "", rest: "" };
+  const more = bookFinished ? [rest, dossier?.arc ?? "", dossier?.voice ?? ""] : [];
+  const relationships = relationshipRows(dossier?.relationships, progress, bookFinished);
+  const record = getChapterRecord("characters", slug, progress);
+  const files = linkedFiles(
+    person.canonDossier,
+    [],
+    progress,
+    [`/characters/${slug}`, ...relationships.map((r) => r.href)]
+  );
+  const questions = bookFinished
+    ? [
+        `What are ${first}'s defining moments?`,
+        `How does ${first} change over the book?`,
+        `How does ${first} speak and carry themselves?`,
+      ]
+    : record.length > 0
+    ? [`What do we know about ${first} so far?`]
+    : [];
 
   return (
     <div className="mx-auto max-w-content px-[var(--page-padding-x)] py-6 md:py-10">
-      <Link
-        href="/characters"
-        className="type-ui mb-4 inline-block text-ink-ghost no-underline transition-colors hover:text-ocean"
-      >
-        &larr; All characters
-      </Link>
-
-      <div className="mb-2 flex items-start justify-between gap-4">
-        <h1 className="type-page-title">{dbPerson?.display_name || person.name}</h1>
+      <div className="flex items-start justify-between gap-4">
+        <h1 className="type-page-title">{name}</h1>
         {isAuthorSpecialAccess && dbPerson && (
           <PersonEditDrawer
             person={dbPerson}
@@ -78,194 +88,32 @@ export default async function CharacterDetailPage({
           />
         )}
       </div>
-
-      {person.tiers.length > 0 && (
-        <div className="mb-4 flex flex-wrap gap-1.5">
-          {person.tiers.map((t) => (
-            <span
-              key={t}
-              className="type-meta rounded-full border border-clay-border bg-warm-white px-2 py-0.5 normal-case tracking-normal text-ink-muted"
-              title={`Inventory tier ${t}: ${TIER_SHORT_LABEL[t] ?? ""}`}
-            >
-              {TIER_SHORT_LABEL[t] ?? `Tier ${t}`}
-            </span>
-          ))}
-        </div>
+      {dossier?.role ? (
+        <p className="mb-6 mt-1 text-sm text-ink-muted">{dossier.role}</p>
+      ) : (
+        <div className="mb-6" />
       )}
 
       <EntityVisualsGallery
         visuals={visuals}
-        entityName={dbPerson?.display_name || person.name}
+        entityName={name}
         canEdit={isAuthorSpecialAccess}
       />
 
-      {person.canonDossier && <CanonDossierCard dossier={person.canonDossier} />}
-      {person.lore && <EntityLoreCard lore={person.lore} />}
-      {person.dossier && <EntityDossier dossier={person.dossier} />}
-      {arc && <CharacterArcPanel arc={arc} />}
-      {(() => {
-        const authored = extractAuthoredBody(person.body ?? "");
-        if (!authored) return null;
-        const rendered = renderWikilinks(authored, resolveWikiSlug);
-        return (
-          <section className="prose prose-story mb-6 max-w-none" aria-label="Authored detail">
-            <StoryMarkdown content={rendered} />
-          </section>
-        );
-      })()}
+      <FileLede lede={lede} more={more} />
+      <FileRelationships rows={relationships} />
+      <ChapterRecord entries={record} partial={!bookFinished} />
+      <LinkedFiles files={files} />
+      <AskAboutFile questions={questions} />
 
-      <p className="type-ui mb-6 text-ink-muted">
-        Appears in {refCount} {refCount === 1 ? "story" : "stories"}
-        .
-      </p>
-
-      {dbPerson && (
+      {isAuthorSpecialAccess && dbPerson && (
         <div className="mb-6">
-          <PersonMediaPanel
-            personId={dbPerson.id}
-            canEdit={isAuthorSpecialAccess}
-          />
+          <PersonMediaPanel personId={dbPerson.id} canEdit />
         </div>
       )}
-
-      {dbPerson?.bio_md ? (
-        <section className="mb-8">
-          <article className="prose prose-story max-w-none">
-            <StoryMarkdown content={dbPerson.bio_md} />
-          </article>
-        </section>
-      ) : (
-        person.aiDraft && (
-          <section className="mb-8">
-            {person.aiDraftStatus === "draft" && (
-              <div className="mb-2 flex items-center gap-2 rounded-md border border-clay-border bg-[rgba(200,130,70,0.08)] px-3 py-2">
-                <span className="type-meta normal-case tracking-normal text-clay">
-                  Draft
-                </span>
-                <span className="type-meta normal-case tracking-normal text-ink-ghost">
-                  AI-generated from memoir &amp; interview passages
-                  {person.aiDraftGeneratedAt ? ` · ${person.aiDraftGeneratedAt}` : ""}{" "}
-                  · awaiting author review
-                </span>
-              </div>
-            )}
-            <article className="prose prose-story max-w-none">
-              <StoryMarkdown content={person.aiDraft} />
-            </article>
-          </section>
-        )
-      )}
-
-      {person.memoirStoryIds.length > 0 && (
-        <div className="mb-6">
-          <h2 className="type-meta mb-3 text-ink">{memoirHeading}</h2>
-          <div className="space-y-2">
-            {person.memoirStoryIds.filter((id) => isStoryUnlocked(id, progress)).map((id) => {
-              const story = getStoryById(id);
-              if (!story) {
-                return (
-                  <div
-                    key={id}
-                    className="rounded-lg border border-[var(--color-border)] bg-warm-white px-3 py-2"
-                  >
-                    <span className="type-ui block font-mono text-sm text-ink">
-                      {id}
-                    </span>
-                    <span className="mt-0.5 block font-[family-name:var(--font-lora)] text-xs text-ink-muted">
-                      Wiki reference — no matching story page in{" "}
-                      <code className="rounded bg-warm-white px-1">
-                        content/wiki/stories/
-                      </code>{" "}
-                      yet.
-                    </span>
-                  </div>
-                );
-              }
-              return (
-                <Link
-                  key={id}
-                  href={`/stories/${id}`}
-                  className="block rounded-lg border border-[var(--color-border)] bg-warm-white p-3 transition-colors hover:border-clay-border"
-                >
-                  <span className="type-ui block text-ink">{story.title}</span>
-                  <span className="mt-0.5 line-clamp-1 font-[family-name:var(--font-lora)] text-xs text-ink-muted">
-                    {story.summary}
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {person.interviewStoryIds.length > 0 && (
-        <div className="mb-6">
-          <h2 className="type-meta mb-3 text-ink">{interviewHeading}</h2>
-          <div className="space-y-2">
-            {person.interviewStoryIds.filter((id) => isStoryUnlocked(id, progress)).map((id) => {
-              const story = getStoryById(id);
-              if (!story) {
-                return (
-                  <div
-                    key={id}
-                    className="rounded-lg border border-[var(--color-border)] bg-warm-white px-3 py-2"
-                  >
-                    <span className="type-ui block font-mono text-sm text-ink">
-                      {id}
-                    </span>
-                    <span className="mt-0.5 block font-[family-name:var(--font-lora)] text-xs text-ink-muted">
-                      Wiki reference — no matching story page yet.
-                    </span>
-                  </div>
-                );
-              }
-              return (
-                <Link
-                  key={id}
-                  href={`/stories/${id}`}
-                  className="block rounded-lg border border-[var(--color-border)] bg-warm-white p-3 transition-colors hover:border-clay-border"
-                >
-                  <span className="type-ui block text-ink">{story.title}</span>
-                  <span className="mt-0.5 line-clamp-1 font-[family-name:var(--font-lora)] text-xs text-ink-muted">
-                    {story.summary}
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
+      {isAuthorSpecialAccess && (
+        <AuthorProvenance dossier={person.canonDossier} lore={person.lore} />
       )}
     </div>
-  );
-}
-
-function CharacterArcPanel({
-  arc,
-}: {
-  arc: NonNullable<ReturnType<typeof getCharacterArcBySlug>>;
-}) {
-  return (
-    <section className="sci-panel mb-6 p-4 md:p-5" aria-labelledby="character-arc-ledger">
-      <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-        <h2
-          id="character-arc-ledger"
-          className="type-meta text-ink"
-        >
-          Arc Ledger
-        </h2>
-        <span className="type-meta rounded-full border border-[var(--color-border)] bg-warm-white px-2 py-0.5 normal-case tracking-normal text-ink-ghost">
-          {arc.reviewStatus || "draft"}
-        </span>
-      </div>
-      <p className="font-[family-name:var(--font-lora)] text-sm leading-relaxed text-ink-muted">
-        {excerpt(arc.startingState)}
-      </p>
-      <Link
-        href={`/arcs/${arc.slug}`}
-        className="type-ui mt-3 inline-flex text-sm font-medium text-burgundy no-underline transition-colors hover:text-clay"
-      >
-        Read full arc ledger &rarr;
-      </Link>
-    </section>
   );
 }

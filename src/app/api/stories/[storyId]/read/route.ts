@@ -14,8 +14,14 @@ export async function POST(
   } = await supabase.auth.getUser();
 
   const chapterNum = chapterNumberFromStoryId(storyId.trim());
-  if (chapterNum !== null) {
-    const cookieStore = await cookies();
+  const cookieStore = await cookies();
+  const existing =
+    chapterNumberFromStoryId(
+      cookieStore.get(READER_CHAPTER_COOKIE)?.value ?? ""
+    ) ?? 0;
+  // Only ever move the bookmark forward: re-reading an earlier chapter must
+  // not lock the reader out of what they already reached.
+  if (chapterNum !== null && chapterNum > existing) {
     cookieStore.set(READER_CHAPTER_COOKIE, `CH${String(chapterNum).padStart(2, "0")}`, {
       path: "/",
       httpOnly: false,

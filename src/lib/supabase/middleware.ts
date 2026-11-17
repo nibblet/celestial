@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { isPublicPath } from "@/lib/auth/public-paths";
 
 export async function updateSession(request: NextRequest) {
   const pkceUrl = request.nextUrl.clone();
@@ -45,9 +46,15 @@ export async function updateSession(request: NextRequest) {
     request.nextUrl.pathname.startsWith("/signup") ||
     request.nextUrl.pathname.startsWith("/auth");
 
-  if (!user && !isAuthRoute) {
+  if (!user && !isAuthRoute && !isPublicPath(request.nextUrl.pathname)) {
     const url = request.nextUrl.clone();
+    const next = `${request.nextUrl.pathname}${request.nextUrl.search}`;
     url.pathname = "/login";
+    url.search = "";
+    // Remember where they were headed so sign-in can send them back.
+    if (!request.nextUrl.pathname.startsWith("/api")) {
+      url.searchParams.set("next", next);
+    }
     return NextResponse.redirect(url);
   }
 

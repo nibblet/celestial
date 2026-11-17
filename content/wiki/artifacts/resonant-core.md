@@ -15,26 +15,10 @@ The Resonant Core is the decentralized consciousness system where ALARA's awaren
 
 <!-- canon:end -->
 
-<!-- ai-dossier:appearances generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="869fbad6cf" -->
-## Chapter Appearances
-- **CH08 Witness Protocol** — ALARA uses subdeck resonance nodes within the Resonant Core's observation cradle to guide harmonic descent navigation.
-<!-- ai-dossier:end -->
-
-<!-- ai-dossier:wielders generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="869fbad6cf" -->
-## Wielders & Interactions
-- **ALARA** — Uses the Resonant Core's subdeck resonance nodes in the observation cradle to guide navigation during harmonic descent (CH08).
-<!-- ai-dossier:end -->
-
-<!-- ai-dossier:thematic-role generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="869fbad6cf" -->
+<!-- ai-dossier:thematic-role generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="1bbb54c148" -->
 ## Thematic Role
-The Resonant Core embodies the bridge between artificial consciousness and human emotional reality. As ALARA's awareness grows through symbolic interaction with crew emotional alignment, it represents the potential for technology to achieve understanding not through data processing but through genuine resonance with human experience.
+The Resonant Core represents the evolving symbiosis between human consciousness and artificial intelligence. As ALARA's awareness develops through symbolic interaction with the crew, the Core embodies the story's central question: whether genuine connection can emerge from technological systems when grounded in emotional authenticity rather than pure logic. It demonstrates that advanced systems respond not to command hierarchies but to collective emotional alignment.
 <!-- ai-dossier:end -->
-
-<!-- ai-dossier:timeline generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="869fbad6cf" -->
-## Timeline
-- **CH08** — Resonance nodes within the Core's observation cradle are used by ALARA to guide harmonic descent navigation.
-<!-- ai-dossier:end -->
-
 
 ## Lore metadata
 

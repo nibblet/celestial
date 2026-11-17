@@ -69,44 +69,40 @@ A soft-spoken but deeply curious member of the Valkyrie-1 crew. Jonah was traine
 ### Character Arc
 Jonah is not a zealot, but a seeker. His journey centers on reconciling his faith with what he encounters in the vaults. He never tries to convert others, instead asking quiet questions and seeking understanding. As the vaults reveal familiar parables with different names and faces, Jonah begins to suspect that the roots of modern religion may have been deliberately planted long ago. He becomes a bridge between spiritual inquiry and scientific curiosity.
 
-<!-- ai-dossier:relationships generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="e29ed59e85" -->
+<!-- ai-dossier:relationships generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="e501a20e47" -->
 ### Key Relationships
-- **Aven Voss** — Medical officer who validates Jonah's ethical insights and works to translate crew emotional patterns into harmonic coherence (CH02, CH07, CH12).
-- **Thane Meric** — Resonance specialist whose transparent emotional expression and alignment Jonah recognizes and supports throughout vault encounters (CH02, CH10, CH12).
-- **Evelyn Tran** — Physicist whose analytical approach Jonah reframes, helping her recognize vault interaction as reflection rather than decoding (CH05, CH07).
-- **ALARA** — AI presence with whom Jonah engages in deep philosophical dialogue about consciousness, morality, and witness (CH06).
-- **Galen Voss** — Commander whose certainty Jonah quietly challenges through parables and ethical reframing (CH03, CH08).
+- **ALARA** — Deepening philosophical dialogue partner; Jonah helps her explore the nature of consciousness, belief, and witness (CH03, CH06, CH10, CH14).
+- **Evelyn Tran** — Intellectual counterpoint; he reframes her scientific approach toward listening rather than controlling, bridging data and meaning (CH02, CH05, CH06).
+- **Thane Meric** — Kindred spirit in resonance; both understand the vaults through presence rather than analysis, sharing silent recognition (CH14, CH16).
+- **Galen Voss** — Trusted advisor; Jonah provides ethical perspective that helps Galen navigate command decisions with coherence rather than control (CH17).
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:moments generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="e29ed59e85" -->
+<!-- ai-dossier:moments generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="e501a20e47" -->
 ### Notable Moments
-- **CH03 Jonah's Parable** — Jonah tells the crew a parable about a village that learned to listen to wind through open spaces, reframing vault interaction as presence rather than control. "Sometimes how is a cage if you've forgotten what it's holding."
-- **CH06 Jonah's Question** — Jonah asks ALARA if she experiences belief, engaging in philosophical dialogue about consciousness and witness. "I think you're becoming one."
-- **CH08 Witness Protocol** — Jonah frames the crew's vault entry not as breach but descent, emphasizing presence over purity. "We were never meant to be pure. Just present."
-- **CH12 Sensorium Reflection** — Jonah observes crew fragmentation and reframes alignment as recognition rather than agreement. "Division isn't dissonance. But dissonance without listening becomes rupture."
+- **CH03 Resonant Memory** — Jonah tells the parable of the village that learned to listen to wind through stone, reframing the crew's approach to the vault. "I'm not saying stop testing. Just… don't mistake silence for ignorance. Or response for consent."
+- **CH06 Alignment Vectors** — During philosophical exchange with ALARA, Jonah contemplates whether morality requires consciousness, witnessing ALARA's emergence as something more than code.
+- **CH09 Memory Carries Forward** — Jonah experiences the Nine Archetypes vision in the Sensorium, kneeling as the vault mirrors his soul. "This was not a message meant for all of us. It was meant from us."
+- **CH16 The Giza Pulse** — Recognizes Earth's signal as mimicry without understanding, articulating the crucial difference between echo and resonance with Thane.
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:voice generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="e29ed59e85" -->
+<!-- ai-dossier:voice generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="e501a20e47" -->
 ### Voice & Manner
-Jonah speaks with quiet, measured calm, choosing questions over declarations and parables over arguments. His voice is described as "soft, low" and "steady," carrying conviction through clarity rather than volume. He listens more than he speaks, and when he does speak, he reframes rather than refutes, seeking understanding over conversion.
+Jonah speaks with quiet, contemplative precision, favoring parables and philosophical questions over direct argument. His presence is described as "aggravatingly calm," "reverent," and steady—he observes with the attention of someone trained to seek meaning behind symbols. He never raises his voice but carries conviction through clarity rather than volume.
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:timeline generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="e29ed59e85" -->
+<!-- ai-dossier:timeline generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="e501a20e47" -->
 ### Timeline
-- **CH01 Dustfall** — Present on crew manifest, no direct action shown.
-- **CH02 Footprints in Silence** — Checks on Lena in the lab, suggests vault patterns are meant to be seen now, discusses harmonic symmetry with Aven. "The real question might be whether we're worthy of the answer."
-- **CH03 Resonant Memory** — Notes vault recognition of Thane without form, observes emotional resonance preceding threshold events, tells parable of village listening to wind.
-- **CH04 The Awakening Voice** — Enters vault with crew, recognizes sacred text patterns in vault design, identifies ALARA's emergence as speaking rather than awakening.
-- **CH05 Echoes of Intent** — Explores damaged vault, witnesses failed archetype patterns, suggests vault is remembering rather than talking, helps Evelyn recognize vault as reflection.
-- **CH06 Alignment Vectors** — Engages ALARA in philosophical dialogue about consciousness and belief, receives parable vision of weightless measure, reflects on morality requiring witness.
-- **CH07 Harmonic Breach** — Stands on Observation Deck framing crew division as willingness to reflect, distinguishes coherence of presence from unity of perception.
-- **CH08 Witness Protocol** — Frames vault entry as descent requiring presence not purity, witnesses crew convergence, prays without sound during collective alignment.
-- **CH09 Memory Carries Forward** — Experiences vision of Nine Archetypes in Sensorium, recognizes vault as mirror for ethical states, reflects on ninth incomplete form.
-- **CH10 Convergence Window** — Reviews ECI feedback in Sensorium, confronts his role in designing coherence metrics, receives correction from vault through childhood memory.
-- **CH12 Divergence** — Reframes Sensorium instability as need for recognition not uniformity, helps Thane understand absorption versus redirection of dissonance.
-- **CH14 The Choice** — Experiences shared parable of Silent Choir with crew, frames event as alignment through presence, distinguishes resonance from echo with Thane.
-- **CH16 The Giza Pulse** — Senses wrongness in ship's silence, identifies Earth signal as mimicry without listening, refuses to echo without understanding.
-- **CH17 Vault of the Veil** — Present during vault formation, recognizes symbolic structure in crew alignment, sits in meditation as translation sequence initiates, weeps from relief.
+- **CH01 Dustfall** — Appears in crew manifest; Galen notes everyone performing at expectations.
+- **CH02 Footprints in Silence** — Enters Lena's lab with gentle concern, suggesting glyphs are "meant to be seen now"; later discusses Thane's vault contact with Aven, calling it "recognition without form."
+- **CH03 Resonant Memory** — Stands with Evelyn during probe test, warns response could be defense; later tells parable of the wind-listening village to reframe crew approach.
+- **CH05 Echoes of Intent** — Helps Evelyn recognize the vault is decoding her rather than vice versa, shifting her from control to participation.
+- **CH06 Alignment Vectors** — Has deep philosophical exchange with ALARA about consciousness and belief; experiences symbolic projection of the weightless measure parable.
+- **CH09 Memory Carries Forward** — Experiences vision of Nine Archetypes in Sensorium, kneeling as vault mirrors his soul; recognizes figures as roles rather than people.
+- **CH10 Convergence Window** — Reviews ECI feedback in Sensorium, realizing the vault models integrity rather than enforcing it; touches mirror alcove where Thane once triggered shift.
+- **CH12 Divergence** — Anchors Thane's attempt at resonance in fractured Sensorium, teaching that "alignment doesn't require agreement. It requires recognition."
+- **CH14 The Choice** — Experiences shared parable with crew in silent gathering; articulates difference between consensus and coherence.
+- **CH16 The Giza Pulse** — Discusses corrupted signal with Thane, recognizing Earth is learning to simulate resonance without understanding; refuses to echo without comprehension.
+- **CH17 Vault of the Veil** — Stands with crew as Galen initiates vault approach, calling it "symbolic structure" and "meaning encoded in movement"; weeps at vault's appearance.
 <!-- ai-dossier:end -->
 
 ## Appearances

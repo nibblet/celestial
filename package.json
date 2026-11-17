@@ -11,6 +11,7 @@
     "test": "node --import tsx --test 'src/**/*.test.ts'",
     "compile:wiki": "node --import tsx scripts/compile-wiki.ts",
     "ingest:book": "node --import tsx scripts/ingest-celestial-book.ts",
+    "ingest:manuscript": "node --import tsx scripts/ingest-celestial-manuscript.ts",
     "ingest:lore": "node --import tsx scripts/ingest-foundational-lore.ts",
     "ingest:scenes": "node --import tsx scripts/ingest-chapter-scenes.ts",
     "seed:threads": "node --import tsx scripts/seed-open-threads.ts",

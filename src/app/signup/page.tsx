@@ -5,11 +5,9 @@ import { book } from "@/config/book";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { getAuthRedirectOrigin } from "@/lib/app-url";
-import { ageModeFromAge } from "@/lib/utils/age-mode";
 
 export default function SignupPage() {
   const [firstName, setFirstName] = useState("");
-  const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -29,13 +27,6 @@ export default function SignupPage() {
       return;
     }
 
-    const ageNum = parseInt(age, 10);
-    if (Number.isNaN(ageNum) || ageNum < 1 || ageNum > 120) {
-      setError("Please enter a valid age between 1 and 120.");
-      setLoading(false);
-      return;
-    }
-
     const supabase = createClient();
     const origin = getAuthRedirectOrigin();
 
@@ -46,7 +37,6 @@ export default function SignupPage() {
         emailRedirectTo: `${origin}/auth/callback`,
         data: {
           display_name: trimmed,
-          age: ageNum,
         },
       },
     });
@@ -58,13 +48,10 @@ export default function SignupPage() {
     }
 
     if (data.session && data.user) {
-      const mode = ageModeFromAge(ageNum);
       await supabase
         .from("sb_profiles")
         .update({
           display_name: trimmed,
-          age: ageNum,
-          age_mode: mode,
           updated_at: new Date().toISOString(),
         })
         .eq("id", data.user.id);
@@ -84,7 +71,7 @@ export default function SignupPage() {
           <h1 className="type-page-title text-3xl">{book.title}</h1>
           <h2 className="type-page-title mt-1 text-3xl">Create account</h2>
           <p className="type-ui mt-3 text-ink-muted">
-            Create an account to explore the stories
+            A free account keeps your place, your highlights and your questions.
           </p>
         </div>
 
@@ -104,7 +91,7 @@ export default function SignupPage() {
         ) : (
           <form onSubmit={handleSignup} className="space-y-4">
             {error && (
-              <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+              <div className="notice-error rounded-lg p-3 text-sm">
                 {error}
               </div>
             )}
@@ -129,27 +116,6 @@ export default function SignupPage() {
             </div>
 
             <div>
-              <label htmlFor="age" className="type-ui mb-1 block text-ink">
-                Age
-              </label>
-              <input
-                id="age"
-                type="number"
-                inputMode="numeric"
-                min={1}
-                max={120}
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-                required
-                className="type-ui w-full rounded-lg border border-[var(--color-border)] bg-warm-white px-3 py-2 text-ink"
-                placeholder="e.g. 14"
-              />
-              <p className="type-ui mt-1 text-xs text-ink-muted">
-                We use this to personalize reading level and tone.
-              </p>
-            </div>
-
-            <div>
               <label htmlFor="email" className="type-ui mb-1 block text-ink">
                 Email
               </label>
@@ -161,7 +127,7 @@ export default function SignupPage() {
                 required
                 autoComplete="email"
                 className="type-ui w-full rounded-lg border border-[var(--color-border)] bg-warm-white px-3 py-2 text-ink"
-                placeholder="you@family.com"
+                placeholder="you@example.com"
               />
             </div>
 

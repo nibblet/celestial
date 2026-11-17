@@ -435,7 +435,7 @@ export function StoryContributionWorkspace({
           )}
 
           {error && (
-            <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+            <div className="notice-error rounded-lg p-3 text-sm">
               {error}
             </div>
           )}
@@ -559,7 +559,7 @@ export function StoryContributionWorkspace({
         ))}
 
         {error && (
-          <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+          <div className="notice-error rounded-lg p-3 text-sm">
             {error}
           </div>
         )}

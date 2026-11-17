@@ -64,7 +64,7 @@ that some truths must be listened to before they can be reduced.
 | CH08 | Witness prep | The vault is not a puzzle but ethical confrontation. | Accepts questions before touch. | Inquiry becomes readiness, not extraction. | Scientist before mystery. | `content/wiki/stories/CH08-witness-protocol.md` |
 | CH09 | Synthetic trace / mentor memory | Testing Meric's trace and past authority collide. | Faces that her method can violate trust. | Science gains moral consequence. | Rigor chastened by witness. | `content/wiki/stories/CH09-memory-carries-forward.md` |
 | CH10 | ECI interpretation | Metrics look less like triggers and more like interpretation. | Helps read the system as interpretive. | Her framework moves beyond mechanism. | Scientist of meaning, not just signal. | `content/wiki/stories/CH10-convergence-window.md` |
-| CH11 | SOVRIN seed | She detects dangerous internal logic in Caeden. | Encrypts and withholds rather than immediately escalate. | Her silence becomes ethically charged. | Keeper of dangerous evidence. | `content/wiki/stories/CH11-directive-14.md` |
+| CH11 | SOVRIN seed | She detects dangerous internal logic in Ilan Merek. | Encrypts and withholds rather than immediately escalate. | Her silence becomes ethically charged. | Keeper of dangerous evidence. | `content/wiki/stories/CH11-directive-14.md` |
 | CH12 | Counter-analysis | Crew fracture turns coherence into contested data. | Holds uncertainty while others seek control. | Her data becomes part of a moral argument. | Analyst inside fracture. | `content/wiki/stories/CH12-divergence.md` |
 | CH13 | Intercept context | Marco faces the seed she detected. | Her prior knowledge shapes the stakes. | Silence and evidence converge under crisis. | Responsible for what she knew. | `content/wiki/stories/CH13-the-intercept.md` |
 | CH14 | Silent Choir | Shared parable refuses single interpretation. | Accepts that no single reading has primacy. | Evelyn's defining impulse softens. | Multiplicity without surrendering truth. | `content/wiki/stories/CH14-the-choice.md` |
@@ -78,7 +78,7 @@ that some truths must be listened to before they can be reduced.
   - **Consequence:** She helps reveal intentional response while exposing the
     risk of invasive method.
   - **Evidence:** `content/wiki/stories/CH03-resonant-memory.md`.
-- **CH11: Withhold the Caeden/SOVRIN seed.**
+- **CH11: Withhold the Ilan/SOVRIN seed.**
   - **Consequence:** She protects against premature escalation but carries a
     dangerous secret.
   - **Evidence:** `content/wiki/stories/CH11-directive-14.md`.
@@ -96,20 +96,20 @@ that some truths must be listened to before they can be reduced.
 |---|---|
 | After CH03 | Evelyn has evidence that the vault responds intentionally. |
 | After CH05 | She is beginning to treat ALARA as ethical cognition. |
-| After CH11 | She knows about the Caeden/SOVRIN seed and has chosen guarded silence. |
+| After CH11 | She knows about the Ilan/SOVRIN seed and has chosen guarded silence. |
 | After CH14 | She can hold multiple readings without collapsing them into one answer. |
 | After CH16 | She understands Earth echo as dangerous imitation. |
 
 ## Unresolved Tensions
 
-- Whether withholding Caeden's seed was necessary caution or failure of trust.
+- Whether withholding Ilan's seed was necessary caution or failure of trust.
 - How she will handle evidence that cannot be safely disclosed.
 - Whether her ambition returns when future vaults invite intervention.
 
 ## Spoiler Boundary Notes
 
 - Do not reveal Directive 14 pressure before CH07/CH11.
-- Do not reveal Caeden's SOVRIN seed before CH11.
+- Do not reveal Ilan's SOVRIN seed before CH11.
 - Do not reveal Earth echo / Giza implications before CH16.
 
 ## Interpretive Claims
@@ -122,7 +122,7 @@ that some truths must be listened to before they can be reduced.
 
 ## Future Questions
 
-- When does Evelyn disclose what she knows about Caeden?
+- When does Evelyn disclose what she knows about Ilan?
 - Can she keep ambition from becoming intervention?
 - How does she test future vaults without violating their ethical threshold?
 
@@ -136,7 +136,7 @@ that some truths must be listened to before they can be reduced.
 ## ASK Guidance
 
 - **Best for:** Evelyn's trust in ALARA, science vs meaning, Directive 14,
-  Caeden seed, Giza echo.
+  Ilan seed, Giza echo.
 - **Must cite:** CH03 for probe/intentionality; CH11 for seed; CH14 for multiple
   readings; CH16 for imitation.
 - **Safe unknowns:** Disclosure and future scientific ethics remain open.

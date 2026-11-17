@@ -1,58 +1,38 @@
 import Link from "next/link";
 import type {
-  WikiEntityRelation,
   WikiFictionNounEntity,
   WikiRuleConcept,
 } from "@/lib/wiki/parser";
-import { EntityLoreCard } from "@/components/entities/EntityLoreCard";
-import { CanonDossierCard } from "@/components/entities/CanonDossierCard";
 import { prettifySlug } from "@/lib/wiki/canon-dossier";
 import { resolveWikiSlug } from "@/lib/wiki/slug-resolver";
-import { extractAuthoredBody, renderWikilinks } from "@/lib/wiki/authored-body";
-import { StoryMarkdown } from "@/components/story/StoryMarkdown";
 import { listEntityVisuals } from "@/lib/visuals/list-entity-assets";
 import { EntityVisualsGallery } from "@/components/visuals/EntityVisualsGallery";
 import { getAuthenticatedProfileContext } from "@/lib/auth/profile-context";
+import { CodexLocked, getCodexLock } from "@/components/entities/CodexGate";
+import type { CodexKind } from "@/lib/wiki/codex";
+import { ChapterRecord } from "@/components/archive/ChapterRecord";
+import {
+  AskAboutFile,
+  AuthorProvenance,
+  FileLede,
+  LinkedFiles,
+} from "@/components/archive/FileSections";
+import { linkedFiles } from "@/lib/archive/file-page";
+import { shortName, splitLede } from "@/lib/archive/file-summary";
+import { getChapterRecord } from "@/lib/archive/record";
+import {
+  getLastChapterNumber,
+  getReaderProgress,
+  isStoryUnlocked,
+} from "@/lib/progress/reader-progress";
 
-function AuthoredBody({
-  raw,
-  preserveAiDossier = false,
-}: {
-  raw: string | undefined | null;
-  /** When true, artifact (and other fiction noun) AI-derived sections render in prose. */
-  preserveAiDossier?: boolean;
-}) {
-  const body = extractAuthoredBody(raw ?? "", {
-    stripAiDossier: preserveAiDossier ? "none" : "character",
-  });
-  if (!body) return null;
-  const rendered = renderWikilinks(body, resolveWikiSlug);
-  return (
-    <section className="prose prose-story mb-6 max-w-none" aria-label="Authored detail">
-      <StoryMarkdown content={rendered} />
-    </section>
-  );
-}
-
-const ENTITY_LINK_BASE: Record<string, string> = {
-  character: "/characters",
-  faction: "/factions",
-  location: "/locations",
-  artifact: "/artifacts",
-  rule: "/rules",
-  vault: "/vaults",
+const ENTITY_TYPE_TO_CODEX_KIND: Record<string, CodexKind> = {
+  fiction_characters: "characters",
+  fiction_artifacts: "artifacts",
+  fiction_locations: "locations",
+  fiction_factions: "factions",
+  fiction_vaults: "vaults",
 };
-
-function entityDetailHref(type: string, slug: string): string | null {
-  const base = ENTITY_LINK_BASE[type.toLowerCase()];
-  return base ? `${base}/${slug}` : null;
-}
-
-function resolveLinkLabel(type: string, slug: string): string {
-  const r = resolveWikiSlug(slug);
-  if (r) return r.label;
-  return prettifySlug(slug);
-}
 
 function renderRefCount(entity: WikiFictionNounEntity): string {
   const refs = entity.memoirStoryIds.length + entity.interviewStoryIds.length;
@@ -62,36 +42,6 @@ function renderRefCount(entity: WikiFictionNounEntity): string {
     return `${mentions} ${mentions === 1 ? "mention" : "mentions"}`;
   }
   return "0 refs";
-}
-
-function WikiRelationLines({ relations }: { relations: WikiEntityRelation[] }) {
-  return (
-    <ul className="list-none space-y-2 text-sm text-ink">
-      {relations.map((rel, idx) => {
-        const srcHref = entityDetailHref(rel.sourceType, rel.sourceSlug);
-        const tgtHref = entityDetailHref(rel.targetType, rel.targetSlug);
-        return (
-          <li key={`${rel.sourceSlug}-${rel.predicate}-${idx}`}>
-            {srcHref ? (
-              <Link href={srcHref} className="hover:text-ocean">
-                {resolveLinkLabel(rel.sourceType, rel.sourceSlug)}
-              </Link>
-            ) : (
-              <span>{rel.sourceType}:{rel.sourceSlug}</span>
-            )}
-            <span className="text-ink-muted"> {rel.predicate} </span>
-            {tgtHref ? (
-              <Link href={tgtHref} className="hover:text-ocean">
-                {resolveLinkLabel(rel.targetType, rel.targetSlug)}
-              </Link>
-            ) : (
-              <span>{rel.targetType}:{rel.targetSlug}</span>
-            )}
-          </li>
-        );
-      })}
-    </ul>
-  );
 }
 
 /** Locations index grouped by lore `Superset:` (hub within superset — decision 3A). */
@@ -218,78 +168,88 @@ export function FictionEntityIndexPage({
 
 export async function FictionEntityDetailPage({
   entity,
-  heading,
   basePath,
 }: {
   entity: WikiFictionNounEntity;
-  heading: string;
+  /** Kept for callers; the Codex bar above the page is the way back. */
+  heading?: string;
   basePath: string;
 }) {
+  const lock = await getCodexLock(
+    ENTITY_TYPE_TO_CODEX_KIND[entity.entityType] ?? "characters",
+    entity.slug
+  );
+  if (lock) return <CodexLocked progress={lock} />;
+
   const supersetResolved = entity.lore?.superset
     ? resolveWikiSlug(entity.lore.superset.slug)
     : null;
   const visuals = await listEntityVisuals(entity.slug);
   const { isAuthorSpecialAccess } = await getAuthenticatedProfileContext();
+  const progress = await getReaderProgress();
+  const bookFinished =
+    progress.showAllContent ||
+    progress.currentChapterNumber >= getLastChapterNumber();
+  const codexKind = ENTITY_TYPE_TO_CODEX_KIND[entity.entityType] ?? "characters";
+
+  // The dossier prose covers the whole book, so it waits for the end.
+  const { lede, rest } = bookFinished
+    ? splitLede(entity.canonDossier?.primaryProse || entity.dossier?.profile)
+    : { lede: "", rest: "" };
+  const record = getChapterRecord(codexKind, entity.slug, progress);
+  const files = linkedFiles(
+    entity.canonDossier,
+    entity.relations.flatMap((rel) => [rel.sourceSlug, rel.targetSlug]),
+    progress,
+    [`${basePath}/${entity.slug}`]
+  );
+  const name = shortName(entity.name);
+  const questions = bookFinished
+    ? [`Why does ${name} matter to the story?`, `What happens at or around ${name}?`]
+    : record.length > 0
+    ? [`What do we know about ${name} so far?`]
+    : [];
+  // Untagged files have no chapter record; fall back to where they appear.
+  const appearsIn =
+    record.length === 0
+      ? [...entity.memoirStoryIds, ...entity.interviewStoryIds].filter((id) =>
+          isStoryUnlocked(id, progress)
+        )
+      : [];
 
   return (
     <div className="mx-auto max-w-content px-[var(--page-padding-x)] py-6 md:py-10">
-      <Link
-        href={basePath}
-        className="type-ui mb-4 inline-block text-ink-ghost no-underline transition-colors hover:text-ocean"
-      >
-        &larr; All {heading.toLowerCase()}
-      </Link>
-      <h1 className="type-page-title mb-2">{entity.name}</h1>
-      {entity.entityType === "fiction_locations" && supersetResolved && (
-        <p className="type-ui mb-4 text-ink-muted">
-          <span className="text-ink-ghost">Within </span>
-          <Link href={supersetResolved.href} className="hover:text-ocean">
+      <h1 className="type-page-title">{entity.name}</h1>
+      {entity.entityType === "fiction_locations" && supersetResolved ? (
+        <p className="mb-6 mt-1 text-sm text-ink-muted">
+          Within{" "}
+          <Link href={supersetResolved.href} className="text-ocean no-underline">
             {supersetResolved.label}
           </Link>
         </p>
+      ) : (
+        <div className="mb-6" />
       )}
       <EntityVisualsGallery
         visuals={visuals}
         entityName={entity.name}
         canEdit={isAuthorSpecialAccess}
       />
-      {entity.canonDossier && <CanonDossierCard dossier={entity.canonDossier} />}
-      <AuthoredBody raw={entity.body} preserveAiDossier />
-      {entity.lore && <EntityLoreCard lore={entity.lore} />}
-      {entity.note && <p className="type-ui mb-4 text-ink-muted">{entity.note}</p>}
-      {entity.memoirStoryIds.length > 0 && (
-        <section className="mb-6">
-          <h2 className="type-meta mb-2 text-ink">Appearances</h2>
-          <ul className="list-disc pl-5 text-sm text-ink">
-            {entity.memoirStoryIds.map((id) => (
-              <li key={id}>
-                <Link href={`/stories/${id}`} className="hover:text-ocean">
-                  {id}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-      {entity.interviewStoryIds.length > 0 && (
-        <section className="mb-6">
-          <h2 className="type-meta mb-2 text-ink">Additional appearances</h2>
-          <ul className="list-disc pl-5 text-sm text-ink">
-            {entity.interviewStoryIds.map((id) => (
-              <li key={id}>
-                <Link href={`/stories/${id}`} className="hover:text-ocean">
-                  {id}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-      {entity.relations.length > 0 && (
-        <section className="mb-6">
-          <h2 className="type-meta mb-2 text-ink">Related</h2>
-          <WikiRelationLines relations={entity.relations} />
-        </section>
+      <FileLede lede={lede} more={[rest]} />
+      <ChapterRecord entries={record} partial={!bookFinished} />
+      {appearsIn.length > 0 ? (
+        <LinkedFiles
+          files={appearsIn.map((id) => ({ href: `/stories/${id}`, label: id }))}
+        />
+      ) : null}
+      <LinkedFiles files={files} />
+      <AskAboutFile questions={questions} />
+      {isAuthorSpecialAccess && (
+        <AuthorProvenance
+          dossier={entity.canonDossier}
+          lore={entity.lore}
+          note={entity.note}
+        />
       )}
     </div>
   );
@@ -389,12 +349,6 @@ export function RuleIndexPage({
 export function RuleDetailPage({ rule }: { rule: WikiRuleConcept }) {
   return (
     <div className="mx-auto max-w-content px-[var(--page-padding-x)] py-6 md:py-10">
-      <Link
-        href="/rules"
-        className="type-ui mb-4 inline-block text-ink-ghost no-underline transition-colors hover:text-ocean"
-      >
-        &larr; All rules
-      </Link>
       <h1 className="type-page-title mb-2">{rule.title}</h1>
       {rule.lore?.status && (
         <p className="type-ui mb-4 text-ink-muted">
@@ -402,40 +356,18 @@ export function RuleDetailPage({ rule }: { rule: WikiRuleConcept }) {
           {STATUS_CHIP_LABELS[rule.lore.status] ?? rule.lore.status}
         </p>
       )}
-      {rule.canonDossier && <CanonDossierCard dossier={rule.canonDossier} />}
-      <AuthoredBody raw={rule.body} />
-      {rule.lore && <EntityLoreCard lore={rule.lore} />}
-      {rule.thesis && <p className="type-ui mb-6 text-ink">{rule.thesis}</p>}
-      {rule.examples.length > 0 && (
-        <section className="mb-6">
-          <h2 className="type-meta mb-2 text-ink">Examples</h2>
-          <ul className="list-disc pl-5 text-sm text-ink">
-            {rule.examples.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </section>
-      )}
-      {rule.exceptions.length > 0 && (
-        <section className="mb-6">
-          <h2 className="type-meta mb-2 text-ink">Exceptions</h2>
-          <ul className="list-disc pl-5 text-sm text-ink">
-            {rule.exceptions.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </section>
-      )}
-      {rule.relatedRules.length > 0 && (
-        <section className="mb-6">
-          <h2 className="type-meta mb-2 text-ink">Related rules</h2>
-          <ul className="list-disc pl-5 text-sm text-ink">
-            {rule.relatedRules.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </section>
-      )}
+      {(() => {
+        const { lede, rest } = splitLede(
+          rule.thesis || rule.canonDossier?.primaryProse
+        );
+        return <FileLede lede={lede} more={[rest, ...rule.examples]} />;
+      })()}
+      <AskAboutFile
+        questions={[
+          `How does ${shortName(rule.title)} work?`,
+          `Where does ${shortName(rule.title)} show up in the story?`,
+        ]}
+      />
     </div>
   );
 }

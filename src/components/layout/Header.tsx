@@ -3,13 +3,12 @@
 import { book } from "@/config/book";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AgeModeSwitcher } from "./AgeModeSwitcher";
 import { ProfileNavLink } from "./ProfileNavLink";
 import { useProfileNotificationBadge } from "@/hooks/useProfileNotificationBadge";
 
-export function Header() {
+export function Header({ signedIn }: { signedIn: boolean }) {
   const pathname = usePathname();
-  const profileBadge = useProfileNotificationBadge();
+  const profileBadge = useProfileNotificationBadge(signedIn);
 
   if (pathname === "/signup" || pathname === "/login") return null;
 
@@ -23,8 +22,16 @@ export function Header() {
         {book.title}
       </Link>
       <div className="flex min-w-0 shrink-0 items-center gap-1.5">
-        <AgeModeSwitcher variant="compact" />
-        <ProfileNavLink badge={profileBadge} />
+        {signedIn ? (
+          <ProfileNavLink badge={profileBadge} />
+        ) : (
+          <Link
+            href="/login"
+            className="type-ui inline-flex min-h-9 items-center rounded-full border border-[var(--color-border)] px-3 text-[0.8125rem] text-ink no-underline transition-colors hover:border-clay-border"
+          >
+            Sign in
+          </Link>
+        )}
       </div>
     </header>
   );

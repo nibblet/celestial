@@ -13,7 +13,9 @@ export type ProfileNavBadge =
   | { kind: "dot" }
   | { kind: "number"; value: number };
 
-export function useProfileNotificationBadge(): ProfileNavBadge | null {
+export function useProfileNotificationBadge(
+  enabled = true
+): ProfileNavBadge | null {
   const pathname = usePathname();
   const [notifications, setNotifications] = useState<NotificationState>({
     unreadAnswers: 0,
@@ -22,6 +24,8 @@ export function useProfileNotificationBadge(): ProfileNavBadge | null {
   });
 
   useEffect(() => {
+    // Guests have no notifications; skip the request (it would redirect to login).
+    if (!enabled) return;
     let cancelled = false;
     async function loadCounts() {
       try {
@@ -37,7 +41,7 @@ export function useProfileNotificationBadge(): ProfileNavBadge | null {
     return () => {
       cancelled = true;
     };
-  }, [pathname]);
+  }, [pathname, enabled]);
 
   if (
     notifications.isAuthor &&

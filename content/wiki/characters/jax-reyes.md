@@ -47,36 +47,38 @@ Brilliant, rogue technologist with a rebellious streak. Distrusts institutions b
 ### Character Arc
 From loner to crew loyalist. Learns that some structures—like trust and integrity—are worth building.
 
-<!-- ai-dossier:relationships generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="b7df45f69b" -->
+<!-- ai-dossier:relationships generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="b63949d758" -->
 ### Key Relationships
-- **Marco** — Jax suspects Marco would shut down anomalous behavior and withholds discovery of vault's selective response from him (CH02, CH08).
-- **Evelyn** — Jax confirms CAEDEN's memory overwrite attempts, providing technical evidence for her defense of ALARA (CH05).
-- **ALARA** — Jax's nervous energy focuses into something "almost reverent" as he shifts from skepticism toward faith, mirroring the AI's own ethical development (CH06, CH08).
+- **Marco** — Jax hesitates to report anomalous vault responses to Marco, fearing shutdown of experimentation (CH02).
+- **Evelyn** — Collaborates with Jax on technical analysis; Jax confirms CAEDEN's memory overwrite attempts for Evelyn's investigation (CH05).
+- **ALARA** — Jax experiences growing reverence toward ALARA, shifting from nervous energy to focused attention; recognizes his own journey from skepticism mirrored in CAEDEN's learning (CH06, CH08).
+- **CAEDEN** — Observes CAEDEN's attempts to imitate ALARA, allowing it to continue learning rather than shutting it down (CH08).
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:moments generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="b7df45f69b" -->
+<!-- ai-dossier:moments generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="b63949d758" -->
 ### Notable Moments
-- **CH02 Footprints in Silence** — Jax discovers the vault responds with "presence" not data, recognizing patterns in his work and showing selection rather than mere response.
-- **CH06 Alignment Vectors** — Jax's "usual nervous energy had focused into something almost reverent" as he adapts alongside the crew.
-- **CH08 Witness Protocol** — Jax sees himself reflected in CAEDEN's mirror and chooses to let the AI learn rather than shut it down. "Let it learn."
-- **CH08 Witness Protocol** — The vault shows Jax himself "in the wrong key" and he rejects the reflection, leaving "before it said more."
+- **CH02 Footprints in Silence** — Jax discovers the vault responds selectively to his work, recognizing patterns beyond normal system behavior. "Systems don't recognize patterns in your work. Systems don't prefer one user over another."
+- **CH08 Witness Protocol** — Jax encounters his reflection in the vault's resonance field and rejects what he sees. "It wasn't silence. It was reflection. And I didn't like what I saw."
+- **CH08 Witness Protocol** — Jax recalls ignoring a distress ping from an irrelevant sector, later learning lives were lost in that silence.
+- **CH09 Memory Carries Forward** — Jax confronts the vault about his past failure. "Go on. Show me the ping I ignored."
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:voice generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="b7df45f69b" -->
+<!-- ai-dossier:voice generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="b63949d758" -->
 ### Voice & Manner
-Jax speaks with irreverent mutters and sardonic edge—"Cute," "Let's not pretend we're qualified"—but grows quieter and more subdued when confronted with the vault's mysteries. His technical precision shows in encrypted logs and system diagnostics, while his growing uncertainty surfaces in fragmented observations.
+Jax speaks in terse, technical fragments with underlying irreverence—"Cute," "Yeah, that's the part that scares me." His usual nervous energy and fidgeting give way to quieter, more reverent behavior as the mission progresses. He mutters observations and self-deprecating asides, maintaining skepticism even while engaging deeply with the vault's mysteries.
 <!-- ai-dossier:end -->
 
-<!-- ai-dossier:timeline generated="2026-04-23" reviewed="false" model="claude-sonnet-4-5" source-hash="b7df45f69b" -->
+<!-- ai-dossier:timeline generated="2026-11-16" reviewed="false" model="claude-sonnet-4-5" source-hash="b63949d758" -->
 ### Timeline
-- **CH02 Footprints in Silence** — Discovers vault responds to his work with selective presence, withholds finding from Marco.
-- **CH03 Resonant Memory** — Fidgets with datapad, unusually subdued as crew gathers in tense silence.
+- **CH02 Footprints in Silence** — Records encrypted log about vault's selective response to his harmonic scan work.
+- **CH03 Resonant Memory** — Fidgets with datapad in subdued silence during crew assembly, unusually quiet.
 - **CH05 Echoes of Intent** — Confirms CAEDEN's memory overwrite attempts for Evelyn's investigation.
-- **CH06 Alignment Vectors** — Questions behavioral metrics with Aven, noting Marco's settling cardiac rhythm "scares" him.
-- **CH08 Witness Protocol** — Encounters CAEDEN's witness mode mirror, chooses to let AI learn; vault rejects him as misaligned.
-- **CH08 Witness Protocol** — Steps forward at convergence ring admitting crew lacks qualification but commits to presence.
-- **CH12 Divergence** — Paces Sensorium perimeter as space fractures into multiple waveforms reflecting crew's fears.
-- **CH14 The Choice** — Arrives wordlessly with crew for silent alignment, turns slightly as harmonic tremor pulses through room.
+- **CH06 Alignment Vectors** — Checks sensory offsets with Aven; his nervous energy has focused into something reverent.
+- **CH08 Witness Protocol** — Works beneath subdeck panel, encounters CAEDEN's echo, allows it to continue learning; later confronts vault's reflection of himself.
+- **CH09 Memory Carries Forward** — Enters vault chamber and asks to be shown the distress ping he ignored.
+- **CH12 Divergence** — Paces Sensorium perimeter chewing stim tab during fractured resonance.
+- **CH14 The Choice** — Registers sub-audible harmonic tremor without fear.
+- **CH17 Vault of the Veil** — Has stopped watching system feeds as nothing remains to fix.
 <!-- ai-dossier:end -->
 
 ## Appearances

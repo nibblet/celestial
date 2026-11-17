@@ -1,14 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  getAllCharacterArcs,
-  getCharacterArcBySlug,
-} from "@/lib/wiki/character-arcs";
+import { getCharacterArcBySlug } from "@/lib/wiki/character-arcs";
+import { CodexLocked, getWholeBookLock } from "@/components/entities/CodexGate";
 import { StoryMarkdown } from "@/components/story/StoryMarkdown";
-
-export function generateStaticParams() {
-  return getAllCharacterArcs().map((arc) => ({ slug: arc.slug }));
-}
 
 export default async function ArcDetailPage({
   params,
@@ -19,14 +13,17 @@ export default async function ArcDetailPage({
   const arc = getCharacterArcBySlug(slug);
   if (!arc) notFound();
 
+  const lock = await getWholeBookLock();
+  if (lock) return <CodexLocked progress={lock} wholeBook />;
+
   return (
     <div className="mx-auto max-w-content px-[var(--page-padding-x)] py-6 md:py-10">
       <div className="mb-4 flex flex-wrap gap-4">
         <Link
-          href="/arcs"
+          href="/codex?type=characters"
           className="type-ui text-ink-ghost no-underline transition-colors hover:text-ocean"
         >
-          &larr; All arcs
+          &larr; Codex
         </Link>
         <Link
           href={`/characters/${arc.slug}`}

@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import {
   READER_CHAPTER_COOKIE,
+  READER_MODE_COOKIE,
   getReaderProgress,
 } from "@/lib/progress/reader-progress";
 import { chapterNumberFromStoryId } from "@/lib/wiki/story-ids";
@@ -18,6 +19,8 @@ export async function PUT(request: Request) {
     showAllContent?: boolean;
     markAllChaptersRead?: boolean;
     markAllChaptersUnread?: boolean;
+    /** "I have finished chapters 1..N" — 0 means just starting. */
+    finishedThrough?: number;
   };
 
   const cookieStore = await cookies();
@@ -71,6 +74,54 @@ export async function PUT(request: Request) {
     });
   }
 
+  if (
+    typeof body.finishedThrough === "number" &&
+    Number.isInteger(body.finishedThrough) &&
+    body.finishedThrough >= 0
+  ) {
+    const chapterIds = storiesData
+      .map((s) => s.storyId)
+      .filter((id) => chapterNumberFromStoryId(id) !== null);
+    const lastChapter = chapterIds.reduce(
+      (acc, id) => Math.max(acc, chapterNumberFromStoryId(id) ?? 0),
+      0
+    );
+    const through = Math.min(body.finishedThrough, lastChapter);
+    if (user) {
+      // Replace, don't merge: this is also how a reader moves the bookmark back.
+      await supabase
+        .from("cel_story_reads")
+        .delete()
+        .eq("user_id", user.id)
+        .like("story_id", "CH%");
+      const rows = chapterIds
+        .filter((id) => (chapterNumberFromStoryId(id) ?? 0) <= through)
+        .map((story_id) => ({ user_id: user.id, story_id }));
+      if (rows.length > 0) {
+        // Plain insert: the table has insert/delete policies but no update
+        // policy, so a merging upsert is rejected by row-level security.
+        const { error } = await supabase.from("cel_story_reads").insert(rows);
+        if (error) {
+          console.error("[reader/progress] bookmark insert failed", error);
+          return Response.json(
+            { error: "Could not save your place." },
+            { status: 500 }
+          );
+        }
+      }
+    }
+    cookieStore.set(
+      READER_CHAPTER_COOKIE,
+      `CH${String(through).padStart(2, "0")}`,
+      {
+        path: "/",
+        httpOnly: false,
+        sameSite: "lax",
+        maxAge: 60 * 60 * 24 * 365,
+      }
+    );
+  }
+
   if (body.chapterId) {
     const num = chapterNumberFromStoryId(body.chapterId);
     if (num !== null) {
@@ -89,6 +140,14 @@ export async function PUT(request: Request) {
         .from("cel_profiles")
         .update({ show_all_content: body.showAllContent })
         .eq("id", user.id);
+    } else {
+      // Guests keep the choice in a cookie; absent means the whole book.
+      cookieStore.set(READER_MODE_COOKIE, body.showAllContent ? "open" : "safe", {
+        path: "/",
+        httpOnly: false,
+        sameSite: "lax",
+        maxAge: 60 * 60 * 24 * 365,
+      });
     }
   }
 

@@ -30,16 +30,20 @@ export type BookConfig = {
   manuscriptSourceOfTruth: string;
   /** When set, this `people` wiki slug is omitted from the social graph unless `includeSubjectEntity` is true. */
   peopleGraphExcludeSlug: string | null;
+  /** Chapters anyone can read without an account. */
+  freeChapterIds: string[];
+  /** Questions a visitor can put to the archive before making an account. */
+  guestQuestionLimit: number;
 };
 
 export const book: BookConfig = {
   id: "celestial",
   title: "Celestial",
-  subtitle: "Interactive Book Companion (working title)",
-  author: "[Author name]",
-  tagline: "Read the story. Explore the world. Ask without spoilers.",
+  subtitle: "Interactive Book Companion",
+  author: "Paul Cobb",
+  tagline: "Ask the archive. Open the files. Go back into the story.",
   description:
-    "A reader companion for an science-fiction novel: curated lore, principles, and an AI guide that respects reading progress.",
+    "The companion to the science-fiction novel Celestial: question the mission archive, open the files on its people and places, and read the logs behind the story.",
   narratorPronoun: "they",
   storiesPossessivePhrase: "the novel’s stories",
   shortName: "the book",
@@ -51,4 +55,6 @@ export const book: BookConfig = {
   manuscriptSourceOfTruth:
     "TBD — e.g. private Git repo path `content/manuscript/`, or numbered exports from your editor of choice. Must be reproducible for rebuilds.",
   peopleGraphExcludeSlug: null,
+  freeChapterIds: ["CH01"],
+  guestQuestionLimit: 3,
 };

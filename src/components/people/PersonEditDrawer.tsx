@@ -135,7 +135,7 @@ export function PersonEditDrawer({
             />
           </div>
           {error && (
-            <p className="type-ui text-sm text-red-800">{error}</p>
+            <p className="type-ui text-sm text-[#f6c7bd]">{error}</p>
           )}
         </div>
 
