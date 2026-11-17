@@ -23,6 +23,10 @@ This folder is the reference for anything we render: character portraits, ship s
 - `elira-voss-portrait.png`: Elira's approved identity portrait (2026-11-17).
 - `sovrin-command-dome.png`: SOVRIN's approved manifestation (2026-11-17, CH12). The Command Dome with its own lights out; one narrow band of cold white light with straight-stroke angular symbols across the upper arc. Attached to `sovrin`.
 - `caeden-relay-cluster.png`: CAEDEN's approved look (2026-11-17). Earth-built relay modules bolted into a hollow under a peeled-up section of the ship's shell, with a faint cold blue-white glow inside them. No screens or words. Attached to `caeden`.
+- `resonant-core.png`: the approved Resonant Core (2026-11-17). A windowless hollow in the same architecture as the Command Dome and Observation Deck; the ship's violet veins gather into a woven knot of gold nodes with nothing at the center. Attached to `resonant-core`. The book never shows it as hardware, so the form is proposed.
+- `harmonic-drive.png`: the approved Harmonic Drive (2026-11-17). Nested rings receding down a tapering chamber in a slow spiral, violet near and gold at the far end, no engine. Attached to `harmonic-drive`. Form proposed, as above.
+- `triple-helix.png`: the approved Triple Helix (2026-11-17). Ribbons of gold light wind up from a small sphere inside a thin circle, in front of the three-arcs-over-a-circle sign recessed in the vault wall: the patch's three arcs are the helix seen from the front. Attached to `triple-helix-symbol`.
+- `rigel-ascendant.png`: the approved Rigel Ascendant exterior (2026-11-17). Angular and Earth-built: a long horizontal hull with a faceted gunmetal bow block, slab modules along a spine, a midsection emitter ring, radiators aft and twin drive cones, over Ganymede. `rigel-ascendant-bow-detail.png` is the first render (ship stood upright, cropped), kept for close surface detail. Both attached to `rigel-ascendant`.
 - `valkyrie-1/hero-photographic.png`: the approved **photographic** hero of the ship, the primary look. Hard raking sun, most of the hull in shadow, faint violet light inside the skin. The concept-art renders below are for shape only.
 - `valkyrie-1/`: the ship. `three-quarter.png` and `orthogonal.png` (hull shape) are attached to every shot of `valkyrie-1`. `state-*.png` (dormant, wake, active, alignment, harmonic-jump, cropped from the `public/images` state renders, caption removed) are attached when that state is chosen. These use `"inherit": false`, so interior specs that inherit from `valkyrie-1` don't receive hull images. The south trench spec attaches the dormant and orthogonal renders so the buried hull matches.
 - `zone-theta-wall.png`: the approved Zone Theta vault wall (material and glyph network), attached to `zone-theta`. Glyphs stay faint until the wall awakens.
@@ -72,7 +76,9 @@ This folder is the reference for anything we render: character portraits, ship s
 | `alara` | AI | master + states `listening`, `present`, `hesitation`, `reflection`, `mourning`, `translation` | grounded in the prose |
 | `sovrin` | AI | master | look approved 2026-11-17 |
 | `caeden` | AI | master | look approved 2026-11-17 (equipment and glow, no text) |
-| `rigel-ascendant` | ship | master | **fully proposed**: the prose describes no exterior at all |
+| `rigel-ascendant` | ship | master | exterior approved 2026-11-17 (the prose describes none of it); interior still proposed |
+| `resonant-core`, `harmonic-drive` | Valkyrie-1 rooms | master | look approved 2026-11-17 (form proposed; not shown in the prose) |
+| `triple-helix-symbol` | vault symbol | master | look approved 2026-11-17 |
 | `south-trench` | Mars dig site | master + features `command-shelter`, `corporate-shuttle` | grounded in the prose |
 | `zone-theta` | shaft / vault threshold | master | grounded in the prose |
 | `vault-002` | Mars vault interior | master + views `domed_chamber`, `spherical_chamber`, `pillar_chamber`, `harmonic_archive` | grounded in the prose |
@@ -112,7 +118,7 @@ Each character's `master.json` has a `_provenance` block that separates canon fi
 | Rhea Solari ✅ approved | late 50s (**"trim lines, eyes too sharp to soften"**) | from `public/visual-references/rhea-solari-portrait.png`: pale; ice-gray eyes; silver hair in a tight low knot; never smiling; high-collared slate-gray Bureau tunic with the **Sovereign Ethics Bureau seal** pin on the collar and two silver cuff bars; the seal as a faint watermark behind her |
 | Elira Voss ✅ approved (2026-11-17) | mid-50s, never rejuvenated (**never described in the book; "soft, expectant, wounded"**) | from `public/visual-references/elira-voss-portrait.png`: takes after Galen, not Aven; tall and lean; light olive skin; pale blue-gray eyes; level brows and a square jaw; straight dark brown hair streaked with gray, cut at the jaw; dark green overshirt over an off-white tee; no uniform or patch. A first render with Aven's portrait attached came out as Aven and was rejected |
 
-Also review: the whole `rigel-ascendant` exterior (a hard-edged graphite modular cruiser, built as the visual opposite of Valkyrie).
+The `rigel-ascendant` exterior was approved 2026-11-17 (angular, Earth lineage, shown horizontal).
 
 **Order of work after approval:** generate each `three_quarter` portrait first and approve the best one. Its seed and the vision fingerprint become the identity anchor that every later still and video reuses. This is what keeps a face the same across clips.
 

@@ -1,0 +1,68 @@
+{
+  "entity": "resonant-core",
+  "parent_entity": "valkyrie-1",
+  "_canon_status": "look_approved_by_author_2026-11-17",
+  "display_name": "Resonant Core",
+  "classification": "decentralized_awareness_system_of_valkyrie_1_where_alara_grows",
+  "location": {
+    "placement": "deep_in_the_center_of_the_ship_below_the_command_dome",
+    "access": "a_single_petal_aperture_and_a_low_ramp_no_doors_no_hatches"
+  },
+  "form": {
+    "chamber": "a_rounded_windowless_hollow_like_the_inside_of_a_seed_walls_floor_and_ceiling_one_continuous_curved_shell",
+    "structure": "curved_ribs_sweep_in_from_every_side_and_lean_toward_the_middle_without_touching_leaving_an_open_center",
+    "the_core": "there_is_no_single_object_at_the_center:_the_ship's_subdermal_veins_run_in_from_all_directions_and_gather_into_a_dense_woven_knot_of_light_inside_the_ribs_and_floor_like_a_nerve_plexus_with_hundreds_of_small_bright_nodes_where_veins_cross",
+    "floor": "dark_polished_reflective_floor_with_faint_inlaid_concentric_rings_under_the_open_center"
+  },
+  "materials": {
+    "shell": "seamless_pearl_silver_and_dark_pearl_bio_crystalline_shell_semi_translucent_at_the_edges",
+    "hard_edges": "none",
+    "machinery": "none_visible"
+  },
+  "lighting": {
+    "source": "only_the_veins_and_nodes_inside_the_surfaces",
+    "color": "violet_amethyst_veins_with_warm_gold_nodes_where_they_cross",
+    "behavior": "the_nodes_brighten_toward_the_open_center_and_fade_to_dark_at_the_chamber_edges"
+  },
+  "_provenance": {
+    "canon": [
+      "decentralized system where ALARA's awareness grows; ship systems adjust to crew alignment (series bible)",
+      "'ship's core' (CH05, CH17); 'thousands of sub-resonance nodes' (CH08)"
+    ],
+    "proposed_needs_author_approval": [
+      "the whole look: the prose never shows the Resonant Core as hardware. Built from the Command Dome and Observation Deck (author direction 2026-11-17)"
+    ],
+    "approved_render": "public/visual-references/resonant-core.png: first OpenAI render, author-approved 2026-11-17. "
+  },
+  "reference_images": [
+    {
+      "path": "/visual-references/resonant-core.png",
+      "role": "environment",
+      "label": "Approved Resonant Core",
+      "instruction": "match this room exactly: curved ribs leaning toward an open center, violet veins gathering into a woven knot of warm gold nodes, dark polished inlaid floor",
+      "inherit": false
+    },
+    {
+      "path": "/visual-references/command-dome.png",
+      "role": "environment",
+      "label": "Command Dome reference render",
+      "instruction": "same ship, different room: match only the architecture language (flowing curved ribs and arches, seamless dark pearl shell, violet light inside the surface, inlaid circular floor geometry). Do not copy the windows, planets, seats or the floating crystal"
+    },
+    {
+      "path": "/visual-references/observation-deck.png",
+      "role": "environment",
+      "label": "Approved Observation Deck",
+      "instruction": "same ship, different room: match only the materials and realism (pearl-silver translucent shell edges with fine violet veins inside, dark polished reflective floor, thin warm gold line of light, photographic rendering). No window, no planets, no person"
+    }
+  ],
+  "avoid": [
+    "reactor_or_glowing_orb_at_the_center",
+    "floating_crystal",
+    "machinery_pipes_or_cables",
+    "consoles_or_screens",
+    "windows_or_planets",
+    "people",
+    "industrial_panel_seams",
+    "cyan_neon"
+  ]
+}

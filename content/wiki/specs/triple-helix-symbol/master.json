@@ -1,0 +1,61 @@
+{
+  "entity": "triple-helix-symbol",
+  "world": "ancient_vault",
+  "_canon_status": "look_approved_by_author_2026-11-17",
+  "display_name": "Triple Helix",
+  "classification": "recurring_vault_symbol_three_curves_and_a_circle",
+  "concept": "the_flat_glyph_and_the_helix_are_one_thing:_the_three_arcs_on_the_mission_patch_are_the_triple_helix_seen_from_the_front",
+  "form": {
+    "node": "one_small_sphere_of_soft_gold_light_at_the_base_the_circle_of_the_glyph",
+    "strands": "exactly_three_ribbons_of_gold_light_rise_from_around_the_sphere_and_wind_upward_around_one_shared_axis_each_wider_than_the_one_inside_it_a_widening_triple_helix",
+    "front_view": "seen_from_the_front_the_nearest_crest_of_each_ribbon_is_brightest_and_the_three_crests_line_up_as_three_nested_crescent_arcs_above_the_sphere_small_medium_large_exactly_like_the_glyph",
+    "depth": "the_far_side_of_each_ribbon_is_dim_and_thin_so_the_winding_is_visible_but_the_three_arcs_read_first",
+    "ring": "one_thin_circle_of_light_encloses_the_whole_figure_the_harmonic_circle",
+    "making": "not_carved_not_painted_emergent:_light_gathered_in_the_air_a_hand's_width_in_front_of_the_wall"
+  },
+  "wall_glyph": "the_same_sign_flat:_three_crescent_arcs_over_a_circle_recessed_faintly_in_the_dark_stone_wall_directly_behind_the_helix_so_the_two_overlap",
+  "setting": "a_dark_vault_wall_of_smooth_basalt_with_a_faint_network_of_fine_lines_like_a_star_map",
+  "color": {
+    "symbol": "soft_gold",
+    "stone": "near_black_basalt_with_a_cool_gray_sheen"
+  },
+  "_provenance": {
+    "canon": [
+      "'Three curves. A circle.' (CH01-CH03, CH10)",
+      "'The triple spiral from Vault One, etched in soft gold' (CH09)",
+      "'Not carved. Not painted. Emergent.' (CH02)",
+      "'The harmonic trace hovered in a triple helix' (CH14)",
+      "'an interlocking triple helix encased within a harmonic wave circle' (wiki dossier)",
+      "'Interconnected with others. A network, like star maps' (CH03)"
+    ],
+    "proposed_needs_author_approval": [
+      "reading the patch's three arcs as the front view of the helix (author direction 2026-11-17: tie the patch's three arcs to the triple helix)"
+    ],
+    "approved_render": "public/visual-references/triple-helix.png: first OpenAI render, author-approved 2026-11-17. It reads more as one spiralling ribbon than three separate strands; accepted as is."
+  },
+  "reference_images": [
+    {
+      "path": "/visual-references/triple-helix.png",
+      "role": "identity",
+      "label": "Approved Triple Helix",
+      "instruction": "match this figure: a gold sphere, ribbons of gold light winding up from it inside one thin circle, and the three nested arcs over a circle recessed in the wall behind",
+      "inherit": false
+    },
+    {
+      "path": "/visual-references/project-valkyrie-patch.png",
+      "role": "insignia",
+      "label": "PROJECT VALKYRIE patch (for the glyph only)",
+      "instruction": "use only the central sign: three nested crescent arcs over a circle. The helix's three bright front crests and the faint wall glyph must both match that arrangement. Do NOT show the patch itself: no navy disc, no embroidery, no lettering"
+    }
+  ],
+  "avoid": [
+    "dna_double_helix",
+    "more_than_three_strands",
+    "text_or_lettering",
+    "embroidered_patch_or_badge",
+    "hologram_ui",
+    "people",
+    "blue_or_cyan_light",
+    "machinery"
+  ]
+}
