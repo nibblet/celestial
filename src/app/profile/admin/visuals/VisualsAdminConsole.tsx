@@ -171,7 +171,14 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
         fd.set("stylePreset", importPreset);
         fd.set("file", file);
         const res = await fetch("/api/visuals/import", { method: "POST", body: fd });
-        const json = await res.json();
+        const text = await res.text();
+        let json: { error?: string } = {};
+        try {
+          json = text ? JSON.parse(text) : {};
+        } catch {
+          json = { error: `server returned ${res.status} ${text.slice(0, 120)}` };
+        }
+        if (res.ok && !text) throw new Error(`${file.name}: empty response from the server`);
         if (!res.ok) throw new Error(`${file.name}: ${json.error ?? "import failed"}`);
         done.push(file.name);
       }
