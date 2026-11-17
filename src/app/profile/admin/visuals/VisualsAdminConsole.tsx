@@ -155,11 +155,16 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
   const [recent, setRecent] = useState<RecentItem[]>([]);
   const [recentStatus, setRecentStatus] = useState<"idle" | "loading" | "error">("idle");
   const [restored, setRestored] = useState(false);
+  const [recentLimit, setRecentLimit] = useState(24);
+  const [recentKind, setRecentKind] = useState<"all" | "image" | "video">("all");
+  const [recentQuery, setRecentQuery] = useState("");
 
-  async function loadRecent() {
+  async function loadRecent(limit = recentLimit, kind = recentKind) {
     setRecentStatus("loading");
     try {
-      const res = await fetch("/api/visuals/recent?limit=24", { cache: "no-store" });
+      const qs = new URLSearchParams({ limit: String(limit) });
+      if (kind !== "all") qs.set("kind", kind);
+      const res = await fetch(`/api/visuals/recent?${qs}`, { cache: "no-store" });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Failed");
       setRecent(json.items ?? []);
@@ -201,6 +206,8 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
     }
     setRestored(true);
     void loadRecent();
+    // Runs once on mount; later loads are triggered by the controls.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -498,6 +505,13 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
     }
   }
 
+  const q = recentQuery.trim().toLowerCase();
+  const filteredRecent = q
+    ? recent.filter((item) =>
+        [item.targetId ?? "", item.targetKind, JSON.stringify(item.prompt)].join(" ").toLowerCase().includes(q),
+      )
+    : recent;
+
   return (
     <div className="space-y-6">
       <section className="rounded-xl border border-[var(--color-border)] bg-warm-white p-5">
@@ -516,12 +530,43 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
           (its prompt, so you can animate or approve it); <strong>+ Ref</strong> adds a still to the
           extra references, where it also becomes a start or end frame option.
         </p>
+        <div className="mb-3 flex flex-wrap items-center gap-2">
+          <input
+            value={recentQuery}
+            onChange={(e) => {
+              setRecentQuery(e.target.value);
+              // Searching looks through everything, not just the newest few.
+              if (e.target.value.trim() && recentLimit < 200) {
+                setRecentLimit(200);
+                void loadRecent(200);
+              }
+            }}
+            placeholder="Search: target, character or prompt words (e.g. thane, hull)"
+            className="min-w-[16rem] flex-1 rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1 text-xs text-ink"
+          />
+          <select
+            value={recentKind}
+            onChange={(e) => {
+              const k = e.target.value as typeof recentKind;
+              setRecentKind(k);
+              void loadRecent(recentLimit, k);
+            }}
+            className="rounded-md border border-[var(--color-border)] bg-warm-white px-2 py-1 text-xs text-ink"
+          >
+            <option value="all">Stills and clips</option>
+            <option value="image">Stills only</option>
+            <option value="video">Clips only</option>
+          </select>
+        </div>
         {recentStatus === "error" && (
           <p className="text-xs text-red-700">Couldn&apos;t load recent generations.</p>
         )}
-        {recent.length > 0 && (
+        {recentQuery.trim() && filteredRecent.length === 0 && recentStatus !== "loading" && (
+          <p className="text-xs text-ink-muted">Nothing matches &ldquo;{recentQuery.trim()}&rdquo;.</p>
+        )}
+        {filteredRecent.length > 0 && (
           <ul className="flex gap-3 overflow-x-auto pb-2">
-            {recent.map((item) => {
+            {filteredRecent.map((item) => {
               const isOpen =
                 item.assetId === assetResult?.assetId || item.assetId === videoResult?.assetId;
               const isRef = extraRefs.some((r) => r.path === item.url);
@@ -566,6 +611,19 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
               );
             })}
           </ul>
+        )}
+        {!recentQuery.trim() && recent.length >= recentLimit && recentLimit < 200 && (
+          <button
+            type="button"
+            onClick={() => {
+              const next = Math.min(200, recentLimit + 24);
+              setRecentLimit(next);
+              void loadRecent(next);
+            }}
+            className="mt-1 text-xs font-semibold text-ink-muted hover:text-ink"
+          >
+            Show older generations →
+          </button>
         )}
       </section>
 
