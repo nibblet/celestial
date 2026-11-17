@@ -1,6 +1,23 @@
 import Link from "next/link";
 import type { ChapterRecordEntry } from "@/lib/archive/record";
 
+function renderEntry(entry: ChapterRecordEntry) {
+  return (
+    <li key={entry.chapterId} className="flex gap-3">
+      <Link
+        href={`/stories/${entry.chapterId}`}
+        className="w-12 shrink-0 pt-0.5 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-ocean no-underline hover:text-burgundy"
+        aria-label={`Chapter ${entry.chapterNumber}: ${entry.chapterTitle}`}
+      >
+        Ch {entry.chapterNumber}
+      </Link>
+      <p className="font-[family-name:var(--font-lora)] text-[0.9375rem] leading-relaxed text-ink-muted">
+        {entry.text}
+      </p>
+    </li>
+  );
+}
+
 /**
  * A file's record, chapter by chapter. For a spoiler-safe reader the entries
  * stop at their bookmark and `partial` explains why the rest is not shown.
@@ -8,34 +25,30 @@ import type { ChapterRecordEntry } from "@/lib/archive/record";
 export function ChapterRecord({
   entries,
   partial,
+  initial = 3,
 }: {
   entries: ChapterRecordEntry[];
   /** True when later chapters are held back for a spoiler-safe reader. */
   partial: boolean;
+  /** Entries shown before the rest folds behind "All chapters". */
+  initial?: number;
 }) {
   if (entries.length === 0 && !partial) return null;
+  const first = entries.slice(0, initial);
+  const rest = entries.slice(initial);
   return (
     <section aria-label="On record, by chapter" className="mb-8">
       <h2 className="mb-3 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.12em] text-ink-ghost">
         On record · by chapter
       </h2>
-      {entries.length > 0 ? (
-        <ol className="list-none space-y-3">
-          {entries.map((entry) => (
-            <li key={entry.chapterId} className="flex gap-3">
-              <Link
-                href={`/stories/${entry.chapterId}`}
-                className="w-12 shrink-0 pt-0.5 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-ocean no-underline hover:text-burgundy"
-                aria-label={`Chapter ${entry.chapterNumber}: ${entry.chapterTitle}`}
-              >
-                Ch {entry.chapterNumber}
-              </Link>
-              <p className="font-[family-name:var(--font-lora)] text-[0.9375rem] leading-relaxed text-ink-muted">
-                {entry.text}
-              </p>
-            </li>
-          ))}
-        </ol>
+      {first.length > 0 ? <ol className="list-none space-y-3">{first.map(renderEntry)}</ol> : null}
+      {rest.length > 0 ? (
+        <details>
+          <summary className="inline-flex min-h-11 cursor-pointer select-none items-center text-sm text-ocean">
+            All {entries.length} chapters
+          </summary>
+          <ol className="list-none space-y-3 pb-2">{rest.map(renderEntry)}</ol>
+        </details>
       ) : null}
       {partial ? (
         <p className="mt-4 rounded-lg border border-[var(--color-border)] bg-warm-white px-3 py-2 text-sm text-ink-muted">
