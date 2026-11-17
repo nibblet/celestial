@@ -99,7 +99,7 @@ const takesEndFrame = (m: VideoModel) => !m.startsWith("gen4");
 
 const IMAGE_PROVIDERS = [
   { key: "openai", label: "OpenAI GPT Image (attaches references)" },
-  { key: "imagen", label: "Google Nano Banana 2.1 (text only)" },
+  { key: "imagen", label: "Google Nano Banana 2.1 (attaches references)" },
 ] as const;
 
 const OPENAI_IMAGE_MODELS = [
@@ -367,7 +367,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
         params.model = openaiModel;
       }
       const refs = promptResult.referenceImages ?? specRefs;
-      if (imageProvider === "openai" && attachRefs && refs.length > 0) {
+      if (attachRefs && refs.length > 0) {
         params.referenceImages = refs.map((r) => r.path);
       }
       const res = await fetch("/api/visuals/generate", {
@@ -858,7 +858,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
           <div className="mt-5 border-t border-[var(--color-border)] pt-4">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <h3 className="type-meta text-ink">Spec reference photos</h3>
-              {imageProvider === "openai" && specRefs.length > 0 && (
+              {specRefs.length > 0 && (
                 <label className="flex items-center gap-1.5 text-xs text-ink-muted">
                   <input
                     type="checkbox"
@@ -869,7 +869,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
                 </label>
               )}
             </div>
-            {imageProvider === "openai" && !attachRefs && specRefs.length > 0 && (
+            {!attachRefs && specRefs.length > 0 && (
               <p className="mt-2 text-[11px] text-ink-muted">
                 Images won&apos;t be sent, but the prompt text still names them. To drop an item
                 entirely, remove it from the spec&apos;s reference_images.
@@ -957,8 +957,7 @@ export function VisualsAdminConsole({ presets }: { presets: PresetOption[] }) {
               <strong className="text-ink">
                 {imageProvider === "openai" ? `OpenAI · ${openaiModel}` : "Nano Banana 2.1"}
               </strong>
-              {imageProvider === "openai" &&
-              attachRefs &&
+              {attachRefs &&
               (promptResult.referenceImages?.length ?? 0) > 0
                 ? ` · attaching ${promptResult.referenceImages!.length} ref(s)`
                 : ""}

@@ -1,5 +1,9 @@
 import "server-only";
 
+import * as fs from "fs/promises";
+import * as path from "path";
+import { contentTypeForFile, resolveReferencePath } from "./openai-helpers";
+
 import type { VisualPrompt, VisualAspect } from "../types";
 import type { GeneratedAsset, VisualProvider } from "./types";
 
@@ -14,6 +18,9 @@ import type { GeneratedAsset, VisualProvider } from "./types";
  *   POST https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key=…
  *
  * Response parts carry inlineData { mimeType, data } (base64).
+ *
+ * Reference images (faces, wardrobe, keyframes) go in as inline_data parts
+ * ahead of the prompt text, like the OpenAI provider's image[] inputs.
  */
 const DEFAULT_MODEL = "gemini-nano-banana-2.1";
 /** HIGH matches Google's mapping from imagen-4.0-generate-001 quality tier. */
@@ -91,6 +98,9 @@ export const imagenProvider: VisualProvider = {
       imageSize: params.imageSize ?? DEFAULT_IMAGE_SIZE,
       thinkingLevel: params.thinkingLevel ?? DEFAULT_THINKING_LEVEL,
       seed: params.seed ?? null,
+      // Same reference paths the OpenAI provider attaches (faces, wardrobe,
+      // keyframes). Part of the cache key.
+      referenceImages: normalizeRefs(params.referenceImages),
       // Cache-bust token from force regenerate — not sent to the API.
       ...(typeof params.reroll === "string" ? { reroll: params.reroll } : {}),
     };
@@ -107,11 +117,19 @@ export const imagenProvider: VisualProvider = {
 
     // Negatives stay in the raw prompt trailer ("Avoid: …") — Nano Banana
     // has no separate negativePrompt field (same as late Imagen 4).
+    const refs = normalizeRefs(params.referenceImages);
+    const refParts = await Promise.all(
+      refs.map(async (ref) => {
+        const { bytes, contentType } = await loadReference(ref);
+        return { inline_data: { mime_type: contentType, data: bytes.toString("base64") } };
+      }),
+    );
     const body = {
       contents: [
         {
           role: "user",
-          parts: [{ text: prompt.raw }],
+          // Images first, then the prompt that names them ("the attached …").
+          parts: [...refParts, { text: prompt.raw }],
         },
       ],
       generationConfig: {
@@ -128,9 +146,9 @@ export const imagenProvider: VisualProvider = {
       },
     };
 
-    const res = await fetch(`${ENDPOINT(model)}?key=${encodeURIComponent(apiKey)}`, {
+    const res = await fetch(ENDPOINT(model), {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
       body: JSON.stringify(body),
     });
 
@@ -158,3 +176,23 @@ export const imagenProvider: VisualProvider = {
     };
   },
 };
+
+/** Gemini image models take up to 14 reference images per request. */
+const MAX_REFS = 14;
+
+function normalizeRefs(raw: unknown): string[] {
+  if (!Array.isArray(raw)) return [];
+  return raw.filter((r): r is string => typeof r === "string" && r.trim().length > 0).slice(0, MAX_REFS);
+}
+
+async function loadReference(ref: string): Promise<{ bytes: Buffer; contentType: string }> {
+  const resolved = resolveReferencePath(ref, {
+    publicDir: path.join(process.cwd(), "public"),
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
+  });
+  const contentType = contentTypeForFile(resolved.fileName);
+  if (resolved.kind === "local") return { bytes: await fs.readFile(resolved.filePath), contentType };
+  const res = await fetch(resolved.url);
+  if (!res.ok) throw new Error(`Couldn't fetch reference ${ref} (${res.status})`);
+  return { bytes: Buffer.from(await res.arrayBuffer()), contentType };
+}

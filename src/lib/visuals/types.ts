@@ -35,7 +35,8 @@ export type StylePresetKey =
   | "giza_archaeological"
   | "noncorporeal_presence"
   | "intimate_crew"
-  | "mythic_scale";
+  | "mythic_scale"
+  | "photoreal_documentary";
 
 export type VisualPrompt = {
   subject: string;
