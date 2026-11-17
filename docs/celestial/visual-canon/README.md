@@ -21,7 +21,7 @@ This folder is the reference for anything we render: character portraits, ship s
 - `rhea-solari-portrait.png`: Rhea's approved identity portrait.
 - `amar-cael-portrait.png`: Amar's approved identity portrait.
 - `elira-voss-portrait.png`: Elira's approved identity portrait (2026-11-17).
-- `sovrin-command-dome.png`: SOVRIN's approved manifestation (2026-11-17, CH12). The Command Dome with its own lights out; one narrow band of cold white light with straight-stroke angular symbols across the upper arc. Attached to `sovrin`.
+- `sovrin-command-dome.png`: SOVRIN's approved manifestation (2026-11-17, CH12). The approved Command Dome interior (third render, replacing the earlier one in the old windowed dome) with its own lights out; one narrow band of cold white light with straight-stroke angular symbols across the upper arc. Attached to `sovrin`.
 - `caeden-relay-cluster.png`: CAEDEN's approved look (2026-11-17). Earth-built relay modules bolted into a hollow under a peeled-up section of the ship's shell, with a faint cold blue-white glow inside them. No screens or words. Attached to `caeden`.
 - `resonant-core.png`: the approved Resonant Core (2026-11-17). A windowless hollow in the same architecture as the Command Dome and Observation Deck; the ship's violet veins gather into a woven knot of gold nodes with nothing at the center. Attached to `resonant-core`. The book never shows it as hardware, so the form is proposed.
 - `harmonic-drive.png`: the approved Harmonic Drive (2026-11-17). Nested rings receding down a tapering chamber in a slow spiral, violet near and gold at the far end, no engine. Attached to `harmonic-drive`. Form proposed, as above.

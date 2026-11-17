@@ -16,7 +16,7 @@
     "cold_white",
     "monochrome_gray"
   ],
-  "signature_setting": "inside_the_command_dome_of_valkyrie_1_the_ship's_own_violet_and_gold_glow_frozen_and_dimmed_while_the_cold_white_band_cuts_across_the_upper_arc_and_hard_angular_symbols_sit_on_the_central_ring",
+  "signature_setting": "inside_the_command_dome_of_valkyrie_1_a_windowless_chamber_of_pale_curved_ribs_and_crystalline_panels_with_a_plain_dark_ceiling_the_ship_own_violet_glow_and_warm_floor_line_gone_out_while_one_cold_white_band_of_hard_angular_symbols_cuts_across_the_upper_arc",
   "_provenance": {
     "canon": [
       "CH02 sterile monochrome + oversight seal",
@@ -25,26 +25,29 @@
       "signature_setting is the CH12 S4 Command Dome manifestation"
     ],
     "note": "wiki 'black alloy core with iridescent edges' never appears in prose; omitted",
-    "approved_render": "public/visual-references/sovrin-command-dome.png: second OpenAI render, author-approved 2026-11-17. The dome's own lights are out; the white band of angular symbols is the only light."
+    "approved_render": "public/visual-references/sovrin-command-dome.png: third OpenAI render, set in the approved Command Dome interior, author-approved 2026-11-17 (replaces the earlier render in the old windowed dome). The room's own lights are out; the white band of angular symbols is the only light."
   },
   "reference_images": [
     {
       "path": "/visual-references/sovrin-command-dome.png",
       "role": "environment",
       "label": "SOVRIN approved manifestation in the Command Dome",
-      "instruction": "match the narrow cold-white band and its straight-stroke angular symbols, and how every other light in the room is out"
+      "instruction": "match the narrow cold-white band and its straight-stroke angular symbols along the upper arc, and how every other light in the room is out"
     },
     {
-      "path": "/visual-references/command-dome.png",
+      "path": "/visual-references/command-dome-interior.png",
       "role": "environment",
-      "label": "Command Dome reference render",
-      "instruction": "the room SOVRIN intrudes on: match the elliptical chamber and curved arches, but dim its violet glow; the white band and angular symbols are the only bright things in frame"
+      "label": "Command Dome approved interior",
+      "instruction": "the room SOVRIN intrudes on: the same windowless chamber, here with its own lights on; in SOVRIN shots its violet glow and warm floor line are out"
     }
   ],
   "avoid": [
     "organic_curves",
     "gold_or_warm_light",
     "humanoid_form",
-    "red_evil_eye_cliche"
+    "red_evil_eye_cliche",
+    "windows_or_viewports",
+    "planets_or_stars_visible",
+    "central_crystal_or_floor_sigil"
   ]
 }
