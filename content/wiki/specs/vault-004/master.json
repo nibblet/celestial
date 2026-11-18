@@ -1,0 +1,53 @@
+{
+  "entity": "vault-004",
+  "parent_entity": "vault-network",
+  "world": "ancient_vault",
+  "_canon_status": "look_approved_by_author_2026-11-18",
+  "display_name": "Vault 004, The Fracture Well",
+  "lesson": "counter_resonance:_the_vault_that_turns_people_away;_the_moral_contrast_to_first_light",
+  "form": "a_well:_one_straight_sided_fracture_running_deep_into_a_dark_asteroid_its_two_inner_faces_perfectly_smooth_edge_less_and_black_curving_very_slightly_toward_each_other_as_they_descend",
+  "inside": "nothing:_no_floor_visible_no_far_end_the_faces_take_all_light_and_give_none_back",
+  "sign_here": "once_only_high_on_one_inner_face_a_shade_less_black_than_the_surface_and_inverted_(the_circle_above_the_arcs)",
+  "light_here": "none_ever:_dormant_and_withholding_lit_only_by_the_small_distant_sun_at_the_rim",
+  "feeling": "the_eye_slides_off_it;_cold_patient_refusal_not_menace",
+  "setting": "the_asteroid_belt_(see_asteroid-belt):_one_charcoal_asteroid_among_a_few_far_apart",
+  "palette": [
+    "black",
+    "charcoal",
+    "ash_gray",
+    "cold_white_rim_light"
+  ],
+  "_provenance": {
+    "canon": [
+      "Asteroid Belt; dormant; repels crew emotionally; counter-resonance, moral inversion? (vault tracker)"
+    ],
+    "proposed_needs_author_approval": [
+      "everything visual: not yet encountered on the page",
+      "the inverted sign as the mark of moral inversion"
+    ],
+    "approved_render": "public/visual-references/vault-004-fracture-well.png: first OpenAI render, author-approved 2026-11-18."
+  },
+  "reference_images": [
+    {
+      "path": "/visual-references/vault-004-fracture-well.png",
+      "role": "environment",
+      "label": "Fracture Well approved view",
+      "instruction": "match this well: rubble rim lit by a small distant sun, two smooth black inner faces dropping into total darkness, one barely visible inverted sign on one face, no glow",
+      "inherit": false
+    },
+    {
+      "path": "/visual-references/asteroid-belt.png",
+      "role": "environment",
+      "label": "Asteroid Belt approved view",
+      "instruction": "the asteroid this well is in: same charcoal rubble surface and hard single-sided sunlight"
+    }
+  ],
+  "avoid": [
+    "glowing_crack_or_light_from_inside",
+    "gold_violet_blue_or_cyan_glow",
+    "lava_or_fire",
+    "monsters_eyes_or_tentacles",
+    "spacecraft_large_in_frame",
+    "stairs_ledges_or_platforms"
+  ]
+}

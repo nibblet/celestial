@@ -1,0 +1,14 @@
+{
+  "view_type": "interior",
+  "composition": "a_walkway_descending_in_a_triple_helix_around_a_central_hollow_a_translucent_pale_blue_veil_hanging_across_the_hollow_the_sign_faint_and_soft_edged_behind_it",
+  "_source": "CH17; approved 2026-11-18",
+  "reference_images": [
+    {
+      "path": "/visual-references/vault-003-veil-interior.png",
+      "role": "environment",
+      "label": "Vault of the Veil approved interior",
+      "instruction": "match this interior: edge-less helix walkway around a hollow, thin seams of light, a sheer pale blue veil hanging across it, the sign faint behind the veil",
+      "inherit": false
+    }
+  ]
+}

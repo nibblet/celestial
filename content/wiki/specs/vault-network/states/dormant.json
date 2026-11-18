@@ -1,0 +1,8 @@
+{
+  "state": "dormant",
+  "display_name": "Dormant",
+  "description": "Asleep. The vault gives no light of its own; whatever light there is comes from outside it. The sign is barely readable.",
+  "light": "none_of_its_own",
+  "sign": "barely_readable_a_shade_darker_or_paler_than_the_surface",
+  "surfaces": "matte_still_light_absorbing"
+}

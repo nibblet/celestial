@@ -1,0 +1,47 @@
+{
+  "entity": "giza-plateau",
+  "world": "earth_2050",
+  "_canon_status": "look_approved_by_author_2026-11-17",
+  "display_name": "Giza Plateau, 2050",
+  "view": "wide_view_across_the_whole_plateau_from_the_desert_side_the_three_main_pyramids_in_a_staggered_line_small_against_a_great_deal_of_sky_and_sand",
+  "ground": "pale_limestone_bedrock_and_wind_scoured_sand_low_ridges_and_long_shallow_hollows_that_run_in_lines_a_little_too_regular_to_be_natural",
+  "time_and_light": "just_after_dawn_low_gold_sun_from_one_side_long_shadows_cool_haze_in_the_hollows",
+  "what_lies_beneath": "only_hinted:_the_regular_lines_in_the_ground_and_the_way_the_three_pyramids_and_their_shadows_line_up",
+  "era_marks": "a_restricted_site_in_2050:_empty_of_people_one_low_weathered_survey_mast_far_off_at_most",
+  "palette": [
+    "pale_gold",
+    "limestone_cream",
+    "dusty_rose",
+    "cool_blue_gray_shadow"
+  ],
+  "_provenance": {
+    "canon": [
+      "structures beneath the plateau revealed by radar: multi-level chambers, cylindrical constructs (Ancient Lore dossier)",
+      "measurable non-human alignment (series bible)",
+      "2049 re-examination, findings classified (Giza Vault dossier)"
+    ],
+    "proposed_needs_author_approval": [
+      "vantage, time of day and the restricted empty site: the book never stages a scene here"
+    ],
+    "approved_render": "public/visual-references/giza-plateau.png: first OpenAI render, author-approved 2026-11-17."
+  },
+  "reference_images": [
+    {
+      "path": "/visual-references/giza-plateau.png",
+      "role": "environment",
+      "label": "Giza Plateau approved view",
+      "instruction": "match the wide dawn view from the desert: three pyramids small in a staggered line, empty site, low gold side light and long shadows",
+      "inherit": false
+    }
+  ],
+  "avoid": [
+    "tourist_crowds_camels_or_tour_buses",
+    "modern_cairo_skyline",
+    "harsh_noon_sun",
+    "glowing_symbols_or_beams_of_light",
+    "cutaway_or_x_ray_view_of_underground_chambers",
+    "flying_vehicles_or_spacecraft",
+    "the_sphinx_as_the_subject",
+    "excavation_scaffolding_or_cranes"
+  ]
+}

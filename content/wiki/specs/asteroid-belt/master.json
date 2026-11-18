@@ -1,0 +1,46 @@
+{
+  "entity": "asteroid-belt",
+  "world": "earth_2050",
+  "_canon_status": "look_approved_by_author_2026-11-17",
+  "display_name": "Asteroid Belt, the Fracture Well region",
+  "view": "deep_space_wide_shot_one_large_dark_asteroid_off_centre_a_scatter_of_a_few_much_smaller_ones_far_apart_and_far_away",
+  "the_asteroid": "charcoal_gray_rubble_and_dust_cratered_irregular_lit_hard_from_one_side_by_a_small_distant_sun",
+  "the_fracture": "one_long_straight_sided_crack_down_into_the_asteroid_too_clean_to_be_natural_perfectly_black_inside_no_light_comes_back_out_of_it",
+  "feeling": "dormant_and_unwelcoming_the_eye_is_pushed_away_from_the_crack_rather_than_drawn_in",
+  "light": "small_white_distant_sun_hard_shadows_no_fill_light_sparse_stars",
+  "palette": [
+    "charcoal",
+    "ash_gray",
+    "cold_white",
+    "black"
+  ],
+  "_provenance": {
+    "canon": [
+      "location of Vault 004, the Fracture Well: dormant, repels the crew emotionally; counter-resonance, moral contrast (vault tracker)"
+    ],
+    "proposed_needs_author_approval": [
+      "everything visual: not yet encountered on the page",
+      "the vault shown only as a black crack, nothing built visible"
+    ],
+    "approved_render": "public/visual-references/asteroid-belt.png: first OpenAI render, author-approved 2026-11-17."
+  },
+  "reference_images": [
+    {
+      "path": "/visual-references/asteroid-belt.png",
+      "role": "environment",
+      "label": "Asteroid Belt approved view",
+      "instruction": "match the single large charcoal asteroid lit hard from one side by a small distant sun, with a straight black crack and near-empty space around it",
+      "inherit": false
+    }
+  ],
+  "avoid": [
+    "dense_crowded_asteroid_field",
+    "glowing_crack_or_light_from_inside",
+    "gold_or_violet_glow",
+    "visible_vault_door_or_built_structure",
+    "spacecraft",
+    "nebula_or_colourful_gas_clouds",
+    "planets_in_frame",
+    "lava_or_fire"
+  ]
+}

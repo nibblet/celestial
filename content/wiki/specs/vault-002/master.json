@@ -1,5 +1,6 @@
 {
   "entity": "vault-002",
+  "parent_entity": "vault-network",
   "world": "ancient_vault",
   "_canon_status": "canon_grounded_from_prose",
   "display_name": "Vault 002, Vault of First Light (Mars, beneath Valkyrie-1)",
@@ -12,6 +13,9 @@
     "golden_red",
     "pale_light"
   ],
+  "lesson": "first_light:_the_welcoming_vault_the_one_that_answers",
+  "light_here": "gold_and_amber_(clarity)_when_awake",
+  "default_state": "awake",
   "avoid": [
     "right_angle_rooms",
     "machinery",

@@ -21,7 +21,7 @@ This folder is the reference for anything we render: character portraits, ship s
 - `rhea-solari-portrait.png`: Rhea's approved identity portrait.
 - `amar-cael-portrait.png`: Amar's approved identity portrait.
 - `elira-voss-portrait.png`: Elira's approved identity portrait (2026-11-17).
-- `sovrin-command-dome.png`: SOVRIN's approved manifestation (2026-11-17, CH12). The Command Dome with its own lights out; one narrow band of cold white light with straight-stroke angular symbols across the upper arc. Attached to `sovrin`.
+- `sovrin-command-dome.png`: SOVRIN's approved manifestation (2026-11-17, CH12). The approved Command Dome interior (third render, replacing the earlier one in the old windowed dome) with its own lights out; one narrow band of cold white light with straight-stroke angular symbols across the upper arc. Attached to `sovrin`.
 - `caeden-relay-cluster.png`: CAEDEN's approved look (2026-11-17). Earth-built relay modules bolted into a hollow under a peeled-up section of the ship's shell, with a faint cold blue-white glow inside them. No screens or words. Attached to `caeden`.
 - `resonant-core.png`: the approved Resonant Core (2026-11-17). A windowless hollow in the same architecture as the Command Dome and Observation Deck; the ship's violet veins gather into a woven knot of gold nodes with nothing at the center. Attached to `resonant-core`. The book never shows it as hardware, so the form is proposed.
 - `harmonic-drive.png`: the approved Harmonic Drive (2026-11-17). Nested rings receding down a tapering chamber in a slow spiral, violet near and gold at the far end, no engine. Attached to `harmonic-drive`. Form proposed, as above.
@@ -37,6 +37,8 @@ This folder is the reference for anything we render: character portraits, ship s
 - `command-dome-interior.png`: the approved Command Dome (2026-11-17): the room from the ALARA stills with her light out. Pale ribbed arches, leaf-shaped door, violet crystalline panels, a plain domed ceiling and a dark polished floor. Attached to `command-dome`. `command-dome.png` is the older concept render (windows, planets, floating crystal); it is no longer the dome's reference, but SOVRIN, the Resonant Core and the Harmonic Drive were made from it and still attach it.
 - `living-quarters.png`, `mess-commons.png`, `med-module.png`, `translation-bay.png`: approved plain shipboard rooms (2026-11-17), in the same architecture as the Command Dome. Each is attached to its own spec.
 - `witness-circle.png`: the approved Witness Circle (2026-11-17), aboard the ship. Nine low seats in a ring face a still black basin with a sphere of pale gold light above it; eight seats are faintly lit and the ninth is dark (CH09: "The ninth... was absent"). Attached to `witness-circle`.
+- `giza-plateau.png`, `great-pyramid.png`, `earth.png`, `asteroid-belt.png`: approved Earth-side and solar-system places (2026-11-17). The plateau at dawn with three small pyramids and an empty site; the Great Pyramid from a low corner before sunrise, only its top courses lit gold where the capstone was; Earth's night side in webs of city light; one dark asteroid with a straight black crack (the Fracture Well). Each is attached to its own spec.
+- `giza-vault.png`, `vault-003-veil-exterior.png`, `vault-003-veil-interior.png`, `vault-004-fracture-well.png`: approved vault looks (2026-11-18), all built on the shared `vault-network` intent. The Giza chamber with the sign formed in level sand; the Veil as a faint fold of blue light between Jupiter and Ganymede, and inside as a helix walkway with a hanging veil; the Fracture Well as smooth black faces dropping into darkness with an inverted sign.
 - `sovereign-ethics-bureau-seal.png` (SVG alongside): the Bureau seal, an octagon with a level balance beam over an inverted triangle, silver on graphite. Used on Rhea's collar and as the watermark behind her transmissions.
 - `galen-voss-portrait.png`: Galen's approved identity portrait, which also shows the full uniform. `galen-voss-portrait-v1-chatgpt.png` is the superseded first version.
 
@@ -84,7 +86,10 @@ This folder is the reference for anything we render: character portraits, ship s
 | `south-trench` | Mars dig site | master + features `command-shelter`, `corporate-shuttle` | grounded in the prose |
 | `zone-theta` | shaft / vault threshold | master | grounded in the prose |
 | `vault-002` | Mars vault interior | master + views `domed_chamber`, `spherical_chamber`, `pillar_chamber`, `harmonic_archive` | grounded in the prose |
-| `ganymede`, `ganymede-vault`, `vault-003`, `giza-vault` | off-ship places | master | grounded in the prose |
+| `giza-plateau`, `great-pyramid`, `earth`, `asteroid-belt` | Earth-side and solar-system places | master | look approved 2026-11-17 (looks proposed; the book stages no scene at any of them) |
+| `vault-network` | shared parent for every vault | master + states `dormant`, `listening`, `awake` | shared intent approved 2026-11-18: same makers and material, one faint sign, empty rooms, one light colour, hidden in its setting |
+| `giza-vault`, `vault-003` (views `exterior`, `interior`), `vault-004` | vaults | master | look approved 2026-11-18; inherit `vault-network` (as does `vault-002`) |
+| `ganymede`, `ganymede-vault` | off-ship places | master | grounded in the prose |
 
 Use them from the Visuals admin console: Target Kind `entity`, Target ID = the slug, then View and/or State. Wardrobe is a **state**: for example, `galen-voss` with view `three_quarter` and state `mars_surface`. The character inherits wardrobe from `valkyrie-crew` through `parent_entity`.
 

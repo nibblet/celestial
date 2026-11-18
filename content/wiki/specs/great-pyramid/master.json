@@ -1,0 +1,43 @@
+{
+  "entity": "great-pyramid",
+  "parent_entity": "giza-plateau",
+  "world": "earth_2050",
+  "_canon_status": "look_approved_by_author_2026-11-17",
+  "display_name": "The Great Pyramid, 2050",
+  "view": "one_pyramid_alone_seen_from_low_on_the_ground_near_one_corner_the_edge_rising_straight_up_the_frame_to_the_apex",
+  "structure": "weathered_stepped_limestone_courses_blocks_as_tall_as_a_person_worn_and_chipped_a_few_smooth_casing_stones_left_at_the_base_the_apex_blunt_with_no_capstone",
+  "time_and_light": "the_last_minute_before_sunrise_the_whole_face_in_cool_blue_shadow_and_only_the_very_top_few_courses_lit_gold_by_the_first_sun_so_the_missing_capstone_seems_for_a_moment_to_be_back",
+  "scale": "vast_and_silent_no_people",
+  "palette": [
+    "cool_blue_gray",
+    "limestone_cream",
+    "one_small_area_of_gold_at_the_apex"
+  ],
+  "_provenance": {
+    "canon": [
+      "built about 2500 BCE above the older Resonant structure; builders unaware but aligned by instinct",
+      "harmonic traces in the design: gold capstones, echo chambers (series bible)"
+    ],
+    "proposed_needs_author_approval": [
+      "the sunrise-lit apex standing in for the lost gold capstone",
+      "exterior only; the buried chamber is the giza-vault spec"
+    ],
+    "approved_render": "public/visual-references/great-pyramid.png: first OpenAI render, author-approved 2026-11-17."
+  },
+  "reference_images": [
+    {
+      "path": "/visual-references/great-pyramid.png",
+      "role": "environment",
+      "label": "Great Pyramid approved view",
+      "instruction": "match the low corner view before sunrise: weathered stepped limestone in cool blue shadow with only the top courses lit gold",
+      "inherit": false
+    }
+  ],
+  "avoid": [
+    "three_pyramids_in_frame",
+    "intact_gold_or_metal_capstone",
+    "smooth_fully_cased_pyramid",
+    "interior_passages_or_chambers",
+    "wide_aerial_view"
+  ]
+}
