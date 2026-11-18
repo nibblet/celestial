@@ -1,0 +1,8 @@
+{
+  "state": "awake",
+  "display_name": "Awake",
+  "description": "Asking its question. The vault is lit from within in the one colour of what it asks; the sign is clear but still modest in size.",
+  "light": "steady_glow_from_within_in_one_colour_from_the_light_code",
+  "sign": "clear_still_no_larger_than_a_doorway",
+  "surfaces": "translucent_depth_light_moving_slowly_inside_the_walls"
+}

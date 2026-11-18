@@ -1,0 +1,8 @@
+{
+  "state": "listening",
+  "display_name": "Listening",
+  "description": "Aware of someone present. A slow, faint pulse travels under the surface; the sign is just visible.",
+  "light": "very_low_one_colour_slow_pulse_under_the_surface",
+  "sign": "faintly_lit_from_within",
+  "surfaces": "a_slow_shimmer_that_reads_as_breath"
+}

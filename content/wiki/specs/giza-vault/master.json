@@ -1,13 +1,48 @@
 {
   "entity": "giza-vault",
+  "parent_entity": "vault-network",
   "world": "ancient_vault",
-  "_canon_status": "canon_grounded_from_prose",
-  "display_name": "Giza, Vault 001 (vision)",
+  "_canon_status": "look_approved_by_author_2026-11-18",
+  "display_name": "Giza, Vault 001 (buried chamber)",
+  "lesson": "the_foundational_parable:_the_oldest_and_quietest_vault_misread_for_twelve_thousand_years",
+  "form": "a_low_wide_buried_chamber_deep_under_the_plateau_its_edge_less_walls_the_pale_colour_of_the_limestone_around_it_curving_up_into_a_shallow_dome",
+  "floor": "fine_pale_gold_sand_perfectly_level_and_undisturbed_as_if_no_one_has_ever_stood_here",
+  "sign_here": "formed_in_the_sand_itself:_grains_curled_into_three_arcs_and_one_circle_a_few_metres_across_shallow_enough_to_miss",
+  "light_here": "dormant:_sunless_and_still_a_dim_even_pale_gold_dusk_with_no_visible_source_and_almost_no_shadow",
+  "setting": "the_giza_plateau_above_(see_giza-plateau_and_great-pyramid):_nothing_on_the_surface_gives_it_away",
   "vision_look": "fine_pale_gold_sand_sunless_and_still_a_lone_figure_before_the_buried_chamber_beneath_the_great_pyramid_grains_curling_into_three_curves_and_one_circle",
   "precursor_vision": "a_city_of_curved_towers_under_a_gold_veined_sky",
+  "palette": [
+    "pale_gold",
+    "limestone_cream",
+    "warm_gray"
+  ],
+  "_provenance": {
+    "canon": [
+      "built about 12,000 BCE, buried before the Great Pyramid; glimpsed in 1904 and sealed; re-imaged 2049; dormant, misinterpreted (vault page)",
+      "vision look and precursor vision from the prose"
+    ],
+    "proposed_needs_author_approval": [
+      "the present-day chamber: the book shows it only in vision"
+    ],
+    "approved_render": "public/visual-references/giza-vault.png: first OpenAI render, author-approved 2026-11-18."
+  },
+  "reference_images": [
+    {
+      "path": "/visual-references/giza-vault.png",
+      "role": "environment",
+      "label": "Giza vault approved chamber",
+      "instruction": "match this buried chamber: pale gold edge-less walls curving into a shallow dome, level untouched sand, the sign formed shallowly in the sand, dim sourceless light",
+      "inherit": false
+    }
+  ],
   "avoid": [
     "tourist_crowds",
     "harsh_sun_and_blue_sky_in_the_vision",
-    "modern_cairo_skyline"
+    "modern_cairo_skyline",
+    "egyptian_wall_paintings_or_hieroglyphs",
+    "limestone_block_masonry_inside_the_chamber",
+    "footprints_in_the_sand",
+    "shafts_of_sunlight"
   ]
 }

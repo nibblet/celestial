@@ -1,0 +1,61 @@
+{
+  "entity": "vault-network",
+  "world": "ancient_vault",
+  "_canon_status": "shared_intent_approved_by_author_2026-11-18",
+  "display_name": "The Vaults (shared intent)",
+  "_purpose": "Shared rules inherited by every vault spec via parent_entity. The vaults differ in form; this holds what they have in common, plus the three states (dormant, listening, awake).",
+  "makers": "built_by_the_same_makers_as_valkyrie_1:_the_same_hand_is_visible_in_every_vault_whatever_its_form",
+  "material": "continuous_edge_less_curved_surfaces_that_take_light_in_like_skin_rather_than_reflect_it_faint_crystalline_trace_shimmer_without_a_source;_grown_or_poured_never_carved_or_assembled",
+  "geometry": "no_right_angles_no_flat_grids_no_seams_openings_form_by_the_surface_folding_into_itself_never_a_door_with_a_frame_or_hinge",
+  "the_sign": "three_nested_arcs_over_a_circle_appears_exactly_once_in_every_vault_faint_no_larger_than_a_doorway_under_the_surface_or_formed_in_the_vault's_own_material_(sand_ice_water_dust)_never_a_bright_emblem",
+  "purpose": "a_vault_is_a_question_not_a_treasure_room:_empty_of_objects_nothing_to_take_nothing_to_operate;_the_space_itself_is_what_it_asks",
+  "temper": "expectant_and_patient_never_hostile;_even_the_vaults_that_turn_people_away_do_it_by_withholding_not_by_threat",
+  "light_code": {
+    "gold": "clarity",
+    "violet": "grief",
+    "blue": "observation",
+    "cyan": "active_resonance",
+    "rule": "a_vault_gives_light_only_when_listening_or_awake_and_only_in_the_one_colour_of_what_it_is_asking"
+  },
+  "setting_rule": "from_outside_a_vault_is_hidden_inside_a_natural_place:_the_only_tell_is_geometry_slightly_too_regular_for_nature;_people_and_craft_are_tiny_against_it",
+  "form_rule": "each_vault's_form_follows_its_lesson_and_its_setting;_the_material_family_the_sign_the_emptiness_and_the_light_code_stay_the_same",
+  "default_state": "dormant",
+  "_provenance": {
+    "canon": [
+      "vaults transmit symbolic content when alignment conditions are met (vault pages)",
+      "Zone Theta and Vault 002 prose: curved planes with no edges, no door, the wall folds into itself, triple curve and circle",
+      "shared colour code in the style presets: blue observation, gold clarity, violet grief, cyan active resonance"
+    ],
+    "proposed_needs_author_approval": [
+      "stating these as rules for all ten vaults (author asked for a consistent intent across different forms, 2026-11-17)",
+      "the three-state language"
+    ],
+    "approved": "Author approved the shared intent and the first four vault looks built on it (Giza vault, Veil exterior and interior, Fracture Well), 2026-11-18. Vaults 005 to 010 not yet rendered."
+  },
+  "reference_images": [
+    {
+      "path": "/visual-references/zone-theta-wall.png",
+      "role": "style",
+      "label": "Vault material family (Zone Theta wall)",
+      "instruction": "material family only: edge-less curved planes with a faint crystalline trace. Colour, brightness, scale and layout follow this vault's own spec, not this image"
+    },
+    {
+      "path": "/visual-references/triple-helix.png",
+      "role": "insignia",
+      "label": "The vault sign",
+      "instruction": "the sign's shape only: three nested arcs over a circle. Here it is faint and small, never a glowing figure as in this image"
+    }
+  ],
+  "avoid": [
+    "carved_stone_blocks_or_hieroglyphs",
+    "temple_tomb_or_cave_look",
+    "torches_candles_or_braziers",
+    "doors_with_frames_hinges_or_handles",
+    "machinery_screens_consoles_or_cables",
+    "treasure_relics_statues_or_sarcophagi",
+    "giant_glowing_logo_or_emblem",
+    "more_than_one_sign",
+    "hostile_or_horror_tone",
+    "right_angle_rooms"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "view_type": "exterior",
+  "composition": "from_high_orbit_looking_down_and_across:_jupiter_large_and_banded_filling_one_side_ganymede's_curved_icy_limb_along_the_bottom_and_far_off_in_the_black_between_them_one_thin_sheer_veil_of_pale_blue_light_small_in_the_frame_like_a_single_faint_fold_of_aurora_standing_still_in_vacuum",
+  "visibility": "almost_not_there:_mostly_transparent_stars_and_jupiter's_bands_show_through_it_only_its_upper_edge_and_one_or_two_folds_catch_the_light",
+  "sign": "not_visible_from_this_distance",
+  "scale": "the_veil_takes_up_no_more_than_a_fifth_of_the_frame;_valkyrie_1_a_single_pale_speck_near_it",
+  "_source": "vault page: harmonic veil phase-locked to Jovian resonance; framing proposed. First render (surface view, bright curtain, large glowing sign) rejected 2026-11-17.",
+  "reference_images": [
+    {
+      "path": "/visual-references/vault-003-veil-exterior.png",
+      "role": "environment",
+      "label": "Vault of the Veil approved exterior",
+      "instruction": "match this view from orbit: Jupiter on one side, Ganymede's limb below, the veil a small faint fold of pale blue light between them, mostly transparent, no sign visible",
+      "inherit": false
+    }
+  ],
+  "avoid": [
+    "camera_standing_on_the_surface",
+    "veil_touching_the_ground",
+    "bright_dense_curtain_or_waterfall_of_light",
+    "glowing_sign_symbol_or_emblem_in_the_veil",
+    "rainbow_or_prismatic_colours",
+    "veil_filling_the_frame"
+  ]
+}
