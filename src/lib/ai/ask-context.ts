@@ -112,7 +112,7 @@ export function renderAskContextPack(pack: AskContextPack): string {
   const lines = [
     "## Ask Context Pack",
     `Intent: ${pack.intent.kind} (${pack.intent.reason})`,
-    `Retrieval confidence: ${pack.confidence.toFixed(2)}`,
+    `Retrieval match score (heuristic, not certainty): ${pack.confidence.toFixed(2)}`,
     "",
   ];
 

@@ -48,7 +48,9 @@ export type AiCallRecord = {
  * rates at the time each model was wired up.
  */
 const MODEL_COST: Record<string, { in: number; out: number }> = {
-  // Current default for Ask / visuals / Tell.
+  // Current default for Ask.
+  "claude-sonnet-5-5": { in: 0.002, out: 0.01 },
+  // Historical Ask rate, still used by other call sites.
   "claude-opus-5-5": { in: 0.004, out: 0.02 },
   // Historical rates retained so old ledger rows still estimate correctly.
   "claude-sonnet-4-20250514": { in: 0.003, out: 0.015 },

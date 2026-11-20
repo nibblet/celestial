@@ -38,6 +38,7 @@ export type VerificationIssueCode =
   | "unknown_story_link"
   | "unknown_wiki_link"
   | "spoiler_story_link"
+  | "unretrieved_source_link"
   | "missing_citations"
   | "off_chapter_entity_link";
 
@@ -132,33 +133,34 @@ export function buildAskMessageEvidence(
   },
 ): AskMessageEvidence {
   const sources: AskEvidenceSource[] = [];
+  const usesSharedContext = !route.personas.includes("ask_answerer");
 
-  if (args.wikiSummaries && args.wikiSummaries.length > 0) {
+  if (usesSharedContext && args.wikiSummaries && args.wikiSummaries.length > 0) {
     sources.push({
       kind: "wiki_summaries",
       label: "Wiki index & summaries",
     });
   }
-  if (args.storyCatalog && args.storyCatalog.length > 0) {
+  if (usesSharedContext && args.storyCatalog && args.storyCatalog.length > 0) {
     sources.push({
       kind: "story_catalog",
       label: "Story catalog (progress-scoped when reader progress exists)",
     });
   }
-  if (args.storySlug) {
+  if (usesSharedContext && args.storySlug) {
     sources.push({
       kind: "chapter_scenes",
       label: "Chapter scenes & story context",
       ref: args.storySlug,
     });
   }
-  if (args.openThreads && args.openThreads.length > 0) {
+  if (usesSharedContext && args.openThreads && args.openThreads.length > 0) {
     sources.push({
       kind: "open_threads",
       label: `Open narrative threads (${args.openThreads.length})`,
     });
   }
-  if (args.beats && args.beats.length > 0) {
+  if (usesSharedContext && args.beats && args.beats.length > 0) {
     sources.push({
       kind: "journey_beats",
       label: `Journey beats (${args.beats.length})`,
@@ -171,19 +173,19 @@ export function buildAskMessageEvidence(
       label: "Reader progress (spoiler-aware scope)",
     });
   }
-  if (args.rulesContextIncluded) {
+  if (usesSharedContext && args.rulesContextIncluded) {
     sources.push({
       kind: "world_rules",
       label: "World rules (content/wiki/rules)",
     });
   }
-  if (args.characterCanonContextIncluded) {
+  if (usesSharedContext && args.characterCanonContextIncluded) {
     sources.push({
       kind: "character_canon",
       label: "Character canon (content/wiki/characters)",
     });
   }
-  if (args.characterArcContextIncluded) {
+  if (usesSharedContext && args.characterArcContextIncluded) {
     sources.push({
       kind: "character_arc_ledgers",
       label: "Character arc ledgers (derived_inference)",

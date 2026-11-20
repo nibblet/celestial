@@ -88,4 +88,5 @@ test("buildAskMessageEvidence exposes context-pack retrieval details", () => {
   assert.equal(ev.retrieval?.items[0]?.canonRank, "wiki_canon");
   assert.deepEqual(ev.retrieval?.gaps, ["One mechanism is still unresolved."]);
   assert.ok(ev.contextSources.map((s) => s.kind).includes("ask_context_pack"));
+  assert.ok(!ev.contextSources.map((s) => s.kind).includes("world_rules"));
 });

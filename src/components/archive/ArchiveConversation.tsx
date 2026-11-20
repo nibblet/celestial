@@ -75,58 +75,42 @@ function trimParam(raw: string | null, max: number): string | undefined {
   return trimmed ? trimmed.slice(0, max) : undefined;
 }
 
-/** File cards and sources under an archive answer. */
+/** Keep evidence available without interrupting the conversation. */
 function AnswerAttachments({ evidence }: { evidence: AskMessageEvidence }) {
-  // Files the answer links to come first, then the files it consulted.
-  const consulted = (evidence.retrieval?.items ?? []).filter(
-    (item) => item.kind !== "story"
-  );
-  const cards = fileCardsFromLinks([
-    ...evidence.linksInAnswer,
-    ...consulted.map((item) => ({ href: item.href, text: item.title })),
-  ]);
-  const sources = (evidence.retrieval?.items ?? [])
-    .filter((item) => item.kind === "story")
+  const cited = fileCardsFromLinks(evidence.linksInAnswer);
+  const consulted = (evidence.retrieval?.items ?? [])
+    .filter((item) => !evidence.linksInAnswer.some((link) => link.href === item.href))
     .slice(0, 6);
+  if (cited.length === 0 && consulted.length === 0) return null;
   return (
-    <div className="mt-3 space-y-2">
-      {evidence.responseSuperseded ? (
-        <p className="notice-warn rounded-md px-3 py-2 text-xs">
-          The archive withheld its first answer because it could not stand
-          behind the sources.
-        </p>
-      ) : null}
-      {cards.length > 0 ? (
-        <ul className="grid list-none gap-2 sm:grid-cols-2">
-          {cards.map((card) => (
-            <li key={card.href}>
-              <Link
-                href={card.href}
-                className="flex min-h-11 flex-col justify-center rounded-lg border border-[var(--color-border)] bg-warm-white px-3 py-2 no-underline transition-colors hover:border-ocean"
-              >
-                <span className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-ocean">
-                  {card.kind}
-                </span>
-                <span className="text-sm text-burgundy">{card.name}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      ) : null}
-      {sources.length > 0 ? (
-        <details className="text-xs text-ink-muted">
-          <summary className={`${META} cursor-pointer select-none py-2`}>
-            Sources · {sources.length}
+    <div className="mt-3">
+      {cited.length > 0 || consulted.length > 0 ? (
+        <details className="text-sm text-ink-muted">
+          <summary className="w-fit cursor-pointer select-none py-1 text-xs text-ink-muted hover:text-ocean">
+            Sources and related files
           </summary>
-          <ul className="mt-1 list-none space-y-1">
-            {sources.map((source) => (
-              <li key={source.href}>
-                <Link href={source.href} className={LINK_CLASS}>
-                  {source.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-2 rounded-xl border border-[var(--color-border)] bg-warm-white/50 px-4 py-3">
+            {cited.length > 0 ? (
+              <div>
+                <p className="mb-1 text-xs font-medium text-ink-muted">Cited in this answer</p>
+                <ul className="list-none space-y-1">
+                  {cited.map((card) => (
+                    <li key={card.href}><Link href={card.href} className={LINK_CLASS}>{card.name}</Link></li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+            {consulted.length > 0 ? (
+              <div className={cited.length > 0 ? "mt-3" : ""}>
+                <p className="mb-1 text-xs font-medium text-ink-muted">Related files</p>
+                <ul className="list-none space-y-1">
+                  {consulted.map((source) => (
+                    <li key={source.href}><Link href={source.href} className={LINK_CLASS}>{source.title}</Link></li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </div>
         </details>
       ) : null}
     </div>
@@ -492,8 +476,8 @@ export function ArchiveConversation({
   return (
     <div className="mx-auto flex h-[calc(100dvh-8rem)] w-full max-w-content flex-col px-[var(--page-padding-x)] md:h-[calc(100dvh-4rem)]">
       <div className="flex items-center justify-between gap-3 border-b border-ocean/25 py-3">
-        <h1 className="font-mono text-[0.6875rem] font-medium uppercase tracking-[0.16em] text-ocean">
-          {book.title} archive
+        <h1 className="font-[family-name:var(--font-lora)] text-base font-medium text-burgundy">
+          Ask {book.title}
         </h1>
         {boundary ? (
           signedIn ? (
@@ -565,15 +549,15 @@ export function ArchiveConversation({
             </section>
           ) : (
             <p className="font-[family-name:var(--font-lora)] text-base leading-relaxed text-ink-muted">
-              Archive online. The chapters, the files on the crew and the places
-              they went are on record. What do you want to look into?
+              What would you like to know about the story? Ask about a character,
+              a moment, or something that still feels unresolved.
             </p>
           )
         ) : null}
 
         {messages.length === 0 && !resuming && (askContext?.suggestions.length ?? 0) > 0 ? (
           <div>
-            <p className={`${META} mb-2`}>Or ask</p>
+            <p className="mb-2 text-sm text-ink-muted">Or try one of these</p>
             <div className="flex flex-wrap gap-2">
               {askContext!.suggestions.map((suggestion) => (
                 <button
@@ -599,9 +583,9 @@ export function ArchiveConversation({
           ) : (
             <div key={msg.id ?? `a-${i}`}>
               {msg.content === "" && loading ? (
-                <p className={`${META} animate-pulse`}>Searching the record…</p>
+                <p className="text-sm text-ink-muted animate-pulse">Looking into that…</p>
               ) : (
-                <div className="prose prose-story max-w-none font-[family-name:var(--font-lora)] prose-p:my-2 prose-headings:my-2 prose-headings:text-base prose-ul:my-2 prose-li:my-0">
+                <div className="prose prose-story max-w-none font-[family-name:var(--font-lora)] text-[0.975rem] leading-relaxed prose-p:my-3 prose-headings:mt-4 prose-headings:mb-2 prose-headings:text-base prose-headings:font-semibold prose-ul:my-2 prose-li:my-1">
                   <ReactMarkdown components={ANSWER_MARKDOWN}>
                     {msg.content}
                   </ReactMarkdown>

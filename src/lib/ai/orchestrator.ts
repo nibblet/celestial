@@ -98,8 +98,9 @@ export function resolveAskRoute(input: {
   askModeRequested: AskReaderMode;
   deepEnabled: boolean;
   multiPersonaEnabled: boolean;
+  spoilerSafe?: boolean;
 }): PersonaRoute {
-  const { classifiedRoute, askModeRequested, deepEnabled, multiPersonaEnabled } =
+  const { classifiedRoute, askModeRequested, deepEnabled, multiPersonaEnabled, spoilerSafe } =
     input;
   const routeAfterAskMode: PersonaRoute =
     askModeRequested === "fast"
@@ -115,6 +116,14 @@ export function resolveAskRoute(input: {
       personas: ["ask_answerer"],
       depth: routeAfterAskMode.depth,
       reason: `reader fast mode; wiki-first compact context; classifier would have: ${classifiedRoute.reason}`,
+    };
+  }
+
+  if (spoilerSafe) {
+    return {
+      personas: ["ask_answerer"],
+      depth: classifiedRoute.depth,
+      reason: "progress-scoped wiki-first answer; legacy full-corpus personas disabled",
     };
   }
 
@@ -156,6 +165,7 @@ export async function orchestrateAsk(
     askModeRequested,
     deepEnabled,
     multiPersonaEnabled,
+    spoilerSafe: !!params.readerProgress && !params.readerProgress.showAllContent,
   });
 
   const promptArgs = await buildPromptArgs(params);
@@ -223,6 +233,9 @@ async function buildPromptArgs(
   params: OrchestrateParams,
 ): Promise<PersonaPromptArgs> {
   const { supabase, ageMode, storySlug, journeySlug, readerProgress } = params;
+  const scopedStorySlug = storySlug && (!readerProgress || isStoryUnlocked(storySlug, readerProgress))
+    ? storySlug
+    : undefined;
 
   // Only fetch open threads when we know what chapter the reader is on — the
   // progress gate is what scopes them to "unresolved through current
@@ -233,11 +246,11 @@ async function buildPromptArgs(
     await Promise.all([
       getCanonicalWikiSummaries(),
       getCanonicalStories(),
-      storySlug ? getScenesForChapter(storySlug) : Promise.resolve([]),
+      scopedStorySlug ? getScenesForChapter(scopedStorySlug) : Promise.resolve([]),
       threadCutoffChapter
         ? listUnresolvedThroughChapter(supabase, threadCutoffChapter)
         : Promise.resolve([]),
-      journeySlug
+      journeySlug && (!readerProgress || readerProgress.showAllContent)
         ? listBeatsByJourney(supabase, journeySlug)
         : Promise.resolve([]),
     ]);
@@ -250,10 +263,11 @@ async function buildPromptArgs(
     .map((story) => `- ${story.storyId} — ${story.title}`)
     .join("\n");
   const intent = classifyAskIntent(params.message);
+  const packLimit = params.askMode === "fast" ? 6 : intent.kind === "factual" ? 5 : 12;
   const retrievedItems = retrieveAskContextItems({
     message: params.message,
     intent,
-    storySlug,
+    storySlug: scopedStorySlug,
     readerProgress,
     sources: buildDefaultAskRetrievalSources({
       stories: visibleStories.map((story) => ({
@@ -270,7 +284,7 @@ async function buildPromptArgs(
         ].join("\n"),
       })),
     }),
-    limit: params.askMode === "fast" ? 6 : 12,
+    limit: packLimit,
   });
   const scopedItems: AskContextItem[] = [
     ...chapterScenes
@@ -278,15 +292,15 @@ async function buildPromptArgs(
       .map((scene) => ({
         kind: "scene" as const,
         title: scene.title,
-        href: storySlug
-          ? `/stories/${storySlug}#${scene.slug}`
+        href: scopedStorySlug
+          ? `/stories/${scopedStorySlug}#${scene.slug}`
           : `/stories/${scene.slug}`,
         canonRank: "chapter_text" as const,
         excerpt: [scene.goal, scene.conflict, scene.outcome]
           .filter(Boolean)
           .join(" "),
-        score: storySlug ? 7 : 3,
-        storyId: storySlug,
+        score: scopedStorySlug ? 7 : 3,
+        storyId: scopedStorySlug,
         slug: scene.slug,
       })),
     ...openThreads.slice(0, params.askMode === "fast" ? 2 : 5).map((thread) => ({
@@ -313,17 +327,17 @@ async function buildPromptArgs(
     intent,
     items: [...retrievedItems, ...scopedItems],
     mode: params.askMode ?? "deep",
-    maxItems: params.askMode === "fast" ? 6 : 12,
+    maxItems: packLimit,
     maxChars: params.askMode === "fast" ? 4_000 : 9_000,
     gaps:
       retrievedItems.length === 0
-        ? ["No high-confidence wiki match was found for this question."]
+        ? ["No relevant, progress-safe archive passage was found for this question."]
         : [],
   });
 
   return {
     ageMode,
-    storySlug,
+    storySlug: scopedStorySlug,
     journeySlug,
     wikiSummaries,
     storyCatalog,
@@ -362,6 +376,7 @@ function askContextMeta(promptArgs: PersonaPromptArgs): Record<string, unknown> 
   const pack = promptArgs.askContextPack;
   if (!pack) return {};
   return {
+    prompt_version: "2026-11-20-conversational-v1",
     ask_intent: pack.intent.kind,
     retrieval_confidence: pack.confidence,
     context_item_count: pack.items.length,

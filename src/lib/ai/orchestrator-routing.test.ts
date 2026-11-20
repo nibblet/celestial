@@ -37,3 +37,14 @@ test("resolveAskRoute keeps legacy multi-persona only behind explicit fallback g
     "lorekeeper",
   ]);
 });
+
+test("spoiler-safe readers never use full-corpus personas", () => {
+  const route = resolveAskRoute({
+    classifiedRoute: routeAsk("How does the crew change across the story?"),
+    askModeRequested: "deep",
+    deepEnabled: true,
+    multiPersonaEnabled: true,
+    spoilerSafe: true,
+  });
+  assert.deepEqual(route.personas, ["ask_answerer"]);
+});

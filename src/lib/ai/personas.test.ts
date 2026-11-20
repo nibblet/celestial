@@ -89,9 +89,42 @@ test("ask answerer prompt consumes the wiki-first context pack", () => {
   });
 
   assert.match(prompt, /Ask Context Pack/);
-  assert.match(prompt, /world-bounded future/i);
-  assert.match(prompt, /derived interpretation/i);
+  assert.match(prompt, /future questions/i);
+  assert.match(prompt, /derived interpretations/i);
   assert.ok(prompt.includes("[Resonance Field](/rules/resonance-field)"));
+});
+
+test("ask answerer states the reader's spoiler boundary", () => {
+  const prompt = getPersona("ask_answerer").buildSystemPrompt({
+    ...BASE_ARGS,
+    readerProgress: {
+      readStoryIds: ["CH01"],
+      currentChapter: "CH01",
+      currentChapterNumber: 1,
+      showAllContent: false,
+    },
+  });
+  assert.match(prompt, /finished through CH01/);
+  assert.match(prompt, /Do not reveal later events/);
+});
+
+test("ask answerer keeps factual replies brief and focused", () => {
+  const prompt = getPersona("ask_answerer").buildSystemPrompt({
+    ...BASE_ARGS,
+    askContextPack: {
+      schemaVersion: 1,
+      message: "Who is ALARA?",
+      mode: "deep",
+      intent: { kind: "factual", confidence: 0.8, reason: "identity" },
+      confidence: 0.8,
+      budget: { maxItems: 5, maxChars: 9000, actualChars: 0 },
+      gaps: [],
+      derivedInsights: [],
+      items: [],
+    },
+  });
+  assert.match(prompt, /two or three sentences/);
+  assert.match(prompt, /Do not add tangential plot threads/);
 });
 
 test("archivist prompt asks for cross-story pattern, not bullet principles", () => {

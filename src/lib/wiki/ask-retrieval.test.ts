@@ -76,6 +76,45 @@ test("retrieveAskContextItems filters future chapter stories", () => {
   assert.equal(items.length, 0);
 });
 
+test("spoiler-safe retrieval never uses an unattributed whole-book dossier", () => {
+  const items = retrieveAskContextItems({
+    message: "What is ALARA's secret?",
+    intent: { kind: "factual", confidence: 0.8, reason: "lookup" },
+    readerProgress,
+    sources: {
+      entities: [{
+        title: "ALARA",
+        slug: "alara",
+        href: "/characters/alara",
+        text: "Late-book secret revealed in chapter seventeen.",
+        storyIds: [],
+        record: [{ chapterNumber: 1, text: "ALARA is present on the ship." }],
+      }],
+    },
+  });
+  assert.equal(items.length, 1);
+  assert.match(items[0]!.excerpt, /present on the ship/);
+  assert.doesNotMatch(items[0]!.excerpt, /secret revealed/);
+});
+
+test("entity excerpt selects the matching paragraph instead of the opening", () => {
+  const items = retrieveAskContextItems({
+    message: "What does the harmonic seal do?",
+    intent: { kind: "factual", confidence: 0.8, reason: "lookup" },
+    sources: {
+      entities: [{
+        title: "Vault 002",
+        slug: "vault-002",
+        href: "/vaults/vault-002",
+        text: "This long introduction describes the ship and its crew in general terms.\n\nThe harmonic seal closes the Vault when coherence breaks.",
+        storyIds: [],
+      }],
+    },
+  });
+  assert.match(items[0]!.excerpt, /harmonic seal closes/);
+  assert.doesNotMatch(items[0]!.excerpt, /long introduction/);
+});
+
 test("retrieveAskContextItems boosts character arc ledgers for arc intent", () => {
   const items = retrieveAskContextItems({
     message: "How is Thane Meric changing?",
@@ -109,6 +148,18 @@ test("retrieveAskContextItems boosts character arc ledgers for arc intent", () =
 
   assert.equal(items[0]?.kind, "character_arc");
   assert.equal(items[0]?.slug, "thane-meric");
+});
+
+test("a simple identity question does not load a whole-book arc", () => {
+  const items = retrieveAskContextItems({
+    message: "Who is ALARA?",
+    intent: { kind: "factual", confidence: 0.8, reason: "identity" },
+    sources: {
+      entities: [{ title: "ALARA", slug: "alara", href: "/characters/alara", text: "An AI aboard Valkyrie-1.", storyIds: [] }],
+      arcs: [{ title: "ALARA", slug: "alara", href: "/arcs/alara", text: "A long arc with late-book revelations." }],
+    },
+  });
+  assert.deepEqual(items.map((item) => item.kind), ["entity"]);
 });
 
 test("a first name in the question brings that person's file into context", () => {

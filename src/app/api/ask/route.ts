@@ -194,6 +194,7 @@ async function postAsk(request: Request) {
 
   // Orchestrate response (simple or deep path based on question type)
   const readerProgress = await getReaderProgress();
+  const spoilerSafe = !readerProgress.showAllContent;
   const normalizedAskMode: AskReaderMode | undefined =
     askMode === "fast" || askMode === "deep" ? askMode : undefined;
 
@@ -220,9 +221,11 @@ async function postAsk(request: Request) {
       try {
         for await (const text of textStream) {
           fullResponse += text;
-          controller.enqueue(
-            encoder.encode(`data: ${JSON.stringify({ text, conversationId: convId })}\n\n`)
-          );
+          if (!spoilerSafe) {
+            controller.enqueue(
+              encoder.encode(`data: ${JSON.stringify({ text, conversationId: convId })}\n\n`)
+            );
+          }
         }
 
         let evidence = buildEvidence(fullResponse);
@@ -233,6 +236,9 @@ async function postAsk(request: Request) {
           linksInAnswer: evidence.linksInAnswer,
           readerProgress,
           storySlug,
+          allowedSourceHrefs: evidence.retrieval?.items.map((item) => item.href) ?? [],
+          // Validate before displaying any text in spoiler-safe mode.
+          ...(spoilerSafe ? { strictness: "fail" as const } : {}),
         });
 
         let assistantContent = fullResponse;
@@ -240,11 +246,18 @@ async function postAsk(request: Request) {
           assistantContent = ASK_VERIFICATION_FALLBACK_MESSAGE;
           evidence = {
             ...evidence,
+            linksInAnswer: [],
             verification,
             responseSuperseded: true,
           };
         } else {
           evidence = { ...evidence, verification };
+        }
+
+        if (spoilerSafe) {
+          controller.enqueue(
+            encoder.encode(`data: ${JSON.stringify({ text: assistantContent, conversationId: convId })}\n\n`)
+          );
         }
 
         if (user) {
@@ -300,7 +313,7 @@ async function postAsk(request: Request) {
                       book.guestQuestionLimit - guestUsed - 1
                     ),
                   }),
-              ...(verification.shouldBlock
+              ...(!spoilerSafe && verification.shouldBlock
                 ? { replacementContent: ASK_VERIFICATION_FALLBACK_MESSAGE }
                 : {}),
             })}\n\n`

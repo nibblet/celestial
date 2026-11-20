@@ -34,7 +34,7 @@ export function getAskVerifierStrictnessFromEnv(): AskVerifierStrictness {
 }
 
 export const ASK_VERIFICATION_FALLBACK_MESSAGE =
-  "I couldn’t fully verify citations in that reply against the archive. Try asking again with a narrower question, or browse stories and lore from the catalog links in Sources.";
+  "I can’t confirm that answer from the chapters available here. Try a narrower question, or open one of the related files below.";
 
 function wikiMarkdownExists(dir: string, slug: string): boolean {
   const fp = path.join(WIKI_ROOT, dir, `${slug}.md`);
@@ -52,6 +52,12 @@ function looksLikeFactualLookup(question: string): boolean {
     return true;
   }
   return /\?$/.test(t) && t.length < 200;
+}
+
+function sourceKey(href: string): string {
+  const path = href.split("#")[0];
+  const story = path.match(/^\/stories\/(CH\d{2,4})(?:-[^/]*)?$/i);
+  return story ? `/stories/${story[1].toUpperCase()}` : path;
 }
 
 async function resolveStorySegment(segment: string) {
@@ -85,8 +91,11 @@ export async function verifyAskAnswer(input: {
    * cross-references, but deserve a reviewer flag.
    */
   storySlug?: string | null;
+  /** Citations must come from the evidence shown to this answer call. */
+  allowedSourceHrefs?: string[];
+  strictness?: AskVerifierStrictness;
 }): Promise<AskVerificationResult> {
-  const strictness = getAskVerifierStrictnessFromEnv();
+  const strictness = input.strictness ?? getAskVerifierStrictnessFromEnv();
   const ranAt = new Date().toISOString();
 
   if (strictness === "off") {
@@ -100,6 +109,9 @@ export async function verifyAskAnswer(input: {
 
   const issues: VerificationIssue[] = [];
   const progress = input.readerProgress ?? null;
+  const allowedHrefs = input.allowedSourceHrefs
+    ? new Set(input.allowedSourceHrefs.map(sourceKey))
+    : null;
 
   // Load chapter tags once per turn. `chapterTagRecord` is null when the
   // reader is not on a chapter page or when no tags exist for the chapter;
@@ -119,6 +131,16 @@ export async function verifyAskAnswer(input: {
       /* keep raw */
     }
     if (!pathname.startsWith("/")) continue;
+
+    const sourcePath = sourceKey(pathname);
+    if (allowedHrefs && !allowedHrefs.has(sourcePath)) {
+      issues.push({
+        code: "unretrieved_source_link",
+        severity: "error",
+        message: `Answer cites a source outside its retrieved evidence: ${link.href}`,
+        href: link.href,
+      });
+    }
 
     const segments = pathname.split("/").filter(Boolean);
     const top = segments[0];

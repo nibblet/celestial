@@ -53,7 +53,10 @@ export type PersonaDefinition = {
   buildSystemPrompt: (args: PersonaPromptArgs) => string;
 };
 
-const DEFAULT_MODEL = "claude-opus-5-5";
+/** Roll back Ask to Opus without a code deployment if comparative evals warrant it. */
+const DEFAULT_MODEL = process.env.ASK_MODEL === "claude-opus-5-5"
+  ? "claude-opus-5-5"
+  : "claude-sonnet-5-5";
 
 export const PERSONAS: Record<PersonaKey, PersonaDefinition> = {
   celestial_narrator: {

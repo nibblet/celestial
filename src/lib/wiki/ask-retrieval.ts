@@ -110,6 +110,15 @@ function compactExcerpt(value: string, maxChars = 420): string {
   return `${text.slice(0, maxChars - 1).trimEnd()}…`;
 }
 
+/** Keep the passage that matched, rather than always showing a dossier's opening. */
+function relevantExcerpt(value: string, queryTokens: string[], maxChars = 420): string {
+  const passages = value.split(/\n\s*\n|\n(?=Chapter \d+:)/).filter(Boolean);
+  const best = passages
+    .map((passage) => ({ passage, score: lexicalScore(queryTokens, passage) }))
+    .sort((a, b) => b.score - a.score)[0];
+  return compactExcerpt(best && best.score > 0 ? best.passage : value, maxChars);
+}
+
 function lexicalScore(queryTokens: string[], haystack: string): number {
   const normalized = normalize(haystack);
   let score = 0;
@@ -199,9 +208,9 @@ export function buildDefaultAskRetrievalSources(
     slug: entity.slug,
     href: `/${entity.entityType.replace("fiction_", "")}/${entity.slug}`,
     text: [
-      entity.canonDossier?.primaryProse,
-      entity.dossier?.profile,
       entity.dossier?.role,
+      entity.dossier?.profile,
+      entity.canonDossier?.primaryProse,
       entity.dossier?.arc,
       entity.note,
       entity.body,
@@ -291,9 +300,12 @@ export function retrieveAskContextItems(
   }
 
   for (const entity of sources.entities ?? []) {
-    const visible = (entity.storyIds ?? []).every((storyId) =>
+    const midBook = !!input.readerProgress &&
+      !input.readerProgress.showAllContent &&
+      input.readerProgress.currentChapterNumber < getLastChapterNumber();
+    const visible = !midBook || ((entity.storyIds ?? []).length > 0 && (entity.storyIds ?? []).every((storyId) =>
       storyIsVisible(storyId, input.readerProgress),
-    );
+    ));
     // The dossier text covers the whole book. A reader still mid-book gets
     // only the record up to their bookmark, and nothing for files not yet met.
     let text = entity.text;
@@ -318,7 +330,7 @@ export function retrieveAskContextItems(
       title: entity.title,
       href: entity.href,
       canonRank: "wiki_canon",
-      excerpt: compactExcerpt(text, visible ? 420 : 700),
+      excerpt: relevantExcerpt(text, queryTokens, visible ? 420 : 700),
       score,
       slug: entity.slug,
     });
@@ -353,13 +365,16 @@ export function retrieveAskContextItems(
       title: rule.title,
       href: rule.href,
       canonRank: "wiki_canon",
-      excerpt: compactExcerpt(text, midBook ? 700 : 420),
+      excerpt: relevantExcerpt(text, queryTokens, midBook ? 700 : 420),
       score,
       slug: rule.slug,
     });
   }
 
-  for (const arc of midBook ? [] : sources.arcs ?? []) {
+  const includeArcs = input.intent.kind === "character_arc" ||
+    input.intent.kind === "thematic" ||
+    input.intent.kind === "future_speculation";
+  for (const arc of midBook || !includeArcs ? [] : sources.arcs ?? []) {
     const score =
       lexicalScore(queryTokens, `${arc.title} ${arc.text}`) +
       titleBoost(input.message, arc.title, arc.slug) +
@@ -371,7 +386,7 @@ export function retrieveAskContextItems(
       title: arc.title,
       href: arc.href,
       canonRank: "derived_inference",
-      excerpt: compactExcerpt(arc.text),
+      excerpt: relevantExcerpt(arc.text, queryTokens),
       score,
       slug: arc.slug,
     });

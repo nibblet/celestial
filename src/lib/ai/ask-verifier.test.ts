@@ -78,3 +78,15 @@ test("when strictness is off, verifier returns empty issues", async () => {
     else process.env.ASK_VERIFIER_STRICTNESS = prev;
   }
 });
+
+test("spoiler-safe verification blocks a citation outside retrieved evidence", async () => {
+  const r = await verifyAskAnswer({
+    userQuestion: "Who is Galen?",
+    assistantText: "[Galen](/characters/galen-voss) leads the team.",
+    linksInAnswer: [{ href: "/characters/galen-voss", text: "Galen" }],
+    allowedSourceHrefs: ["/stories/CH01"],
+    strictness: "fail",
+  });
+  assert.equal(r.shouldBlock, true);
+  assert.ok(r.issues.some((issue) => issue.code === "unretrieved_source_link"));
+});

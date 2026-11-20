@@ -19,6 +19,10 @@ test("estimateCostUsd computes USD using per-1K rates for opus-5-5", () => {
   assert.ok(Math.abs((got as number) - 0.014) < 1e-9);
 });
 
+test("estimateCostUsd uses the Sonnet 5.5 Ask rate", () => {
+  assert.equal(estimateCostUsd("claude-sonnet-5-5", 1000, 500), 0.007);
+});
+
 test("estimateCostUsd computes USD for haiku-3-5 correctly", () => {
   const got = estimateCostUsd("claude-3-5-haiku-20241022", 2000, 1000);
   assert.ok(got !== null);
